@@ -1,0 +1,20 @@
+chemkit - an open source software library for chemistry
+
+=== Introduction ==============================================================
+
+chemkit is is an open source software library for cheminformatics, molecular 
+modeling and molecular visualization. The chemkit library is written in C++ 
+using the Qt framework.
+
+For more information see the chemkit website: http://www.chemkit.org
+
+=== Installation and Usage ====================================================
+
+See the included INSTALL file for directions for compiling, installing, and
+using the chemkit library.
+
+=== License ===================================================================
+
+The chemkit library is licensed under the GNU Lesser General Public License
+(LGPL). See the included COPYING and COPYING.LESSER files to view the full
+license text.

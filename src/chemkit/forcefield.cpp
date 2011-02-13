@@ -1,0 +1,661 @@
+/******************************************************************************
+**
+** Copyright (C) 2009-2011 Kyle Lutz <kyle.r.lutz@gmail.com>
+**
+** This file is part of chemkit. For more information see
+** <http://www.chemkit.org>.
+**
+** chemkit is free software: you can redistribute it and/or modify
+** it under the terms of the GNU Lesser General Public License as published by
+** the Free Software Foundation, either version 3 of the License, or
+** (at your option) any later version.
+**
+** chemkit is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+** GNU Lesser General Public License for more details.
+**
+** You should have received a copy of the GNU Lesser General Public License
+** along with chemkit. If not, see <http://www.gnu.org/licenses/>.
+**
+******************************************************************************/
+
+#include "forcefield.h"
+
+#include "atom.h"
+#include "molecule.h"
+#include "constants.h"
+#include "pluginmanager.h"
+#include "forcefieldatom.h"
+#include "forcefieldcalculation.h"
+
+namespace chemkit {
+
+namespace {
+
+// The forceFieldPlugins hash table contains the names of each
+// registered force field plugin and a pointer to its create()
+// function.
+QHash<QString, ForceField::CreateFunction> forceFieldPlugins;
+
+} // end anonymous namespace
+
+// === ForceFieldPrivate =================================================== //
+class ForceFieldPrivate
+{
+    public:
+        QString name;
+        ForceField::Flags flags;
+        QList<ForceFieldAtom *> atoms;
+        QList<ForceFieldCalculation *> calculations;
+        QList<const Molecule *> molecules;
+        QString parameterSet;
+        QString parameterFile;
+        QHash<QString, QString> parameterSets;
+        QString errorString;
+};
+
+// === ForceField ========================================================== //
+/// \class ForceField forcefield.h chemkit/forcefield.h
+/// \ingroup chemkit
+/// \brief The ForceField class provides a generic interface to
+///        molecular mechanics force fields.
+///
+/// The following force fields are supported in chemkit:
+///     - \c amber
+///     - \c mmff
+///     - \c opls
+///     - \c uff
+///
+/// The following example shows how to calculate the energy of a
+/// molecule using the uff force field.
+///
+/// \code
+/// // create the uff force field
+/// ForceField *forceField = ForceField::create("uff");
+///
+/// // add the molecule to the force field
+/// forceField->addMolecule(molecule);
+///
+/// // setup the force field
+/// forceField->setup();
+///
+/// // calculate the total energy
+/// Float energy = forceField->energy();
+/// \endcode
+
+// --- Construction and Destruction ---------------------------------------- //
+ForceField::ForceField(const QString &name)
+    : d(new ForceFieldPrivate)
+{
+    d->name = name;
+}
+
+/// Destroys a force field.
+ForceField::~ForceField()
+{
+    // delete all calculations
+    foreach(ForceFieldCalculation *calculation, d->calculations){
+        delete calculation;
+    }
+
+    // delete all atoms
+    foreach(ForceFieldAtom *atom, d->atoms){
+        delete atom;
+    }
+
+    delete d;
+}
+
+// --- Properties ---------------------------------------------------------- //
+/// Returns the name of the force field.
+QString ForceField::name() const
+{
+    return d->name;
+}
+
+/// Sets the flags for the force field to \p flags.
+void ForceField::setFlags(Flags flags)
+{
+    d->flags = flags;
+}
+
+/// Returns the flags for the force field.
+ForceField::Flags ForceField::flags() const
+{
+    return d->flags;
+}
+
+/// Returns the number of atoms in the force field.
+int ForceField::size() const
+{
+    return atomCount();
+}
+
+/// Returns a list of all the atoms in the force field.
+QList<ForceFieldAtom *> ForceField::atoms()
+{
+    return d->atoms;
+}
+
+/// \overload
+QList<const ForceFieldAtom *> ForceField::atoms() const
+{
+    QList<const ForceFieldAtom *> atoms;
+
+    foreach(const ForceFieldAtom *atom, d->atoms){
+        atoms.append(atom);
+    }
+
+    return atoms;
+}
+
+/// Returns the number of atoms in the force field.
+int ForceField::atomCount() const
+{
+    return d->atoms.size();
+}
+
+/// Returns the atom at index.
+ForceFieldAtom* ForceField::atom(int index)
+{
+    return d->atoms.value(index, 0);
+}
+
+/// \overload
+const ForceFieldAtom* ForceField::atom(int index) const
+{
+    return d->atoms.value(index, 0);
+}
+
+/// Returns the force field atom that represents atom.
+ForceFieldAtom* ForceField::atom(const Atom *atom)
+{
+    foreach(ForceFieldAtom *forceFieldAtom, d->atoms){
+        if(forceFieldAtom->atom() == atom){
+            return forceFieldAtom;
+        }
+    }
+
+    return 0;
+}
+
+/// \overload
+const ForceFieldAtom* ForceField::atom(const Atom *atom) const
+{
+    foreach(const ForceFieldAtom *forceFieldAtom, d->atoms){
+        if(forceFieldAtom->atom() == atom){
+            return forceFieldAtom;
+        }
+    }
+
+    return 0;
+}
+
+// --- Setup --------------------------------------------------------------- //
+/// Adds a molecule to the force field.
+void ForceField::addMolecule(const Molecule *molecule)
+{
+    d->molecules.append(molecule);
+}
+
+/// Removes a molecule from the force field.
+void ForceField::removeMolecule(const Molecule *molecule)
+{
+    d->molecules.removeAll(molecule);
+}
+
+/// Returns a list of all the molecules in the force field.
+QList<const Molecule *> ForceField::molecules() const
+{
+    return d->molecules;
+}
+
+/// Returns the number of molecules in the force field.
+int ForceField::moleculeCount() const
+{
+    return d->molecules.size();
+}
+
+void ForceField::addAtom(ForceFieldAtom *atom)
+{
+    d->atoms.append(atom);
+}
+
+void ForceField::removeAtom(ForceFieldAtom *atom)
+{
+    d->atoms.removeOne(atom);
+}
+
+/// Removes all of the molecules in the force field.
+void ForceField::clear()
+{
+    foreach(const Molecule *molecule, d->molecules){
+        removeMolecule(molecule);
+    }
+
+    foreach(ForceFieldCalculation *calculation, d->calculations){
+        removeCalculation(calculation);
+    }
+}
+
+/// Sets up the force field. Returns false if the setup failed.
+bool ForceField::setup()
+{
+    return false;
+}
+
+/// Returns \c true if the force field is setup.
+bool ForceField::isSetup() const
+{
+    foreach(const ForceFieldCalculation *calculation, d->calculations){
+        if(!calculation->isSetup()){
+            return false;
+        }
+    }
+
+    return true;
+}
+
+// --- Parameters ---------------------------------------------------------- //
+void ForceField::addParameterSet(const QString &name, const QString &fileName)
+{
+    d->parameterSets[name] = fileName;
+}
+
+void ForceField::removeParameterSet(const QString &name)
+{
+    d->parameterSets.remove(name);
+}
+
+void ForceField::setParameterSet(const QString &name)
+{
+    if(!d->parameterSets.contains(name)){
+        return;
+    }
+
+    d->parameterSet = name;
+    d->parameterFile = d->parameterSets[name];
+}
+
+QString ForceField::parameterSet() const
+{
+    return d->parameterSet;
+}
+
+QStringList ForceField::parameterSets() const
+{
+    return d->parameterSets.keys();
+}
+
+void ForceField::setParameterFile(const QString &fileName)
+{
+    d->parameterFile = fileName;
+}
+
+QString ForceField::parameterFile() const
+{
+    return d->parameterFile;
+}
+
+// --- Calculations -------------------------------------------------------- //
+void ForceField::addCalculation(ForceFieldCalculation *calculation)
+{
+    d->calculations.append(calculation);
+}
+
+void ForceField::removeCalculation(ForceFieldCalculation *calculation)
+{
+    d->calculations.removeOne(calculation);
+    delete calculation;
+}
+
+/// Returns a list of all the calculations in the force field.
+QList<ForceFieldCalculation *> ForceField::calculations()
+{
+    return d->calculations;
+}
+
+/// \overload
+QList<const ForceFieldCalculation *> ForceField::calculations() const
+{
+    QList<const ForceFieldCalculation *> calculations;
+
+    foreach(const ForceFieldCalculation *calculation, d->calculations){
+        calculations.append(calculation);
+    }
+
+    return calculations;
+}
+
+/// Returns the number of calculations in the force field.
+int ForceField::calculationCount() const
+{
+    return d->calculations.size();
+}
+
+void ForceField::setCalculationSetup(ForceFieldCalculation *calculation, bool setup)
+{
+    calculation->setSetup(setup);
+}
+
+/// Calculates and returns the total energy of the system. Energy is
+/// in kcal/mol. If the force field is not setup this method will
+/// return \c 0.
+Float ForceField::energy() const
+{
+    Float energy = 0;
+
+    foreach(const ForceFieldCalculation *calculation, calculations()){
+        energy += calculation->energy();
+    }
+
+    return energy;
+}
+
+/// Returns the gradient of the energy with respect to the
+/// coordinates of each atom in the force field.
+///
+/** \f[ \nabla E = \left[
+///                \begin{array}{ccc}
+///                    \frac{\partial E}{\partial x_{0}} &
+///                    \frac{\partial E}{\partial y_{0}} &
+///                    \frac{\partial E}{\partial z_{0}} \\
+///                    \frac{\partial E}{\partial x_{1}} &
+///                    \frac{\partial E}{\partial y_{1}} &
+///                    \frac{\partial E}{\partial z_{1}} \\
+///                    \vdots & \vdots & \vdots \\
+///                    \frac{\partial E}{\partial x_{n}} &
+///                    \frac{\partial E}{\partial y_{n}} &
+///                    \frac{\partial E}{\partial z_{n}}
+///                \end{array}
+///                \right]
+/// \f]
+**/
+QVector<Vector> ForceField::gradient() const
+{
+    if(d->flags.testFlag(AnalyticalGradient)){
+        QVector<Vector> gradient(atomCount());
+
+        foreach(const ForceFieldCalculation *calculation, d->calculations){
+            QVector<Vector> atomGradients = calculation->gradient();
+
+            for(int i = 0; i < atomGradients.size(); i++){
+                const ForceFieldAtom *atom = calculation->atom(i);
+
+                gradient[atom->index()] += atomGradients[i];
+            }
+        }
+
+        return gradient;
+    }
+    else{
+        return numericalGradient();
+    }
+}
+
+/// Returns the gradient of the energy with respect to the
+/// coordinates of each atom in the force field. The gradient is
+/// calculated numerically.
+///
+/// \see ForceField::gradient()
+QVector<Vector> ForceField::numericalGradient() const
+{
+    QVector<Vector> gradient(atomCount());
+
+    for(int i = 0; i < atomCount(); i++){
+        ForceFieldAtom *atom = d->atoms[i];
+
+        // initial energy
+        Float eI = atom->energy();
+        Float epsilon = 1.0e-10;
+
+        atom->moveBy(epsilon, 0, 0);
+        Float eF_x = atom->energy();
+
+        atom->moveBy(-epsilon, epsilon, 0);
+        Float eF_y = atom->energy();
+
+        atom->moveBy(0, -epsilon, epsilon);
+        Float eF_z = atom->energy();
+
+        // restore initial position
+        atom->moveBy(0, 0, -epsilon);
+
+        Float dx = (eF_x - eI) / epsilon;
+        Float dy = (eF_y - eI) / epsilon;
+        Float dz = (eF_z - eI) / epsilon;
+
+        gradient[i] = Vector(dx, dy, dz);
+    }
+
+    return gradient;
+}
+
+/// Returns the magnitude of the largest gradient.
+Float ForceField::largestGradient() const
+{
+    if(!size()){
+        return 0;
+    }
+
+    Float largest = 0;
+
+    QVector<Vector> gradient = this->gradient();
+
+    for(int i = 0; i < gradient.size(); i++){
+        Float length = gradient[i].length();
+
+        if(length > largest)
+            largest = length;
+    }
+
+    return largest;
+}
+
+/// Returns the root mean square gradient.
+Float ForceField::rootMeanSquareGradient() const
+{
+    if(!size()){
+        return 0;
+    }
+
+    Float sum = 0;
+
+    QVector<Vector> gradient = this->gradient();
+
+    for(int i = 0; i < gradient.size(); i++){
+        sum += gradient[i].lengthSquared();
+    }
+
+    return sqrt(sum / (3.0 * size()));
+}
+
+// --- Coordinates --------------------------------------------------------- //
+/// Updates the coordinates of molecule in the force field.
+void ForceField::readCoordinates(const Molecule *molecule)
+{
+    foreach(const Atom *atom, molecule->atoms()){
+        readCoordinates(atom);
+    }
+}
+
+/// Updates the coordinates of atom in the force field.
+void ForceField::readCoordinates(const Atom *atom)
+{
+    ForceFieldAtom *forceFieldAtom = this->atom(atom);
+
+    if(forceFieldAtom){
+        forceFieldAtom->setPosition(atom->position());
+    }
+}
+
+/// Writes the coordinates to molecule from the force field.
+void ForceField::writeCoordinates(Molecule *molecule) const
+{
+    foreach(Atom *atom, molecule->atoms()){
+        writeCoordinates(atom);
+    }
+}
+
+/// Writes the coordinates to atom from the force field.
+void ForceField::writeCoordinates(Atom *atom) const
+{
+    const ForceFieldAtom *forceFieldAtom = this->atom(atom);
+
+    if(forceFieldAtom){
+        atom->setPosition(forceFieldAtom->position());
+    }
+}
+
+// --- Energy Minimization ------------------------------------------------- //
+/// Perform one step of energy minimization. Returns \c true if
+/// converged. The minimization is considered converged when the
+/// root mean square gradient is below \p converganceValue.
+bool ForceField::minimizationStep(Float converganceValue)
+{
+    // calculate gradient
+    QVector<Vector> gradient = this->gradient();
+
+    // perform line search
+    QVector<Point> initialPositions(atomCount());
+
+    Float step = 0.05;
+    Float stepConv = 1e-5;
+    int stepCount = 10;
+
+    Float initialEnergy = energy();
+
+    for(int i = 0; i < stepCount; i++){
+        for(int atomIndex = 0; atomIndex < atomCount(); atomIndex++){
+            ForceFieldAtom *atom = d->atoms[atomIndex];
+
+            initialPositions[atomIndex] = atom->position();
+            atom->moveBy(-gradient[atomIndex] * step);
+        }
+
+        Float finalEnergy = energy();
+
+        if(finalEnergy < initialEnergy && qAbs(finalEnergy - initialEnergy) < stepConv){
+            break;
+        }
+        else if(finalEnergy < initialEnergy){
+            // we reduced the energy, so set a bigger step size
+            step *= 2;
+
+            // maximum step size is 1
+            if(step > 1){
+                step = 1;
+            }
+
+            // the initial energy for the next step
+            // is the final energy of this step
+            initialEnergy = finalEnergy;
+        }
+        else if(finalEnergy > initialEnergy){
+            // we went too far, so reset initial atom positions
+            for(int atomIndex = 0; atomIndex < atomCount(); atomIndex++){
+                d->atoms[atomIndex]->setPosition(initialPositions[atomIndex]);
+            }
+
+            // and reduce step size
+            step *= 0.1;
+        }
+    }
+
+    // check for convergance
+    return rootMeanSquareGradient() < converganceValue;
+}
+
+QFuture<bool> ForceField::minimizationStepAsync(Float converganceValue)
+{
+    return QtConcurrent::run(this, &ForceField::minimizationStep, converganceValue);
+}
+
+// --- Geometry ------------------------------------------------------------ //
+Float ForceField::distance(const ForceFieldAtom *a, const ForceFieldAtom *b) const
+{
+    return Point::distance(a->position(), b->position());
+}
+
+Float ForceField::bondAngle(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c) const
+{
+    return bondAngleRadians(a, b, c) * chemkit::constants::RadiansToDegrees;
+}
+
+Float ForceField::bondAngleRadians(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c) const
+{
+    return Point::angleRadians(a->position(), b->position(), c->position());
+}
+
+Float ForceField::torsionAngle(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c, const ForceFieldAtom *d) const
+{
+    return torsionAngleRadians(a, b, c, d) * chemkit::constants::RadiansToDegrees;
+}
+
+Float ForceField::torsionAngleRadians(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c, const ForceFieldAtom *d) const
+{
+    return Point::torsionAngleRadians(a->position(), b->position(), c->position(), d->position());
+}
+
+Float ForceField::wilsonAngle(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c, const ForceFieldAtom *d) const
+{
+    return wilsonAngleRadians(a, b, c, d) * chemkit::constants::RadiansToDegrees;
+}
+
+Float ForceField::wilsonAngleRadians(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c, const ForceFieldAtom *d) const
+{
+    return Point::wilsonAngleRadians(a->position(), b->position(), c->position(), d->position());
+}
+
+// --- Error Handling ------------------------------------------------------ //
+/// Sets a string that describes the last error that occured.
+void ForceField::setErrorString(const QString &errorString)
+{
+    d->errorString = errorString;
+}
+
+/// Returns a string describing the last error that occured.
+QString ForceField::errorString() const
+{
+    return d->errorString;
+}
+
+// --- Static Methods ------------------------------------------------------ //
+/// Create a new force field from \p name. If \p name is invalid or
+/// a force field with \p name is not available \c 0 is returned.
+ForceField* ForceField::create(const QString &name)
+{
+    // ensure default plugins are loaded
+    PluginManager::instance()->loadDefaultPlugins();
+
+    CreateFunction createFunction = forceFieldPlugins.value(name.toLower());
+    if(createFunction){
+        return createFunction();
+    }
+
+    return 0;
+}
+
+/// Returns a list of names of all supported force fields.
+QStringList ForceField::forceFields()
+{
+    // ensure default plugins are loaded
+    PluginManager::instance()->loadDefaultPlugins();
+
+    return forceFieldPlugins.keys();
+}
+
+void ForceField::registerForceField(const QString &name, CreateFunction function)
+{
+    forceFieldPlugins[name.toLower()] = function;
+}
+
+void ForceField::unregisterForceField(const QString &name, CreateFunction function)
+{
+    if(forceFieldPlugins.contains(name) && forceFieldPlugins[name] == function){
+        forceFieldPlugins.remove(name);
+    }
+}
+
+} // end chemkit namespace

@@ -1,0 +1,19 @@
+=== Dependencies ==============================================================
+
+  - Qt Framework (version 4.7 or later) - http://qt.nokia.com
+  - BLAS & LAPACK libraries
+
+=== Compiling =================================================================
+
+From the chemkit directory (the same directory this file is in) run the
+following commands:
+
+    qmake
+    make
+
+=== Installation ==============================================================
+
+After successfully compiling chemkit run the following command to install the
+library (you may need root/administator privileges):
+
+    make install
