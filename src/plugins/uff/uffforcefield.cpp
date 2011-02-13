@@ -40,6 +40,8 @@ UffForceField::UffForceField()
     : chemkit::ForceField("uff")
 {
     m_parameters = new UffParameters;
+
+    setFlags(chemkit::ForceField::AnalyticalGradient);
 }
 
 UffForceField::~UffForceField()

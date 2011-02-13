@@ -116,6 +116,26 @@ chemkit::Float UffBondStrechCalculation::energy() const
     return 0.5 * kb * pow(r - r0, 2);
 }
 
+QVector<chemkit::Vector> UffBondStrechCalculation::gradient() const
+{
+    const chemkit::ForceFieldAtom *a = atom(0);
+    const chemkit::ForceFieldAtom *b = atom(1);
+
+    chemkit::Float kb = parameter(0);
+    chemkit::Float r0 = parameter(1);
+    chemkit::Float r = distance(a, b);
+
+    // dE/dr
+    chemkit::Float de_dr = kb * (r - r0);
+
+    QVector<chemkit::Vector> gradient = distanceGradient(a, b);
+
+    gradient[0] *= de_dr;
+    gradient[1] *= de_dr;
+
+    return gradient;
+}
+
 // === UffAngleBendCalculation ============================================= //
 UffAngleBendCalculation::UffAngleBendCalculation(const chemkit::ForceFieldAtom *a,
                                                  const chemkit::ForceFieldAtom *b,
@@ -184,6 +204,30 @@ chemkit::Float UffAngleBendCalculation::energy() const
     chemkit::Float theta = bondAngleRadians(a, b, c);
 
     return ka * (c0 + (c1 * cos(theta)) + (c2 * cos(2*theta)));
+}
+
+QVector<chemkit::Vector> UffAngleBendCalculation::gradient() const
+{
+    const chemkit::ForceFieldAtom *a = atom(0);
+    const chemkit::ForceFieldAtom *b = atom(1);
+    const chemkit::ForceFieldAtom *c = atom(2);
+
+    chemkit::Float ka = parameter(0);
+    chemkit::Float c1 = parameter(2);
+    chemkit::Float c2 = parameter(3);
+
+    chemkit::Float theta = bondAngleRadians(a, b, c);
+
+    // dE/dtheta
+    chemkit::Float de_dtheta = -ka * (c1 * sin(theta) + 2 * c2 * sin(2 * theta));
+
+    QVector<chemkit::Vector> gradient = bondAngleGradientRadians(a, b, c);
+
+    gradient[0] *= de_dtheta;
+    gradient[1] *= de_dtheta;
+    gradient[2] *= de_dtheta;
+
+    return gradient;
 }
 
 // === UffTorsionCalculation =============================================== //
@@ -300,6 +344,32 @@ chemkit::Float UffTorsionCalculation::energy() const
     return 0.5 * V * (1 - cos(n * phi0) * cos(n * phi));
 }
 
+QVector<chemkit::Vector> UffTorsionCalculation::gradient() const
+{
+    const chemkit::ForceFieldAtom *a = atom(0);
+    const chemkit::ForceFieldAtom *b = atom(1);
+    const chemkit::ForceFieldAtom *c = atom(2);
+    const chemkit::ForceFieldAtom *d = atom(3);
+
+    chemkit::Float V = parameter(0);
+    chemkit::Float n = parameter(1);
+    chemkit::Float phi0 = parameter(2);
+
+    chemkit::Float phi = torsionAngleRadians(a, b, c, d);
+
+    // dE/dphi
+    chemkit::Float de_dphi = 0.5 * V * n * cos(n * phi0) * sin(n * phi);
+
+    QVector<chemkit::Vector> gradient = torsionAngleGradientRadians(a, b, c, d);
+
+    gradient[0] *= de_dphi;
+    gradient[1] *= de_dphi;
+    gradient[2] *= de_dphi;
+    gradient[3] *= de_dphi;
+
+    return gradient;
+}
+
 // === UffInversionCalculation ============================================= //
 UffInversionCalculation::UffInversionCalculation(const chemkit::ForceFieldAtom *a,
                                                  const chemkit::ForceFieldAtom *b,
@@ -369,6 +439,33 @@ chemkit::Float UffInversionCalculation::energy() const
     return k * (c0 + c1 * sin(y) + c2 * cos(2 * y));
 }
 
+QVector<chemkit::Vector> UffInversionCalculation::gradient() const
+{
+    const chemkit::ForceFieldAtom *a = atom(0);
+    const chemkit::ForceFieldAtom *b = atom(1);
+    const chemkit::ForceFieldAtom *c = atom(2);
+    const chemkit::ForceFieldAtom *d = atom(3);
+
+    chemkit::Float k = parameter(0);
+    chemkit::Float c1 = parameter(2);
+    chemkit::Float c2 = parameter(3);
+
+    chemkit::Float w = wilsonAngleRadians(a, b, c, d);
+    chemkit::Float y = w + (chemkit::constants::Pi / 2.0);
+
+    // dE/dw
+    chemkit::Float de_dw = k * (c1 * cos(y) - 2 * c2 * sin(2 * y));
+
+    QVector<chemkit::Vector> gradient = wilsonAngleGradientRadians(a, b, c, d);
+
+    gradient[0] *= de_dw;
+    gradient[1] *= de_dw;
+    gradient[2] *= de_dw;
+    gradient[3] *= de_dw;
+
+    return gradient;
+}
+
 // === UffVanDerWaalsCalculation =========================================== //
 UffVanDerWaalsCalculation::UffVanDerWaalsCalculation(const chemkit::ForceFieldAtom *a,
                                                      const chemkit::ForceFieldAtom *b)
@@ -412,6 +509,26 @@ chemkit::Float UffVanDerWaalsCalculation::energy() const
     chemkit::Float r = distance(a, b);
 
     return d * (-2 * pow(x/r, 6) + pow(x/r, 12));
+}
+
+QVector<chemkit::Vector> UffVanDerWaalsCalculation::gradient() const
+{
+    const chemkit::ForceFieldAtom *a = atom(0);
+    const chemkit::ForceFieldAtom *b = atom(1);
+
+    chemkit::Float d = parameter(0);
+    chemkit::Float x = parameter(1);
+    chemkit::Float r = distance(a, b);
+
+    // dE/dr
+    chemkit::Float de_dr = -12 * d * x / pow(r, 2) * (pow(x/r, 11) - pow(x/r, 5));
+
+    QVector<chemkit::Vector> gradient = distanceGradient(a, b);
+
+    gradient[0] *= de_dr;
+    gradient[1] *= de_dr;
+
+    return gradient;
 }
 
 // === UffElectrostaticCalculation ========================================= //

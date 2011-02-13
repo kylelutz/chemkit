@@ -47,6 +47,7 @@ class UffBondStrechCalculation : public UffCalculation
 
         bool setup();
         chemkit::Float energy() const;
+        QVector<chemkit::Vector> gradient() const;
 };
 
 class UffAngleBendCalculation : public UffCalculation
@@ -56,6 +57,7 @@ class UffAngleBendCalculation : public UffCalculation
 
         bool setup();
         chemkit::Float energy() const;
+        QVector<chemkit::Vector> gradient() const;
 };
 
 class UffTorsionCalculation : public UffCalculation
@@ -65,6 +67,7 @@ class UffTorsionCalculation : public UffCalculation
 
         bool setup();
         chemkit::Float energy() const;
+        QVector<chemkit::Vector> gradient() const;
 };
 
 class UffInversionCalculation : public UffCalculation
@@ -74,6 +77,7 @@ class UffInversionCalculation : public UffCalculation
 
         bool setup();
         chemkit::Float energy() const;
+        QVector<chemkit::Vector> gradient() const;
 };
 
 class UffVanDerWaalsCalculation : public UffCalculation
@@ -83,6 +87,7 @@ class UffVanDerWaalsCalculation : public UffCalculation
 
         bool setup();
         chemkit::Float energy() const;
+        QVector<chemkit::Vector> gradient() const;
 };
 
 class UffElectrostaticCalculation : public UffCalculation
