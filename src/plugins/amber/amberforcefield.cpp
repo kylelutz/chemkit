@@ -39,6 +39,8 @@ AmberForceField::AmberForceField()
     : chemkit::ForceField("amber")
 {
     m_parameters = new AmberParameters;
+
+    setFlags(chemkit::ForceField::AnalyticalGradient);
 }
 
 AmberForceField::~AmberForceField()

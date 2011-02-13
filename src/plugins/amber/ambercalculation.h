@@ -45,6 +45,7 @@ class AmberBondCalculation : public AmberCalculation
 
         bool setup(const AmberParameters *parameters);
         chemkit::Float energy() const;
+        QVector<chemkit::Vector> gradient() const;
 };
 
 class AmberAngleCalculation : public AmberCalculation
@@ -54,6 +55,7 @@ class AmberAngleCalculation : public AmberCalculation
 
         bool setup(const AmberParameters *parameters);
         chemkit::Float energy() const;
+        QVector<chemkit::Vector> gradient() const;
 };
 
 class AmberTorsionCalculation : public AmberCalculation
@@ -63,6 +65,7 @@ class AmberTorsionCalculation : public AmberCalculation
 
         bool setup(const AmberParameters *parameters);
         chemkit::Float energy() const;
+        QVector<chemkit::Vector> gradient() const;
 };
 
 class AmberNonbondedCalculation : public AmberCalculation
@@ -72,6 +75,7 @@ class AmberNonbondedCalculation : public AmberCalculation
 
         bool setup(const AmberParameters *parameters);
         chemkit::Float energy() const;
+        QVector<chemkit::Vector> gradient() const;
 };
 
 #endif // AMBERCALCULATION_H
