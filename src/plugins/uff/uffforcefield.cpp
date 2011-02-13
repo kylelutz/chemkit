@@ -44,6 +44,7 @@ UffForceField::UffForceField()
 
 UffForceField::~UffForceField()
 {
+    delete m_parameters;
 }
 
 // --- Parameters ---------------------------------------------------------- //
