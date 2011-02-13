@@ -616,6 +616,10 @@ AmberParameters::AmberParameters()
 {
 }
 
+AmberParameters::~AmberParameters()
+{
+}
+
 // --- Parameters ---------------------------------------------------------- //
 const AmberBondParameters* AmberParameters::bondParameters(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b) const
 {

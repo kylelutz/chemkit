@@ -45,6 +45,7 @@ AmberForceField::AmberForceField()
 
 AmberForceField::~AmberForceField()
 {
+    delete m_parameters;
 }
 
 // --- Setup --------------------------------------------------------------- //

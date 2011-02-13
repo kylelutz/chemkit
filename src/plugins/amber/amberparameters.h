@@ -60,6 +60,7 @@ class AmberParameters
     public:
         // construction and destruction
         AmberParameters();
+        ~AmberParameters();
 
         // parameters
         const AmberBondParameters* bondParameters(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b) const;
