@@ -88,12 +88,15 @@ class CHEMKIT_EXPORT ForceFieldCalculation
         QVector<Vector> torsionAngleGradientRadians(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c, const ForceFieldAtom *d) const;
         Float wilsonAngle(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c, const ForceFieldAtom *d) const;
         Float wilsonAngleRadians(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c, const ForceFieldAtom *d) const;
+        QVector<Vector> wilsonAngleGradient(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c, const ForceFieldAtom *d) const;
+        QVector<Vector> wilsonAngleGradientRadians(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c, const ForceFieldAtom *d) const;
 
     private:
         void setSetup(bool setup);
         QVector<Vector> distanceGradient(const Point &a, const Point &b) const;
         QVector<Vector> bondAngleGradientRadians(const Point &a, const Point &b, const Point &c) const;
         QVector<Vector> torsionAngleGradientRadians(const Point &a, const Point &b, const Point &c, const Point &d) const;
+        QVector<Vector> wilsonAngleGradientRadians(const Point &a, const Point &b, const Point &c, const Point &d) const;
 
         friend class ForceField;
 

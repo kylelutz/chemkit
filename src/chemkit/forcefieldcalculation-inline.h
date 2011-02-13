@@ -184,6 +184,56 @@ inline Float ForceFieldCalculation::wilsonAngleRadians(const ForceFieldAtom *a, 
     return Point::wilsonAngleRadians(a->position(), b->position(), c->position(), d->position());
 }
 
+/// Returns the gradient of the wilson angle between the atoms
+/// \p a, \p b, \p c, and \p d.
+inline QVector<Vector> ForceFieldCalculation::wilsonAngleGradient(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c, const ForceFieldAtom *d) const
+{
+    QVector<Vector> gradient = wilsonAngleGradientRadians(a, b, c, d);
+
+    for(int i = 0; i < gradient.size(); i++){
+        gradient[i].scale(chemkit::constants::RadiansToDegrees);
+    }
+
+    return gradient;
+}
+
+/// Returns the gradient of the wilson angle between the atoms
+/// \p a, \p b, \p c, and \p d.
+inline QVector<Vector> ForceFieldCalculation::wilsonAngleGradientRadians(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c, const ForceFieldAtom *d) const
+{
+    return wilsonAngleGradientRadians(a->position(), b->position(), c->position(), d->position());
+}
+
+/// Returns the gradient of the wilson angle between the points
+/// \p a, \p b, \p c, and \p d.
+inline QVector<Vector> ForceFieldCalculation::wilsonAngleGradientRadians(const Point &a, const Point &b, const Point &c, const Point &d) const
+{
+    Vector ba = a - b;
+    Vector bc = c - b;
+    Vector bd = d - b;
+
+    Float rba = ba.length();
+    Float rbc = bc.length();
+    Float rbd = bd.length();
+
+    ba.normalize();
+    bc.normalize();
+    bd.normalize();
+
+    Float theta = acos(ba.dot(bc));
+
+    Float w = Point::wilsonAngleRadians(a, b, c, d);
+
+    QVector<Vector> gradient(4);
+
+    gradient[0] = ((bd.cross(bc) / (cos(w) * sin(theta)) - (ba - bc * cos(theta)) * (tan(w) / pow(sin(theta), 2)))) / rba;
+    gradient[2] = ((ba.cross(bd) / (cos(w) * sin(theta)) - (bc - ba * cos(theta)) * (tan(w) / pow(sin(theta), 2)))) / rbc;
+    gradient[3] = (bc.cross(ba) / (cos(w) * sin(theta)) - bd * tan(w)) / rbd;
+    gradient[1] = -(gradient[0] + gradient[2] + gradient[3]);
+
+    return gradient;
+}
+
 } // end chemkit namespace
 
 #endif // CHEMKIT_FORCEFIELDCALCULATION_INLINE_H
