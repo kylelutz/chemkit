@@ -656,17 +656,10 @@ void GraphicsView::paintGL()
         GraphicsVector s = f.cross(camera()->upVector());
         GraphicsVector u = s.cross(f);
 
-        d->modelViewTransform = GraphicsTransform();
-        d->modelViewTransform(0, 0) = s.x();
-        d->modelViewTransform(0, 1) = s.y();
-        d->modelViewTransform(0, 2) = s.z();
-        d->modelViewTransform(1, 0) = u.x();
-        d->modelViewTransform(1, 1) = u.y();
-        d->modelViewTransform(1, 2) = u.z();
-        d->modelViewTransform(2, 0) = -f.x();
-        d->modelViewTransform(2, 1) = -f.y();
-        d->modelViewTransform(2, 2) = -f.z();
-        d->modelViewTransform(3, 3) = 1;
+        d->modelViewTransform =  s.x(),  s.y(),  s.z(), 0,
+                                 u.x(),  u.y(),  u.z(), 0,
+                                -f.x(), -f.y(), -f.z(), 0,
+                                     0,      0,      0, 1;
 
         d->modelViewTransform *= GraphicsTransform::translation(-camera()->position());
         glLoadMatrixf(d->modelViewTransform.data());
