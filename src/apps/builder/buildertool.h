@@ -25,6 +25,8 @@
 
 #include "builderwindow.h"
 
+#include <chemkit/graphicstool.h>
+
 class BuilderTool : public virtual chemkit::GraphicsTool
 {
     public:

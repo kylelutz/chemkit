@@ -23,10 +23,15 @@
 #include "graphicsview.h"
 
 #include "graphics.h"
+#include "graphicsitem.h"
+#include "graphicstool.h"
+#include "graphicslight.h"
 #include "graphicsscene.h"
-#include "graphicspoint.h"
+#include "graphicscamera.h"
 #include "graphicsvector.h"
+#include "graphicsoverlay.h"
 #include "graphicspainter.h"
+#include "graphicstransform.h"
 
 #ifndef GL_MULTISAMPLE
 #define GL_MULTISAMPLE 0x809D

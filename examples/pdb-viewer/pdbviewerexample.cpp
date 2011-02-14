@@ -24,6 +24,7 @@
 #include "ui_pdbviewerexample.h"
 
 #include <chemkit/bondpredictor.h>
+#include <chemkit/graphicscamera.h>
 #include <chemkit/graphicsnavigationtool.h>
 
 // === PdbViewerWindow ===================================================== //

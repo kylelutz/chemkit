@@ -24,6 +24,8 @@
 
 #include <chemkit/vector.h>
 #include <chemkit/graphicspoint.h>
+#include <chemkit/graphicscamera.h>
+#include <chemkit/graphicsoverlay.h>
 
 // --- Construction and Destruction ---------------------------------------- //
 ManipulateTool::ManipulateTool(BuilderWindow *builder)

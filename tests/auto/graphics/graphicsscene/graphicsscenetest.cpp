@@ -22,6 +22,7 @@
 
 #include <QtTest>
 
+#include <chemkit/graphicsitem.h>
 #include <chemkit/graphicsview.h>
 #include <chemkit/graphicsscene.h>
 

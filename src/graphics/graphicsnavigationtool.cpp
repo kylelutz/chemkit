@@ -23,6 +23,7 @@
 #include "graphicsnavigationtool.h"
 
 #include "graphicsview.h"
+#include "graphicscamera.h"
 
 namespace chemkit {
 

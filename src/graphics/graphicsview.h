@@ -25,16 +25,18 @@
 
 #include "graphics.h"
 
-#include "graphicsitem.h"
-#include "graphicsscene.h"
-#include "graphicstool.h"
-#include "graphicscamera.h"
-#include "graphicslight.h"
-#include "graphicsoverlay.h"
-#include "graphicstransform.h"
+#include "graphicsray.h"
+#include "graphicspoint.h"
 
 namespace chemkit {
 
+class GraphicsItem;
+class GraphicsTool;
+class GraphicsLight;
+class GraphicsScene;
+class GraphicsCamera;
+class GraphicsOverlay;
+class GraphicsTransform;
 class GraphicsViewPrivate;
 
 class CHEMKIT_GRAPHICS_EXPORT GraphicsView : public QGLWidget

@@ -24,6 +24,7 @@
 #include "ui_builderwindow.h"
 
 #include <chemkit/bondpredictor.h>
+#include <chemkit/graphicscamera.h>
 
 #include "buildertool.h"
 #include "navigatetool.h"
