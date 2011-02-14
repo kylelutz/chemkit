@@ -66,6 +66,7 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsTransform
         GraphicsTransform operator*(const GraphicsTransform &transform) const;
         GraphicsTransform& operator*=(const GraphicsTransform &transform);
         GraphicsTransform& operator=(const GraphicsTransform &transform);
+        GenericMatrixCommaInitializer<GraphicsFloat> operator=(const GraphicsFloat value);
 
         // static methods
         static GraphicsTransform identity();
