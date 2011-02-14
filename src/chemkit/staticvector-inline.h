@@ -27,6 +27,10 @@
 
 #include <cmath>
 
+#ifndef QT_NO_DEBUG_STREAM
+#include <QDebug>
+#endif
+
 namespace chemkit {
 
 // === StaticVector ======================================================== //
@@ -402,6 +406,25 @@ inline bool StaticVector<T, N>::operator==(const StaticVector<T, N> &vector) con
 
     return true;
 }
+
+// --- Related Functions --------------------------------------------------- //
+#ifndef QT_NO_DEBUG_STREAM
+template<typename T, int N>
+inline QDebug operator<<(QDebug debug, const StaticVector<T, N> &vector)
+{
+    debug.nospace() << "(";
+    for(int i = 0; i < N; i++){
+        if(i > 0){
+            debug << ", ";
+        }
+
+        debug.nospace() << vector[i];
+    }
+    debug.nospace() << ")";
+
+    return debug.space();
+}
+#endif // QT_NO_DEBUG_STREAM
 
 } // end chemkit namespace
 
