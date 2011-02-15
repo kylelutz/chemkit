@@ -36,17 +36,6 @@ class ProteinPrivate;
 class CHEMKIT_EXPORT Protein
 {
     public:
-        // enumerations
-        enum ChangeType{
-            ChainAdded,
-            ChainRemoved,
-            ResidueAdded,
-            ResidueRemoved,
-            ResidueMoved,
-            ResidueTypeChanged,
-            ResidueConformationChanged,
-        };
-
         // construction and destruction
         Protein();
         ~Protein();
