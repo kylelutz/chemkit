@@ -50,38 +50,7 @@ Ring::~Ring()
 {
 }
 
-// --- Properties ---------------------------------------------------------- //
-/// Returns the number of atoms in the ring.
-int Ring::size() const
-{
-    return atomCount();
-}
-
-/// Returns the molecule the ring is a part of.
-Molecule* Ring::molecule() const
-{
-    return m_atoms[0]->molecule();
-}
-
-/// Returns the fragment the ring is a part of.
-Fragment* Ring::fragment() const
-{
-    return m_atoms[0]->fragment();
-}
-
 // --- Structure ----------------------------------------------------------- //
-/// Returns the atoms in the ring.
-QList<Atom *> Ring::atoms() const
-{
-    return m_atoms;
-}
-
-/// Returns the number of atoms in the ring.
-int Ring::atomCount() const
-{
-    return atoms().size();
-}
-
 /// Returns the number of atoms in the ring with atomicNumber.
 int Ring::atomCount(int atomicNumber) const
 {
@@ -138,30 +107,6 @@ QList<Bond *> Ring::exocyclicBonds() const
 int Ring::exocyclicBondCount() const
 {
     return exocyclicBonds().size();
-}
-
-/// Returns \c true if the ring contains atom.
-bool Ring::contains(const Atom *atom) const
-{
-    return m_atoms.contains(const_cast<Atom *>(atom));
-}
-
-/// Returns \c true if the ring contains an atom with atomicNumber.
-bool Ring::contains(int atomicNumber) const
-{
-    foreach(Atom *atom, m_atoms){
-        if(atom->is(atomicNumber)){
-            return true;
-        }
-    }
-
-    return false;
-}
-
-/// Returns \c true if the ring contains bond.
-bool Ring::contains(const Bond *bond) const
-{
-    return contains(bond->atom1()) && contains(bond->atom2());
 }
 
 /// Returns the number of heteroatoms (non-carbon atoms) in the ring.

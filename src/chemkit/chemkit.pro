@@ -109,6 +109,7 @@ HEADERS += alphashape.h \
     quaternion-inline.h \
     residue.h \
     ring.h \
+    ring-inline.h \
     scalarfield.h \
     staticmatrix.h \
     staticmatrix-inline.h \

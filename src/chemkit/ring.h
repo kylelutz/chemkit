@@ -86,4 +86,6 @@ class CHEMKIT_EXPORT Ring
 
 } // end chemkit namespace
 
+#include "ring-inline.h"
+
 #endif // CHEMKIT_RING_H
