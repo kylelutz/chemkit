@@ -68,38 +68,7 @@ Fragment::~Fragment()
 {
 }
 
-// --- Properties ---------------------------------------------------------- //
-/// Returns the number of atoms in the fragment.
-int Fragment::size() const
-{
-    return atomCount();
-}
-
-/// Returns the molecule the fragment is a part of.
-Molecule* Fragment::molecule() const
-{
-    return m_atoms[0]->molecule();
-}
-
 // --- Structure ----------------------------------------------------------- //
-/// Returns a list of all the atoms in the fragment.
-QList<Atom *> Fragment::atoms() const
-{
-    return m_atoms;
-}
-
-/// Returns the number of atoms in the fragment.
-int Fragment::atomCount() const
-{
-    return atoms().size();
-}
-
-/// Returns \c true if the fragment contains the atom.
-bool Fragment::contains(const Atom *atom) const
-{
-    return m_atoms.contains(const_cast<Atom *>(atom));
-}
-
 /// Returns a list of all the bonds in the fragment.
 QList<Bond *> Fragment::bonds() const
 {

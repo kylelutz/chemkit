@@ -20,48 +20,47 @@
 **
 ******************************************************************************/
 
-#ifndef CHEMKIT_FRAGMENT_H
-#define CHEMKIT_FRAGMENT_H
+#ifndef CHEMKIT_FRAGMENT_INLINE_H
+#define CHEMKIT_FRAGMENT_INLINE_H
 
-#include "chemkit.h"
+#include "fragment.h"
 
-#include <QtCore>
+#include "atom.h"
 
 namespace chemkit {
 
-class Atom;
-class Bond;
-class Molecule;
-
-class CHEMKIT_EXPORT Fragment
+// --- Properties ---------------------------------------------------------- //
+/// Returns the number of atoms in the fragment.
+inline int Fragment::size() const
 {
-    public:
-        // properties
-        int size() const;
-        Molecule* molecule() const;
+    return atomCount();
+}
 
-        // structure
-        QList<Atom *> atoms() const;
-        int atomCount() const;
-        bool contains(const Atom *atom) const;
-        QList<Bond *> bonds() const;
-        int bondCount() const;
-        bool contains(const Bond *bond) const;
+/// Returns the molecule the fragment is a part of.
+inline Molecule* Fragment::molecule() const
+{
+    return m_atoms[0]->molecule();
+}
 
-    private:
-        Fragment(Atom *root);
-        ~Fragment();
+// --- Structure ----------------------------------------------------------- //
+/// Returns a list of all the atoms in the fragment.
+inline QList<Atom *> Fragment::atoms() const
+{
+    return m_atoms;
+}
 
-        Q_DISABLE_COPY(Fragment)
+/// Returns the number of atoms in the fragment.
+inline int Fragment::atomCount() const
+{
+    return m_atoms.size();
+}
 
-        friend class Molecule;
-
-    private:
-        QList<Atom *> m_atoms;
-};
+/// Returns \c true if the fragment contains the atom.
+inline bool Fragment::contains(const Atom *atom) const
+{
+    return m_atoms.contains(const_cast<Atom *>(atom));
+}
 
 } // end chemkit namespace
 
-#include "fragment-inline.h"
-
-#endif // CHEMKIT_FRAGMENT_H
+#endif // CHEMKIT_FRAGMENT_INLINE_H
