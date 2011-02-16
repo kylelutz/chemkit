@@ -52,12 +52,12 @@ Ring::~Ring()
 
 // --- Structure ----------------------------------------------------------- //
 /// Returns the number of atoms in the ring with atomicNumber.
-int Ring::atomCount(int atomicNumber) const
+int Ring::atomCount(const Element &element) const
 {
     int count = 0;
 
     foreach(const Atom *atom, m_atoms){
-        if(atom->atomicNumber() == atomicNumber){
+        if(atom->is(element)){
             count++;
         }
     }

@@ -31,6 +31,7 @@ namespace chemkit {
 
 class Atom;
 class Bond;
+class Element;
 class Fragment;
 class Molecule;
 
@@ -45,7 +46,7 @@ class CHEMKIT_EXPORT Ring
         // structure
         QList<Atom *> atoms() const;
         int atomCount() const;
-        int atomCount(int atomicNumber) const;
+        int atomCount(const Element &element) const;
         QList<Bond *> bonds() const;
         int bondCount() const;
         QList<Bond *> exocyclicBonds() const;
