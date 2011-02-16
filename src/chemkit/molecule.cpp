@@ -374,13 +374,14 @@ void Molecule::removeAtom(Atom *atom)
     delete atom;
 }
 
-/// Returns the number of atoms in the molecule with \p atomicNumber.
-int Molecule::atomCount(int atomicNumber) const
+/// Returns the number of atoms in the molecule of the given
+/// \p element.
+int Molecule::atomCount(const Element &element) const
 {
     int count = 0;
 
     foreach(Atom *atom, m_atoms){
-        if(atom->atomicNumber() == atomicNumber){
+        if(atom->is(element)){
             count++;
         }
     }

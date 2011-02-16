@@ -96,7 +96,7 @@ class CHEMKIT_EXPORT Molecule
         Atom* atom(int index) const;
         QList<Atom *> atoms() const;
         int atomCount() const;
-        int atomCount(int atomicNumber) const;
+        int atomCount(const Element &element) const;
         int indexOf(const Atom *atom) const;
         bool contains(const Atom *atom) const;
         bool contains(int atomicNumber) const;
