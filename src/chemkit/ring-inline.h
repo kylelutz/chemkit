@@ -68,22 +68,22 @@ inline bool Ring::contains(const Atom *atom) const
     return m_atoms.contains(const_cast<Atom *>(atom));
 }
 
+/// Returns \c true if the ring contains bond.
+inline bool Ring::contains(const Bond *bond) const
+{
+    return contains(bond->atom1()) && contains(bond->atom2());
+}
+
 /// Returns \c true if the ring contains an atom with atomicNumber.
-inline bool Ring::contains(int atomicNumber) const
+inline bool Ring::contains(const Element &element) const
 {
     foreach(Atom *atom, m_atoms){
-        if(atom->is(atomicNumber)){
+        if(atom->is(element)){
             return true;
         }
     }
 
     return false;
-}
-
-/// Returns \c true if the ring contains bond.
-inline bool Ring::contains(const Bond *bond) const
-{
-    return contains(bond->atom1()) && contains(bond->atom2());
 }
 
 } // end chemkit namespace

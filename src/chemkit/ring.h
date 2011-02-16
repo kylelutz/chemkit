@@ -52,8 +52,8 @@ class CHEMKIT_EXPORT Ring
         QList<Bond *> exocyclicBonds() const;
         int exocyclicBondCount() const;
         bool contains(const Atom *atom) const;
-        bool contains(int atomicNumber) const;
         bool contains(const Bond *bond) const;
+        bool contains(const Element &element) const;
         int heteroatomCount() const;
         bool isHeterocycle() const;
         Atom *root() const;
