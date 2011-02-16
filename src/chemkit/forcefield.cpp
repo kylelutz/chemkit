@@ -494,6 +494,23 @@ bool ForceField::minimizationStep(Float converganceValue)
 
         Float finalEnergy = energy();
 
+        // if the final energy is NaN then most likely the
+        // simulation exploded so we reset the initial atom
+        // positions and then 'wiggle' each atom by one
+        // Angstrom in a random direction
+        if(qIsNaN(finalEnergy)){
+            for(int atomIndex = 0; atomIndex < atomCount(); atomIndex++){
+                d->atoms[atomIndex]->setPosition(initialPositions[atomIndex]);
+                d->atoms[atomIndex]->moveBy(Vector::randomUnitVector());
+            }
+
+            // recalculate gradient
+            gradient = this->gradient();
+
+            // continue to next step
+            continue;
+        }
+
         if(finalEnergy < initialEnergy && qAbs(finalEnergy - initialEnergy) < stepConv){
             break;
         }
