@@ -304,13 +304,13 @@ int Atom::neighborCount() const
     return bondCount();
 }
 
-/// Returns the number of neighboring atoms with atomicNumber.
-int Atom::neighborCount(int atomicNumber) const
+/// Returns the number of neighboring atoms of the given \p element.
+int Atom::neighborCount(const Element &element) const
 {
     int count = 0;
 
     foreach(const Bond *bond, d->bonds){
-        if(bond->otherAtom(this)->is(atomicNumber)){
+        if(bond->otherAtom(this)->is(element)){
             count++;
         }
     }
