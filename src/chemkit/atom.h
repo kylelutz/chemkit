@@ -91,8 +91,8 @@ class CHEMKIT_EXPORT Atom
         int atomCountTo(const Atom *atom, int maxCount) const;
         Atom* otherNeighbor(const Atom *neighbor) const;
         bool isBondedTo(const Atom *atom) const;
-        bool isBondedTo(int atomicNumber) const;
-        bool isBondedTo(int atomicNumber, int bondOrder) const;
+        bool isBondedTo(const Element &element) const;
+        bool isBondedTo(const Element &element, int bondOrder) const;
         bool isConnectedTo(const Atom *atom) const;
         bool isTerminal() const;
         bool isTerminalHydrogen() const;

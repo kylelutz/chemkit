@@ -356,12 +356,12 @@ bool Atom::isBondedTo(const Atom *atom) const
     return bondTo(atom) != 0;
 }
 
-/// Returns \c true if the atom is bonded to an atom with
-/// \p atomicNumber.
-bool Atom::isBondedTo(int atomicNumber) const
+/// Returns \c true if the atom is bonded to an atom of the given
+/// \p element.
+bool Atom::isBondedTo(const Element &element) const
 {
     foreach(const Bond *bond, bonds()){
-        if(bond->otherAtom(this)->is(atomicNumber)){
+        if(bond->otherAtom(this)->is(element)){
             return true;
         }
     }
@@ -369,12 +369,12 @@ bool Atom::isBondedTo(int atomicNumber) const
     return false;
 }
 
-/// Returns \c true if the atom is bonded to an atom with
-/// \p atomicNumber via a bond with \p bondOrder.
-bool Atom::isBondedTo(int atomicNumber, int bondOrder) const
+/// Returns \c true if the atom is bonded to an atom of the given
+/// \p element via a bond with \p bondOrder.
+bool Atom::isBondedTo(const Element &element, int bondOrder) const
 {
     foreach(const Bond *bond, bonds()){
-        if(bond->otherAtom(this)->is(atomicNumber) && bond->order() == bondOrder){
+        if(bond->otherAtom(this)->is(element) && bond->order() == bondOrder){
             return true;
         }
     }
