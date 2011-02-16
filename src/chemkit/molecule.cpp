@@ -728,18 +728,10 @@ QList<Ring *> Molecule::rings() const
 {
     // only run ring perception if neccessary
     if(!ringsPerceived()){
-
-        // remove old rings
-        if(d->rings.size()){
-            foreach(Ring *ring, d->rings)
-                delete ring;
-            d->rings.clear();
-        }
-
-        // find new rings
+        // find rings
         d->rings = MolecularGraph::sssr(this);
 
-        // set flag
+        // set perceived to true
         setRingsPerceived(true);
     }
 
