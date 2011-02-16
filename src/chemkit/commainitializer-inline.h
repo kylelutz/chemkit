@@ -20,33 +20,46 @@
 **
 ******************************************************************************/
 
-#ifndef CHEMKIT_GENERICMATRIXCOMMAINITIALIZER_H
-#define CHEMKIT_GENERICMATRIXCOMMAINITIALIZER_H
+#ifndef CHEMKIT_COMMAINITIALIZER_INLINE_H
+#define CHEMKIT_COMMAINITIALIZER_INLINE_H
 
-#include "chemkit.h"
+#include "commainitializer.h"
 
 namespace chemkit {
 
+// === CommaInitializer ==================================================== //
+// --- Construction and Destruction ---------------------------------------- //
 template<typename T>
-class GenericMatrixCommaInitializer
+inline CommaInitializer<T>::CommaInitializer(T *data, int rowCount, int columnCount)
+    : m_data(data),
+      m_rowCount(rowCount),
+      m_columnCount(columnCount)
 {
-    public:
-        // construction and destruction
-        GenericMatrixCommaInitializer(T *data, int rowCount, int columnCount);
+    m_row = 0;
+    m_column = 0;
+}
 
-        // operators
-        GenericMatrixCommaInitializer<T>& operator,(const T value);
+// --- Operators ----------------------------------------------------------- //
+template<typename T>
+inline CommaInitializer<T>& CommaInitializer<T>::operator,(const T value)
+{
+    m_column++;
+    if(m_column == m_columnCount){
+        m_column = 0;
+        m_row++;
 
-    private:
-        T *m_data;
-        int m_row;
-        int m_column;
-        int m_rowCount;
-        int m_columnCount;
-};
+        // we've filled all the matrix data, so ignore any other values
+        if(m_row == m_rowCount){
+            return *this;
+        }
+    }
+
+    // set the value
+    m_data[m_column * m_rowCount + m_row] = value;
+
+    return *this;
+}
 
 } // end chemkit namespace
 
-#include "genericmatrixcommainitializer-inline.h"
-
-#endif // CHEMKIT_GENERICMATRIXCOMMAINITIALIZER_H
+#endif // CHEMKIT_COMMAINITIALIZER_INLINE_H

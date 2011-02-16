@@ -25,7 +25,7 @@
 
 #include "chemkit.h"
 
-#include "genericmatrixcommainitializer.h"
+#include "commainitializer.h"
 
 namespace chemkit {
 
@@ -68,7 +68,7 @@ class GenericMatrix
         GenericMatrix<T> operator*(const T scalar) const;
         GenericMatrix<T> operator*(const GenericMatrix<T> &matrix) const;
         GenericMatrix<T>& operator=(const GenericMatrix<T> &matrix);
-        GenericMatrixCommaInitializer<T> operator=(const T value);
+        CommaInitializer<T> operator=(const T value);
         bool operator==(const GenericMatrix<T> &matrix) const;
 
         // static methods

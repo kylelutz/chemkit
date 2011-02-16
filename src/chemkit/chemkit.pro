@@ -62,6 +62,8 @@ HEADERS += alphashape.h \
     chemicalfile.h \
     chemicalfileformat.h \
     chemkit.h \
+    commainitializer.h \
+    commainitializer-inline.h \
     conformer.h \
     constants.h \
     coordinatematrix.h \
@@ -77,8 +79,6 @@ HEADERS += alphashape.h \
     fragment-inline.h \
     genericmatrix.h \
     genericmatrix-inline.h \
-    genericmatrixcommainitializer.h \
-    genericmatrixcommainitializer-inline.h \
     genericpoint.h \
     genericpoint-inline.h \
     genericquaternion.h \

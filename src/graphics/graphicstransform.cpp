@@ -222,11 +222,11 @@ GraphicsTransform& GraphicsTransform::operator=(const GraphicsTransform &transfo
     return *this;
 }
 
-GenericMatrixCommaInitializer<GraphicsFloat> GraphicsTransform::operator=(const GraphicsFloat value)
+CommaInitializer<GraphicsFloat> GraphicsTransform::operator=(const GraphicsFloat value)
 {
     m_matrix->data()[0] = value;
 
-    return GenericMatrixCommaInitializer<GraphicsFloat>(m_matrix->data(), 4, 4);
+    return CommaInitializer<GraphicsFloat>(m_matrix->data(), 4, 4);
 }
 
 // --- Static Methods ------------------------------------------------------ //

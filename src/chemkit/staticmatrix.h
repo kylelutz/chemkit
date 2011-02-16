@@ -27,7 +27,7 @@
 
 #include "blas.h"
 #include "lapack.h"
-#include "genericmatrixcommainitializer.h"
+#include "commainitializer.h"
 
 namespace chemkit {
 
@@ -59,7 +59,7 @@ class StaticMatrix
         // operators
         T operator()(int row, int column) const;
         T& operator()(int row, int column);
-        GenericMatrixCommaInitializer<T> operator=(const T value);
+        CommaInitializer<T> operator=(const T value);
         bool operator==(const StaticMatrix<T, R, C> &matrix);
 
         // static methods
@@ -103,7 +103,7 @@ class StaticMatrix<T, N, N>
         T& operator()(int row, int column);
         StaticMatrix<T, N, N> operator*(const StaticMatrix<T, N, N> &matrix) const;
         StaticMatrix<T, N, N>& operator*=(const StaticMatrix<T, N, N> &matrix);
-        GenericMatrixCommaInitializer<T> operator=(const T value);
+        CommaInitializer<T> operator=(const T value);
         bool operator==(const StaticMatrix<T, N, N> &matrix);
 
         // static methods

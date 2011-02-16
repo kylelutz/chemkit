@@ -341,11 +341,11 @@ inline GenericMatrix<T>& GenericMatrix<T>::operator=(const GenericMatrix<T> &mat
 }
 
 template<typename T>
-inline GenericMatrixCommaInitializer<T> GenericMatrix<T>::operator=(const T value)
+inline CommaInitializer<T> GenericMatrix<T>::operator=(const T value)
 {
     m_data[0] = value;
 
-    return GenericMatrixCommaInitializer<T>(m_data, m_rowCount, m_columnCount);
+    return CommaInitializer<T>(m_data, m_rowCount, m_columnCount);
 }
 
 template<typename T>

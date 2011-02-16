@@ -204,11 +204,11 @@ inline T& StaticMatrix<T, R, C>::operator()(int row, int column)
 }
 
 template<typename T, int R, int C>
-inline GenericMatrixCommaInitializer<T> StaticMatrix<T, R, C>::operator=(const T value)
+inline CommaInitializer<T> StaticMatrix<T, R, C>::operator=(const T value)
 {
     m_data[0] = value;
 
-    return GenericMatrixCommaInitializer<T>(m_data, R, C);
+    return CommaInitializer<T>(m_data, R, C);
 }
 
 template<typename T, int R, int C>
@@ -528,11 +528,11 @@ inline StaticMatrix<T, N, N>& StaticMatrix<T, N, N>::operator*=(const StaticMatr
 }
 
 template<typename T, int N>
-inline GenericMatrixCommaInitializer<T> StaticMatrix<T, N, N>::operator=(const T value)
+inline CommaInitializer<T> StaticMatrix<T, N, N>::operator=(const T value)
 {
     m_data[0] = value;
 
-    return GenericMatrixCommaInitializer<T>(m_data, N, N);
+    return CommaInitializer<T>(m_data, N, N);
 }
 
 template<typename T, int N>
