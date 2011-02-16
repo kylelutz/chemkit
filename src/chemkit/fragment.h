@@ -38,16 +38,13 @@ class CHEMKIT_EXPORT Fragment
     public:
         // properties
         int size() const;
-        Molecule* molecule();
-        const Molecule* molecule() const;
+        Molecule* molecule() const;
 
         // structure
-        QList<Atom *> atoms();
-        QList<const Atom *> atoms() const;
+        QList<Atom *> atoms() const;
         int atomCount() const;
         bool contains(const Atom *atom) const;
-        QList<Bond *> bonds();
-        QList<const Bond *> bonds() const;
+        QList<Bond *> bonds() const;
         int bondCount() const;
         bool contains(const Bond *bond) const;
 

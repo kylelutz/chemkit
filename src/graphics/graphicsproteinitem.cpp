@@ -94,17 +94,17 @@ void GraphicsProteinItem::setProtein(const Protein *protein)
                 continue;
             }
 
-            QList<const AminoAcid *> residues;
+            QList<AminoAcid *> residues;
             AminoAcid::Conformation conformation = chain->residue(0)->conformation();
 
             for(int i = 0; i < chain->size(); i++){
-                const AminoAcid *residue = chain->residue(i);
+                AminoAcid *residue = chain->residue(i);
 
                 if(residue->conformation() != conformation){
                     if(conformation == AminoAcid::Coil){
                         residues.append(residue);
 
-                        int index = chain->residues().indexOf(const_cast<AminoAcid *>(residues.first()));
+                        int index = chain->residues().indexOf(residues.first());
                         if(index > 0)
                             residues.prepend(chain->residue(index-1));
 

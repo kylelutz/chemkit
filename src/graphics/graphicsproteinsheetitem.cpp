@@ -34,7 +34,7 @@ namespace chemkit {
 class GraphicsProteinSheetItemPrivate
 {
     public:
-        QList<const AminoAcid *> residues;
+        QList<AminoAcid *> residues;
 };
 
 // === GraphicsProteinSheetItem ============================================ //
@@ -47,7 +47,7 @@ class GraphicsProteinSheetItemPrivate
 
 // --- Construction and Destruction ---------------------------------------- //
 /// Creates a new protein sheet item to display \p residues.
-GraphicsProteinSheetItem::GraphicsProteinSheetItem(const QList<const AminoAcid *> &residues)
+GraphicsProteinSheetItem::GraphicsProteinSheetItem(const QList<AminoAcid *> &residues)
     : GraphicsItem(ProteinSheetItem),
       d(new GraphicsProteinSheetItemPrivate)
 {

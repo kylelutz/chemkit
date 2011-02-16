@@ -85,13 +85,7 @@ GraphicsCamera::~GraphicsCamera()
 
 // --- Properties ---------------------------------------------------------- //
 /// Returns the graphics view that the camera belongs to.
-GraphicsView* GraphicsCamera::view()
-{
-    return d->view;
-}
-
-/// \overload
-const GraphicsView* GraphicsCamera::view() const
+GraphicsView* GraphicsCamera::view() const
 {
     return d->view;
 }

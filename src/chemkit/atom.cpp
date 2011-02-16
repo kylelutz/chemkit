@@ -207,16 +207,7 @@ bool Atom::isHeteroatom() const
 }
 
 /// Returns the fragment the atom is a part of.
-Fragment* Atom::fragment()
-{
-    if(m_fragment)
-        return m_fragment;
-    else
-        return molecule()->fragment(this);
-}
-
-/// \overload
-const Fragment* Atom::fragment() const
+Fragment* Atom::fragment() const
 {
     if(m_fragment)
         return m_fragment;
@@ -225,13 +216,7 @@ const Fragment* Atom::fragment() const
 }
 
 /// Returns the residue the atom is a part of.
-Residue* Atom::residue()
-{
-    return d->residue;
-}
-
-/// \overload
-const Residue* Atom::residue() const
+Residue* Atom::residue() const
 {
     return d->residue;
 }
@@ -244,21 +229,9 @@ int Atom::index() const
 
 // --- Structure ----------------------------------------------------------- //
 /// Returns a list of bonds that this atom is a member of.
-QList<Bond *> Atom::bonds()
+QList<Bond *> Atom::bonds() const
 {
     return d->bonds;
-}
-
-/// \overload
-QList<const Bond *> Atom::bonds() const
-{
-    QList<const Bond *> bonds;
-
-    foreach(const Bond *bond, d->bonds){
-        bonds.append(bond);
-    }
-
-    return bonds;
 }
 
 /// Returns the number of bonds that this atom is a member of.
@@ -269,7 +242,7 @@ int Atom::bondCount() const
 }
 
 /// Returns a list of bonds between the atom and the other atom.
-QList<const Bond *> Atom::bondPathTo(const Atom *atom) const
+QList<Bond *> Atom::bondPathTo(const Atom *atom) const
 {
     return m_molecule->bondPathBetween(this, atom);
 }
@@ -301,7 +274,7 @@ int Atom::valence() const
 }
 
 /// Returns the bond between the atom and the other atom.
-Bond* Atom::bondTo(const Atom *atom)
+Bond* Atom::bondTo(const Atom *atom) const
 {
     foreach(Bond *bond, d->bonds){
         if(bond->otherAtom(this) == atom){
@@ -313,30 +286,12 @@ Bond* Atom::bondTo(const Atom *atom)
     return 0;
 }
 
-/// \overload
-const Bond* Atom::bondTo(const Atom *atom) const
-{
-    return const_cast<Atom *>(this)->bondTo(atom);
-}
-
 /// Returns a list of atoms that are directly bonded to the atom.
-QList<Atom *> Atom::neighbors()
+QList<Atom *> Atom::neighbors() const
 {
     QList<Atom *> neighbors;
 
     foreach(Bond *bond, d->bonds){
-        neighbors.append(bond->otherAtom(this));
-    }
-
-    return neighbors;
-}
-
-/// \overload
-QList<const Atom *> Atom::neighbors() const
-{
-    QList<const Atom *> neighbors;
-
-    foreach(const Bond *bond, d->bonds){
         neighbors.append(bond->otherAtom(this));
     }
 
@@ -364,7 +319,7 @@ int Atom::neighborCount(int atomicNumber) const
 }
 
 /// Returns the path of atoms between the atom and the other atom.
-QList<const Atom *> Atom::atomPathTo(const Atom *atom) const
+QList<Atom *> Atom::atomPathTo(const Atom *atom) const
 {
     return m_molecule->atomPathBetween(this, atom);
 }
@@ -384,7 +339,7 @@ int Atom::atomCountTo(const Atom *atom, int maxCount) const
 }
 
 /// Returns the other neighboring atom for a divalent atom.
-Atom* Atom::otherNeighbor(const Atom *neighbor)
+Atom* Atom::otherNeighbor(const Atom *neighbor) const
 {
     foreach(Atom *atom, neighbors()){
         if(atom != neighbor){
@@ -393,12 +348,6 @@ Atom* Atom::otherNeighbor(const Atom *neighbor)
     }
 
     return 0;
-}
-
-/// \overload
-const Atom* Atom::otherNeighbor(const Atom *neighbor) const
-{
-    return const_cast<Atom *>(this)->otherNeighbor(neighbor);
 }
 
 /// Returns \c true if the atom is bonded to the other atom.
@@ -460,7 +409,7 @@ bool Atom::isTerminalHydrogen() const
 /// Returns a list of rings the atom is a member of.
 ///
 /// \see Molecule::rings()
-QList<Ring *> Atom::rings()
+QList<Ring *> Atom::rings() const
 {
     QList<Ring *> rings;
 
@@ -468,18 +417,6 @@ QList<Ring *> Atom::rings()
         if(ring->contains(this)){
             rings.append(ring);
         }
-    }
-
-    return rings;
-}
-
-/// \overload
-QList<const Ring *> Atom::rings() const
-{
-    QList<const Ring *> rings;
-
-    foreach(const Ring *ring, const_cast<Atom *>(this)->rings()){
-        rings.append(ring);
     }
 
     return rings;
@@ -518,7 +455,7 @@ bool Atom::isInRing(int size) const
 
 /// Returns the smallest ring the atom is a member of or 0 if the
 /// atom is not in a ring.
-Ring* Atom::smallestRing()
+Ring* Atom::smallestRing() const
 {
     Ring *smallest = 0;
 
@@ -529,12 +466,6 @@ Ring* Atom::smallestRing()
     }
 
     return smallest;
-}
-
-/// \overload
-const Ring* Atom::smallestRing() const
-{
-    return const_cast<Atom *>(this)->smallestRing();
 }
 
 /// Returns \c true if the atom is in an aromatic ring.

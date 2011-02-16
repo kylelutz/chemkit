@@ -46,7 +46,7 @@ class CHEMKIT_EXPORT CoordinateMatrix
         CoordinateMatrix(int size);
         CoordinateMatrix(const Molecule *molecule);
         CoordinateMatrix(const Conformer *conformer);
-        CoordinateMatrix(const QList<const Atom *> &atoms);
+        CoordinateMatrix(const QList<Atom *> &atoms);
         CoordinateMatrix(const QList<Point> &points);
         CoordinateMatrix(const CoordinateMatrix &matrix);
         ~CoordinateMatrix();

@@ -102,7 +102,7 @@ bool UffForceField::setup()
                                               atom->is(chemkit::Atom::Arsenic) ||
                                               atom->is(chemkit::Atom::Antimony) ||
                                               atom->is(chemkit::Atom::Bismuth))){
-                QList<const chemkit::Atom *> neighbors = atom->neighbors();
+                QList<chemkit::Atom *> neighbors = atom->neighbors();
 
                 addCalculation(new UffInversionCalculation(atoms[neighbors[0]],
                                                            atoms[atom],
@@ -162,7 +162,7 @@ bool UffForceField::atomsAreWithinTwoBonds(const chemkit::Atom *a, const chemkit
         if(neighbor == b){
             return true;
         }
-        else if(neighbor->neighbors().contains(b)){
+        else if(neighbor->neighbors().contains(const_cast<chemkit::Atom *>(b))){
             return true;
         }
     }

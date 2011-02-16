@@ -31,25 +31,13 @@ namespace chemkit {
 
 // --- Properties ---------------------------------------------------------- //
 /// Returns the first atom in the bond.
-inline Atom* Bond::atom1()
-{
-    return m_atom1;
-}
-
-/// \overload
-inline const Atom* Bond::atom1() const
+inline Atom* Bond::atom1() const
 {
     return m_atom1;
 }
 
 /// Returns the second atom in the bond.
-inline Atom* Bond::atom2()
-{
-    return m_atom2;
-}
-
-/// \overload
-inline const Atom* Bond::atom2() const
+inline Atom* Bond::atom2() const
 {
     return m_atom2;
 }
@@ -61,13 +49,7 @@ inline int Bond::order() const
 }
 
 /// Returns the molecule the bond is a part of.
-inline Molecule* Bond::molecule()
-{
-    return m_atom1->molecule();
-}
-
-/// \overload
-inline const Molecule* Bond::molecule() const
+inline Molecule* Bond::molecule() const
 {
     return m_atom1->molecule();
 }

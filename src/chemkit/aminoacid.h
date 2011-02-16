@@ -82,10 +82,8 @@ class CHEMKIT_EXPORT AminoAcid : public Residue
         QString letter() const;
         void setConformation(Conformation conformation);
         Conformation conformation() const;
-        Protein* protein();
-        const Protein* protein() const;
-        ProteinChain* proteinChain();
-        const ProteinChain* proteinChain() const;
+        Protein* protein() const;
+        ProteinChain* proteinChain() const;
         int sequenceNumber() const;
 
         // structure

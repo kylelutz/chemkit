@@ -392,13 +392,7 @@ void MoleculeEditor::setMolecule(Molecule *molecule)
 }
 
 /// Returns the molecule that is being edited.
-Molecule* MoleculeEditor::molecule()
-{
-    return d->molecule;
-}
-
-/// \overload
-const Molecule* MoleculeEditor::molecule() const
+Molecule* MoleculeEditor::molecule() const
 {
     return d->molecule;
 }

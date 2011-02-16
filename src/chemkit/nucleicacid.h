@@ -43,16 +43,13 @@ class CHEMKIT_EXPORT NucleicAcid
 
         // properties
         int size() const;
-        Molecule* molecule();
-        const Molecule* molecule() const;
+        Molecule* molecule() const;
 
         // structure
         NucleicAcidChain* addChain();
         void removeChain(NucleicAcidChain *chain);
-        NucleicAcidChain* chain(int index);
-        const NucleicAcidChain* chain(int index) const;
-        QList<NucleicAcidChain *> chains();
-        QList<const NucleicAcidChain *> chains() const;
+        NucleicAcidChain* chain(int index) const;
+        QList<NucleicAcidChain *> chains() const;
         int chainCount() const;
         int residueCount() const;
 

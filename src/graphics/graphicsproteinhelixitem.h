@@ -43,7 +43,7 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsProteinHelixItem : public GraphicsItem
         };
 
         // construction and destruction
-        GraphicsProteinHelixItem(const QList<const AminoAcid *> &residues);
+        GraphicsProteinHelixItem(const QList<AminoAcid *> &residues);
         ~GraphicsProteinHelixItem();
 
         // properties

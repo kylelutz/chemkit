@@ -70,33 +70,26 @@ class CHEMKIT_EXPORT Atom
         Float vanDerWaalsRadius() const;
         bool is(const Element &element) const;
         bool isHeteroatom() const;
-        Molecule* molecule();
-        const Molecule* molecule() const;
-        Fragment* fragment();
-        const Fragment* fragment() const;
-        Residue* residue();
-        const Residue* residue() const;
+        Molecule* molecule() const;
+        Fragment* fragment() const;
+        Residue* residue() const;
         int index() const;
 
         // structure
-        QList<Bond *> bonds();
-        QList<const Bond *> bonds() const;
+        QList<Bond *> bonds() const;
         int bondCount() const;
-        QList<const Bond *> bondPathTo(const Atom *atom) const;
+        QList<Bond *> bondPathTo(const Atom *atom) const;
         int bondCountTo(const Atom *atom) const;
         int bondCountTo(const Atom *atom, int maxCount) const;
         int valence() const;
-        Bond *bondTo(const Atom *atom);
-        const Bond* bondTo(const Atom *atom) const;
-        QList<Atom *> neighbors();
-        QList<const Atom *> neighbors() const;
+        Bond *bondTo(const Atom *atom) const;
+        QList<Atom *> neighbors() const;
         int neighborCount() const;
         int neighborCount(int atomicNumber) const;
-        QList<const Atom *> atomPathTo(const Atom *atom) const;
+        QList<Atom *> atomPathTo(const Atom *atom) const;
         int atomCountTo(const Atom *atom) const;
         int atomCountTo(const Atom *atom, int maxCount) const;
-        Atom* otherNeighbor(const Atom *neighbor);
-        const Atom* otherNeighbor(const Atom *neighbor) const;
+        Atom* otherNeighbor(const Atom *neighbor) const;
         bool isBondedTo(const Atom *atom) const;
         bool isBondedTo(int atomicNumber) const;
         bool isBondedTo(int atomicNumber, int bondOrder) const;
@@ -105,13 +98,11 @@ class CHEMKIT_EXPORT Atom
         bool isTerminalHydrogen() const;
 
         // ring perception
-        QList<Ring *> rings();
-        QList<const Ring *> rings() const;
+        QList<Ring *> rings() const;
         int ringCount() const;
         bool isInRing() const;
         bool isInRing(int size) const;
-        Ring* smallestRing();
-        const Ring* smallestRing() const;
+        Ring* smallestRing() const;
         bool isAromatic() const;
 
         // geometry

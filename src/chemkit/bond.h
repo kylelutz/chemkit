@@ -49,26 +49,18 @@ class CHEMKIT_EXPORT Bond
         };
 
         // properties
-        Atom* atom(int index);
-        const Atom* atom(int index) const;
-        Atom* atom1();
-        const Atom* atom1() const;
-        Atom* atom2();
-        const Atom* atom2() const;
-        QList<Atom *> atoms();
-        QList<const Atom *> atoms() const;
-        Atom* otherAtom(const Atom *atom);
-        const Atom* otherAtom(const Atom *atom) const;
+        Atom* atom(int index) const;
+        Atom* atom1() const;
+        Atom* atom2() const;
+        QList<Atom *> atoms() const;
+        Atom* otherAtom(const Atom *atom) const;
         void setOrder(int order);
         int order() const;
         Float polarity() const;
         Vector dipoleMoment() const;
-        Molecule* molecule();
-        const Molecule* molecule() const;
-        Fragment* fragment();
-        const Fragment* fragment() const;
-        Residue* residue();
-        const Residue* residue() const;
+        Molecule* molecule() const;
+        Fragment* fragment() const;
+        Residue* residue() const;
         int index() const;
 
         // structure
@@ -79,13 +71,11 @@ class CHEMKIT_EXPORT Bond
         bool isTerminal() const;
 
         // ring perception
-        QList<Ring *> rings();
-        QList<const Ring *> rings() const;
+        QList<Ring *> rings() const;
         int ringCount() const;
         bool isInRing() const;
         bool isInRing(int size) const;
-        Ring* smallestRing();
-        const Ring* smallestRing() const;
+        Ring* smallestRing() const;
         bool isAromatic() const;
 
         // geometry

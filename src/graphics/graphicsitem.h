@@ -66,8 +66,7 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsItem
         bool isVisible() const;
         void show();
         void hide();
-        GraphicsScene* scene();
-        const GraphicsScene* scene() const;
+        GraphicsScene* scene() const;
         void setOpacity(GraphicsFloat opacity);
         GraphicsFloat opacity() const;
         bool isOpaque() const;

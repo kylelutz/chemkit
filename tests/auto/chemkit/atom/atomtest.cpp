@@ -235,8 +235,8 @@ void AtomTest::distance()
 
 void AtomTest::pathTo()
 {
-    QList<const chemkit::Atom *> atomPath;
-    QList<const chemkit::Bond *> bondPath;
+    QList<chemkit::Atom *> atomPath;
+    QList<chemkit::Bond *> bondPath;
 
     // propane
     chemkit::Molecule propane;

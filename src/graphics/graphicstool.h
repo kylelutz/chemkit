@@ -38,8 +38,7 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsTool
         virtual ~GraphicsTool();
 
         // properties
-        GraphicsView* view();
-        const GraphicsView* view() const;
+        GraphicsView* view() const;
 
         // event handling
         virtual void mousePressEvent(QMouseEvent *event);

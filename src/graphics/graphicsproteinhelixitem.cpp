@@ -34,7 +34,7 @@ namespace chemkit {
 class GraphicsProteinHelixItemPrivate
 {
     public:
-        QList<const AminoAcid *> residues;
+        QList<AminoAcid *> residues;
         GraphicsProteinHelixItem::DisplayType displayType;
 };
 
@@ -53,7 +53,7 @@ class GraphicsProteinHelixItemPrivate
 
 // --- Construction and Destruction ---------------------------------------- //
 /// Creates a new protein helix item object to display \p residues.
-GraphicsProteinHelixItem::GraphicsProteinHelixItem(const QList<const AminoAcid *> &residues)
+GraphicsProteinHelixItem::GraphicsProteinHelixItem(const QList<AminoAcid *> &residues)
     : GraphicsItem(ProteinHelixItem),
       d(new GraphicsProteinHelixItemPrivate)
 {

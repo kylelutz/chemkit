@@ -484,21 +484,9 @@ void Molecule::removeBond(int a, int b)
 }
 
 /// Returns a list of all the bonds in the molecule.
-QList<Bond *> Molecule::bonds()
+QList<Bond *> Molecule::bonds() const
 {
     return d->bonds;
-}
-
-/// \overload
-QList<const Bond *> Molecule::bonds() const
-{
-    QList<const Bond *> bonds;
-
-    foreach(const Bond *bond, d->bonds){
-        bonds.append(bond);
-    }
-
-    return bonds;
 }
 
 /// Returns the number of bonds in the molecule.
@@ -508,13 +496,7 @@ int Molecule::bondCount() const
 }
 
 /// Returns the bond at index.
-Bond* Molecule::bond(int index)
-{
-    return d->bonds.value(index, 0);
-}
-
-/// \overload
-const Bond* Molecule::bond(int index) const
+Bond* Molecule::bond(int index) const
 {
     return d->bonds.value(index, 0);
 }
@@ -523,25 +505,13 @@ const Bond* Molecule::bond(int index) const
 /// are not bonded.
 ///
 /// To create a new bond between the atoms use Molecule::addBond().
-Bond* Molecule::bond(const Atom *a, const Atom *b)
+Bond* Molecule::bond(const Atom *a, const Atom *b) const
 {
     return const_cast<Atom *>(a)->bondTo(b);
 }
 
-/// \overload
-const Bond* Molecule::bond(const Atom *a, const Atom *b) const
-{
-    return a->bondTo(b);
-}
-
 /// Returns the bond between the atoms with indicies \p a and \p b.
-Bond* Molecule::bond(int a, int b)
-{
-    return bond(atom(a), atom(b));
-}
-
-/// \overload
-const Bond* Molecule::bond(int a, int b) const
+Bond* Molecule::bond(int a, int b) const
 {
     return bond(atom(a), atom(b));
 }
@@ -587,21 +557,9 @@ void Molecule::removeResidue(Residue *residue)
 }
 
 /// Returns a list of all residues in the molecule.
-QList<Residue *> Molecule::residues()
+QList<Residue *> Molecule::residues() const
 {
     return d->residues;
-}
-
-/// \overload
-QList<const Residue *> Molecule::residues() const
-{
-    QList<const Residue *> residues;
-
-    foreach(const Residue *residue, d->residues){
-        residues.append(residue);
-    }
-
-    return residues;
 }
 
 /// Returns the number of residues in the molecule.
@@ -740,7 +698,7 @@ Moiety Molecule::find(const Molecule *moiety, CompareFlags flags) const
     }
 
     QList<const Atom *> moietyAtoms;
-    foreach(const Atom *atom, moiety->atoms()){
+    foreach(Atom *atom, moiety->atoms()){
         moietyAtoms.append(mapping.map(atom));
     }
 
@@ -754,13 +712,7 @@ Moiety Molecule::find(const Molecule *moiety, CompareFlags flags) const
 /// \code
 /// molecule.rings()[index];
 /// \endcode
-Ring* Molecule::ring(int index)
-{
-    return rings().value(index, 0);
-}
-
-/// \overload
-const Ring* Molecule::ring(int index) const
+Ring* Molecule::ring(int index) const
 {
     return rings().value(index, 0);
 }
@@ -772,7 +724,7 @@ const Ring* Molecule::ring(int index) const
 ///          unchanged. If any atoms or bonds in the molecule are
 ///          added or removed the old results must be discarded and
 ///          this method must be called again.
-QList<Ring *> Molecule::rings()
+QList<Ring *> Molecule::rings() const
 {
     // only run ring perception if neccessary
     if(!ringsPerceived()){
@@ -792,18 +744,6 @@ QList<Ring *> Molecule::rings()
     }
 
     return d->rings;
-}
-
-/// \overload
-QList<const Ring *> Molecule::rings() const
-{
-    QList<const Ring *> rings;
-
-    foreach(const Ring *ring, const_cast<Molecule *>(this)->rings()){
-        rings.append(ring);
-    }
-
-    return rings;
 }
 
 /// Returns the number of rings in the molecule.
@@ -841,13 +781,7 @@ bool Molecule::ringsPerceived() const
 /// \code
 /// molecule.fragments()[index];
 /// \endcode
-Fragment* Molecule::fragment(int index)
-{
-    return fragments().value(index, 0);
-}
-
-/// \overload
-const Fragment* Molecule::fragment(int index) const
+Fragment* Molecule::fragment(int index) const
 {
     return fragments().value(index, 0);
 }
@@ -859,7 +793,7 @@ const Fragment* Molecule::fragment(int index) const
 ///          unchanged. If any atoms or bonds in the molecule are
 ///          added or removed the old results must be discarded and
 ///          this method must be called again.
-QList<Fragment *> Molecule::fragments()
+QList<Fragment *> Molecule::fragments() const
 {
     if(!fragmentsPerceived()){
         foreach(Atom *atom, m_atoms){
@@ -872,18 +806,6 @@ QList<Fragment *> Molecule::fragments()
     }
 
     return d->fragments;
-}
-
-/// \overload
-QList<const Fragment *> Molecule::fragments() const
-{
-    QList<const Fragment *> fragments;
-
-    foreach(const Fragment *fragment, const_cast<Molecule *>(this)->fragments()){
-        fragments.append(fragment);
-    }
-
-    return fragments;
 }
 
 /// Returns the number of fragments in the molecule.
@@ -910,20 +832,9 @@ void Molecule::removeFragment(Fragment *fragment)
     }
 }
 
-Fragment* Molecule::fragment(Atom *atom)
+Fragment* Molecule::fragment(const Atom *atom) const
 {
     foreach(Fragment *fragment, fragments()){
-        if(fragment->contains(atom)){
-            return fragment;
-        }
-    }
-
-    return 0;
-}
-
-const Fragment* Molecule::fragment(const Atom *atom) const
-{
-    foreach(const Fragment *fragment, fragments()){
         if(fragment->contains(atom)){
             return fragment;
         }
@@ -1161,7 +1072,7 @@ void Molecule::setConformer(Conformer *conformer)
 }
 
 /// Returns the active conformer for the molecule.
-Conformer* Molecule::conformer()
+Conformer* Molecule::conformer() const
 {
     if(!d->conformer){
         d->conformer = conformers()[0];
@@ -1170,31 +1081,19 @@ Conformer* Molecule::conformer()
     return d->conformer;
 }
 
-/// \overload
-const Conformer* Molecule::conformer() const
-{
-    return const_cast<Molecule *>(this)->conformer();
-}
-
 /// Returns the conformer at \p index.
 ///
 /// Equivalent to:
 /// \code
 /// molelcule.conformers()[index];
 /// \endcode
-Conformer* Molecule::conformer(int index)
-{
-    return conformers().value(index, 0);
-}
-
-/// \overload
-const Conformer* Molecule::conformer(int index) const
+Conformer* Molecule::conformer(int index) const
 {
     return conformers().value(index, 0);
 }
 
 /// Returns a list of all conformers in the molecule.
-QList<Conformer *> Molecule::conformers()
+QList<Conformer *> Molecule::conformers() const
 {
     if(d->conformers.isEmpty()){
         d->conformer = new Conformer(this);
@@ -1204,18 +1103,6 @@ QList<Conformer *> Molecule::conformers()
     return d->conformers;
 }
 
-/// \overload
-QList<const Conformer *> Molecule::conformers() const
-{
-    QList<const Conformer *> conformers;
-
-    foreach(const Conformer *conformer, const_cast<Molecule *>(this)->conformers()){
-        conformers.append(conformer);
-    }
-
-    return conformers;
-}
-
 /// Returns the number of conformers in the molecule.
 int Molecule::conformerCount() const
 {
@@ -1223,53 +1110,53 @@ int Molecule::conformerCount() const
 }
 
 // --- Internal Methods ---------------------------------------------------- //
-QList<const Atom *> Molecule::atomPathBetween(const Atom *a, const Atom *b) const
+QList<Atom *> Molecule::atomPathBetween(const Atom *a, const Atom *b) const
 {
     if(a == b){
-        return QList<const Atom *>();
+        return QList<Atom *>();
     }
     else if(!a->isConnectedTo(b)){
-        return QList<const Atom *>();
+        return QList<Atom *>();
     }
     else if(a->isBondedTo(b)){
-        QList<const Atom *> path;
-        path.append(b);
+        QList<Atom *> path;
+        path.append(const_cast<Atom *>(b));
         return path;
     }
 
     QBitArray visited(atomCount());
     visited.setBit(a->index());
 
-    QList<QList<const Atom *> > paths;
+    QList<QList<Atom *> > paths;
 
-    foreach(const Atom *neighbor, a->neighbors()){
+    foreach(Atom *neighbor, a->neighbors()){
         visited.setBit(neighbor->index());
-        QList<const Atom *> path;
+        QList<Atom *> path;
         path.append(neighbor);
         paths.append(path);
     }
 
     while(paths.size()){
-        QList<const Atom *> path = paths.takeFirst();
+        QList<Atom *> path = paths.takeFirst();
 
         const Atom *lastAtom = path.last();
         if(lastAtom == b){
             return path;
         }
         else{
-            foreach(const Atom *neighbor, lastAtom->neighbors()){
+            foreach(Atom *neighbor, lastAtom->neighbors()){
                 if(visited[neighbor->index()])
                     continue;
 
                 visited.setBit(neighbor->index());
-                QList<const Atom *> nextPath(path);
+                QList<Atom *> nextPath(path);
                 nextPath.append(neighbor);
                 paths.append(nextPath);
             }
         }
     }
 
-    return QList<const Atom *>();
+    return QList<Atom *>();
 }
 
 int Molecule::atomCountBetween(const Atom *a, const Atom *b) const
@@ -1287,14 +1174,14 @@ int Molecule::atomCountBetween(const Atom *a, const Atom *b, int maxCount) const
     return count;
 }
 
-QList<const Bond *> Molecule::bondPathBetween(const Atom *a, const Atom *b) const
+QList<Bond *> Molecule::bondPathBetween(const Atom *a, const Atom *b) const
 {
-    QList<const Atom *> atomPath = atomPathBetween(a, b);
+    QList<Atom *> atomPath = atomPathBetween(a, b);
     if(atomPath.isEmpty()){
-        return QList<const Bond *>();
+        return QList<Bond *>();
     }
 
-    QList<const Bond *> bondPath;
+    QList<Bond *> bondPath;
     bondPath.append(a->bondTo(atomPath[0]));
     for(int i = 0; i < atomPath.size()-1; i++){
         bondPath.append(atomPath[i]->bondTo(atomPath[i+1]));
@@ -1354,12 +1241,12 @@ bool Molecule::isSubsetOf(const Molecule *molecule, CompareFlags flags) const
 {
     Q_UNUSED(flags);
 
-    QList<const Atom *> otherAtoms = molecule->atoms();
+    QList<Atom *> otherAtoms = molecule->atoms();
 
     foreach(const Atom *atom, m_atoms){
         bool found = false;
 
-        foreach(const Atom *otherAtom, otherAtoms){
+        foreach(Atom *otherAtom, otherAtoms){
             if(atom->atomicNumber() == otherAtom->atomicNumber()){
                 otherAtoms.removeOne(otherAtom);
                 found = true;

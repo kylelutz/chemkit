@@ -58,46 +58,22 @@ int Ring::size() const
 }
 
 /// Returns the molecule the ring is a part of.
-Molecule* Ring::molecule()
+Molecule* Ring::molecule() const
 {
     return m_atoms[0]->molecule();
 }
 
-/// \overload
-const Molecule* Ring::molecule() const
-{
-    return const_cast<const Atom *>(m_atoms[0])->molecule();
-}
-
 /// Returns the fragment the ring is a part of.
-Fragment* Ring::fragment()
+Fragment* Ring::fragment() const
 {
     return m_atoms[0]->fragment();
 }
 
-/// \overload
-const Fragment* Ring::fragment() const
-{
-    return const_cast<const Atom *>(m_atoms[0])->fragment();
-}
-
 // --- Structure ----------------------------------------------------------- //
 /// Returns the atoms in the ring.
-QList<Atom *> Ring::atoms()
+QList<Atom *> Ring::atoms() const
 {
     return m_atoms;
-}
-
-/// \overload
-QList<const Atom *> Ring::atoms() const
-{
-    QList<const Atom *> atoms;
-
-    foreach(const Atom *atom, m_atoms){
-        atoms.append(atom);
-    }
-
-    return atoms;
 }
 
 /// Returns the number of atoms in the ring.
@@ -121,7 +97,7 @@ int Ring::atomCount(int atomicNumber) const
 }
 
 /// Returns the bonds in the ring.
-QList<Bond *> Ring::bonds()
+QList<Bond *> Ring::bonds() const
 {
     QList<Bond *> bonds;
 
@@ -130,18 +106,6 @@ QList<Bond *> Ring::bonds()
     }
 
     bonds.append(m_atoms.first()->bondTo(m_atoms.last()));
-
-    return bonds;
-}
-
-/// \overload
-QList<const Bond *> Ring::bonds() const
-{
-    QList<const Bond *> bonds;
-
-    foreach(const Bond *bond, const_cast<Ring *>(this)->bonds()){
-        bonds.append(bond);
-    }
 
     return bonds;
 }
@@ -155,7 +119,7 @@ int Ring::bondCount() const
 
 /// Returns a list of all bonds from atoms inside the ring
 /// to atoms outside the ring.
-QList<Bond *> Ring::exocyclicBonds()
+QList<Bond *> Ring::exocyclicBonds() const
 {
     QSet<Bond *> bonds;
 
@@ -168,18 +132,6 @@ QList<Bond *> Ring::exocyclicBonds()
     }
 
     return bonds.toList();
-}
-
-/// \overload
-QList<const Bond *> Ring::exocyclicBonds() const
-{
-    QList<const Bond *> bonds;
-
-    foreach(const Bond *bond, const_cast<Ring *>(this)->exocyclicBonds()){
-        bonds.append(bond);
-    }
-
-    return bonds;
 }
 
 /// Returns the number of exocyclic bonds.
@@ -235,7 +187,7 @@ bool Ring::isHeterocycle() const
 /// Returns the root atom of the ring. This is determined by finding
 /// the non-carbon atom with the highest atomic number. In the case of
 /// a tie the atom with the largest valence is returned.
-Atom* Ring::root()
+Atom* Ring::root() const
 {
     int highestAtomicNumber = 0;
     QList<Atom *> candidates;
@@ -269,12 +221,6 @@ Atom* Ring::root()
     }
 
     return root;
-}
-
-/// \overload
-const Atom* Ring::root() const
-{
-    return const_cast<Ring *>(this)->root();
 }
 
 /// Returns the relative postion (distance around the ring) of atom to

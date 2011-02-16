@@ -99,7 +99,7 @@ Float BondPredictor::maximumBondLength() const
 }
 
 /// Returns the molecule.
-const Molecule* BondPredictor::molecule() const
+Molecule* BondPredictor::molecule() const
 {
     return d->molecule;
 }

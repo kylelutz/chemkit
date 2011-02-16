@@ -51,17 +51,14 @@ class CHEMKIT_EXPORT Residue
         // properties
         int residueType() const;
         int size() const;
-        Molecule* molecule();
-        const Molecule* molecule() const;
+        Molecule* molecule() const;
 
         // structure
         void addAtom(Atom *atom);
         void removeAtom(Atom *atom);
-        QList<Atom *> atoms();
-        QList<const Atom *> atoms() const;
+        QList<Atom *> atoms() const;
         int atomCount() const;
-        QList<Bond *> bonds();
-        QList<const Bond *> bonds() const;
+        QList<Bond *> bonds() const;
         int bondCount() const;
         bool contains(const Atom *atom) const;
         bool contains(const Bond *bond) const;
@@ -69,8 +66,7 @@ class CHEMKIT_EXPORT Residue
         // atom types
         void setAtomType(const Atom *atom, const QString &type);
         QString atomType(const Atom *atom) const;
-        Atom* atom(const QString &type);
-        const Atom *atom(const QString &type) const;
+        Atom* atom(const QString &type) const;
 
     private:
         Q_DISABLE_COPY(Residue)

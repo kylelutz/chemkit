@@ -45,8 +45,7 @@ class CHEMKIT_WIDGETS_EXPORT MoleculeEditor : public QObject
 
         // properties
         void setMolecule(Molecule *molecule);
-        Molecule* molecule();
-        const Molecule* molecule() const;
+        Molecule* molecule() const;
 
         // editing
         void undo();

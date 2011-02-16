@@ -98,7 +98,7 @@ void GraphicsRingItem::paint(GraphicsPainter *painter)
     painter->setColor(color);
 
     GraphicsPoint center = ringCenter(d->ring);
-    QList<const Atom *> atoms = d->ring->atoms();
+    QList<Atom *> atoms = d->ring->atoms();
 
     for(int i = 0; i < atoms.size(); i++){
         const Atom *a = atoms[i];

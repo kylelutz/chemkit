@@ -156,33 +156,15 @@ bool BiochemicalFile::deleteProtein(Protein *protein)
 }
 
 /// Returns the protein at the \p index.
-Protein* BiochemicalFile::protein(int index)
-{
-    return d->proteins.value(index, 0);
-}
-
-/// \overload
-const Protein* BiochemicalFile::protein(int index) const
+Protein* BiochemicalFile::protein(int index) const
 {
     return d->proteins.value(index, 0);
 }
 
 /// Returns a list of all the proteins in the file.
-QList<Protein *> BiochemicalFile::proteins()
+QList<Protein *> BiochemicalFile::proteins() const
 {
     return d->proteins;
-}
-
-/// \overload
-QList<const Protein *> BiochemicalFile::proteins() const
-{
-    QList<const Protein *> proteins;
-
-    foreach(const Protein *protein, const_cast<BiochemicalFile *>(this)->proteins()){
-        proteins.append(protein);
-    }
-
-    return proteins;
 }
 
 /// Returns the number of proteins in the file.
@@ -223,33 +205,15 @@ bool BiochemicalFile::deleteNucleicAcid(NucleicAcid *nucleicAcid)
 }
 
 /// Returns the nucleic acid at the given index.
-NucleicAcid* BiochemicalFile::nucleicAcid(int index)
-{
-    return d->nucleicAcids.value(index, 0);
-}
-
-/// \overload
-const NucleicAcid* BiochemicalFile::nucleicAcid(int index) const
+NucleicAcid* BiochemicalFile::nucleicAcid(int index) const
 {
     return d->nucleicAcids.value(index, 0);
 }
 
 /// Returns a list of all the nucleic acids in the file.
-QList<NucleicAcid *> BiochemicalFile::nucleicAcids()
+QList<NucleicAcid *> BiochemicalFile::nucleicAcids() const
 {
     return d->nucleicAcids;
-}
-
-/// \overload
-QList<const NucleicAcid *> BiochemicalFile::nucleicAcids() const
-{
-    QList<const NucleicAcid *> nucleicAcids;
-
-    foreach(const NucleicAcid *nucleicAcid, const_cast<BiochemicalFile *>(this)->nucleicAcids()){
-        nucleicAcids.append(nucleicAcid);
-    }
-
-    return nucleicAcids;
 }
 
 /// Returns the number of nucleic acids in the file.

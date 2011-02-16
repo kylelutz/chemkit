@@ -43,21 +43,9 @@ inline bool Molecule::isEmpty() const
 
 // --- Structure ----------------------------------------------------------- //
 /// Returns a list of all the atoms in the molecule.
-inline QList<Atom *> Molecule::atoms()
+inline QList<Atom *> Molecule::atoms() const
 {
     return m_atoms;
-}
-
-/// \overload
-inline QList<const Atom *> Molecule::atoms() const
-{
-    QList<const Atom *> atoms;
-
-    foreach(const Atom *atom, m_atoms){
-        atoms.append(atom);
-    }
-
-    return atoms;
 }
 
 /// Returns the number of atoms in the molecule.
@@ -67,13 +55,7 @@ inline int Molecule::atomCount() const
 }
 
 /// Returns the atom at \p index.
-inline Atom* Molecule::atom(int index)
-{
-    return m_atoms.value(index, 0);
-}
-
-/// \overload
-inline const Atom* Molecule::atom(int index) const
+inline Atom* Molecule::atom(int index) const
 {
     return m_atoms.value(index, 0);
 }

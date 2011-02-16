@@ -60,13 +60,7 @@ NucleicAcidChain::~NucleicAcidChain()
 
 // --- Properties ---------------------------------------------------------- //
 /// Returns the nucleic acid the chain is a part of.
-NucleicAcid* NucleicAcidChain::nucleicAcid()
-{
-    return d->nucleicAcid;
-}
-
-/// \overload
-const NucleicAcid* NucleicAcidChain::nucleicAcid() const
+NucleicAcid* NucleicAcidChain::nucleicAcid() const
 {
     return d->nucleicAcid;
 }
@@ -85,21 +79,9 @@ void NucleicAcidChain::removeResidue(Nucleotide *residue)
 }
 
 /// Returns a list of all the nucleotide residues in the chain.
-QList<Nucleotide *> NucleicAcidChain::residues()
+QList<Nucleotide *> NucleicAcidChain::residues() const
 {
     return d->residues;
-}
-
-/// \overload
-QList<const Nucleotide *> NucleicAcidChain::residues() const
-{
-    QList<const Nucleotide *> residues;
-
-    foreach(const Nucleotide *residue, d->residues){
-        residues.append(residue);
-    }
-
-    return residues;
 }
 
 /// Returns the number of nucleotide residues in the chain.

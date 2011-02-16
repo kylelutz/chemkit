@@ -100,13 +100,7 @@ void GraphicsItem::hide()
 
 /// Returns the \p scene the item is contained in or \c 0 if the
 /// item is not in a scene.
-GraphicsScene* GraphicsItem::scene()
-{
-    return d->scene;
-}
-
-/// \overload
-const GraphicsScene* GraphicsItem::scene() const
+GraphicsScene* GraphicsItem::scene() const
 {
     return d->scene;
 }

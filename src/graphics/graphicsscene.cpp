@@ -75,21 +75,9 @@ bool GraphicsScene::isEmpty() const
 }
 
 /// Returns a list of views that show the scene.
-QList<GraphicsView *> GraphicsScene::views()
+QList<GraphicsView *> GraphicsScene::views() const
 {
     return d->views;
-}
-
-/// \overload
-QList<const GraphicsView *> GraphicsScene::views() const
-{
-    QList<const GraphicsView *> views;
-
-    foreach(const GraphicsView *view, d->views){
-        views.append(view);
-    }
-
-    return views;
 }
 
 // --- Items --------------------------------------------------------------- //
@@ -131,19 +119,13 @@ bool GraphicsScene::deleteItem(GraphicsItem *item)
 }
 
 /// Returns the item at \p index.
-GraphicsItem* GraphicsScene::item(int index)
-{
-    return d->items.value(index, 0);
-}
-
-/// \overload
-const GraphicsItem* GraphicsScene::item(int index) const
+GraphicsItem* GraphicsScene::item(int index) const
 {
     return d->items.value(index, 0);
 }
 
 /// Returns the item that intersects \p ray.
-GraphicsItem* GraphicsScene::item(const GraphicsRay &ray)
+GraphicsItem* GraphicsScene::item(const GraphicsRay &ray) const
 {
     GraphicsItem *closestItem = 0;
     GraphicsFloat closestDistance = qInf();
@@ -162,32 +144,14 @@ GraphicsItem* GraphicsScene::item(const GraphicsRay &ray)
     return closestItem;
 }
 
-/// \overload
-const GraphicsItem* GraphicsScene::item(const GraphicsRay &ray) const
-{
-    return const_cast<GraphicsScene *>(this)->item(ray);
-}
-
 /// Returns a list of items in the scene.
-QList<GraphicsItem *> GraphicsScene::items()
+QList<GraphicsItem *> GraphicsScene::items() const
 {
     return d->items;
 }
 
-/// \overload
-QList<const GraphicsItem *> GraphicsScene::items() const
-{
-    QList<const GraphicsItem *> items;
-
-    foreach(const GraphicsItem *item, d->items){
-        items.append(item);
-    }
-
-    return items;
-}
-
 /// Returns a list of all items that intersect \p ray.
-QList<GraphicsItem *> GraphicsScene::items(const GraphicsRay &ray, bool sorted)
+QList<GraphicsItem *> GraphicsScene::items(const GraphicsRay &ray, bool sorted) const
 {
     QList<GraphicsItem *> items;
 
@@ -214,18 +178,6 @@ QList<GraphicsItem *> GraphicsScene::items(const GraphicsRay &ray, bool sorted)
                 items.append(item);
             }
         }
-    }
-
-    return items;
-}
-
-/// \overload
-QList<const GraphicsItem *> GraphicsScene::items(const GraphicsRay &ray, bool sorted) const
-{
-    QList<const GraphicsItem *> items;
-
-    foreach(const GraphicsItem *item, const_cast<GraphicsScene *>(this)->items(ray, sorted)){
-        items.append(item);
     }
 
     return items;

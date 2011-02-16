@@ -78,7 +78,7 @@ CoordinateMatrix::CoordinateMatrix(const Conformer *conformer)
 
 /// Creates a new coordinate matrix with the coordinates from
 /// \p atoms.
-CoordinateMatrix::CoordinateMatrix(const QList<const Atom *> &atoms)
+CoordinateMatrix::CoordinateMatrix(const QList<Atom *> &atoms)
     : m_matrix(atoms.size(), 3)
 {
     int size = atoms.size();

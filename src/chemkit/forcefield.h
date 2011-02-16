@@ -57,13 +57,10 @@ class CHEMKIT_EXPORT ForceField
         QString name() const;
         ForceField::Flags flags() const;
         int size() const;
-        QList<ForceFieldAtom *> atoms();
-        QList<const ForceFieldAtom *> atoms() const;
+        QList<ForceFieldAtom *> atoms() const;
         int atomCount() const;
-        ForceFieldAtom* atom(int index);
-        const ForceFieldAtom* atom(int index) const;
-        ForceFieldAtom* atom(const Atom *atom);
-        const ForceFieldAtom* atom(const Atom *atom) const;
+        ForceFieldAtom* atom(int index) const;
+        ForceFieldAtom* atom(const Atom *atom) const;
 
         // setup
         void addMolecule(const Molecule *molecule);
@@ -82,8 +79,7 @@ class CHEMKIT_EXPORT ForceField
         QString parameterFile() const;
 
         // calculations
-        QList<ForceFieldCalculation *> calculations();
-        QList<const ForceFieldCalculation *> calculations() const;
+        QList<ForceFieldCalculation *> calculations() const;
         int calculationCount() const;
         virtual Float energy() const;
         QVector<Vector> gradient() const;

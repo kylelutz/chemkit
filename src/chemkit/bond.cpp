@@ -60,19 +60,13 @@ Bond::~Bond()
 // --- Properties ---------------------------------------------------------- //
 /// Returns the atom at \p index in the bond. Index must be either
 /// \c 0 or \c 1.
-Atom* Bond::atom(int index)
-{
-    return index == 0 ? m_atom1 : m_atom2;
-}
-
-/// \overload
-const Atom* Bond::atom(int index) const
+Atom* Bond::atom(int index) const
 {
     return index == 0 ? m_atom1 : m_atom2;
 }
 
 /// Returns a list containing both atoms in the bond.
-QList<Atom *> Bond::atoms()
+QList<Atom *> Bond::atoms() const
 {
     QList<Atom *> atoms;
     atoms.append(m_atom1);
@@ -80,24 +74,9 @@ QList<Atom *> Bond::atoms()
     return atoms;
 }
 
-/// \overload
-QList<const Atom *> Bond::atoms() const
-{
-    QList<const Atom *> atoms;
-    atoms.append(m_atom1);
-    atoms.append(m_atom2);
-    return atoms;
-}
-
 /// Returns the other atom in the bond. The given atom must be a
 /// part of the bond.
-Atom* Bond::otherAtom(const Atom *atom)
-{
-    return m_atom1 == atom ? m_atom2 : m_atom1;
-}
-
-/// \overload
-const Atom* Bond::otherAtom(const Atom *atom) const
+Atom* Bond::otherAtom(const Atom *atom) const
 {
     return m_atom1 == atom ? m_atom2 : m_atom1;
 }
@@ -134,32 +113,20 @@ Vector Bond::dipoleMoment() const
 }
 
 /// Returns the fragment the bond is a part of.
-Fragment* Bond::fragment()
+Fragment* Bond::fragment() const
 {
     return m_atom1->fragment();
-}
-
-/// \overload
-const Fragment* Bond::fragment() const
-{
-    return const_cast<const Atom *>(m_atom1)->fragment();
 }
 
 /// Returns the residue the bond is a part of. If the bond is not
 /// a part of any residue or the atoms of the bond are in different
 /// residues then \c 0 is returned.
-Residue* Bond::residue()
+Residue* Bond::residue() const
 {
     if(m_atom1->residue() == m_atom2->residue())
         return m_atom1->residue();
     else
         return 0;
-}
-
-/// \overload
-const Residue* Bond::residue() const
-{
-    return const_cast<Bond *>(this)->residue();
 }
 
 /// Returns the bond's index in the molecule.
@@ -212,7 +179,7 @@ bool Bond::isTerminal() const
 
 // --- Ring Perception ----------------------------------------------------- //
 /// Returns a list of rings the bond is a member of.
-QList<Ring *> Bond::rings()
+QList<Ring *> Bond::rings() const
 {
     QList<Ring *> rings;
 
@@ -220,18 +187,6 @@ QList<Ring *> Bond::rings()
         if(ring->contains(this)){
             rings.append(ring);
         }
-    }
-
-    return rings;
-}
-
-/// \overload
-QList<const Ring *> Bond::rings() const
-{
-    QList<const Ring *> rings;
-
-    foreach(const Ring *ring, const_cast<Bond *>(this)->rings()){
-        rings.append(ring);
     }
 
     return rings;
@@ -270,7 +225,7 @@ bool Bond::isInRing(int size) const
 
 /// Returns the smallest ring the bond is a member of or \c 0 if the
 /// bond is not in a ring.
-Ring* Bond::smallestRing()
+Ring* Bond::smallestRing() const
 {
     Ring *smallest = 0;
 
@@ -281,12 +236,6 @@ Ring* Bond::smallestRing()
     }
 
     return smallest;
-}
-
-/// \overload
-const Ring* Bond::smallestRing() const
-{
-    return const_cast<Bond *>(this)->smallestRing();
 }
 
 /// Returns \c true if the bond is in an aromatic ring.

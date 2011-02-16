@@ -39,29 +39,23 @@ class CHEMKIT_EXPORT Ring
     public:
         // properties
         int size() const;
-        Molecule* molecule();
-        const Molecule* molecule() const;
-        Fragment* fragment();
-        const Fragment* fragment() const;
+        Molecule* molecule() const;
+        Fragment* fragment() const;
 
         // structure
-        QList<Atom *> atoms();
-        QList<const Atom *> atoms() const;
+        QList<Atom *> atoms() const;
         int atomCount() const;
         int atomCount(int atomicNumber) const;
-        QList<Bond *> bonds();
-        QList<const Bond *> bonds() const;
+        QList<Bond *> bonds() const;
         int bondCount() const;
-        QList<Bond *> exocyclicBonds();
-        QList<const Bond *> exocyclicBonds() const;
+        QList<Bond *> exocyclicBonds() const;
         int exocyclicBondCount() const;
         bool contains(const Atom *atom) const;
         bool contains(int atomicNumber) const;
         bool contains(const Bond *bond) const;
         int heteroatomCount() const;
         bool isHeterocycle() const;
-        Atom *root();
-        const Atom *root() const;
+        Atom *root() const;
         int position(const Atom *atom, const Atom *root = 0) const;
         bool isFusedTo(const Ring *ring) const;
 

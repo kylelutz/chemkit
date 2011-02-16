@@ -47,7 +47,7 @@ class CHEMKIT_EXPORT BondPredictor
         Float minimumBondLength() const;
         void setMaximumBondLength(Float length);
         Float maximumBondLength() const;
-        const Molecule* molecule() const;
+        Molecule* molecule() const;
 
         // prediction
         QList<QPair<Atom *, Atom *> > predictedBonds();

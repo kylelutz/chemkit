@@ -92,11 +92,9 @@ class CHEMKIT_EXPORT Molecule
         // structure
         Atom* addAtom(const Element &element);
         Atom* addAtomCopy(const Atom *atom);
-        Atom* atom(int index);
-        const Atom* atom(int index) const;
         void removeAtom(Atom *atom);
-        QList<Atom *> atoms();
-        QList<const Atom *> atoms() const;
+        Atom* atom(int index) const;
+        QList<Atom *> atoms() const;
         int atomCount() const;
         int atomCount(int atomicNumber) const;
         int indexOf(const Atom *atom) const;
@@ -107,21 +105,16 @@ class CHEMKIT_EXPORT Molecule
         void removeBond(Bond *bond);
         void removeBond(Atom *a, Atom *b);
         void removeBond(int a, int b);
-        Bond* bond(int index);
-        const Bond* bond(int index) const;
-        Bond* bond(const Atom *a, const Atom *b);
-        const Bond* bond(const Atom *a, const Atom *b) const;
-        Bond* bond(int a, int b);
-        const Bond* bond(int a, int b) const;
-        QList<Bond *> bonds();
-        QList<const Bond *> bonds() const;
+        Bond* bond(int index) const;
+        Bond* bond(const Atom *a, const Atom *b) const;
+        Bond* bond(int a, int b) const;
+        QList<Bond *> bonds() const;
         int bondCount() const;
         int indexOf(const Bond *bond) const;
         bool contains(const Bond *bond) const;
         void addResidue(Residue *residue);
         void removeResidue(Residue *residue);
-        QList<Residue *> residues();
-        QList<const Residue *> residues() const;
+        QList<Residue *> residues() const;
         int residueCount() const;
         void clear();
 
@@ -133,17 +126,13 @@ class CHEMKIT_EXPORT Molecule
         Moiety find(const Molecule *moiety, CompareFlags flags = CompareFlags()) const;
 
         // ring perception
-        Ring* ring(int index);
-        const Ring* ring(int index) const;
-        QList<Ring *> rings();
-        QList<const Ring *> rings() const;
+        Ring* ring(int index) const;
+        QList<Ring *> rings() const;
         int ringCount() const;
 
         // fragment perception
-        Fragment* fragment(int index);
-        const Fragment* fragment(int index) const;
-        QList<Fragment *> fragments();
-        QList<const Fragment *> fragments() const;
+        Fragment* fragment(int index) const;
+        QList<Fragment *> fragments() const;
         int fragmentCount() const;
         bool isFragmented() const;
         void removeFragment(Fragment *fragment);
@@ -167,28 +156,24 @@ class CHEMKIT_EXPORT Molecule
         Conformer* addConformer();
         void removeConformer(Conformer *conformer);
         void setConformer(Conformer *conformer);
-        Conformer* conformer();
-        const Conformer* conformer() const;
-        Conformer* conformer(int index);
-        const Conformer* conformer(int index) const;
-        QList<Conformer *> conformers();
-        QList<const Conformer *> conformers() const;
+        Conformer* conformer() const;
+        Conformer* conformer(int index) const;
+        QList<Conformer *> conformers() const;
         int conformerCount() const;
 
     private:
         // internal methods
-        QList<const Atom *> atomPathBetween(const Atom *a, const Atom *b) const;
+        QList<Atom *> atomPathBetween(const Atom *a, const Atom *b) const;
         int atomCountBetween(const Atom *a, const Atom *b) const;
         int atomCountBetween(const Atom *a, const Atom *b, int maxCount) const;
-        QList<const Bond *> bondPathBetween(const Atom *a, const Atom *b) const;
+        QList<Bond *> bondPathBetween(const Atom *a, const Atom *b) const;
         int bondCountBetween(const Atom *a, const Atom *b) const;
         int bondCountBetween(const Atom *a, const Atom *b, int maxCount) const;
         void setRingsPerceived(bool perceived) const;
         bool ringsPerceived() const;
         void setFragmentsPerceived(bool perceived) const;
         bool fragmentsPerceived() const;
-        Fragment* fragment(Atom *atom);
-        const Fragment* fragment(const Atom *atom) const;
+        Fragment* fragment(const Atom *atom) const;
         void notifyObservers(ChangeType type);
         void notifyObservers(const Atom *atom, ChangeType type);
         void notifyObservers(const Bond *bond, ChangeType type);

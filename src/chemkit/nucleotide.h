@@ -68,10 +68,8 @@ class CHEMKIT_EXPORT Nucleotide : public Residue
         SugarType sugarType() const;
         bool isPurine() const;
         bool isPyrimidine() const;
-        NucleicAcid* nucleicAcid();
-        const NucleicAcid* nucleicAcid() const;
-        NucleicAcidChain* nucleicAcidChain();
-        const NucleicAcidChain* nucleicAcidChain() const;
+        NucleicAcid* nucleicAcid() const;
+        NucleicAcidChain* nucleicAcidChain() const;
 
     private:
         NucleotidePrivate* const d;

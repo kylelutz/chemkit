@@ -92,7 +92,7 @@ QList<QVector<const ForceFieldAtom *> > ForceFieldInteractions::angleGroups()
 
     foreach(const Atom *atom, d->molecule->atoms()){
         if(!atom->isTerminal()){
-            QList<const Atom *> neighbors = atom->neighbors();
+            QList<Atom *> neighbors = atom->neighbors();
             for(int i = 0; i < neighbors.size(); i++){
                 for(int j = i + 1; j < neighbors.size(); j++){
                     QVector<const ForceFieldAtom *> angleGroup(3);
@@ -114,7 +114,7 @@ QList<QVector<const ForceFieldAtom *> > ForceFieldInteractions::torsionGroups()
 {
     QList<QVector<const ForceFieldAtom *> > torsionGroups;
 
-    QList<QPair<const Atom *, const Atom *> > pairs;
+    QList<QPair<Atom *, Atom *> > pairs;
     foreach(const Bond *bond, d->molecule->bonds()){
         if(!bond->atom1()->isTerminal() && !bond->atom2()->isTerminal()){
             pairs.append(qMakePair(bond->atom1(), bond->atom2()));
@@ -124,7 +124,7 @@ QList<QVector<const ForceFieldAtom *> > ForceFieldInteractions::torsionGroups()
     // a        d
     //  \      /
     //   b -- c
-    QPair<const Atom *, const Atom *> pair;
+    QPair<Atom *, Atom *> pair;
     foreach(pair, pairs){
         const Atom *b = pair.first;
         const Atom *c = pair.second;
@@ -156,12 +156,14 @@ QList<QPair<const ForceFieldAtom *, const ForceFieldAtom *> > ForceFieldInteract
 {
     QList<QPair<const ForceFieldAtom *, const ForceFieldAtom *> > nonbondedPairs;
 
-    QList<const Atom *> atoms = d->molecule->atoms();
+    QList<Atom *> atoms = d->molecule->atoms();
     for(int i = 0; i < atoms.size(); i++){
         for(int j = i + 1; j < atoms.size(); j++){
             if(!atomsWithinTwoBonds(atoms[i], atoms[j])){
-                nonbondedPairs.append(qMakePair(forceField()->atom(atoms[i]),
-                                                forceField()->atom(atoms[j])));
+                const ForceFieldAtom *a = forceField()->atom(atoms[i]);
+                const ForceFieldAtom *b = forceField()->atom(atoms[j]);
+
+                nonbondedPairs.append(qMakePair(a, b));
             }
         }
     }
@@ -175,7 +177,7 @@ bool ForceFieldInteractions::atomsWithinTwoBonds(const Atom *a, const Atom *b)
     foreach(const Atom *neighbor, a->neighbors()){
         if(neighbor == b)
             return true;
-        else if(neighbor->neighbors().contains(b))
+        else if(neighbor->neighbors().contains(const_cast<Atom *>(b)))
             return true;
     }
 

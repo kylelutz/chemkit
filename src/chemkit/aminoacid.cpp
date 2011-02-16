@@ -299,25 +299,13 @@ AminoAcid::Conformation AminoAcid::conformation() const
 }
 
 /// Returns the protein the amino acid is a part of.
-Protein* AminoAcid::protein()
-{
-    return d->chain->protein();
-}
-
-/// \overload
-const Protein* AminoAcid::protein() const
+Protein* AminoAcid::protein() const
 {
     return d->chain->protein();
 }
 
 /// Returns the protein chain the amino acid is a part of.
-ProteinChain* AminoAcid::proteinChain()
-{
-    return d->chain;
-}
-
-/// \overload
-const ProteinChain* AminoAcid::proteinChain() const
+ProteinChain* AminoAcid::proteinChain() const
 {
     return d->chain;
 }

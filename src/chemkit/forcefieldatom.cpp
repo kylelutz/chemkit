@@ -77,7 +77,7 @@ const Atom* ForceFieldAtom::atom() const
 /// Returns the atom's index.
 int ForceFieldAtom::index() const
 {
-    return forceField()->atoms().indexOf(this);
+    return forceField()->atoms().indexOf(const_cast<ForceFieldAtom *>(this));
 }
 
 /// Sets the symbolic type for the atom.
@@ -113,13 +113,7 @@ bool ForceFieldAtom::isSetup() const
 }
 
 /// Returns the force field the atom is a part of.
-ForceField* ForceFieldAtom::forceField()
-{
-    return d->forceField;
-}
-
-/// \overload
-const ForceField* ForceFieldAtom::forceField() const
+ForceField* ForceFieldAtom::forceField() const
 {
     return d->forceField;
 }
@@ -162,7 +156,7 @@ bool ForceFieldAtom::isOneFour(const ForceFieldAtom *atom) const
             if(secondNeighbor == otherAtom)
                 return false;
 
-            if(secondNeighbor->neighbors().contains(otherAtom))
+            if(secondNeighbor->neighbors().contains(const_cast<Atom *>(otherAtom)))
                 return true;
         }
     }

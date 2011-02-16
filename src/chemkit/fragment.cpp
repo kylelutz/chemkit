@@ -76,34 +76,16 @@ int Fragment::size() const
 }
 
 /// Returns the molecule the fragment is a part of.
-Molecule* Fragment::molecule()
+Molecule* Fragment::molecule() const
 {
     return m_atoms[0]->molecule();
 }
 
-/// \overload
-const Molecule* Fragment::molecule() const
-{
-    return const_cast<const Atom *>(m_atoms[0])->molecule();
-}
-
 // --- Structure ----------------------------------------------------------- //
 /// Returns a list of all the atoms in the fragment.
-QList<Atom *> Fragment::atoms()
+QList<Atom *> Fragment::atoms() const
 {
     return m_atoms;
-}
-
-/// \overload
-QList<const Atom *> Fragment::atoms() const
-{
-    QList<const Atom *> atoms;
-
-    foreach(const Atom *atom, m_atoms){
-        atoms.append(atom);
-    }
-
-    return atoms;
 }
 
 /// Returns the number of atoms in the fragment.
@@ -119,7 +101,7 @@ bool Fragment::contains(const Atom *atom) const
 }
 
 /// Returns a list of all the bonds in the fragment.
-QList<Bond *> Fragment::bonds()
+QList<Bond *> Fragment::bonds() const
 {
     QList<Bond *> bonds;
 
@@ -129,18 +111,6 @@ QList<Bond *> Fragment::bonds()
                 bonds.append(bond);
             }
         }
-    }
-
-    return bonds;
-}
-
-/// \overload
-QList<const Bond *> Fragment::bonds() const
-{
-    QList<const Bond *> bonds;
-
-    foreach(const Bond *bond, const_cast<Fragment *>(this)->bonds()){
-        bonds.append(bond);
     }
 
     return bonds;

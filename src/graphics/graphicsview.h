@@ -51,13 +51,11 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsView : public QGLWidget
 
         // properties
         void setScene(GraphicsScene *scene);
-        GraphicsScene* scene();
-        const GraphicsScene* scene() const;
+        GraphicsScene* scene() const;
         void setBackgroundColor(const QColor &color);
         QColor backgroundColor() const;
         void setTool(GraphicsTool *tool);
-        GraphicsTool* tool();
-        const GraphicsTool* tool() const;
+        GraphicsTool* tool() const;
         const GraphicsTransform& projectionTransform() const;
         const GraphicsTransform& modelViewTransform() const;
 
@@ -65,14 +63,12 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsView : public QGLWidget
         void addItem(GraphicsItem *item);
         bool removeItem(GraphicsItem *item);
         bool deleteItem(GraphicsItem *item);
-        QList<GraphicsItem *> items();
-        QList<const GraphicsItem *> items() const;
+        QList<GraphicsItem *> items() const;
         int itemCount() const;
 
         // camera
         void setCamera(GraphicsCamera *camera);
-        GraphicsCamera* camera();
-        const GraphicsCamera* camera() const;
+        GraphicsCamera* camera() const;
         void setNearClipDistance(GraphicsFloat distance);
         GraphicsFloat nearClipDistance() const;
         void setFarClipDistance(GraphicsFloat distance);
@@ -86,20 +82,16 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsView : public QGLWidget
         void addLight(GraphicsLight *light);
         bool removeLight(GraphicsLight *light);
         bool deleteLight(GraphicsLight *light);
-        QList<GraphicsLight *> lights();
-        QList<const GraphicsLight *> lights() const;
+        QList<GraphicsLight *> lights() const;
         int lightCount() const;
         GraphicsLight* light(int index = 0) const;
 
         // selection
-        GraphicsItem* itemAt(int x, int y);
-        const GraphicsItem* itemAt(int x, int y) const;
-        QList<GraphicsItem *> itemsAt(int x, int y, bool sorted = true);
-        QList<const GraphicsItem *> itemsAt(int x, int y, bool sorted = true) const;
+        GraphicsItem* itemAt(int x, int y) const;
+        QList<GraphicsItem *> itemsAt(int x, int y, bool sorted = true) const;
 
         // overlay
-        GraphicsOverlay* overlay();
-        const GraphicsOverlay* overlay() const;
+        GraphicsOverlay* overlay() const;
         void setOverlayEnabled(bool enabled);
         bool overlayEnabled() const;
 

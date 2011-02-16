@@ -51,8 +51,7 @@ class CHEMKIT_EXPORT ForceFieldAtom
         void setCharge(Float charge);
         Float charge() const;
         bool isSetup() const;
-        ForceField* forceField();
-        const ForceField* forceField() const;
+        ForceField* forceField() const;
 
         // calculations
         Float energy() const;

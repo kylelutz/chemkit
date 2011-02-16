@@ -150,26 +150,14 @@ bool Nucleotide::isPyrimidine() const
 }
 
 /// Returns the nucleic acid the nucleotide residue is a part of.
-NucleicAcid* Nucleotide::nucleicAcid()
-{
-    return d->chain->nucleicAcid();
-}
-
-/// \overload
-const NucleicAcid* Nucleotide::nucleicAcid() const
+NucleicAcid* Nucleotide::nucleicAcid() const
 {
     return d->chain->nucleicAcid();
 }
 
 /// Returns the nucleic acid chain the nucleotide residue is a part
 /// of.
-NucleicAcidChain* Nucleotide::nucleicAcidChain()
-{
-    return d->chain;
-}
-
-/// \overload
-const NucleicAcidChain* Nucleotide::nucleicAcidChain() const
+NucleicAcidChain* Nucleotide::nucleicAcidChain() const
 {
     return d->chain;
 }

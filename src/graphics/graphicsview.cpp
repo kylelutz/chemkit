@@ -196,13 +196,7 @@ void GraphicsView::setScene(GraphicsScene *scene)
 }
 
 /// Returns the scene that the view is showing.
-GraphicsScene* GraphicsView::scene()
-{
-    return d->scene;
-}
-
-/// \overload
-const GraphicsScene* GraphicsView::scene() const
+GraphicsScene* GraphicsView::scene() const
 {
     return d->scene;
 }
@@ -241,13 +235,7 @@ void GraphicsView::setTool(GraphicsTool *tool)
 }
 
 /// Returns the current tool.
-GraphicsTool* GraphicsView::tool()
-{
-    return d->tool;
-}
-
-/// \overload
-const GraphicsTool* GraphicsView::tool() const
+GraphicsTool* GraphicsView::tool() const
 {
     return d->tool;
 }
@@ -320,21 +308,12 @@ bool GraphicsView::deleteItem(GraphicsItem *item)
 /// Returns a list of all the items in the view's scene.
 ///
 /// \see GraphicsScene::items()
-QList<GraphicsItem *> GraphicsView::items()
+QList<GraphicsItem *> GraphicsView::items() const
 {
     if(d->scene)
         return d->scene->items();
 
     return QList<GraphicsItem *>();
-}
-
-/// \overload
-QList<const GraphicsItem *> GraphicsView::items() const
-{
-    if(d->scene)
-        return const_cast<const GraphicsScene *>(d->scene)->items();
-
-    return QList<const GraphicsItem *>();
 }
 
 /// Returns the number of items in the view's scene.
@@ -373,13 +352,7 @@ void GraphicsView::setCamera(GraphicsCamera *camera)
 }
 
 /// Returns the camera.
-GraphicsCamera* GraphicsView::camera()
-{
-    return d->camera;
-}
-
-/// \overload
-const GraphicsCamera* GraphicsView::camera() const
+GraphicsCamera* GraphicsView::camera() const
 {
     return d->camera;
 }
@@ -512,21 +485,9 @@ bool GraphicsView::deleteLight(GraphicsLight *light)
 }
 
 /// Returns a list of lights in the view.
-QList<GraphicsLight *> GraphicsView::lights()
+QList<GraphicsLight *> GraphicsView::lights() const
 {
     return d->lights;
-}
-
-/// \overload
-QList<const GraphicsLight *> GraphicsView::lights() const
-{
-    QList<const GraphicsLight *> lights;
-
-    foreach(const GraphicsLight *light, d->lights){
-        lights.append(light);
-    }
-
-    return lights;
 }
 
 /// Returns the number of lights in the view.
@@ -543,48 +504,24 @@ GraphicsLight* GraphicsView::light(int index) const
 
 // --- Selection ----------------------------------------------------------- //
 /// Returns the item at the window position (\p x, \p y).
-GraphicsItem* GraphicsView::itemAt(int x, int y)
+GraphicsItem* GraphicsView::itemAt(int x, int y) const
 {
     GraphicsRay ray = buildPickRay(x, y);
 
     return scene()->item(ray);
 }
 
-/// \overload
-const GraphicsItem* GraphicsView::itemAt(int x, int y) const
-{
-    return const_cast<GraphicsView *>(this)->itemAt(x, y);
-}
-
 /// Returns a list of all items under the window point (\p x, \p y).
-QList<GraphicsItem *> GraphicsView::itemsAt(int x, int y, bool sorted)
+QList<GraphicsItem *> GraphicsView::itemsAt(int x, int y, bool sorted) const
 {
     GraphicsRay ray = buildPickRay(x, y);
 
     return scene()->items(ray, sorted);
 }
 
-/// \overload
-QList<const GraphicsItem *> GraphicsView::itemsAt(int x, int y, bool sorted) const
-{
-    QList<const GraphicsItem *> items;
-
-    foreach(const GraphicsItem *item, const_cast<GraphicsView *>(this)->itemsAt(x, y, sorted)){
-        items.append(item);
-    }
-
-    return items;
-}
-
 // --- Overlay ------------------------------------------------------------- //
 /// Returns the overlay for the scene.
-GraphicsOverlay* GraphicsView::overlay()
-{
-    return d->overlay;
-}
-
-/// \overload
-const GraphicsOverlay* GraphicsView::overlay() const
+GraphicsOverlay* GraphicsView::overlay() const
 {
     return d->overlay;
 }

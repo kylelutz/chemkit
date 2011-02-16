@@ -36,7 +36,7 @@ class GraphicsProteinCoilItemPrivate
     public:
         int curveDegree;
         GraphicsFloat radius;
-        QList<const AminoAcid *> residues;
+        QList<AminoAcid *> residues;
 };
 
 // === GraphicsProteinCoilItem ============================================= //
@@ -60,7 +60,7 @@ GraphicsProteinCoilItem::GraphicsProteinCoilItem(const Protein *protein)
 }
 
 /// Creates a new protein coil item to display \p residues.
-GraphicsProteinCoilItem::GraphicsProteinCoilItem(const QList<const AminoAcid *> &residues)
+GraphicsProteinCoilItem::GraphicsProteinCoilItem(const QList<AminoAcid *> &residues)
     : GraphicsItem(ProteinCoilItem),
       d(new GraphicsProteinCoilItemPrivate)
 {

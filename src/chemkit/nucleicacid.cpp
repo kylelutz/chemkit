@@ -64,13 +64,7 @@ int NucleicAcid::size() const
 }
 
 /// Returns the molecule for the nucleic acid.
-Molecule* NucleicAcid::molecule()
-{
-    return d->molecule;
-}
-
-/// \overload
-const Molecule* NucleicAcid::molecule() const
+Molecule* NucleicAcid::molecule() const
 {
     return d->molecule;
 }
@@ -91,33 +85,15 @@ void NucleicAcid::removeChain(NucleicAcidChain *chain)
 }
 
 /// Returns the nucleic acid chain at \p index.
-NucleicAcidChain* NucleicAcid::chain(int index)
-{
-    return d->chains.value(index, 0);
-}
-
-/// \overload
-const NucleicAcidChain* NucleicAcid::chain(int index) const
+NucleicAcidChain* NucleicAcid::chain(int index) const
 {
     return d->chains.value(index, 0);
 }
 
 /// Returns a list of all the chains in the nucleic acid.
-QList<NucleicAcidChain *> NucleicAcid::chains()
+QList<NucleicAcidChain *> NucleicAcid::chains() const
 {
     return d->chains;
-}
-
-/// \overload
-QList<const NucleicAcidChain *> NucleicAcid::chains() const
-{
-    QList<const NucleicAcidChain *> chains;
-
-    foreach(const NucleicAcidChain *chain, d->chains){
-        chains.append(chain);
-    }
-
-    return chains;
 }
 
 /// Returns a list of all the chains in the nucleic acid.

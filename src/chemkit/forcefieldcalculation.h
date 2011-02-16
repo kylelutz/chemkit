@@ -52,8 +52,7 @@ class CHEMKIT_EXPORT ForceFieldCalculation
         // properties
         int type() const;
         bool isSetup() const;
-        ForceField* forceField();
-        const ForceField* forceField() const;
+        ForceField* forceField() const;
 
         // atoms
         const ForceFieldAtom* atom(int index) const;

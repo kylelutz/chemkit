@@ -43,8 +43,7 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsCamera
         ~GraphicsCamera();
 
         // properties
-        GraphicsView* view();
-        const GraphicsView* view() const;
+        GraphicsView* view() const;
 
         // position
         void setPosition(const GraphicsPoint &position);

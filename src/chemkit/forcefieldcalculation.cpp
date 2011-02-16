@@ -73,15 +73,9 @@ bool ForceFieldCalculation::isSetup() const
 }
 
 /// Returns the force field the calculation is a part of.
-ForceField* ForceFieldCalculation::forceField()
+ForceField* ForceFieldCalculation::forceField() const
 {
     return const_cast<ForceFieldAtom *>(d->atoms[0])->forceField();
-}
-
-/// \overload
-const ForceField* ForceFieldCalculation::forceField() const
-{
-    return d->atoms[0]->forceField();
 }
 
 // --- Atoms --------------------------------------------------------------- //

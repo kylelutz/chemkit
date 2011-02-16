@@ -37,14 +37,12 @@ class CHEMKIT_EXPORT NucleicAcidChain
 {
     public:
         // properties
-        NucleicAcid* nucleicAcid();
-        const NucleicAcid* nucleicAcid() const;
+        NucleicAcid* nucleicAcid() const;
 
         // structure
         void addResidue(Nucleotide *residue);
         void removeResidue(Nucleotide *residue);
-        QList<Nucleotide *> residues();
-        QList<const Nucleotide *> residues() const;
+        QList<Nucleotide *> residues() const;
         int residueCount() const;
         bool contains(const Nucleotide *residue) const;
         QString sequenceString() const;

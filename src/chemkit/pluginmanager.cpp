@@ -63,7 +63,7 @@ PluginManager::~PluginManager()
 // --- Properties ---------------------------------------------------------- //
 /// Returns the plugin with \p name. Returns \c 0 if no plugin with
 // \p name is loaded.
-Plugin* PluginManager::plugin(const QString &name)
+Plugin* PluginManager::plugin(const QString &name) const
 {
     foreach(Plugin *plugin, d->plugins){
         if(plugin->name() == name){
@@ -74,34 +74,10 @@ Plugin* PluginManager::plugin(const QString &name)
     return 0;
 }
 
-/// \overload
-const Plugin* PluginManager::plugin(const QString &name) const
-{
-    foreach(const Plugin *plugin, d->plugins){
-        if(plugin->name() == name){
-            return plugin;
-        }
-    }
-
-    return 0;
-}
-
 /// Returns a list of all the loaded plugins.
-QList<Plugin *> PluginManager::plugins()
+QList<Plugin *> PluginManager::plugins() const
 {
     return d->plugins;
-}
-
-/// \overload
-QList<const Plugin *> PluginManager::plugins() const
-{
-    QList<const Plugin *> plugins;
-
-    foreach(const Plugin *plugin, d->plugins){
-        plugins.append(plugin);
-    }
-
-    return plugins;
 }
 
 /// Returns the number of loaded plugins.

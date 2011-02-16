@@ -62,13 +62,7 @@ void GraphicsTool::setView(GraphicsView *view)
 
 /// Returns the view the tool is a part of. Returns \c 0 if the tool
 /// is not in any view.
-GraphicsView* GraphicsTool::view()
-{
-    return d->view;
-}
-
-/// \overload
-const GraphicsView* GraphicsTool::view() const
+GraphicsView* GraphicsTool::view() const
 {
     return d->view;
 }

@@ -38,7 +38,7 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsProteinCoilItem : public GraphicsItem
     public:
         // construction and destruction
         GraphicsProteinCoilItem(const Protein *protein);
-        GraphicsProteinCoilItem(const QList<const AminoAcid *> &residues);
+        GraphicsProteinCoilItem(const QList<AminoAcid *> &residues);
         ~GraphicsProteinCoilItem();
 
         // properties

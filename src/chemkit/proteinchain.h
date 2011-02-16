@@ -41,19 +41,15 @@ class CHEMKIT_EXPORT ProteinChain
     public:
         // properties
         int size() const;
-        Protein* protein();
-        const Protein* protein() const;
-        Molecule* molecule();
-        const Molecule* molecule() const;
+        Protein* protein() const;
+        Molecule* molecule() const;
 
         // structure
         void addResidue(AminoAcid *residue);
         AminoAcid* addNewResidue();
         void removeResidue(AminoAcid *residue);
-        QList<AminoAcid *> residues();
-        QList<const AminoAcid *> residues() const;
-        AminoAcid* residue(int index);
-        const AminoAcid* residue(int index) const;
+        QList<AminoAcid *> residues() const;
+        AminoAcid* residue(int index) const;
         int residueCount() const;
         int residueCount(AminoAcid::AminoAcidType type) const;
         QString sequenceString() const;

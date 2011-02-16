@@ -36,7 +36,7 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsProteinSheetItem : public GraphicsItem
 {
     public:
         // construction and destruction
-        GraphicsProteinSheetItem(const QList<const AminoAcid *> &residues);
+        GraphicsProteinSheetItem(const QList<AminoAcid *> &residues);
         ~GraphicsProteinSheetItem();
 
         // drawing

@@ -72,13 +72,7 @@ int Residue::size() const
 }
 
 /// Returns the molecule the residue is a part of.
-Molecule* Residue::molecule()
-{
-    return d->molecule;
-}
-
-/// \overload
-const Molecule* Residue::molecule() const
+Molecule* Residue::molecule() const
 {
     return d->molecule;
 }
@@ -107,21 +101,9 @@ void Residue::removeAtom(Atom *atom)
 }
 
 /// Returns a list of all the atoms in the residue.
-QList<Atom *> Residue::atoms()
+QList<Atom *> Residue::atoms() const
 {
     return d->atoms;
-}
-
-/// \overload
-QList<const Atom *> Residue::atoms() const
-{
-    QList<const Atom *> atoms;
-
-    foreach(const Atom *atom, const_cast<Residue *>(this)->atoms()){
-        atoms.append(atom);
-    }
-
-    return atoms;
 }
 
 /// Returns the number of atoms in the residue.
@@ -131,7 +113,7 @@ int Residue::atomCount() const
 }
 
 /// Returns a list of all the bonds in the residue.
-QList<Bond *> Residue::bonds()
+QList<Bond *> Residue::bonds() const
 {
     QList<Bond *> bonds;
 
@@ -143,18 +125,6 @@ QList<Bond *> Residue::bonds()
                 bonds.append(bond);
             }
         }
-    }
-
-    return bonds;
-}
-
-/// \overload
-QList<const Bond *> Residue::bonds() const
-{
-    QList<const Bond *> bonds;
-
-    foreach(const Bond *bond, const_cast<Residue *>(this)->bonds()){
-        bonds.append(bond);
     }
 
     return bonds;
@@ -172,7 +142,7 @@ bool Residue::contains(const Atom *atom) const
     if(atom->residue() == this){
         return true;
     }
-    else if(atoms().contains(atom)){
+    else if(d->atoms.contains(const_cast<Atom *>(atom))){
         return true;
     }
     else{
@@ -183,7 +153,7 @@ bool Residue::contains(const Atom *atom) const
 /// Returns \c true if the residue contains the bond.
 bool Residue::contains(const Bond *bond) const
 {
-    return bonds().contains(bond);
+    return bonds().contains(const_cast<Bond *>(bond));
 }
 
 // --- Atom Types ---------------------------------------------------------- //
@@ -200,15 +170,9 @@ QString Residue::atomType(const Atom *atom) const
 }
 
 /// Returns the atom with type or 0 if no atom has type.
-Atom* Residue::atom(const QString &type)
+Atom* Residue::atom(const QString &type) const
 {
     return const_cast<Atom *>(d->types.value(type, 0));
-}
-
-/// \overload
-const Atom* Residue::atom(const QString &type) const
-{
-    return d->types.value(type, 0);
 }
 
 } // end chemkit namespace

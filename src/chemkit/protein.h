@@ -42,18 +42,15 @@ class CHEMKIT_EXPORT Protein
 
         // properties
         int size() const;
-        Molecule* molecule();
-        const Molecule* molecule() const;
+        Molecule* molecule() const;
 
         // structure
         ProteinChain* addChain();
         void removeChain(ProteinChain *chain);
-        QList<ProteinChain *> chains();
-        QList<const ProteinChain *> chains() const;
-        ProteinChain* chain(int index);
-        const ProteinChain* chain(int index) const;
+        QList<ProteinChain *> chains() const;
+        ProteinChain* chain(int index) const;
         int chainCount() const;
-        QList<const AminoAcid *> residues() const;
+        QList<AminoAcid *> residues() const;
         int residueCount() const;
 
     private:

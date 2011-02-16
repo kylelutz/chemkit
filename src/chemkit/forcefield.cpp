@@ -133,21 +133,9 @@ int ForceField::size() const
 }
 
 /// Returns a list of all the atoms in the force field.
-QList<ForceFieldAtom *> ForceField::atoms()
+QList<ForceFieldAtom *> ForceField::atoms() const
 {
     return d->atoms;
-}
-
-/// \overload
-QList<const ForceFieldAtom *> ForceField::atoms() const
-{
-    QList<const ForceFieldAtom *> atoms;
-
-    foreach(const ForceFieldAtom *atom, d->atoms){
-        atoms.append(atom);
-    }
-
-    return atoms;
 }
 
 /// Returns the number of atoms in the force field.
@@ -157,33 +145,15 @@ int ForceField::atomCount() const
 }
 
 /// Returns the atom at index.
-ForceFieldAtom* ForceField::atom(int index)
-{
-    return d->atoms.value(index, 0);
-}
-
-/// \overload
-const ForceFieldAtom* ForceField::atom(int index) const
+ForceFieldAtom* ForceField::atom(int index) const
 {
     return d->atoms.value(index, 0);
 }
 
 /// Returns the force field atom that represents atom.
-ForceFieldAtom* ForceField::atom(const Atom *atom)
+ForceFieldAtom* ForceField::atom(const Atom *atom) const
 {
     foreach(ForceFieldAtom *forceFieldAtom, d->atoms){
-        if(forceFieldAtom->atom() == atom){
-            return forceFieldAtom;
-        }
-    }
-
-    return 0;
-}
-
-/// \overload
-const ForceFieldAtom* ForceField::atom(const Atom *atom) const
-{
-    foreach(const ForceFieldAtom *forceFieldAtom, d->atoms){
         if(forceFieldAtom->atom() == atom){
             return forceFieldAtom;
         }
@@ -311,21 +281,9 @@ void ForceField::removeCalculation(ForceFieldCalculation *calculation)
 }
 
 /// Returns a list of all the calculations in the force field.
-QList<ForceFieldCalculation *> ForceField::calculations()
+QList<ForceFieldCalculation *> ForceField::calculations() const
 {
     return d->calculations;
-}
-
-/// \overload
-QList<const ForceFieldCalculation *> ForceField::calculations() const
-{
-    QList<const ForceFieldCalculation *> calculations;
-
-    foreach(const ForceFieldCalculation *calculation, d->calculations){
-        calculations.append(calculation);
-    }
-
-    return calculations;
 }
 
 /// Returns the number of calculations in the force field.

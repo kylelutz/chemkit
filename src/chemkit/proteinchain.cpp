@@ -65,25 +65,13 @@ int ProteinChain::size() const
 }
 
 /// Returns the protein the chain is a part of.
-Protein* ProteinChain::protein()
-{
-    return d->protein;
-}
-
-/// \overload
-const Protein* ProteinChain::protein() const
+Protein* ProteinChain::protein() const
 {
     return d->protein;
 }
 
 /// Returns the molecule for the protein.
-Molecule* ProteinChain::molecule()
-{
-    return d->protein->molecule();
-}
-
-/// \overload
-const Molecule* ProteinChain::molecule() const
+Molecule* ProteinChain::molecule() const
 {
     return d->protein->molecule();
 }
@@ -114,31 +102,13 @@ void ProteinChain::removeResidue(AminoAcid *residue)
 }
 
 /// Returns a list of all the amino acid residues in the chain.
-QList<AminoAcid *> ProteinChain::residues()
+QList<AminoAcid *> ProteinChain::residues() const
 {
     return d->residues;
 }
 
-/// \overload
-QList<const AminoAcid *> ProteinChain::residues() const
-{
-    QList<const AminoAcid *> residues;
-
-    foreach(const AminoAcid *residue, d->residues){
-        residues.append(residue);
-    }
-
-    return residues;
-}
-
 /// Returns the amino acid residue at index.
-AminoAcid* ProteinChain::residue(int index)
-{
-    return d->residues.value(index, 0);
-}
-
-/// \overload
-const AminoAcid* ProteinChain::residue(int index) const
+AminoAcid* ProteinChain::residue(int index) const
 {
     return d->residues.value(index, 0);
 }

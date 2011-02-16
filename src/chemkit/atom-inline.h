@@ -35,13 +35,7 @@ inline Element Atom::element() const
 }
 
 /// Returns the molecule the atom is a part of.
-inline Molecule* Atom::molecule()
-{
-    return m_molecule;
-}
-
-/// \overload
-inline const Molecule* Atom::molecule() const
+inline Molecule* Atom::molecule() const
 {
     return m_molecule;
 }

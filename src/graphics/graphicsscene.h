@@ -43,21 +43,16 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsScene
         // properties
         int size() const;
         bool isEmpty() const;
-        QList<GraphicsView *> views();
-        QList<const GraphicsView *> views() const;
+        QList<GraphicsView *> views() const;
 
         // items
         void addItem(GraphicsItem *item);
         bool removeItem(GraphicsItem *item);
         bool deleteItem(GraphicsItem *item);
-        GraphicsItem* item(int index);
-        const GraphicsItem* item(int index) const;
-        GraphicsItem* item(const GraphicsRay &ray);
-        const GraphicsItem* item(const GraphicsRay &ray) const;
-        QList<GraphicsItem *> items();
-        QList<const GraphicsItem *> items() const;
-        QList<GraphicsItem *> items(const GraphicsRay &ray, bool sorted = true);
-        QList<const GraphicsItem *> items(const GraphicsRay &ray, bool sorted = true) const;
+        GraphicsItem* item(int index) const;
+        GraphicsItem* item(const GraphicsRay &ray) const;
+        QList<GraphicsItem *> items() const;
+        QList<GraphicsItem *> items(const GraphicsRay &ray, bool sorted = true) const;
         int itemCount() const;
 
     private:
