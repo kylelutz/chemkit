@@ -506,6 +506,10 @@ GraphicsLight* GraphicsView::light(int index) const
 /// Returns the item at the window position (\p x, \p y).
 GraphicsItem* GraphicsView::itemAt(int x, int y) const
 {
+    if(!d->scene){
+        return 0;
+    }
+
     GraphicsRay ray = buildPickRay(x, y);
 
     return scene()->item(ray);
@@ -514,6 +518,10 @@ GraphicsItem* GraphicsView::itemAt(int x, int y) const
 /// Returns a list of all items under the window point (\p x, \p y).
 QList<GraphicsItem *> GraphicsView::itemsAt(int x, int y, bool sorted) const
 {
+    if(!d->scene){
+        return QList<GraphicsItem *>();
+    }
+
     GraphicsRay ray = buildPickRay(x, y);
 
     return scene()->items(ray, sorted);
@@ -579,6 +587,10 @@ void GraphicsView::initializeGL()
 
 void GraphicsView::paintGL()
 {
+    if(!d->scene){
+        return;
+    }
+
     d->shader->bind();
 
     // clear
