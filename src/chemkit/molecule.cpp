@@ -401,12 +401,12 @@ bool Molecule::contains(const Atom *atom) const
     return atom->molecule() == this;
 }
 
-/// Returns \c true if the molecule contains an atom with
-/// \p atomicNumber.
-bool Molecule::contains(int atomicNumber) const
+/// Returns \c true if the molecule contains an atom of the given
+/// \p element.
+bool Molecule::contains(const Element &element) const
 {
     foreach(const Atom *atom, m_atoms){
-        if(atom->is(atomicNumber)){
+        if(atom->is(element)){
             return true;
         }
     }

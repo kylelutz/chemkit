@@ -99,7 +99,7 @@ class CHEMKIT_EXPORT Molecule
         int atomCount(const Element &element) const;
         int indexOf(const Atom *atom) const;
         bool contains(const Atom *atom) const;
-        bool contains(int atomicNumber) const;
+        bool contains(const Element &element) const;
         Bond* addBond(Atom *a, Atom *b, int order = Bond::Single);
         Bond* addBond(int a, int b, int order = Bond::Single);
         void removeBond(Bond *bond);
