@@ -34,6 +34,7 @@ namespace chemkit {
 
 class Atom;
 class Ring;
+class Element;
 class Residue;
 class Fragment;
 class Molecule;
@@ -65,9 +66,9 @@ class CHEMKIT_EXPORT Bond
 
         // structure
         bool contains(const Atom *atom) const;
-        bool contains(int atomicNumber) const;
+        bool contains(const Element &element) const;
         bool containsBoth(const Atom *a, const Atom *b) const;
-        bool containsBoth(int a, int b) const;
+        bool containsBoth(const Element &a, const Element &b) const;
         bool isTerminal() const;
 
         // ring perception

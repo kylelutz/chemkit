@@ -142,11 +142,11 @@ bool Bond::contains(const Atom *atom) const
     return m_atom1 == atom || m_atom2 == atom;
 }
 
-/// Returns \c true if the bond contains an atom with the atomic
-/// number.
-bool Bond::contains(int atomicNumber) const
+/// Returns \c true if the bond contains an atom of the given
+/// \p element.
+bool Bond::contains(const Element &element) const
 {
-    return m_atom1->is(atomicNumber) || m_atom2->is(atomicNumber);
+    return m_atom1->is(element) || m_atom2->is(element);
 }
 
 /// Returns \c true if the bond contains both atom \p a and atom
@@ -156,8 +156,8 @@ bool Bond::containsBoth(const Atom *a, const Atom *b) const
     return contains(a) && contains(b);
 }
 
-/// Returns \c true if the bond contains an atom with atomic number
-/// \p a and an atom with atomic number \p b.
+/// Returns \c true if the bond contains an atom of the element \p a
+/// and an atom of the element \p b.
 ///
 /// For example, to check if this is a carbonyl bond you could use:
 /// \code
@@ -165,7 +165,7 @@ bool Bond::containsBoth(const Atom *a, const Atom *b) const
 ///     // it is a carbonyl
 /// }
 /// \endcode
-bool Bond::containsBoth(int a, int b) const
+bool Bond::containsBoth(const Element &a, const Element &b) const
 {
     return (m_atom1->is(a) && m_atom2->is(b)) || (m_atom2->is(a) && m_atom1->is(b));
 }
