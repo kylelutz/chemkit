@@ -408,6 +408,12 @@ inline bool StaticVector<T, N>::operator==(const StaticVector<T, N> &vector) con
 }
 
 // --- Related Functions --------------------------------------------------- //
+template<typename T, int N>
+inline StaticVector<T, N> operator*(Float scalar, const StaticVector<T, N> &vector)
+{
+    return vector * scalar;
+}
+
 #ifndef QT_NO_DEBUG_STREAM
 template<typename T, int N>
 inline QDebug operator<<(QDebug debug, const StaticVector<T, N> &vector)
