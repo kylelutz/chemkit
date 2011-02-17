@@ -409,7 +409,7 @@ inline bool StaticVector<T, N>::operator==(const StaticVector<T, N> &vector) con
 
 // --- Related Functions --------------------------------------------------- //
 template<typename T, int N>
-inline StaticVector<T, N> operator*(Float scalar, const StaticVector<T, N> &vector)
+inline StaticVector<T, N> operator*(T scalar, const StaticVector<T, N> &vector)
 {
     return vector * scalar;
 }
