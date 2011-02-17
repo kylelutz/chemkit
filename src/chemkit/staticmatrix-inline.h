@@ -181,6 +181,14 @@ inline StaticMatrix<T, R, C> StaticMatrix<T, R, C>::inverted() const
 }
 
 template<typename T, int R, int C>
+inline StaticMatrix<T, R, R> StaticMatrix<T, R, C>::multiply(T scalar) const
+{
+    for(int i = 0; i < R * C; i++){
+        m_data[i] *= scalar;
+    }
+}
+
+template<typename T, int R, int C>
 inline StaticMatrix<T, R, R> StaticMatrix<T, R, C>::multiply(const StaticMatrix<T, C, R> &matrix) const
 {
     StaticMatrix<T, R, R> product;
@@ -201,6 +209,12 @@ template<typename T, int R, int C>
 inline T& StaticMatrix<T, R, C>::operator()(int row, int column)
 {
     return value(row, column);
+}
+
+template<typename T, int R, int C>
+inline StaticMatrix<T, R, C> StaticMatrix<T, R, C>::operator*(T scalar) const
+{
+    return multiply(scalar);
 }
 
 template<typename T, int R, int C>
@@ -254,6 +268,13 @@ inline StaticMatrix<T, R, C> StaticMatrix<T, R, C>::identity()
     }
 
     return matrix;
+}
+
+// --- Related Functions --------------------------------------------------- //
+template<typename T, int R, int C>
+inline StaticMatrix<T, R, C> operator*(T scalar, const StaticMatrix<T, R, C> &matrix)
+{
+    return matrix * scalar;
 }
 
 // === StaticMatrix<T, N, N> =============================================== //
@@ -471,6 +492,14 @@ inline StaticVector<T, N> StaticMatrix<T, N, N>::multiply(const StaticVector<T, 
 }
 
 template<typename T, int N>
+inline StaticMatrix<T, N, N> StaticMatrix<T, N, N>::multiply(T scalar) const
+{
+    for(int i = 0; i < N * N; i++){
+        m_data[i] *= scalar;
+    }
+}
+
+template<typename T, int N>
 inline StaticMatrix<T, N, N> StaticMatrix<T, N, N>::multiply(const StaticMatrix<T, N, N> &matrix) const
 {
     StaticMatrix<T, N, N> product;
@@ -512,6 +541,12 @@ template<typename T, int N>
 inline T& StaticMatrix<T, N, N>::operator()(int row, int column)
 {
     return value(row, column);
+}
+
+template<typename T, int N>
+inline StaticMatrix<T, N, N> StaticMatrix<T, N, N>::operator*(T scalar) const
+{
+    return multiply(scalar);
 }
 
 template<typename T, int N>
@@ -558,6 +593,13 @@ inline StaticMatrix<T, N, N> StaticMatrix<T, N, N>::identity()
     }
 
     return matrix;
+}
+
+// --- Related Functions --------------------------------------------------- //
+template<typename T, int N>
+inline StaticMatrix<T, N, N> operator*(T scalar, const StaticMatrix<T, N, N> &matrix)
+{
+    return matrix * scalar;
 }
 
 } // end chemkit namespace
