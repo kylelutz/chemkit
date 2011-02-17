@@ -466,6 +466,13 @@ inline GenericMatrix<T> GenericMatrix<T>::identity(int rowCount, int columnCount
     return matrix;
 }
 
+// --- Related Functions --------------------------------------------------- //
+template<typename T>
+inline GenericMatrix<T> operator*(const T scalar, const GenericMatrix<T> &matrix)
+{
+    return matrix * scalar;
+}
+
 } // end chemkit namespace
 
 #endif // CHEMKIT_GENERICMATRIX_INLINE_H
