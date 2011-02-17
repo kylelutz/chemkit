@@ -45,6 +45,7 @@ class MmffBondStrechCalculation : public MmffCalculation
 
         bool setup(const MmffParameters *parameters);
         chemkit::Float energy() const;
+        QVector<chemkit::Vector> gradient() const;
 };
 
 class MmffAngleBendCalculation : public MmffCalculation
@@ -54,6 +55,7 @@ class MmffAngleBendCalculation : public MmffCalculation
 
         bool setup(const MmffParameters *parameters);
         chemkit::Float energy() const;
+        QVector<chemkit::Vector> gradient() const;
 };
 
 class MmffStrechBendCalculation : public MmffCalculation
@@ -63,6 +65,7 @@ class MmffStrechBendCalculation : public MmffCalculation
 
         bool setup(const MmffParameters *parameters);
         chemkit::Float energy() const;
+        QVector<chemkit::Vector> gradient() const;
 };
 
 class MmffOutOfPlaneBendingCalculation : public MmffCalculation
@@ -72,6 +75,7 @@ class MmffOutOfPlaneBendingCalculation : public MmffCalculation
 
         bool setup(const MmffParameters *parameters);
         chemkit::Float energy() const;
+        QVector<chemkit::Vector> gradient() const;
 };
 
 class MmffTorsionCalculation : public MmffCalculation
@@ -81,6 +85,7 @@ class MmffTorsionCalculation : public MmffCalculation
 
         bool setup(const MmffParameters *parameters);
         chemkit::Float energy() const;
+        QVector<chemkit::Vector> gradient() const;
 };
 
 class MmffVanDerWaalsCalculation : public MmffCalculation
@@ -90,6 +95,7 @@ class MmffVanDerWaalsCalculation : public MmffCalculation
 
         bool setup(const MmffParameters *parameters);
         chemkit::Float energy() const;
+        QVector<chemkit::Vector> gradient() const;
 };
 
 class MmffElectrostaticCalculation : public MmffCalculation
@@ -99,6 +105,7 @@ class MmffElectrostaticCalculation : public MmffCalculation
 
         bool setup(const MmffParameters *parameters);
         chemkit::Float energy() const;
+        QVector<chemkit::Vector> gradient() const;
 };
 
 #endif // MMFFCALCULATION_H

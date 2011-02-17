@@ -57,6 +57,8 @@ MmffForceField::MmffForceField()
         addParameterSet("mmff94", dataPath + "mmff94.prm");
         setParameterSet("mmff94");
     }
+
+    setFlags(chemkit::ForceField::AnalyticalGradient);
 }
 
 MmffForceField::~MmffForceField()

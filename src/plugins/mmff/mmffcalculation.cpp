@@ -80,6 +80,29 @@ chemkit::Float MmffBondStrechCalculation::energy() const
     return 143.9325 * (kb / 2) * (dr*dr) * (1 + cs * dr + ((7.0/12.0)*(cs*cs)) * (dr*dr));
 }
 
+QVector<chemkit::Vector> MmffBondStrechCalculation::gradient() const
+{
+    const MmffAtom *a = atom(0);
+    const MmffAtom *b = atom(1);
+
+    chemkit::Float kb = parameter(0);
+    chemkit::Float r0 = parameter(1);
+
+    chemkit::Float r = distance(a, b);
+    chemkit::Float dr = r - r0;
+    chemkit::Float cs = -2.0; // cubic strech constant
+
+    // dE/dr
+    chemkit::Float de_dr = 143.9325 * kb * dr * (1 + cs * dr + (7.0/12.0 * (cs*cs) * (dr*dr)) + 0.5 * dr * (cs + (14.0/12.0 * (cs*cs) * dr)));
+
+    QVector<chemkit::Vector> gradient = distanceGradient(a, b);
+
+    gradient[0] *= de_dr;
+    gradient[1] *= de_dr;
+
+    return gradient;
+}
+
 // === MmffAngleBendCalculation ============================================ //
 MmffAngleBendCalculation::MmffAngleBendCalculation(const MmffAtom *a,
                                                    const MmffAtom *b,
@@ -122,6 +145,31 @@ chemkit::Float MmffAngleBendCalculation::energy() const
 
     // equation 3
     return 0.043844 * (ka / 2.0) * pow(dt, 2) * (1 + cb * dt);
+}
+
+QVector<chemkit::Vector> MmffAngleBendCalculation::gradient() const
+{
+    const MmffAtom *a = atom(0);
+    const MmffAtom *b = atom(1);
+    const MmffAtom *c = atom(2);
+
+    chemkit::Float ka = parameter(0);
+    chemkit::Float t0 = parameter(1);
+
+    chemkit::Float cb = -0.007; // cubic bend constant
+    chemkit::Float t = bondAngle(a, b, c);
+    chemkit::Float dt = t - t0;
+
+    // dE/dt
+    chemkit::Float de_dt = 0.043844 * ka * dt * (1 + cb * dt + 0.5 * cb * dt);
+
+    QVector<chemkit::Vector> gradient = bondAngleGradient(a, b, c);
+
+    gradient[0] *= de_dt;
+    gradient[1] *= de_dt;
+    gradient[2] *= de_dt;
+
+    return gradient;
 }
 
 // === MmffStrechBendCalculation =========================================== //
@@ -204,6 +252,38 @@ chemkit::Float MmffStrechBendCalculation::energy() const
     return 2.51210 * (kba_ijk * dr_ab + kba_kji * dr_bc) * dt;
 }
 
+QVector<chemkit::Vector> MmffStrechBendCalculation::gradient() const
+{
+    const MmffAtom *a = atom(0);
+    const MmffAtom *b = atom(1);
+    const MmffAtom *c = atom(2);
+
+    chemkit::Float kba_ijk = parameter(0);
+    chemkit::Float kba_kji = parameter(1);
+    chemkit::Float r0_ab = parameter(2);
+    chemkit::Float r0_bc = parameter(3);
+    chemkit::Float t0 = parameter(4);
+
+    chemkit::Float r_ab = distance(a, b);
+    chemkit::Float r_bc = distance(b, c);
+    chemkit::Float dr_ab = r_ab - r0_ab;
+    chemkit::Float dr_bc = r_bc - r0_bc;
+    chemkit::Float t = bondAngle(a, b, c);
+    chemkit::Float dt = t - t0;
+
+    QVector<chemkit::Vector> gradient(3);
+
+    QVector<chemkit::Vector> distanceGradientAB = distanceGradient(a, b);
+    QVector<chemkit::Vector> distanceGradientBC = distanceGradient(b, c);
+    QVector<chemkit::Vector> bondAngleGradientABC = bondAngleGradient(a, b, c);
+
+    gradient[0] = (distanceGradientAB[0] * kba_ijk * dt + bondAngleGradientABC[0] * (kba_ijk * dr_ab + kba_kji * dr_bc)) * 2.51210;
+    gradient[1] = ((distanceGradientAB[1] * kba_ijk + distanceGradientBC[0] * kba_kji) * dt + bondAngleGradientABC[1] * (kba_ijk * dr_ab + kba_kji * dr_bc)) * 2.51210;
+    gradient[2] = ((distanceGradientBC[1] * kba_kji) * dt + bondAngleGradientABC[2] * (kba_ijk * dr_ab + kba_kji * dr_bc)) * 2.51210;
+
+    return gradient;
+}
+
 // === MmffOutOfPlaneBendingCalculation ==================================== //
 MmffOutOfPlaneBendingCalculation::MmffOutOfPlaneBendingCalculation(const MmffAtom *a,
                                                                    const MmffAtom *b,
@@ -245,6 +325,29 @@ chemkit::Float MmffOutOfPlaneBendingCalculation::energy() const
 
     // equation 6
     return 0.043844 * (koop / 2.0) * (angle*angle);
+}
+
+QVector<chemkit::Vector> MmffOutOfPlaneBendingCalculation::gradient() const
+{
+    const MmffAtom *a = atom(0);
+    const MmffAtom *b = atom(1);
+    const MmffAtom *c = atom(2);
+    const MmffAtom *d = atom(3);
+
+    chemkit::Float angle = wilsonAngle(a, b, c, d);
+    chemkit::Float koop = parameter(0);
+
+    // dE/dw
+    chemkit::Float de_dw = 0.043844 * koop * angle;
+
+    QVector<chemkit::Vector> gradient = wilsonAngleGradient(a, b, c, d);
+
+    gradient[0] *= de_dw;
+    gradient[1] *= de_dw;
+    gradient[2] *= de_dw;
+    gradient[3] *= de_dw;
+
+    return gradient;
 }
 
 // === MmffTorsionCalculation ============================================== //
@@ -293,6 +396,31 @@ chemkit::Float MmffTorsionCalculation::energy() const
 
     // equation 7
     return 0.5 * (V1 * (1.0 + cos(angle)) + V2 * (1.0 - cos(2.0 * angle)) + V3 * (1.0 + cos(3.0 * angle)));
+}
+
+QVector<chemkit::Vector> MmffTorsionCalculation::gradient() const
+{
+    const MmffAtom *a = atom(0);
+    const MmffAtom *b = atom(1);
+    const MmffAtom *c = atom(2);
+    const MmffAtom *d = atom(3);
+
+    chemkit::Float phi = torsionAngleRadians(a, b, c, d);
+    chemkit::Float V1 = parameter(0);
+    chemkit::Float V2 = parameter(1);
+    chemkit::Float V3 = parameter(2);
+
+    // dE/dphi
+    chemkit::Float de_dphi = 0.5 * (-V1 * sin(phi) + 2 * V2 * sin(2 * phi) - 3 * V3 * sin(3 * phi));
+
+    QVector<chemkit::Vector> gradient = torsionAngleGradientRadians(a, b, c, d);
+
+    gradient[0] *= de_dphi;
+    gradient[1] *= de_dphi;
+    gradient[2] *= de_dphi;
+    gradient[3] *= de_dphi;
+
+    return gradient;
 }
 
 // === MmffVanDerWaalsCalculation ========================================== //
@@ -370,6 +498,28 @@ chemkit::Float MmffVanDerWaalsCalculation::energy() const
     return eps * pow(((1.07 * rs) / (r + 0.07 * rs)), 7) * (((1.12 * pow(rs, 7)) / (pow(r, 7) + 0.12 * pow(rs, 7))) - 2);
 }
 
+QVector<chemkit::Vector> MmffVanDerWaalsCalculation::gradient() const
+{
+    const MmffAtom *a = atom(0);
+    const MmffAtom *b = atom(1);
+
+    chemkit::Float rs = parameter(0);
+    chemkit::Float eps = parameter(1);
+    chemkit::Float r = distance(a, b);
+
+    // dE/dr
+    chemkit::Float de_dr = 7 * eps * pow(1.07 * rs / (r + 0.07 * rs), 6) *
+                           ((-1.07 * rs / pow(r + 0.07 * rs, 2)) * (1.12 * pow(rs, 7) / (pow(r, 7) + 0.12 * pow(rs, 7)) - 2) +
+                           (-1.12 * pow(rs, 7) * pow(r, 6) / pow(pow(r, 7) + 0.12 * pow(rs, 7), 2)) * (1.07 * rs / (r + 0.07 * rs)));
+
+    QVector<chemkit::Vector> gradient = distanceGradient(a, b);
+
+    gradient[0] *= de_dr;
+    gradient[1] *= de_dr;
+
+    return gradient;
+}
+
 // === MmffElectrostaticCalculation ======================================== //
 MmffElectrostaticCalculation::MmffElectrostaticCalculation(const MmffAtom *a,
                                                            const MmffAtom *b)
@@ -417,4 +567,27 @@ chemkit::Float MmffElectrostaticCalculation::energy() const
 
     // equation 13
     return ((332.0716 * qa * qb) / (e * (r + d))) * oneFourScaling;
+}
+
+QVector<chemkit::Vector> MmffElectrostaticCalculation::gradient() const
+{
+    const chemkit::ForceFieldAtom *a = atom(0);
+    const chemkit::ForceFieldAtom *b = atom(1);
+
+    chemkit::Float qa = parameter(0);
+    chemkit::Float qb = parameter(1);
+    chemkit::Float oneFourScaling = parameter(2);
+
+    chemkit::Float r = distance(a, b);
+    chemkit::Float e = 1.0; // dielectric constant
+    chemkit::Float d = 0.05; // electrostatic buffering constant
+
+    chemkit::Float de_dr = 332.0716 * qa * qb * oneFourScaling * (-1.0 / (e * pow(r + d, 2)));
+
+    QVector<chemkit::Vector> gradient = distanceGradient(a, b);
+
+    gradient[0] *= de_dr;
+    gradient[1] *= de_dr;
+
+    return gradient;
 }
