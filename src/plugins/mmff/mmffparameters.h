@@ -27,6 +27,8 @@
 
 #include "mmffatom.h"
 
+class MmffParametersData;
+
 struct MmffBondStrechParameters
 {
     chemkit::Float kb;
@@ -124,6 +126,9 @@ class MmffParameters
         // error handling
         QString errorString() const;
 
+        // constants
+        const static int MaxAtomType = 99;
+
     private:
         const MmffBondStrechParameters* bondStrechParameters(int bondType, int typeA, int typeB) const;
         const MmffBondStrechParameters* empiricalBondStrechParameters(int atomicNumberA, int atomicNumberB) const;
@@ -147,17 +152,7 @@ class MmffParameters
     private:
         QString m_fileName;
         QString m_errorString;
-        QMap<int, MmffBondStrechParameters *> m_bondStrechParameters;
-        QMap<int, MmffAngleBendParameters *> m_angleBendParameters;
-        QMap<int, MmffStrechBendParameters *> m_strechBendParameters;
-        QList<MmffDefaultStrechBendParameters *> m_defaultStrechBendParameters;
-        QMap<int, MmffOutOfPlaneBendingParameters *> m_outOfPlaneBendingParameters;
-        QMap<int, MmffTorsionParameters *> m_torsionParameters;
-        QVector<MmffVanDerWaalsParameters *> m_vanDerWaalsParameters;
-        QList<MmffChargeParameters *> m_chargeParameters;
-        QVector<MmffPartialChargeParameters *> m_partialChargeParameters;
-
-        const static int MaxAtomType = 99;
+        MmffParametersData *d;
 };
 
 #endif // MMFFPARAMETERS_H

@@ -63,6 +63,7 @@ MmffForceField::MmffForceField()
 
 MmffForceField::~MmffForceField()
 {
+    delete m_parameters;
 }
 
 // --- Atoms --------------------------------------------------------------- //
@@ -86,20 +87,13 @@ const MmffAtom* MmffForceField::atom(const chemkit::Atom *atom) const
 bool MmffForceField::setup()
 {
     if(!m_parameters || m_parameters->fileName() != parameterFile()){
-        if(m_parametersCache.contains(parameterFile())){
-            m_parameters = m_parametersCache[parameterFile()];
-        }
-        else{
-            m_parameters = new MmffParameters;
-            bool ok = m_parameters->read(parameterFile());
-            if(!ok){
-                setErrorString(QString("Failed to load parameters: %1").arg(m_parameters->errorString()));
-                delete m_parameters;
-                m_parameters = 0;
-                return false;
-            }
-
-            m_parametersCache.insert(parameterFile(), m_parameters);
+        m_parameters = new MmffParameters;
+        bool ok = m_parameters->read(parameterFile());
+        if(!ok){
+            setErrorString(QString("Failed to load parameters: %1").arg(m_parameters->errorString()));
+            delete m_parameters;
+            m_parameters = 0;
+            return false;
         }
     }
 
@@ -429,5 +423,3 @@ bool MmffForceField::atomsWithinTwoBonds(const chemkit::Atom *a, const chemkit::
 
     return false;
 }
-
-QHash<QString, MmffParameters *> MmffForceField::m_parametersCache;

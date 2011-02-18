@@ -20,31 +20,39 @@
 **
 ******************************************************************************/
 
-#ifndef MMFFPLUGIN_H
-#define MMFFPLUGIN_H
+#ifndef MMFFPARAMETERSDATA_H
+#define MMFFPARAMETERSDATA_H
 
 #include <QtCore>
 
-#include <chemkit/plugin.h>
-#include <chemkit/forcefield.h>
+#include "mmffparameters.h"
 
-class MmffParametersData;
-
-class MmffPlugin : public chemkit::Plugin
+class MmffParametersData
 {
-    Q_OBJECT
-
     public:
-        MmffPlugin();
-        ~MmffPlugin();
+        // construction and destruction
+        MmffParametersData();
 
-        void storeParameters(const QString &name, MmffParametersData *parameters);
-        MmffParametersData* parameters(const QString &name) const;
-
-        static chemkit::ForceField* createMmffForceField();
+        // reference counting
+        void ref();
+        void deref();
 
     private:
-        QHash<QString, MmffParametersData *> m_parametersCache;
+        ~MmffParametersData();
+
+    public:
+        QMap<int, MmffBondStrechParameters *> bondStrechParameters;
+        QMap<int, MmffAngleBendParameters *> angleBendParameters;
+        QMap<int, MmffStrechBendParameters *> strechBendParameters;
+        QList<MmffDefaultStrechBendParameters *> defaultStrechBendParameters;
+        QMap<int, MmffOutOfPlaneBendingParameters *> outOfPlaneBendingParameters;
+        QMap<int, MmffTorsionParameters *> torsionParameters;
+        QVector<MmffVanDerWaalsParameters *> vanDerWaalsParameters;
+        QList<MmffChargeParameters *> chargeParameters;
+        QVector<MmffPartialChargeParameters *> partialChargeParameters;
+
+    private:
+        QAtomicInt m_refcount;
 };
 
-#endif // MMFFPLUGIN_H
+#endif // MMFFPARAMETERSDATA_H

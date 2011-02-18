@@ -23,11 +23,14 @@
 #include "mmffparameters.h"
 
 #include "mmffatom.h"
+#include "mmffplugin.h"
 #include "mmffforcefield.h"
+#include "mmffparametersdata.h"
 
 #include <chemkit/atom.h>
 #include <chemkit/bond.h>
 #include <chemkit/ring.h>
+#include <chemkit/pluginmanager.h>
 
 namespace {
 
@@ -239,13 +242,13 @@ int EquivalentTypesCount = sizeof(EquivalentTypes) / sizeof(*EquivalentTypes);
 
 // --- Construction and Destruction ---------------------------------------- //
 MmffParameters::MmffParameters()
-    : m_vanDerWaalsParameters(MaxAtomType + 1),
-      m_partialChargeParameters(MaxAtomType + 1)
+    : d(new MmffParametersData)
 {
 }
 
 MmffParameters::~MmffParameters()
 {
+    d->deref();
 }
 
 // --- Parameters ---------------------------------------------------------- //
@@ -256,6 +259,28 @@ QString MmffParameters::fileName() const
 
 bool MmffParameters::read(const QString &fileName)
 {
+    // delete old parameters data
+    if(d){
+        d->deref();
+        d = 0;
+    }
+
+    // try to load cached parameters
+    MmffPlugin *mmffPlugin = static_cast<MmffPlugin *>(chemkit::PluginManager::instance()->plugin("mmff"));
+    if(mmffPlugin){
+        d = mmffPlugin->parameters(fileName);
+
+        if(d){
+            d->ref();
+            return true;
+        }
+    }
+
+    // create new parameters data if we don't have a cached one
+    if(!d){
+        d = new MmffParametersData;
+    }
+
     QFile file(fileName);
     if(!file.open(QFile::ReadOnly)){
         setErrorString(file.errorString());
@@ -317,7 +342,7 @@ bool MmffParameters::read(const QString &fileName)
                 parameters->kb = data.value(3).toDouble();
                 parameters->r0 = data.value(4).toDouble();
 
-                m_bondStrechParameters[index] = parameters;
+                d->bondStrechParameters[index] = parameters;
             }
             else if(section == EmpiricalBondStrech){
             }
@@ -333,7 +358,7 @@ bool MmffParameters::read(const QString &fileName)
                 parameters->ka = data.value(4).toDouble();
                 parameters->theta0 = data.value(5).toDouble();
 
-                m_angleBendParameters[index] = parameters;
+                d->angleBendParameters[index] = parameters;
             }
             else if(section == StrechBend){
                 int strechBendType = data.value(0).toInt();
@@ -347,7 +372,7 @@ bool MmffParameters::read(const QString &fileName)
                 parameters->kba_ijk = data.value(4).toDouble();
                 parameters->kba_kji = data.value(5).toDouble();
 
-                m_strechBendParameters[index] = parameters;
+                d->strechBendParameters[index] = parameters;
             }
             else if(section == DefaultStrechBend){
                 MmffDefaultStrechBendParameters *parameters = new MmffDefaultStrechBendParameters;
@@ -356,7 +381,7 @@ bool MmffParameters::read(const QString &fileName)
                 parameters->rowC = data.value(2).toInt();
                 parameters->parameters.kba_ijk = data.value(3).toDouble();
                 parameters->parameters.kba_kji = data.value(4).toDouble();
-                m_defaultStrechBendParameters.append(parameters);
+                d->defaultStrechBendParameters.append(parameters);
             }
             else if(section == OutOfPlaneBending){
                 int typeA = data.value(0).toInt();
@@ -369,7 +394,7 @@ bool MmffParameters::read(const QString &fileName)
                 MmffOutOfPlaneBendingParameters *parameters = new MmffOutOfPlaneBendingParameters;
                 parameters->koop = data.value(4).toDouble();
 
-                m_outOfPlaneBendingParameters[index] = parameters;
+                d->outOfPlaneBendingParameters[index] = parameters;
             }
             else if(section == Torsion){
                 int torsionType = data.value(0).toInt();
@@ -385,7 +410,7 @@ bool MmffParameters::read(const QString &fileName)
                 parameters->V2 = data.value(6).toDouble();
                 parameters->V3 = data.value(7).toDouble();
 
-                m_torsionParameters[index] = parameters;
+                d->torsionParameters[index] = parameters;
             }
             else if(section == VanDerWaals){
                 int type = data.value(0).toInt();
@@ -399,7 +424,7 @@ bool MmffParameters::read(const QString &fileName)
                 parameters->G = data.value(4).toDouble();
                 parameters->DA = data.value(5).at(0).toAscii();
 
-                m_vanDerWaalsParameters[type] = parameters;
+                d->vanDerWaalsParameters[type] = parameters;
             }
             else if(section == Charge){
                 MmffChargeParameters *parameters = new MmffChargeParameters;
@@ -407,7 +432,7 @@ bool MmffParameters::read(const QString &fileName)
                 parameters->typeA = data.value(1).toInt();
                 parameters->typeB = data.value(2).toInt();
                 parameters->bci = data.value(3).toDouble();
-                m_chargeParameters.append(parameters);
+                d->chargeParameters.append(parameters);
             }
             else if(section == PartialCharge){
                 int type = data.value(1).toInt();
@@ -418,9 +443,14 @@ bool MmffParameters::read(const QString &fileName)
                 parameters->pbci = data.value(2).toDouble();
                 parameters->fcadj = data.value(3).toDouble();
 
-                m_partialChargeParameters[type] = parameters;
+                d->partialChargeParameters[type] = parameters;
             }
         }
+    }
+
+    // store parameters in the cache
+    if(mmffPlugin){
+        mmffPlugin->storeParameters(fileName, d);
     }
 
     return true;
@@ -527,7 +557,7 @@ const MmffVanDerWaalsParameters* MmffParameters::vanDerWaalsParameters(const Mmf
 {
     int type = atom->typeNumber();
 
-    return m_vanDerWaalsParameters.value(type, 0);
+    return d->vanDerWaalsParameters.value(type, 0);
 }
 
 const MmffAtomParameters* MmffParameters::atomParameters(const MmffAtom *atom) const
@@ -546,7 +576,7 @@ const MmffChargeParameters* MmffParameters::chargeParameters(const MmffAtom *a, 
     int typeB = b->typeNumber();
     int bondType = calculateBondType(a, b);
 
-    foreach(const MmffChargeParameters *parameters, m_chargeParameters){
+    foreach(const MmffChargeParameters *parameters, d->chargeParameters){
         if(parameters->bondType == bondType &&
            parameters->typeA == typeA &&
            parameters->typeB == typeB){
@@ -561,7 +591,7 @@ const MmffPartialChargeParameters* MmffParameters::partialChargeParameters(const
 {
     int type = atom->typeNumber();
 
-    return m_partialChargeParameters.value(type, 0);
+    return d->partialChargeParameters.value(type, 0);
 }
 
 // --- Internal Methods ---------------------------------------------------- //
@@ -572,7 +602,7 @@ const MmffBondStrechParameters* MmffParameters::bondStrechParameters(int bondTyp
 
     int index = calculateBondStrechIndex(bondType, typeA, typeB);
 
-    return m_bondStrechParameters.value(index, 0);
+    return d->bondStrechParameters.value(index, 0);
 }
 
 const MmffBondStrechParameters* MmffParameters::empiricalBondStrechParameters(int atomicNumberA, int atomicNumberB) const
@@ -590,19 +620,19 @@ const MmffAngleBendParameters* MmffParameters::angleBendParameters(int angleType
 
     int index = calculateAngleBendIndex(angleType, typeA, typeB, typeC);
 
-    return m_angleBendParameters.value(index, 0);
+    return d->angleBendParameters.value(index, 0);
 }
 
 const MmffStrechBendParameters* MmffParameters::strechBendParameters(int strechBendType, int typeA, int typeB, int typeC) const
 {
     int index = calculateStrechBendIndex(strechBendType, typeA, typeB, typeC);
 
-    return m_strechBendParameters.value(index, 0);
+    return d->strechBendParameters.value(index, 0);
 }
 
 const MmffStrechBendParameters* MmffParameters::defaultStrechBendParameters(int rowA, int rowB, int rowC) const
 {
-    foreach(const MmffDefaultStrechBendParameters *parameters, m_defaultStrechBendParameters){
+    foreach(const MmffDefaultStrechBendParameters *parameters, d->defaultStrechBendParameters){
         if(parameters->rowA == rowA &&
            parameters->rowB == rowB &&
            parameters->rowC == rowC){
@@ -623,7 +653,7 @@ const MmffOutOfPlaneBendingParameters* MmffParameters::outOfPlaneBendingParamete
 
     int index = calculateOutOfPlaneBendingIndex(typeA, typeB, typeC, typeD);
 
-    return m_outOfPlaneBendingParameters.value(index, 0);
+    return d->outOfPlaneBendingParameters.value(index, 0);
 }
 
 const MmffTorsionParameters* MmffParameters::torsionParameters(int torsionType, int typeA, int typeB, int typeC, int typeD) const
@@ -638,7 +668,7 @@ const MmffTorsionParameters* MmffParameters::torsionParameters(int torsionType, 
 
     int index = calculateTorsionIndex(torsionType, typeA, typeB, typeC, typeD);
 
-    return m_torsionParameters.value(index, 0);
+    return d->torsionParameters.value(index, 0);
 }
 
 int MmffParameters::calculateBondType(const MmffAtom *a, const MmffAtom *b) const

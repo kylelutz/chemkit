@@ -61,8 +61,6 @@ class MmffForceField : public chemkit::ForceField
 
     private:
         MmffParameters *m_parameters;
-
-        static QHash<QString, MmffParameters *> m_parametersCache;
 };
 
 #endif // MMFFFORCEFIELD_H

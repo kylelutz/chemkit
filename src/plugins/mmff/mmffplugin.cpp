@@ -23,6 +23,7 @@
 #include "mmffplugin.h"
 
 #include "mmffforcefield.h"
+#include "mmffparametersdata.h"
 
 MmffPlugin::MmffPlugin()
     : chemkit::Plugin("mmff")
@@ -32,6 +33,24 @@ MmffPlugin::MmffPlugin()
 
 MmffPlugin::~MmffPlugin()
 {
+    foreach(MmffParametersData *parameters, m_parametersCache.values()){
+        parameters->deref();
+    }
+}
+
+void MmffPlugin::storeParameters(const QString &name, MmffParametersData *parameters)
+{
+    if(m_parametersCache.contains(name)){
+        m_parametersCache[name]->deref();
+    }
+
+    m_parametersCache.insert(name, parameters);
+    parameters->ref();
+}
+
+MmffParametersData* MmffPlugin::parameters(const QString &name) const
+{
+    return m_parametersCache.value(name, 0);
 }
 
 chemkit::ForceField* MmffPlugin::createMmffForceField()
