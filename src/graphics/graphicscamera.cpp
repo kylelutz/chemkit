@@ -33,6 +33,7 @@ class GraphicsCameraPrivate
         GraphicsPoint position;
         GraphicsVector direction;
         GraphicsVector upVector;
+        GraphicsPoint focus;
         GraphicsView *view;
         bool changed;
 };
@@ -51,6 +52,7 @@ GraphicsCamera::GraphicsCamera()
     d->position = GraphicsPoint(0, 0, 0);
     d->direction = -GraphicsVector::Z();
     d->upVector = GraphicsVector::Y();
+    d->focus = GraphicsPoint(0, 0, 0);
     d->changed = true;
     d->view = 0;
 }
@@ -62,6 +64,7 @@ GraphicsCamera::GraphicsCamera(const GraphicsPoint &position)
     d->position = position;
     d->direction = -GraphicsVector::Z();
     d->upVector = GraphicsVector::Y();
+    d->focus = GraphicsPoint(0, 0, 0);
     d->changed = true;
     d->view = 0;
 }
@@ -73,6 +76,7 @@ GraphicsCamera::GraphicsCamera(GraphicsFloat x, GraphicsFloat y, GraphicsFloat z
     d->position = GraphicsPoint(x, y, z);
     d->direction = -GraphicsVector::Z();
     d->upVector = GraphicsVector::Y();
+    d->focus = GraphicsPoint(0, 0, 0);
     d->changed = true;
     d->view = 0;
 }
@@ -183,6 +187,20 @@ void GraphicsCamera::rotate(const GraphicsVector &axis, GraphicsFloat angle, boo
     }
 }
 
+/// Rotates the camera around its focus point by \p dx degrees on
+/// the x-axis and \p dy degrees on the y-axis. If \p rotateDirection
+/// is \c true then the direction will also be rotated so that the
+/// camera remains pointed towards its focus point.
+///
+/// Equivalent to:
+/// \code
+/// orbit(focus(), dx, dy, rotateDirection);
+/// \endcode
+void GraphicsCamera::orbit(GraphicsFloat dx, GraphicsFloat dy, bool rotateDirection)
+{
+    orbit(d->focus, dx, dy, rotateDirection);
+}
+
 /// Rotates the camera around \p point by \p dx degrees on the x-axis
 /// and \p py degrees on the y-axis. If \p rotateDirection is \c true
 /// the direction will also be rotated so that the camera remains
@@ -214,10 +232,30 @@ GraphicsVector GraphicsCamera::direction() const
     return d->direction;
 }
 
-/// Rotates the camera to look at \p position.
-void GraphicsCamera::lookAt(const GraphicsPoint &position)
+/// Sets the camera's focus to \p point.
+void GraphicsCamera::setFocus(const GraphicsPoint &point)
 {
-    setDirection(GraphicsVector(position - d->position));
+    d->focus = point;
+}
+
+/// Returns the camera's focus.
+GraphicsPoint GraphicsCamera::focus() const
+{
+    return d->focus;
+}
+
+/// Sets the camera's focus to \p point and rotates the camera's
+/// direction to look at \p point.
+///
+/// Equivalent to:
+/// \code
+/// setFocus(point);
+/// setDirection(point - position());
+/// \endcode
+void GraphicsCamera::lookAt(const GraphicsPoint &point)
+{
+    setFocus(point);
+    setDirection(point - d->position);
 }
 
 /// Sets the camera's up vector.

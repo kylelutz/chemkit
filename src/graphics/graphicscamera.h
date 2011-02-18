@@ -60,12 +60,15 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsCamera
         void moveFoward(GraphicsFloat distance);
         void moveBackward(GraphicsFloat distance);
         void rotate(const GraphicsVector &axis, GraphicsFloat angle, bool rotateDirection = true);
+        void orbit(GraphicsFloat dx, GraphicsFloat dy, bool rotateDirection = true);
         void orbit(const GraphicsPoint &point, GraphicsFloat dx, GraphicsFloat dy, bool rotateDirection = true);
 
         // orientation
         void setDirection(const GraphicsVector &direction);
         GraphicsVector direction() const;
-        void lookAt(const GraphicsPoint &position);
+        void setFocus(const GraphicsPoint &point);
+        GraphicsPoint focus() const;
+        void lookAt(const GraphicsPoint &point);
         void setUpVector(const GraphicsVector &upVector);
         GraphicsVector upVector() const;
         void tilt(GraphicsFloat angle);
