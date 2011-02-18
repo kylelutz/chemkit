@@ -27,3 +27,4 @@ share/
 
 # misc
 gdb.txt
+callgrind.out.*
