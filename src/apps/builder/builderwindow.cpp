@@ -422,12 +422,9 @@ void BuilderWindow::minimizerStateChanged(int state)
 void BuilderWindow::centerCamera()
 {
     if(m_molecule){
-        m_molecule->setCenter(0, 0, 0);
+        view()->camera()->lookAt(m_molecule->center());
+        view()->update();
     }
-
-    view()->camera()->lookAt(chemkit::Point(0, 0, 0));
-
-    view()->update();
 }
 
 void BuilderWindow::setBackgroundColor(QAction *action)
