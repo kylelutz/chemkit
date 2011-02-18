@@ -79,7 +79,7 @@ void GraphicsNavigationTool::mouseMoveEvent(QMouseEvent *event)
 
         // left button
         if(event->buttons() & Qt::LeftButton){
-            camera->orbit(GraphicsPoint(0, 0, 0), -dx, dy);
+            camera->orbit(-dx, dy);
         }
         // right button
         if(event->buttons() & Qt::RightButton){
