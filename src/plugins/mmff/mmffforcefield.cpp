@@ -323,15 +323,6 @@ int MmffForceField::piElectronCount(const chemkit::Ring *ring)
     return piElectronCount;
 }
 
-void MmffForceField::clearParametersCache()
-{
-    foreach(MmffParameters *parameters, m_parametersCache){
-        delete parameters;
-    }
-
-    m_parametersCache.clear();
-}
-
 // --- Internal Methods ---------------------------------------------------- //
 int MmffForceField::ringPosition(const chemkit::Atom *atom, const chemkit::Ring *ring) const
 {

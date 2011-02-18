@@ -58,7 +58,6 @@ class MmffForceField : public chemkit::ForceField
         int ringPosition(const chemkit::Atom *atom, const chemkit::Ring *ring) const;
         bool atomsWithinTwoBonds(const chemkit::Atom *a, const chemkit::Atom *b);
         bool assignPartialCharge(MmffAtom *a);
-        static void clearParametersCache();
 
     private:
         MmffParameters *m_parameters;
