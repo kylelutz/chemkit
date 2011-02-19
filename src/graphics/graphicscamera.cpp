@@ -202,7 +202,7 @@ void GraphicsCamera::orbit(GraphicsFloat dx, GraphicsFloat dy, bool rotateDirect
 }
 
 /// Rotates the camera around \p point by \p dx degrees on the x-axis
-/// and \p py degrees on the y-axis. If \p rotateDirection is \c true
+/// and \p dy degrees on the y-axis. If \p rotateDirection is \c true
 /// the direction will also be rotated so that the camera remains
 /// pointed toward \p point.
 void GraphicsCamera::orbit(const GraphicsPoint &point, GraphicsFloat dx, GraphicsFloat dy, bool rotateDirection)
