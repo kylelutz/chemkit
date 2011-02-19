@@ -30,7 +30,7 @@ namespace chemkit {
 namespace {
 
 // (1 + sqrt(5)) / 2
-const GraphicsFloat GoldenRatio = chemkit::GraphicsFloat(1.61803399);
+const GraphicsFloat GoldenRatio = GraphicsFloat(1.61803399);
 
 const GraphicsFloat s = sqrt(1 + GoldenRatio*GoldenRatio);
 const GraphicsFloat t = GoldenRatio / s;
