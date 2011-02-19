@@ -183,7 +183,7 @@ void CoordinateMatrix::append(const Point &position)
 /// Appends the point (\p x, \p y, \p z) to the matrix.
 void CoordinateMatrix::append(Float x, Float y, Float z)
 {
-    append(chemkit::Point(x, y, z));
+    append(Point(x, y, z));
 }
 
 /// Inserts \p position at \p index.
@@ -209,7 +209,7 @@ void CoordinateMatrix::insert(int index, const Point &position)
 /// Inserts the point (\p x, \p y, \p z) at \p index.
 void CoordinateMatrix::insert(int index, Float x, Float y, Float z)
 {
-    insert(index, chemkit::Point(x, y, z));
+    insert(index, Point(x, y, z));
 }
 
 /// Removes the position at \p index.
