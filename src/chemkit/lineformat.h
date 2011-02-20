@@ -49,7 +49,7 @@ class CHEMKIT_EXPORT LineFormat
 
         // input and output
         virtual bool read(const QString &formula, Molecule *molecule);
-        chemkit::Molecule* read(const QString &formula);
+        Molecule* read(const QString &formula);
         virtual QString write(const Molecule *molecule);
 
         // error handling

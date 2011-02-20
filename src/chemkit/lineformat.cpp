@@ -108,9 +108,9 @@ bool LineFormat::read(const QString &formula, Molecule *molecule)
 /// Reads and returns the molecule represented by the given
 /// \p formula. Returns \c 0 if \p formula could not be
 /// read.
-chemkit::Molecule* LineFormat::read(const QString &formula)
+Molecule* LineFormat::read(const QString &formula)
 {
-    chemkit::Molecule *molecule = new chemkit::Molecule;
+    Molecule *molecule = new Molecule;
 
     bool ok = read(formula, molecule);
     if(!ok){
