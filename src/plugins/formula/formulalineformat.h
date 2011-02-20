@@ -32,7 +32,7 @@ class FormulaLineFormat : public chemkit::LineFormat
     public:
         FormulaLineFormat();
 
-        chemkit::Molecule* read(const QString &formula);
+        bool read(const QString &formula, chemkit::Molecule *molecule);
         QString write(const chemkit::Molecule *molecule);
 };
 

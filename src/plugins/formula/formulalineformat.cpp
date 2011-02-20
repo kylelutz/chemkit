@@ -27,10 +27,8 @@ FormulaLineFormat::FormulaLineFormat()
 {
 }
 
-chemkit::Molecule* FormulaLineFormat::read(const QString &formula)
+bool FormulaLineFormat::read(const QString &formula, chemkit::Molecule *molecule)
 {
-    chemkit::Molecule *molecule = new chemkit::Molecule();
-
     bool inSymbol = false;
     bool inNumber = false;
     QString symbol;
@@ -87,7 +85,7 @@ chemkit::Molecule* FormulaLineFormat::read(const QString &formula)
         }
     }
 
-    return molecule;
+    return true;
 }
 
 QString FormulaLineFormat::write(const chemkit::Molecule *molecule)

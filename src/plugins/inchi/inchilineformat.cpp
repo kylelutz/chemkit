@@ -29,7 +29,7 @@ InchiLineFormat::InchiLineFormat()
 {
 }
 
-chemkit::Molecule* InchiLineFormat::read(const QString &formula)
+bool InchiLineFormat::read(const QString &formula, chemkit::Molecule *molecule)
 {
     // verify formula
     if(formula.isEmpty()){
@@ -55,8 +55,6 @@ chemkit::Molecule* InchiLineFormat::read(const QString &formula)
     Q_UNUSED(ret);
 
     // build molecule from inchi output
-    chemkit::Molecule *molecule = new chemkit::Molecule();
-
     QVector<chemkit::Atom *> atoms(output.num_atoms);
 
     bool addHydrogens = option("add-hydrogens").toBool();
@@ -93,7 +91,7 @@ chemkit::Molecule* InchiLineFormat::read(const QString &formula)
     delete [] input.szInChI;
     FreeStructFromStdINCHI(&output);
 
-    return molecule;
+    return true;
 }
 
 QString InchiLineFormat::write(const chemkit::Molecule *molecule)

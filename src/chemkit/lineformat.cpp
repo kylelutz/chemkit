@@ -94,13 +94,31 @@ QVariant LineFormat::defaultOption(const QString &name) const
 }
 
 // --- Input and Output ---------------------------------------------------- //
-/// Read and return a molecule from the formula.
-Molecule* LineFormat::read(const QString &formula)
+/// Reads \p formula and adds its contents to \p molecule. Returns
+/// \c false if \p formula could not be read.
+bool LineFormat::read(const QString &formula, Molecule *molecule)
 {
     Q_UNUSED(formula);
+    Q_UNUSED(molecule);
 
     setErrorString(QString("'%1' read not supported.").arg(name()));
-    return 0;
+    return false;
+}
+
+/// Reads and returns the molecule represented by the given
+/// \p formula. Returns \c 0 if \p formula could not be
+/// read.
+chemkit::Molecule* LineFormat::read(const QString &formula)
+{
+    chemkit::Molecule *molecule = new chemkit::Molecule;
+
+    bool ok = read(formula, molecule);
+    if(!ok){
+        delete molecule;
+        return 0;
+    }
+
+    return molecule;
 }
 
 /// Write and return the formula of a molecule.

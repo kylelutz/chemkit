@@ -178,15 +178,13 @@ QVariant SmilesLineFormat::defaultOption(const QString &name) const
 }
 
 // --- Input and Output ---------------------------------------------------- //
-chemkit::Molecule* SmilesLineFormat::read(const QString &formula)
+bool SmilesLineFormat::read(const QString &formula, chemkit::Molecule *molecule)
 {
-    return read(formula.toAscii().constData());
+    return read(formula.toAscii().constData(), molecule);
 }
 
-chemkit::Molecule* SmilesLineFormat::read(const char *formula)
+bool SmilesLineFormat::read(const char *formula, chemkit::Molecule *molecule)
 {
-    chemkit::Molecule *molecule = new chemkit::Molecule;
-
     const char *p = formula;
     int number = 0;
     chemkit::Atom *atom = 0;
@@ -524,8 +522,7 @@ invalid_atom_error:
     goto error;
 
 error:
-    delete molecule;
-    return 0;
+    return false;
 
 done:
     // kekulize aromatic bonds
@@ -543,7 +540,7 @@ done:
         }
     }
 
-    return molecule;
+    return true;
 }
 
 QString SmilesLineFormat::write(const chemkit::Molecule *molecule)

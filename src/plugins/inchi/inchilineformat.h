@@ -33,7 +33,7 @@ class InchiLineFormat : public chemkit::LineFormat
     public:
         InchiLineFormat();
 
-        chemkit::Molecule* read(const QString &formula);
+        bool read(const QString &formula, chemkit::Molecule *molecule);
         QString write(const chemkit::Molecule *molecule);
 
         virtual QVariant defaultOption(const QString &name) const;
