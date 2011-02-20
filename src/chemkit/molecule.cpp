@@ -129,22 +129,7 @@ Molecule::Molecule(const QString &formula, const QString &format)
         return;
     }
 
-    Molecule *molecule = lineFormat->read(formula);
-    if(molecule){
-        QHash<const Atom *, Atom *> oldToNew;
-
-        foreach(const Atom *atom, molecule->atoms()){
-            Atom *newAtom = addAtomCopy(atom);
-            oldToNew[atom] = newAtom;
-        }
-
-        foreach(const Bond *bond, molecule->bonds()){
-            Bond *newBond = addBond(oldToNew[bond->atom1()], oldToNew[bond->atom2()]);
-            newBond->setOrder(bond->order());
-        }
-
-        delete molecule;
-    }
+    lineFormat->read(formula, this);
 
     delete lineFormat;
 }
