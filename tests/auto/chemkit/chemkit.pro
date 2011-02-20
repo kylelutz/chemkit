@@ -30,5 +30,6 @@ SUBDIRS = alphashape \
     ring-perception \
     scalarfield \
     staticmatrix \
+    staticvector \
     substructure-search \
     vector
