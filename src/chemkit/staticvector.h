@@ -28,6 +28,7 @@
 #include "blas.h"
 #include "lapack.h"
 #include "constants.h"
+#include "commainitializer.h"
 
 namespace chemkit {
 
@@ -81,6 +82,7 @@ class StaticVector
         StaticVector<T, N>& operator*=(T scalar);
         StaticVector<T, N>& operator/=(T scalar);
         bool operator==(const StaticVector<T, N> &vector) const;
+        CommaInitializer<T> operator<<(const T value);
 
     private:
         T m_data[N];

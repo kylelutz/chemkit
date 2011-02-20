@@ -429,6 +429,14 @@ inline bool StaticVector<T, N>::operator==(const StaticVector<T, N> &vector) con
     return true;
 }
 
+template<typename T, int N>
+inline CommaInitializer<T> StaticVector<T, N>::operator<<(const T value)
+{
+    m_data[0] = value;
+
+    return CommaInitializer<T>(m_data, 1, N);
+}
+
 // --- Related Functions --------------------------------------------------- //
 /// Returns the product of \p scalar and \p vector.
 ///
