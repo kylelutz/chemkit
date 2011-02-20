@@ -61,7 +61,7 @@ class StaticMatrix
         T operator()(int row, int column) const;
         T& operator()(int row, int column);
         StaticMatrix<T, R, C> operator*(T scalar) const;
-        CommaInitializer<T> operator=(const T value);
+        CommaInitializer<T> operator<<(const T value);
         bool operator==(const StaticMatrix<T, R, C> &matrix);
 
         // static methods
@@ -107,7 +107,7 @@ class StaticMatrix<T, N, N>
         StaticMatrix<T, N, N> operator*(T scalar) const;
         StaticMatrix<T, N, N> operator*(const StaticMatrix<T, N, N> &matrix) const;
         StaticMatrix<T, N, N>& operator*=(const StaticMatrix<T, N, N> &matrix);
-        CommaInitializer<T> operator=(const T value);
+        CommaInitializer<T> operator<<(const T value);
         bool operator==(const StaticMatrix<T, N, N> &matrix);
 
         // static methods

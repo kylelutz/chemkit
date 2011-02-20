@@ -43,8 +43,8 @@ namespace chemkit {
 /// \code
 /// StaticMatrix<int, 2, 4> matrix;
 ///
-/// matrix = 1, 2, 3, 4,
-///          5, 6, 7, 8;
+/// matrix << 1, 2, 3, 4,
+///           5, 6, 7, 8;
 /// \endcode
 /// \see GenericMatrix
 
@@ -218,7 +218,7 @@ inline StaticMatrix<T, R, C> StaticMatrix<T, R, C>::operator*(T scalar) const
 }
 
 template<typename T, int R, int C>
-inline CommaInitializer<T> StaticMatrix<T, R, C>::operator=(const T value)
+inline CommaInitializer<T> StaticMatrix<T, R, C>::operator<<(const T value)
 {
     m_data[0] = value;
 
@@ -563,7 +563,7 @@ inline StaticMatrix<T, N, N>& StaticMatrix<T, N, N>::operator*=(const StaticMatr
 }
 
 template<typename T, int N>
-inline CommaInitializer<T> StaticMatrix<T, N, N>::operator=(const T value)
+inline CommaInitializer<T> StaticMatrix<T, N, N>::operator<<(const T value)
 {
     m_data[0] = value;
 

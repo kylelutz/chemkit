@@ -156,40 +156,40 @@ Point orthocenter(const Point &a, const Point &b, const Point &c, Float wa, Floa
     //      | b.x b.y b.z 1 |
     //      | c.x c.y c.z 1 |
     //      | a1  a2  a3  0 |
-    matrix = a.x(), a.y(), a.z(), 1,
-             b.x(), b.y(), b.z(), 1,
-             c.x(), c.y(), c.z(), 1,
-             a1,    a2,    a3,    0;
+    matrix << a.x(), a.y(), a.z(), 1,
+              b.x(), b.y(), b.z(), 1,
+              c.x(), c.y(), c.z(), 1,
+              a1,    a2,    a3,    0;
     double d0 = matrix.determinant();
 
     // dx = | i0  a.y a.z 1 |
     //      | j0  b.y b.z 1 |
     //      | k0  c.y c.z 1 |
     //      | a1  a2  a3  0 |
-    matrix = i0, a.y(), a.z(), 1,
-             j0, b.y(), b.z(), 1,
-             k0, c.y(), c.z(), 1,
-             a4, a2,    a3,    0;
+    matrix << i0, a.y(), a.z(), 1,
+              j0, b.y(), b.z(), 1,
+              k0, c.y(), c.z(), 1,
+              a4, a2,    a3,    0;
     double dx = matrix.determinant();
 
     // dy = | a.x i0  a.z 1 |
     //      | b.x j0  b.z 1 |
     //      | c.x k0  c.z 1 |
     //      | a1  a4  a3  0 |
-    matrix = a.x(), i0, a.z(), 1,
-             b.x(), j0, b.z(), 1,
-             c.x(), k0, c.z(), 1,
-             a1,    a4, a3,    0;
+    matrix << a.x(), i0, a.z(), 1,
+              b.x(), j0, b.z(), 1,
+              c.x(), k0, c.z(), 1,
+              a1,    a4, a3,    0;
     double dy = matrix.determinant();
 
     // dz = | a.x a.y i0  1 |
     //      | b.x b.y j0  1 |
     //      | c.x c.y k0  1 |
     //      | a1  a2  a4  0 |
-    matrix = a.x(), a.y(), i0, 1,
-             b.x(), b.y(), j0, 1,
-             c.x(), c.y(), k0, 1,
-             a1,    a2,    a4, 0;
+    matrix << a.x(), a.y(), i0, 1,
+              b.x(), b.y(), j0, 1,
+              c.x(), c.y(), k0, 1,
+              a1,    a2,    a4, 0;
     double dz = matrix.determinant();
 
     return Point(dx/d0, dy/d0, dz/d0);
@@ -206,28 +206,28 @@ Point orthocenter(const Point &a, const Point &b, const Point &c, const Point &d
 
     StaticMatrix<double, 4, 4> matrix;
 
-    matrix = a.x(), a.y(), a.z(), 1,
-             b.x(), b.y(), b.z(), 1,
-             c.x(), c.y(), c.z(), 1,
-             d.x(), d.y(), d.z(), 1;
+    matrix << a.x(), a.y(), a.z(), 1,
+              b.x(), b.y(), b.z(), 1,
+              c.x(), c.y(), c.z(), 1,
+              d.x(), d.y(), d.z(), 1;
     double d0 = matrix.determinant();
 
-    matrix = i0, a.y(), a.z(), 1,
-             j0, b.y(), b.z(), 1,
-             k0, c.y(), c.z(), 1,
-             l0, d.y(), d.z(), 1;
+    matrix << i0, a.y(), a.z(), 1,
+              j0, b.y(), b.z(), 1,
+              k0, c.y(), c.z(), 1,
+              l0, d.y(), d.z(), 1;
     double dx = matrix.determinant();
 
-    matrix = a.x(), i0, a.z(), 1,
-             b.x(), j0, b.z(), 1,
-             c.x(), k0, c.z(), 1,
-             d.x(), l0, d.z(), 1;
+    matrix << a.x(), i0, a.z(), 1,
+              b.x(), j0, b.z(), 1,
+              c.x(), k0, c.z(), 1,
+              d.x(), l0, d.z(), 1;
     double dy = matrix.determinant();
 
-    matrix = a.x(), a.y(), i0, 1,
-             b.x(), b.y(), j0, 1,
-             c.x(), c.y(), k0, 1,
-             d.x(), d.y(), l0, 1;
+    matrix << a.x(), a.y(), i0, 1,
+              b.x(), b.y(), j0, 1,
+              c.x(), c.y(), k0, 1,
+              d.x(), d.y(), l0, 1;
     double dz = matrix.determinant();
 
     return Point(dx/d0, dy/d0, dz/d0);
@@ -364,10 +364,10 @@ Float sphereOrientation(const Point &a, const Point &b, const Point &c, const Po
 
     StaticMatrix<double, 4, 4> matrix;
 
-    matrix = t.x(), t.y(), t.z(), t.dot(t),
-             u.x(), u.y(), u.z(), u.dot(u),
-             v.x(), v.y(), v.z(), v.dot(v),
-             w.x(), w.y(), w.z(), w.dot(w);
+    matrix << t.x(), t.y(), t.z(), t.dot(t),
+              u.x(), u.y(), u.z(), u.dot(u),
+              v.x(), v.y(), v.z(), v.dot(v),
+              w.x(), w.y(), w.z(), w.dot(w);
 
     return matrix.determinant();
 }
@@ -403,10 +403,10 @@ Float sphereOrientation(const Point &a, const Point &b, const Point &c, const Po
 
     StaticMatrix<double, 4, 4> matrix;
 
-    matrix = t.x(), t.y(), t.z(), t.dot(t) - (wa - wp),
-             u.x(), u.y(), u.z(), u.dot(u) - (wb - wp),
-             v.x(), v.y(), v.z(), v.dot(v) - (wc - wp),
-             w.x(), w.y(), w.z(), w.dot(w) - (wd - wp);
+    matrix << t.x(), t.y(), t.z(), t.dot(t) - (wa - wp),
+              u.x(), u.y(), u.z(), u.dot(u) - (wb - wp),
+              v.x(), v.y(), v.z(), v.dot(v) - (wc - wp),
+              w.x(), w.y(), w.z(), w.dot(w) - (wd - wp);
 
     return matrix.determinant();
 }
