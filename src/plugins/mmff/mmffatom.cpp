@@ -116,6 +116,10 @@ bool MmffAtom::setCharge()
             else{
                 const MmffPartialChargeParameters *partialChargeParameters = parameters->partialChargeParameters(this);
                 const MmffPartialChargeParameters *neighborPartialChargeParameters = parameters->partialChargeParameters(neighbor);
+                if(!partialChargeParameters || !neighborPartialChargeParameters){
+                    return false;
+                }
+
                 partialChargeSum += (partialChargeParameters->pbci - neighborPartialChargeParameters->pbci);
             }
         }
