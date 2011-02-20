@@ -222,7 +222,7 @@ GraphicsTransform& GraphicsTransform::operator=(const GraphicsTransform &transfo
     return *this;
 }
 
-CommaInitializer<GraphicsFloat> GraphicsTransform::operator=(const GraphicsFloat value)
+CommaInitializer<GraphicsFloat> GraphicsTransform::operator<<(const GraphicsFloat value)
 {
     m_matrix->data()[0] = value;
 

@@ -605,7 +605,7 @@ void GraphicsView::paintGL()
         GraphicsVector s = f.cross(camera()->upVector());
         GraphicsVector u = s.cross(f);
 
-        d->modelViewTransform =  s.x(),  s.y(),  s.z(), 0,
+        d->modelViewTransform << s.x(),  s.y(),  s.z(), 0,
                                  u.x(),  u.y(),  u.z(), 0,
                                 -f.x(), -f.y(), -f.z(), 0,
                                      0,      0,      0, 1;
