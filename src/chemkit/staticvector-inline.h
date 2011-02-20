@@ -325,48 +325,66 @@ inline T StaticVector<T, N>::angleRadians(const StaticVector<T, N> &vector) cons
 }
 
 // --- Operators ----------------------------------------------------------- //
+/// Returns the value of the component at \p index.
+///
+/// \see value()
 template<typename T, int N>
 inline T StaticVector<T, N>::operator[](int index) const
 {
     return value(index);
 }
 
+/// Returns the value of the component at \p index.
+///
+/// \see value()
 template<typename T, int N>
 inline T& StaticVector<T, N>::operator[](int index)
 {
     return value(index);
 }
 
+/// Returns the sum of the vector and \p vector.
+///
+/// \see add()
 template<typename T, int N>
 inline StaticVector<T, N> StaticVector<T, N>::operator+(const StaticVector<T, N> &vector) const
 {
     return add(vector);
 }
 
+/// Returns the product of \c -1 and the vector.
 template<typename T, int N>
 inline StaticVector<T, N> StaticVector<T, N>::operator-() const
 {
     return scaled(-1);
 }
 
+/// Returns the difference between the vector and \p vector.
+///
+/// \see subtract()
 template<typename T, int N>
 inline StaticVector<T, N> StaticVector<T, N>::operator-(const StaticVector<T, N> &vector) const
 {
     return subtract(vector);
 }
 
+/// Returns the vector multiplied by \p scalar.
+///
+/// \see scaled()
 template<typename T, int N>
 inline StaticVector<T, N> StaticVector<T, N>::operator*(T scalar) const
 {
     return scaled(scalar);
 }
 
+/// Returns the vector divided by \p scalar.
 template<typename T, int N>
 inline StaticVector<T, N> StaticVector<T, N>::operator/(T scalar) const
 {
     return scaled(1 / scalar);
 }
 
+/// Adds \p vector to the vector.
 template<typename T, int N>
 inline StaticVector<T, N>& StaticVector<T, N>::operator+=(const StaticVector<T, N> &vector)
 {
@@ -374,6 +392,7 @@ inline StaticVector<T, N>& StaticVector<T, N>::operator+=(const StaticVector<T, 
     return *this;
 }
 
+/// Subtracts \p vector from the vector.
 template<typename T, int N>
 inline StaticVector<T, N>& StaticVector<T, N>::operator-=(const StaticVector<T, N> &vector)
 {
@@ -381,6 +400,7 @@ inline StaticVector<T, N>& StaticVector<T, N>::operator-=(const StaticVector<T, 
     return *this;
 }
 
+/// Multiplies the vector by \p scalar.
 template<typename T, int N>
 inline StaticVector<T, N>& StaticVector<T, N>::operator*=(T scalar)
 {
@@ -388,6 +408,7 @@ inline StaticVector<T, N>& StaticVector<T, N>::operator*=(T scalar)
     return *this;
 }
 
+/// Divides the vector by \p scalar.
 template<typename T, int N>
 inline StaticVector<T, N>& StaticVector<T, N>::operator/=(T scalar)
 {
@@ -395,6 +416,7 @@ inline StaticVector<T, N>& StaticVector<T, N>::operator/=(T scalar)
     return *this;
 }
 
+/// Returns \c true if the vector is equal to \p vector.
 template<typename T, int N>
 inline bool StaticVector<T, N>::operator==(const StaticVector<T, N> &vector) const
 {
@@ -408,6 +430,9 @@ inline bool StaticVector<T, N>::operator==(const StaticVector<T, N> &vector) con
 }
 
 // --- Related Functions --------------------------------------------------- //
+/// Returns the product of \p scalar and \p vector.
+///
+/// \related StaticVector
 template<typename T, int N>
 inline StaticVector<T, N> operator*(T scalar, const StaticVector<T, N> &vector)
 {
