@@ -26,6 +26,8 @@
 #include "staticvector.h"
 
 #include <cmath>
+#include <limits>
+#include <cstdlib>
 
 #ifndef QT_NO_DEBUG_STREAM
 #include <QDebug>
@@ -421,7 +423,7 @@ template<typename T, int N>
 inline bool StaticVector<T, N>::operator==(const StaticVector<T, N> &vector) const
 {
     for(int i = 0; i < N; i++){
-        if(!qFuzzyCompare(value(i), vector[i])){
+        if(std::abs(value(i) - vector[i]) > std::numeric_limits<T>::epsilon()){
             return false;
         }
     }

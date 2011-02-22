@@ -25,6 +25,10 @@
 
 #include "staticmatrix.h"
 
+#include <cmath>
+#include <limits>
+#include <cstdlib>
+
 namespace chemkit {
 
 // === StaticMatrix ======================================================== //
@@ -291,7 +295,7 @@ template<typename T, int R, int C>
 inline bool StaticMatrix<T, R, C>::operator==(const StaticMatrix<T, R, C> &matrix)
 {
     for(int i = 0; i < R*C; i++){
-        if(!qFuzzyCompare(m_data[i], matrix.m_data[i])){
+        if(std::abs(m_data[i] - matrix.m_data[i]) > std::numeric_limits<T>::epsilon()){
             return false;
         }
     }
@@ -679,7 +683,7 @@ template<typename T, int N>
 inline bool StaticMatrix<T, N, N>::operator==(const StaticMatrix<T, N, N> &matrix)
 {
     for(int i = 0; i < N*N; i++){
-        if(!qFuzzyCompare(m_data[i], matrix.m_data[i])){
+        if(std::abs(m_data[i] - matrix.m_data[i]) > std::numeric_limits<T>::epsilon()){
             return false;
         }
     }

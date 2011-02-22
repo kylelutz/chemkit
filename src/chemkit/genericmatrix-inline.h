@@ -26,6 +26,7 @@
 #include "genericmatrix.h"
 
 #include <cmath>
+#include <limits>
 #include <cstdlib>
 
 #include "blas.h"
@@ -373,7 +374,7 @@ inline bool GenericMatrix<T>::operator==(const GenericMatrix<T> &matrix) const
     }
 
     for(int i = 0; i < m_rowCount * m_columnCount; i++){
-        if(!qFuzzyCompare(m_data[i], matrix.m_data[i])){
+        if(std::abs(m_data[i] - matrix.m_data[i]) > std::numeric_limits<T>::epsilon()){
             return false;
         }
     }
