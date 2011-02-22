@@ -290,7 +290,7 @@ bool GraphicsMoleculeItem::atomVisible(const Atom *atom) const
 }
 
 // --- Items --------------------------------------------------------------- //
-GraphicsAtomItem* GraphicsMoleculeItem::atomItem(const Atom *atom)
+GraphicsAtomItem* GraphicsMoleculeItem::atomItem(const Atom *atom) const
 {
     foreach(GraphicsAtomItem *item, d->atomItems){
         if(item->atom() == atom){
