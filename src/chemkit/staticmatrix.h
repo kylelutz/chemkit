@@ -56,7 +56,7 @@ class StaticMatrix
         StaticMatrix<T, R, C> inverted() const;
         StaticMatrix<T, R, C> add(const StaticMatrix<T, R, C> &matrix) const;
         StaticMatrix<T, R, C> subtract(const StaticMatrix<T, R, C> &matrix) const;
-        StaticMatrix<T, R, R> multiply(T scalar) const;
+        StaticMatrix<T, R, C> multiply(T scalar) const;
         StaticMatrix<T, R, R> multiply(const StaticMatrix<T, C, R> &matrix) const;
 
         // operators

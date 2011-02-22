@@ -209,11 +209,15 @@ inline StaticMatrix<T, R, C> StaticMatrix<T, R, C>::subtract(const StaticMatrix<
 
 /// Multiplies values in the matrix by \p scalar.
 template<typename T, int R, int C>
-inline StaticMatrix<T, R, R> StaticMatrix<T, R, C>::multiply(T scalar) const
+inline StaticMatrix<T, R, C> StaticMatrix<T, R, C>::multiply(T scalar) const
 {
+    StaticMatrix<T, R, C> product;
+
     for(int i = 0; i < R * C; i++){
-        m_data[i] *= scalar;
+        product.m_data[i] = scalar * m_data[i];
     }
+
+    return product;
 }
 
 /// Multiplies the matrix by \p matrix.
@@ -579,9 +583,13 @@ inline StaticVector<T, N> StaticMatrix<T, N, N>::multiply(const StaticVector<T, 
 template<typename T, int N>
 inline StaticMatrix<T, N, N> StaticMatrix<T, N, N>::multiply(T scalar) const
 {
+    StaticMatrix<T, N, N> product;
+
     for(int i = 0; i < N * N; i++){
-        m_data[i] *= scalar;
+        product.m_data[i] = scalar * m_data[i];
     }
+
+    return product;
 }
 
 template<typename T, int N>
