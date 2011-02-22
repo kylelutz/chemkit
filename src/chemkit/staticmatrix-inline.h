@@ -181,6 +181,32 @@ inline StaticMatrix<T, R, C> StaticMatrix<T, R, C>::inverted() const
     return matrix;
 }
 
+/// Returns the sum of the matrix and \p matrix.
+template<typename T, int R, int C>
+inline StaticMatrix<T, R, C> StaticMatrix<T, R, C>::add(const StaticMatrix<T, R, C> &matrix) const
+{
+    StaticMatrix<T, R, C> sum;
+
+    for(int i = 0; i < R * C; i++){
+        sum.m_data[i] = m_data[i] + matrix.m_data[i];
+    }
+
+    return sum;
+}
+
+/// Returns the difference of the matrix and \p matrix.
+template<typename T, int R, int C>
+inline StaticMatrix<T, R, C> StaticMatrix<T, R, C>::subtract(const StaticMatrix<T, R, C> &matrix) const
+{
+    StaticMatrix<T, R, C> difference;
+
+    for(int i = 0; i < R * C; i++){
+        difference.m_data[i] = m_data[i] - matrix.m_data[i];
+    }
+
+    return difference;
+}
+
 /// Multiplies values in the matrix by \p scalar.
 template<typename T, int R, int C>
 inline StaticMatrix<T, R, R> StaticMatrix<T, R, C>::multiply(T scalar) const
@@ -219,6 +245,24 @@ template<typename T, int R, int C>
 inline T& StaticMatrix<T, R, C>::operator()(int row, int column)
 {
     return value(row, column);
+}
+
+/// Returns the sum of the matrix and \p matrix.
+///
+/// \see add()
+template<typename T, int R, int C>
+inline StaticMatrix<T, R, C> StaticMatrix<T, R, C>::operator+(const StaticMatrix<T, R, C> &matrix) const
+{
+    return add(matrix);
+}
+
+/// Returns the difference of the matrix and \p matrix.
+///
+/// \see subtract()
+template<typename T, int R, int C>
+inline StaticMatrix<T, R, C> StaticMatrix<T, R, C>::operator-(const StaticMatrix<T, R, C> &matrix) const
+{
+    return subtract(matrix);
 }
 
 /// Multiplies the values in the matrix by \p scalar.
@@ -501,6 +545,30 @@ inline StaticMatrix<T, N, N> StaticMatrix<T, N, N>::inverted() const
 }
 
 template<typename T, int N>
+inline StaticMatrix<T, N, N> StaticMatrix<T, N, N>::add(const StaticMatrix<T, N, N> &matrix) const
+{
+    StaticMatrix<T, N, N> sum;
+
+    for(int i = 0; i < N * N; i++){
+        sum.m_data[i] = m_data[i] + matrix.m_data[i];
+    }
+
+    return sum;
+}
+
+template<typename T, int N>
+inline StaticMatrix<T, N, N> StaticMatrix<T, N, N>::subtract(const StaticMatrix<T, N, N> &matrix) const
+{
+    StaticMatrix<T, N, N> difference;
+
+    for(int i = 0; i < N * N; i++){
+        difference.m_data[i] = m_data[i] - matrix.m_data[i];
+    }
+
+    return difference;
+}
+
+template<typename T, int N>
 inline StaticVector<T, N> StaticMatrix<T, N, N>::multiply(const StaticVector<T, N> &vector) const
 {
     StaticVector<T, N> product;
@@ -558,6 +626,18 @@ template<typename T, int N>
 inline T& StaticMatrix<T, N, N>::operator()(int row, int column)
 {
     return value(row, column);
+}
+
+template<typename T, int N>
+inline StaticMatrix<T, N, N> StaticMatrix<T, N, N>::operator+(const StaticMatrix<T, N, N> &matrix) const
+{
+    return add(matrix);
+}
+
+template<typename T, int N>
+inline StaticMatrix<T, N, N> StaticMatrix<T, N, N>::operator-(const StaticMatrix<T, N, N> &matrix) const
+{
+    return subtract(matrix);
 }
 
 template<typename T, int N>

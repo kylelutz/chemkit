@@ -54,12 +54,16 @@ class StaticMatrix
         T determinant() const;
         void invert();
         StaticMatrix<T, R, C> inverted() const;
+        StaticMatrix<T, R, C> add(const StaticMatrix<T, R, C> &matrix) const;
+        StaticMatrix<T, R, C> subtract(const StaticMatrix<T, R, C> &matrix) const;
         StaticMatrix<T, R, R> multiply(T scalar) const;
         StaticMatrix<T, R, R> multiply(const StaticMatrix<T, C, R> &matrix) const;
 
         // operators
         T operator()(int row, int column) const;
         T& operator()(int row, int column);
+        StaticMatrix<T, R, C> operator+(const StaticMatrix<T, R, C> &matrix) const;
+        StaticMatrix<T, R, C> operator-(const StaticMatrix<T, R, C> &matrix) const;
         StaticMatrix<T, R, C> operator*(T scalar) const;
         CommaInitializer<T> operator<<(const T value);
         bool operator==(const StaticMatrix<T, R, C> &matrix);
@@ -94,6 +98,8 @@ class StaticMatrix<T, N, N>
         T determinant() const;
         void invert();
         StaticMatrix<T, N, N> inverted() const;
+        StaticMatrix<T, N, N> add(const StaticMatrix<T, N, N> &matrix) const;
+        StaticMatrix<T, N, N> subtract(const StaticMatrix<T, N, N> &matrix) const;
         StaticVector<T, N> multiply(const StaticVector<T, N> &vector) const;
         StaticMatrix<T, N, N> multiply(T scalar) const;
         StaticMatrix<T, N, N> multiply(const StaticMatrix<T, N, N> &matrix) const;
@@ -104,6 +110,8 @@ class StaticMatrix<T, N, N>
         // operators
         T operator()(int row, int column) const;
         T& operator()(int row, int column);
+        StaticMatrix<T, N, N> operator+(const StaticMatrix<T, N, N> &matrix) const;
+        StaticMatrix<T, N, N> operator-(const StaticMatrix<T, N, N> &matrix) const;
         StaticMatrix<T, N, N> operator*(T scalar) const;
         StaticMatrix<T, N, N> operator*(const StaticMatrix<T, N, N> &matrix) const;
         StaticMatrix<T, N, N>& operator*=(const StaticMatrix<T, N, N> &matrix);
