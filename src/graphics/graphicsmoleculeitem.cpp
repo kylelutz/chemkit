@@ -424,7 +424,18 @@ void GraphicsMoleculeItem::atomRemoved(const chemkit::Atom *atom)
 
 void GraphicsMoleculeItem::atomAtomicNumberChanged(const chemkit::Atom *atom)
 {
-    Q_UNUSED(atom);
+    GraphicsAtomItem *item = atomItem(atom);
+
+    if(d->displayType == SpaceFilling){
+        item->setRadius(atom->vanDerWaalsRadius());
+    }
+    else if(d->displayType == BallAndStick && atom->isTerminalHydrogen()){
+        item->setRadius(d->atomRadius * d->hydrogenScale);
+    }
+    else{
+        item->setRadius(d->atomRadius);
+    }
+
     update();
 }
 
