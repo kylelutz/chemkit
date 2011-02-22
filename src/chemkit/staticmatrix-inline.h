@@ -81,14 +81,15 @@ inline void StaticMatrix<T, R, C>::setValue(int row, int column, T value)
     m_data[column*R + row] = value;
 }
 
-/// Returns the value at \p row and \p column.
+/// Returns the value at \p row and \p column in the matrix.
 template<typename T, int R, int C>
 inline T StaticMatrix<T, R, C>::value(int row, int column) const
 {
     return m_data[column*R + row];
 }
 
-/// \overload
+/// Returns a reference to the value at \p row and \p column in the
+/// matrix.
 template<typename T, int R, int C>
 inline T& StaticMatrix<T, R, C>::value(int row, int column)
 {
@@ -180,6 +181,7 @@ inline StaticMatrix<T, R, C> StaticMatrix<T, R, C>::inverted() const
     return matrix;
 }
 
+/// Multiplies values in the matrix by \p scalar.
 template<typename T, int R, int C>
 inline StaticMatrix<T, R, R> StaticMatrix<T, R, C>::multiply(T scalar) const
 {
@@ -188,6 +190,7 @@ inline StaticMatrix<T, R, R> StaticMatrix<T, R, C>::multiply(T scalar) const
     }
 }
 
+/// Multiplies the matrix by \p matrix.
 template<typename T, int R, int C>
 inline StaticMatrix<T, R, R> StaticMatrix<T, R, C>::multiply(const StaticMatrix<T, C, R> &matrix) const
 {
@@ -199,18 +202,28 @@ inline StaticMatrix<T, R, R> StaticMatrix<T, R, C>::multiply(const StaticMatrix<
 }
 
 // --- Operators ---------------------------------------------------------------- //
+/// Returns the value at \p row and \p column in the matrix.
+///
+/// \see value()
 template<typename T, int R, int C>
 inline T StaticMatrix<T, R, C>::operator()(int row, int column) const
 {
     return value(row, column);
 }
 
+/// Returns a reference to the value at \p row and \p column in the
+/// matrix.
+///
+/// \see value()
 template<typename T, int R, int C>
 inline T& StaticMatrix<T, R, C>::operator()(int row, int column)
 {
     return value(row, column);
 }
 
+/// Multiplies the values in the matrix by \p scalar.
+///
+/// \see multiply()
 template<typename T, int R, int C>
 inline StaticMatrix<T, R, C> StaticMatrix<T, R, C>::operator*(T scalar) const
 {
@@ -225,6 +238,7 @@ inline CommaInitializer<T> StaticMatrix<T, R, C>::operator<<(const T value)
     return CommaInitializer<T>(m_data, R, C);
 }
 
+/// Returns \c true if the matrix is equal to \p matrix.
 template<typename T, int R, int C>
 inline bool StaticMatrix<T, R, C>::operator==(const StaticMatrix<T, R, C> &matrix)
 {
@@ -271,6 +285,9 @@ inline StaticMatrix<T, R, C> StaticMatrix<T, R, C>::identity()
 }
 
 // --- Related Functions --------------------------------------------------- //
+/// Multiplies the matrix by \p scalar.
+///
+/// \related StaticMatrix
 template<typename T, int R, int C>
 inline StaticMatrix<T, R, C> operator*(T scalar, const StaticMatrix<T, R, C> &matrix)
 {
