@@ -370,6 +370,15 @@ inline StaticVector<T, N> StaticVector<T, N>::operator-(const StaticVector<T, N>
     return subtract(vector);
 }
 
+/// Returns the dot product of the vector and \p vector.
+///
+/// \see dot()
+template<typename T, int N>
+inline T StaticVector<T, N>::operator*(const StaticVector<T, N> &vector) const
+{
+    return dot(vector);
+}
+
 /// Returns the vector multiplied by \p scalar.
 ///
 /// \see scaled()
@@ -384,6 +393,15 @@ template<typename T, int N>
 inline StaticVector<T, N> StaticVector<T, N>::operator/(T scalar) const
 {
     return scaled(1 / scalar);
+}
+
+/// Returns the cross product of the vector and \p vector.
+///
+/// \see cross()
+template<typename T, int N>
+inline StaticVector<T, N> StaticVector<T, N>::operator^(const StaticVector<T, N> &vector) const
+{
+    return cross(vector);
 }
 
 /// Adds \p vector to the vector.

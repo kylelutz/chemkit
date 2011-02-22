@@ -75,8 +75,10 @@ class StaticVector
         StaticVector<T, N> operator+(const StaticVector<T, N> &vector) const;
         StaticVector<T, N> operator-() const;
         StaticVector<T, N> operator-(const StaticVector<T, N> &vector) const;
+        T operator*(const StaticVector<T, N> &vector) const;
         StaticVector<T, N> operator*(T scalar) const;
         StaticVector<T, N> operator/(T scalar) const;
+        StaticVector<T, N> operator^(const StaticVector<T, N> &vector) const;
         StaticVector<T, N>& operator+=(const StaticVector<T, N> &vector);
         StaticVector<T, N>& operator-=(const StaticVector<T, N> &vector);
         StaticVector<T, N>& operator*=(T scalar);

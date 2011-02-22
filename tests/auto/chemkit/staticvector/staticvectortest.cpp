@@ -32,6 +32,8 @@ class StaticVectorTest : public QObject
         void value();
         void isNull();
         void commaInitializer();
+        void dot();
+        void cross();
 };
 
 void StaticVectorTest::value()
@@ -71,6 +73,37 @@ void StaticVectorTest::commaInitializer()
     QCOMPARE(vector[1], 3);
     QCOMPARE(vector[2], 2);
     QCOMPARE(vector[3], 1);
+}
+
+void StaticVectorTest::dot()
+{
+    chemkit::StaticVector<int, 3> a;
+    a << 1, 2, 3;
+
+    chemkit::StaticVector<int, 3> b;
+    b << 4, 5, 6;
+
+    QCOMPARE(a.dot(b), 32);
+    QCOMPARE(b.dot(a), 32);
+    QCOMPARE(a * b, 32);
+    QCOMPARE(b * a, 32);
+}
+
+void StaticVectorTest::cross()
+{
+    chemkit::StaticVector<int, 3> a;
+    a << 1, 2, 3;
+
+    chemkit::StaticVector<int, 3> b;
+    b << 4, 5, 6;
+
+    chemkit::StaticVector<int, 3> c;
+    c << -3, 6, -3;
+
+    QVERIFY(a.cross(b) == c);
+    QVERIFY(b.cross(a) == -c);
+    QVERIFY((a ^ b) == c);
+    QVERIFY((b ^ a) == -c);
 }
 
 QTEST_APPLESS_MAIN(StaticVectorTest)
