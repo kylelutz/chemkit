@@ -101,7 +101,7 @@ inline T GenericMatrix<T>::value(int row, int column) const
     return m_data[column*m_rowCount + row];
 }
 
-/// \overload
+/// Returns a reference to the value at \p row and \p column.
 template<typename T>
 inline T& GenericMatrix<T>::value(int row, int column)
 {
@@ -293,37 +293,50 @@ inline T GenericMatrix<T>::operator()(int row, int column) const
     return value(row, column);
 }
 
-/// \overload
+/// Returns a reference to the value at \p row and \p column.
 template<typename T>
 inline T& GenericMatrix<T>::operator()(int row, int column)
 {
     return value(row, column);
 }
 
+/// Returns the sum of the matrix and \p matrix.
+///
+/// \see add()
 template<typename T>
 inline GenericMatrix<T> GenericMatrix<T>::operator+(const GenericMatrix<T> &matrix) const
 {
     return add(matrix);
 }
 
+/// Returns the difference of the matrix and \p matrix.
+///
+/// \see subtract()
 template<typename T>
 inline GenericMatrix<T> GenericMatrix<T>::operator-(const GenericMatrix<T> &matrix) const
 {
     return subtract(matrix);
 }
 
+/// Returns the product of the matrix and \p scalar.
+///
+/// \see multiply()
 template<typename T>
 inline GenericMatrix<T> GenericMatrix<T>::operator*(const T scalar) const
 {
     return multiply(scalar);
 }
 
+/// Returns the product of the matrix and \p matrix.
+///
+/// \see multiply()
 template<typename T>
 inline GenericMatrix<T> GenericMatrix<T>::operator*(const GenericMatrix<T> &matrix) const
 {
     return multiply(matrix);
 }
 
+/// Sets the matrix equal to \p matrix.
 template<typename T>
 inline GenericMatrix<T>& GenericMatrix<T>::operator=(const GenericMatrix<T> &matrix)
 {
@@ -348,6 +361,7 @@ inline CommaInitializer<T> GenericMatrix<T>::operator=(const T value)
     return CommaInitializer<T>(m_data, m_rowCount, m_columnCount);
 }
 
+/// Returns \c true if the matrix equals \p matrix.
 template<typename T>
 inline bool GenericMatrix<T>::operator==(const GenericMatrix<T> &matrix) const
 {
@@ -467,6 +481,9 @@ inline GenericMatrix<T> GenericMatrix<T>::identity(int rowCount, int columnCount
 }
 
 // --- Related Functions --------------------------------------------------- //
+/// Returns the product of \p scalar and \p matrix.
+///
+/// \related GenericMatrix
 template<typename T>
 inline GenericMatrix<T> operator*(const T scalar, const GenericMatrix<T> &matrix)
 {
