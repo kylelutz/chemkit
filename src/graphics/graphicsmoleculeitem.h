@@ -74,7 +74,7 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsMoleculeItem : public QObject, public Grap
 
         // items
         GraphicsAtomItem* atomItem(const Atom *atom) const;
-        GraphicsBondItem* bondItem(const Bond *bond);
+        GraphicsBondItem* bondItem(const Bond *bond) const;
 
         // painting
         virtual void paint(GraphicsPainter *painter);

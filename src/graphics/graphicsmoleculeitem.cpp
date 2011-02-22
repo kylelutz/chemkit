@@ -301,7 +301,7 @@ GraphicsAtomItem* GraphicsMoleculeItem::atomItem(const Atom *atom) const
     return 0;
 }
 
-GraphicsBondItem* GraphicsMoleculeItem::bondItem(const Bond *bond)
+GraphicsBondItem* GraphicsMoleculeItem::bondItem(const Bond *bond) const
 {
     foreach(GraphicsBondItem *item, d->bondItems){
         if(item->bond() == bond){
