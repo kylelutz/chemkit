@@ -30,6 +30,7 @@ class StaticMatrixTest : public QObject
 
     private slots:
         void multiply();
+        void multiplyScalar();
         void determinant();
         void invert();
 };
@@ -70,6 +71,37 @@ void StaticMatrixTest::multiply()
     QCOMPARE(d(2, 0), chemkit::Float(48.0));
     QCOMPARE(d(2, 1), chemkit::Float(-56.0));
     QCOMPARE(d(2, 2), chemkit::Float(11.0));
+}
+
+void StaticMatrixTest::multiplyScalar()
+{
+    chemkit::StaticMatrix<int, 2, 3> a;
+    a << 1, 2, 3,
+         4, 5, 6;
+
+    chemkit::StaticMatrix<int, 2, 3> b = a.multiply(4);
+    QCOMPARE(b(0, 0), 4);
+    QCOMPARE(b(0, 1), 8);
+    QCOMPARE(b(0, 2), 12);
+    QCOMPARE(b(1, 0), 16);
+    QCOMPARE(b(1, 1), 20);
+    QCOMPARE(b(1, 2), 24);
+
+    chemkit::StaticMatrix<int, 3, 3> c;
+    c <<  2,  4,  6,
+          8, 10, 12,
+         14, 16, 18;
+
+    chemkit::StaticMatrix<int, 3, 3> d = c.multiply(-1);
+    QCOMPARE(d(0, 0), -2);
+    QCOMPARE(d(0, 1), -4);
+    QCOMPARE(d(0, 2), -6);
+    QCOMPARE(d(1, 0), -8);
+    QCOMPARE(d(1, 1), -10);
+    QCOMPARE(d(1, 2), -12);
+    QCOMPARE(d(2, 0), -14);
+    QCOMPARE(d(2, 1), -16);
+    QCOMPARE(d(2, 2), -18);
 }
 
 void StaticMatrixTest::determinant()
