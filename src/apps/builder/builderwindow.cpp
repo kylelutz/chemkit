@@ -114,10 +114,6 @@ BuilderWindow::BuilderWindow(QWidget *parent)
     m_energyMinimizer = new EnergyMinimizer;
     connect(m_energyMinimizer, SIGNAL(stateChanged(int)), SLOT(minimizerStateChanged(int)));
 
-    // central view widget
-    m_view = new chemkit::GraphicsView;
-    setCentralWidget(m_view);
-
     // setup tools
     m_tool = 0;
     m_navigateTool = new NavigateTool(this);
@@ -157,7 +153,7 @@ BuilderWindow::BuilderWindow(QWidget *parent)
 
 BuilderWindow::~BuilderWindow()
 {
-    m_view->setTool(0);
+    ui->graphicsView->setTool(0);
     delete m_navigateTool;
     delete m_buildTool;
     delete m_manipulateTool;
@@ -166,7 +162,7 @@ BuilderWindow::~BuilderWindow()
 //    delete m_molecule;
 //    delete m_energyMinimizer;
 
-    delete m_view;
+    delete ui->graphicsView;
     delete ui;
 }
 
@@ -177,7 +173,7 @@ void BuilderWindow::setTool(BuilderTool *tool)
     }
 
     m_tool = tool;
-    m_view->setTool(tool);
+    ui->graphicsView->setTool(tool);
     emit toolChanged(tool);
 
     if(tool == m_navigateTool)
@@ -199,14 +195,14 @@ void BuilderWindow::setMolecule(chemkit::Molecule *molecule)
 
     // remove old molecule item
     if(m_moleculeItem){
-        m_view->deleteItem(m_moleculeItem);
+        ui->graphicsView->deleteItem(m_moleculeItem);
         m_moleculeItem = 0;
     }
 
     // add new molecule item
     if(molecule){
         m_moleculeItem = new chemkit::GraphicsMoleculeItem(molecule);
-        m_view->addItem(m_moleculeItem);
+        ui->graphicsView->addItem(m_moleculeItem);
     }
 
     // reset editor
@@ -259,6 +255,12 @@ void BuilderWindow::endMoleculeEdit()
        m_energyMinimizer->state() == EnergyMinimizer::UpdateReady){
         m_energyMinimizer->start();
     }
+}
+
+// --- View ---------------------------------------------------------------- //
+chemkit::GraphicsView* BuilderWindow::view() const
+{
+    return ui->graphicsView;
 }
 
 // --- Slots --------------------------------------------------------------- //
@@ -432,15 +434,15 @@ void BuilderWindow::centerCamera()
 void BuilderWindow::setBackgroundColor(QAction *action)
 {
     if(action == ui->actionBackgroundBlack)
-        m_view->setBackgroundColor(Qt::black);
+        ui->graphicsView->setBackgroundColor(Qt::black);
     else if(action == ui->actionBackgroundWhite)
-        m_view->setBackgroundColor(Qt::white);
+        ui->graphicsView->setBackgroundColor(Qt::white);
     else if(action == ui->actionBackgroundGray)
-        m_view->setBackgroundColor(Qt::gray);
+        ui->graphicsView->setBackgroundColor(Qt::gray);
     else if(action == ui->actionBackgroundOther)
-        m_view->setBackgroundColor(QColorDialog::getColor(m_view->backgroundColor(), this));
+        ui->graphicsView->setBackgroundColor(QColorDialog::getColor(ui->graphicsView->backgroundColor(), this));
 
-    m_view->update();
+    ui->graphicsView->update();
 }
 
 void BuilderWindow::setTool(QAction *action)

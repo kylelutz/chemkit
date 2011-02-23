@@ -62,7 +62,7 @@ class BuilderWindow : public QMainWindow
         void endMoleculeEdit();
 
         // view
-        chemkit::GraphicsView* view() const { return m_view; }
+        chemkit::GraphicsView* view() const;
 
         // tools
         void setTool(BuilderTool *tool);
@@ -107,7 +107,6 @@ class BuilderWindow : public QMainWindow
 
     private:
         Ui::BuilderWindow *ui;
-        chemkit::GraphicsView *m_view;
         chemkit::ChemicalFile *m_file;
         chemkit::Molecule *m_molecule;
         chemkit::GraphicsMoleculeItem *m_moleculeItem;
