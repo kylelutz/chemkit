@@ -252,6 +252,8 @@ void BuilderWindow::endMoleculeEdit()
     m_editor->endEdit();
     m_inMoleculeEdit = false;
 
+    m_energyMinimizer->setMoleculeChanged(true);
+
     if(m_energyMinimizer->state() == EnergyMinimizer::Running ||
        m_energyMinimizer->state() == EnergyMinimizer::Converged ||
        m_energyMinimizer->state() == EnergyMinimizer::UpdateReady){

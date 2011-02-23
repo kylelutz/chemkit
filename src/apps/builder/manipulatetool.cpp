@@ -48,7 +48,7 @@ void ManipulateTool::mousePressEvent(QMouseEvent *event)
 
     if(m_hasSelection && view()->overlay()->itemAt(event->pos()) == m_selectionOverlayItem){
         setState(MovingSelection);
-        editor()->beginEdit();
+        builder()->beginMoleculeEdit();
     }
     else{
         clearSelection();
@@ -57,7 +57,7 @@ void ManipulateTool::mousePressEvent(QMouseEvent *event)
 
         if(item && item->type() == chemkit::GraphicsItem::AtomItem){
             m_selectedItem = item;
-            editor()->beginEdit();
+            builder()->beginMoleculeEdit();
             setState(MovingAtom);
         }
         else{
@@ -107,10 +107,10 @@ void ManipulateTool::mouseReleaseEvent(QMouseEvent *event)
     Q_UNUSED(event);
 
     if(state() == MovingAtom){
-        editor()->endEdit();
+        builder()->endMoleculeEdit();
     }
     else if(state() == MovingSelection){
-        editor()->endEdit();
+        builder()->endMoleculeEdit();
     }
     else if(state() == Selecting){
         setSelection(m_selectionOverlayItem->rect().toRect().normalized());
@@ -139,22 +139,22 @@ void ManipulateTool::copy()
 
 void ManipulateTool::paste()
 {
-    editor()->beginEdit();
+    builder()->beginMoleculeEdit();
     QList<chemkit::Atom *> newAtoms = editor()->paste();
     m_selection = newAtoms;
     moveSelectionBy(30, -30);
-    editor()->endEdit();
+    builder()->endMoleculeEdit();
 }
 
 void ManipulateTool::del()
 {
-    editor()->beginEdit();
+    builder()->beginMoleculeEdit();
 
     foreach(chemkit::Atom *atom, m_selection){
         editor()->removeAtom(atom);
     }
 
-    editor()->endEdit();
+    builder()->endMoleculeEdit();
 
     clearSelection();
 }

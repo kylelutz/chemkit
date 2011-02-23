@@ -29,6 +29,7 @@ EnergyMinimizer::EnergyMinimizer(chemkit::Molecule *molecule)
     : QObject()
 {
     m_molecule = molecule;
+    m_moleculeChanged = true;
     m_state = Stopped;
     m_forceField = 0;
     m_forceFieldName = "uff";
@@ -43,10 +44,12 @@ EnergyMinimizer::~EnergyMinimizer()
 // --- Properties ---------------------------------------------------------- //
 void EnergyMinimizer::setMolecule(chemkit::Molecule *molecule)
 {
-    if(molecule == m_molecule)
+    if(molecule == m_molecule){
         return;
+    }
 
     m_molecule = molecule;
+    m_moleculeChanged = true;
 }
 
 chemkit::Molecule* EnergyMinimizer::molecule() const
@@ -54,9 +57,20 @@ chemkit::Molecule* EnergyMinimizer::molecule() const
     return m_molecule;
 }
 
+void EnergyMinimizer::setMoleculeChanged(bool changed)
+{
+    m_moleculeChanged = changed;
+}
+
+bool EnergyMinimizer::moleculeChanged() const
+{
+    return m_moleculeChanged;
+}
+
 void EnergyMinimizer::setForceField(const QString &name)
 {
     m_forceFieldName = name;
+    m_moleculeChanged = true;
 }
 
 chemkit::ForceField* EnergyMinimizer::forceField() const
@@ -99,22 +113,26 @@ void EnergyMinimizer::start()
         return;
     }
 
-    delete m_forceField;
+    if(m_moleculeChanged){
+        delete m_forceField;
 
-    m_forceField = chemkit::ForceField::create(m_forceFieldName);
-    if(!m_forceField){
-        setState(SetupFailed);
-        return;
-    }
+        m_forceField = chemkit::ForceField::create(m_forceFieldName);
+        if(!m_forceField){
+            setState(SetupFailed);
+            return;
+        }
 
-    setState(SettingUp);
+        setState(SettingUp);
 
-    m_forceField->addMolecule(m_molecule);
-    m_forceField->setup();
+        m_forceField->addMolecule(m_molecule);
+        m_forceField->setup();
 
-    if(!m_forceField->isSetup()){
-        setState(SetupFailed);
-        return;
+        if(!m_forceField->isSetup()){
+            setState(SetupFailed);
+            return;
+        }
+
+        m_moleculeChanged = false;
     }
 
     QFuture<bool> future = m_forceField->minimizationStepAsync();

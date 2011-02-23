@@ -51,6 +51,8 @@ class EnergyMinimizer : public QObject
         // properties
         void setMolecule(chemkit::Molecule *molecule);
         chemkit::Molecule* molecule() const;
+        void setMoleculeChanged(bool changed);
+        bool moleculeChanged() const;
         void setForceField(const QString &name);
         chemkit::ForceField* forceField() const;
         int state() const;
@@ -75,6 +77,7 @@ class EnergyMinimizer : public QObject
         void setState(int state);
 
     private:
+        bool m_moleculeChanged;
         chemkit::Molecule *m_molecule;
         chemkit::ForceField *m_forceField;
         QString m_forceFieldName;
