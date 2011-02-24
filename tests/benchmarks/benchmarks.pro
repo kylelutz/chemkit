@@ -4,4 +4,5 @@ SUBDIRS = benzene-rings \
     mmff-energy \
     molecular-masses \
     parse-smiles \
-    protein-surface
+    protein-surface \
+    uridine-minimization
