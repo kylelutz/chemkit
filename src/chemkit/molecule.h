@@ -75,7 +75,7 @@ class CHEMKIT_EXPORT Molecule
         // construction and destruction
         Molecule();
         Molecule(const QString &formula, const QString &format);
-        Molecule(const Molecule *molecule);
+        Molecule(const Molecule &molecule);
         ~Molecule();
 
         // properties
@@ -182,8 +182,6 @@ class CHEMKIT_EXPORT Molecule
         void addWatcher(MoleculeWatcher *watcher) const;
         void removeWatcher(MoleculeWatcher *watcher) const;
         bool isSubsetOf(const Molecule *molecule, CompareFlags flags = CompareFlags()) const;
-
-        Q_DISABLE_COPY(Molecule)
 
         friend class Atom;
         friend class Bond;

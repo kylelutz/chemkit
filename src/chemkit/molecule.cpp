@@ -135,19 +135,19 @@ Molecule::Molecule(const QString &formula, const QString &format)
 }
 
 /// Creates a new molecule that is a copy of \p molecule.
-Molecule::Molecule(const Molecule *molecule)
+Molecule::Molecule(const Molecule &molecule)
     : d(new MoleculePrivate)
 {
-    d->name = molecule->name();
+    d->name = molecule.name();
 
     QHash<const Atom *, Atom *> oldToNew;
 
-    foreach(const Atom *atom, molecule->atoms()){
+    foreach(const Atom *atom, molecule.atoms()){
         Atom *newAtom = addAtomCopy(atom);
         oldToNew[atom] = newAtom;
     }
 
-    foreach(const Bond *bond, molecule->bonds()){
+    foreach(const Bond *bond, molecule.bonds()){
         Bond *newBond = addBond(oldToNew[bond->atom1()], oldToNew[bond->atom2()]);
         newBond->setOrder(bond->order());
     }
