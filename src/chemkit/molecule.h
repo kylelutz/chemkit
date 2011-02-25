@@ -161,6 +161,9 @@ class CHEMKIT_EXPORT Molecule
         QList<Conformer *> conformers() const;
         int conformerCount() const;
 
+        // operators
+        Molecule& operator=(const Molecule &molecule);
+
     private:
         // internal methods
         QList<Atom *> atomPathBetween(const Atom *a, const Atom *b) const;

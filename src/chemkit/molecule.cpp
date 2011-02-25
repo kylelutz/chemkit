@@ -1087,6 +1087,34 @@ int Molecule::conformerCount() const
     return conformers().size();
 }
 
+// --- Operators ----------------------------------------------------------- //
+Molecule& Molecule::operator=(const Molecule &molecule)
+{
+    if(this != &molecule){
+        // clear current molecule
+        clear();
+
+        // set new name
+        setName(molecule.name());
+
+        QHash<const Atom *, Atom *> oldToNew;
+
+        // add new atoms
+        foreach(const Atom *atom, molecule.atoms()){
+            Atom *newAtom = addAtomCopy(atom);
+            oldToNew[atom] = newAtom;
+        }
+
+        // add new bonds
+        foreach(const Bond *bond, molecule.bonds()){
+            Bond *newBond = addBond(oldToNew[bond->atom1()], oldToNew[bond->atom2()]);
+            newBond->setOrder(bond->order());
+        }
+    }
+
+    return *this;
+}
+
 // --- Internal Methods ---------------------------------------------------- //
 QList<Atom *> Molecule::atomPathBetween(const Atom *a, const Atom *b) const
 {
