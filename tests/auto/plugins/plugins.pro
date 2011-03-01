@@ -5,6 +5,7 @@ SUBDIRS = amber \
     formula \
     hydrogenbonds \
     inchi \
+    mcdl \
     mdl \
     mmff \
     mol2 \

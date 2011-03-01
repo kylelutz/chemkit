@@ -50,6 +50,7 @@ class LineFormatPrivate
 /// The following line formats are supported in chemkit:
 ///   - \c inchi
 ///   - \c inchikey
+///   - \c mcdl
 ///   - \c formula
 ///   - \c smiles
 
