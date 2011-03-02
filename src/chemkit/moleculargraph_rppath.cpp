@@ -253,7 +253,7 @@ QList<Ring *> MolecularGraph::sssr_rpPath(const MolecularGraph *graph)
     if(ringCount < 1)
         return QList<Ring *>();
 
-    // algorithm 1 - create the distance and pid matricies
+    // algorithm 1 - create the distance and pid matrices
     DistanceMatrix D(n);
     PidMatrix P(n);
     PidMatrix Pt(n);

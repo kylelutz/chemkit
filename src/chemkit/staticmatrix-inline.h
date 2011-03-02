@@ -145,8 +145,8 @@ inline void StaticMatrix<T, R, C>::fill(T value)
 // --- Math --------------------------------------------------------------------- //
 /// Returns the trace of the matrix.
 ///
-/// This method is only applicable to sqaure matricies. For
-/// non-square matricies \c 0 is returned.
+/// This method is only applicable to sqaure matrices. For
+/// non-square matrices \c 0 is returned.
 template<typename T, int R, int C>
 inline T StaticMatrix<T, R, C>::trace() const
 {
@@ -155,8 +155,8 @@ inline T StaticMatrix<T, R, C>::trace() const
 
 /// Returns the determinant of the matrix.
 ///
-/// This method is only applicable to sqaure matricies. For
-/// non-square matricies \c 0 is returned.
+/// This method is only applicable to sqaure matrices. For
+/// non-square matrices \c 0 is returned.
 template<typename T, int R, int C>
 inline T StaticMatrix<T, R, C>::determinant() const
 {
@@ -165,8 +165,8 @@ inline T StaticMatrix<T, R, C>::determinant() const
 
 /// Inverts the matrix in-place.
 ///
-/// This method is only applicable to sqaure matricies. For
-/// non-square matricies this method does nothing.
+/// This method is only applicable to sqaure matrices. For
+/// non-square matrices this method does nothing.
 template<typename T, int R, int C>
 inline void StaticMatrix<T, R, C>::invert()
 {
@@ -174,8 +174,8 @@ inline void StaticMatrix<T, R, C>::invert()
 
 /// Returns the inverse of the matrix.
 ///
-/// This method is only applicable to sqaure matricies. For
-/// non-square matricies this method does nothing and the original
+/// This method is only applicable to sqaure matrices. For
+/// non-square matrices this method does nothing and the original
 /// matrix is returned.
 template<typename T, int R, int C>
 inline StaticMatrix<T, R, C> StaticMatrix<T, R, C>::inverted() const
