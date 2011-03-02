@@ -32,6 +32,7 @@ namespace chemkit {
 class GraphicsRay;
 class GraphicsScene;
 class GraphicsPainter;
+class GraphicsMaterial;
 class GraphicsItemPrivate;
 
 class CHEMKIT_GRAPHICS_EXPORT GraphicsItem
@@ -72,6 +73,10 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsItem
         bool isOpaque() const;
         bool isTransparent() const;
         bool isTranslucent() const;
+
+        // material
+        void setMaterial(GraphicsMaterial *material);
+        GraphicsMaterial* material() const;
 
         // geometry
         void setTransform(const GraphicsTransform &transform);

@@ -24,6 +24,7 @@
 
 #include "graphicssphere.h"
 #include "graphicscylinder.h"
+#include "graphicsmaterial.h"
 #include "graphicsquaternion.h"
 #include "graphicsvertexbuffer.h"
 
@@ -356,6 +357,17 @@ void GraphicsPainter::setColor(const QColor &color)
 {
     d->drawColor = color;
     glColor4f(color.redF(), color.greenF(), color.blueF(), color.alphaF());
+}
+
+void GraphicsPainter::setMaterial(const GraphicsMaterial *material)
+{
+    glMateriali(GL_FRONT, GL_SHININESS, material->shininess());
+
+    GraphicsFloat specular[] = {material->specularColor().redF(),
+                                material->specularColor().greenF(),
+                                material->specularColor().blueF(),
+                                material->specularColor().alphaF()};
+    glMaterialfv(GL_FRONT, GL_SPECULAR, specular);
 }
 
 } // end chemkit namespace

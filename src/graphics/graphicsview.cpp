@@ -31,6 +31,7 @@
 #include "graphicsvector.h"
 #include "graphicsoverlay.h"
 #include "graphicspainter.h"
+#include "graphicsmaterial.h"
 #include "graphicstransform.h"
 
 #ifndef GL_MULTISAMPLE
@@ -563,9 +564,6 @@ void GraphicsView::initializeGL()
     glEnable(GL_MULTISAMPLE);
 
     // materials
-    GraphicsFloat specular[] = {0.3f, 0.3f, 0.3f, 1.0f};
-    glMaterialfv(GL_FRONT, GL_SPECULAR, specular);
-    glMaterialf(GL_FRONT, GL_SHININESS, 15.0f);
     glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
     glEnable(GL_COLOR_MATERIAL);
 
@@ -633,6 +631,8 @@ void GraphicsView::paintGL()
 
             GraphicsTransform transform = item->transform();
             glMultMatrixf(transform.data());
+
+            painter.setMaterial(item->material());
             item->paint(&painter);
 
             glPopMatrix();
@@ -647,6 +647,8 @@ void GraphicsView::paintGL()
 
             GraphicsTransform transform = item->transform();
             glMultMatrixf(transform.data());
+
+            painter.setMaterial(item->material());
             item->paint(&painter);
 
             glPopMatrix();

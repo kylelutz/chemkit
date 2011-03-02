@@ -24,6 +24,7 @@
 
 #include "graphicsview.h"
 #include "graphicsscene.h"
+#include "graphicsmaterial.h"
 #include "graphicstransform.h"
 
 namespace chemkit {
@@ -36,6 +37,7 @@ class GraphicsItemPrivate
         bool visible;
         GraphicsScene *scene;
         GraphicsFloat opacity;
+        GraphicsMaterial *material;
         GraphicsTransform transform;
 };
 
@@ -54,6 +56,7 @@ GraphicsItem::GraphicsItem(int type)
     d->visible = true;
     d->scene = 0;
     d->opacity = 1.0;
+    d->material = new GraphicsMaterial;
     d->transform = GraphicsTransform::identity();
 }
 
@@ -64,6 +67,7 @@ GraphicsItem::~GraphicsItem()
         d->scene->removeItem(this);
     }
 
+    delete d->material;
     delete d;
 }
 
@@ -128,6 +132,19 @@ bool GraphicsItem::isTransparent() const
 bool GraphicsItem::isTranslucent() const
 {
     return !(isOpaque() || isTransparent());
+}
+
+// --- Material ------------------------------------------------------------ //
+void GraphicsItem::setMaterial(GraphicsMaterial *material)
+{
+    delete d->material;
+
+    d->material = material;
+}
+
+GraphicsMaterial* GraphicsItem::material() const
+{
+    return d->material;
 }
 
 // --- Geometry ------------------------------------------------------------ //

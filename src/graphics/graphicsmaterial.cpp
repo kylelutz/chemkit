@@ -45,6 +45,8 @@ class GraphicsMaterialPrivate
 GraphicsMaterial::GraphicsMaterial()
     : d(new GraphicsMaterialPrivate)
 {
+    d->shininess = 15;
+    d->specularColor = QColor::fromRgbF(0.3f, 0.3f, 0.3f, 1.0f);
 }
 
 /// Destroys the graphics material object.
