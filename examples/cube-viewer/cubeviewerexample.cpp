@@ -25,6 +25,7 @@
 
 #include <chemkit/chemicalfile.h>
 #include <chemkit/bondpredictor.h>
+#include <chemkit/graphicsmaterial.h>
 #include <chemkit/graphicsnavigationtool.h>
 
 // === CubeViewerExample =================================================== //
@@ -53,10 +54,12 @@ CubeViewerExample::CubeViewerExample(QWidget *parent)
 
     m_positiveSurfaceItem = new chemkit::GraphicsIsosurfaceItem;
     m_positiveSurfaceItem->setColor(Qt::red);
+    m_positiveSurfaceItem->material()->setSpecularColor(Qt::transparent);
     m_view->addItem(m_positiveSurfaceItem);
 
     m_negativeSurfaceItem = new chemkit::GraphicsIsosurfaceItem;
     m_negativeSurfaceItem->setColor(Qt::blue);
+    m_negativeSurfaceItem->material()->setSpecularColor(Qt::transparent);
     m_view->addItem(m_negativeSurfaceItem);
 
     // setup scalar fields
