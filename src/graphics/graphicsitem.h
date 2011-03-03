@@ -54,7 +54,7 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsItem
 
         enum ItemChange {
             ItemSceneChanged,
-            ItemVisiblityChanged,
+            ItemVisiblityChanged
         };
 
         // construction and destruction
