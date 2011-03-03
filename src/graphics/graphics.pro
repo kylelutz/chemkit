@@ -30,6 +30,7 @@ SOURCES += graphics.cpp \
     graphicsringitem.cpp \
     graphicsscene.cpp \
     graphicssphere.cpp \
+    graphicssphereitem.cpp \
     graphicstool.cpp \
     graphicstransform.cpp \
     graphicsview.cpp \
@@ -60,6 +61,7 @@ HEADERS += graphics.h \
     graphicsringitem.h \
     graphicsscene.h \
     graphicssphere.h \
+    graphicssphereitem.h \
     graphicstool.h \
     graphicstransform.h \
     graphicsvector.h \
