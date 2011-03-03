@@ -13,6 +13,7 @@ SOURCES += graphics.cpp \
     graphicsbonditem.cpp \
     graphicscamera.cpp \
     graphicscylinder.cpp \
+    graphicscylinderitem.cpp \
     graphicsisosurfaceitem.cpp \
     graphicsitem.cpp \
     graphicslight.cpp \
@@ -40,6 +41,7 @@ HEADERS += graphics.h \
     graphicsbonditem.h \
     graphicscamera.h \
     graphicscylinder.h \
+    graphicscylinderitem.h \
     graphicsisosurfaceitem.h \
     graphicsitem.h \
     graphicslight.h \
