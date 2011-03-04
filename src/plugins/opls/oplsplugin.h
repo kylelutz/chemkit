@@ -24,6 +24,7 @@
 #define OPLSPLUGIN_H
 
 #include <chemkit/plugin.h>
+#include <chemkit/atomtyper.h>
 #include <chemkit/forcefield.h>
 
 class OplsPlugin : public chemkit::Plugin
@@ -34,6 +35,7 @@ class OplsPlugin : public chemkit::Plugin
         OplsPlugin();
         ~OplsPlugin();
 
+        static chemkit::AtomTyper* createOplsAtomTyper();
         static chemkit::ForceField* createOplsForceField();
 };
 

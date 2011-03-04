@@ -22,17 +22,25 @@
 
 #include "oplsplugin.h"
 
+#include "oplsatomtyper.h"
 #include "oplsforcefield.h"
 
 OplsPlugin::OplsPlugin()
     : chemkit::Plugin("opls")
 {
+    chemkit::AtomTyper::registerTyper("opls", createOplsAtomTyper);
     chemkit::ForceField::registerForceField("opls", createOplsForceField);
 }
 
 OplsPlugin::~OplsPlugin()
 {
+    chemkit::AtomTyper::unregisterTyper("opls", createOplsAtomTyper);
     chemkit::ForceField::unregisterForceField("opls", createOplsForceField);
+}
+
+chemkit::AtomTyper* OplsPlugin::createOplsAtomTyper()
+{
+    return new OplsAtomTyper;
 }
 
 chemkit::ForceField* OplsPlugin::createOplsForceField()

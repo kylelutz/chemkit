@@ -25,21 +25,21 @@
 
 #include <chemkit/atom.h>
 #include <chemkit/molecule.h>
+#include <chemkit/atomtyper.h>
 
-class OplsAtomTyper
+class OplsAtomTyper : public chemkit::AtomTyper
 {
     public:
         // construction and destruction
         OplsAtomTyper(const chemkit::Molecule *molecule = 0);
         ~OplsAtomTyper();
 
-        // properties
-        void setMolecule(const chemkit::Molecule *molecule);
-        const chemkit::Molecule* molecule() const;
-
         // types
-        QString type(const chemkit::Atom *atom) const;
         int typeNumber(const chemkit::Atom *atom) const;
+        QString typeString(const chemkit::Atom *atom) const;
+
+    protected:
+        void assignTypes(const chemkit::Molecule *molecule);
 
     private:
         void setTypeNumber(int index, int typeNumber);

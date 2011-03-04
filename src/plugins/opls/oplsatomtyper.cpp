@@ -24,6 +24,7 @@
 
 // --- Construction and Destruction ---------------------------------------- //
 OplsAtomTyper::OplsAtomTyper(const chemkit::Molecule *molecule)
+    : chemkit::AtomTyper("opls")
 {
     setMolecule(molecule);
 }
@@ -32,11 +33,24 @@ OplsAtomTyper::~OplsAtomTyper()
 {
 }
 
-// --- Properties ---------------------------------------------------------- //
-void OplsAtomTyper::setMolecule(const chemkit::Molecule *molecule)
+// --- Types --------------------------------------------------------------- //
+void OplsAtomTyper::setTypeNumber(int index, int typeNumber)
 {
-    m_molecule = molecule;
+    m_typeNumbers[index] = typeNumber;
+}
 
+int OplsAtomTyper::typeNumber(const chemkit::Atom *atom) const
+{
+    return m_typeNumbers[atom->index()];
+}
+
+QString OplsAtomTyper::typeString(const chemkit::Atom *atom) const
+{
+    return QString::number(typeNumber(atom));
+}
+
+void OplsAtomTyper::assignTypes(const chemkit::Molecule *molecule)
+{
     if(!molecule){
         m_typeNumbers.resize(0);
         return;
@@ -212,25 +226,4 @@ void OplsAtomTyper::setMolecule(const chemkit::Molecule *molecule)
             setTypeNumber(index, 47); // xenon atom
         }
     }
-}
-
-const chemkit::Molecule* OplsAtomTyper::molecule() const
-{
-    return m_molecule;
-}
-
-// --- Types --------------------------------------------------------------- //
-QString OplsAtomTyper::type(const chemkit::Atom *atom) const
-{
-    return QString::number(typeNumber(atom));
-}
-
-void OplsAtomTyper::setTypeNumber(int index, int typeNumber)
-{
-    m_typeNumbers[index] = typeNumber;
-}
-
-int OplsAtomTyper::typeNumber(const chemkit::Atom *atom) const
-{
-    return m_typeNumbers[atom->index()];
 }

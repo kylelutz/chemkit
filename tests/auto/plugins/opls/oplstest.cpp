@@ -23,6 +23,7 @@
 #include <QtTest>
 
 #include <chemkit/molecule.h>
+#include <chemkit/atomtyper.h>
 #include <chemkit/forcefield.h>
 #include <chemkit/chemicalfile.h>
 
@@ -43,6 +44,7 @@ class OplsTest : public QObject
 
 void OplsTest::initTestCase()
 {
+    QVERIFY(chemkit::AtomTyper::typers().contains("opls"));
     QVERIFY(chemkit::ForceField::forceFields().contains("opls"));
 }
 
