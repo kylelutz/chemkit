@@ -15,6 +15,7 @@ SUBDIRS = amber \
     randicindex \
     rotatablebonds \
     smiles \
+    sybyl \
     txyz \
     uff \
     wienerindex \
