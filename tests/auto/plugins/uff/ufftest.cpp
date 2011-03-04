@@ -23,6 +23,7 @@
 #include <QtTest>
 
 #include <chemkit/molecule.h>
+#include <chemkit/atomtyper.h>
 #include <chemkit/forcefield.h>
 #include <chemkit/chemicalfile.h>
 
@@ -36,6 +37,7 @@ class UffTest : public QObject
 
 void UffTest::initTestCase()
 {
+    QVERIFY(chemkit::AtomTyper::typers().contains("uff"));
     QVERIFY(chemkit::ForceField::forceFields().contains("uff"));
 }
 

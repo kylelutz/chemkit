@@ -26,6 +26,7 @@
 #include <QtCore>
 
 #include <chemkit/plugin.h>
+#include <chemkit/atomtyper.h>
 #include <chemkit/forcefield.h>
 
 class UffPlugin : public chemkit::Plugin
@@ -35,6 +36,7 @@ class UffPlugin : public chemkit::Plugin
     public:
         UffPlugin();
 
+        static chemkit::AtomTyper* createUffAtomTyper();
         static chemkit::ForceField* createUffForceField();
 };
 

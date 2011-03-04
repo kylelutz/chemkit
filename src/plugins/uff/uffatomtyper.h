@@ -20,32 +20,28 @@
 **
 ******************************************************************************/
 
-#ifndef UFFFORCEFIELD_H
-#define UFFFORCEFIELD_H
+#ifndef UFFATOMTYPER_H
+#define UFFATOMTYPER_H
 
-#include <chemkit/forcefield.h>
-#include <chemkit/forcefieldatom.h>
+#include <chemkit/atomtyper.h>
 
-class UffParameters;
-
-class UffForceField : public chemkit::ForceField
+class UffAtomTyper : public chemkit::AtomTyper
 {
     public:
         // construction and destruction
-        UffForceField();
-        ~UffForceField();
+        UffAtomTyper(const chemkit::Molecule *molecule = 0);
+        ~UffAtomTyper();
 
-        // parameters
-        const UffParameters* parameters() const;
+        // types
+        QString typeString(int index) const;
+        QString typeString(const chemkit::Atom *atom) const;
 
-        // setup
-        virtual bool setup();
-
-        bool atomsAreWithinTwoBonds(const chemkit::Atom *a, const chemkit::Atom *b) const;
-        bool isGroupSix(const chemkit::ForceFieldAtom *atom) const;
+    protected:
+        QString atomType(const chemkit::Atom *atom) const;
+        void assignTypes(const chemkit::Molecule *molecule);
 
     private:
-        UffParameters *m_parameters;
+        QVector<QString> m_types;
 };
 
-#endif // UFFFORCEFIELD_H
+#endif // UFFATOMTYPER_H

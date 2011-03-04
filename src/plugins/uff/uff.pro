@@ -1,10 +1,12 @@
 include(../plugin.pri)
 
-SOURCES += uffforcefield.cpp \
+SOURCES += uffatomtyper.cpp \
+    uffforcefield.cpp \
     uffcalculation.cpp \
     uffparameters.cpp \
     uffplugin.cpp
-HEADERS += uffforcefield.h \
+HEADERS += uffatomtyper.h \
+    uffforcefield.h \
     uffcalculation.h \
     uffparameters.h \
     uffplugin.h

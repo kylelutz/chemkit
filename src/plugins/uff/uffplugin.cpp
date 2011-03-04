@@ -22,12 +22,19 @@
 
 #include "uffplugin.h"
 
+#include "uffatomtyper.h"
 #include "uffforcefield.h"
 
 UffPlugin::UffPlugin()
     : chemkit::Plugin("uff")
 {
+    chemkit::AtomTyper::registerTyper("uff", createUffAtomTyper);
     chemkit::ForceField::registerForceField("uff", &createUffForceField);
+}
+
+chemkit::AtomTyper* UffPlugin::createUffAtomTyper()
+{
+    return new UffAtomTyper;
 }
 
 chemkit::ForceField* UffPlugin::createUffForceField()
