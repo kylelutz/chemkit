@@ -10,6 +10,7 @@ SOURCES += alphashape.cpp \
     aminoacid.cpp \
     atom.cpp \
     atommapping.cpp \
+    atomtyper.cpp \
     biochemicalfile.cpp \
     biochemicalfileformat.cpp \
     bond.cpp \
@@ -53,6 +54,7 @@ HEADERS += alphashape.h \
     atom.h \
     atom-inline.h \
     atommapping.h \
+    atomtyper.h \
     biochemicalfile.h \
     biochemicalfileformat.h \
     blas.h \

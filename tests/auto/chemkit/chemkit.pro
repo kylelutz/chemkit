@@ -3,6 +3,7 @@ SUBDIRS = alphashape \
     aminoacid \
     atom \
     atommapping \
+    atomtyper \
     bond \
     bondpredictor \
     chemicalfile \
