@@ -36,6 +36,8 @@ MmffPlugin::~MmffPlugin()
     foreach(MmffParametersData *parameters, m_parametersCache.values()){
         parameters->deref();
     }
+
+    chemkit::ForceField::unregisterForceField("mmff", createMmffForceField);
 }
 
 void MmffPlugin::storeParameters(const QString &name, MmffParametersData *parameters)
