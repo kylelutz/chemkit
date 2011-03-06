@@ -30,6 +30,11 @@ AmberPlugin::AmberPlugin()
     chemkit::ForceField::registerForceField("amber", &createAmberForceField);
 }
 
+AmberPlugin::~AmberPlugin()
+{
+    chemkit::ForceField::unregisterForceField("amber", createAmberForceField);
+}
+
 chemkit::ForceField* AmberPlugin::createAmberForceField()
 {
     return new AmberForceField;

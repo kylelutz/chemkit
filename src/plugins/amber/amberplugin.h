@@ -34,6 +34,7 @@ class AmberPlugin : public chemkit::Plugin
 
     public:
         AmberPlugin();
+        ~AmberPlugin();
 
         static chemkit::ForceField* createAmberForceField();
 };
