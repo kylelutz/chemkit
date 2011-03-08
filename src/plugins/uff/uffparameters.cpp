@@ -24,6 +24,8 @@
 
 #include <chemkit/forcefieldatom.h>
 
+namespace {
+
 const UffAtomParameters AtomParameters[] = {
     {"H_", 0.354, 180, 2.886, 0.044, 12, 0.712, 0, 0, 4.528, 6.9452, 0.371},
     {"H_b", 0.46, 83.5, 2.886, 0.044, 12, 0.712, 0, 0, 4.528, 6.9452, 0.371},
@@ -155,6 +157,8 @@ const UffAtomParameters AtomParameters[] = {
 };
 
 int AtomParametersCount = sizeof(AtomParameters) / sizeof(*AtomParameters);
+
+} // end anonymous namespace
 
 // --- Construction and Destruction ---------------------------------------- //
 UffParameters::UffParameters()
