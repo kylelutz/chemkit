@@ -158,17 +158,3 @@ bool UffForceField::isGroupSix(const chemkit::ForceFieldAtom *atom) const
             return false;
     };
 }
-
-bool UffForceField::atomsAreWithinTwoBonds(const chemkit::Atom *a, const chemkit::Atom *b) const
-{
-    foreach(const chemkit::Atom *neighbor, a->neighbors()){
-        if(neighbor == b){
-            return true;
-        }
-        else if(neighbor->neighbors().contains(const_cast<chemkit::Atom *>(b))){
-            return true;
-        }
-    }
-
-    return false;
-}

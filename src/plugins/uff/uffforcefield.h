@@ -41,7 +41,6 @@ class UffForceField : public chemkit::ForceField
         // setup
         virtual bool setup();
 
-        bool atomsAreWithinTwoBonds(const chemkit::Atom *a, const chemkit::Atom *b) const;
         bool isGroupSix(const chemkit::ForceFieldAtom *atom) const;
 
     private:
