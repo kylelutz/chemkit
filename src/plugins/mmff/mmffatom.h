@@ -40,14 +40,7 @@ class MmffAtom : public chemkit::ForceFieldAtom
 
         // properties
         const MmffForceField* forceField() const;
-        void setType();
         void setType(int typeNumber, chemkit::Float formalCharge = 0);
-        void setHydrogenType(const MmffAtom *neighborAtom);
-        void setCarbonType();
-        void setNitrogenType();
-        void setOxygenType();
-        void setSulfurType();
-        void setAromaticType(const chemkit::Ring *aromaticRing, int position);
         virtual QString type() const;
         int typeNumber() const;
         chemkit::Float formalCharge() const;
@@ -56,15 +49,6 @@ class MmffAtom : public chemkit::ForceFieldAtom
 
         // parameters
         const MmffAtomParameters* parameters() const;
-
-    private:
-        bool isGuanidinium(const chemkit::Atom *atom) const;
-        bool isResonant(const chemkit::Atom *atom) const;
-        bool isAmide(const chemkit::Atom *atom) const;
-        bool isPhosphate(const chemkit::Atom *atom) const;
-        bool isSulfate(const chemkit::Atom *atom) const;
-        bool isThiocarboxylate(const chemkit::Atom *atom) const;
-        bool isPositiveAromaticNitrogenRing(const chemkit::Ring *ring) const;
 
     private:
         int m_typeNumber;

@@ -35,6 +35,7 @@
 #include "mmffforcefield.h"
 
 #include "mmffatom.h"
+#include "mmffatomtyper.h"
 #include "mmffparameters.h"
 #include "mmffcalculation.h"
 
@@ -98,50 +99,13 @@ bool MmffForceField::setup()
     }
 
     foreach(const chemkit::Molecule *molecule, molecules()){
+        MmffAtomTyper typer(molecule);
+
         // add atoms
-        QList<MmffAtom *> terminalHydrogens;
         foreach(const chemkit::Atom *atom, molecule->atoms()){
             MmffAtom *mmffAtom = new MmffAtom(this, atom);
             addAtom(mmffAtom);
-
-            if(atom->isTerminalHydrogen()){
-                terminalHydrogens.append(mmffAtom);
-            }
-            else{
-                mmffAtom->setType();
-            }
-        }
-
-        // set aromatic atom types
-        QList<const chemkit::Ring *> sixMemberedAromaticRings;
-        QList<const chemkit::Ring *> fiveMemberedAromaticRings;
-        foreach(const chemkit::Ring *ring, molecule->rings()){
-            if(ring->size() == 5 && isAromatic(ring)){
-                fiveMemberedAromaticRings.append(ring);
-            }
-            else if(ring->size() == 6 && isAromatic(ring)){
-                sixMemberedAromaticRings.append(ring);
-            }
-        }
-
-        foreach(const chemkit::Ring *ring, sixMemberedAromaticRings){
-            foreach(const chemkit::Atom *atom, ring->atoms()){
-                MmffAtom *mmffAtom = this->atom(atom);
-                mmffAtom->setAromaticType(ring, ringPosition(atom, ring));
-            }
-        }
-
-        foreach(const chemkit::Ring *ring, fiveMemberedAromaticRings){
-            foreach(const chemkit::Atom *atom, ring->atoms()){
-                MmffAtom *mmffAtom = this->atom(atom);
-                mmffAtom->setAromaticType(ring, ringPosition(atom, ring));
-            }
-        }
-
-        // add terminal hydrogens
-        foreach(MmffAtom *atom, terminalHydrogens){
-            MmffAtom *neighbor = this->atom(atom->atom()->neighbors()[0]);
-            atom->setHydrogenType(neighbor);
+            mmffAtom->setType(typer.typeNumber(atom), typer.formalCharge(atom));
         }
 
         // setup atom charges
@@ -315,99 +279,4 @@ int MmffForceField::piElectronCount(const chemkit::Ring *ring)
     }
 
     return piElectronCount;
-}
-
-// --- Internal Methods ---------------------------------------------------- //
-int MmffForceField::ringPosition(const chemkit::Atom *atom, const chemkit::Ring *ring) const
-{
-    if(ring->size() != 5){
-        return 0;
-    }
-
-    const chemkit::Atom *ringRoot = 0;
-    int rootAtomCount = 0;
-
-    bool imidizadole = false;
-    bool positiveNitrogen = false;
-
-    if(ring->size() == 5){
-        foreach(const chemkit::Atom *atom, ring->atoms()){
-            if(atom->is(chemkit::Atom::Nitrogen) &&
-               atom->neighborCount() == 3 &&
-               atom->valence() == 3){
-
-                if(ringRoot && ringRoot->atomicNumber() == atom->atomicNumber()){
-                    rootAtomCount++;
-                }
-                else if(ringRoot && atom->atomicNumber() > ringRoot->atomicNumber()){
-                    ringRoot = atom;
-                    rootAtomCount++;
-                }
-                else if(ringRoot && atom->atomicNumber() < ringRoot->atomicNumber()){
-                }
-                else{
-                    ringRoot = atom;
-                    rootAtomCount = 0;
-                }
-            }
-            else if(atom->is(chemkit::Atom::Nitrogen) &&
-                    atom->formalCharge() == 1){
-                bool negativeNeighbor = false;
-
-                foreach(const chemkit::Atom *neighbor, atom->neighbors()){
-                    if(neighbor->formalCharge() < 0){
-                        negativeNeighbor = true;
-                    }
-                }
-
-                if(!negativeNeighbor){
-                    positiveNitrogen = true;
-                }
-            }
-            else if((atom->is(chemkit::Atom::Oxygen) || atom->is(chemkit::Atom::Sulfur)) &&
-                    atom->neighborCount() == 2){
-
-                if(ringRoot && ringRoot->atomicNumber() == atom->atomicNumber()){
-                    rootAtomCount++;
-                }
-                else if(ringRoot && atom->atomicNumber() > ringRoot->atomicNumber()){
-                    ringRoot = atom;
-                    rootAtomCount++;
-                }
-                else if(ringRoot && atom->atomicNumber() < ringRoot->atomicNumber()){
-                }
-                else{
-                    ringRoot = atom;
-                    rootAtomCount = 0;
-                }
-            }
-        }
-    }
-
-    if(positiveNitrogen && ring->atomCount(chemkit::Atom::Nitrogen) >= 2){
-        imidizadole = true;
-
-        foreach(const chemkit::Atom *atom, ring->atoms()){
-            if(atom->is(chemkit::Atom::Nitrogen) && atom->formalCharge() == 1){
-                if(atom->isBondedTo(chemkit::Atom::Nitrogen)){
-                    imidizadole = false;
-                }
-            }
-        }
-    }
-
-    if(imidizadole && ring->heteroatomCount() == 2){
-        return 0;
-    }
-    else if(rootAtomCount > 1){
-        ringRoot = 0;
-    }
-    else if(!ringRoot){
-        return 0;
-    }
-    else if(positiveNitrogen && ringRoot->is(chemkit::Atom::Nitrogen)){
-        return 4;
-    }
-
-    return ring->position(atom, ringRoot);
 }

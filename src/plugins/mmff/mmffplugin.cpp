@@ -22,12 +22,14 @@
 
 #include "mmffplugin.h"
 
+#include "mmffatomtyper.h"
 #include "mmffforcefield.h"
 #include "mmffparametersdata.h"
 
 MmffPlugin::MmffPlugin()
     : chemkit::Plugin("mmff")
 {
+    chemkit::AtomTyper::registerTyper("mmff", createMmffAtomTyper);
     chemkit::ForceField::registerForceField("mmff", &createMmffForceField);
 }
 
@@ -37,6 +39,7 @@ MmffPlugin::~MmffPlugin()
         parameters->deref();
     }
 
+    chemkit::AtomTyper::unregisterTyper("mmff", createMmffAtomTyper);
     chemkit::ForceField::unregisterForceField("mmff", createMmffForceField);
 }
 
@@ -53,6 +56,11 @@ void MmffPlugin::storeParameters(const QString &name, MmffParametersData *parame
 MmffParametersData* MmffPlugin::parameters(const QString &name) const
 {
     return m_parametersCache.value(name, 0);
+}
+
+chemkit::AtomTyper* MmffPlugin::createMmffAtomTyper()
+{
+    return new MmffAtomTyper;
 }
 
 chemkit::ForceField* MmffPlugin::createMmffForceField()

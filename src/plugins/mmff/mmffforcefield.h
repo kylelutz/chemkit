@@ -55,9 +55,6 @@ class MmffForceField : public chemkit::ForceField
         static int piElectronCount(const chemkit::Ring *ring);
 
     private:
-        int ringPosition(const chemkit::Atom *atom, const chemkit::Ring *ring) const;
-
-    private:
         MmffParameters *m_parameters;
 };
 

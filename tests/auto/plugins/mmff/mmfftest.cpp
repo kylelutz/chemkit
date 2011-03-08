@@ -24,6 +24,7 @@
 #include <QtXml>
 
 #include <chemkit/molecule.h>
+#include <chemkit/atomtyper.h>
 #include <chemkit/forcefield.h>
 #include <chemkit/chemicalfile.h>
 
@@ -40,6 +41,7 @@ class MmffTest : public QObject
 
 void MmffTest::initTestCase()
 {
+    QVERIFY(chemkit::AtomTyper::typers().contains("mmff"));
     QVERIFY(chemkit::ForceField::forceFields().contains("mmff"));
 }
 

@@ -26,6 +26,7 @@
 #include <QtCore>
 
 #include <chemkit/plugin.h>
+#include <chemkit/atomtyper.h>
 #include <chemkit/forcefield.h>
 
 class MmffParametersData;
@@ -41,6 +42,7 @@ class MmffPlugin : public chemkit::Plugin
         void storeParameters(const QString &name, MmffParametersData *parameters);
         MmffParametersData* parameters(const QString &name) const;
 
+        static chemkit::AtomTyper* createMmffAtomTyper();
         static chemkit::ForceField* createMmffForceField();
 
     private:
