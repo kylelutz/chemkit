@@ -3,6 +3,7 @@ SUBDIRS = amber \
     cml \
     cube \
     formula \
+    gasteiger \
     hydrogenbonds \
     inchi \
     mcdl \
