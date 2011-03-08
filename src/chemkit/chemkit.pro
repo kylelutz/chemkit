@@ -42,6 +42,7 @@ SOURCES += alphashape.cpp \
     nucleicacid.cpp \
     nucleicacidchain.cpp \
     nucleotide.cpp \
+    partialchargepredictor.cpp \
     plugin.cpp \
     pluginmanager.cpp \
     protein.cpp \
@@ -102,6 +103,7 @@ HEADERS += alphashape.h \
     nucleicacid.h \
     nucleicacidchain.h \
     nucleotide.h \
+    partialchargepredictor.h \
     plugin.h \
     pluginmanager.h \
     point.h \
