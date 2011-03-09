@@ -6,6 +6,7 @@ SOURCES += mmffforcefield.cpp \
     mmffcalculation.cpp \
     mmffparameters.cpp \
     mmffparametersdata.cpp \
+    mmffpartialchargepredictor.cpp \
     mmffplugin.cpp
 HEADERS += mmffforcefield.h \
     mmffatom.h \
@@ -13,4 +14,5 @@ HEADERS += mmffforcefield.h \
     mmffcalculation.h \
     mmffparameters.h \
     mmffparametersdata.h \
+    mmffpartialchargepredictor.h \
     mmffplugin.h

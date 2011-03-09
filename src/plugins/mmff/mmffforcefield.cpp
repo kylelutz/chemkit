@@ -38,6 +38,7 @@
 #include "mmffatomtyper.h"
 #include "mmffparameters.h"
 #include "mmffcalculation.h"
+#include "mmffpartialchargepredictor.h"
 
 #include <chemkit/atom.h>
 #include <chemkit/bond.h>
@@ -109,8 +110,12 @@ bool MmffForceField::setup()
         }
 
         // setup atom charges
+        MmffPartialChargePredictor partialCharges;
+        partialCharges.setAtomTyper(&typer);
+        partialCharges.setMolecule(molecule);
+
         foreach(chemkit::ForceFieldAtom *atom, atoms()){
-            static_cast<MmffAtom *>(atom)->setCharge();
+            atom->setCharge(partialCharges.partialCharge(atom->atom()));
         }
 
         // add calculations

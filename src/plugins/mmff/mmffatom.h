@@ -45,7 +45,6 @@ class MmffAtom : public chemkit::ForceFieldAtom
         int typeNumber() const;
         chemkit::Float formalCharge() const;
         int period() const;
-        bool setCharge();
 
         // parameters
         const MmffAtomParameters* parameters() const;

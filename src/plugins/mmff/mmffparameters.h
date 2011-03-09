@@ -119,8 +119,11 @@ class MmffParameters
         const MmffOutOfPlaneBendingParameters* outOfPlaneBendingParameters(const MmffAtom *a, const MmffAtom *b, const MmffAtom *c, const MmffAtom *d) const;
         const MmffTorsionParameters* torsionParameters(const MmffAtom *a, const MmffAtom *b, const MmffAtom *c, const MmffAtom *d) const;
         const MmffVanDerWaalsParameters* vanDerWaalsParameters(const MmffAtom *atom) const;
+        const MmffAtomParameters* atomParameters(int type) const;
         const MmffAtomParameters* atomParameters(const MmffAtom *atom) const;
+        const MmffChargeParameters* chargeParameters(const chemkit::Atom *a, int typeA, const chemkit::Atom *b, int typeB) const;
         const MmffChargeParameters* chargeParameters(const MmffAtom *a, const MmffAtom *b) const;
+        const MmffPartialChargeParameters* partialChargeParameters(int type) const;
         const MmffPartialChargeParameters* partialChargeParameters(const MmffAtom *atom) const;
 
         // error handling
@@ -137,6 +140,7 @@ class MmffParameters
         const MmffStrechBendParameters* defaultStrechBendParameters(int rowA, int rowB, int rowC) const;
         const MmffOutOfPlaneBendingParameters* outOfPlaneBendingParameters(int typeA, int typeB, int typeC, int typeD) const;
         const MmffTorsionParameters* torsionParameters(int torsionType, int typeA, int typeB, int typeC, int typeD) const;
+        int calculateBondType(const chemkit::Bond *bond, int typeA, int typeB) const;
         int calculateBondType(const MmffAtom *a, const MmffAtom *b) const;
         int calculateAngleType(const MmffAtom *a, const MmffAtom *b, const MmffAtom *c) const;
         int calculateStrechBendType(const MmffAtom *a, const MmffAtom *b, const MmffAtom *c) const;

@@ -27,6 +27,7 @@
 #include <chemkit/atomtyper.h>
 #include <chemkit/forcefield.h>
 #include <chemkit/chemicalfile.h>
+#include <chemkit/partialchargepredictor.h>
 
 const QString dataPath = "../../../data/";
 
@@ -43,6 +44,7 @@ void MmffTest::initTestCase()
 {
     QVERIFY(chemkit::AtomTyper::typers().contains("mmff"));
     QVERIFY(chemkit::ForceField::forceFields().contains("mmff"));
+    QVERIFY(chemkit::PartialChargePredictor::predictors().contains("mmff"));
 }
 
 // The validate() method validates the MMFF force field using the MMFF94

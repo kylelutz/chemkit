@@ -20,35 +20,35 @@
 **
 ******************************************************************************/
 
-#ifndef MMFFPLUGIN_H
-#define MMFFPLUGIN_H
+#ifndef MMFFPARTIALCHARGEPREDICTOR_H
+#define MMFFPARTIALCHARGEPREDICTOR_H
 
-#include <QtCore>
-
-#include <chemkit/plugin.h>
-#include <chemkit/atomtyper.h>
-#include <chemkit/forcefield.h>
 #include <chemkit/partialchargepredictor.h>
 
-class MmffParametersData;
+#include "mmffatomtyper.h"
+#include "mmffparameters.h"
 
-class MmffPlugin : public chemkit::Plugin
+class MmffPartialChargePredictor : public chemkit::PartialChargePredictor
 {
-    Q_OBJECT
-
     public:
-        MmffPlugin();
-        ~MmffPlugin();
+        // construction and destruction
+        MmffPartialChargePredictor();
+        ~MmffPartialChargePredictor();
 
-        void storeParameters(const QString &name, MmffParametersData *parameters);
-        MmffParametersData* parameters(const QString &name) const;
+        // properties
+        void setAtomTyper(const MmffAtomTyper *typer);
 
-        static chemkit::AtomTyper* createMmffAtomTyper();
-        static chemkit::ForceField* createMmffForceField();
-        static chemkit::PartialChargePredictor* createMmffPartialChargePredictor();
+        // partial charges
+        virtual chemkit::Float partialCharge(int index) const;
+        virtual chemkit::Float partialCharge(const chemkit::Atom *atom) const;
+
+    protected:
+        virtual void assignPartialCharges(const chemkit::Molecule *molecule);
 
     private:
-        QHash<QString, MmffParametersData *> m_parametersCache;
+        QVector<chemkit::Float> m_partialCharges;
+        const MmffAtomTyper *m_typer;
+        MmffParameters *m_parameters;
 };
 
-#endif // MMFFPLUGIN_H
+#endif // MMFFPARTIALCHARGEPREDICTOR_H

@@ -560,21 +560,22 @@ const MmffVanDerWaalsParameters* MmffParameters::vanDerWaalsParameters(const Mmf
     return d->vanDerWaalsParameters.value(type, 0);
 }
 
-const MmffAtomParameters* MmffParameters::atomParameters(const MmffAtom *atom) const
+const MmffAtomParameters* MmffParameters::atomParameters(int type) const
 {
-    int type = atom->typeNumber();
-
     if(type < 1 || type > 99)
         return 0;
 
     return &AtomParameters[type-1];
 }
 
-const MmffChargeParameters* MmffParameters::chargeParameters(const MmffAtom *a, const MmffAtom *b) const
+const MmffAtomParameters* MmffParameters::atomParameters(const MmffAtom *atom) const
 {
-    int typeA = a->typeNumber();
-    int typeB = b->typeNumber();
-    int bondType = calculateBondType(a, b);
+    return atomParameters(atom->typeNumber());
+}
+
+const MmffChargeParameters* MmffParameters::chargeParameters(const chemkit::Atom *a, int typeA, const chemkit::Atom *b, int typeB) const
+{
+    int bondType = calculateBondType(a->bondTo(b), typeA, typeB);
 
     foreach(const MmffChargeParameters *parameters, d->chargeParameters){
         if(parameters->bondType == bondType &&
@@ -587,11 +588,19 @@ const MmffChargeParameters* MmffParameters::chargeParameters(const MmffAtom *a, 
     return 0;
 }
 
+const MmffChargeParameters* MmffParameters::chargeParameters(const MmffAtom *a, const MmffAtom *b) const
+{
+    return chargeParameters(a->atom(), a->typeNumber(), b->atom(), b->typeNumber());
+}
+
+const MmffPartialChargeParameters* MmffParameters::partialChargeParameters(int type) const
+{
+    return d->partialChargeParameters.value(type, 0);
+}
+
 const MmffPartialChargeParameters* MmffParameters::partialChargeParameters(const MmffAtom *atom) const
 {
-    int type = atom->typeNumber();
-
-    return d->partialChargeParameters.value(type, 0);
+    return partialChargeParameters(atom->typeNumber());
 }
 
 // --- Internal Methods ---------------------------------------------------- //
@@ -671,26 +680,31 @@ const MmffTorsionParameters* MmffParameters::torsionParameters(int torsionType, 
     return d->torsionParameters.value(index, 0);
 }
 
-int MmffParameters::calculateBondType(const MmffAtom *a, const MmffAtom *b) const
+int MmffParameters::calculateBondType(const chemkit::Bond *bond, int typeA, int typeB) const
 {
-    const chemkit::Bond *bond = a->atom()->bondTo(b->atom());
-
-    const MmffAtomParameters *pa = a->parameters();
-    const MmffAtomParameters *pb = b->parameters();
+    const MmffAtomParameters *pa = atomParameters(typeA);
+    const MmffAtomParameters *pb = atomParameters(typeB);
     if(!pa || !pb){
         return 0;
     }
 
     if(bond->order() == chemkit::Bond::Single && !MmffForceField::isAromatic(bond)){
-        if(a->parameters()->sbmb && b->parameters()->sbmb){
+        if(pa->sbmb && pb->sbmb){
             return 1;
         }
-        else if(a->parameters()->arom && b->parameters()->arom){
+        else if(pa->arom && pb->arom){
             return 1;
         }
     }
 
     return 0;
+}
+
+int MmffParameters::calculateBondType(const MmffAtom *a, const MmffAtom *b) const
+{
+    const chemkit::Bond *bond = a->atom()->bondTo(b->atom());
+
+    return calculateBondType(bond, a->typeNumber(), b->typeNumber());
 }
 
 int MmffParameters::calculateAngleType(const MmffAtom *a, const MmffAtom *b, const MmffAtom *c) const
