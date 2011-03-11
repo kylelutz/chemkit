@@ -73,7 +73,7 @@ class ChemicalFilePrivate
 /// Molecule *molecule = file.molecule();
 /// \endcode
 ///
-/// \see BiochemicalFile
+/// \see PolymerFile
 
 // --- Construction and Destruction ---------------------------------------- //
 /// Creates a new, empty file object.

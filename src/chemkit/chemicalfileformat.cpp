@@ -52,7 +52,7 @@ class ChemicalFileFormatPrivate
 /// file format. To access the molecules contained in a file use the
 /// ChemicalFile class.
 ///
-/// \see ChemicalFile, BiochemicalFileFormat
+/// \see ChemicalFile, PolymerFileFormat
 
 // --- Construction and Destruction ---------------------------------------- //
 /// Construct a chemical file format.

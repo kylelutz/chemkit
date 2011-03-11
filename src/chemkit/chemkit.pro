@@ -11,8 +11,6 @@ SOURCES += alphashape.cpp \
     atom.cpp \
     atommapping.cpp \
     atomtyper.cpp \
-    biochemicalfile.cpp \
-    biochemicalfileformat.cpp \
     bond.cpp \
     bondpredictor.cpp \
     chemicalfile.cpp \
@@ -60,8 +58,6 @@ HEADERS += alphashape.h \
     atom-inline.h \
     atommapping.h \
     atomtyper.h \
-    biochemicalfile.h \
-    biochemicalfileformat.h \
     blas.h \
     bond.h \
     bond-inline.h \
