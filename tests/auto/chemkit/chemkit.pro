@@ -21,7 +21,6 @@ SUBDIRS = alphashape \
     molecularsurface \
     molecule \
     moleculealigner \
-    nucleicacid \
     nucleotide \
     point \
     polymer \

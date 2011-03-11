@@ -37,8 +37,6 @@ SOURCES += alphashape.cpp \
     molecule.cpp \
     moleculealigner.cpp \
     moleculewatcher.cpp \
-    nucleicacid.cpp \
-    nucleicacidchain.cpp \
     nucleotide.cpp \
     partialchargepredictor.cpp \
     plugin.cpp \
@@ -98,8 +96,6 @@ HEADERS += alphashape.h \
     molecule-inline.h \
     moleculealigner.h \
     moleculewatcher.h \
-    nucleicacid.h \
-    nucleicacidchain.h \
     nucleotide.h \
     partialchargepredictor.h \
     plugin.h \

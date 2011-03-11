@@ -31,8 +31,6 @@ namespace chemkit {
 
 class Atom;
 class Ring;
-class NucleicAcid;
-class NucleicAcidChain;
 class NucleotidePrivate;
 
 class CHEMKIT_EXPORT Nucleotide : public Residue
@@ -68,8 +66,6 @@ class CHEMKIT_EXPORT Nucleotide : public Residue
         SugarType sugarType() const;
         bool isPurine() const;
         bool isPyrimidine() const;
-        NucleicAcid* nucleicAcid() const;
-        NucleicAcidChain* nucleicAcidChain() const;
 
     private:
         NucleotidePrivate* const d;

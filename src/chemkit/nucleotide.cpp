@@ -22,15 +22,12 @@
 
 #include "nucleotide.h"
 
-#include "nucleicacidchain.h"
-
 namespace chemkit {
 
 // === NucleotidePrivate =================================================== //
 class NucleotidePrivate
 {
     public:
-        NucleicAcidChain *chain;
         Nucleotide::NucleotideType type;
         Nucleotide::SugarType sugarType;
 };
@@ -40,8 +37,6 @@ class NucleotidePrivate
 /// \ingroup chemkit
 /// \brief The Nucleotide class represents a single nucleotide
 ///        residue.
-///
-/// \see NucleicAcid
 
 // --- Construction and Destruction ---------------------------------------- //
 /// Creates a new nucleotide residue.
@@ -147,19 +142,6 @@ bool Nucleotide::isPurine() const
 bool Nucleotide::isPyrimidine() const
 {
     return type() == Cytosine || type() == Thymine || type() == Uracil;
-}
-
-/// Returns the nucleic acid the nucleotide residue is a part of.
-NucleicAcid* Nucleotide::nucleicAcid() const
-{
-    return d->chain->nucleicAcid();
-}
-
-/// Returns the nucleic acid chain the nucleotide residue is a part
-/// of.
-NucleicAcidChain* Nucleotide::nucleicAcidChain() const
-{
-    return d->chain;
 }
 
 } // end chemkit namespace

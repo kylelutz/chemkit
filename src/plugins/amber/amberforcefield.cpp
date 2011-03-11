@@ -30,7 +30,6 @@
 
 #include <chemkit/atom.h>
 #include <chemkit/molecule.h>
-#include <chemkit/nucleicacid.h>
 #include <chemkit/forcefieldinteractions.h>
 
 // --- Construction and Destruction ---------------------------------------- //

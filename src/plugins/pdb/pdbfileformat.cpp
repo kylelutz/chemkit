@@ -28,7 +28,6 @@
 #include <chemkit/aminoacid.h>
 #include <chemkit/conformer.h>
 #include <chemkit/nucleotide.h>
-#include <chemkit/nucleicacid.h>
 #include <chemkit/polymerfile.h>
 #include <chemkit/polymerchain.h>
 
