@@ -129,6 +129,21 @@ MolecularSurface::~MolecularSurface()
 void MolecularSurface::setMolecule(const Molecule *molecule)
 {
     d->molecule = molecule;
+
+    // update atom positions and radii
+    if(molecule){
+        d->points.resize(molecule->size());
+        d->radii.resize(molecule->size());
+
+        for(int i = 0; i < molecule->size(); i++){
+            const Atom *atom = molecule->atom(i);
+
+            d->points[i] = atom->position();
+            d->radii[i] = atom->vanDerWaalsRadius();
+        }
+    }
+
+    setCalculated(false);
 }
 
 /// Returns the molecule for the surface.

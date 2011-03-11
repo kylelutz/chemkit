@@ -111,6 +111,23 @@ void MolecularSurfaceTest::surfaceType()
 
 void MolecularSurfaceTest::hydrogen()
 {
+    chemkit::Molecule molecule;
+    molecule.addAtom("H");
+
+    chemkit::MolecularSurface surface(&molecule);
+    QCOMPARE(qRound(surface.volume()), 7);
+    QCOMPARE(qRound(surface.surfaceArea()), 18);
+
+    surface.setSurfaceType(chemkit::MolecularSurface::SolventAccessible);
+    QCOMPARE(qRound(surface.volume()), 74);
+    QCOMPARE(qRound(surface.surfaceArea()), 85);
+
+    chemkit::Atom *H2 = molecule.addAtom("H");
+    H2->setPosition(2.4, 0, 0);
+    surface.setMolecule(&molecule);
+    surface.setSurfaceType(chemkit::MolecularSurface::VanDerWaals);
+    QCOMPARE(qRound(surface.volume()), 14);
+    QCOMPARE(qRound(surface.surfaceArea()), 36);
 }
 
 void MolecularSurfaceTest::water()
