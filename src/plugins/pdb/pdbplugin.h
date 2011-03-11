@@ -26,7 +26,7 @@
 #include <QtCore>
 
 #include <chemkit/plugin.h>
-#include <chemkit/biochemicalfileformat.h>
+#include <chemkit/polymerfileformat.h>
 
 class PdbPlugin : public chemkit::Plugin
 {
@@ -35,7 +35,7 @@ class PdbPlugin : public chemkit::Plugin
     public:
         PdbPlugin();
 
-        static chemkit::BiochemicalFileFormat* createPdbFormat();
+        static chemkit::PolymerFileFormat* createPdbFormat();
 };
 
 #endif // PDBPLUGIN_H

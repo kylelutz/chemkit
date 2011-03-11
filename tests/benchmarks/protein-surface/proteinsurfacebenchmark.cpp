@@ -27,7 +27,8 @@
 
 #include <QtTest>
 
-#include <chemkit/biochemicalfile.h>
+#include <chemkit/polymer.h>
+#include <chemkit/polymerfile.h>
 #include <chemkit/molecularsurface.h>
 
 const QString dataPath = "../../data/";
@@ -42,20 +43,18 @@ class ProteinSurfaceBenchmark : public QObject
 
 void ProteinSurfaceBenchmark::benchmark()
 {
-    chemkit::BiochemicalFile file(dataPath + "2DHB.pdb");
+    chemkit::PolymerFile file(dataPath + "2DHB.pdb");
     bool ok = file.read();
     if(!ok)
         qDebug() << file.errorString();
     QVERIFY(ok);
 
-    chemkit::Protein *protein = file.protein();
+    chemkit::Polymer *protein = file.polymer();
     QVERIFY(protein);
-
-    chemkit::Molecule *molecule = protein->molecule();
-    QCOMPARE(molecule->size(), 2201);
+    QCOMPARE(protein->size(), 2201);
 
     QBENCHMARK {
-        chemkit::MolecularSurface surface(molecule);
+        chemkit::MolecularSurface surface(protein);
         surface.setSurfaceType(chemkit::MolecularSurface::SolventAccessible);
 
         QCOMPARE(qRound(surface.surfaceArea()), 14791);

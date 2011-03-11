@@ -22,14 +22,15 @@
 
 #include "pdbfileformat.h"
 
-#include <chemkit/protein.h>
+#include <chemkit/polymer.h>
+#include <chemkit/residue.h>
 #include <chemkit/molecule.h>
+#include <chemkit/aminoacid.h>
 #include <chemkit/conformer.h>
 #include <chemkit/nucleotide.h>
 #include <chemkit/nucleicacid.h>
-#include <chemkit/chemicalfile.h>
-#include <chemkit/biochemicalfile.h>
-#include <chemkit/nucleicacidchain.h>
+#include <chemkit/polymerfile.h>
+#include <chemkit/polymerchain.h>
 
 namespace {
 
@@ -277,7 +278,7 @@ class PdbFile
         bool read(QIODevice *iodev);
 
         void addChain(PdbChain *chain);
-        void writeBiochemicalFile(chemkit::BiochemicalFile *file);
+        void writePolymerFile(chemkit::PolymerFile *file);
 
     private:
         QList<PdbChain *> m_chains;
@@ -356,52 +357,34 @@ void PdbFile::addChain(PdbChain *chain)
     m_chains.append(chain);
 }
 
-void PdbFile::writeBiochemicalFile(chemkit::BiochemicalFile *file)
+void PdbFile::writePolymerFile(chemkit::PolymerFile *file)
 {
     if(m_chains.isEmpty()){
         return;
     }
 
-    chemkit::Protein *protein = 0;
-    chemkit::NucleicAcid *nucleicAcid = 0;
-    chemkit::Molecule *molecule = 0;
+    chemkit::Polymer *polymer = new chemkit::Polymer;
 
     QHash<int, chemkit::Atom *> atomIds;
+    PdbChain::Type chainType = PdbChain::Protein;
 
-    PdbChain::Type type = m_chains.first()->guessType();
-    if(type == PdbChain::Protein){
-        protein = new chemkit::Protein;
-        molecule = protein->molecule();
-    }
-    else{
-        nucleicAcid = new chemkit::NucleicAcid;
-        molecule = nucleicAcid->molecule();
-    }
+    foreach(PdbChain *pdbChain, m_chains){
+        chemkit::PolymerChain *chain = polymer->addChain();
+        chainType = pdbChain->guessType();
 
-    foreach(PdbChain *chain, m_chains){
-        chemkit::ProteinChain *proteinChain = 0;
-        chemkit::NucleicAcidChain *nucleicAcidChain = 0;
-
-        if(type == PdbChain::Protein){
-            proteinChain = protein->addChain();
-        }
-        else{
-            nucleicAcidChain = nucleicAcid->addChain();
-        }
-
-        foreach(PdbResidue *pdbResidue, chain->residues()){
+        foreach(PdbResidue *pdbResidue, pdbChain->residues()){
             chemkit::AminoAcid *aminoAcid = 0;
             chemkit::Nucleotide *nucleotide = 0;
             chemkit::Residue *residue = 0;
 
-            if(type == PdbChain::Protein){
-                aminoAcid = new chemkit::AminoAcid(molecule);
+            if(chainType == PdbChain::Protein){
+                aminoAcid = new chemkit::AminoAcid(polymer);
                 residue = aminoAcid;
 
                 aminoAcid->setType(pdbResidue->name());
             }
             else{
-                nucleotide = new chemkit::Nucleotide(molecule);
+                nucleotide = new chemkit::Nucleotide(polymer);
                 residue = nucleotide;
 
                 QChar symbol;
@@ -432,7 +415,7 @@ void PdbFile::writeBiochemicalFile(chemkit::BiochemicalFile *file)
             }
 
             foreach(PdbAtom *pdbAtom, pdbResidue->atoms()){
-                chemkit::Atom *atom = molecule->addAtom(pdbAtom->atomicNumber);
+                chemkit::Atom *atom = polymer->addAtom(pdbAtom->atomicNumber);
                 if(!atom){
                     continue;
                 }
@@ -443,7 +426,7 @@ void PdbFile::writeBiochemicalFile(chemkit::BiochemicalFile *file)
                 residue->addAtom(atom);
                 residue->setAtomType(atom, pdbAtom->name);
 
-                if(type == PdbChain::Protein){
+                if(chainType == PdbChain::Protein){
                     if(pdbAtom->name == "CA"){
                         aminoAcid->setAlphaCarbon(atom);
                     }
@@ -459,57 +442,47 @@ void PdbFile::writeBiochemicalFile(chemkit::BiochemicalFile *file)
                 }
             }
 
-            if(type == PdbChain::Protein){
-                proteinChain->addResidue(aminoAcid);
-            }
-            else{
-                nucleicAcidChain->addResidue(nucleotide);
-            }
+            chain->addResidue(residue);
         }
     }
 
     // set amino acid conformations (alpha helix or beta sheet)
-    if(type == PdbChain::Protein){
+    if(chainType == PdbChain::Protein){
         for(int i = 0; i < m_chains.size(); i++){
             PdbChain *pdbChain = m_chains[i];
-            chemkit::ProteinChain *chain = protein->chain(i);
+            chemkit::PolymerChain *chain = polymer->chain(i);
 
             foreach(const PdbConformation *pdbConformation, m_conformations){
                 if(pdbConformation->chain() == pdbChain->id()){
-                    for(int residue = pdbConformation->firstResidue();
-                        residue < pdbConformation->lastResidue();
-                        residue++){
-                        chain->residue(residue)->setConformation(pdbConformation->type());
+                    for(int residue = pdbConformation->firstResidue(); residue < pdbConformation->lastResidue(); residue++){
+                        chemkit::AminoAcid *aminoAcid = static_cast<chemkit::AminoAcid *>(chain->residue(residue));
+                        aminoAcid->setConformation(pdbConformation->type());
                     }
                 }
             }
         }
     }
 
+    // add conformers
     foreach(const PdbConformer *pdbConformer, m_conformers){
-        chemkit::Conformer *conformer = molecule->addConformer();
+        chemkit::Conformer *conformer = polymer->addConformer();
 
         foreach(int atomId, atomIds.keys()){
             conformer->setPosition(atomIds[atomId], pdbConformer->position(atomId));
         }
     }
 
-    if(protein){
-        file->addProtein(protein);
-    }
-    if(nucleicAcid){
-        file->addNucleicAcid(nucleicAcid);
-    }
+    file->addPolymer(polymer);
 }
 
 } // end anonymous namespace
 
 PdbFileFormat::PdbFileFormat()
-    : chemkit::BiochemicalFileFormat("pdb")
+    : chemkit::PolymerFileFormat("pdb")
 {
 }
 
-bool PdbFileFormat::read(QIODevice *iodev, chemkit::BiochemicalFile *file)
+bool PdbFileFormat::read(QIODevice *iodev, chemkit::PolymerFile *file)
 {
     PdbFile pdb;
     bool ok = pdb.read(iodev);
@@ -517,6 +490,6 @@ bool PdbFileFormat::read(QIODevice *iodev, chemkit::BiochemicalFile *file)
         return false;
     }
 
-    pdb.writeBiochemicalFile(file);
+    pdb.writePolymerFile(file);
     return true;
 }

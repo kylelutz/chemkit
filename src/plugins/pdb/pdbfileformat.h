@@ -25,16 +25,14 @@
 
 #include <QtCore>
 
-#include <chemkit/molecule.h>
-#include <chemkit/aminoacid.h>
-#include <chemkit/biochemicalfileformat.h>
+#include <chemkit/polymerfileformat.h>
 
-class PdbFileFormat : public chemkit::BiochemicalFileFormat
+class PdbFileFormat : public chemkit::PolymerFileFormat
 {
     public:
         PdbFileFormat();
 
-        bool read(QIODevice *iodev, chemkit::BiochemicalFile *file);
+        bool read(QIODevice *iodev, chemkit::PolymerFile *file);
 };
 
 #endif // PDBFILEFORMAT_H

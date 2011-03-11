@@ -22,8 +22,10 @@
 
 #include <QtTest>
 
+#include <chemkit/polymer.h>
 #include <chemkit/molecule.h>
-#include <chemkit/biochemicalfile.h>
+#include <chemkit/polymerfile.h>
+#include <chemkit/polymerchain.h>
 #include <chemkit/moleculealigner.h>
 
 const QString dataPath = "../../../data/";
@@ -76,20 +78,20 @@ void MoleculeAlignerTest::water()
 // to perform the alignment and obtain the minimized RMSD values.
 void MoleculeAlignerTest::ubiquitin()
 {
-    chemkit::BiochemicalFile file(dataPath + "1D3Z.pdb");
+    chemkit::PolymerFile file(dataPath + "1D3Z.pdb");
     bool ok = file.read();
     if(!ok)
         qDebug() << file.errorString();
     QVERIFY(ok);
 
-    QCOMPARE(file.proteinCount(), 1);
-    chemkit::Protein *protein = file.protein();
+    QCOMPARE(file.polymerCount(), 1);
+    chemkit::Polymer *polymer = file.polymer();
 
-    QCOMPARE(protein->chainCount(), 1);
-    chemkit::ProteinChain *chain = protein->chain(0);
+    QCOMPARE(polymer->chainCount(), 1);
+    chemkit::PolymerChain *chain = polymer->chain(0);
     QCOMPARE(chain->residueCount(), 76);
 
-    chemkit::Molecule *molecule = protein->molecule();
+    chemkit::Molecule *molecule = polymer;
     QCOMPARE(molecule->atomCount(), 1231);
     QCOMPARE(molecule->conformerCount(), 10);
 
