@@ -29,7 +29,6 @@
 
 namespace chemkit {
 
-class Protein;
 class AminoAcid;
 class GraphicsProteinCoilItemPrivate;
 
@@ -37,7 +36,6 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsProteinCoilItem : public GraphicsItem
 {
     public:
         // construction and destruction
-        GraphicsProteinCoilItem(const Protein *protein);
         GraphicsProteinCoilItem(const QList<AminoAcid *> &residues);
         ~GraphicsProteinCoilItem();
 

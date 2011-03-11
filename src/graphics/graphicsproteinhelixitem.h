@@ -29,7 +29,6 @@
 
 namespace chemkit {
 
-class Protein;
 class AminoAcid;
 class GraphicsProteinHelixItemPrivate;
 

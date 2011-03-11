@@ -22,11 +22,11 @@
 
 #include "graphicsproteincoilitem.h"
 
+#include <chemkit/atom.h>
+#include <chemkit/aminoacid.h>
+
 #include "graphicspoint.h"
 #include "graphicspainter.h"
-
-#include <chemkit/protein.h>
-#include <chemkit/aminoacid.h>
 
 namespace chemkit {
 
@@ -48,17 +48,6 @@ class GraphicsProteinCoilItemPrivate
 /// \see GraphicsProteinItem
 
 // --- Construction and Destruction ---------------------------------------- //
-/// Creates a new protien coil item to display \p protein.
-GraphicsProteinCoilItem::GraphicsProteinCoilItem(const Protein *protein)
-    : GraphicsItem(ProteinCoilItem),
-      d(new GraphicsProteinCoilItemPrivate)
-
-{
-    d->residues = protein->residues();
-    d->radius = 0.35f;
-    d->curveDegree = 2;
-}
-
 /// Creates a new protein coil item to display \p residues.
 GraphicsProteinCoilItem::GraphicsProteinCoilItem(const QList<AminoAcid *> &residues)
     : GraphicsItem(ProteinCoilItem),

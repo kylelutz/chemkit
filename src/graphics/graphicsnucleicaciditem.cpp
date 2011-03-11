@@ -26,9 +26,9 @@
 #include "graphicspainter.h"
 
 #include <chemkit/atom.h>
+#include <chemkit/polymer.h>
 #include <chemkit/nucleotide.h>
-#include <chemkit/nucleicacid.h>
-#include <chemkit/nucleicacidchain.h>
+#include <chemkit/polymerchain.h>
 
 namespace chemkit {
 
@@ -36,7 +36,7 @@ namespace chemkit {
 class GraphicsNucleicAcidItemPrivate
 {
     public:
-        const NucleicAcid *nucleicAcid;
+        const Polymer *polymer;
 };
 
 // === GraphicsNucleicAcidItem ============================================= //
@@ -44,17 +44,17 @@ class GraphicsNucleicAcidItemPrivate
 /// \ingroup chemkit-graphics
 /// \brief The GraphicsNucleicAcidItem represents a nucleic acid.
 ///
-/// The GraphicsNucleicAcid item displays a NucleicAcid object.
+/// The GraphicsNucleicAcid item displays a nucleic acid Polymer.
 ///
 /// \image html nucleic-acid-item.png
 
 // --- Construction and Destruction ---------------------------------------- //
-/// Creates a new nucleic acid item to display \p nucleicAcid.
-GraphicsNucleicAcidItem::GraphicsNucleicAcidItem(const NucleicAcid *nucleicAcid)
+/// Creates a new nucleic acid item to display \p polymer.
+GraphicsNucleicAcidItem::GraphicsNucleicAcidItem(const Polymer *polymer)
     : GraphicsItem(NucleicAcidItem),
       d(new GraphicsNucleicAcidItemPrivate)
 {
-    d->nucleicAcid = nucleicAcid;
+    d->polymer = polymer;
 }
 
 /// Destroys the nucleic acid item.
@@ -64,33 +64,46 @@ GraphicsNucleicAcidItem::~GraphicsNucleicAcidItem()
 }
 
 // --- Properties ---------------------------------------------------------- //
-/// Sets the nucleic acid to display.
-void GraphicsNucleicAcidItem::setNucleicAcid(const NucleicAcid *nucleicAcid)
+/// Sets the polymer for the item to display to \p polymer.
+void GraphicsNucleicAcidItem::setPolymer(const Polymer *polymer)
 {
-    d->nucleicAcid = nucleicAcid;
+    d->polymer = polymer;
 }
 
-/// Returns the current nucleic acid item or \c 0 if no nucleic aicd
-/// is being displayed.
-const NucleicAcid* GraphicsNucleicAcidItem::nucleicAcid() const
+/// Returns the polymer for the item.
+const Polymer* GraphicsNucleicAcidItem::polymer() const
 {
-    return d->nucleicAcid;
+    return d->polymer;
 }
 
 // --- Painting ------------------------------------------------------------ //
 void GraphicsNucleicAcidItem::paint(GraphicsPainter *painter)
 {
-    if(!d->nucleicAcid){
+    if(!d->polymer){
         return;
     }
 
-    foreach(const NucleicAcidChain *chain, d->nucleicAcid->chains()){
-        GraphicsFloat radius = 0.6f;
+    foreach(const PolymerChain *chain, d->polymer->chains()){
+        // ensure the chain contains only nucleotides
+        bool isOnlyNucleotides = true;
 
+        foreach(const Residue *residue, chain->residues()){
+            if(residue->residueType() != Residue::NucleotideResidue){
+                isOnlyNucleotides = false;
+                break;
+            }
+        }
+
+        if(!isOnlyNucleotides){
+            continue;
+        }
+
+        // build a list of points for the spline
         QList<GraphicsPoint> trace;
+        GraphicsFloat radius = 0.6f;
         painter->setColor(Qt::cyan);
 
-        foreach(const Nucleotide *residue, chain->residues()){
+        foreach(const Residue *residue, chain->residues()){
             // add phosphorus position to trace
             const Atom *phosphorus = residue->atom("P");
             if(phosphorus){

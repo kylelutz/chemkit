@@ -25,8 +25,8 @@
 
 #include <QtGui>
 
+#include <chemkit/polymerfile.h>
 #include <chemkit/graphicsview.h>
-#include <chemkit/biochemicalfile.h>
 #include <chemkit/graphicsproteinitem.h>
 #include <chemkit/graphicsmoleculeitem.h>
 #include <chemkit/graphicsnucleicaciditem.h>
@@ -44,7 +44,7 @@ class PdbViewerWindow : public QMainWindow
         PdbViewerWindow(QWidget *parent = 0);
         ~PdbViewerWindow();
 
-        void setFile(chemkit::BiochemicalFile *file);
+        void setFile(chemkit::PolymerFile *file);
 
     public slots:
         void openFile();
@@ -54,7 +54,7 @@ class PdbViewerWindow : public QMainWindow
     private:
         Ui::PdbViewerWindow *ui;
         chemkit::GraphicsView *m_view;
-        chemkit::BiochemicalFile *m_file;
+        chemkit::PolymerFile *m_file;
         chemkit::GraphicsProteinItem *m_proteinItem;
         chemkit::GraphicsNucleicAcidItem *m_nucleicAcidItem;
 };

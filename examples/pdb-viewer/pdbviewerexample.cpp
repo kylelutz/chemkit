@@ -23,6 +23,7 @@
 #include "pdbviewerexample.h"
 #include "ui_pdbviewerexample.h"
 
+#include <chemkit/polymer.h>
 #include <chemkit/bondpredictor.h>
 #include <chemkit/graphicscamera.h>
 #include <chemkit/graphicsnavigationtool.h>
@@ -64,36 +65,23 @@ PdbViewerWindow::~PdbViewerWindow()
 }
 
 // --- Properties ---------------------------------------------------------- //
-void PdbViewerWindow::setFile(chemkit::BiochemicalFile *file)
+void PdbViewerWindow::setFile(chemkit::PolymerFile *file)
 {
     if(m_file){
         delete m_file;
-        m_proteinItem->setProtein(0);
-        m_nucleicAcidItem->setNucleicAcid(0);
+        m_proteinItem->setPolymer(0);
+        m_nucleicAcidItem->setPolymer(0);
     }
 
     m_file = file;
 
     if(file){
-        // update items
-        chemkit::Protein *protein = file->protein();
-        chemkit::NucleicAcid *nucleicAcid = file->nucleicAcid();
+        chemkit::Polymer *polymer = file->polymer();
 
-        chemkit::Molecule *molecule = 0;
-
-        if(protein){
-            m_proteinItem->setProtein(protein);
-            molecule = protein->molecule();
-        }
-
-        if(nucleicAcid){
-            m_nucleicAcidItem->setNucleicAcid(nucleicAcid);
-            molecule = nucleicAcid->molecule();
-        }
-
-        if(molecule){
-            molecule->setCenter(0, 0, 0);
-            m_view->camera()->lookAt(molecule->center());
+        if(polymer){
+            m_proteinItem->setPolymer(polymer);
+            m_nucleicAcidItem->setPolymer(polymer);
+            m_view->camera()->lookAt(polymer->center());
         }
     }
 
@@ -123,7 +111,7 @@ void PdbViewerWindow::openFile(const QString &fileName)
         format = "pdbml";
 
     // open and read file
-    chemkit::BiochemicalFile *file = new chemkit::BiochemicalFile;
+    chemkit::PolymerFile *file = new chemkit::PolymerFile;
 
     bool ok = file->read(fileName, format);
     if(!ok){

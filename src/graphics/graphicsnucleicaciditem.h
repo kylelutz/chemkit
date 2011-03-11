@@ -29,19 +29,19 @@
 
 namespace chemkit {
 
-class NucleicAcid;
+class Polymer;
 class GraphicsNucleicAcidItemPrivate;
 
 class CHEMKIT_GRAPHICS_EXPORT GraphicsNucleicAcidItem : public GraphicsItem
 {
     public:
         // construction and destruction
-        GraphicsNucleicAcidItem(const NucleicAcid *nucleicAcid = 0);
+        GraphicsNucleicAcidItem(const Polymer *polymer = 0);
         ~GraphicsNucleicAcidItem();
 
         // properties
-        void setNucleicAcid(const NucleicAcid *nucleicAcid);
-        const NucleicAcid* nucleicAcid() const;
+        void setPolymer(const Polymer *polymer);
+        const Polymer* polymer() const;
 
         // painting
         virtual void paint(GraphicsPainter *painter);

@@ -25,7 +25,10 @@
 #include "graphicsscene.h"
 #include "graphicspainter.h"
 
-#include <chemkit/protein.h>
+#include <chemkit/polymer.h>
+#include <chemkit/residue.h>
+#include <chemkit/aminoacid.h>
+#include <chemkit/polymerchain.h>
 
 namespace chemkit {
 
@@ -33,7 +36,7 @@ namespace chemkit {
 class GraphicsProteinItemPrivate
 {
     public:
-        const Protein *protein;
+        const Polymer *polymer;
         bool secondaryStructureVisible;
         GraphicsFloat coilRadius;
         QList<GraphicsProteinCoilItem *> coilItems;
@@ -45,7 +48,7 @@ class GraphicsProteinItemPrivate
 /// \class GraphicsProteinItem graphicsproteinitem.h chemkit/graphicsproteinitem.h
 /// \ingroup chemkit-graphics
 /// \brief The GraphicsProteinItem class visually represents a
-///        protein.
+///        protein polymer.
 ///
 /// GraphicsProteinItem objects manage the following graphics items
 /// which display each type of protein secondary structures.
@@ -60,13 +63,15 @@ class GraphicsProteinItemPrivate
 /// \image html protein-item.png
 
 // --- Construction and Destruction ---------------------------------------- //
-/// Creates a new protein item to display \p protein.
-GraphicsProteinItem::GraphicsProteinItem(const Protein *protein)
+/// Creates a new protein item to display \p polymer.
+GraphicsProteinItem::GraphicsProteinItem(const Polymer *polymer)
     : GraphicsItem(ProteinItem),
       d(new GraphicsProteinItemPrivate)
 {
-    d->protein = protein;
+    d->polymer = 0;
     d->secondaryStructureVisible = true;
+
+    setPolymer(polymer);
 }
 
 /// Destoys the protein item object.
@@ -76,10 +81,10 @@ GraphicsProteinItem::~GraphicsProteinItem()
 }
 
 // --- Properties ---------------------------------------------------------- //
-/// Sets the protein to display.
-void GraphicsProteinItem::setProtein(const Protein *protein)
+/// Sets the polymer for the protein item to \p polymer.
+void GraphicsProteinItem::setPolymer(const Polymer *polymer)
 {
-    d->protein = protein;
+    d->polymer = polymer;
 
     qDeleteAll(d->coilItems);
     d->coilItems.clear();
@@ -88,41 +93,62 @@ void GraphicsProteinItem::setProtein(const Protein *protein)
     qDeleteAll(d->helixItems);
     d->helixItems.clear();
 
-    if(protein){
-        foreach(const ProteinChain *chain, protein->chains()){
-            if(chain->residueCount() < 1){
+    if(polymer){
+        foreach(const PolymerChain *chain, polymer->chains()){
+            if(chain->isEmpty()){
+                continue;
+            }
+
+            // ensure that the chain contains only amino acids
+            bool onlyAminoAcids = true;
+
+            foreach(const Residue *residue, chain->residues()){
+                if(residue->residueType() != Residue::AminoAcidResidue){
+                    onlyAminoAcids = false;
+                    break;
+                }
+            }
+
+            if(!onlyAminoAcids){
                 continue;
             }
 
             QList<AminoAcid *> residues;
-            AminoAcid::Conformation conformation = chain->residue(0)->conformation();
+            AminoAcid::Conformation conformation = static_cast<AminoAcid *>(chain->residue(0))->conformation();
 
             for(int i = 0; i < chain->size(); i++){
-                AminoAcid *residue = chain->residue(i);
+                AminoAcid *residue = static_cast<AminoAcid *>(chain->residue(i));
 
                 if(residue->conformation() != conformation){
                     if(conformation == AminoAcid::Coil){
                         residues.append(residue);
 
                         int index = chain->residues().indexOf(residues.first());
-                        if(index > 0)
-                            residues.prepend(chain->residue(index-1));
+                        if(index > 0){
+                            residues.prepend(static_cast<AminoAcid *>(chain->residue(index-1)));
+                        }
 
                         GraphicsProteinCoilItem *item = new GraphicsProteinCoilItem(residues);
-                        if(scene())
+                        if(scene()){
                             scene()->addItem(item);
+                        }
+
                         d->coilItems.append(item);
                     }
                     else if(conformation == AminoAcid::AlphaHelix){
                         GraphicsProteinHelixItem *item = new GraphicsProteinHelixItem(residues);
-                        if(scene())
+                        if(scene()){
                             scene()->addItem(item);
+                        }
+
                         d->helixItems.append(item);
                     }
                     else if(conformation == AminoAcid::BetaSheet){
                         GraphicsProteinSheetItem *item = new GraphicsProteinSheetItem(residues);
-                        if(scene())
+                        if(scene()){
                             scene()->addItem(item);
+                        }
+
                         d->sheetItems.append(item);
                     }
 
@@ -136,10 +162,10 @@ void GraphicsProteinItem::setProtein(const Protein *protein)
     }
 }
 
-/// Returns the protein that is being displayed.
-const Protein* GraphicsProteinItem::protein() const
+/// Returns the polymer for the protein item.
+const Polymer* GraphicsProteinItem::polymer() const
 {
-    return d->protein;
+    return d->polymer;
 }
 
 /// Sets whether or not the protein's secondary structure is visible.
@@ -171,7 +197,7 @@ bool GraphicsProteinItem::secondaryStructureVisible() const
 // --- Painting ------------------------------------------------------------ //
 void GraphicsProteinItem::paint(GraphicsPainter *painter)
 {
-    if(!d->protein || d->protein->chainCount() < 1){
+    if(!d->polymer || d->polymer->chainCount() < 1){
         return;
     }
 
@@ -179,12 +205,14 @@ void GraphicsProteinItem::paint(GraphicsPainter *painter)
     if(!d->secondaryStructureVisible){
         GraphicsFloat radius = 0.35f;
 
-        foreach(const ProteinChain *chain, d->protein->chains()){
+        foreach(const PolymerChain *chain, d->polymer->chains()){
             QList<GraphicsPoint> trace;
 
-            foreach(const AminoAcid *residue, chain->residues()){
-                if(residue->alphaCarbon() != 0){
-                    trace.append(residue->alphaCarbon()->position());
+            foreach(const Residue *residue, chain->residues()){
+                const AminoAcid *aminoAcid = static_cast<const AminoAcid *>(residue);
+
+                if(aminoAcid->alphaCarbon() != 0){
+                    trace.append(aminoAcid->alphaCarbon()->position());
                 }
             }
 

@@ -22,11 +22,11 @@
 
 #include "graphicsproteinsheetitem.h"
 
+#include <chemkit/atom.h>
+#include <chemkit/aminoacid.h>
+
 #include "graphicspoint.h"
 #include "graphicspainter.h"
-
-#include <chemkit/protein.h>
-#include <chemkit/aminoacid.h>
 
 namespace chemkit {
 

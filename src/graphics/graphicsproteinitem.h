@@ -32,6 +32,7 @@
 
 namespace chemkit {
 
+class Polymer;
 class Protein;
 class GraphicsProteinItemPrivate;
 
@@ -39,12 +40,12 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsProteinItem : public GraphicsItem
 {
     public:
         // construction and destruction
-        GraphicsProteinItem(const Protein *protein = 0);
+        GraphicsProteinItem(const Polymer *polymer = 0);
         ~GraphicsProteinItem();
 
         // properties
-        void setProtein(const Protein *protein);
-        const Protein* protein() const;
+        void setPolymer(const Polymer *polymer);
+        const Polymer* polymer() const;
         void setSecondaryStructureVisible(bool visible);
         bool secondaryStructureVisible() const;
         void setCoilRadius(GraphicsFloat radius);
