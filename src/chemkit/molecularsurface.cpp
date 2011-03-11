@@ -93,7 +93,7 @@ class MolecularSurfacePrivate
 /// \enum MolecularSurface::SurfaceType
 /// Provides names for each of the availble surface types:
 ///     - \c VanDerWaals
-///     - \c SolventAccessible,
+///     - \c SolventAccessible
 ///     - \c SolventExcluded
 
 // --- Construction and Destruction ---------------------------------------- //
