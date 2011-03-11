@@ -71,6 +71,12 @@ int Residue::size() const
     return atomCount();
 }
 
+/// Returns a one letter symbol for the residue;
+QString Residue::letter() const
+{
+    return " ";
+}
+
 /// Returns the molecule the residue is a part of.
 Molecule* Residue::molecule() const
 {

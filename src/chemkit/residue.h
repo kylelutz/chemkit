@@ -51,6 +51,7 @@ class CHEMKIT_EXPORT Residue
         // properties
         int residueType() const;
         int size() const;
+        virtual QString letter() const;
         Molecule* molecule() const;
 
         // structure
