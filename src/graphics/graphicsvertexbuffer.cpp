@@ -176,6 +176,12 @@ void GraphicsVertexBuffer::setVerticies(const QVector<GraphicsPoint> &verticies)
     d->verticies = verticies;
 }
 
+/// Returns the verticies contained in the vertex buffer.
+QVector<GraphicsPoint> GraphicsVertexBuffer::verticies() const
+{
+    return d->verticies;
+}
+
 /// Returns the number of verticies in the buffer.
 int GraphicsVertexBuffer::vertexCount() const
 {
