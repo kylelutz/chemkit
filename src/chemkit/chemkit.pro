@@ -47,6 +47,8 @@ SOURCES += alphashape.cpp \
     pluginmanager.cpp \
     polymer.cpp \
     polymerchain.cpp \
+    polymerfile.cpp \
+    polymerfileformat.cpp \
     protein.cpp \
     proteinchain.cpp \
     residue.cpp \
@@ -112,6 +114,8 @@ HEADERS += alphashape.h \
     point-inline.h \
     polymer.h \
     polymerchain.h \
+    polymerfile.h \
+    polymerfileformat.h \
     protein.h \
     proteinchain.h \
     quaternion.h \
