@@ -198,7 +198,7 @@ void GraphicsVertexBuffer::setNormals(const QVector<GraphicsVector> &normals)
 /// Returns a list containing the vertex normals in the buffer.
 QVector<GraphicsVector> GraphicsVertexBuffer::normals() const
 {
-    return QVector<GraphicsVector>();
+    return d->normals;
 }
 
 /// Returns the number of vertex normals in the buffer.
