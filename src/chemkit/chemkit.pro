@@ -45,6 +45,8 @@ SOURCES += alphashape.cpp \
     partialchargepredictor.cpp \
     plugin.cpp \
     pluginmanager.cpp \
+    polymer.cpp \
+    polymerchain.cpp \
     protein.cpp \
     proteinchain.cpp \
     residue.cpp \
@@ -108,6 +110,8 @@ HEADERS += alphashape.h \
     pluginmanager.h \
     point.h \
     point-inline.h \
+    polymer.h \
+    polymerchain.h \
     protein.h \
     proteinchain.h \
     quaternion.h \
