@@ -22,8 +22,10 @@
 
 #include <QtTest>
 
+#include <chemkit/polymer.h>
 #include <chemkit/molecule.h>
-#include <chemkit/biochemicalfile.h>
+#include <chemkit/polymerfile.h>
+#include <chemkit/polymerchain.h>
 #include <chemkit/proteindatabank.h>
 
 class ProteinDataBankTest : public QObject
@@ -40,12 +42,13 @@ void ProteinDataBankTest::downloadFile()
     chemkit::ProteinDataBank pdb;
 
     // download file for lysozyme
-    chemkit::BiochemicalFile *file = pdb.downloadFile("2LYZ");
+    chemkit::PolymerFile *file = pdb.downloadFile("2LYZ");
     QVERIFY(file != 0);
 
-    QCOMPARE(file->proteinCount(), 1);
-    chemkit::Protein *protein = file->protein();
-    QCOMPARE(protein->residueCount(), 129);
+    QCOMPARE(file->polymerCount(), 1);
+    chemkit::Polymer *protein = file->polymer();
+    QCOMPARE(protein->chainCount(), 1);
+    QCOMPARE(protein->chain(0)->residueCount(), 129);
 
     delete file;
 }

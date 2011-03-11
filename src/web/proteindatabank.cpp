@@ -26,8 +26,8 @@
 
 #include "downloadthread.h"
 
+#include <chemkit/polymerfile.h>
 #include <chemkit/chemicalfile.h>
-#include <chemkit/biochemicalfile.h>
 
 namespace chemkit {
 
@@ -73,44 +73,26 @@ QUrl ProteinDataBank::url() const
 }
 
 // --- Downloads ----------------------------------------------------------- //
-/// Downloads and returns the protein with the PDB ID of \p id. If an
-/// error occurs \c 0 is returned.
+/// Downloads and returns the polymer (protein or nucleic acid) with
+/// the PDB ID of \p id. If an error occurs \c 0 is returned.
 ///
-/// The ownership of the returned protein is passed to the caller.
+/// The ownership of the returned polymer is passed to the caller.
 ///
 /// For example, to download the Lysozyme protein (PDB ID: 2LYZ):
 /// \code
-/// Protein *lysozyme = pdb.downloadProtein("2LYZ");
+/// Polymer *lysozyme = pdb.downloadPolymer("2LYZ");
 /// \endcode
-Protein* ProteinDataBank::downloadProtein(const QString &id) const
+Polymer* ProteinDataBank::downloadPolymer(const QString &id) const
 {
-    QScopedPointer<BiochemicalFile> file(downloadFile(id));
+    QScopedPointer<PolymerFile> file(downloadFile(id));
     if(!file){
         return 0;
     }
 
-    Protein *protein = file->protein();
-    file->removeProtein(protein);
+    Polymer *polymer = file->polymer();
+    file->removePolymer(polymer);
 
-    return protein;
-}
-
-/// Downloads and returns the nucleic acid with the PDB ID of \p id.
-/// If an error occurs \c 0 is returned.
-///
-/// The ownership of the returned nucleic acid is passed to the
-/// caller.
-NucleicAcid* ProteinDataBank::downloadNucleicAcid(const QString &id) const
-{
-    QScopedPointer<BiochemicalFile> file(downloadFile(id));
-    if(!file){
-        return 0;
-    }
-
-    NucleicAcid *nucleicAcid = file->nucleicAcid();
-    file->removeNucleicAcid(nucleicAcid);
-
-    return nucleicAcid;
+    return polymer;
 }
 
 /// Downloads and returns the ligand molecule with \p name. If an
@@ -155,9 +137,9 @@ Molecule* ProteinDataBank::downloadLigand(const QString &name) const
 ///
 /// For example, to download the ubiquitin pdb file (PDB ID: 1UBQ):
 /// \code
-/// BiochemicalFile *file = pdb.downloadFile("1UBQ");
+/// PolymerFile *file = pdb.downloadFile("1UBQ");
 /// \endcode
-BiochemicalFile* ProteinDataBank::downloadFile(const QString &id) const
+PolymerFile* ProteinDataBank::downloadFile(const QString &id) const
 {
     QByteArray data = downloadFileData(id, "pdb");
     if(data.isEmpty()){
@@ -168,7 +150,7 @@ BiochemicalFile* ProteinDataBank::downloadFile(const QString &id) const
     buffer.setData(data);
     buffer.open(QBuffer::ReadOnly);
 
-    BiochemicalFile *file = new BiochemicalFile;
+    PolymerFile *file = new PolymerFile;
     file->read(&buffer, "pdb");
 
     return file;
