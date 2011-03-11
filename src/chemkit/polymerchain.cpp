@@ -146,6 +146,20 @@ int PolymerChain::indexOf(const Residue *residue) const
     return d->residues.indexOf(const_cast<Residue *>(residue));
 }
 
+/// Returns the residue sequence as a string of one letter symbols.
+///
+/// \see Residue::letter()
+QString PolymerChain::sequenceString() const
+{
+    QString string;
+
+    foreach(const Residue *residue, d->residues){
+        string.append(residue->letter());
+    }
+
+    return string;
+}
+
 /// Returns the sequence number of \p residue. Sequence numbers start
 /// at \c 1 for the first residue in the chain.
 int PolymerChain::sequenceNumber(const Residue *residue) const
