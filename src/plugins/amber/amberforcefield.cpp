@@ -29,7 +29,6 @@
 #include "ambercalculation.h"
 
 #include <chemkit/atom.h>
-#include <chemkit/protein.h>
 #include <chemkit/molecule.h>
 #include <chemkit/nucleicacid.h>
 #include <chemkit/forcefieldinteractions.h>

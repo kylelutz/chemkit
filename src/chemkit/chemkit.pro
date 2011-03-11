@@ -47,8 +47,6 @@ SOURCES += alphashape.cpp \
     polymerchain.cpp \
     polymerfile.cpp \
     polymerfileformat.cpp \
-    protein.cpp \
-    proteinchain.cpp \
     residue.cpp \
     ring.cpp \
     scalarfield.cpp
@@ -112,8 +110,6 @@ HEADERS += alphashape.h \
     polymerchain.h \
     polymerfile.h \
     polymerfileformat.h \
-    protein.h \
-    proteinchain.h \
     quaternion.h \
     quaternion-inline.h \
     residue.h \

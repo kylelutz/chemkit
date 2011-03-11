@@ -23,8 +23,6 @@
 #include "aminoacid.h"
 
 #include "atom.h"
-#include "protein.h"
-#include "proteinchain.h"
 
 namespace chemkit {
 
@@ -34,7 +32,6 @@ class AminoAcidPrivate
     public:
         AminoAcid::AminoAcidType type;
         AminoAcid::Conformation conformation;
-        ProteinChain *chain;
         Atom *alphaCarbon;
         Atom *carbonylCarbon;
         Atom *carbonylOxygen;
@@ -63,7 +60,6 @@ AminoAcid::AminoAcid(Molecule *molecule)
 {
     d->type = UnspecifiedType;
     d->conformation = Coil;
-    d->chain = 0;
     d->alphaCarbon = 0;
     d->carbonylCarbon = 0;
     d->carbonylOxygen = 0;
@@ -296,24 +292,6 @@ void AminoAcid::setConformation(Conformation conformation)
 AminoAcid::Conformation AminoAcid::conformation() const
 {
     return d->conformation;
-}
-
-/// Returns the protein the amino acid is a part of.
-Protein* AminoAcid::protein() const
-{
-    return d->chain->protein();
-}
-
-/// Returns the protein chain the amino acid is a part of.
-ProteinChain* AminoAcid::proteinChain() const
-{
-    return d->chain;
-}
-
-/// Returns the sequence number of the amino acid.
-int AminoAcid::sequenceNumber() const
-{
-    return proteinChain()->sequenceNumber(this);
 }
 
 // --- Structure ----------------------------------------------------------- //

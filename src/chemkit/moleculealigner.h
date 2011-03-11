@@ -31,7 +31,6 @@
 
 namespace chemkit {
 
-class Protein;
 class Molecule;
 class Conformer;
 class CoordinateMatrix;
@@ -43,7 +42,6 @@ class CHEMKIT_EXPORT MoleculeAligner
         // construction and destruction
         MoleculeAligner(const AtomMapping &mapping);
         MoleculeAligner(const Molecule *source, const Molecule *target);
-        MoleculeAligner(const Protein *source, const Protein *target);
         ~MoleculeAligner();
 
         // properties

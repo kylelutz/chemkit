@@ -23,7 +23,6 @@
 #include "moleculealigner.h"
 
 #include "vector.h"
-#include "protein.h"
 #include "molecule.h"
 #include "coordinatematrix.h"
 
@@ -68,27 +67,6 @@ MoleculeAligner::MoleculeAligner(const Molecule *source, const Molecule *target)
 
     for(int i = 0; i < d->size; i++){
         d->mapping.add(source->atom(i), target->atom(i));
-    }
-}
-
-/// Create a new molecule aligner object using a mapping between the
-/// \p source and \p target proteins.
-MoleculeAligner::MoleculeAligner(const Protein *source, const Protein *target)
-    : d(new MoleculeAlignerPrivate)
-{
-    d->mapping = AtomMapping(source->molecule(), target->molecule());
-    d->sourceConformer = 0;
-    d->targetConformer = 0;
-
-    const ProteinChain *sourceChain = source->chain(0);
-    const ProteinChain *targetChain = target->chain(0);
-
-    d->size = qMin(sourceChain->residueCount(), targetChain->residueCount());
-    for(int i = 0; i < d->size; i++){
-        const AminoAcid *sourceResidue = sourceChain->residue(i);
-        const AminoAcid *targetResidue = targetChain->residue(i);
-
-        d->mapping.add(sourceResidue->alphaCarbon(), targetResidue->alphaCarbon());
     }
 }
 

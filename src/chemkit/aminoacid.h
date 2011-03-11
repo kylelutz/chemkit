@@ -30,8 +30,6 @@
 
 namespace chemkit {
 
-class Protein;
-class ProteinChain;
 class AminoAcidPrivate;
 
 class CHEMKIT_EXPORT AminoAcid : public Residue
@@ -82,9 +80,6 @@ class CHEMKIT_EXPORT AminoAcid : public Residue
         QString letter() const;
         void setConformation(Conformation conformation);
         Conformation conformation() const;
-        Protein* protein() const;
-        ProteinChain* proteinChain() const;
-        int sequenceNumber() const;
 
         // structure
         void setAlphaCarbon(Atom *atom);

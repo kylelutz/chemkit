@@ -25,7 +25,6 @@ SUBDIRS = alphashape \
     nucleotide \
     point \
     polymer \
-    protein \
     quaternion \
     residue \
     ring \

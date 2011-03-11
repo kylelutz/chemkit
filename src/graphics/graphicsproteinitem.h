@@ -33,7 +33,6 @@
 namespace chemkit {
 
 class Polymer;
-class Protein;
 class GraphicsProteinItemPrivate;
 
 class CHEMKIT_GRAPHICS_EXPORT GraphicsProteinItem : public GraphicsItem
