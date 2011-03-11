@@ -123,7 +123,7 @@ GraphicsVertexBuffer* GraphicsSphere::tesselate(int subdivisions) const
     }
 
     // set up initial triangle indicies
-    QVector<unsigned int> indicies(IcosahedronIndexCount);
+    QVector<unsigned short> indicies(IcosahedronIndexCount);
     for(int i = 0; i < IcosahedronIndexCount; i++){
         indicies[i] = IcosahedronIndicies[i];
     }
@@ -131,7 +131,7 @@ GraphicsVertexBuffer* GraphicsSphere::tesselate(int subdivisions) const
     // subdivide
     int subdivisionCount = 0;
     while(subdivisionCount < subdivisions){
-        QVector<unsigned int> subdivisionIndicies;
+        QVector<unsigned short> subdivisionIndicies;
 
         for(int i = 0; i < indicies.size() / 3; i++){
             // indicies of current triangle

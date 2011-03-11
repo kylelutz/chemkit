@@ -63,8 +63,8 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsVertexBuffer
         int normalCount() const;
 
         // indicies
-        void setIndicies(const QVector<unsigned int> &indicies);
-        QVector<unsigned int> indicies() const;
+        void setIndicies(const QVector<unsigned short> &indicies);
+        QVector<unsigned short> indicies() const;
         int indexCount() const;
 
         // drawing

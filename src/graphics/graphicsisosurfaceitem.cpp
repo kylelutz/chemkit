@@ -381,7 +381,7 @@ GraphicsVertexBuffer* marchCubes(const ScalarField *scalarField, GraphicsFloat i
 {
     QVector<GraphicsPoint> verticies;
     QVector<GraphicsVector> normals;
-    QVector<unsigned int> indicies;
+    QVector<unsigned short> indicies;
 
     GraphicsFloat xStep = scalarField->cellWidth();
     GraphicsFloat yStep = scalarField->cellHeight();

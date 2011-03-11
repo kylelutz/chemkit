@@ -127,11 +127,11 @@ GraphicsVertexBuffer* GraphicsCylinder::tesselate(int slices, int stacks) const
         normals.append(normal);
     }
 
-    QVector<unsigned int> indicies;
+    QVector<unsigned short> indicies;
     for(int i = 0; i < stacks; i++){
         for(int j = 0; j < slices; j++){
             // triangle indices
-            unsigned int i0, i1, i2;
+            unsigned short i0, i1, i2;
 
             // first triangle
             i0 = i * slices + j;

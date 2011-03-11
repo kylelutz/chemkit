@@ -99,7 +99,7 @@ class GraphicsVertexBufferPrivate
         GLuint indexBuffer;
         QVector<GraphicsPoint> verticies;
         QVector<GraphicsVector> normals;
-        QVector<unsigned int> indicies;
+        QVector<unsigned short> indicies;
 };
 
 // === GraphicsVertexBuffer ================================================ //
@@ -209,13 +209,13 @@ int GraphicsVertexBuffer::normalCount() const
 
 // --- Indicies ------------------------------------------------------------ //
 /// Sets the indicies to \p indicies.
-void GraphicsVertexBuffer::setIndicies(const QVector<unsigned int> &indicies)
+void GraphicsVertexBuffer::setIndicies(const QVector<unsigned short> &indicies)
 {
     d->indicies = indicies;
 }
 
 /// Returns the indicies contained in the vertex buffer.
-QVector<unsigned int> GraphicsVertexBuffer::indicies() const
+QVector<unsigned short> GraphicsVertexBuffer::indicies() const
 {
     return d->indicies;
 }
@@ -241,7 +241,7 @@ void GraphicsVertexBuffer::draw() const
     glEnableClientState(GL_NORMAL_ARRAY);
 
     if(!d->indicies.isEmpty()){
-        glDrawElements(GL_TRIANGLES, d->indicies.size(), GL_UNSIGNED_INT, d->indicies.data());
+        glDrawElements(GL_TRIANGLES, d->indicies.size(), GL_UNSIGNED_SHORT, d->indicies.data());
     }
     else{
         glDrawArrays(GL_POINTS, 0, d->verticies.size());

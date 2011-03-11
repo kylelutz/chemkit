@@ -161,7 +161,7 @@ void GraphicsPainter::drawTriangle(const GraphicsPoint &a, const GraphicsPoint &
     normals.fill(normal);
 
     // indicies
-    QVector<unsigned int> indicies;
+    QVector<unsigned short> indicies;
     indicies << 0 << 1 << 2;
 
     // setup buffer
