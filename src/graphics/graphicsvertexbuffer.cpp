@@ -214,6 +214,12 @@ void GraphicsVertexBuffer::setIndicies(const QVector<unsigned int> &indicies)
     d->indicies = indicies;
 }
 
+/// Returns the indicies contained in the vertex buffer.
+QVector<unsigned int> GraphicsVertexBuffer::indicies() const
+{
+    return d->indicies;
+}
+
 /// Returns the number of indicies in the buffer.
 int GraphicsVertexBuffer::indexCount() const
 {
