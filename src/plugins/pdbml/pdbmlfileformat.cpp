@@ -24,14 +24,13 @@
 
 #include <QtXml>
 
-#include <chemkit/protein.h>
-#include <chemkit/molecule.h>
+#include <chemkit/polymer.h>
 #include <chemkit/aminoacid.h>
-#include <chemkit/proteinchain.h>
-#include <chemkit/biochemicalfile.h>
+#include <chemkit/polymerfile.h>
+#include <chemkit/polymerchain.h>
 
 PdbmlFileFormat::PdbmlFileFormat()
-    : chemkit::BiochemicalFileFormat("pdbml")
+    : chemkit::PolymerFileFormat("pdbml")
 {
 }
 
@@ -39,7 +38,7 @@ PdbmlFileFormat::~PdbmlFileFormat()
 {
 }
 
-bool PdbmlFileFormat::read(QIODevice *iodev, chemkit::BiochemicalFile *file)
+bool PdbmlFileFormat::read(QIODevice *iodev, chemkit::PolymerFile *file)
 {
     QDomDocument doc;
     bool ok = doc.setContent(iodev, true);
@@ -50,14 +49,13 @@ bool PdbmlFileFormat::read(QIODevice *iodev, chemkit::BiochemicalFile *file)
 
     QDomElement datablockElement = doc.documentElement();
 
-    chemkit::Protein *protein = new chemkit::Protein;
-    chemkit::ProteinChain *chain = 0;
-    chemkit::Molecule *molecule = protein->molecule();
-    QHash<QString, chemkit::ProteinChain *> chainNameToChain;
+    chemkit::Polymer *polymer = new chemkit::Polymer;
+    chemkit::PolymerChain *chain = 0;
+    QHash<QString, chemkit::PolymerChain *> chainNameToChain;
 
     QString name = datablockElement.attribute("datablockName");
     if(!name.isEmpty()){
-        molecule->setName(name);
+        polymer->setName(name);
     }
 
     QDomElement element = datablockElement.firstChildElement();
@@ -118,7 +116,7 @@ bool PdbmlFileFormat::read(QIODevice *iodev, chemkit::BiochemicalFile *file)
                 }
 
                 // add atom and set its data
-                chemkit::Atom *atom = molecule->addAtom(symbol);
+                chemkit::Atom *atom = polymer->addAtom(symbol);
                 if(atom){
                     // atomic coordinates
                     atom->setPosition(x.toDouble(), y.toDouble(), z.toDouble());
@@ -126,14 +124,15 @@ bool PdbmlFileFormat::read(QIODevice *iodev, chemkit::BiochemicalFile *file)
                     if(group == "ATOM"){
                         // set residue
                         if(chainName != currentChainName){
-                            chain = protein->addChain();
+                            chain = polymer->addChain();
                             currentChainName = chainName;
                             chainNameToChain[chainName] = chain;
                         }
 
                         if(sequenceNumber != currentSequenceNumber){
-                            residue = chain->addNewResidue();
+                            residue = new chemkit::AminoAcid(polymer);
                             residue->setType(residueSymbol);
+                            chain->addResidue(residue);
                             currentSequenceNumber = sequenceNumber;
                         }
 
@@ -193,10 +192,11 @@ bool PdbmlFileFormat::read(QIODevice *iodev, chemkit::BiochemicalFile *file)
                     structDataElement = structDataElement.nextSiblingElement();
                 }
 
-                chemkit::ProteinChain *chain = chainNameToChain.value(chainName, 0);
+                chemkit::PolymerChain *chain = chainNameToChain.value(chainName, 0);
                 if(chain){
                     for(int i = firstResidue; i < lastResidue; i++){
-                        chain->residue(i - 1)->setConformation(conformation);
+                        chemkit::AminoAcid *aminoAcid = static_cast<chemkit::AminoAcid *>(chain->residue(i - 1));
+                        aminoAcid->setConformation(conformation);
                     }
                 }
 
@@ -207,7 +207,7 @@ bool PdbmlFileFormat::read(QIODevice *iodev, chemkit::BiochemicalFile *file)
         element = element.nextSiblingElement();
     }
 
-    file->addProtein(protein);
+    file->addPolymer(polymer);
 
     return true;
 }

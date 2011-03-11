@@ -27,10 +27,10 @@
 PdbmlPlugin::PdbmlPlugin()
     : chemkit::Plugin("pdbml")
 {
-    chemkit::BiochemicalFileFormat::registerFormat("pdbml", &createPdbmlFormat);
+    chemkit::PolymerFileFormat::registerFormat("pdbml", createPdbmlFormat);
 }
 
-chemkit::BiochemicalFileFormat* PdbmlPlugin::createPdbmlFormat()
+chemkit::PolymerFileFormat* PdbmlPlugin::createPdbmlFormat()
 {
     return new PdbmlFileFormat;
 }

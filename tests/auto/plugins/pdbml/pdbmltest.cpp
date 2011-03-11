@@ -22,8 +22,10 @@
 
 #include <QtTest>
 
-#include <chemkit/chemkit.h>
-#include <chemkit/biochemicalfile.h>
+#include <chemkit/polymer.h>
+#include <chemkit/polymerfile.h>
+#include <chemkit/polymerchain.h>
+#include <chemkit/polymerfileformat.h>
 
 const QString dataPath = "../../../data/";
 
@@ -39,52 +41,51 @@ class PdbmlTest : public QObject
 
 void PdbmlTest::initTestCase()
 {
-    QVERIFY(chemkit::BiochemicalFileFormat::formats().contains("pdbml"));
+    QVERIFY(chemkit::PolymerFileFormat::formats().contains("pdbml"));
 }
 
 void PdbmlTest::read_1UBQ()
 {
-    chemkit::BiochemicalFile file(dataPath + "1UBQ.pdbml");
+    chemkit::PolymerFile file(dataPath + "1UBQ.pdbml");
 
     bool ok = file.read();
     if(!ok)
         qDebug() << file.errorString();
     QVERIFY(ok);
-    QCOMPARE(file.proteinCount(), 1);
+    QCOMPARE(file.polymerCount(), 1);
 
     // protein
-    chemkit::Protein *protein = file.protein();
+    chemkit::Polymer *protein = file.polymer();
     QCOMPARE(protein->chainCount(), 1);
-    QCOMPARE(protein->residueCount(), 76);
 
     // chain
-    chemkit::ProteinChain *chain = protein->chain(0);
+    chemkit::PolymerChain *chain = protein->chain(0);
     QVERIFY(chain != 0);
+    QCOMPARE(chain->residueCount(), 76);
     QCOMPARE(chain->sequenceString(), QString("MQIFVKTLTGKTITLEVEPSDTIENVKAKIQ"
                                               "DKEGIPPDQQRLIFAGKQLEDGRTLSDYNIQ"
                                               "KESTLHLVLRLRGG"));
 
     // molecule
-    chemkit::Molecule *molecule = protein->molecule();
-    QCOMPARE(molecule->atomCount(), 660);
+    QCOMPARE(protein->atomCount(), 660);
 }
 
 void PdbmlTest::read_2DHB()
 {
-    chemkit::BiochemicalFile file(dataPath + "2DHB.pdbml");
+    chemkit::PolymerFile file(dataPath + "2DHB.pdbml");
 
     bool ok = file.read();
     if(!ok)
         qDebug() << file.errorString();
     QVERIFY(ok);
-    QCOMPARE(file.proteinCount(), 1);
+    QCOMPARE(file.polymerCount(), 1);
 
     // protein
-    chemkit::Protein *protein = file.protein();
+    chemkit::Polymer *protein = file.polymer();
     QCOMPARE(protein->chainCount(), 2);
 
     // chain A
-    chemkit::ProteinChain *chainA = protein->chain(0);
+    chemkit::PolymerChain *chainA = protein->chain(0);
     QCOMPARE(chainA->residueCount(), 141);
     QCOMPARE(chainA->sequenceString(), QString("VLSAADKTNVKAAWSKVGGHAGEYGAEALE"
                                                "RMFLGFPTTKTYFPHFDLSHGSAQVKAHGK"
@@ -93,7 +94,7 @@ void PdbmlTest::read_2DHB()
                                                "VHASLDKFLSSVSTVLTSKYR"));
 
     // chain B
-    chemkit::ProteinChain *chainB = protein->chain(1);
+    chemkit::PolymerChain *chainB = protein->chain(1);
     QCOMPARE(chainB->residueCount(), 146);
     QCOMPARE(chainB->sequenceString(), QString("VQLSGEEKAAVLALWDKVNEEEVGGEALGR"
                                                "LLVVYPWTQRFFDSFGDLSNPGAVMGNPKV"
