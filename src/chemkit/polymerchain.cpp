@@ -31,6 +31,7 @@ class PolymerChainPrivate
 {
     public:
         Polymer *polymer;
+        QString name;
         QList<Residue *> residues;
 };
 
@@ -57,6 +58,18 @@ PolymerChain::~PolymerChain()
 }
 
 // --- Properties ---------------------------------------------------------- //
+/// Sets the name for the polymer chain to \p name.
+void PolymerChain::setName(const QString &name)
+{
+    d->name = name;
+}
+
+/// Returns the name of the polymer chain.
+QString PolymerChain::name() const
+{
+    return d->name;
+}
+
 /// Returns the number of residues in the chain.
 int PolymerChain::size() const
 {
