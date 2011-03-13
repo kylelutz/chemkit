@@ -31,6 +31,7 @@
 #include "constants.h"
 #include "lineformat.h"
 #include "quaternion.h"
+#include "coordinates.h"
 #include "moleculargraph.h"
 #include "moleculewatcher.h"
 #include "moleculardescriptor.h"
@@ -847,6 +848,17 @@ bool Molecule::fragmentsPerceived() const
 }
 
 // --- Geometry ------------------------------------------------------------ //
+/// Sets the coordinates for the atoms in the molecule to
+/// \p coordinates.
+void Molecule::setCoordinates(const Coordinates *coordinates)
+{
+    int size = qMin(m_atoms.size(), coordinates->size());
+
+    for(int i = 0; i < size; i++){
+        m_atoms[i]->setPosition(coordinates->position(i));
+    }
+}
+
 /// Returns the distance between atoms \p a and \p b. The returned
 /// distance is in Angstroms.
 Float Molecule::distance(const Atom *a, const Atom *b) const

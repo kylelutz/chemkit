@@ -38,6 +38,7 @@
 namespace chemkit {
 
 class Vector;
+class Coordinates;
 class MoleculePrivate;
 class MoleculeWatcher;
 
@@ -138,6 +139,7 @@ class CHEMKIT_EXPORT Molecule
         void removeFragment(Fragment *fragment);
 
         // geometry
+        void setCoordinates(const Coordinates *coordinates);
         Float distance(const Atom *a, const Atom *b) const;
         Float bondAngle(const Atom *a, const Atom *b, const Atom *c) const;
         Float torsionAngle(const Atom *a, const Atom *b, const Atom *c, const Atom *d) const;
