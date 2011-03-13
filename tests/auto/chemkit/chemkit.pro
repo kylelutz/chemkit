@@ -14,6 +14,7 @@ SUBDIRS = alphashape \
     forcefield \
     fragment \
     geometry \
+    internalcoordinates \
     matrix \
     moiety \
     moleculardescriptor \

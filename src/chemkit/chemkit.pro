@@ -26,6 +26,7 @@ SOURCES += alphashape.cpp \
     forcefieldinteractions.cpp \
     fragment.cpp \
     geometry.cpp \
+    internalcoordinates.cpp \
     lineformat.cpp \
     matrix.cpp \
     moiety.cpp \
@@ -85,6 +86,7 @@ HEADERS += alphashape.h \
     genericvector.h \
     genericvector-inline.h \
     geometry.h \
+    internalcoordinates.h \
     lapack.h \
     lineformat.h \
     matrix.h \
