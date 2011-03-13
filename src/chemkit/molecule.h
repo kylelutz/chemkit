@@ -41,6 +41,7 @@ class Vector;
 class Coordinates;
 class MoleculePrivate;
 class MoleculeWatcher;
+class InternalCoordinates;
 
 class CHEMKIT_EXPORT Molecule
 {
@@ -140,6 +141,7 @@ class CHEMKIT_EXPORT Molecule
 
         // geometry
         void setCoordinates(const Coordinates *coordinates);
+        void setCoordinates(const InternalCoordinates *coordinates);
         Float distance(const Atom *a, const Atom *b) const;
         Float bondAngle(const Atom *a, const Atom *b, const Atom *c) const;
         Float torsionAngle(const Atom *a, const Atom *b, const Atom *c, const Atom *d) const;

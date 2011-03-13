@@ -34,6 +34,7 @@
 #include "coordinates.h"
 #include "moleculargraph.h"
 #include "moleculewatcher.h"
+#include "internalcoordinates.h"
 #include "moleculardescriptor.h"
 
 namespace chemkit {
@@ -857,6 +858,15 @@ void Molecule::setCoordinates(const Coordinates *coordinates)
     for(int i = 0; i < size; i++){
         m_atoms[i]->setPosition(coordinates->position(i));
     }
+}
+
+/// Sets the coordinates for the atoms in the molecule to
+/// \p coordinates.
+void Molecule::setCoordinates(const InternalCoordinates *coordinates)
+{
+    Coordinates *cartesianCoordinates = coordinates->toCartesianCoordinates();
+    setCoordinates(cartesianCoordinates);
+    delete cartesianCoordinates;
 }
 
 /// Returns the distance between atoms \p a and \p b. The returned
