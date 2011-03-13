@@ -33,7 +33,7 @@ namespace chemkit {
 
 class Molecule;
 class Conformer;
-class CoordinateMatrix;
+class Coordinates;
 class MoleculeAlignerPrivate;
 
 class CHEMKIT_EXPORT MoleculeAligner
@@ -61,8 +61,8 @@ class CHEMKIT_EXPORT MoleculeAligner
         void align(Molecule *molecule);
 
     private:
-        CoordinateMatrix *sourceCoordinates() const;
-        CoordinateMatrix *targetCoordinates() const;
+        Coordinates *sourceCoordinates() const;
+        Coordinates *targetCoordinates() const;
 
     private:
         MoleculeAlignerPrivate* const d;

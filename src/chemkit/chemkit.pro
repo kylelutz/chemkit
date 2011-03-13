@@ -17,7 +17,7 @@ SOURCES += alphashape.cpp \
     chemicalfileformat.cpp \
     chemkit.cpp \
     conformer.cpp \
-    coordinatematrix.cpp \
+    coordinates.cpp \
     delaunaytriangulation.cpp \
     element.cpp \
     forcefield.cpp \
@@ -65,7 +65,7 @@ HEADERS += alphashape.h \
     commainitializer-inline.h \
     conformer.h \
     constants.h \
-    coordinatematrix.h \
+    coordinates.h \
     delaunaytriangulation.h \
     element.h \
     element-inline.h \

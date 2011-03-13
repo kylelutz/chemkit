@@ -20,8 +20,8 @@
 **
 ******************************************************************************/
 
-#ifndef CHEMKIT_COORDINATEMATRIX_H
-#define CHEMKIT_COORDINATEMATRIX_H
+#ifndef CHEMKIT_COORDINATES_H
+#define CHEMKIT_COORDINATES_H
 
 #include "chemkit.h"
 
@@ -38,18 +38,18 @@ class Vector;
 class Molecule;
 class Conformer;
 
-class CHEMKIT_EXPORT CoordinateMatrix
+class CHEMKIT_EXPORT Coordinates
 {
     public:
         // construction and destruction
-        CoordinateMatrix();
-        CoordinateMatrix(int size);
-        CoordinateMatrix(const Molecule *molecule);
-        CoordinateMatrix(const Conformer *conformer);
-        CoordinateMatrix(const QList<Atom *> &atoms);
-        CoordinateMatrix(const QList<Point> &points);
-        CoordinateMatrix(const CoordinateMatrix &matrix);
-        ~CoordinateMatrix();
+        Coordinates();
+        Coordinates(int size);
+        Coordinates(const Molecule *molecule);
+        Coordinates(const Conformer *conformer);
+        Coordinates(const QList<Atom *> &atoms);
+        Coordinates(const QList<Point> &points);
+        Coordinates(const Coordinates &coordinates);
+        ~Coordinates();
 
         // properties
         void setSize(int size);
@@ -81,14 +81,14 @@ class CHEMKIT_EXPORT CoordinateMatrix
         Matrix distanceMatrix() const;
 
         // math
-        CoordinateMatrix add(const CoordinateMatrix &matrix) const;
-        CoordinateMatrix subtract(const CoordinateMatrix &matrix) const;
-        StaticMatrix<Float, 3, 3> multiply(const CoordinateMatrix *matrix) const;
+        Coordinates add(const Coordinates &coordinates) const;
+        Coordinates subtract(const Coordinates &coordinates) const;
+        StaticMatrix<Float, 3, 3> multiply(const Coordinates *coordinates) const;
 
         // operators
-        CoordinateMatrix operator+(const CoordinateMatrix &matrix) const;
-        CoordinateMatrix operator-(const CoordinateMatrix &matrix) const;
-        CoordinateMatrix& operator=(const CoordinateMatrix &matrix);
+        Coordinates operator+(const Coordinates &coordinates) const;
+        Coordinates operator-(const Coordinates &coordinates) const;
+        Coordinates& operator=(const Coordinates &coordinates);
 
     private:
         Matrix m_matrix;
@@ -96,4 +96,4 @@ class CHEMKIT_EXPORT CoordinateMatrix
 
 } // end chemkit namespace
 
-#endif // CHEMKIT_COORDINATEMATRIX_H
+#endif // CHEMKIT_COORDINATES_H

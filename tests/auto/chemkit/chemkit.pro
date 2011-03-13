@@ -8,7 +8,7 @@ SUBDIRS = alphashape \
     bondpredictor \
     chemicalfile \
     conformer \
-    coordinatematrix \
+    coordinates \
     delaunaytriangulation \
     element \
     forcefield \

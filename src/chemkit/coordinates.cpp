@@ -20,35 +20,35 @@
 **
 ******************************************************************************/
 
-#include "coordinatematrix.h"
+#include "coordinates.h"
 
 #include "vector.h"
 #include "molecule.h"
 
 namespace chemkit {
 
-// === CoordinateMatrix ==================================================== //
-/// \class CoordinateMatrix coordinatematrix.h chemkit/coordinatematrix.h
+// === Coordinates ========================================================= //
+/// \class Coordinates coordinates.h chemkit/coordinates.h
 /// \ingroup chemkit
-/// \brief The CoordinateMatrix class contains coordinates.
+/// \brief The Coordinates class contains cartesian coordinates.
 
 // --- Construction and Destruction ---------------------------------------- //
 /// Creates a new, empty coordinate matrix.
-CoordinateMatrix::CoordinateMatrix()
+Coordinates::Coordinates()
     : m_matrix(0, 3)
 {
 }
 
 /// Creates a new, empty coordinate matrix with space for \p size
 /// points.
-CoordinateMatrix::CoordinateMatrix(int size)
+Coordinates::Coordinates(int size)
     : m_matrix(size, 3)
 {
 }
 
 /// Creates a new coordinate matrix with the coordinates from
 /// \p molecule.
-CoordinateMatrix::CoordinateMatrix(const Molecule *molecule)
+Coordinates::Coordinates(const Molecule *molecule)
     : m_matrix(molecule->size(), 3)
 {
     int size = molecule->size();
@@ -63,7 +63,7 @@ CoordinateMatrix::CoordinateMatrix(const Molecule *molecule)
 
 /// Creates a new coordinate matrix with the coordinates from
 /// \p conformer.
-CoordinateMatrix::CoordinateMatrix(const Conformer *conformer)
+Coordinates::Coordinates(const Conformer *conformer)
     : m_matrix(conformer->molecule()->size(), 3)
 {
     int size = conformer->molecule()->size();
@@ -78,7 +78,7 @@ CoordinateMatrix::CoordinateMatrix(const Conformer *conformer)
 
 /// Creates a new coordinate matrix with the coordinates from
 /// \p atoms.
-CoordinateMatrix::CoordinateMatrix(const QList<Atom *> &atoms)
+Coordinates::Coordinates(const QList<Atom *> &atoms)
     : m_matrix(atoms.size(), 3)
 {
     int size = atoms.size();
@@ -92,7 +92,7 @@ CoordinateMatrix::CoordinateMatrix(const QList<Atom *> &atoms)
 }
 
 /// Creates a new coordinate matrix that contains \p points.
-CoordinateMatrix::CoordinateMatrix(const QList<Point> &points)
+Coordinates::Coordinates(const QList<Point> &points)
     : m_matrix(points.size(), 3)
 {
     for(int i = 0; i < points.size(); i++){
@@ -103,45 +103,45 @@ CoordinateMatrix::CoordinateMatrix(const QList<Point> &points)
     }
 }
 
-/// Creates a new coordinate matrix that is a copy of \p matrix.
-CoordinateMatrix::CoordinateMatrix(const CoordinateMatrix &matrix)
-    : m_matrix(matrix.m_matrix)
+/// Creates a new coordinate matrix that is a copy of \p coordinates.
+Coordinates::Coordinates(const Coordinates &coordinates)
+    : m_matrix(coordinates.m_matrix)
 {
 }
 
 /// Destroys the coordinate matrix.
-CoordinateMatrix::~CoordinateMatrix()
+Coordinates::~Coordinates()
 {
 }
 
 // --- Properties ---------------------------------------------------------- //
 /// Sets the size of the matrix to \p size.
-void CoordinateMatrix::setSize(int size)
+void Coordinates::setSize(int size)
 {
     m_matrix.setRowCount(size);
 }
 
 /// Returns the number of coordinates in the matrix.
-int CoordinateMatrix::size() const
+int Coordinates::size() const
 {
     return m_matrix.rowCount();
 }
 
 /// Returns \c true if the matrix is empty.
-bool CoordinateMatrix::isEmpty() const
+bool Coordinates::isEmpty() const
 {
     return size() == 0;
 }
 
 /// Returns a matrix containing the data in the coordinate matrix.
-Matrix CoordinateMatrix::toMatrix() const
+Matrix Coordinates::toMatrix() const
 {
     return m_matrix;
 }
 
 // --- Coordinates --------------------------------------------------------- //
 /// Sets the position at \p index to \p position.
-void CoordinateMatrix::setPosition(int index, const Point &position)
+void Coordinates::setPosition(int index, const Point &position)
 {
     m_matrix.setValue(index, 0, position.x());
     m_matrix.setValue(index, 1, position.y());
@@ -149,13 +149,13 @@ void CoordinateMatrix::setPosition(int index, const Point &position)
 }
 
 /// Sets the position at \p index to (\p x, \p y, \p z).
-void CoordinateMatrix::setPosition(int index, Float x, Float y, Float z)
+void Coordinates::setPosition(int index, Float x, Float y, Float z)
 {
     setPosition(index, Point(x, y, z));
 }
 
 /// Returns the coordinates at \p index.
-Point CoordinateMatrix::position(int index) const
+Point Coordinates::position(int index) const
 {
     return Point(m_matrix(index, 0),
                  m_matrix(index, 1),
@@ -163,31 +163,31 @@ Point CoordinateMatrix::position(int index) const
 }
 
 /// Sets the value at \p row and \p column to \p value.
-void CoordinateMatrix::setValue(int row, int column, Float value)
+void Coordinates::setValue(int row, int column, Float value)
 {
     m_matrix.setValue(row, column, value);
 }
 
 /// Returns the value at \p row and \p column;
-Float CoordinateMatrix::value(int row, int column) const
+Float Coordinates::value(int row, int column) const
 {
     return m_matrix.value(row, column);
 }
 
-/// Appends \p position to the matrix.
-void CoordinateMatrix::append(const Point &position)
+/// Appends \p position to the coordinates.
+void Coordinates::append(const Point &position)
 {
     insert(size(), position);
 }
 
-/// Appends the point (\p x, \p y, \p z) to the matrix.
-void CoordinateMatrix::append(Float x, Float y, Float z)
+/// Appends the point (\p x, \p y, \p z) to the coordinates.
+void Coordinates::append(Float x, Float y, Float z)
 {
     append(Point(x, y, z));
 }
 
 /// Inserts \p position at \p index.
-void CoordinateMatrix::insert(int index, const Point &position)
+void Coordinates::insert(int index, const Point &position)
 {
     // resize to make space for the new position
     if(index >= size()){
@@ -207,13 +207,13 @@ void CoordinateMatrix::insert(int index, const Point &position)
 }
 
 /// Inserts the point (\p x, \p y, \p z) at \p index.
-void CoordinateMatrix::insert(int index, Float x, Float y, Float z)
+void Coordinates::insert(int index, Float x, Float y, Float z)
 {
     insert(index, Point(x, y, z));
 }
 
 /// Removes the position at \p index.
-void CoordinateMatrix::remove(int index)
+void Coordinates::remove(int index)
 {
     for(int i = index + 1; i < size(); i++){
         setPosition(i - 1, position(i));
@@ -225,35 +225,35 @@ void CoordinateMatrix::remove(int index)
 // --- Geometry ------------------------------------------------------------ //
 /// Returns the distance between the points at \p i and \p j. The
 /// returned distance is in Angstroms.
-Float CoordinateMatrix::distance(int i, int j) const
+Float Coordinates::distance(int i, int j) const
 {
     return Point::distance(position(i), position(j));
 }
 
 /// Returns the bond angle between the points at \p i, \p j, and
 /// \p k. The returned angle is in degrees.
-Float CoordinateMatrix::bondAngle(int i, int j, int k) const
+Float Coordinates::bondAngle(int i, int j, int k) const
 {
     return Point::angle(position(i), position(j), position(k));
 }
 
 /// Returns the torsion angle between the points at \p i, \p j, \p k,
 /// and \p l. The returned angle is in degrees.
-Float CoordinateMatrix::torsionAngle(int i, int j, int k, int l) const
+Float Coordinates::torsionAngle(int i, int j, int k, int l) const
 {
     return Point::torsionAngle(position(i), position(j), position(k), position(l));
 }
 
 /// Returns the wilson angle between the points at \p i, \p j, \p k
 /// and \p l. The returned angle is in degrees.
-Float CoordinateMatrix::wilsonAngle(int i, int j, int k, int l) const
+Float Coordinates::wilsonAngle(int i, int j, int k, int l) const
 {
     return Point::wilsonAngle(position(i), position(j), position(k), position(l));
 }
 
-/// Returns the center of the positions in the matrix. This is also
-/// known as the centroid.
-Point CoordinateMatrix::center() const
+/// Returns the center of the positions in the coordinates. This is
+/// also known as the centroid.
+Point Coordinates::center() const
 {
     if(isEmpty()){
         return Point();
@@ -275,9 +275,9 @@ Point CoordinateMatrix::center() const
     return Point(sx/n, sy/n, sz/n);
 }
 
-/// Returns the center of the coordinates in the matrix after
-/// weighting each position with \p weights.
-Point CoordinateMatrix::weightedCenter(const QVector<Float> &weights) const
+/// Returns the center of the coordinates after weighting each
+/// position with \p weights.
+Point Coordinates::weightedCenter(const QVector<Float> &weights) const
 {
     Q_ASSERT(size() == weights.size());
 
@@ -308,8 +308,8 @@ Point CoordinateMatrix::weightedCenter(const QVector<Float> &weights) const
     return Point(sx/n, sy/n, sz/n);
 }
 
-/// Moves all of the coordinates in the matrix by \p vector.
-void CoordinateMatrix::moveBy(const Vector &vector)
+/// Moves all of the coordinates by \p vector.
+void Coordinates::moveBy(const Vector &vector)
 {
     for(int i = 0; i < size(); i++){
         m_matrix.value(i, 0) += vector.x();
@@ -318,15 +318,15 @@ void CoordinateMatrix::moveBy(const Vector &vector)
     }
 }
 
-/// Moves all of the coordinates in the matrix by (\p x, \p y, \p z).
-void CoordinateMatrix::moveBy(Float x, Float y, Float z)
+/// Moves all of the coordinates by (\p x, \p y, \p z).
+void Coordinates::moveBy(Float x, Float y, Float z)
 {
     moveBy(Vector(x, y, z));
 }
 
 /// Returns a matrix containing the distances between each pair of
-/// points in the coordinate matrix.
-Matrix CoordinateMatrix::distanceMatrix() const
+/// points in the coordinates.
+Matrix Coordinates::distanceMatrix() const
 {
     Matrix matrix(size(), size());
 
@@ -344,16 +344,16 @@ Matrix CoordinateMatrix::distanceMatrix() const
 
 // --- Math ---------------------------------------------------------------- //
 /// Returns a new coordinate matrix containing the result of adding
-/// the coordinates with \p matrix.
-CoordinateMatrix CoordinateMatrix::add(const CoordinateMatrix &matrix) const
+/// the coordinates with \p coordinates.
+Coordinates Coordinates::add(const Coordinates &coordinates) const
 {
-    int size = qMin(this->size(), matrix.size());
+    int size = qMin(this->size(), coordinates.size());
 
-    CoordinateMatrix result(size);
+    Coordinates result(size);
 
     for(int i = 0; i < size; i++){
         const Point &a = position(i);
-        const Point &b = matrix.position(i);
+        const Point &b = coordinates.position(i);
 
         result.setPosition(i, a + b);
     }
@@ -362,16 +362,16 @@ CoordinateMatrix CoordinateMatrix::add(const CoordinateMatrix &matrix) const
 }
 
 /// Returns a new coordinate matrix containing the result of
-/// subtracting the coordinates with \p matrix.
-CoordinateMatrix CoordinateMatrix::subtract(const CoordinateMatrix &matrix) const
+/// subtracting the coordinates with \p coordinates.
+Coordinates Coordinates::subtract(const Coordinates &coordinates) const
 {
-    int size = qMin(this->size(), matrix.size());
+    int size = qMin(this->size(), coordinates.size());
 
-    CoordinateMatrix result(size);
+    Coordinates result(size);
 
     for(int i = 0; i < size; i++){
         const Point &a = position(i);
-        const Point &b = matrix.position(i);
+        const Point &b = coordinates.position(i);
 
         result.setPosition(i, a - b);
     }
@@ -380,8 +380,8 @@ CoordinateMatrix CoordinateMatrix::subtract(const CoordinateMatrix &matrix) cons
 }
 
 /// Returns the 3x3 matrix product of the transpose of the matrix
-/// and \p matrix.
-StaticMatrix<Float, 3, 3> CoordinateMatrix::multiply(const CoordinateMatrix *matrix) const
+/// and \p coordinates.
+StaticMatrix<Float, 3, 3> Coordinates::multiply(const Coordinates *coordinates) const
 {
     StaticMatrix<Float, 3, 3> product;
 
@@ -390,7 +390,7 @@ StaticMatrix<Float, 3, 3> CoordinateMatrix::multiply(const CoordinateMatrix *mat
                         size(),
                         m_matrix.data(),
                         true,
-                        matrix->m_matrix.data(),
+                        coordinates->m_matrix.data(),
                         false,
                         product.data());
 
@@ -398,19 +398,19 @@ StaticMatrix<Float, 3, 3> CoordinateMatrix::multiply(const CoordinateMatrix *mat
 }
 
 // --- Operators ----------------------------------------------------------- //
-CoordinateMatrix CoordinateMatrix::operator+(const CoordinateMatrix &matrix) const
+Coordinates Coordinates::operator+(const Coordinates &coordinates) const
 {
-    return add(matrix);
+    return add(coordinates);
 }
 
-CoordinateMatrix CoordinateMatrix::operator-(const CoordinateMatrix &matrix) const
+Coordinates Coordinates::operator-(const Coordinates &coordinates) const
 {
-    return subtract(matrix);
+    return subtract(coordinates);
 }
 
-CoordinateMatrix& CoordinateMatrix::operator=(const CoordinateMatrix &matrix)
+Coordinates& Coordinates::operator=(const Coordinates &coordinates)
 {
-    m_matrix = matrix.m_matrix;
+    m_matrix = coordinates.m_matrix;
 
     return *this;
 }

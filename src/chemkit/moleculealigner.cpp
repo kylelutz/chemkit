@@ -24,7 +24,7 @@
 
 #include "vector.h"
 #include "molecule.h"
-#include "coordinatematrix.h"
+#include "coordinates.h"
 
 namespace chemkit {
 
@@ -136,8 +136,8 @@ const Conformer* MoleculeAligner::targetConformer() const
 /// of the source and target molecules.
 Float MoleculeAligner::deviation() const
 {
-    CoordinateMatrix *sourceMatrix = sourceCoordinates();
-    CoordinateMatrix *targetMatrix = targetCoordinates();
+    Coordinates *sourceMatrix = sourceCoordinates();
+    Coordinates *targetMatrix = targetCoordinates();
 
     Float sum = 0;
 
@@ -157,8 +157,8 @@ Float MoleculeAligner::deviation() const
 /// deviation.
 StaticMatrix<Float, 3, 3> MoleculeAligner::rotationMatrix() const
 {
-    CoordinateMatrix *sourceMatrix = sourceCoordinates();
-    CoordinateMatrix *targetMatrix = targetCoordinates();
+    Coordinates *sourceMatrix = sourceCoordinates();
+    Coordinates *targetMatrix = targetCoordinates();
 
     sourceMatrix->moveBy(-sourceMatrix->center());
     targetMatrix->moveBy(-targetMatrix->center());
@@ -189,8 +189,8 @@ StaticMatrix<Float, 3, 3> MoleculeAligner::rotationMatrix() const
 /// of the source and target molecules.
 Vector MoleculeAligner::displacementVector() const
 {
-    CoordinateMatrix *sourceMatrix = sourceCoordinates();
-    CoordinateMatrix *targetMatrix = targetCoordinates();
+    Coordinates *sourceMatrix = sourceCoordinates();
+    Coordinates *targetMatrix = targetCoordinates();
 
     Vector displacement = targetCoordinates()->center() - sourceCoordinates()->center();
 
@@ -217,23 +217,23 @@ void MoleculeAligner::align(Molecule *molecule)
 }
 
 // --- Internal Methods ---------------------------------------------------- //
-CoordinateMatrix* MoleculeAligner::sourceCoordinates() const
+Coordinates* MoleculeAligner::sourceCoordinates() const
 {
     if(d->sourceConformer){
-        return new CoordinateMatrix(d->sourceConformer);
+        return new Coordinates(d->sourceConformer);
     }
     else{
-        return new CoordinateMatrix(sourceMolecule());
+        return new Coordinates(sourceMolecule());
     }
 }
 
-CoordinateMatrix* MoleculeAligner::targetCoordinates() const
+Coordinates* MoleculeAligner::targetCoordinates() const
 {
     if(d->targetConformer){
-        return new CoordinateMatrix(d->targetConformer);
+        return new Coordinates(d->targetConformer);
     }
     else{
-        return new CoordinateMatrix(targetMolecule());
+        return new Coordinates(targetMolecule());
     }
 }
 
