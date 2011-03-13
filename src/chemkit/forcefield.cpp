@@ -33,6 +33,16 @@ namespace chemkit {
 
 namespace {
 
+Float mapEnergy(const ForceFieldCalculation *calculation)
+{
+    return calculation->energy();
+}
+
+void reduceEnergy(Float &result, const Float &energy)
+{
+    result += energy;
+}
+
 // The forceFieldPlugins hash table contains the names of each
 // registered force field plugin and a pointer to its create()
 // function.
@@ -302,10 +312,19 @@ void ForceField::setCalculationSetup(ForceFieldCalculation *calculation, bool se
 /// return \c 0.
 Float ForceField::energy() const
 {
+    const int parallelThreshold = 5000;
+
     Float energy = 0;
 
-    foreach(const ForceFieldCalculation *calculation, calculations()){
-        energy += calculation->energy();
+    if(d->calculations.size() < parallelThreshold){
+        // calculate energy sequentially
+        foreach(const ForceFieldCalculation *calculation, d->calculations){
+            energy += calculation->energy();
+        }
+    }
+    else{
+        // calculate energy in parallel
+        energy = QtConcurrent::blockingMappedReduced(d->calculations, mapEnergy, reduceEnergy);
     }
 
     return energy;
