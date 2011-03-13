@@ -22,22 +22,30 @@
 
 #include "sybylplugin.h"
 
+#include "mol2fileformat.h"
 #include "sybylatomtyper.h"
 
 SybylPlugin::SybylPlugin()
     : chemkit::Plugin("sybyl")
 {
     chemkit::AtomTyper::registerTyper("sybyl", createSybylAtomTyper);
+    chemkit::ChemicalFileFormat::registerFormat("mol2", createMol2FileFormat);
 }
 
 SybylPlugin::~SybylPlugin()
 {
     chemkit::AtomTyper::unregisterTyper("sybyl", createSybylAtomTyper);
+    chemkit::ChemicalFileFormat::unregisterFormat("mol2", createMol2FileFormat);
 }
 
 chemkit::AtomTyper* SybylPlugin::createSybylAtomTyper()
 {
     return new SybylAtomTyper;
+}
+
+chemkit::ChemicalFileFormat* SybylPlugin::createMol2FileFormat()
+{
+    return new Mol2FileFormat;
 }
 
 Q_EXPORT_PLUGIN2(sybyl, SybylPlugin)

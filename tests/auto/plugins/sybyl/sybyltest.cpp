@@ -22,7 +22,12 @@
 
 #include <QtTest>
 
+#include <chemkit/molecule.h>
 #include <chemkit/atomtyper.h>
+#include <chemkit/chemicalfile.h>
+#include <chemkit/chemicalfileformat.h>
+
+const QString dataPath = "../../../data/";
 
 class SybylTest : public QObject
 {
@@ -30,11 +35,39 @@ class SybylTest : public QObject
 
     private slots:
         void initTestCase();
+        void readMol2_data();
+        void readMol2();
 };
 
 void SybylTest::initTestCase()
 {
     QVERIFY(chemkit::AtomTyper::typers().contains("sybyl"));
+    QVERIFY(chemkit::ChemicalFileFormat::formats().contains("mol2"));
+}
+
+void SybylTest::readMol2_data()
+{
+    QTest::addColumn<QString>("fileName");
+    QTest::addColumn<QString>("formula");
+
+    QTest::newRow("uridine") << "uridine.mol2" << "C9H13N2O9P";
+}
+
+void SybylTest::readMol2()
+{
+    QFETCH(QString, fileName);
+    QFETCH(QString, formula);
+
+    chemkit::ChemicalFile file(dataPath + fileName);
+    bool ok = file.read();
+    if(!ok)
+        qDebug() << file.errorString();
+    QVERIFY(ok);
+
+    QCOMPARE(file.moleculeCount(), 1);
+    chemkit::Molecule *molecule = file.molecule();
+    QVERIFY(molecule != 0);
+    QCOMPARE(molecule->formula(), formula);
 }
 
 QTEST_APPLESS_MAIN(SybylTest)

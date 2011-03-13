@@ -9,7 +9,6 @@ SUBDIRS = amber \
     mcdl \
     mdl \
     mmff \
-    mol2 \
     opls \
     pdb \
     pdbml \
