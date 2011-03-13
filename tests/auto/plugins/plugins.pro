@@ -2,6 +2,7 @@ TEMPLATE = subdirs
 SUBDIRS = amber \
     cml \
     cube \
+    fhz \
     formula \
     gasteiger \
     hydrogenbonds \
