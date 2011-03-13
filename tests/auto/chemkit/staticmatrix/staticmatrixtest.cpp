@@ -23,6 +23,7 @@
 #include <QtTest>
 
 #include <chemkit/staticmatrix.h>
+#include <chemkit/staticvector.h>
 
 class StaticMatrixTest : public QObject
 {
@@ -31,6 +32,7 @@ class StaticMatrixTest : public QObject
     private slots:
         void multiply();
         void multiplyScalar();
+        void multiplyVector();
         void determinant();
         void invert();
 };
@@ -102,6 +104,31 @@ void StaticMatrixTest::multiplyScalar()
     QCOMPARE(d(2, 0), -14);
     QCOMPARE(d(2, 1), -16);
     QCOMPARE(d(2, 2), -18);
+}
+
+void StaticMatrixTest::multiplyVector()
+{
+    chemkit::StaticMatrix<double, 3, 3> a;
+    a << 1, 2, 3,
+         4, 5, 6,
+         7, 8, 9;
+
+    chemkit::StaticVector<double, 3> p;
+    p << 4, 0, -12;
+
+    chemkit::StaticVector<double, 3> ap = a.multiply(p);
+    QCOMPARE(qRound(ap[0]), -32);
+    QCOMPARE(qRound(ap[1]), -56);
+    QCOMPARE(qRound(ap[2]), -80);
+
+    a << -10, 15, 20,
+           0,  3,  9,
+           1,  2,  8;
+    p << 5, 1, 9;
+    ap = a.multiply(p);
+    QCOMPARE(qRound(ap[0]), 145);
+    QCOMPARE(qRound(ap[1]), 84);
+    QCOMPARE(qRound(ap[2]), 79);
 }
 
 void StaticMatrixTest::determinant()
