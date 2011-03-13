@@ -30,6 +30,11 @@ XyzPlugin::XyzPlugin()
     chemkit::ChemicalFileFormat::registerFormat("xyz", &createXyzFormat);
 }
 
+XyzPlugin::~XyzPlugin()
+{
+    chemkit::ChemicalFileFormat::unregisterFormat("xyz", createXyzFormat);
+}
+
 chemkit::ChemicalFileFormat* XyzPlugin::createXyzFormat()
 {
     return new XyzFileFormat;

@@ -34,6 +34,7 @@ class XyzPlugin : public chemkit::Plugin
 
     public:
         XyzPlugin();
+        ~XyzPlugin();
 
         static chemkit::ChemicalFileFormat* createXyzFormat();
 };
