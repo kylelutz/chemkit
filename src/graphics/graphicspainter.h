@@ -44,7 +44,7 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsPainter
             Lines,
             LineStrip,
             LineLoop,
-            Points,
+            Points
         };
 
         // construction and destruction
