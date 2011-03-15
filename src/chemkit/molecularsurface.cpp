@@ -183,6 +183,21 @@ Float MolecularSurface::probeRadius() const
     return d->probeRadius;
 }
 
+const AlphaShape* MolecularSurface::alphaShape() const
+{
+    if(!d->alphaShape){
+        // calculate weights (weight = radius sqaured)
+        QVector<Float> weights(d->points.size());
+        for(int i = 0; i < d->points.size(); i++){
+            weights[i] = pow(radius(i), 2);
+        }
+
+        d->alphaShape = new AlphaShape(d->points, weights);
+    }
+
+    return d->alphaShape;
+}
+
 // --- Geometry ------------------------------------------------------------ //
 /// Returns the position of the sphere at \p index.
 Point MolecularSurface::position(int index) const
@@ -288,21 +303,6 @@ QFuture<Float> MolecularSurface::surfaceAreaAsync() const
 }
 
 // --- Internal Methods ---------------------------------------------------- //
-const AlphaShape* MolecularSurface::alphaShape() const
-{
-    if(!d->alphaShape){
-        // calculate weights (weight = radius sqaured)
-        QVector<Float> weights(d->points.size());
-        for(int i = 0; i < d->points.size(); i++){
-            weights[i] = pow(radius(i), 2);
-        }
-
-        d->alphaShape = new AlphaShape(d->points, weights);
-    }
-
-    return d->alphaShape;
-}
-
 void MolecularSurface::setCalculated(bool calculated) const
 {
     if(calculated == false){

@@ -56,6 +56,7 @@ class CHEMKIT_EXPORT MolecularSurface
         SurfaceType surfaceType() const;
         void setProbeRadius(Float radius);
         Float probeRadius() const;
+        const AlphaShape* alphaShape() const;
 
         // geometry
         Point position(int index) const;
@@ -67,7 +68,6 @@ class CHEMKIT_EXPORT MolecularSurface
 
     private:
         // internal methods
-        const AlphaShape* alphaShape() const;
         void setCalculated(bool calculated) const;
         Float intersectionArea(int i, int j) const;
         Float intersectionArea(int i, int j, int k) const;
