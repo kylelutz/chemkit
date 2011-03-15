@@ -68,9 +68,9 @@ GraphicsPainter::~GraphicsPainter()
 }
 
 // --- Drawing ------------------------------------------------------------- //
-void GraphicsPainter::draw(const GraphicsVertexBuffer *buffer, GraphicsPainter::DrawMode mode)
+void GraphicsPainter::draw(const GraphicsVertexBuffer *buffer, GraphicsPainter::PrimitiveType type)
 {
-    Q_UNUSED(mode);
+    Q_UNUSED(type);
 
     buffer->draw();
 }

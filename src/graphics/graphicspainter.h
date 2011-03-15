@@ -37,7 +37,7 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsPainter
 {
     public:
         // enumerations
-        enum DrawMode {
+        enum PrimitiveType {
             Triangles,
             TriangleStrip,
             TriangleFan,
@@ -52,7 +52,7 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsPainter
         ~GraphicsPainter();
 
         // drawing
-        void draw(const GraphicsVertexBuffer *buffer, DrawMode mode = Triangles);
+        void draw(const GraphicsVertexBuffer *buffer, PrimitiveType type = Triangles);
         void drawSphere(GraphicsFloat radius);
         void drawSphere(const GraphicsPoint &center, GraphicsFloat radius);
         void drawCylinder(GraphicsFloat radius, GraphicsFloat length);
