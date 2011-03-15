@@ -112,6 +112,8 @@ GraphicsScene* GraphicsItem::scene() const
 void GraphicsItem::setOpacity(GraphicsFloat opacity)
 {
     d->opacity = opacity;
+
+    itemChanged(ItemOpacityChanged);
 }
 
 GraphicsFloat GraphicsItem::opacity() const

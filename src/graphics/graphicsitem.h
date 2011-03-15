@@ -53,6 +53,7 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsItem
         };
 
         enum ItemChange {
+            ItemOpacityChanged,
             ItemSceneChanged,
             ItemVisiblityChanged
         };
