@@ -251,6 +251,10 @@ class GraphicsMolecularSurfaceItemPrivate
 /// \brief The GraphicsMolecularSurfaceItem displays a molecular
 ///        surface.
 ///
+/// The image below shows a molecular surface item on top of a
+/// guanine molecule:
+/// \image html molecular-surface-item.png
+///
 /// \see MolecularSurface
 
 // --- Construction and Destruction ---------------------------------------- //
