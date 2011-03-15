@@ -66,8 +66,8 @@ namespace chemkit {
 /// usage from C++ more natural.
 ///
 /// The functions contained in this namespace provide low-level
-/// primatives used for linear algebra. The following classes make
-/// use of these primatives and provide an easier to use interface:
+/// primitives used for linear algebra. The following classes make
+/// use of these primitives and provide an easier to use interface:
 ///     - StaticMatrix
 ///     - GenericMatrix
 namespace lapack {
