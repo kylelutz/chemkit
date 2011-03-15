@@ -18,6 +18,7 @@ SOURCES += graphics.cpp \
     graphicsitem.cpp \
     graphicslight.cpp \
     graphicsmaterial.cpp \
+    graphicsmolecularsurfaceitem.cpp \
     graphicsmoleculeitem.cpp \
     graphicsnavigationtool.cpp \
     graphicsnucleicaciditem.cpp \
@@ -46,6 +47,7 @@ HEADERS += graphics.h \
     graphicsitem.h \
     graphicslight.h \
     graphicsmaterial.h \
+    graphicsmolecularsurfaceitem.h \
     graphicsmoleculeitem.h \
     graphicsnavigationtool.h \
     graphicsnucleicaciditem.h \
