@@ -60,6 +60,9 @@ class CHEMKIT_EXPORT MoleculeAligner
         Vector displacementVector() const;
         void align(Molecule *molecule);
 
+        // static methods
+        static Float rmsd(const Coordinates *a, const Coordinates *b);
+
     private:
         Coordinates *sourceCoordinates() const;
         Coordinates *targetCoordinates() const;

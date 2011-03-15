@@ -139,17 +139,12 @@ Float MoleculeAligner::deviation() const
     Coordinates *sourceMatrix = sourceCoordinates();
     Coordinates *targetMatrix = targetCoordinates();
 
-    Float sum = 0;
-
-    for(int i = 0; i < d->size; i++){
-        sum += Point::distanceSquared(sourceMatrix->position(i),
-                                      targetMatrix->position(i));
-    }
+    Float rmsd = this->rmsd(sourceMatrix, targetMatrix);
 
     delete sourceMatrix;
     delete targetMatrix;
 
-    return sqrt(sum / d->size);
+    return rmsd;
 }
 
 /// Returns a 3x3 rotation matrix that represents the optimal
@@ -214,6 +209,22 @@ void MoleculeAligner::align(Molecule *molecule)
     foreach(Atom *atom, molecule->atoms()){
         atom->moveBy(displacement);
     }
+}
+
+// --- Static Methods ------------------------------------------------------ //
+/// Returns the root mean square deviation between the coordinates
+/// in \p a and \p b.
+Float MoleculeAligner::rmsd(const Coordinates *a, const Coordinates *b)
+{
+    int size = qMin(a->size(), b->size());
+
+    Float sum = 0;
+
+    for(int i = 0; i < size; i++){
+        sum += Point::distanceSquared(a->position(i), b->position(i));
+    }
+
+    return sqrt(sum / size);
 }
 
 // --- Internal Methods ---------------------------------------------------- //
