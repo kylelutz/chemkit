@@ -74,6 +74,7 @@ class CHEMKIT_EXPORT Coordinates
         Float angle(int i, int j, int k) const;
         Float angleRadians(int i, int j, int k) const;
         Float torsionAngle(int i, int j, int k, int l) const;
+        Float torsionAngleRadians(int i, int j, int k, int l) const;
         Float wilsonAngle(int i, int j, int k, int l) const;
         Point center() const;
         Point weightedCenter(const QVector<Float> &weights) const;

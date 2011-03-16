@@ -251,6 +251,13 @@ Float Coordinates::torsionAngle(int i, int j, int k, int l) const
     return Point::torsionAngle(position(i), position(j), position(k), position(l));
 }
 
+/// Returns the torsion angle between the points at \p i, \p j, \p k,
+/// and \p l. The returned angle is in radians.
+Float Coordinates::torsionAngleRadians(int i, int j, int k, int l) const
+{
+    return Point::torsionAngleRadians(position(i), position(j), position(k), position(l));
+}
+
 /// Returns the wilson angle between the points at \p i, \p j, \p k
 /// and \p l. The returned angle is in degrees.
 Float Coordinates::wilsonAngle(int i, int j, int k, int l) const
