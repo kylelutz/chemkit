@@ -10,6 +10,7 @@ SUBDIRS = amber \
     mcdl \
     mdl \
     mmff \
+    mopac \
     opls \
     pdb \
     pdbml \
