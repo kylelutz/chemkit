@@ -232,7 +232,7 @@ Float Coordinates::distance(int i, int j) const
 
 /// Returns the bond angle between the points at \p i, \p j, and
 /// \p k. The returned angle is in degrees.
-Float Coordinates::bondAngle(int i, int j, int k) const
+Float Coordinates::angle(int i, int j, int k) const
 {
     return Point::angle(position(i), position(j), position(k));
 }

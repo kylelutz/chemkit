@@ -71,7 +71,7 @@ class CHEMKIT_EXPORT Coordinates
 
         // geometry
         Float distance(int i, int j) const;
-        Float bondAngle(int i, int j, int k) const;
+        Float angle(int i, int j, int k) const;
         Float torsionAngle(int i, int j, int k, int l) const;
         Float wilsonAngle(int i, int j, int k, int l) const;
         Point center() const;
