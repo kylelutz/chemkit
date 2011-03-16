@@ -245,4 +245,24 @@ Coordinates* InternalCoordinates::toCartesianCoordinates() const
     return cartesianCoordinates;
 }
 
+// --- Operators ----------------------------------------------------------- //
+InternalCoordinates& InternalCoordinates::operator=(const InternalCoordinates &coordinates)
+{
+    if(&coordinates == this){
+        return *this;
+    }
+
+    delete [] d->connections;
+    delete [] d->coordinates;
+
+    d->size = coordinates.d->size;
+    d->connections = new int[3 * coordinates.d->size];
+    d->coordinates = new Float[3 * coordinates.d->size];
+
+    memcpy(d->connections, coordinates.d->connections, 3 * coordinates.d->size * sizeof(int));
+    memcpy(d->coordinates, coordinates.d->coordinates, 3 * coordinates.d->size * sizeof(int));
+
+    return *this;
+}
+
 } // end chemkit namespace

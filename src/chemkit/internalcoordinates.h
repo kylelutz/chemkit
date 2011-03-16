@@ -55,6 +55,9 @@ class CHEMKIT_EXPORT InternalCoordinates
         // conversions
         Coordinates* toCartesianCoordinates() const;
 
+        // operators
+        InternalCoordinates& operator=(const InternalCoordinates &coordinates);
+
     private:
         InternalCoordinatesPrivate* const d;
 };
