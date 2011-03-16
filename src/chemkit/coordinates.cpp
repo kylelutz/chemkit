@@ -237,6 +237,13 @@ Float Coordinates::angle(int i, int j, int k) const
     return Point::angle(position(i), position(j), position(k));
 }
 
+/// Returns the bond angle between the points at \p i, \p j, and
+/// \p k. The returned angle is in radians.
+Float Coordinates::angleRadians(int i, int j, int k) const
+{
+    return Point::angleRadians(position(i), position(j), position(k));
+}
+
 /// Returns the torsion angle between the points at \p i, \p j, \p k,
 /// and \p l. The returned angle is in degrees.
 Float Coordinates::torsionAngle(int i, int j, int k, int l) const
