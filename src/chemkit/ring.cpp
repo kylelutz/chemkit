@@ -65,6 +65,12 @@ int Ring::atomCount(const Element &element) const
     return count;
 }
 
+/// Returns the bond at \p index in the ring.
+Bond* Ring::bond(int index) const
+{
+    return bonds().value(index);
+}
+
 /// Returns the bonds in the ring.
 QList<Bond *> Ring::bonds() const
 {

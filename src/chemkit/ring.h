@@ -48,6 +48,7 @@ class CHEMKIT_EXPORT Ring
         QList<Atom *> atoms() const;
         int atomCount() const;
         int atomCount(const Element &element) const;
+        Bond* bond(int index) const;
         QList<Bond *> bonds() const;
         int bondCount() const;
         QList<Bond *> exocyclicBonds() const;
