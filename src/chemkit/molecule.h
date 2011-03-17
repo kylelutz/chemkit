@@ -83,7 +83,6 @@ class CHEMKIT_EXPORT Molecule
         // properties
         void setName(const QString &name);
         QString name() const;
-        bool hasName() const;
         QString formula() const;
         QString formula(const QString &format) const;
         QVariant descriptor(const QString &name) const;

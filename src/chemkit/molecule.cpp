@@ -181,17 +181,10 @@ void Molecule::setName(const QString &name)
     notifyObservers(NameChanged);
 }
 
-/// Returns the name of the molecule. If a name is not set, this will
-/// return the molecular formula (from formula()) instead.
+/// Returns the name of the molecule.
 QString Molecule::name() const
 {
-    return hasName() ? d->name : formula();
-}
-
-/// Returns \c true if the molecule has a name.
-bool Molecule::hasName() const
-{
-    return !d->name.isEmpty();
+    return d->name;
 }
 
 /// Returns the chemical formula (e.g. "H2O") for the molecule. The

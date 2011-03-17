@@ -85,7 +85,7 @@ bool InchiFileFormat::write(const chemkit::ChemicalFile *file, QIODevice *iodev)
         QString inchi = inchiFormat->write(molecule);
         iodev->write(inchi.toAscii());
 
-        if(molecule->hasName()){
+        if(!molecule->name().isEmpty()){
             iodev->write(" ");
             iodev->write(molecule->name().toAscii());
         }

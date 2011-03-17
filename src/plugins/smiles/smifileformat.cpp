@@ -87,7 +87,7 @@ bool SmiFileFormat::write(const chemkit::ChemicalFile *file, QIODevice *iodev)
         QString smiles = smilesFormat->write(molecule);
         iodev->write(smiles.toAscii());
 
-        if(molecule->hasName()){
+        if(!molecule->name().isEmpty()){
             iodev->write(" ");
             iodev->write(molecule->name().toAscii());
         }
