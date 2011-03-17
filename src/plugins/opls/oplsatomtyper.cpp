@@ -64,7 +64,7 @@ void OplsAtomTyper::assignTypes(const chemkit::Molecule *molecule)
         // hydrogen
         if(atom->is(chemkit::Atom::Hydrogen)){
             if(atom->isTerminal()){
-                const chemkit::Atom *neighbor = atom->neighbors()[0];
+                const chemkit::Atom *neighbor = atom->neighbor(0);
 
                 if(neighbor->is(chemkit::Atom::Oxygen)){
                     if(neighbor->neighborCount() == 2 &&
@@ -124,7 +124,7 @@ void OplsAtomTyper::assignTypes(const chemkit::Molecule *molecule)
         // oxygen
         else if(atom->is(chemkit::Atom::Oxygen)){
             if(atom->neighborCount() == 1){
-                const chemkit::Atom *neighbor = atom->neighbors()[0];
+                const chemkit::Atom *neighbor = atom->neighbor(0);
                 const chemkit::Bond *neighborBond = atom->bonds()[0];
 
                 if(neighbor->is(chemkit::Atom::Carbon) && neighborBond->order() == chemkit::Bond::Double){

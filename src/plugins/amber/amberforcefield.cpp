@@ -116,7 +116,7 @@ QString AmberForceField::atomType(const chemkit::Atom *atom) const
 {
     if(atom->is(chemkit::Atom::Hydrogen)){
         if(atom->isTerminal()){
-            const chemkit::Atom *neighbor = atom->neighbors()[0];
+            const chemkit::Atom *neighbor = atom->neighbor(0);
 
             if(neighbor->is(chemkit::Atom::Oxygen)){
                 if(neighbor->neighborCount(chemkit::Atom::Hydrogen) == 2){
@@ -230,7 +230,7 @@ QString AmberForceField::atomType(const chemkit::Atom *atom) const
     }
     else if(atom->is(chemkit::Atom::Nitrogen)){
         if(atom->neighborCount() == 1){
-            const chemkit::Atom *neighbor = atom->neighbors()[0];
+            const chemkit::Atom *neighbor = atom->neighbor(0);
             if(neighbor->is(chemkit::Atom::Carbon) && atom->bondTo(neighbor)->order() == chemkit::Bond::Triple){
                 return "NY"; // nitrile nitrogen
             }
@@ -265,7 +265,7 @@ QString AmberForceField::atomType(const chemkit::Atom *atom) const
     }
     else if(atom->is(chemkit::Atom::Oxygen)){
         if(atom->neighborCount() == 1){
-            const chemkit::Atom *neighbor = atom->neighbors()[0];
+            const chemkit::Atom *neighbor = atom->neighbor(0);
             if(neighbor->is(chemkit::Atom::Carbon)){
                 bool negativeOxygen = false;
                 foreach(const chemkit::Atom *secondNeighbor, neighbor->neighbors()){
