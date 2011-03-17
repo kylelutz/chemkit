@@ -41,6 +41,7 @@ class CHEMKIT_EXPORT Fragment
         Molecule* molecule() const;
 
         // structure
+        Atom* atom(int index) const;
         QList<Atom *> atoms() const;
         int atomCount() const;
         bool contains(const Atom *atom) const;

@@ -43,6 +43,12 @@ inline Molecule* Fragment::molecule() const
 }
 
 // --- Structure ----------------------------------------------------------- //
+/// Returns the atom at \p index in the fragment.
+inline Atom* Fragment::atom(int index) const
+{
+    return m_atoms.value(index);
+}
+
 /// Returns a list of all the atoms in the fragment.
 inline QList<Atom *> Fragment::atoms() const
 {
