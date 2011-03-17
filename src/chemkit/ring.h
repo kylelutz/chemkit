@@ -44,6 +44,7 @@ class CHEMKIT_EXPORT Ring
         Fragment* fragment() const;
 
         // structure
+        Atom* atom(int index) const;
         QList<Atom *> atoms() const;
         int atomCount() const;
         int atomCount(const Element &element) const;

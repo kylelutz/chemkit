@@ -50,6 +50,12 @@ inline Fragment* Ring::fragment() const
 }
 
 // --- Structure ----------------------------------------------------------- //
+/// Returns the atom at \p index in the ring.
+inline Atom* Ring::atom(int index) const
+{
+    return m_atoms.value(index);
+}
+
 /// Returns the atoms in the ring.
 inline QList<Atom *> Ring::atoms() const
 {
