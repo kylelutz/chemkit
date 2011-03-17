@@ -286,6 +286,12 @@ Bond* Atom::bondTo(const Atom *atom) const
     return 0;
 }
 
+/// Returns the bonded neighbor at \p index.
+Atom* Atom::neighbor(int index) const
+{
+    return neighbors().value(index);
+}
+
 /// Returns a list of atoms that are directly bonded to the atom.
 QList<Atom *> Atom::neighbors() const
 {
