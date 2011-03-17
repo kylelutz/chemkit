@@ -51,7 +51,7 @@ Ring::~Ring()
 }
 
 // --- Structure ----------------------------------------------------------- //
-/// Returns the number of atoms in the ring with atomicNumber.
+/// Returns the number of atoms in the ring with \p element.
 int Ring::atomCount(const Element &element) const
 {
     int count = 0;
