@@ -82,7 +82,7 @@ class CHEMKIT_EXPORT Atom
         int bondCountTo(const Atom *atom) const;
         int bondCountTo(const Atom *atom, int maxCount) const;
         int valence() const;
-        Bond *bondTo(const Atom *atom) const;
+        Bond* bondTo(const Atom *atom) const;
         Atom* neighbor(int index) const;
         QList<Atom *> neighbors() const;
         int neighborCount() const;
