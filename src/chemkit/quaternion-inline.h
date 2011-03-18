@@ -53,7 +53,7 @@ inline Quaternion::Quaternion(const Point3 &point, Float r)
 }
 
 /// Creates a new quaternion from vector with real component r.
-inline Quaternion::Quaternion(const Vector &vector, Float r)
+inline Quaternion::Quaternion(const Vector3 &vector, Float r)
     : GenericQuaternion<Float>(vector.x(), vector.y(), vector.z(), r)
 {
 }
@@ -77,23 +77,23 @@ inline Point3 Quaternion::toPoint3() const
 }
 
 /// Returns the imaginary part of the quaternion as a vector.
-/// Equivalent to Vector(x(), y(), z()).
-inline Vector Quaternion::toVector() const
+/// Equivalent to Vector3(x(), y(), z()).
+inline Vector3 Quaternion::toVector3() const
 {
-    return Vector(x(), y(), z());
+    return Vector3(x(), y(), z());
 }
 
 // --- Static Methods ------------------------------------------------------ //
 /// Returns a quaternion that represents the rotation of \p angle degrees
 /// around \p axis.
-inline Quaternion  Quaternion::rotation(const Vector &axis, Float angle)
+inline Quaternion  Quaternion::rotation(const Vector3 &axis, Float angle)
 {
     return rotationRadians(axis, angle * chemkit::constants::DegreesToRadians);
 }
 
 /// Returns a quaternion that represents the rotation of \p angle radians
 /// around \p axis.
-inline Quaternion Quaternion::rotationRadians(const Vector &axis, Float angle)
+inline Quaternion Quaternion::rotationRadians(const Vector3 &axis, Float angle)
 {
     return Quaternion(axis.x() * sin(angle/2.0),
                       axis.y() * sin(angle/2.0),
@@ -103,14 +103,14 @@ inline Quaternion Quaternion::rotationRadians(const Vector &axis, Float angle)
 
 /// Returns a new point that is the result of rotating the point
 /// angle degrees around axis.
-inline Point3 Quaternion::rotate(const Point3 &point, const Vector &axis, Float angle)
+inline Point3 Quaternion::rotate(const Point3 &point, const Vector3 &axis, Float angle)
 {
     return rotateRadians(point, axis, angle * chemkit::constants::DegreesToRadians);
 }
 
 /// Returns a new point that is the result of rotating the point
 /// angle radians around axis.
-inline Point3 Quaternion::rotateRadians(const Point3 &point, const Vector &axis, Float angle)
+inline Point3 Quaternion::rotateRadians(const Point3 &point, const Vector3 &axis, Float angle)
 {
     Quaternion p(point.x(), point.y(), point.z(), 0);
     Quaternion q = rotationRadians(axis, angle);
@@ -124,14 +124,14 @@ inline Point3 Quaternion::rotateRadians(const Point3 &point, const Vector &axis,
 
 /// Returns a new vector that is the result of rotating the vector
 /// angle degrees around axis.
-inline Vector Quaternion::rotate(const Vector &vector, const Vector &axis, Float angle)
+inline Vector3 Quaternion::rotate(const Vector3 &vector, const Vector3 &axis, Float angle)
 {
     return rotateRadians(vector, axis, angle * chemkit::constants::DegreesToRadians);
 }
 
 /// Returns a new vector that is the result of rotating the vector
 /// angle radians areound axis.
-inline Vector Quaternion::rotateRadians(const Vector &vector, const Vector &axis, Float angle)
+inline Vector3 Quaternion::rotateRadians(const Vector3 &vector, const Vector3 &axis, Float angle)
 {
     Quaternion p(vector.x(), vector.y(), vector.z(), 0);
     Quaternion q  = rotationRadians(axis, angle);
@@ -140,7 +140,7 @@ inline Vector Quaternion::rotateRadians(const Vector &vector, const Vector &axis
     Quaternion qp = q.multiply(p);
     Quaternion r = qp.multiply(qc);
 
-    return r.toVector();
+    return r.toVector3();
 }
 
 } // end chemkit namespace

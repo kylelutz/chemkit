@@ -22,7 +22,7 @@
 
 #include "internalcoordinates.h"
 
-#include "vector.h"
+#include "vector3.h"
 #include "constants.h"
 #include "coordinates.h"
 #include "staticmatrix.h"
@@ -228,10 +228,10 @@ Coordinates* InternalCoordinates::toCartesianCoordinates() const
         const Point3 &b = cartesianCoordinates->position(connections[1]);
         const Point3 &c = cartesianCoordinates->position(connections[0]);
 
-        Vector ab = (b - a);
-        Vector bc = (c - b).normalized();
-        Vector n = ab.cross(bc).normalized();
-        Vector ncbc = n.cross(bc);
+        Vector3 ab = (b - a);
+        Vector3 bc = (c - b).normalized();
+        Vector3 n = ab.cross(bc).normalized();
+        Vector3 ncbc = n.cross(bc);
 
         StaticMatrix<Float, 3, 3> M;
         M << bc.x(), ncbc.x(), n.x(),

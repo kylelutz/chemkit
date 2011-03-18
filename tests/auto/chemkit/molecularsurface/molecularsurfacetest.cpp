@@ -27,8 +27,8 @@
 #include <QtTest>
 
 #include <chemkit/point3.h>
-#include <chemkit/vector.h>
 #include <chemkit/polymer.h>
+#include <chemkit/vector3.h>
 #include <chemkit/molecule.h>
 #include <chemkit/polymerfile.h>
 #include <chemkit/chemicalfile.h>

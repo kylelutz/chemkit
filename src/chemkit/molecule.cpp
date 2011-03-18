@@ -26,8 +26,8 @@
 #include "bond.h"
 #include "ring.h"
 #include "point3.h"
-#include "vector.h"
 #include "element.h"
+#include "vector3.h"
 #include "constants.h"
 #include "lineformat.h"
 #include "quaternion.h"
@@ -972,7 +972,7 @@ Point3 Molecule::centerOfMass() const
 }
 
 /// Moves all the atoms in the molecule by \p vector.
-void Molecule::moveBy(const Vector &vector)
+void Molecule::moveBy(const Vector3 &vector)
 {
     foreach(Atom *atom, m_atoms){
         atom->moveBy(vector);
@@ -989,7 +989,7 @@ void Molecule::moveBy(Float dx, Float dy, Float dz)
 
 /// Rotates the positions of all the atoms in the molecule
 /// by \p angle degrees around \p axis.
-void Molecule::rotate(const Vector &axis, Float angle)
+void Molecule::rotate(const Vector3 &axis, Float angle)
 {
     foreach(Atom *atom, m_atoms){
         atom->setPosition(Quaternion::rotate(atom->position(), axis, angle));

@@ -22,9 +22,9 @@
 
 #include <QtTest>
 
-#include <chemkit/vector.h>
+#include <chemkit/vector3.h>
 
-class VectorTest : public QObject
+class Vector3Test : public QObject
 {
     Q_OBJECT
 
@@ -36,22 +36,22 @@ class VectorTest : public QObject
         void normalize();
 };
 
-void VectorTest::constructor()
+void Vector3Test::constructor()
 {
-    chemkit::Vector empty;
+    chemkit::Vector3 empty;
     QCOMPARE(qRound(empty.x()), 0);
     QCOMPARE(qRound(empty.y()), 0);
     QCOMPARE(qRound(empty.z()), 0);
 
-    chemkit::Vector vector123(1, 2, 3);
+    chemkit::Vector3 vector123(1, 2, 3);
     QCOMPARE(qRound(vector123.x()), 1);
     QCOMPARE(qRound(vector123.y()), 2);
     QCOMPARE(qRound(vector123.z()), 3);
 }
 
-void VectorTest::value()
+void Vector3Test::value()
 {
-    chemkit::Vector vector;
+    chemkit::Vector3 vector;
     QCOMPARE(qRound(vector.value(0)), 0);
     QCOMPARE(qRound(vector.value(1)), 0);
     QCOMPARE(qRound(vector.value(2)), 0);
@@ -69,41 +69,41 @@ void VectorTest::value()
     QCOMPARE(qRound(vector.value(0)), 3);
 }
 
-void VectorTest::length()
+void Vector3Test::length()
 {
-    chemkit::Vector vector;
+    chemkit::Vector3 vector;
     QCOMPARE(qRound(vector.length()), 0);
 
-    vector = chemkit::Vector(1, 0, 0);
+    vector = chemkit::Vector3(1, 0, 0);
     QCOMPARE(qRound(vector.x()), 1);
     QCOMPARE(qRound(vector.y()), 0);
     QCOMPARE(qRound(vector.z()), 0);
     QCOMPARE(qRound(vector.length()), 1);
 }
 
-void VectorTest::isNull()
+void Vector3Test::isNull()
 {
-    chemkit::Vector vector;
+    chemkit::Vector3 vector;
     QCOMPARE(vector.isNull(), true);
 
-    vector = chemkit::Vector(1, 2, 3);
+    vector = chemkit::Vector3(1, 2, 3);
     QCOMPARE(vector.isNull(), false);
 }
 
-void VectorTest::normalize()
+void Vector3Test::normalize()
 {
-    chemkit::Vector vector(2, 0, 0);
+    chemkit::Vector3 vector(2, 0, 0);
     QCOMPARE(qRound(vector.length()), 2);
 
     vector.normalize();
     QCOMPARE(qRound(vector.length()), 1);
     QCOMPARE(qRound(vector.x()), 1);
 
-    chemkit::Vector nullVector;
+    chemkit::Vector3 nullVector;
     QCOMPARE(qRound(nullVector.length()), 0);
     nullVector.normalize();
     QCOMPARE(qRound(nullVector.length()), 0);
 }
 
-QTEST_APPLESS_MAIN(VectorTest)
-#include "vectortest.moc"
+QTEST_APPLESS_MAIN(Vector3Test)
+#include "vector3test.moc"

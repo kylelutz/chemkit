@@ -22,7 +22,7 @@
 
 #include "buildtool.h"
 
-#include <chemkit/vector.h>
+#include <chemkit/vector3.h>
 #include <chemkit/element.h>
 #include <chemkit/periodictabledialog.h>
 
@@ -438,7 +438,7 @@ void BuildTool::adjustHydrogens(chemkit::Atom *atom)
     else if(atom->valence() < atom->expectedValence()){
         while(atom->valence() < atom->expectedValence()){
             chemkit::Atom *hydrogen = editor()->addAtom(chemkit::Atom::Hydrogen);
-            editor()->setAtomPosition(hydrogen, atom->position().movedBy(chemkit::Vector::randomUnitVector()));
+            editor()->setAtomPosition(hydrogen, atom->position().movedBy(chemkit::Vector3::randomUnitVector()));
             editor()->addBond(atom, hydrogen);
         }
     }

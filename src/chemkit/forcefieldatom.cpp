@@ -135,7 +135,7 @@ Float ForceFieldAtom::energy() const
 }
 
 /// Returns the energy gradient for the atom.
-Vector ForceFieldAtom::gradient() const
+Vector3 ForceFieldAtom::gradient() const
 {
     return forceField()->gradient()[index()];
 }
@@ -178,7 +178,7 @@ Point3 ForceFieldAtom::position() const
 }
 
 /// Moves the atom's position by \p vector.
-void ForceFieldAtom::moveBy(const Vector &vector)
+void ForceFieldAtom::moveBy(const Vector3 &vector)
 {
     d->position.moveBy(vector);
 }

@@ -26,7 +26,7 @@
 
 #include "molecularsurface.h"
 
-#include "vector.h"
+#include "vector3.h"
 #include "geometry.h"
 #include "molecule.h"
 #include "alphashape.h"
@@ -41,11 +41,11 @@ const Float pi = chemkit::constants::Pi;
 
 Float angleDihedral(const Point3 &s, const Point3 &t, const Point3 &u, const Point3 &v)
 {
-    Vector mu = (u - s).cross(u - t);
-    Vector mv = (v - s).cross(v - t);
+    Vector3 mu = (u - s).cross(u - t);
+    Vector3 mv = (v - s).cross(v - t);
 
-    Vector nu = mu.normalized();
-    Vector nv = mv.normalized();
+    Vector3 nu = mu.normalized();
+    Vector3 nv = mv.normalized();
 
     return acos(nu.dot(nv)) / (2.0 * pi);
 }
@@ -483,9 +483,9 @@ Point3 MolecularSurface::triangleDual(int i, int j, int k) const
     const Point3 &t = d->points[j];
     const Point3 &u = d->points[k];
 
-    Vector n = (t - s).cross(u - s);
+    Vector3 n = (t - s).cross(u - s);
 
-    Vector ys = y - s;
+    Vector3 ys = y - s;
 
     Float s1 = (ys).dot(n);
     Float s2 = n.dot(n);

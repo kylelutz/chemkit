@@ -20,42 +20,42 @@
 **
 ******************************************************************************/
 
-#ifndef CHEMKIT_VECTOR_INLINE_H
-#define CHEMKIT_VECTOR_INLINE_H
+#ifndef CHEMKIT_VECTOR3_INLINE_H
+#define CHEMKIT_VECTOR3_INLINE_H
 
-#include "vector.h"
+#include "vector3.h"
 
 namespace chemkit {
 
-// === Vector ============================================================== //
-/// \class Vector vector.h chemkit/vector.h
+// === Vector3 ============================================================= //
+/// \class Vector3 vector3.h chemkit/vector3.h
 /// \ingroup chemkit
-/// \brief The Vector class represents a direction in
+/// \brief The Vector3 class represents a direction in
 ///        three-dimensional space.
 
 // --- Construction and Destruction ---------------------------------------- //
 /// Create a new vector containing (\c 0, \c 0, \c 0).
-inline Vector::Vector()
+inline Vector3::Vector3()
     : GenericVector<Float>()
 {
 }
 
 /// Create a new vector containing (\p x, \p y, \p z).
-inline Vector::Vector(Float x, Float y, Float z)
+inline Vector3::Vector3(Float x, Float y, Float z)
     : GenericVector<Float>(x, y, z)
 {
 }
 
-inline Vector::Vector(const GenericVector<Float> &vector)
+inline Vector3::Vector3(const GenericVector<Float> &vector)
     : GenericVector<Float>(vector)
 {
 }
 
-inline Vector::Vector(const StaticVector<Float, 3> &vector)
+inline Vector3::Vector3(const StaticVector<Float, 3> &vector)
     : GenericVector<Float>(vector)
 {
 }
 
 } // end chemkit namespace
 
-#endif // CHEMKIT_VECTOR_INLINE_H
+#endif // CHEMKIT_VECTOR3_INLINE_H

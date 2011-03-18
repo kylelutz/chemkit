@@ -23,7 +23,7 @@
 #include "delaunaytriangulation.h"
 
 #include "point3.h"
-#include "vector.h"
+#include "vector3.h"
 #include "geometry.h"
 #include "alphashape.h"
 #include "staticmatrix.h"

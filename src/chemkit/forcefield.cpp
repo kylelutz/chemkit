@@ -349,13 +349,13 @@ Float ForceField::energy() const
 ///                \right]
 /// \f]
 **/
-QVector<Vector> ForceField::gradient() const
+QVector<Vector3> ForceField::gradient() const
 {
     if(d->flags.testFlag(AnalyticalGradient)){
-        QVector<Vector> gradient(atomCount());
+        QVector<Vector3> gradient(atomCount());
 
         foreach(const ForceFieldCalculation *calculation, d->calculations){
-            QVector<Vector> atomGradients = calculation->gradient();
+            QVector<Vector3> atomGradients = calculation->gradient();
 
             for(int i = 0; i < atomGradients.size(); i++){
                 const ForceFieldAtom *atom = calculation->atom(i);
@@ -376,9 +376,9 @@ QVector<Vector> ForceField::gradient() const
 /// calculated numerically.
 ///
 /// \see ForceField::gradient()
-QVector<Vector> ForceField::numericalGradient() const
+QVector<Vector3> ForceField::numericalGradient() const
 {
-    QVector<Vector> gradient(atomCount());
+    QVector<Vector3> gradient(atomCount());
 
     for(int i = 0; i < atomCount(); i++){
         ForceFieldAtom *atom = d->atoms[i];
@@ -403,7 +403,7 @@ QVector<Vector> ForceField::numericalGradient() const
         Float dy = (eF_y - eI) / epsilon;
         Float dz = (eF_z - eI) / epsilon;
 
-        gradient[i] = Vector(dx, dy, dz);
+        gradient[i] = Vector3(dx, dy, dz);
     }
 
     return gradient;
@@ -418,7 +418,7 @@ Float ForceField::largestGradient() const
 
     Float largest = 0;
 
-    QVector<Vector> gradient = this->gradient();
+    QVector<Vector3> gradient = this->gradient();
 
     for(int i = 0; i < gradient.size(); i++){
         Float length = gradient[i].length();
@@ -439,7 +439,7 @@ Float ForceField::rootMeanSquareGradient() const
 
     Float sum = 0;
 
-    QVector<Vector> gradient = this->gradient();
+    QVector<Vector3> gradient = this->gradient();
 
     for(int i = 0; i < gradient.size(); i++){
         sum += gradient[i].lengthSquared();
@@ -492,7 +492,7 @@ void ForceField::writeCoordinates(Atom *atom) const
 bool ForceField::minimizationStep(Float converganceValue)
 {
     // calculate gradient
-    QVector<Vector> gradient = this->gradient();
+    QVector<Vector3> gradient = this->gradient();
 
     // perform line search
     QVector<Point3> initialPositions(atomCount());
@@ -520,7 +520,7 @@ bool ForceField::minimizationStep(Float converganceValue)
         if(qIsNaN(finalEnergy)){
             for(int atomIndex = 0; atomIndex < atomCount(); atomIndex++){
                 d->atoms[atomIndex]->setPosition(initialPositions[atomIndex]);
-                d->atoms[atomIndex]->moveBy(Vector::randomUnitVector());
+                d->atoms[atomIndex]->moveBy(Vector3::randomUnitVector());
             }
 
             // recalculate gradient

@@ -20,8 +20,8 @@
 **
 ******************************************************************************/
 
-#ifndef CHEMKIT_VECTOR_H
-#define CHEMKIT_VECTOR_H
+#ifndef CHEMKIT_VECTOR3_H
+#define CHEMKIT_VECTOR3_H
 
 #include "chemkit.h"
 
@@ -29,17 +29,17 @@
 
 namespace chemkit {
 
-class CHEMKIT_EXPORT Vector : public GenericVector<Float>
+class CHEMKIT_EXPORT Vector3 : public GenericVector<Float>
 {
     public:
-        Vector();
-        Vector(Float x, Float y, Float z);
-        Vector(const GenericVector<Float> &vector);
-        Vector(const StaticVector<Float, 3> &vector);
+        Vector3();
+        Vector3(Float x, Float y, Float z);
+        Vector3(const GenericVector<Float> &vector);
+        Vector3(const StaticVector<Float, 3> &vector);
 };
 
 } // end chemkit namespace
 
-#include "vector-inline.h"
+#include "vector3-inline.h"
 
-#endif // CHEMKIT_VECTOR_H
+#endif // CHEMKIT_VECTOR3_H

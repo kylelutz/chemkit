@@ -102,7 +102,7 @@ Float Bond::polarity() const
 }
 
 /// Returns the dipole moment for the bond.
-Vector Bond::dipoleMoment() const
+Vector3 Bond::dipoleMoment() const
 {
     Point3 a = m_atom1->position();
     Point3 b = m_atom2->position();

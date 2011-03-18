@@ -80,7 +80,7 @@ chemkit::Float MmffBondStrechCalculation::energy() const
     return 143.9325 * (kb / 2) * (dr*dr) * (1 + cs * dr + ((7.0/12.0)*(cs*cs)) * (dr*dr));
 }
 
-QVector<chemkit::Vector> MmffBondStrechCalculation::gradient() const
+QVector<chemkit::Vector3> MmffBondStrechCalculation::gradient() const
 {
     const MmffAtom *a = atom(0);
     const MmffAtom *b = atom(1);
@@ -95,7 +95,7 @@ QVector<chemkit::Vector> MmffBondStrechCalculation::gradient() const
     // dE/dr
     chemkit::Float de_dr = 143.9325 * kb * dr * (1 + cs * dr + (7.0/12.0 * (cs*cs) * (dr*dr)) + 0.5 * dr * (cs + (14.0/12.0 * (cs*cs) * dr)));
 
-    QVector<chemkit::Vector> gradient = distanceGradient(a, b);
+    QVector<chemkit::Vector3> gradient = distanceGradient(a, b);
 
     gradient[0] *= de_dr;
     gradient[1] *= de_dr;
@@ -147,7 +147,7 @@ chemkit::Float MmffAngleBendCalculation::energy() const
     return 0.043844 * (ka / 2.0) * pow(dt, 2) * (1 + cb * dt);
 }
 
-QVector<chemkit::Vector> MmffAngleBendCalculation::gradient() const
+QVector<chemkit::Vector3> MmffAngleBendCalculation::gradient() const
 {
     const MmffAtom *a = atom(0);
     const MmffAtom *b = atom(1);
@@ -163,7 +163,7 @@ QVector<chemkit::Vector> MmffAngleBendCalculation::gradient() const
     // dE/dt
     chemkit::Float de_dt = 0.043844 * ka * dt * (1 + cb * dt + 0.5 * cb * dt);
 
-    QVector<chemkit::Vector> gradient = bondAngleGradient(a, b, c);
+    QVector<chemkit::Vector3> gradient = bondAngleGradient(a, b, c);
 
     gradient[0] *= de_dt;
     gradient[1] *= de_dt;
@@ -252,7 +252,7 @@ chemkit::Float MmffStrechBendCalculation::energy() const
     return 2.51210 * (kba_ijk * dr_ab + kba_kji * dr_bc) * dt;
 }
 
-QVector<chemkit::Vector> MmffStrechBendCalculation::gradient() const
+QVector<chemkit::Vector3> MmffStrechBendCalculation::gradient() const
 {
     const MmffAtom *a = atom(0);
     const MmffAtom *b = atom(1);
@@ -271,11 +271,11 @@ QVector<chemkit::Vector> MmffStrechBendCalculation::gradient() const
     chemkit::Float t = bondAngle(a, b, c);
     chemkit::Float dt = t - t0;
 
-    QVector<chemkit::Vector> gradient(3);
+    QVector<chemkit::Vector3> gradient(3);
 
-    QVector<chemkit::Vector> distanceGradientAB = distanceGradient(a, b);
-    QVector<chemkit::Vector> distanceGradientBC = distanceGradient(b, c);
-    QVector<chemkit::Vector> bondAngleGradientABC = bondAngleGradient(a, b, c);
+    QVector<chemkit::Vector3> distanceGradientAB = distanceGradient(a, b);
+    QVector<chemkit::Vector3> distanceGradientBC = distanceGradient(b, c);
+    QVector<chemkit::Vector3> bondAngleGradientABC = bondAngleGradient(a, b, c);
 
     gradient[0] = (distanceGradientAB[0] * kba_ijk * dt + bondAngleGradientABC[0] * (kba_ijk * dr_ab + kba_kji * dr_bc)) * 2.51210;
     gradient[1] = ((distanceGradientAB[1] * kba_ijk + distanceGradientBC[0] * kba_kji) * dt + bondAngleGradientABC[1] * (kba_ijk * dr_ab + kba_kji * dr_bc)) * 2.51210;
@@ -327,7 +327,7 @@ chemkit::Float MmffOutOfPlaneBendingCalculation::energy() const
     return 0.043844 * (koop / 2.0) * (angle*angle);
 }
 
-QVector<chemkit::Vector> MmffOutOfPlaneBendingCalculation::gradient() const
+QVector<chemkit::Vector3> MmffOutOfPlaneBendingCalculation::gradient() const
 {
     const MmffAtom *a = atom(0);
     const MmffAtom *b = atom(1);
@@ -340,7 +340,7 @@ QVector<chemkit::Vector> MmffOutOfPlaneBendingCalculation::gradient() const
     // dE/dw
     chemkit::Float de_dw = 0.043844 * koop * angle;
 
-    QVector<chemkit::Vector> gradient = wilsonAngleGradient(a, b, c, d);
+    QVector<chemkit::Vector3> gradient = wilsonAngleGradient(a, b, c, d);
 
     gradient[0] *= de_dw;
     gradient[1] *= de_dw;
@@ -398,7 +398,7 @@ chemkit::Float MmffTorsionCalculation::energy() const
     return 0.5 * (V1 * (1.0 + cos(angle)) + V2 * (1.0 - cos(2.0 * angle)) + V3 * (1.0 + cos(3.0 * angle)));
 }
 
-QVector<chemkit::Vector> MmffTorsionCalculation::gradient() const
+QVector<chemkit::Vector3> MmffTorsionCalculation::gradient() const
 {
     const MmffAtom *a = atom(0);
     const MmffAtom *b = atom(1);
@@ -413,7 +413,7 @@ QVector<chemkit::Vector> MmffTorsionCalculation::gradient() const
     // dE/dphi
     chemkit::Float de_dphi = 0.5 * (-V1 * sin(phi) + 2 * V2 * sin(2 * phi) - 3 * V3 * sin(3 * phi));
 
-    QVector<chemkit::Vector> gradient = torsionAngleGradientRadians(a, b, c, d);
+    QVector<chemkit::Vector3> gradient = torsionAngleGradientRadians(a, b, c, d);
 
     gradient[0] *= de_dphi;
     gradient[1] *= de_dphi;
@@ -498,7 +498,7 @@ chemkit::Float MmffVanDerWaalsCalculation::energy() const
     return eps * pow(((1.07 * rs) / (r + 0.07 * rs)), 7) * (((1.12 * pow(rs, 7)) / (pow(r, 7) + 0.12 * pow(rs, 7))) - 2);
 }
 
-QVector<chemkit::Vector> MmffVanDerWaalsCalculation::gradient() const
+QVector<chemkit::Vector3> MmffVanDerWaalsCalculation::gradient() const
 {
     const MmffAtom *a = atom(0);
     const MmffAtom *b = atom(1);
@@ -512,7 +512,7 @@ QVector<chemkit::Vector> MmffVanDerWaalsCalculation::gradient() const
                            ((-1.07 * rs / pow(r + 0.07 * rs, 2)) * (1.12 * pow(rs, 7) / (pow(r, 7) + 0.12 * pow(rs, 7)) - 2) +
                            (-1.12 * pow(rs, 7) * pow(r, 6) / pow(pow(r, 7) + 0.12 * pow(rs, 7), 2)) * (1.07 * rs / (r + 0.07 * rs)));
 
-    QVector<chemkit::Vector> gradient = distanceGradient(a, b);
+    QVector<chemkit::Vector3> gradient = distanceGradient(a, b);
 
     gradient[0] *= de_dr;
     gradient[1] *= de_dr;
@@ -569,7 +569,7 @@ chemkit::Float MmffElectrostaticCalculation::energy() const
     return ((332.0716 * qa * qb) / (e * (r + d))) * oneFourScaling;
 }
 
-QVector<chemkit::Vector> MmffElectrostaticCalculation::gradient() const
+QVector<chemkit::Vector3> MmffElectrostaticCalculation::gradient() const
 {
     const chemkit::ForceFieldAtom *a = atom(0);
     const chemkit::ForceFieldAtom *b = atom(1);
@@ -584,7 +584,7 @@ QVector<chemkit::Vector> MmffElectrostaticCalculation::gradient() const
 
     chemkit::Float de_dr = 332.0716 * qa * qb * oneFourScaling * (-1.0 / (e * pow(r + d, 2)));
 
-    QVector<chemkit::Vector> gradient = distanceGradient(a, b);
+    QVector<chemkit::Vector3> gradient = distanceGradient(a, b);
 
     gradient[0] *= de_dr;
     gradient[1] *= de_dr;

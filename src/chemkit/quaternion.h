@@ -26,7 +26,7 @@
 #include "chemkit.h"
 
 #include "point3.h"
-#include "vector.h"
+#include "vector3.h"
 #include "genericquaternion.h"
 
 namespace chemkit {
@@ -37,21 +37,21 @@ class CHEMKIT_EXPORT Quaternion : public GenericQuaternion<Float>
         // construction and destruction
         Quaternion(Float x, Float y, Float z, Float r);
         Quaternion(const Point3 &point, Float r);
-        Quaternion(const Vector &vector, Float r);
+        Quaternion(const Vector3 &vector, Float r);
         Quaternion(const GenericQuaternion<Float> &quaternion);
         Quaternion(const StaticVector<Float, 4> &quaternion);
 
         // properties
         Point3 toPoint3() const;
-        Vector toVector() const;
+        Vector3 toVector3() const;
 
         // static methods
-        static Quaternion rotation(const Vector &axis, Float angle);
-        static Quaternion rotationRadians(const Vector &axis, Float angle);
-        static Point3 rotate(const Point3 &point, const Vector &axis, Float angle);
-        static Point3 rotateRadians(const Point3 &point, const Vector &axis, Float angle);
-        static Vector rotate(const Vector &vector, const Vector &axis, Float angle);
-        static Vector rotateRadians(const Vector &vector, const Vector &axis, Float angle);
+        static Quaternion rotation(const Vector3 &axis, Float angle);
+        static Quaternion rotationRadians(const Vector3 &axis, Float angle);
+        static Point3 rotate(const Point3 &point, const Vector3 &axis, Float angle);
+        static Point3 rotateRadians(const Point3 &point, const Vector3 &axis, Float angle);
+        static Vector3 rotate(const Vector3 &vector, const Vector3 &axis, Float angle);
+        static Vector3 rotateRadians(const Vector3 &vector, const Vector3 &axis, Float angle);
 };
 
 } // end chemkit namespace

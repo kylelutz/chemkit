@@ -25,8 +25,8 @@
 
 #include "chemkit.h"
 
-#include "vector.h"
 #include "residue.h"
+#include "vector3.h"
 
 namespace chemkit {
 
@@ -92,7 +92,7 @@ class CHEMKIT_EXPORT AminoAcid : public Residue
         Atom* aminoNitrogen() const;
 
         // geometry
-        Vector peptidePlaneNormal() const;
+        Vector3 peptidePlaneNormal() const;
 
     private:
         AminoAcidPrivate* const d;

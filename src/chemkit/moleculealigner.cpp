@@ -22,7 +22,7 @@
 
 #include "moleculealigner.h"
 
-#include "vector.h"
+#include "vector3.h"
 #include "molecule.h"
 #include "coordinates.h"
 
@@ -182,12 +182,12 @@ StaticMatrix<Float, 3, 3> MoleculeAligner::rotationMatrix() const
 
 /// Returns a vector containing the displacement between the centers
 /// of the source and target molecules.
-Vector MoleculeAligner::displacementVector() const
+Vector3 MoleculeAligner::displacementVector() const
 {
     Coordinates *sourceMatrix = sourceCoordinates();
     Coordinates *targetMatrix = targetCoordinates();
 
-    Vector displacement = targetCoordinates()->center() - sourceCoordinates()->center();
+    Vector3 displacement = targetCoordinates()->center() - sourceCoordinates()->center();
 
     delete sourceMatrix;
     delete targetMatrix;
@@ -205,7 +205,7 @@ void MoleculeAligner::align(Molecule *molecule)
         atom->setPosition(matrix.multiply(atom->position()));
     }
 
-    Vector displacement = displacementVector();
+    Vector3 displacement = displacementVector();
     foreach(Atom *atom, molecule->atoms()){
         atom->moveBy(displacement);
     }

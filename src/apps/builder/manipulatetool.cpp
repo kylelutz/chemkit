@@ -22,7 +22,7 @@
 
 #include "manipulatetool.h"
 
-#include <chemkit/vector.h>
+#include <chemkit/vector3.h>
 #include <chemkit/graphicspoint.h>
 #include <chemkit/graphicscamera.h>
 #include <chemkit/graphicsoverlay.h>
@@ -231,7 +231,7 @@ void ManipulateTool::moveSelectionBy(int x, int y)
     foreach(chemkit::Atom *atom, m_selection){
         chemkit::GraphicsVector delta = view()->unproject(finalPosition.x(), finalPosition.y(), atom->position()) -
                                         view()->unproject(initialPosition.x(), initialPosition.y(), atom->position());
-        editor()->setAtomPosition(atom, atom->position() + delta.toVector());
+        editor()->setAtomPosition(atom, atom->position() + delta.toVector3());
     }
 
     view()->update();

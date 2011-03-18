@@ -118,8 +118,8 @@ HEADERS += alphashape.h \
     staticmatrix-inline.h \
     staticvector.h \
     staticvector-inline.h \
-    vector.h \
-    vector-inline.h
+    vector3.h \
+    vector3-inline.h
 target.path = /usr/lib
 INSTALLS += target
 headers.files = $$HEADERS

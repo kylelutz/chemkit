@@ -491,7 +491,7 @@ void BuilderWindow::adjustHydrogens()
         while(atom->valence() < atom->expectedValence()){
             chemkit::Atom *hydrogen = editor()->addAtom(chemkit::Atom::Hydrogen);
             editor()->addBond(atom, hydrogen);
-            editor()->setAtomPosition(hydrogen, atom->position().movedBy(chemkit::Vector::randomUnitVector()));
+            editor()->setAtomPosition(hydrogen, atom->position().movedBy(chemkit::Vector3::randomUnitVector()));
         }
 
         // remove hydrogens

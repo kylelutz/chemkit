@@ -34,7 +34,7 @@
 namespace chemkit {
 
 class Atom;
-class Vector;
+class Vector3;
 class Molecule;
 class Conformer;
 
@@ -79,7 +79,7 @@ class CHEMKIT_EXPORT Coordinates
         Float wilsonAngleRadians(int i, int j, int k, int l) const;
         Point3 center() const;
         Point3 weightedCenter(const QVector<Float> &weights) const;
-        void moveBy(const Vector &vector);
+        void moveBy(const Vector3 &vector);
         void moveBy(Float x, Float y, Float z);
         Matrix distanceMatrix() const;
 

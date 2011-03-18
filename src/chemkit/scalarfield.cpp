@@ -188,17 +188,17 @@ Point3 ScalarField::position(int i, int j, int k) const
 }
 
 /// Returns the gradient at (\p i, \p j, \p k).
-Vector ScalarField::gradient(int i, int j, int k) const
+Vector3 ScalarField::gradient(int i, int j, int k) const
 {
     return gradient(position(i, j, k));
 }
 
 /// Returns the gradient at the position relative to the origin.
-Vector ScalarField::gradient(const Point3 &position) const
+Vector3 ScalarField::gradient(const Point3 &position) const
 {
     Float h = 1.0e-4;
 
-    return Vector((value(position.movedBy(-h, 0, 0)) - value(position.movedBy(h, 0, 0))) / (2.0 * h),
+    return Vector3((value(position.movedBy(-h, 0, 0)) - value(position.movedBy(h, 0, 0))) / (2.0 * h),
                   (value(position.movedBy(0, -h, 0)) - value(position.movedBy(0, h, 0))) / (2.0 * h),
                   (value(position.movedBy(0, 0, -h)) - value(position.movedBy(0, 0, h))) / (2.0 * h));
 }

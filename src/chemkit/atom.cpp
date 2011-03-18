@@ -23,7 +23,7 @@
 #include "atom.h"
 
 #include "ring.h"
-#include "vector.h"
+#include "vector3.h"
 #include "molecule.h"
 
 namespace chemkit {
@@ -539,7 +539,7 @@ void Atom::moveTo(Float x, Float y, Float z)
 }
 
 /// Moves the atom by vector.
-void Atom::moveBy(const Vector &vector)
+void Atom::moveBy(const Vector3 &vector)
 {
     moveBy(vector.x(), vector.y(), vector.z());
 }

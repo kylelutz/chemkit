@@ -28,7 +28,7 @@
 #include <QtCore>
 
 #include "point3.h"
-#include "vector.h"
+#include "vector3.h"
 #include "forcefieldatom.h"
 #include "forcefieldcalculation.h"
 
@@ -82,8 +82,8 @@ class CHEMKIT_EXPORT ForceField
         QList<ForceFieldCalculation *> calculations() const;
         int calculationCount() const;
         virtual Float energy() const;
-        QVector<Vector> gradient() const;
-        QVector<Vector> numericalGradient() const;
+        QVector<Vector3> gradient() const;
+        QVector<Vector3> numericalGradient() const;
         Float largestGradient() const;
         Float rootMeanSquareGradient() const;
 

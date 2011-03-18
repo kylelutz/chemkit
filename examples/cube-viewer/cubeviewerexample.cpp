@@ -220,7 +220,7 @@ chemkit::ScalarField* CubeViewerExample::readVolumeData(const QString &fileName)
 		}
 
 		dimensions[i] = lineItems[0].toInt();
-		axes[i] = chemkit::Vector(lineItems[1].toDouble(),
+		axes[i] = chemkit::Vector3(lineItems[1].toDouble(),
 								  lineItems[2].toDouble(),
 								  lineItems[3].toDouble());
 	}

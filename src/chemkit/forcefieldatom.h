@@ -28,7 +28,7 @@
 #include <QtCore>
 
 #include "point3.h"
-#include "vector.h"
+#include "vector3.h"
 
 namespace chemkit {
 
@@ -55,7 +55,7 @@ class CHEMKIT_EXPORT ForceFieldAtom
 
         // calculations
         Float energy() const;
-        Vector gradient() const;
+        Vector3 gradient() const;
 
         // structure
         bool isOneFour(const ForceFieldAtom *atom) const;
@@ -63,7 +63,7 @@ class CHEMKIT_EXPORT ForceFieldAtom
         // geometry
         void setPosition(const Point3 &position);
         Point3 position() const;
-        void moveBy(const Vector &vector);
+        void moveBy(const Vector3 &vector);
         void moveBy(Float dx, Float dy, Float dz);
 
     private:

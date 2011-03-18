@@ -33,4 +33,4 @@ SUBDIRS = alphashape \
     staticmatrix \
     staticvector \
     substructure-search \
-    vector
+    vector3

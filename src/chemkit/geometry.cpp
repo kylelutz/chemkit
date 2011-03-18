@@ -28,7 +28,7 @@
 #include "geometry.h"
 
 #include "point3.h"
-#include "vector.h"
+#include "vector3.h"
 #include "staticmatrix.h"
 #include "staticvector.h"
 

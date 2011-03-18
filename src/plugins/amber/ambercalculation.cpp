@@ -71,7 +71,7 @@ chemkit::Float AmberBondCalculation::energy() const
     return kb * (dr*dr);
 }
 
-QVector<chemkit::Vector> AmberBondCalculation::gradient() const
+QVector<chemkit::Vector3> AmberBondCalculation::gradient() const
 {
     const chemkit::ForceFieldAtom *a = atom(0);
     const chemkit::ForceFieldAtom *b = atom(1);
@@ -83,7 +83,7 @@ QVector<chemkit::Vector> AmberBondCalculation::gradient() const
     // dE/dr
     chemkit::Float de_dr = 2.0 * kb * (r - r0);
 
-    QVector<chemkit::Vector> gradient = distanceGradient(a, b);
+    QVector<chemkit::Vector3> gradient = distanceGradient(a, b);
 
     gradient[0] *= de_dr;
     gradient[1] *= de_dr;
@@ -133,7 +133,7 @@ chemkit::Float AmberAngleCalculation::energy() const
     return ka * (dt*dt);
 }
 
-QVector<chemkit::Vector> AmberAngleCalculation::gradient() const
+QVector<chemkit::Vector3> AmberAngleCalculation::gradient() const
 {
     const chemkit::ForceFieldAtom *a = atom(0);
     const chemkit::ForceFieldAtom *b = atom(1);
@@ -146,7 +146,7 @@ QVector<chemkit::Vector> AmberAngleCalculation::gradient() const
     // dE/dtheta
     chemkit::Float de_dtheta = 2.0 * ka * (theta - theta0);
 
-    QVector<chemkit::Vector> gradient = bondAngleGradient(a, b, c);
+    QVector<chemkit::Vector3> gradient = bondAngleGradient(a, b, c);
 
     gradient[0] *= de_dtheta;
     gradient[1] *= de_dtheta;
@@ -219,7 +219,7 @@ chemkit::Float AmberTorsionCalculation::energy() const
     return energy;
 }
 
-QVector<chemkit::Vector> AmberTorsionCalculation::gradient() const
+QVector<chemkit::Vector3> AmberTorsionCalculation::gradient() const
 {
     const chemkit::ForceFieldAtom *a = atom(0);
     const chemkit::ForceFieldAtom *b = atom(1);
@@ -245,7 +245,7 @@ QVector<chemkit::Vector> AmberTorsionCalculation::gradient() const
     de_dphi += V4 * (-sin((4.0 * phi - gamma4) * chemkit::constants::DegreesToRadians) * 4.0);
     de_dphi *= chemkit::constants::DegreesToRadians;
 
-    QVector<chemkit::Vector> gradient = torsionAngleGradient(a, b, c, d);
+    QVector<chemkit::Vector3> gradient = torsionAngleGradient(a, b, c, d);
 
     gradient[0] *= de_dphi;
     gradient[1] *= de_dphi;
@@ -300,7 +300,7 @@ chemkit::Float AmberNonbondedCalculation::energy() const
     return vanDerWaalsTerm + electrostaticTerm;
 }
 
-QVector<chemkit::Vector> AmberNonbondedCalculation::gradient() const
+QVector<chemkit::Vector3> AmberNonbondedCalculation::gradient() const
 {
     const chemkit::ForceFieldAtom *a = atom(0);
     const chemkit::ForceFieldAtom *b = atom(1);
@@ -318,7 +318,7 @@ QVector<chemkit::Vector> AmberNonbondedCalculation::gradient() const
     // dE/dr
     chemkit::Float de_dr = (-12 * epsilon * sigma / pow(r, 2) * (pow(sr, 11) - pow(sr, 5))) - ((qa * qb) / (4.0 * pi * e0 * pow(r, 2)));
 
-    QVector<chemkit::Vector> gradient = distanceGradient(a, b);
+    QVector<chemkit::Vector3> gradient = distanceGradient(a, b);
 
     gradient[0] *= de_dr;
     gradient[1] *= de_dr;

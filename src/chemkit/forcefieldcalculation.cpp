@@ -168,7 +168,7 @@ Float ForceFieldCalculation::energy() const
 ///                \right]
 /// \f]
 **/
-QVector<Vector> ForceFieldCalculation::gradient() const
+QVector<Vector3> ForceFieldCalculation::gradient() const
 {
     return numericalGradient();
 }
@@ -178,9 +178,9 @@ QVector<Vector> ForceFieldCalculation::gradient() const
 /// is used when analytical gradients are not available.
 ///
 /// \see ForceFieldCalculation::gradient()
-QVector<Vector> ForceFieldCalculation::numericalGradient() const
+QVector<Vector3> ForceFieldCalculation::numericalGradient() const
 {
-    QVector<Vector> gradient(atomCount());
+    QVector<Vector3> gradient(atomCount());
 
     for(int i = 0; i < atomCount(); i++){
         ForceFieldAtom *atom = const_cast<ForceFieldAtom *>(d->atoms[i]);
@@ -205,7 +205,7 @@ QVector<Vector> ForceFieldCalculation::numericalGradient() const
         Float dy = (eF_y - eI) / epsilon;
         Float dz = (eF_z - eI) / epsilon;
 
-        gradient[i] = Vector(dx, dy, dz);
+        gradient[i] = Vector3(dx, dy, dz);
     }
 
     return gradient;

@@ -28,7 +28,7 @@
 #include <QtCore>
 
 #include "point3.h"
-#include "vector.h"
+#include "vector3.h"
 
 namespace chemkit {
 
@@ -61,8 +61,8 @@ class CHEMKIT_EXPORT ScalarField
         Float value(int i, int j, int k) const;
         Float value(const Point3 &position) const;
         Point3 position(int i, int j, int k) const;
-        Vector gradient(int i, int j, int k) const;
-        Vector gradient(const Point3 &position) const;
+        Vector3 gradient(int i, int j, int k) const;
+        Vector3 gradient(const Point3 &position) const;
 
     private:
         ScalarFieldPrivate* const d;

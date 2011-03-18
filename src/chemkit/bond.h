@@ -28,7 +28,7 @@
 #include <QtCore>
 
 #include "point3.h"
-#include "vector.h"
+#include "vector3.h"
 
 namespace chemkit {
 
@@ -58,7 +58,7 @@ class CHEMKIT_EXPORT Bond
         void setOrder(int order);
         int order() const;
         Float polarity() const;
-        Vector dipoleMoment() const;
+        Vector3 dipoleMoment() const;
         Molecule* molecule() const;
         Fragment* fragment() const;
         Residue* residue() const;

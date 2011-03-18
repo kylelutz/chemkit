@@ -43,7 +43,7 @@ class OplsBondStrechCalculation : public OplsCalculation
 
         bool setup(const OplsParameters *parameters);
         chemkit::Float energy() const;
-        QVector<chemkit::Vector> gradient() const;
+        QVector<chemkit::Vector3> gradient() const;
 };
 
 class OplsAngleBendCalculation : public OplsCalculation
@@ -53,7 +53,7 @@ class OplsAngleBendCalculation : public OplsCalculation
 
         bool setup(const OplsParameters *parameters);
         chemkit::Float energy() const;
-        QVector<chemkit::Vector> gradient() const;
+        QVector<chemkit::Vector3> gradient() const;
 };
 
 class OplsTorsionCalculation : public OplsCalculation
@@ -63,7 +63,7 @@ class OplsTorsionCalculation : public OplsCalculation
 
         bool setup(const OplsParameters *parameters);
         chemkit::Float energy() const;
-        QVector<chemkit::Vector> gradient() const;
+        QVector<chemkit::Vector3> gradient() const;
 };
 
 class OplsNonbondedCalculation : public OplsCalculation
@@ -73,7 +73,7 @@ class OplsNonbondedCalculation : public OplsCalculation
 
         bool setup(const OplsParameters *parameters);
         chemkit::Float energy() const;
-        QVector<chemkit::Vector> gradient() const;
+        QVector<chemkit::Vector3> gradient() const;
 };
 
 #endif // OPLSCALCULATION_H

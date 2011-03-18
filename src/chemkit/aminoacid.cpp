@@ -345,12 +345,12 @@ Atom* AminoAcid::aminoNitrogen() const
 
 // --- Geometry ------------------------------------------------------------ //
 /// Returns the normal vector to the peptide plane.
-Vector AminoAcid::peptidePlaneNormal() const
+Vector3 AminoAcid::peptidePlaneNormal() const
 {
     if(!d->alphaCarbon || !d->carbonylCarbon || !d->carbonylOxygen)
-        return Vector::Y();
+        return Vector3::Y();
 
-    return Vector::planeNormal(d->alphaCarbon->position(),
+    return Vector3::planeNormal(d->alphaCarbon->position(),
                                d->carbonylCarbon->position(),
                                d->carbonylOxygen->position());
 }

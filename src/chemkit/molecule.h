@@ -37,7 +37,7 @@
 
 namespace chemkit {
 
-class Vector;
+class Vector3;
 class Coordinates;
 class MoleculePrivate;
 class MoleculeWatcher;
@@ -149,9 +149,9 @@ class CHEMKIT_EXPORT Molecule
         void setCenter(Float x, Float y, Float z);
         Point3 center() const;
         Point3 centerOfMass() const;
-        void moveBy(const Vector &vector);
+        void moveBy(const Vector3 &vector);
         void moveBy(Float dx, Float dy, Float dz);
-        void rotate(const Vector &axis, Float angle);
+        void rotate(const Vector3 &axis, Float angle);
         bool hasCoordinates() const;
         void clearCoordinates();
 

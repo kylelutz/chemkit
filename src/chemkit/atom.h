@@ -35,7 +35,7 @@ namespace chemkit {
 class Bond;
 class Ring;
 class Residue;
-class Vector;
+class Vector3;
 class Fragment;
 class Molecule;
 class AtomPrivate;
@@ -115,7 +115,7 @@ class CHEMKIT_EXPORT Atom
         Float z() const;
         void moveTo(const Point3 &position);
         void moveTo(Float x, Float y, Float z);
-        void moveBy(const Vector &vector);
+        void moveBy(const Vector3 &vector);
         void moveBy(Float dx, Float dy, Float dz);
         Float distance(const Atom *atom) const;
 

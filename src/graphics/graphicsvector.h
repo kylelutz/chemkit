@@ -25,7 +25,7 @@
 
 #include "graphics.h"
 
-#include <chemkit/vector.h>
+#include <chemkit/vector3.h>
 #include <chemkit/genericvector.h>
 
 namespace chemkit {
@@ -42,7 +42,7 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsVector : public GenericVector<GraphicsFloa
         GraphicsVector(const StaticVector<double, 3> &vector);
 
         // properties
-        Vector toVector() const;
+        Vector3 toVector3() const;
 };
 
 } // end chemkit namespace

@@ -22,7 +22,7 @@
 
 #include "coordinates.h"
 
-#include "vector.h"
+#include "vector3.h"
 #include "molecule.h"
 
 namespace chemkit {
@@ -330,7 +330,7 @@ Point3 Coordinates::weightedCenter(const QVector<Float> &weights) const
 }
 
 /// Moves all of the coordinates by \p vector.
-void Coordinates::moveBy(const Vector &vector)
+void Coordinates::moveBy(const Vector3 &vector)
 {
     for(int i = 0; i < size(); i++){
         m_matrix.value(i, 0) += vector.x();
@@ -342,7 +342,7 @@ void Coordinates::moveBy(const Vector &vector)
 /// Moves all of the coordinates by (\p x, \p y, \p z).
 void Coordinates::moveBy(Float x, Float y, Float z)
 {
-    moveBy(Vector(x, y, z));
+    moveBy(Vector3(x, y, z));
 }
 
 /// Returns a matrix containing the distances between each pair of

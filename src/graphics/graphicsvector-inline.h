@@ -67,9 +67,9 @@ inline GraphicsVector::GraphicsVector(const StaticVector<double, 3> &vector)
 }
 
 // --- Properties ---------------------------------------------------------- //
-inline Vector GraphicsVector::toVector() const
+inline Vector3 GraphicsVector::toVector3() const
 {
-    return Vector(x(), y(), z());
+    return Vector3(x(), y(), z());
 }
 
 } // end chemkit namespace

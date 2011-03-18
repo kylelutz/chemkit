@@ -25,7 +25,7 @@
 
 #include "chemkit.h"
 
-#include "vector.h"
+#include "vector3.h"
 #include "atommapping.h"
 #include "staticmatrix.h"
 
@@ -57,7 +57,7 @@ class CHEMKIT_EXPORT MoleculeAligner
         // geometry
         Float deviation() const;
         StaticMatrix<Float, 3, 3> rotationMatrix() const;
-        Vector displacementVector() const;
+        Vector3 displacementVector() const;
         void align(Molecule *molecule);
 
         // static methods
