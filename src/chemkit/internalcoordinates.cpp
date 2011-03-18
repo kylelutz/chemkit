@@ -188,11 +188,11 @@ Coordinates* InternalCoordinates::toCartesianCoordinates() const
 
     // set positions for the first three atoms
     if(d->size >= 0){
-        cartesianCoordinates->setPosition(0, Point(0, 0, 0));
+        cartesianCoordinates->setPosition(0, Point3(0, 0, 0));
 
         if(d->size >= 1){
             Float r1 = coordinates(1)[0];
-            cartesianCoordinates->setPosition(1, Point(r1, 0, 0));
+            cartesianCoordinates->setPosition(1, Point3(r1, 0, 0));
 
             if(d->size >= 2){
                 Float r2 = coordinates(2)[0];
@@ -201,7 +201,7 @@ Coordinates* InternalCoordinates::toCartesianCoordinates() const
                 Float x = r2 * cos((180.0 - theta) * chemkit::constants::DegreesToRadians);
                 Float y = r2 * sin((180.0 - theta) * chemkit::constants::DegreesToRadians);
 
-                cartesianCoordinates->setPosition(2, Point(r1 + x, y, 0));
+                cartesianCoordinates->setPosition(2, Point3(r1 + x, y, 0));
             }
         }
     }
@@ -224,9 +224,9 @@ Coordinates* InternalCoordinates::toCartesianCoordinates() const
 
         QVector<int> connections = this->connections(i);
 
-        const Point &a = cartesianCoordinates->position(connections[2]);
-        const Point &b = cartesianCoordinates->position(connections[1]);
-        const Point &c = cartesianCoordinates->position(connections[0]);
+        const Point3 &a = cartesianCoordinates->position(connections[2]);
+        const Point3 &b = cartesianCoordinates->position(connections[1]);
+        const Point3 &c = cartesianCoordinates->position(connections[0]);
 
         Vector ab = (b - a);
         Vector bc = (c - b).normalized();
@@ -238,7 +238,7 @@ Coordinates* InternalCoordinates::toCartesianCoordinates() const
              bc.y(), ncbc.y(), n.y(),
              bc.z(), ncbc.z(), n.z();
 
-        Point d = M.multiply(Point(-x, y, z)) + c;
+        Point3 d = M.multiply(Point3(-x, y, z)) + c;
         cartesianCoordinates->setPosition(i, d);
     }
 

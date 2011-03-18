@@ -104,8 +104,8 @@ Float Bond::polarity() const
 /// Returns the dipole moment for the bond.
 Vector Bond::dipoleMoment() const
 {
-    Point a = m_atom1->position();
-    Point b = m_atom2->position();
+    Point3 a = m_atom1->position();
+    Point3 b = m_atom2->position();
     Float qa = m_atom1->partialCharge();
     Float qb = m_atom2->partialCharge();
 
@@ -255,7 +255,7 @@ bool Bond::isAromatic() const
 // --- Geometry ------------------------------------------------------------ //
 /// Returns the center point of the bond. The center is equal to the
 /// midpoint between the two atoms in the bond.
-Point Bond::center() const
+Point3 Bond::center() const
 {
     return m_atom1->position().midpoint(m_atom2->position());
 }

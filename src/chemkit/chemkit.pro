@@ -102,8 +102,8 @@ HEADERS += alphashape.h \
     partialchargepredictor.h \
     plugin.h \
     pluginmanager.h \
-    point.h \
-    point-inline.h \
+    point3.h \
+    point3-inline.h \
     polymer.h \
     polymerchain.h \
     polymerfile.h \

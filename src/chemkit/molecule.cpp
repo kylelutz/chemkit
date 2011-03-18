@@ -25,7 +25,7 @@
 #include "atom.h"
 #include "bond.h"
 #include "ring.h"
-#include "point.h"
+#include "point3.h"
 #include "vector.h"
 #include "element.h"
 #include "constants.h"
@@ -866,16 +866,16 @@ void Molecule::setCoordinates(const InternalCoordinates *coordinates)
 /// distance is in Angstroms.
 Float Molecule::distance(const Atom *a, const Atom *b) const
 {
-    return Point::distance(a->position(), b->position());
+    return Point3::distance(a->position(), b->position());
 }
 
 /// Returns the angle between atoms \p a, \p b, and \p c. The
 /// returned angle is in degrees.
 Float Molecule::bondAngle(const Atom *a, const Atom *b, const Atom *c) const
 {
-    return Point::angle(a->position(),
-                        b->position(),
-                        c->position());
+    return Point3::angle(a->position(),
+                         b->position(),
+                         c->position());
 }
 
 /// Returns the torsion angle (also known as the dihedral angle)
@@ -883,10 +883,10 @@ Float Molecule::bondAngle(const Atom *a, const Atom *b, const Atom *c) const
 /// in degrees.
 Float Molecule::torsionAngle(const Atom *a, const Atom *b, const Atom *c, const Atom *d) const
 {
-    return Point::torsionAngle(a->position(),
-                               b->position(),
-                               c->position(),
-                               d->position());
+    return Point3::torsionAngle(a->position(),
+                                b->position(),
+                                c->position(),
+                                d->position());
 }
 
 /// Returns the wilson angle between the plane made by atoms \p a,
@@ -894,15 +894,15 @@ Float Molecule::torsionAngle(const Atom *a, const Atom *b, const Atom *c, const 
 /// is in degrees.
 Float Molecule::wilsonAngle(const Atom *a, const Atom *b, const Atom *c, const Atom *d) const
 {
-    return Point::wilsonAngle(a->position(),
-                              b->position(),
-                              c->position(),
-                              d->position());
+    return Point3::wilsonAngle(a->position(),
+                               b->position(),
+                               c->position(),
+                               d->position());
 }
 
 /// Moves all of the atoms in the molecule so that the center point
 /// is at \p position.
-void Molecule::setCenter(const Point &position)
+void Molecule::setCenter(const Point3 &position)
 {
     moveBy(position - center());
 }
@@ -912,17 +912,17 @@ void Molecule::setCenter(const Point &position)
 /// equivalent to calling setCenter(Point(\p x, \p y, \p z)).
 void Molecule::setCenter(Float x, Float y, Float z)
 {
-    setCenter(Point(x, y, z));
+    setCenter(Point3(x, y, z));
 }
 
 /// Returns the center point of the molecule. This is also known as
 /// the centriod.
 ///
 /// \see centerOfMass()
-Point Molecule::center() const
+Point3 Molecule::center() const
 {
     if(isEmpty()){
-        return Point();
+        return Point3();
     }
 
     // sums for each component
@@ -938,14 +938,14 @@ Point Molecule::center() const
 
     int n = atomCount();
 
-    return Point(sx/n, sy/n, sz/n);
+    return Point3(sx/n, sy/n, sz/n);
 }
 
 /// Returns the center of mass for the molecule.
-Point Molecule::centerOfMass() const
+Point3 Molecule::centerOfMass() const
 {
     if(isEmpty()){
-        return Point();
+        return Point3();
     }
 
     // sums for each component
@@ -968,7 +968,7 @@ Point Molecule::centerOfMass() const
 
     int n = sw * size();
 
-    return Point(sx/n, sy/n, sz/n);
+    return Point3(sx/n, sy/n, sz/n);
 }
 
 /// Moves all the atoms in the molecule by \p vector.
@@ -1013,7 +1013,7 @@ bool Molecule::hasCoordinates() const
 void Molecule::clearCoordinates()
 {
     foreach(Atom *atom, m_atoms){
-        atom->setPosition(Point());
+        atom->setPosition(Point3());
     }
 }
 

@@ -38,15 +38,15 @@ class DelaunayTriangulationTest : public QObject
 // by Barry Joe (Siam J. Sci. Stat. Comput. Vol 10, No 4, 1989).
 void DelaunayTriangulationTest::joe89()
 {
-    QVector<chemkit::Point> points;
-    points.append(chemkit::Point(0.054f, 0.099f, 0.993f));
-    points.append(chemkit::Point(0.066f, 0.756f, 0.910f));
-    points.append(chemkit::Point(0.076f, 0.578f, 0.408f));
-    points.append(chemkit::Point(0.081f, 0.036f, 0.954f));
-    points.append(chemkit::Point(0.082f, 0.600f, 0.726f));
-    points.append(chemkit::Point(0.085f, 0.327f, 0.731f));
-    points.append(chemkit::Point(0.123f, 0.666f, 0.842f));
-    points.append(chemkit::Point(0.161f, 0.303f, 0.975f));
+    QVector<chemkit::Point3> points;
+    points.append(chemkit::Point3(0.054f, 0.099f, 0.993f));
+    points.append(chemkit::Point3(0.066f, 0.756f, 0.910f));
+    points.append(chemkit::Point3(0.076f, 0.578f, 0.408f));
+    points.append(chemkit::Point3(0.081f, 0.036f, 0.954f));
+    points.append(chemkit::Point3(0.082f, 0.600f, 0.726f));
+    points.append(chemkit::Point3(0.085f, 0.327f, 0.731f));
+    points.append(chemkit::Point3(0.123f, 0.666f, 0.842f));
+    points.append(chemkit::Point3(0.161f, 0.303f, 0.975f));
 
     chemkit::DelaunayTriangulation triangulation(points);
     QCOMPARE(triangulation.vertexCount(), 8);
@@ -95,21 +95,21 @@ void DelaunayTriangulationTest::joe89()
 void DelaunayTriangulationTest::serine()
 {
     // coordinates of the atoms
-    QVector<chemkit::Point> points;
-    points.append(chemkit::Point(-0.1664, -1.0370, 0.4066));
-    points.append(chemkit::Point(1.2077, -0.5767, -0.0716));
-    points.append(chemkit::Point(-0.6079, -1.5894, -0.3173));
-    points.append(chemkit::Point(1.1440, -0.3456, -1.0571));
-    points.append(chemkit::Point(2.2495, -1.7077, 0.1008));
-    points.append(chemkit::Point(1.6659, 0.7153, 0.7175));
-    points.append(chemkit::Point(1.7844, 0.4727, 1.7759));
-    points.append(chemkit::Point(0.8959, 1.5129, 0.6034));
-    points.append(chemkit::Point(2.8918, 1.1700, 0.2007));
-    points.append(chemkit::Point(3.1444, 1.9558, 0.6711));
-    points.append(chemkit::Point(1.8101, -2.8570, 0.2804));
-    points.append(chemkit::Point(3.4579, -1.3878, 0.0035));
-    points.append(chemkit::Point(-0.0600, -1.6097, 1.2601));
-    points.append(chemkit::Point(-0.7527, -0.2118, 0.6162));
+    QVector<chemkit::Point3> points;
+    points.append(chemkit::Point3(-0.1664, -1.0370, 0.4066));
+    points.append(chemkit::Point3(1.2077, -0.5767, -0.0716));
+    points.append(chemkit::Point3(-0.6079, -1.5894, -0.3173));
+    points.append(chemkit::Point3(1.1440, -0.3456, -1.0571));
+    points.append(chemkit::Point3(2.2495, -1.7077, 0.1008));
+    points.append(chemkit::Point3(1.6659, 0.7153, 0.7175));
+    points.append(chemkit::Point3(1.7844, 0.4727, 1.7759));
+    points.append(chemkit::Point3(0.8959, 1.5129, 0.6034));
+    points.append(chemkit::Point3(2.8918, 1.1700, 0.2007));
+    points.append(chemkit::Point3(3.1444, 1.9558, 0.6711));
+    points.append(chemkit::Point3(1.8101, -2.8570, 0.2804));
+    points.append(chemkit::Point3(3.4579, -1.3878, 0.0035));
+    points.append(chemkit::Point3(-0.0600, -1.6097, 1.2601));
+    points.append(chemkit::Point3(-0.7527, -0.2118, 0.6162));
 
     // calculate delaunay triangulation
     chemkit::DelaunayTriangulation triangulation(points);

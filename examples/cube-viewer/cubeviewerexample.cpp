@@ -204,9 +204,9 @@ chemkit::ScalarField* CubeViewerExample::readVolumeData(const QString &fileName)
 		atomCount = qAbs(atomCount);
 	}
 
-	chemkit::Point origin(lineItems[1].toDouble(),
-						  lineItems[2].toDouble(),
-						  lineItems[3].toDouble());
+	chemkit::Point3 origin(lineItems[1].toDouble(),
+			       lineItems[2].toDouble(),
+			       lineItems[3].toDouble());
 
 	// voxel count and axes
 	QVector<int> dimensions(3);

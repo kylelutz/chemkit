@@ -25,7 +25,7 @@
 
 #include <QtCore>
 
-#include <chemkit/point.h>
+#include "point3.h"
 
 namespace chemkit {
 
@@ -42,13 +42,13 @@ class CHEMKIT_EXPORT AlphaShape
         };
 
         // construction and destruction
-        AlphaShape(const QVector<Point> &points);
-        AlphaShape(const QVector<Point> &points, const QVector<Float> &weights);
+        AlphaShape(const QVector<Point3> &points);
+        AlphaShape(const QVector<Point3> &points, const QVector<Float> &weights);
         ~AlphaShape();
 
         // properties
         int size() const;
-        Point position(int vertex) const;
+        Point3 position(int vertex) const;
         Float weight(int vertex) const;
         void setAlphaValue(Float alphaValue);
         Float alphaValue() const;
@@ -66,9 +66,9 @@ class CHEMKIT_EXPORT AlphaShape
         // geometry
         Float volume() const;
         Float surfaceArea() const;
-        Point orthocenter(int i, int j) const;
-        Point orthocenter(int i, int j, int k) const;
-        Point orthocenter(int i, int j, int k, int l) const;
+        Point3 orthocenter(int i, int j) const;
+        Point3 orthocenter(int i, int j, int k) const;
+        Point3 orthocenter(int i, int j, int k, int l) const;
         Float orthoradius(int i, int j) const;
         Float orthoradius(int i, int j, int k) const;
         Float orthoradius(int i, int j, int k, int l) const;

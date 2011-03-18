@@ -27,7 +27,7 @@
 
 #include <QtCore>
 
-#include "point.h"
+#include "point3.h"
 #include "vector.h"
 
 namespace chemkit {
@@ -52,17 +52,17 @@ class CHEMKIT_EXPORT ScalarField
         Float cellHeight() const;
         Float cellDepth() const;
         QVector<Float> cellDimensions() const;
-        void setOrigin(const Point &origin);
-        Point origin() const;
+        void setOrigin(const Point3 &origin);
+        Point3 origin() const;
         QVector<Float> data() const;
 
         // values
         void setValue(int i, int j, int k, Float value);
         Float value(int i, int j, int k) const;
-        Float value(const Point &position) const;
-        Point position(int i, int j, int k) const;
+        Float value(const Point3 &position) const;
+        Point3 position(int i, int j, int k) const;
         Vector gradient(int i, int j, int k) const;
-        Vector gradient(const Point &position) const;
+        Vector gradient(const Point3 &position) const;
 
     private:
         ScalarFieldPrivate* const d;

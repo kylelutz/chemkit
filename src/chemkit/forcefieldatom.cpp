@@ -36,7 +36,7 @@ class ForceFieldAtomPrivate
         const Atom *atom;
         QString type;
         Float charge;
-        Point position;
+        Point3 position;
         bool setup;
         ForceField *forceField;
 };
@@ -166,13 +166,13 @@ bool ForceFieldAtom::isOneFour(const ForceFieldAtom *atom) const
 
 // --- Geometry ------------------------------------------------------------ //
 /// Sets the position of the atom.
-void ForceFieldAtom::setPosition(const Point &position)
+void ForceFieldAtom::setPosition(const Point3 &position)
 {
     d->position = position;
 }
 
 /// Returns the position of the atom.
-Point ForceFieldAtom::position() const
+Point3 ForceFieldAtom::position() const
 {
     return d->position;
 }

@@ -35,7 +35,7 @@ class AtomPrivate
         Residue *residue;
         int massNumber;
         Float partialCharge;
-        Point position;
+        Point3 position;
         QList<Bond *> bonds;
         Atom::Chirality chirality;
 };
@@ -488,7 +488,7 @@ bool Atom::isAromatic() const
 
 // --- Geometry ------------------------------------------------------------ //
 /// Sets the coordinates of the atom.
-void Atom::setPosition(const Point &position)
+void Atom::setPosition(const Point3 &position)
 {
     d->position = position;
     molecule()->notifyObservers(this, Molecule::AtomPositionChanged);
@@ -498,11 +498,11 @@ void Atom::setPosition(const Point &position)
 /// setPosition(Point(x, y, z)).
 void Atom::setPosition(Float x, Float y, Float z)
 {
-    setPosition(Point(x, y, z));
+    setPosition(Point3(x, y, z));
 }
 
 /// Returns the atom's coordinates.
-Point Atom::position() const
+Point3 Atom::position() const
 {
     return d->position;
 }
@@ -526,7 +526,7 @@ Float Atom::z() const
 }
 
 /// Moves the atom to position. Equivalent to setPosition(position).
-void Atom::moveTo(const Point &position)
+void Atom::moveTo(const Point3 &position)
 {
     setPosition(position);
 }

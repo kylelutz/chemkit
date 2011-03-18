@@ -41,7 +41,7 @@ class PdbAtom
 
         int id;
         QString name;
-        chemkit::Point position;
+        chemkit::Point3 position;
         int atomicNumber;
 };
 
@@ -60,7 +60,7 @@ PdbAtom::PdbAtom(const char *data)
     // coordinates
     double x, y, z;
     sscanf(&data[31], "%lf%lf%lf", &x, &y, &z);
-    position = chemkit::Point(x, y, z);
+    position = chemkit::Point3(x, y, z);
 
     // atomic number
     QString symbol;
@@ -236,10 +236,10 @@ class PdbConformer
     public:
         PdbConformer(QIODevice *iodev);
 
-        chemkit::Point position(int atom) const;
+        chemkit::Point3 position(int atom) const;
 
     private:
-        QHash<int, chemkit::Point> m_positions;
+        QHash<int, chemkit::Point3> m_positions;
 };
 
 PdbConformer::PdbConformer(QIODevice *iodev)
@@ -250,7 +250,7 @@ PdbConformer::PdbConformer(QIODevice *iodev)
         if(line.startsWith("ATOM")){
             int id = line.mid(7, 4).toInt();
 
-            chemkit::Point position(line.mid(30, 8).toDouble(),
+            chemkit::Point3 position(line.mid(30, 8).toDouble(),
                                     line.mid(38, 8).toDouble(),
                                     line.mid(46, 8).toDouble());
 
@@ -262,7 +262,7 @@ PdbConformer::PdbConformer(QIODevice *iodev)
     }
 }
 
-chemkit::Point PdbConformer::position(int atom) const
+chemkit::Point3 PdbConformer::position(int atom) const
 {
     return m_positions.value(atom);
 }

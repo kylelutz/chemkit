@@ -177,7 +177,7 @@ void BuildTool::mousePressEvent(QMouseEvent *event)
             // add new atom
             chemkit::Atom *atom = addAtom(m_element.atomicNumber());
             chemkit::GraphicsPoint position = view()->unproject(event->x(), event->y(), editor()->molecule()->center());
-            setAtomPosition(atom, position.toPoint());
+            setAtomPosition(atom, position.toPoint3());
             m_intialAtom = atom;
             m_intialElement = m_element.atomicNumber();
         }
@@ -250,7 +250,7 @@ void BuildTool::mouseMoveEvent(QMouseEvent *event)
             m_movingAtom = addAtom(m_element.atomicNumber());
             addBond(m_intialAtom, m_movingAtom, bondOrder());
             chemkit::GraphicsPoint position = view()->unproject(event->x(), event->y(), m_intialAtom->position());
-            setAtomPosition(m_movingAtom, position.toPoint());
+            setAtomPosition(m_movingAtom, position.toPoint3());
 
             if(m_newBond){
                 removeBond(m_newBond);
@@ -260,7 +260,7 @@ void BuildTool::mouseMoveEvent(QMouseEvent *event)
         }
         else{
             chemkit::GraphicsPoint newPosition = view()->unproject(event->x(), event->y(), m_movingAtom->position());
-            setAtomPosition(m_movingAtom, newPosition.toPoint());
+            setAtomPosition(m_movingAtom, newPosition.toPoint3());
         }
     }
 
@@ -280,7 +280,7 @@ void BuildTool::mouseMoveEvent(QMouseEvent *event)
         // over moving atom
         else if(atom == m_movingAtom){
             chemkit::GraphicsPoint newPosition = view()->unproject(event->x(), event->y(), m_movingAtom->position());
-            setAtomPosition(m_movingAtom, newPosition.toPoint());
+            setAtomPosition(m_movingAtom, newPosition.toPoint3());
         }
         // over new atom
         else{
@@ -401,7 +401,7 @@ void BuildTool::setAtomAtomicNumber(chemkit::Atom *atom, int atomicNumber)
     editor()->setAtomAtomicNumber(atom, atomicNumber);
 }
 
-void BuildTool::setAtomPosition(chemkit::Atom *atom, const chemkit::Point &position)
+void BuildTool::setAtomPosition(chemkit::Atom *atom, const chemkit::Point3 &position)
 {
     editor()->setAtomPosition(atom, position);
 }

@@ -27,7 +27,7 @@
 
 #include <QtCore>
 
-#include "point.h"
+#include "point3.h"
 #include "vector.h"
 
 namespace chemkit {
@@ -61,8 +61,8 @@ class CHEMKIT_EXPORT ForceFieldAtom
         bool isOneFour(const ForceFieldAtom *atom) const;
 
         // geometry
-        void setPosition(const Point &position);
-        Point position() const;
+        void setPosition(const Point3 &position);
+        Point3 position() const;
         void moveBy(const Vector &vector);
         void moveBy(Float dx, Float dy, Float dz);
 

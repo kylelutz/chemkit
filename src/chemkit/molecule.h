@@ -28,8 +28,8 @@
 #include "atom.h"
 #include "bond.h"
 #include "ring.h"
-#include "point.h"
 #include "moiety.h"
+#include "point3.h"
 #include "residue.h"
 #include "fragment.h"
 #include "conformer.h"
@@ -145,10 +145,10 @@ class CHEMKIT_EXPORT Molecule
         Float bondAngle(const Atom *a, const Atom *b, const Atom *c) const;
         Float torsionAngle(const Atom *a, const Atom *b, const Atom *c, const Atom *d) const;
         Float wilsonAngle(const Atom *a, const Atom *b, const Atom *c, const Atom *d) const;
-        void setCenter(const Point &position);
+        void setCenter(const Point3 &position);
         void setCenter(Float x, Float y, Float z);
-        Point center() const;
-        Point centerOfMass() const;
+        Point3 center() const;
+        Point3 centerOfMass() const;
         void moveBy(const Vector &vector);
         void moveBy(Float dx, Float dy, Float dz);
         void rotate(const Vector &axis, Float angle);

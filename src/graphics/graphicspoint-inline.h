@@ -68,9 +68,9 @@ inline GraphicsPoint::GraphicsPoint(const StaticVector<double, 3> &point)
 }
 
 // --- Properties ---------------------------------------------------------- //
-inline Point GraphicsPoint::toPoint() const
+inline Point3 GraphicsPoint::toPoint3() const
 {
-    return Point(x(), y(), z());
+    return Point3(x(), y(), z());
 }
 
 } // end chemkit namespace

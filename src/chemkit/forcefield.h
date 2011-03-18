@@ -27,7 +27,7 @@
 
 #include <QtCore>
 
-#include "point.h"
+#include "point3.h"
 #include "vector.h"
 #include "forcefieldatom.h"
 #include "forcefieldcalculation.h"

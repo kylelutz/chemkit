@@ -31,7 +31,7 @@
 
 namespace chemkit {
 
-class Point;
+class Point3;
 class ForceField;
 class ForceFieldAtom;
 class ForceFieldCalculationPrivate;
@@ -92,10 +92,10 @@ class CHEMKIT_EXPORT ForceFieldCalculation
 
     private:
         void setSetup(bool setup);
-        QVector<Vector> distanceGradient(const Point &a, const Point &b) const;
-        QVector<Vector> bondAngleGradientRadians(const Point &a, const Point &b, const Point &c) const;
-        QVector<Vector> torsionAngleGradientRadians(const Point &a, const Point &b, const Point &c, const Point &d) const;
-        QVector<Vector> wilsonAngleGradientRadians(const Point &a, const Point &b, const Point &c, const Point &d) const;
+        QVector<Vector> distanceGradient(const Point3 &a, const Point3 &b) const;
+        QVector<Vector> bondAngleGradientRadians(const Point3 &a, const Point3 &b, const Point3 &c) const;
+        QVector<Vector> torsionAngleGradientRadians(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d) const;
+        QVector<Vector> wilsonAngleGradientRadians(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d) const;
 
         friend class ForceField;
 

@@ -25,7 +25,7 @@
 
 #include "chemkit.h"
 
-#include "point.h"
+#include "point3.h"
 #include "vector.h"
 #include "genericquaternion.h"
 
@@ -36,20 +36,20 @@ class CHEMKIT_EXPORT Quaternion : public GenericQuaternion<Float>
     public:
         // construction and destruction
         Quaternion(Float x, Float y, Float z, Float r);
-        Quaternion(const Point &point, Float r);
+        Quaternion(const Point3 &point, Float r);
         Quaternion(const Vector &vector, Float r);
         Quaternion(const GenericQuaternion<Float> &quaternion);
         Quaternion(const StaticVector<Float, 4> &quaternion);
 
         // properties
-        Point toPoint() const;
+        Point3 toPoint3() const;
         Vector toVector() const;
 
         // static methods
         static Quaternion rotation(const Vector &axis, Float angle);
         static Quaternion rotationRadians(const Vector &axis, Float angle);
-        static Point rotate(const Point &point, const Vector &axis, Float angle);
-        static Point rotateRadians(const Point &point, const Vector &axis, Float angle);
+        static Point3 rotate(const Point3 &point, const Vector &axis, Float angle);
+        static Point3 rotateRadians(const Point3 &point, const Vector &axis, Float angle);
         static Vector rotate(const Vector &vector, const Vector &axis, Float angle);
         static Vector rotateRadians(const Vector &vector, const Vector &axis, Float angle);
 };

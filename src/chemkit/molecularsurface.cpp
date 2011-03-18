@@ -39,7 +39,7 @@ namespace {
 
 const Float pi = chemkit::constants::Pi;
 
-Float angleDihedral(const Point &s, const Point &t, const Point &u, const Point &v)
+Float angleDihedral(const Point3 &s, const Point3 &t, const Point3 &u, const Point3 &v)
 {
     Vector mu = (u - s).cross(u - t);
     Vector mv = (v - s).cross(v - t);
@@ -59,7 +59,7 @@ class MolecularSurfacePrivate
         const Molecule *molecule;
         MolecularSurface::SurfaceType surfaceType;
         Float probeRadius;
-        QVector<Point> points;
+        QVector<Point3> points;
         QVector<Float> radii;
         AlphaShape *alphaShape;
         Float volume;
@@ -200,7 +200,7 @@ const AlphaShape* MolecularSurface::alphaShape() const
 
 // --- Geometry ------------------------------------------------------------ //
 /// Returns the position of the sphere at \p index.
-Point MolecularSurface::position(int index) const
+Point3 MolecularSurface::position(int index) const
 {
     return d->points[index];
 }
@@ -363,9 +363,9 @@ Float MolecularSurface::ballArea(int index) const
 
 Float MolecularSurface::capHeight(int i, int j) const
 {
-    const Point &s = position(i);
+    const Point3 &s = position(i);
 
-    Point y = d->alphaShape->orthocenter(i, j);
+    Point3 y = d->alphaShape->orthocenter(i, j);
 
     // check if vertex i is attached to vertex j
     if(d->alphaShape->vertexAttached(i, j)){
@@ -391,14 +391,14 @@ Float MolecularSurface::capVolume(int i, int j) const
 
 Float MolecularSurface::cap2Area(int i, int j, int k) const
 {
-    Point pjk = triangleDual(i, j, k);
+    Point3 pjk = triangleDual(i, j, k);
 
     Float lj = segmentAngle(i, j, k);
     Float lk = segmentAngle(i, k, j);
 
-    const Point &s = position(i);
-    const Point &t = position(j);
-    const Point &u = position(k);
+    const Point3 &s = position(i);
+    const Point3 &t = position(j);
+    const Point3 &u = position(k);
 
     Float r = radius(i);
     Float phi = (1.0/2.0) - angleDihedral(s, pjk, t, u);
@@ -425,14 +425,14 @@ Float MolecularSurface::cap3Area(int i, int j, int k, int l) const
         qSwap(k, l);
     }
 
-    const Point &s = position(i);
-    const Point &t = position(j);
-    const Point &u = position(k);
-    const Point &v = position(l);
+    const Point3 &s = position(i);
+    const Point3 &t = position(j);
+    const Point3 &u = position(k);
+    const Point3 &v = position(l);
 
-    Point pkj = triangleDual(i, k, j);
-    Point plk = triangleDual(i, l, k);
-    Point pjl = triangleDual(i, j, l);
+    Point3 pkj = triangleDual(i, k, j);
+    Point3 plk = triangleDual(i, l, k);
+    Point3 pjl = triangleDual(i, j, l);
 
     Float lj = segment2Angle(i, j, k, l);
     Float lk = segment2Angle(i, k, l, j);
@@ -475,13 +475,13 @@ Float MolecularSurface::diskRadius(int i, int j) const
     return sqrt(capHeight(i, j) * (2.0 * radius(i) - capHeight(i, j)));
 }
 
-Point MolecularSurface::triangleDual(int i, int j, int k) const
+Point3 MolecularSurface::triangleDual(int i, int j, int k) const
 {
-    Point y = d->alphaShape->orthocenter(i, j, k);
+    Point3 y = d->alphaShape->orthocenter(i, j, k);
 
-    const Point &s = d->points[i];
-    const Point &t = d->points[j];
-    const Point &u = d->points[k];
+    const Point3 &s = d->points[i];
+    const Point3 &t = d->points[j];
+    const Point3 &u = d->points[k];
 
     Vector n = (t - s).cross(u - s);
 
@@ -502,8 +502,8 @@ Float MolecularSurface::segmentArea(int i, int j, int k) const
 {
     Float s = (1.0/2.0) * diskRadius(i, j) * segmentLength(i, j, k);
 
-    Point pjk = triangleDual(i, j, k);
-    Point pkj = triangleDual(i, k, j);
+    Point3 pjk = triangleDual(i, j, k);
+    Point3 pkj = triangleDual(i, k, j);
 
     Float h = diskRadius(i, j) - segmentHeight(i, j, k);
     Float t = (1.0/2.0) * h * pjk.distance(pkj);
@@ -513,11 +513,11 @@ Float MolecularSurface::segmentArea(int i, int j, int k) const
 
 Float MolecularSurface::segmentAngle(int i, int j, int k) const
 {
-    Point pjk = triangleDual(i, j, k);
+    Point3 pjk = triangleDual(i, j, k);
 
-    const Point &s = d->points[i];
-    const Point &t = d->points[j];
-    const Point &u = d->points[k];
+    const Point3 &s = d->points[i];
+    const Point3 &t = d->points[j];
+    const Point3 &u = d->points[k];
 
     return 2.0 * angleDihedral(s, t, u, pjk);
 }
@@ -529,8 +529,8 @@ Float MolecularSurface::segmentLength(int i, int j, int k) const
 
 Float MolecularSurface::segmentHeight(int i, int j, int k) const
 {
-    Point y2 = d->alphaShape->orthocenter(i, j);
-    Point y3 = d->alphaShape->orthocenter(i, j, k);
+    Point3 y2 = d->alphaShape->orthocenter(i, j);
+    Point3 y3 = d->alphaShape->orthocenter(i, j, k);
 
     // check if vertex k is attached to the edge (i, j)
     if(d->alphaShape->edgeAttached(i, j, k)){
@@ -546,12 +546,12 @@ Float MolecularSurface::segment2Area(int i, int j, int k, int l) const
     if(!ccw(i, j, k, l))
         qSwap(k, l);
 
-    Point pjk = triangleDual(i, j, k);
-    Point pkj = triangleDual(i, k, j);
-    Point pjl = triangleDual(i, j, l);
-    Point plj = triangleDual(i, l, j);
+    Point3 pjk = triangleDual(i, j, k);
+    Point3 pkj = triangleDual(i, k, j);
+    Point3 pjl = triangleDual(i, j, l);
+    Point3 plj = triangleDual(i, l, j);
 
-    Point y = d->alphaShape->orthocenter(i, j, k, l);
+    Point3 y = d->alphaShape->orthocenter(i, j, k, l);
 
     Float hk = segmentHeight(i, j, k);
     Float hl = segmentHeight(i, j, l);
@@ -567,13 +567,13 @@ Float MolecularSurface::segment2Area(int i, int j, int k, int l) const
 
 Float MolecularSurface::segment2Angle(int i, int j, int k, int l) const
 {
-    Point pjl = triangleDual(i, j, l);
-    Point pkj = triangleDual(i, k, j);
+    Point3 pjl = triangleDual(i, j, l);
+    Point3 pkj = triangleDual(i, k, j);
 
-    const Point &s = d->points[i];
-    const Point &t = d->points[j];
-    const Point &u = d->points[k];
-    const Point &v = d->points[l];
+    const Point3 &s = d->points[i];
+    const Point3 &t = d->points[j];
+    const Point3 &u = d->points[k];
+    const Point3 &v = d->points[l];
 
     return angleDihedral(s, t, u, pkj) + angleDihedral(s, t, v, pjl) - angleDihedral(s, t, u, v);
 }
@@ -585,10 +585,10 @@ Float MolecularSurface::segment2Length(int i, int j, int k, int l) const
 
 bool MolecularSurface::ccw(int i, int j, int k, int l) const
 {
-    const Point &a = position(i);
-    const Point &b = position(j);
-    const Point &c = position(k);
-    const Point &d = position(l);
+    const Point3 &a = position(i);
+    const Point3 &b = position(j);
+    const Point3 &c = position(k);
+    const Point3 &d = position(l);
 
     return chemkit::geometry::planeOrientation(a, b, c, d) > 0;
 }

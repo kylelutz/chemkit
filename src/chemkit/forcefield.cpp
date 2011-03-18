@@ -495,7 +495,7 @@ bool ForceField::minimizationStep(Float converganceValue)
     QVector<Vector> gradient = this->gradient();
 
     // perform line search
-    QVector<Point> initialPositions(atomCount());
+    QVector<Point3> initialPositions(atomCount());
 
     Float step = 0.05;
     Float stepConv = 1e-5;
@@ -569,7 +569,7 @@ QFuture<bool> ForceField::minimizationStepAsync(Float converganceValue)
 // --- Geometry ------------------------------------------------------------ //
 Float ForceField::distance(const ForceFieldAtom *a, const ForceFieldAtom *b) const
 {
-    return Point::distance(a->position(), b->position());
+    return Point3::distance(a->position(), b->position());
 }
 
 Float ForceField::bondAngle(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c) const
@@ -579,7 +579,7 @@ Float ForceField::bondAngle(const ForceFieldAtom *a, const ForceFieldAtom *b, co
 
 Float ForceField::bondAngleRadians(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c) const
 {
-    return Point::angleRadians(a->position(), b->position(), c->position());
+    return Point3::angleRadians(a->position(), b->position(), c->position());
 }
 
 Float ForceField::torsionAngle(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c, const ForceFieldAtom *d) const
@@ -589,7 +589,7 @@ Float ForceField::torsionAngle(const ForceFieldAtom *a, const ForceFieldAtom *b,
 
 Float ForceField::torsionAngleRadians(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c, const ForceFieldAtom *d) const
 {
-    return Point::torsionAngleRadians(a->position(), b->position(), c->position(), d->position());
+    return Point3::torsionAngleRadians(a->position(), b->position(), c->position(), d->position());
 }
 
 Float ForceField::wilsonAngle(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c, const ForceFieldAtom *d) const
@@ -599,7 +599,7 @@ Float ForceField::wilsonAngle(const ForceFieldAtom *a, const ForceFieldAtom *b, 
 
 Float ForceField::wilsonAngleRadians(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c, const ForceFieldAtom *d) const
 {
-    return Point::wilsonAngleRadians(a->position(), b->position(), c->position(), d->position());
+    return Point3::wilsonAngleRadians(a->position(), b->position(), c->position(), d->position());
 }
 
 // --- Error Handling ------------------------------------------------------ //

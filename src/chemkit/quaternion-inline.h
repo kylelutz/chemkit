@@ -47,7 +47,7 @@ inline Quaternion::Quaternion(Float x, Float y, Float z, Float r)
 }
 
 /// Creates a new quaternion from point with real component r.
-inline Quaternion::Quaternion(const Point &point, Float r)
+inline Quaternion::Quaternion(const Point3 &point, Float r)
     : GenericQuaternion<Float>(point.x(), point.y(), point.z(), r)
 {
 }
@@ -70,10 +70,10 @@ inline Quaternion::Quaternion(const StaticVector<Float, 4> &quaternion)
 
 // --- Properties ---------------------------------------------------------- //
 /// Returns the imaginary part of the quaternion as a point.
-/// Equivalent to Point(x(), y(), z()).
-inline Point Quaternion::toPoint() const
+/// Equivalent to Point3(x(), y(), z()).
+inline Point3 Quaternion::toPoint3() const
 {
-    return Point(x(), y(), z());
+    return Point3(x(), y(), z());
 }
 
 /// Returns the imaginary part of the quaternion as a vector.
@@ -103,14 +103,14 @@ inline Quaternion Quaternion::rotationRadians(const Vector &axis, Float angle)
 
 /// Returns a new point that is the result of rotating the point
 /// angle degrees around axis.
-inline Point Quaternion::rotate(const Point &point, const Vector &axis, Float angle)
+inline Point3 Quaternion::rotate(const Point3 &point, const Vector &axis, Float angle)
 {
     return rotateRadians(point, axis, angle * chemkit::constants::DegreesToRadians);
 }
 
 /// Returns a new point that is the result of rotating the point
 /// angle radians around axis.
-inline Point Quaternion::rotateRadians(const Point &point, const Vector &axis, Float angle)
+inline Point3 Quaternion::rotateRadians(const Point3 &point, const Vector &axis, Float angle)
 {
     Quaternion p(point.x(), point.y(), point.z(), 0);
     Quaternion q = rotationRadians(axis, angle);
@@ -119,7 +119,7 @@ inline Point Quaternion::rotateRadians(const Point &point, const Vector &axis, F
     Quaternion qp = q.multiply(p);
     Quaternion r = qp.multiply(qc);
 
-    return r.toPoint();
+    return r.toPoint3();
 }
 
 /// Returns a new vector that is the result of rotating the vector

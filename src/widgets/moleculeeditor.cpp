@@ -108,7 +108,7 @@ class RemoveAtomCommand : public MoleculeEditorCommand
     private:
         int m_atomId;
         int m_atomicNumber;
-        Point m_position;
+        Point3 m_position;
 };
 
 RemoveAtomCommand::RemoveAtomCommand(MoleculeEditor *editor, Atom *atom)
@@ -179,18 +179,18 @@ void SetAtomAtomicNumberCommand::redo()
 class SetAtomPositionCommand : public MoleculeEditorCommand
 {
     public:
-        SetAtomPositionCommand(MoleculeEditor *editor, Atom *atom, const Point &position);
+        SetAtomPositionCommand(MoleculeEditor *editor, Atom *atom, const Point3 &position);
 
         void undo();
         void redo();
 
     private:
         int m_atomId;
-        Point m_initialPosition;
-        Point m_finalPosition;
+        Point3 m_initialPosition;
+        Point3 m_finalPosition;
 };
 
-SetAtomPositionCommand::SetAtomPositionCommand(MoleculeEditor *editor, Atom *atom, const Point &position)
+SetAtomPositionCommand::SetAtomPositionCommand(MoleculeEditor *editor, Atom *atom, const Point3 &position)
     : MoleculeEditorCommand(editor)
 {
     m_atomId = editor->id(atom);
@@ -617,7 +617,7 @@ void MoleculeEditor::setAtomAtomicNumber(Atom *atom, int atomicNumber)
 /// Sets the position of \p atom to \p position.
 ///
 /// \see Atom::setPosition()
-void MoleculeEditor::setAtomPosition(Atom *atom, const Point &position)
+void MoleculeEditor::setAtomPosition(Atom *atom, const Point3 &position)
 {
     SetAtomPositionCommand *command = new SetAtomPositionCommand(this, atom, position);
     d->undoStack.push(command);

@@ -2,4 +2,4 @@ QT += testlib
 CONFIG += console
 INCLUDEPATH += ../../../../include/
 LIBS = -L../../../../lib -lchemkit
-SOURCES += pointtest.cpp
+SOURCES += point3test.cpp

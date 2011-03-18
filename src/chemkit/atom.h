@@ -27,7 +27,7 @@
 
 #include <QtCore>
 
-#include "point.h"
+#include "point3.h"
 #include "element.h"
 
 namespace chemkit {
@@ -107,13 +107,13 @@ class CHEMKIT_EXPORT Atom
         bool isAromatic() const;
 
         // geometry
-        void setPosition(const Point &position);
+        void setPosition(const Point3 &position);
         void setPosition(Float x, Float y, Float z);
-        Point position() const;
+        Point3 position() const;
         Float x() const;
         Float y() const;
         Float z() const;
-        void moveTo(const Point &position);
+        void moveTo(const Point3 &position);
         void moveTo(Float x, Float y, Float z);
         void moveBy(const Vector &vector);
         void moveBy(Float dx, Float dy, Float dz);

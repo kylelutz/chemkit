@@ -27,7 +27,7 @@
 
 #include <QtCore>
 
-#include "point.h"
+#include "point3.h"
 #include "vector.h"
 
 namespace chemkit {
@@ -80,7 +80,7 @@ class CHEMKIT_EXPORT Bond
         bool isAromatic() const;
 
         // geometry
-        Point center() const;
+        Point3 center() const;
         Float length() const;
 
     private:

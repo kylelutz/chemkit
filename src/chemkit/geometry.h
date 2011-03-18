@@ -27,30 +27,30 @@
 
 namespace chemkit {
 
-class Point;
+class Point3;
 
 namespace geometry {
 
 // constructions
-Point circumcenter(const Point &a, const Point &b);
-Point circumcenter(const Point &a, const Point &b, const Point &c);
-Point circumcenter(const Point &a, const Point &b, const Point &c, const Point &d);
-Float circumradius(const Point &a, const Point &b);
-Float circumradius(const Point &a, const Point &b, const Point &c);
-Float circumradius(const Point &a, const Point &b, const Point &c, const Point &d);
-Point orthocenter(const Point &a, const Point &b, Float wa, Float wb);
-Point orthocenter(const Point &a, const Point &b, const Point &c, Float wa, Float wb, Float wc);
-Point orthocenter(const Point &a, const Point &b, const Point &c, const Point &d, Float wa, Float wb, Float wc, Float wd);
-Float orthoradius(const Point &a, const Point &b, Float wa, Float wb);
-Float orthoradius(const Point &a, const Point &b, const Point &c, Float wa, Float wb, Float wc);
-Float orthoradius(const Point &a, const Point &b, const Point &c, const Point &d, Float wa, Float wb, Float wc, Float wd);
-Float triangleArea(const Point &a, const Point &b, const Point &c);
-Float tetrahedronVolume(const Point &a, const Point &b, const Point &c, const Point &d);
+Point3 circumcenter(const Point3 &a, const Point3 &b);
+Point3 circumcenter(const Point3 &a, const Point3 &b, const Point3 &c);
+Point3 circumcenter(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d);
+Float circumradius(const Point3 &a, const Point3 &b);
+Float circumradius(const Point3 &a, const Point3 &b, const Point3 &c);
+Float circumradius(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d);
+Point3 orthocenter(const Point3 &a, const Point3 &b, Float wa, Float wb);
+Point3 orthocenter(const Point3 &a, const Point3 &b, const Point3 &c, Float wa, Float wb, Float wc);
+Point3 orthocenter(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d, Float wa, Float wb, Float wc, Float wd);
+Float orthoradius(const Point3 &a, const Point3 &b, Float wa, Float wb);
+Float orthoradius(const Point3 &a, const Point3 &b, const Point3 &c, Float wa, Float wb, Float wc);
+Float orthoradius(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d, Float wa, Float wb, Float wc, Float wd);
+Float triangleArea(const Point3 &a, const Point3 &b, const Point3 &c);
+Float tetrahedronVolume(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d);
 
 // predicates
-Float planeOrientation(const Point &a, const Point &b, const Point &c, const Point &p);
-Float sphereOrientation(const Point &a, const Point &b, const Point &c, const Point &d, const Point &p);
-Float sphereOrientation(const Point &a, const Point &b, const Point &c, const Point &d, const Point &p, Float wa, Float wb, Float wc, Float wd, Float wp);
+Float planeOrientation(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &p);
+Float sphereOrientation(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d, const Point3 &p);
+Float sphereOrientation(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d, const Point3 &p, Float wa, Float wb, Float wc, Float wd, Float wp);
 
 } // end geometry namespace
 

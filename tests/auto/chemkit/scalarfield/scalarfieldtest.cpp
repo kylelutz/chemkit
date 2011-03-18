@@ -35,10 +35,10 @@ class ScalarFieldTest : public QObject
 void ScalarFieldTest::origin()
 {
     chemkit::ScalarField field;
-    QCOMPARE(field.origin(), chemkit::Point(0, 0, 0));
+    QCOMPARE(field.origin(), chemkit::Point3(0, 0, 0));
 
-    field.setOrigin(chemkit::Point(10, 15, 20));
-    QCOMPARE(field.origin(), chemkit::Point(10, 15, 20));
+    field.setOrigin(chemkit::Point3(10, 15, 20));
+    QCOMPARE(field.origin(), chemkit::Point3(10, 15, 20));
 }
 
 QTEST_APPLESS_MAIN(ScalarFieldTest)

@@ -27,7 +27,7 @@
 
 #include <QtCore>
 
-#include "point.h"
+#include "point3.h"
 
 namespace chemkit {
 
@@ -42,8 +42,8 @@ class CHEMKIT_EXPORT Conformer
         const Molecule* molecule() const;
 
         // coordinates
-        void setPosition(const Atom *atom, const Point &position);
-        Point position(const Atom *atom) const;
+        void setPosition(const Atom *atom, const Point3 &position);
+        Point3 position(const Atom *atom) const;
 
     private:
         Conformer(const Molecule *molecule);

@@ -22,7 +22,7 @@
 
 #include "delaunaytriangulation.h"
 
-#include "point.h"
+#include "point3.h"
 #include "vector.h"
 #include "geometry.h"
 #include "alphashape.h"
@@ -128,7 +128,7 @@ QVector<int> Tetrahedron::triangle(int index) const
 class DelaunayTriangulationPrivate
 {
     public:
-        QVector<Point> verticies;
+        QVector<Point3> verticies;
         QVector<Float> weights;
         QVector<Tetrahedron> tetrahedra;
 
@@ -158,7 +158,7 @@ class DelaunayTriangulationPrivate
 
 // --- Construction and Destruction ---------------------------------------- //
 /// Creates a new delaunay triangulation for \p points.
-DelaunayTriangulation::DelaunayTriangulation(const QVector<Point> &points)
+DelaunayTriangulation::DelaunayTriangulation(const QVector<Point3> &points)
     : d(new DelaunayTriangulationPrivate)
 {
     d->verticies = points;
@@ -170,7 +170,7 @@ DelaunayTriangulation::DelaunayTriangulation(const QVector<Point> &points)
 
 /// Creates a new weighted delaunay triangulation for \p points with
 /// \p weights.
-DelaunayTriangulation::DelaunayTriangulation(const QVector<Point> &points, const QVector<Float> &weights)
+DelaunayTriangulation::DelaunayTriangulation(const QVector<Point3> &points, const QVector<Float> &weights)
     : d(new DelaunayTriangulationPrivate)
 {
     d->verticies = points;
@@ -195,7 +195,7 @@ int DelaunayTriangulation::size() const
 }
 
 /// Returns the position of \p vertex.
-Point DelaunayTriangulation::position(int vertex) const
+Point3 DelaunayTriangulation::position(int vertex) const
 {
     return d->verticies[vertex];
 }
@@ -363,10 +363,10 @@ Float DelaunayTriangulation::volume() const
     Float volume = 0;
 
     foreach(const QVector<int> &tetrahedron, tetrahedra()){
-        const Point &a = position(tetrahedron[0]);
-        const Point &b = position(tetrahedron[1]);
-        const Point &c = position(tetrahedron[2]);
-        const Point &d = position(tetrahedron[3]);
+        const Point3 &a = position(tetrahedron[0]);
+        const Point3 &b = position(tetrahedron[1]);
+        const Point3 &c = position(tetrahedron[2]);
+        const Point3 &d = position(tetrahedron[3]);
 
         volume += chemkit::geometry::tetrahedronVolume(a, b, c, d);
     }
@@ -591,10 +591,10 @@ void DelaunayTriangulation::triangulate(bool weighted)
 
     // build big tetrahedron which will contain all other points. its
     // vertices will be the last four positions in the vertex vector
-    d->verticies.append(Point(0, 1e10, 0));
-    d->verticies.append(Point(1e10, -1e10, 1e10));
-    d->verticies.append(Point(-1e10, -1e10, 1e10));
-    d->verticies.append(Point(0, -1e10, -1e10));
+    d->verticies.append(Point3(0, 1e10, 0));
+    d->verticies.append(Point3(1e10, -1e10, 1e10));
+    d->verticies.append(Point3(-1e10, -1e10, 1e10));
+    d->verticies.append(Point3(0, -1e10, -1e10));
 
     if(weighted){
         d->weights.append(0);
@@ -622,7 +622,7 @@ void DelaunayTriangulation::triangulate(bool weighted)
 }
 
 /// Returns the index of the tetrahedron that contains the point.
-int DelaunayTriangulation::location(const Point &point) const
+int DelaunayTriangulation::location(const Point3 &point) const
 {
     int tetrahedronIndex = 0;
 
@@ -638,10 +638,10 @@ int DelaunayTriangulation::location(const Point &point) const
 
     for(;;){
         const Tetrahedron &tetrahedron = d->tetrahedra[tetrahedronIndex];
-        const Point &a = position(tetrahedron.verticies[0]);
-        const Point &b = position(tetrahedron.verticies[1]);
-        const Point &c = position(tetrahedron.verticies[2]);
-        const Point &d = position(tetrahedron.verticies[3]);
+        const Point3 &a = position(tetrahedron.verticies[0]);
+        const Point3 &b = position(tetrahedron.verticies[1]);
+        const Point3 &c = position(tetrahedron.verticies[2]);
+        const Point3 &d = position(tetrahedron.verticies[3]);
 
         if(chemkit::geometry::planeOrientation(a, b, c, point) > 0){
             tetrahedronIndex = tetrahedron.neighbors[0];
@@ -668,7 +668,7 @@ int DelaunayTriangulation::location(const Point &point) const
 /// circumsphere.
 QList<int> DelaunayTriangulation::findContainingTetrahedra(int vertex) const
 {
-    const Point &point = position(vertex);
+    const Point3 &point = position(vertex);
 
     QList<int> tetrahedra;
 
@@ -692,10 +692,10 @@ QList<int> DelaunayTriangulation::findContainingTetrahedra(int vertex) const
         int vc = tetrahedron.verticies[2];
         int vd = tetrahedron.verticies[3];
 
-        Point pa = position(va);
-        Point pb = position(vb);
-        Point pc = position(vc);
-        Point pd = position(vd);
+        Point3 pa = position(va);
+        Point3 pb = position(vb);
+        Point3 pc = position(vc);
+        Point3 pd = position(vd);
 
         if(chemkit::geometry::planeOrientation(pa, pb, pc, pd) < 0){
             qSwap(pa, pb);
@@ -733,7 +733,7 @@ QList<int> DelaunayTriangulation::findContainingTetrahedra(int vertex) const
 
 void DelaunayTriangulation::insertPoint(int index)
 {
-    Point point = position(index);
+    Point3 point = position(index);
 
     QList<int> containingTetrahedra = findContainingTetrahedra(index);
 
@@ -790,9 +790,9 @@ void DelaunayTriangulation::insertPoint(int index)
             Tetrahedron tetrahedron;
             int tetrahedronIndex = d->tetrahedra.size();
 
-            const Point &a = position(face[0]);
-            const Point &b = position(face[1]);
-            const Point &c = position(face[2]);
+            const Point3 &a = position(face[0]);
+            const Point3 &b = position(face[1]);
+            const Point3 &c = position(face[2]);
 
             if(chemkit::geometry::planeOrientation(a, b, c, point) < 0){
                 tetrahedron.verticies[0] = face[0];

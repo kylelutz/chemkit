@@ -221,7 +221,7 @@ Float MoleculeAligner::rmsd(const Coordinates *a, const Coordinates *b)
     Float sum = 0;
 
     for(int i = 0; i < size; i++){
-        sum += Point::distanceSquared(a->position(i), b->position(i));
+        sum += Point3::distanceSquared(a->position(i), b->position(i));
     }
 
     return sqrt(sum / size);

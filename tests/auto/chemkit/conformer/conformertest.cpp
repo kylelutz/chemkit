@@ -49,21 +49,21 @@ void ConformerTest::atomPosition()
     chemkit::Molecule molecule;
     chemkit::Atom *atom = molecule.addAtom("C");
     atom->setPosition(1, 2, 3);
-    QCOMPARE(atom->position(), chemkit::Point(1, 2, 3));
+    QCOMPARE(atom->position(), chemkit::Point3(1, 2, 3));
 
     chemkit::Conformer *conformer = molecule.addConformer();
     QVERIFY(conformer != 0);
 
-    conformer->setPosition(atom, chemkit::Point(3, 2, 1));
-    QCOMPARE(conformer->position(atom), chemkit::Point(3, 2, 1));
-    QCOMPARE(atom->position(), chemkit::Point(1, 2, 3));
+    conformer->setPosition(atom, chemkit::Point3(3, 2, 1));
+    QCOMPARE(conformer->position(atom), chemkit::Point3(3, 2, 1));
+    QCOMPARE(atom->position(), chemkit::Point3(1, 2, 3));
 
     chemkit::Conformer *originalConformer = molecule.conformer();
     QVERIFY(originalConformer != 0);
 
     molecule.setConformer(conformer);
-    QCOMPARE(atom->position(), chemkit::Point(3, 2, 1));
-    QCOMPARE(originalConformer->position(atom), chemkit::Point(1, 2, 3));
+    QCOMPARE(atom->position(), chemkit::Point3(3, 2, 1));
+    QCOMPARE(originalConformer->position(atom), chemkit::Point3(1, 2, 3));
 }
 
 QTEST_APPLESS_MAIN(ConformerTest)

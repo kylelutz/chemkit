@@ -20,27 +20,42 @@
 **
 ******************************************************************************/
 
-#ifndef CHEMKIT_POINT_H
-#define CHEMKIT_POINT_H
+#ifndef CHEMKIT_POINT3_INLINE_H
+#define CHEMKIT_POINT3_INLINE_H
 
-#include "chemkit.h"
-
-#include "genericpoint.h"
+#include "point3.h"
 
 namespace chemkit {
 
-class CHEMKIT_EXPORT Point : public GenericPoint<Float>
+// === Point3 ============================================================== //
+/// \class Point3 point3.h chemkit/point3.h
+/// \ingroup chemkit
+/// \brief The Point3 class represent a location in three-dimensional
+///        space.
+
+// --- Construction and Destruction ---------------------------------------- //
+/// Create a new point at (\c 0, \c 0, \c 0).
+inline Point3::Point3()
+    : GenericPoint<Float>()
 {
-    public:
-        // construction and destruction
-        Point();
-        Point(Float x, Float y, Float z);
-        Point(const GenericPoint<Float> &point);
-        Point(const StaticVector<Float, 3> &vector);
-};
+}
+
+/// Create a new point at (\p x, \p y, \p z).
+inline Point3::Point3(Float x, Float y, Float z)
+    : GenericPoint<Float>(x, y, z)
+{
+}
+
+inline Point3::Point3(const GenericPoint<Float> &point)
+    : GenericPoint<Float>(point)
+{
+}
+
+inline Point3::Point3(const StaticVector<Float, 3> &vector)
+    : GenericPoint<Float>(vector)
+{
+}
 
 } // end chemkit namespace
 
-#include "point-inline.h"
-
-#endif // CHEMKIT_POINT_H
+#endif // CHEMKIT_POINT3_INLINE_H

@@ -27,8 +27,8 @@
 
 #include <QtCore>
 
-#include "point.h"
 #include "matrix.h"
+#include "point3.h"
 #include "staticmatrix.h"
 
 namespace chemkit {
@@ -47,7 +47,7 @@ class CHEMKIT_EXPORT Coordinates
         Coordinates(const Molecule *molecule);
         Coordinates(const Conformer *conformer);
         Coordinates(const QList<Atom *> &atoms);
-        Coordinates(const QList<Point> &points);
+        Coordinates(const QList<Point3> &points);
         Coordinates(const Coordinates &coordinates);
         ~Coordinates();
 
@@ -58,14 +58,14 @@ class CHEMKIT_EXPORT Coordinates
         Matrix toMatrix() const;
 
         // coordinates
-        void setPosition(int index, const Point &position);
+        void setPosition(int index, const Point3 &position);
         void setPosition(int index, Float x, Float y, Float z);
-        Point position(int index) const;
+        Point3 position(int index) const;
         void setValue(int row, int column, Float value);
         Float value(int row, int column) const;
-        void append(const Point &position);
+        void append(const Point3 &position);
         void append(Float x, Float y, Float z);
-        void insert(int index, const Point &position);
+        void insert(int index, const Point3 &position);
         void insert(int index, Float x, Float y, Float z);
         void remove(int index);
 
@@ -77,8 +77,8 @@ class CHEMKIT_EXPORT Coordinates
         Float torsionAngleRadians(int i, int j, int k, int l) const;
         Float wilsonAngle(int i, int j, int k, int l) const;
         Float wilsonAngleRadians(int i, int j, int k, int l) const;
-        Point center() const;
-        Point weightedCenter(const QVector<Float> &weights) const;
+        Point3 center() const;
+        Point3 weightedCenter(const QVector<Float> &weights) const;
         void moveBy(const Vector &vector);
         void moveBy(Float x, Float y, Float z);
         Matrix distanceMatrix() const;

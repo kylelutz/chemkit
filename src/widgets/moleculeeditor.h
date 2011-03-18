@@ -68,7 +68,7 @@ class CHEMKIT_WIDGETS_EXPORT MoleculeEditor : public QObject
         Atom* addAtomCopy(const Atom *atom);
         void removeAtom(Atom *atom);
         void setAtomAtomicNumber(Atom *atom, int atomicNumber);
-        void setAtomPosition(Atom *atom, const Point &position);
+        void setAtomPosition(Atom *atom, const Point3 &position);
         Bond* addBond(Atom *a, Atom *b, int order = Bond::Single);
         void removeBond(Bond *bond);
         void setBondOrder(Bond *bond, int order);

@@ -22,9 +22,9 @@
 
 #include <QtTest>
 
-#include <chemkit/point.h>
+#include <chemkit/point3.h>
 
-class PointTest : public QObject
+class Point3Test : public QObject
 {
     Q_OBJECT
 
@@ -37,57 +37,57 @@ class PointTest : public QObject
         void midpoint();
 };
 
-void PointTest::basic()
+void Point3Test::basic()
 {
-    chemkit::Point point;
+    chemkit::Point3 point;
     QCOMPARE(point.x(), chemkit::Float(0.0));
     QCOMPARE(point.y(), chemkit::Float(0.0));
     QCOMPARE(point.z(), chemkit::Float(0.0));
 
-    point = chemkit::Point(1, 2, 3);
+    point = chemkit::Point3(1, 2, 3);
     QCOMPARE(point.x(), chemkit::Float(1.0));
     QCOMPARE(point.y(), chemkit::Float(2.0));
     QCOMPARE(point.z(), chemkit::Float(3.0));
 }
 
-void PointTest::moveBy()
+void Point3Test::moveBy()
 {
 }
 
-void PointTest::movedBy()
+void Point3Test::movedBy()
 {
 }
 
-void PointTest::isNull()
+void Point3Test::isNull()
 {
-    chemkit::Point point;
+    chemkit::Point3 point;
     QCOMPARE(point.isNull(), true);
 
-    point = chemkit::Point(1, 2, 3);
+    point = chemkit::Point3(1, 2, 3);
     QCOMPARE(point.isNull(), false);
 
-    point = chemkit::Point(0, 0, 0);
+    point = chemkit::Point3(0, 0, 0);
     QCOMPARE(point.isNull(), true);
 }
 
-void PointTest::distance()
+void Point3Test::distance()
 {
-    chemkit::Point a, b;
+    chemkit::Point3 a, b;
     QCOMPARE(a.distance(b), chemkit::Float(0.0));
 
-    a = chemkit::Point(1, 0, 0);
-    b = chemkit::Point(3, 0, 0);
+    a = chemkit::Point3(1, 0, 0);
+    b = chemkit::Point3(3, 0, 0);
     QCOMPARE(a.distance(b), chemkit::Float(2.0));
 }
 
-void PointTest::midpoint()
+void Point3Test::midpoint()
 {
-    chemkit::Point a(1, 0, 0);
-    chemkit::Point b(3, 0, 0);
+    chemkit::Point3 a(1, 0, 0);
+    chemkit::Point3 b(3, 0, 0);
 
-    chemkit::Point midpoint = a.midpoint(b);
-    QCOMPARE(midpoint, chemkit::Point(2, 0, 0));
+    chemkit::Point3 midpoint = a.midpoint(b);
+    QCOMPARE(midpoint, chemkit::Point3(2, 0, 0));
 }
 
-QTEST_APPLESS_MAIN(PointTest)
-#include "pointtest.moc"
+QTEST_APPLESS_MAIN(Point3Test)
+#include "point3test.moc"

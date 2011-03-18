@@ -28,7 +28,7 @@ namespace chemkit {
 class ScalarFieldPrivate
 {
     public:
-        Point origin;
+        Point3 origin;
         QVector<int> dimensions;
         QVector<Float> lengths;
         QVector<Float> data;
@@ -120,13 +120,13 @@ QVector<Float> ScalarField::cellDimensions() const
 }
 
 /// Sets the origin of the scalar field to \p origin.
-void ScalarField::setOrigin(const Point &origin)
+void ScalarField::setOrigin(const Point3 &origin)
 {
     d->origin = origin;
 }
 
 /// Returns the origin of the scalar field.
-Point ScalarField::origin() const
+Point3 ScalarField::origin() const
 {
     return d->origin;
 }
@@ -155,7 +155,7 @@ Float ScalarField::value(int i, int j, int k) const
 }
 
 /// Returns the value at the position relative to the origin.
-Float ScalarField::value(const Point &position) const
+Float ScalarField::value(const Point3 &position) const
 {
     Float x = position.x();
     Float y = position.y();
@@ -180,9 +180,9 @@ Float ScalarField::value(const Point &position) const
 }
 
 /// Returns the position at (\p i, \p j, \p k).
-Point ScalarField::position(int i, int j, int k) const
+Point3 ScalarField::position(int i, int j, int k) const
 {
-    return Point(i * d->lengths[0],
+    return Point3(i * d->lengths[0],
                  j * d->lengths[1],
                  k * d->lengths[2]);
 }
@@ -194,7 +194,7 @@ Vector ScalarField::gradient(int i, int j, int k) const
 }
 
 /// Returns the gradient at the position relative to the origin.
-Vector ScalarField::gradient(const Point &position) const
+Vector ScalarField::gradient(const Point3 &position) const
 {
     Float h = 1.0e-4;
 

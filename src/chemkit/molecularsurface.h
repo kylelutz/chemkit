@@ -27,7 +27,7 @@
 
 #include <QFuture>
 
-#include "point.h"
+#include "point3.h"
 
 namespace chemkit {
 
@@ -59,7 +59,7 @@ class CHEMKIT_EXPORT MolecularSurface
         const AlphaShape* alphaShape() const;
 
         // geometry
-        Point position(int index) const;
+        Point3 position(int index) const;
         Float radius(int index) const;
         Float volume() const;
         QFuture<Float> volumeAsync() const;
@@ -86,7 +86,7 @@ class CHEMKIT_EXPORT MolecularSurface
         Float diskArea(int i, int j) const;
         Float diskLength(int i, int j) const;
         Float diskRadius(int i, int j) const;
-        Point triangleDual(int i, int j, int k) const;
+        Point3 triangleDual(int i, int j, int k) const;
         Float segmentArea(int i, int j, int k) const;
         Float segmentAngle(int i, int j, int k) const;
         Float segmentLength(int i, int j, int k) const;

@@ -25,7 +25,7 @@
 
 #include "graphics.h"
 
-#include <chemkit/point.h>
+#include <chemkit/point3.h>
 #include <chemkit/genericpoint.h>
 
 namespace chemkit {
@@ -42,7 +42,7 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsPoint : public GenericPoint<GraphicsFloat>
         GraphicsPoint(const StaticVector<double, 3> &point);
 
         // properties
-        Point toPoint() const;
+        Point3 toPoint3() const;
 };
 
 } // end chemkit namespace

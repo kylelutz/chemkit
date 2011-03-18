@@ -27,7 +27,7 @@
 
 #include "geometry.h"
 
-#include "point.h"
+#include "point3.h"
 #include "vector.h"
 #include "staticmatrix.h"
 #include "staticvector.h"
@@ -55,34 +55,34 @@ namespace chemkit {
 namespace geometry {
 
 // --- Constructions ------------------------------------------------------- //
-Point circumcenter(const Point &a, const Point &b)
+Point3 circumcenter(const Point3 &a, const Point3 &b)
 {
     Q_UNUSED(a);
     Q_UNUSED(b);
 
-    return Point();
+    return Point3();
 }
 
-Point circumcenter(const Point &a, const Point &b, const Point &c)
+Point3 circumcenter(const Point3 &a, const Point3 &b, const Point3 &c)
 {
     Q_UNUSED(a);
     Q_UNUSED(b);
     Q_UNUSED(c);
 
-    return Point();
+    return Point3();
 }
 
-Point circumcenter(const Point &a, const Point &b, const Point &c, const Point &d)
+Point3 circumcenter(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d)
 {
     Q_UNUSED(a);
     Q_UNUSED(b);
     Q_UNUSED(c);
     Q_UNUSED(d);
 
-    return Point();
+    return Point3();
 }
 
-Float circumradius(const Point &a, const Point &b)
+Float circumradius(const Point3 &a, const Point3 &b)
 {
     Q_UNUSED(a);
     Q_UNUSED(b);
@@ -90,7 +90,7 @@ Float circumradius(const Point &a, const Point &b)
     return 0;
 }
 
-Float circumradius(const Point &a, const Point &b, const Point &c)
+Float circumradius(const Point3 &a, const Point3 &b, const Point3 &c)
 {
     Q_UNUSED(a);
     Q_UNUSED(b);
@@ -99,7 +99,7 @@ Float circumradius(const Point &a, const Point &b, const Point &c)
     return 0;
 }
 
-Float circumradius(const Point &a, const Point &b, const Point &c, const Point &d)
+Float circumradius(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d)
 {
     Q_UNUSED(a);
     Q_UNUSED(b);
@@ -111,7 +111,7 @@ Float circumradius(const Point &a, const Point &b, const Point &c, const Point &
 
 /// Returns the position of a point orthogonal to the weighted
 /// points (a, b).
-Point orthocenter(const Point &a, const Point &b, Float wa, Float wb)
+Point3 orthocenter(const Point3 &a, const Point3 &b, Float wa, Float wb)
 {
     double l = (1.0/2.0) - ((wa - wb) / (2.0 * (a - b).lengthSquared()));
 
@@ -120,7 +120,7 @@ Point orthocenter(const Point &a, const Point &b, Float wa, Float wb)
 
 /// Returns the position of a point orthogonal to the weighted
 /// points (a, b, c).
-Point orthocenter(const Point &a, const Point &b, const Point &c, Float wa, Float wb, Float wc)
+Point3 orthocenter(const Point3 &a, const Point3 &b, const Point3 &c, Float wa, Float wb, Float wc)
 {
     // a1 = | a.y a.z 1 |
     //      | b.y b.z 1 |
@@ -192,12 +192,12 @@ Point orthocenter(const Point &a, const Point &b, const Point &c, Float wa, Floa
               a1,    a2,    a4, 0;
     double dz = matrix.determinant();
 
-    return Point(dx/d0, dy/d0, dz/d0);
+    return Point3(dx/d0, dy/d0, dz/d0);
 }
 
 /// Returns the position of a point orthogonal to the weighted
 /// points (a, b, c, d).
-Point orthocenter(const Point &a, const Point &b, const Point &c, const Point &d, Float wa, Float wb, Float wc, Float wd)
+Point3 orthocenter(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d, Float wa, Float wb, Float wc, Float wd)
 {
     double i0 = (1.0/2.0) * (a.dot(a) - wa);
     double j0 = (1.0/2.0) * (b.dot(b) - wb);
@@ -230,12 +230,12 @@ Point orthocenter(const Point &a, const Point &b, const Point &c, const Point &d
               d.x(), d.y(), l0, 1;
     double dz = matrix.determinant();
 
-    return Point(dx/d0, dy/d0, dz/d0);
+    return Point3(dx/d0, dy/d0, dz/d0);
 }
 
 /// Returns the radius of a point orthogonal to the edge with
 /// weighted verticies (\p a, \p b).
-Float orthoradius(const Point &a, const Point &b, Float wa, Float wb)
+Float orthoradius(const Point3 &a, const Point3 &b, Float wa, Float wb)
 {
     GenericVector<double> ap = a - orthocenter(a, b, wa, wb);
 
@@ -244,7 +244,7 @@ Float orthoradius(const Point &a, const Point &b, Float wa, Float wb)
 
 /// Returns the radius of a point orthogonal to the triangle
 /// with weighted verticies (\p a, \p b, \p c).
-Float orthoradius(const Point &a, const Point &b, const Point &c, Float wa, Float wb, Float wc)
+Float orthoradius(const Point3 &a, const Point3 &b, const Point3 &c, Float wa, Float wb, Float wc)
 {
     GenericVector<double> r = a - c;
     GenericVector<double> s = b - c;
@@ -271,7 +271,7 @@ Float orthoradius(const Point &a, const Point &b, const Point &c, Float wa, Floa
 
 /// Returns the radius of a point orthogonal to the tetrahedron
 /// with weighted verticies (\p a, \p b, \p c, \p d).
-Float orthoradius(const Point &a, const Point &b, const Point &c, const Point &d, Float wa, Float wb, Float wc, Float wd)
+Float orthoradius(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d, Float wa, Float wb, Float wc, Float wd)
 {
     GenericVector<double> t = a - d;
     GenericVector<double> u = b - d;
@@ -290,14 +290,14 @@ Float orthoradius(const Point &a, const Point &b, const Point &c, const Point &d
 
 /// Returns the area of the triangle with verticies (\p a, \p b,
 /// \p c).
-Float triangleArea(const Point &a, const Point &b, const Point &c)
+Float triangleArea(const Point3 &a, const Point3 &b, const Point3 &c)
 {
     return (1.0/2.0) * (b - a).cross(c - a).length();
 }
 
 /// Returns the volume of the tetrahedron with verticies (\p a, \p b,
 /// \p c, \p d).
-Float tetrahedronVolume(const Point &a, const Point &b, const Point &c, const Point &d)
+Float tetrahedronVolume(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d)
 {
     return (1.0/6.0) * planeOrientation(a, b, c, d);
 }
@@ -324,7 +324,7 @@ Float tetrahedronVolume(const Point &a, const Point &b, const Point &c, const Po
 ///   \right|
 /// \f]
 **/
-Float planeOrientation(const Point &a, const Point &b, const Point &c, const Point &p)
+Float planeOrientation(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &p)
 {
     GenericVector<double> t = a - p;
     GenericVector<double> u = b - p;
@@ -355,7 +355,7 @@ Float planeOrientation(const Point &a, const Point &b, const Point &c, const Poi
 ///   \right|
 /// \f]
 **/
-Float sphereOrientation(const Point &a, const Point &b, const Point &c, const Point &d, const Point &p)
+Float sphereOrientation(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d, const Point3 &p)
 {
     GenericVector<double> t = a - p;
     GenericVector<double> u = b - p;
@@ -394,7 +394,7 @@ Float sphereOrientation(const Point &a, const Point &b, const Point &c, const Po
 ///   \right|
 /// \f]
 **/
-Float sphereOrientation(const Point &a, const Point &b, const Point &c, const Point &d, const Point &p, Float wa, Float wb, Float wc, Float wd, Float wp)
+Float sphereOrientation(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d, const Point3 &p, Float wa, Float wb, Float wc, Float wd, Float wp)
 {
     GenericVector<double> t = a - p;
     GenericVector<double> u = b - p;

@@ -60,7 +60,7 @@ class BuildTool : public QObject, public BuilderTool
         chemkit::Atom* addAtom(int atomicNumber);
         void removeAtom(chemkit::Atom *atom);
         void setAtomAtomicNumber(chemkit::Atom *atom, int atomicNumber);
-        void setAtomPosition(chemkit::Atom *atom, const chemkit::Point &position);
+        void setAtomPosition(chemkit::Atom *atom, const chemkit::Point3 &position);
         chemkit::Bond* addBond(chemkit::Atom *a, chemkit::Atom *b, int order = chemkit::Bond::Single);
         void removeBond(chemkit::Bond *bond);
         void setBondOrder(chemkit::Bond *bond, int order);

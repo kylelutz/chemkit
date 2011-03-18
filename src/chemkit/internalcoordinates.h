@@ -25,7 +25,7 @@
 
 #include "chemkit.h"
 
-#include "point.h"
+#include "point3.h"
 
 namespace chemkit {
 

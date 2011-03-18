@@ -439,17 +439,17 @@ void MoleculeTest::distance()
 void MoleculeTest::center()
 {
     chemkit::Molecule molecule;
-    QCOMPARE(molecule.center(), chemkit::Point(0, 0, 0));
+    QCOMPARE(molecule.center(), chemkit::Point3(0, 0, 0));
 
     chemkit::Atom *H1 = molecule.addAtom("H");
-    QCOMPARE(molecule.center(), chemkit::Point(0, 0, 0));
+    QCOMPARE(molecule.center(), chemkit::Point3(0, 0, 0));
 
     H1->setPosition(1.0, 0, 0);
-    QCOMPARE(molecule.center(), chemkit::Point(1.0, 0, 0));
+    QCOMPARE(molecule.center(), chemkit::Point3(1.0, 0, 0));
 
     chemkit::Atom *H2 = molecule.addAtom("H");
     H2->setPosition(3.0, 0, 0);
-    QCOMPARE(molecule.center(), chemkit::Point(2.0, 0, 0));
+    QCOMPARE(molecule.center(), chemkit::Point3(2.0, 0, 0));
 }
 
 void MoleculeTest::bondAngle()
@@ -542,19 +542,19 @@ void MoleculeTest::addConformer()
     chemkit::Molecule molecule;
     chemkit::Atom *Na1 = molecule.addAtom("Na");
     chemkit::Atom *Cl2 = molecule.addAtom("Cl");
-    QCOMPARE(molecule.center(), chemkit::Point(0, 0, 0));
+    QCOMPARE(molecule.center(), chemkit::Point3(0, 0, 0));
 
     chemkit::Conformer *conformer = molecule.addConformer();
-    conformer->setPosition(Na1, chemkit::Point(1, 0, 0));
-    conformer->setPosition(Cl2, chemkit::Point(3, 0, 0));
-    QCOMPARE(molecule.center(), chemkit::Point(0, 0, 0));
+    conformer->setPosition(Na1, chemkit::Point3(1, 0, 0));
+    conformer->setPosition(Cl2, chemkit::Point3(3, 0, 0));
+    QCOMPARE(molecule.center(), chemkit::Point3(0, 0, 0));
 
     chemkit::Conformer *originalConformer = molecule.conformer();
     molecule.setConformer(conformer);
-    QCOMPARE(molecule.center(), chemkit::Point(2, 0, 0));
+    QCOMPARE(molecule.center(), chemkit::Point3(2, 0, 0));
 
     molecule.setConformer(originalConformer);
-    QCOMPARE(molecule.center(), chemkit::Point(0, 0, 0));
+    QCOMPARE(molecule.center(), chemkit::Point3(0, 0, 0));
 }
 
 void MoleculeTest::conformers()
@@ -568,15 +568,15 @@ void MoleculeTest::conformers()
 
     chemkit::Conformer *conformer = molecule.addConformer();
     QCOMPARE(molecule.conformerCount(), 2);
-    conformer->setPosition(C1, chemkit::Point(1, 2, 3));
-    conformer->setPosition(C2, chemkit::Point(2, 4, 6));
+    conformer->setPosition(C1, chemkit::Point3(1, 2, 3));
+    conformer->setPosition(C2, chemkit::Point3(2, 4, 6));
 
-    QCOMPARE(C1->position(), chemkit::Point(0, 0, 0));
-    QCOMPARE(C2->position(), chemkit::Point(0, 0, 0));
+    QCOMPARE(C1->position(), chemkit::Point3(0, 0, 0));
+    QCOMPARE(C2->position(), chemkit::Point3(0, 0, 0));
 
     molecule.setConformer(conformer);
-    QCOMPARE(C1->position(), chemkit::Point(1, 2, 3));
-    QCOMPARE(C2->position(), chemkit::Point(2, 4, 6));
+    QCOMPARE(C1->position(), chemkit::Point3(1, 2, 3));
+    QCOMPARE(C2->position(), chemkit::Point3(2, 4, 6));
 }
 
 QTEST_APPLESS_MAIN(MoleculeTest)

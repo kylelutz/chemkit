@@ -31,7 +31,7 @@ class ConformerPrivate
 {
     public:
         const Molecule *molecule;
-        QHash<const Atom *, Point> coordinates;
+        QHash<const Atom *, Point3> coordinates;
 };
 
 // === Conformer =========================================================== //
@@ -68,13 +68,13 @@ const Molecule* Conformer::molecule() const
 
 // --- Coordinates --------------------------------------------------------- //
 /// Sets the coordinates for \p atom to \p position.
-void Conformer::setPosition(const Atom *atom, const Point &position)
+void Conformer::setPosition(const Atom *atom, const Point3 &position)
 {
     d->coordinates[atom] = position;
 }
 
 /// Returns the position of the atom in the conformer.
-Point Conformer::position(const Atom *atom) const
+Point3 Conformer::position(const Atom *atom) const
 {
     return d->coordinates.value(atom, atom->position());
 }

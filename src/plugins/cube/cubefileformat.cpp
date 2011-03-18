@@ -84,7 +84,7 @@ bool CubeFileFormat::read(QIODevice *iodev, chemkit::ChemicalFile *file)
         }
 
         // read position
-        chemkit::Point position(lineItems[2].toDouble(),
+        chemkit::Point3 position(lineItems[2].toDouble(),
                                 lineItems[3].toDouble(),
                                 lineItems[4].toDouble());
 

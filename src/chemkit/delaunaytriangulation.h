@@ -27,7 +27,7 @@
 
 #include <QtCore>
 
-#include "point.h"
+#include "point3.h"
 
 namespace chemkit {
 
@@ -38,13 +38,13 @@ class CHEMKIT_EXPORT DelaunayTriangulation
 {
     public:
         // construction and destruction
-        DelaunayTriangulation(const QVector<Point> &points);
-        DelaunayTriangulation(const QVector<Point> &points, const QVector<Float> &weights);
+        DelaunayTriangulation(const QVector<Point3> &points);
+        DelaunayTriangulation(const QVector<Point3> &points, const QVector<Float> &weights);
         ~DelaunayTriangulation();
 
         // properties
         int size() const;
-        Point position(int vertex) const;
+        Point3 position(int vertex) const;
         Float weight(int vertex) const;
         bool isWeighted() const;
 
@@ -65,7 +65,7 @@ class CHEMKIT_EXPORT DelaunayTriangulation
     private:
         // internal methods
         void triangulate(bool weighted);
-        int location(const Point &point) const;
+        int location(const Point3 &point) const;
         void insertPoint(int index);
         QList<int> findContainingTetrahedra(int vertex) const;
         bool isExternal(int tetrahedron) const;

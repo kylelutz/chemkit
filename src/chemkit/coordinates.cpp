@@ -54,7 +54,7 @@ Coordinates::Coordinates(const Molecule *molecule)
     int size = molecule->size();
 
     for(int i = 0; i < size; i++){
-        Point position = molecule->atom(i)->position();
+        Point3 position = molecule->atom(i)->position();
         m_matrix.setValue(i, 0, position.x());
         m_matrix.setValue(i, 1, position.y());
         m_matrix.setValue(i, 2, position.z());
@@ -69,7 +69,7 @@ Coordinates::Coordinates(const Conformer *conformer)
     int size = conformer->molecule()->size();
 
     for(int i = 0; i < size; i++){
-        Point position = conformer->position(conformer->molecule()->atom(i));
+        Point3 position = conformer->position(conformer->molecule()->atom(i));
         m_matrix.setValue(i, 0, position.x());
         m_matrix.setValue(i, 1, position.y());
         m_matrix.setValue(i, 2, position.z());
@@ -84,7 +84,7 @@ Coordinates::Coordinates(const QList<Atom *> &atoms)
     int size = atoms.size();
 
     for(int i = 0; i < size; i++){
-        Point position = atoms[i]->position();
+        Point3 position = atoms[i]->position();
         m_matrix.setValue(i, 0, position.x());
         m_matrix.setValue(i, 1, position.y());
         m_matrix.setValue(i, 2, position.z());
@@ -92,11 +92,11 @@ Coordinates::Coordinates(const QList<Atom *> &atoms)
 }
 
 /// Creates a new coordinate matrix that contains \p points.
-Coordinates::Coordinates(const QList<Point> &points)
+Coordinates::Coordinates(const QList<Point3> &points)
     : m_matrix(points.size(), 3)
 {
     for(int i = 0; i < points.size(); i++){
-        Point position = points[i];
+        Point3 position = points[i];
         m_matrix.setValue(i, 0, position.x());
         m_matrix.setValue(i, 1, position.y());
         m_matrix.setValue(i, 2, position.z());
@@ -141,7 +141,7 @@ Matrix Coordinates::toMatrix() const
 
 // --- Coordinates --------------------------------------------------------- //
 /// Sets the position at \p index to \p position.
-void Coordinates::setPosition(int index, const Point &position)
+void Coordinates::setPosition(int index, const Point3 &position)
 {
     m_matrix.setValue(index, 0, position.x());
     m_matrix.setValue(index, 1, position.y());
@@ -151,15 +151,15 @@ void Coordinates::setPosition(int index, const Point &position)
 /// Sets the position at \p index to (\p x, \p y, \p z).
 void Coordinates::setPosition(int index, Float x, Float y, Float z)
 {
-    setPosition(index, Point(x, y, z));
+    setPosition(index, Point3(x, y, z));
 }
 
 /// Returns the coordinates at \p index.
-Point Coordinates::position(int index) const
+Point3 Coordinates::position(int index) const
 {
-    return Point(m_matrix(index, 0),
-                 m_matrix(index, 1),
-                 m_matrix(index, 2));
+    return Point3(m_matrix(index, 0),
+                  m_matrix(index, 1),
+                  m_matrix(index, 2));
 }
 
 /// Sets the value at \p row and \p column to \p value.
@@ -175,7 +175,7 @@ Float Coordinates::value(int row, int column) const
 }
 
 /// Appends \p position to the coordinates.
-void Coordinates::append(const Point &position)
+void Coordinates::append(const Point3 &position)
 {
     insert(size(), position);
 }
@@ -183,11 +183,11 @@ void Coordinates::append(const Point &position)
 /// Appends the point (\p x, \p y, \p z) to the coordinates.
 void Coordinates::append(Float x, Float y, Float z)
 {
-    append(Point(x, y, z));
+    append(Point3(x, y, z));
 }
 
 /// Inserts \p position at \p index.
-void Coordinates::insert(int index, const Point &position)
+void Coordinates::insert(int index, const Point3 &position)
 {
     // resize to make space for the new position
     if(index >= size()){
@@ -209,7 +209,7 @@ void Coordinates::insert(int index, const Point &position)
 /// Inserts the point (\p x, \p y, \p z) at \p index.
 void Coordinates::insert(int index, Float x, Float y, Float z)
 {
-    insert(index, Point(x, y, z));
+    insert(index, Point3(x, y, z));
 }
 
 /// Removes the position at \p index.
@@ -227,57 +227,57 @@ void Coordinates::remove(int index)
 /// returned distance is in Angstroms.
 Float Coordinates::distance(int i, int j) const
 {
-    return Point::distance(position(i), position(j));
+    return Point3::distance(position(i), position(j));
 }
 
 /// Returns the bond angle between the points at \p i, \p j, and
 /// \p k. The returned angle is in degrees.
 Float Coordinates::angle(int i, int j, int k) const
 {
-    return Point::angle(position(i), position(j), position(k));
+    return Point3::angle(position(i), position(j), position(k));
 }
 
 /// Returns the bond angle between the points at \p i, \p j, and
 /// \p k. The returned angle is in radians.
 Float Coordinates::angleRadians(int i, int j, int k) const
 {
-    return Point::angleRadians(position(i), position(j), position(k));
+    return Point3::angleRadians(position(i), position(j), position(k));
 }
 
 /// Returns the torsion angle between the points at \p i, \p j, \p k,
 /// and \p l. The returned angle is in degrees.
 Float Coordinates::torsionAngle(int i, int j, int k, int l) const
 {
-    return Point::torsionAngle(position(i), position(j), position(k), position(l));
+    return Point3::torsionAngle(position(i), position(j), position(k), position(l));
 }
 
 /// Returns the torsion angle between the points at \p i, \p j, \p k,
 /// and \p l. The returned angle is in radians.
 Float Coordinates::torsionAngleRadians(int i, int j, int k, int l) const
 {
-    return Point::torsionAngleRadians(position(i), position(j), position(k), position(l));
+    return Point3::torsionAngleRadians(position(i), position(j), position(k), position(l));
 }
 
 /// Returns the wilson angle between the points at \p i, \p j, \p k
 /// and \p l. The returned angle is in degrees.
 Float Coordinates::wilsonAngle(int i, int j, int k, int l) const
 {
-    return Point::wilsonAngle(position(i), position(j), position(k), position(l));
+    return Point3::wilsonAngle(position(i), position(j), position(k), position(l));
 }
 
 /// Returns the wilson angle between the points at \p i, \p j, \p k
 /// and \p l. The returned angle is in radians.
 Float Coordinates::wilsonAngleRadians(int i, int j, int k, int l) const
 {
-    return Point::wilsonAngleRadians(position(i), position(j), position(k), position(l));
+    return Point3::wilsonAngleRadians(position(i), position(j), position(k), position(l));
 }
 
 /// Returns the center of the positions in the coordinates. This is
 /// also known as the centroid.
-Point Coordinates::center() const
+Point3 Coordinates::center() const
 {
     if(isEmpty()){
-        return Point();
+        return Point3();
     }
 
     // sums for each component
@@ -293,17 +293,17 @@ Point Coordinates::center() const
 
     int n = size();
 
-    return Point(sx/n, sy/n, sz/n);
+    return Point3(sx/n, sy/n, sz/n);
 }
 
 /// Returns the center of the coordinates after weighting each
 /// position with \p weights.
-Point Coordinates::weightedCenter(const QVector<Float> &weights) const
+Point3 Coordinates::weightedCenter(const QVector<Float> &weights) const
 {
     Q_ASSERT(size() == weights.size());
 
     if(isEmpty()){
-        return Point();
+        return Point3();
     }
 
     // sums for each component
@@ -326,7 +326,7 @@ Point Coordinates::weightedCenter(const QVector<Float> &weights) const
 
     int n = sw * size();
 
-    return Point(sx/n, sy/n, sz/n);
+    return Point3(sx/n, sy/n, sz/n);
 }
 
 /// Moves all of the coordinates by \p vector.
@@ -373,8 +373,8 @@ Coordinates Coordinates::add(const Coordinates &coordinates) const
     Coordinates result(size);
 
     for(int i = 0; i < size; i++){
-        const Point &a = position(i);
-        const Point &b = coordinates.position(i);
+        const Point3 &a = position(i);
+        const Point3 &b = coordinates.position(i);
 
         result.setPosition(i, a + b);
     }
@@ -391,8 +391,8 @@ Coordinates Coordinates::subtract(const Coordinates &coordinates) const
     Coordinates result(size);
 
     for(int i = 0; i < size; i++){
-        const Point &a = position(i);
-        const Point &b = coordinates.position(i);
+        const Point3 &a = position(i);
+        const Point3 &b = coordinates.position(i);
 
         result.setPosition(i, a - b);
     }
