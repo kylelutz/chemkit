@@ -29,7 +29,7 @@ class GraphicsLightPrivate
 {
     public:
         Point3g position;
-        GraphicsVector direction;
+        Vector3g direction;
 };
 
 // === GraphicsLight ======================================================= //
@@ -65,13 +65,13 @@ Point3g GraphicsLight::position() const
 }
 
 /// Sets the direction the camera points to \p direction.
-void GraphicsLight::setDirection(const GraphicsVector &direction)
+void GraphicsLight::setDirection(const Vector3g &direction)
 {
     d->direction = direction;
 }
 
 /// Returns the direction that the camera points.
-GraphicsVector GraphicsLight::direction() const
+Vector3g GraphicsLight::direction() const
 {
     return d->direction;
 }

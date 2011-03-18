@@ -26,8 +26,8 @@
 #include "graphics.h"
 
 #include "point3g.h"
+#include "vector3g.h"
 #include "graphicsray.h"
-#include "graphicsvector.h"
 
 #include <chemkit/staticmatrix.h>
 
@@ -50,11 +50,11 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsTransform
         GraphicsTransform inverted() const;
         GraphicsRay multiply(const GraphicsRay &ray) const;
         Point3g multiply(const Point3g &point) const;
-        GraphicsVector multiply(const GraphicsVector &vector) const;
+        Vector3g multiply(const Vector3g &vector) const;
         StaticVector<GraphicsFloat, 4> multiply(const StaticVector<GraphicsFloat, 4> &vector);
         GraphicsTransform multiply(const GraphicsTransform &transform) const;
         Point3g inverseMultiply(const Point3g &point) const;
-        GraphicsVector inverseMultiply(const GraphicsVector &vector) const;
+        Vector3g inverseMultiply(const Vector3g &vector) const;
         StaticVector<GraphicsFloat, 4> inverseMultiply(const StaticVector<GraphicsFloat, 4> &vector);
 
         // operators
@@ -62,7 +62,7 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsTransform
         GraphicsFloat& operator()(int row, int column);
         GraphicsRay operator*(const GraphicsRay &ray) const;
         Point3g operator*(const Point3g &point) const;
-        GraphicsVector operator*(const GraphicsVector &vector) const;
+        Vector3g operator*(const Vector3g &vector) const;
         GraphicsTransform operator*(const GraphicsTransform &transform) const;
         GraphicsTransform& operator*=(const GraphicsTransform &transform);
         GraphicsTransform& operator=(const GraphicsTransform &transform);
@@ -70,8 +70,8 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsTransform
 
         // static methods
         static GraphicsTransform identity();
-        static GraphicsTransform translation(const GraphicsVector &vector);
-        static GraphicsTransform rotation(const GraphicsVector &axis, GraphicsFloat angle);
+        static GraphicsTransform translation(const Vector3g &vector);
+        static GraphicsTransform rotation(const Vector3g &axis, GraphicsFloat angle);
         static GraphicsTransform perspective(GraphicsFloat angle, GraphicsFloat aspectRatio, GraphicsFloat nearDistance, GraphicsFloat farDistance);
         static GraphicsTransform frustum(GraphicsFloat left, GraphicsFloat right, GraphicsFloat top, GraphicsFloat bottom, GraphicsFloat nearDistance, GraphicsFloat farDistance);
         static GraphicsTransform orthographic(GraphicsFloat left, GraphicsFloat right, GraphicsFloat top, GraphicsFloat bottom, GraphicsFloat near, GraphicsFloat far);

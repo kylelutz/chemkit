@@ -122,7 +122,7 @@ Point3g GraphicsTransform::multiply(const Point3g &point) const
 }
 
 /// Multiplies \p vector by the transform.
-GraphicsVector GraphicsTransform::multiply(const GraphicsVector &vector) const
+Vector3g GraphicsTransform::multiply(const Vector3g &vector) const
 {
     StaticVector<GraphicsFloat, 4> vector4;
     vector4[0] = vector.x();
@@ -132,7 +132,7 @@ GraphicsVector GraphicsTransform::multiply(const GraphicsVector &vector) const
 
     vector4 = m_matrix->multiply(vector4);
 
-    return GraphicsVector(vector4[0], vector4[1], vector4[2]);
+    return Vector3g(vector4[0], vector4[1], vector4[2]);
 }
 
 /// Multiplies \p transform by the transform.
@@ -161,7 +161,7 @@ Point3g GraphicsTransform::inverseMultiply(const Point3g &point) const
 }
 
 /// Multiplies \p vector by the inverse of the transform.
-GraphicsVector GraphicsTransform::inverseMultiply(const GraphicsVector &vector) const
+Vector3g GraphicsTransform::inverseMultiply(const Vector3g &vector) const
 {
     StaticVector<GraphicsFloat, 4> vector4;
     vector4[0] = vector.x();
@@ -171,7 +171,7 @@ GraphicsVector GraphicsTransform::inverseMultiply(const GraphicsVector &vector) 
 
     vector4 = m_matrix->inverted().multiply(vector4);
 
-    return GraphicsVector(vector4[0], vector4[1], vector4[2]);
+    return Vector3g(vector4[0], vector4[1], vector4[2]);
 }
 
 StaticVector<GraphicsFloat, 4> GraphicsTransform::inverseMultiply(const StaticVector<GraphicsFloat, 4> &vector)
@@ -200,7 +200,7 @@ Point3g GraphicsTransform::operator*(const Point3g &point) const
     return multiply(point);
 }
 
-GraphicsVector GraphicsTransform::operator*(const GraphicsVector &vector) const
+Vector3g GraphicsTransform::operator*(const Vector3g &vector) const
 {
     return multiply(vector);
 }
@@ -268,7 +268,7 @@ GraphicsTransform GraphicsTransform::identity()
 ///   \right]
 /// \f]
 **/
-GraphicsTransform GraphicsTransform::translation(const GraphicsVector &vector)
+GraphicsTransform GraphicsTransform::translation(const Vector3g &vector)
 {
     GraphicsTransform transform = identity();
 
@@ -281,11 +281,11 @@ GraphicsTransform GraphicsTransform::translation(const GraphicsVector &vector)
 
 /// Returns a transform that represents a rotation by \p angle
 /// degrees around \p axis.
-GraphicsTransform GraphicsTransform::rotation(const GraphicsVector &axis, GraphicsFloat angle)
+GraphicsTransform GraphicsTransform::rotation(const Vector3g &axis, GraphicsFloat angle)
 {
     GraphicsTransform transform = identity();
 
-    GraphicsVector v = axis.normalized();
+    Vector3g v = axis.normalized();
     GraphicsFloat c = cos(angle * chemkit::constants::DegreesToRadians);
     GraphicsFloat s = sin(angle * chemkit::constants::DegreesToRadians);
 

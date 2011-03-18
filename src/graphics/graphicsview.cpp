@@ -23,12 +23,12 @@
 #include "graphicsview.h"
 
 #include "graphics.h"
+#include "vector3g.h"
 #include "graphicsitem.h"
 #include "graphicstool.h"
 #include "graphicslight.h"
 #include "graphicsscene.h"
 #include "graphicscamera.h"
-#include "graphicsvector.h"
 #include "graphicsoverlay.h"
 #include "graphicspainter.h"
 #include "graphicsmaterial.h"
@@ -599,9 +599,9 @@ void GraphicsView::paintGL()
     if(camera()->changed()){
         glMatrixMode(GL_MODELVIEW);
 
-        GraphicsVector f = camera()->direction();
-        GraphicsVector s = f.cross(camera()->upVector());
-        GraphicsVector u = s.cross(f);
+        Vector3g f = camera()->direction();
+        Vector3g s = f.cross(camera()->upVector());
+        Vector3g u = s.cross(f);
 
         d->modelViewTransform << s.x(),  s.y(),  s.z(), 0,
                                  u.x(),  u.y(),  u.z(), 0,

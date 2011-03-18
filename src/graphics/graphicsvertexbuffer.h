@@ -26,7 +26,7 @@
 #include "graphics.h"
 
 #include "point3g.h"
-#include "graphicsvector.h"
+#include "vector3g.h"
 
 namespace chemkit {
 
@@ -58,8 +58,8 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsVertexBuffer
         int vertexCount() const;
 
         // normals
-        void setNormals(const QVector<GraphicsVector> &normals);
-        QVector<GraphicsVector> normals() const;
+        void setNormals(const QVector<Vector3g> &normals);
+        QVector<Vector3g> normals() const;
         int normalCount() const;
 
         // indicies

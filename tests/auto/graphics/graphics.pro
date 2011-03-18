@@ -3,6 +3,6 @@ SUBDIRS = graphicscamera \
     graphicsquaternion \
     graphicsray \
     graphicsscene \
-    graphicsvector \
     graphicstransform \
-    point3g
+    point3g \
+    vector3g

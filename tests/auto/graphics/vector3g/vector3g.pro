@@ -2,4 +2,4 @@ QT += testlib opengl
 CONFIG += console
 INCLUDEPATH += ../../../../include/
 LIBS = -L../../../../lib -lchemkit
-SOURCES += graphicsvectortest.cpp
+SOURCES += vector3gtest.cpp

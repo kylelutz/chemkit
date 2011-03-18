@@ -380,7 +380,7 @@ GraphicsFloat vertexOffset(GraphicsFloat a, GraphicsFloat b, GraphicsFloat isova
 GraphicsVertexBuffer* marchCubes(const ScalarField *scalarField, GraphicsFloat isovalue)
 {
     QVector<Point3g> verticies;
-    QVector<GraphicsVector> normals;
+    QVector<Vector3g> normals;
     QVector<unsigned short> indicies;
 
     GraphicsFloat xStep = scalarField->cellWidth();
@@ -468,7 +468,7 @@ class GraphicsIsosurfaceItemPrivate
         QColor color;
         QVector<GraphicsFloat> values;
         QVector<int> voxelCounts;
-        QVector<GraphicsVector> axii;
+        QVector<Vector3g> axii;
         const ScalarField *scalarField;
         GraphicsVertexBuffer *buffer;
 };

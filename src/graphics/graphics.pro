@@ -66,12 +66,12 @@ HEADERS += graphics.h \
     graphicssphereitem.h \
     graphicstool.h \
     graphicstransform.h \
-    graphicsvector.h \
-    graphicsvector-inline.h \
     graphicsview.h \
     graphicsvertexbuffer.h \
     point3g.h \
-    point3g-inline.h
+    point3g-inline.h \
+    vector3g.h \
+    vector3g-inline.h
 RESOURCES = shaders.qrc
 OTHER_FILES += shaders/phong.frag \
     shaders/phong.vert \

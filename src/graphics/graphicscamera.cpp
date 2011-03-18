@@ -31,8 +31,8 @@ class GraphicsCameraPrivate
 {
     public:
         Point3g position;
-        GraphicsVector direction;
-        GraphicsVector upVector;
+        Vector3g direction;
+        Vector3g upVector;
         Point3g focus;
         GraphicsView *view;
         bool changed;
@@ -50,8 +50,8 @@ GraphicsCamera::GraphicsCamera()
     : d(new GraphicsCameraPrivate)
 {
     d->position = Point3g(0, 0, 0);
-    d->direction = -GraphicsVector::Z();
-    d->upVector = GraphicsVector::Y();
+    d->direction = -Vector3g::Z();
+    d->upVector = Vector3g::Y();
     d->focus = Point3g(0, 0, 0);
     d->changed = true;
     d->view = 0;
@@ -62,8 +62,8 @@ GraphicsCamera::GraphicsCamera(const Point3g &position)
     : d(new GraphicsCameraPrivate)
 {
     d->position = position;
-    d->direction = -GraphicsVector::Z();
-    d->upVector = GraphicsVector::Y();
+    d->direction = -Vector3g::Z();
+    d->upVector = Vector3g::Y();
     d->focus = Point3g(0, 0, 0);
     d->changed = true;
     d->view = 0;
@@ -74,8 +74,8 @@ GraphicsCamera::GraphicsCamera(GraphicsFloat x, GraphicsFloat y, GraphicsFloat z
     : d(new GraphicsCameraPrivate)
 {
     d->position = Point3g(x, y, z);
-    d->direction = -GraphicsVector::Z();
-    d->upVector = GraphicsVector::Y();
+    d->direction = -Vector3g::Z();
+    d->upVector = Vector3g::Y();
     d->focus = Point3g(0, 0, 0);
     d->changed = true;
     d->view = 0;
@@ -145,7 +145,7 @@ void GraphicsCamera::moveTo(GraphicsFloat x, GraphicsFloat y, GraphicsFloat z)
 }
 
 /// Moves the camera by \p vector.
-void GraphicsCamera::moveBy(const GraphicsVector &vector)
+void GraphicsCamera::moveBy(const Vector3g &vector)
 {
     setPosition(position().movedBy(vector));
 }
@@ -153,11 +153,11 @@ void GraphicsCamera::moveBy(const GraphicsVector &vector)
 /// Moves the camera by (\p dx, \p dy, \p dz).
 void GraphicsCamera::moveBy(GraphicsFloat dx, GraphicsFloat dy, GraphicsFloat dz)
 {
-    moveBy(GraphicsVector(dx, dy, dz));
+    moveBy(Vector3g(dx, dy, dz));
 }
 
 /// Moves the camera by \p distance in \p direction.
-void GraphicsCamera::moveBy(GraphicsFloat distance, const GraphicsVector &direction)
+void GraphicsCamera::moveBy(GraphicsFloat distance, const Vector3g &direction)
 {
     setPosition(position().movedBy(distance, direction));
 }
@@ -177,7 +177,7 @@ void GraphicsCamera::moveBackward(GraphicsFloat distance)
 /// Rotates the camera around \p axis by \p angle degrees. If
 /// \p rotateDirection is \c true the camera's direction will also
 /// be rotated.
-void GraphicsCamera::rotate(const GraphicsVector &axis, GraphicsFloat angle, bool rotateDirection)
+void GraphicsCamera::rotate(const Vector3g &axis, GraphicsFloat angle, bool rotateDirection)
 {
     setPosition(GraphicsQuaternion::rotate(position(), axis, angle));
 
@@ -207,27 +207,27 @@ void GraphicsCamera::orbit(GraphicsFloat dx, GraphicsFloat dy, bool rotateDirect
 /// pointed toward \p point.
 void GraphicsCamera::orbit(const Point3g &point, GraphicsFloat dx, GraphicsFloat dy, bool rotateDirection)
 {
-    moveBy(GraphicsVector(-point.x(), -point.y(), -point.z()));
+    moveBy(Vector3g(-point.x(), -point.y(), -point.z()));
 
-    GraphicsVector up = upVector();
-    GraphicsVector right = up.cross(direction()).normalized();
+    Vector3g up = upVector();
+    Vector3g right = up.cross(direction()).normalized();
 
     rotate(up, dx, rotateDirection);
     rotate(right, dy, rotateDirection);
 
-    moveBy(GraphicsVector(point.x(), point.y(), point.z()));
+    moveBy(Vector3g(point.x(), point.y(), point.z()));
 }
 
 // --- Orientation --------------------------------------------------------- //
 /// Sets the camera's direction.
-void GraphicsCamera::setDirection(const GraphicsVector &direction)
+void GraphicsCamera::setDirection(const Vector3g &direction)
 {
     d->direction = direction.normalized();
     setChanged(true);
 }
 
 /// Returns the camera's direction.
-GraphicsVector GraphicsCamera::direction() const
+Vector3g GraphicsCamera::direction() const
 {
     return d->direction;
 }
@@ -259,14 +259,14 @@ void GraphicsCamera::lookAt(const Point3g &point)
 }
 
 /// Sets the camera's up vector.
-void GraphicsCamera::setUpVector(const GraphicsVector &upVector)
+void GraphicsCamera::setUpVector(const Vector3g &upVector)
 {
     d->upVector = upVector.normalized();
     setChanged(true);
 }
 
 /// Returns the camera's up vector.
-GraphicsVector GraphicsCamera::upVector() const
+Vector3g GraphicsCamera::upVector() const
 {
     return d->upVector;
 }

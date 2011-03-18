@@ -38,7 +38,7 @@ namespace chemkit {
 /// The GenericVector template has one parameter:
 ///     - \b T: The coordinate type.
 ///
-/// \see Vector, GraphicsVector
+/// \see Vector3
 
 // --- Construction and Destruction ---------------------------------------- //
 /// Creates a new generic vector.

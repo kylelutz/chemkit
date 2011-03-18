@@ -28,7 +28,7 @@
 namespace chemkit {
 
 class Point3g;
-class GraphicsVector;
+class Vector3g;
 class GraphicsMaterial;
 class GraphicsVertexBuffer;
 class GraphicsPainterPrivate;
@@ -58,7 +58,7 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsPainter
         void drawCylinder(GraphicsFloat radius, GraphicsFloat length);
         void drawCylinder(const Point3g &a, const Point3g &b, GraphicsFloat radius);
         void drawCircle(GraphicsFloat radius);
-        void drawCircle(const Point3g &center, GraphicsFloat radius, const GraphicsVector &normal);
+        void drawCircle(const Point3g &center, GraphicsFloat radius, const Vector3g &normal);
         void drawTriangle(const Point3g &a, const Point3g &b, const Point3g &c);
         void drawRectangle(const Point3g &a, const Point3g &b, const Point3g &c, const Point3g &d);
         void drawSpline(const QList<Point3g> &points, GraphicsFloat radius, int order);

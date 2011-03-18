@@ -20,33 +20,16 @@
 **
 ******************************************************************************/
 
-#ifndef CHEMKIT_GRAPHICSVECTOR_H
-#define CHEMKIT_GRAPHICSVECTOR_H
+#include <QtTest>
 
-#include "graphics.h"
+#include <chemkit/vector3g.h>
 
-#include <chemkit/vector3.h>
-#include <chemkit/genericvector.h>
-
-namespace chemkit {
-
-class CHEMKIT_GRAPHICS_EXPORT GraphicsVector : public GenericVector<GraphicsFloat>
+class Vector3gTest : public QObject
 {
-    public:
-        // construction and destruction
-        GraphicsVector();
-        GraphicsVector(GraphicsFloat x, GraphicsFloat y, GraphicsFloat z);
-        GraphicsVector(const GenericVector<float> &vector);
-        GraphicsVector(const GenericVector<double> &vector);
-        GraphicsVector(const StaticVector<float, 3> &vector);
-        GraphicsVector(const StaticVector<double, 3> &vector);
+    Q_OBJECT
 
-        // properties
-        Vector3 toVector3() const;
+    private slots:
 };
 
-} // end chemkit namespace
-
-#include "graphicsvector-inline.h"
-
-#endif // CHEMKIT_GRAPHICSVECTOR_H
+QTEST_APPLESS_MAIN(Vector3gTest)
+#include "vector3gtest.moc"

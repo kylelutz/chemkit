@@ -28,7 +28,7 @@
 #include <chemkit/genericquaternion.h>
 
 #include "point3g.h"
-#include "graphicsvector.h"
+#include "vector3g.h"
 
 namespace chemkit {
 
@@ -38,21 +38,21 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsQuaternion : public GenericQuaternion<Grap
         // construction and destruction
         GraphicsQuaternion(GraphicsFloat x, GraphicsFloat y, GraphicsFloat z, GraphicsFloat r);
         GraphicsQuaternion(const Point3g &point, GraphicsFloat r);
-        GraphicsQuaternion(const GraphicsVector &vector, GraphicsFloat r);
+        GraphicsQuaternion(const Vector3g &vector, GraphicsFloat r);
         GraphicsQuaternion(const GenericQuaternion<GraphicsFloat> &quaternion);
         GraphicsQuaternion(const StaticVector<GraphicsFloat, 4> &quaternion);
 
         // properties
         Point3g toPoint3() const;
-        GraphicsVector toVector() const;
+        Vector3g toVector() const;
 
         // static methods
-        static GraphicsQuaternion rotation(const GraphicsVector &axis, GraphicsFloat angle);
-        static GraphicsQuaternion rotationRadians(const GraphicsVector &axis, GraphicsFloat angle);
-        static Point3g rotate(const Point3g &point, const GraphicsVector &axis, GraphicsFloat angle);
-        static Point3g rotateRadians(const Point3g &point, const GraphicsVector &axis, GraphicsFloat angle);
-        static GraphicsVector rotate(const GraphicsVector &vector, const GraphicsVector &axis, GraphicsFloat angle);
-        static GraphicsVector rotateRadians(const GraphicsVector &vector, const GraphicsVector &axis, GraphicsFloat angle);
+        static GraphicsQuaternion rotation(const Vector3g &axis, GraphicsFloat angle);
+        static GraphicsQuaternion rotationRadians(const Vector3g &axis, GraphicsFloat angle);
+        static Point3g rotate(const Point3g &point, const Vector3g &axis, GraphicsFloat angle);
+        static Point3g rotateRadians(const Point3g &point, const Vector3g &axis, GraphicsFloat angle);
+        static Vector3g rotate(const Vector3g &vector, const Vector3g &axis, GraphicsFloat angle);
+        static Vector3g rotateRadians(const Vector3g &vector, const Vector3g &axis, GraphicsFloat angle);
 };
 
 } // end chemkit namespace

@@ -23,8 +23,8 @@
 #include "graphicsbonditem.h"
 
 #include "point3g.h"
+#include "vector3g.h"
 #include "graphicsray.h"
-#include "graphicsvector.h"
 #include "graphicspainter.h"
 #include "graphicsmoleculeitem.h"
 
@@ -40,7 +40,7 @@ class GraphicsBondItemPrivate
         const Bond *bond;
         GraphicsFloat radius;
         GraphicsFloat maximumRadius;
-        GraphicsVector normal;
+        Vector3g normal;
         bool bondOrderVisible;
         bool atomColored;
 };
@@ -63,7 +63,7 @@ GraphicsBondItem::GraphicsBondItem(const Bond *bond, GraphicsFloat radius)
     d->bond = bond;
     d->radius = radius;
     d->maximumRadius = 0.5;
-    d->normal = -GraphicsVector::Z();
+    d->normal = -Vector3g::Z();
     d->bondOrderVisible = true;
     d->atomColored = true;
 }
@@ -110,12 +110,12 @@ GraphicsFloat GraphicsBondItem::maximumRadius() const
     return d->maximumRadius;
 }
 
-void GraphicsBondItem::setNormal(const GraphicsVector &normal)
+void GraphicsBondItem::setNormal(const Vector3g &normal)
 {
     d->normal = normal;
 }
 
-GraphicsVector GraphicsBondItem::normal() const
+Vector3g GraphicsBondItem::normal() const
 {
     return d->normal;
 }
@@ -175,7 +175,7 @@ void GraphicsBondItem::paint(GraphicsPainter *painter)
         GraphicsFloat initialOffset = 1.5 * (bondOrder - 1) * radius;
 
         // a vector pointing to the right (with normal pointing up)
-        GraphicsVector right = GraphicsVector(Point3g(atom2->position()) - Point3g(atom1->position())).cross(d->normal);
+        Vector3g right = Vector3g(Point3g(atom2->position()) - Point3g(atom1->position())).cross(d->normal);
 
         // positions for the first cylinder
         Point3g a = Point3g(atom1->position()).movedBy(-initialOffset, right);

@@ -26,7 +26,7 @@
 #include "graphics.h"
 
 #include "point3g.h"
-#include "graphicsvector.h"
+#include "vector3g.h"
 
 namespace chemkit {
 
@@ -54,23 +54,23 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsCamera
         GraphicsFloat z() const;
         void moveTo(const Point3g &position);
         void moveTo(GraphicsFloat x, GraphicsFloat y, GraphicsFloat z);
-        void moveBy(const GraphicsVector &vector);
+        void moveBy(const Vector3g &vector);
         void moveBy(GraphicsFloat dx, GraphicsFloat dy, GraphicsFloat dz);
-        void moveBy(GraphicsFloat distance, const GraphicsVector &direction);
+        void moveBy(GraphicsFloat distance, const Vector3g &direction);
         void moveFoward(GraphicsFloat distance);
         void moveBackward(GraphicsFloat distance);
-        void rotate(const GraphicsVector &axis, GraphicsFloat angle, bool rotateDirection = true);
+        void rotate(const Vector3g &axis, GraphicsFloat angle, bool rotateDirection = true);
         void orbit(GraphicsFloat dx, GraphicsFloat dy, bool rotateDirection = true);
         void orbit(const Point3g &point, GraphicsFloat dx, GraphicsFloat dy, bool rotateDirection = true);
 
         // orientation
-        void setDirection(const GraphicsVector &direction);
-        GraphicsVector direction() const;
+        void setDirection(const Vector3g &direction);
+        Vector3g direction() const;
         void setFocus(const Point3g &point);
         Point3g focus() const;
         void lookAt(const Point3g &point);
-        void setUpVector(const GraphicsVector &upVector);
-        GraphicsVector upVector() const;
+        void setUpVector(const Vector3g &upVector);
+        Vector3g upVector() const;
         void tilt(GraphicsFloat angle);
 
     private:

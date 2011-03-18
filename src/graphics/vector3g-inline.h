@@ -20,58 +20,58 @@
 **
 ******************************************************************************/
 
-#ifndef CHEMKIT_GRAPHICSVECTOR_INLINE_H
-#define CHEMKIT_GRAPHICSVECTOR_INLINE_H
+#ifndef CHEMKIT_VECTOR3G_INLINE_H
+#define CHEMKIT_VECTOR3G_INLINE_H
 
-#include "graphicsvector.h"
+#include "vector3g.h"
 
 namespace chemkit {
 
-// === GraphicsVector ====================================================== //
-/// \class GraphicsVector graphicsvector.h chemkit/graphicsvector.h
+// === Vector3g ============================================================ //
+/// \class Vector3g vector3g.h chemkit/vector3g.h
 /// \ingroup chemkit-graphics
-/// \brief The GraphicsVector class represents a direction in
+/// \brief The Vector3g class represents a direction in
 ///        three-dimensional space.
 
 // --- Construction and Destruction ---------------------------------------- //
 /// Create a new vector containing (\c 0, \c 0, \c 0).
-inline GraphicsVector::GraphicsVector()
+inline Vector3g::Vector3g()
     : GenericVector<GraphicsFloat>()
 {
 }
 
 /// Create a new vector containing (\p x, \p y, \p z).
-inline GraphicsVector::GraphicsVector(GraphicsFloat x, GraphicsFloat y, GraphicsFloat z)
+inline Vector3g::Vector3g(GraphicsFloat x, GraphicsFloat y, GraphicsFloat z)
     : GenericVector<GraphicsFloat>(x, y, z)
 {
 }
 
-inline GraphicsVector::GraphicsVector(const GenericVector<float> &vector)
+inline Vector3g::Vector3g(const GenericVector<float> &vector)
     : GenericVector<GraphicsFloat>(vector)
 {
 }
 
-inline GraphicsVector::GraphicsVector(const GenericVector<double> &vector)
+inline Vector3g::Vector3g(const GenericVector<double> &vector)
     : GenericVector<GraphicsFloat>(vector)
 {
 }
 
-inline GraphicsVector::GraphicsVector(const StaticVector<float, 3> &vector)
+inline Vector3g::Vector3g(const StaticVector<float, 3> &vector)
     : GenericVector<GraphicsFloat>(vector)
 {
 }
 
-inline GraphicsVector::GraphicsVector(const StaticVector<double, 3> &vector)
+inline Vector3g::Vector3g(const StaticVector<double, 3> &vector)
     : GenericVector<GraphicsFloat>(vector)
 {
 }
 
 // --- Properties ---------------------------------------------------------- //
-inline Vector3 GraphicsVector::toVector3() const
+inline Vector3 Vector3g::toVector3() const
 {
     return Vector3(x(), y(), z());
 }
 
 } // end chemkit namespace
 
-#endif // CHEMKIT_GRAPHICSVECTOR_INLINE_H
+#endif // CHEMKIT_VECTOR3G_INLINE_H

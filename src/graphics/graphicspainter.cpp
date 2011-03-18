@@ -111,9 +111,9 @@ void GraphicsPainter::drawCylinder(const Point3g &a, const Point3g &b, GraphicsF
 
     glTranslatef(a.x(), a.y(), a.z());
 
-    GraphicsVector vector = (a - b).normalized();
-    GraphicsVector axis = vector.cross(-GraphicsVector::Z()).normalized();
-    GraphicsFloat angle = vector.angle(-GraphicsVector::Z());
+    Vector3g vector = (a - b).normalized();
+    Vector3g axis = vector.cross(-Vector3g::Z()).normalized();
+    GraphicsFloat angle = vector.angle(-Vector3g::Z());
     glRotatef(-angle, axis.x(), axis.y(), axis.z());
 
     GraphicsFloat length = a.distance(b);
@@ -128,9 +128,9 @@ void GraphicsPainter::drawCircle(GraphicsFloat radius)
     Q_UNUSED(radius);
 }
 
-void GraphicsPainter::drawCircle(const Point3g &center, GraphicsFloat radius, const GraphicsVector &normal)
+void GraphicsPainter::drawCircle(const Point3g &center, GraphicsFloat radius, const Vector3g &normal)
 {
-    GraphicsVector right(normal.y(), -normal.x(), 0); // vector orthogonal to normal
+    Vector3g right(normal.y(), -normal.x(), 0); // vector orthogonal to normal
 
     glBegin(GL_TRIANGLE_FAN);
 
@@ -156,8 +156,8 @@ void GraphicsPainter::drawTriangle(const Point3g &a, const Point3g &b, const Poi
     verticies[2] = c;
 
     // normals
-    GraphicsVector normal = (b - a).cross(c - b).normalized();
-    QVector<GraphicsVector> normals(3);
+    Vector3g normal = (b - a).cross(c - b).normalized();
+    QVector<Vector3g> normals(3);
     normals.fill(normal);
 
     // indicies
@@ -187,29 +187,29 @@ void GraphicsPainter::drawSpline(const QList<Point3g> &points, GraphicsFloat rad
     }
 
     // calculate axis and up vectors (needed to calculate control points)
-    QVector<GraphicsVector> axisVectors(points.size());
+    QVector<Vector3g> axisVectors(points.size());
     axisVectors[0] = (points[1] - points[0]).normalized();
 
-    QVector<GraphicsVector> upVectors(points.size());
+    QVector<Vector3g> upVectors(points.size());
     if(points.size() > 2)
         upVectors[0] = (points[1] - points[0]).cross(points[2] - points[1]).normalized();
     else
-        upVectors[0] = GraphicsVector::Z();
+        upVectors[0] = Vector3g::Z();
 
     for(int i = 1; i < points.size(); i++){
-        GraphicsVector axis = points[i] - points[i-1];
+        Vector3g axis = points[i] - points[i-1];
 
         if(i != (points.size() - 1)){
             GraphicsFloat angle = axis.angle(points[i+1] - points[i]);
-            GraphicsVector rotationAxis = (points[i] - points[i-1]).cross(points[i+1] - points[i]).normalized();
+            Vector3g rotationAxis = (points[i] - points[i-1]).cross(points[i+1] - points[i]).normalized();
             axis = GraphicsQuaternion::rotate(axis, rotationAxis, angle / 2.0);
         }
 
         axisVectors[i] = axis.normalized();
 
-        GraphicsVector rotationAxis = axisVectors[i-1].cross(axisVectors[i]);
+        Vector3g rotationAxis = axisVectors[i-1].cross(axisVectors[i]);
         GraphicsFloat angle = axis.angle(axisVectors[i-1]);
-        GraphicsVector up = GraphicsQuaternion::rotate(upVectors[i-1], rotationAxis, angle);
+        Vector3g up = GraphicsQuaternion::rotate(upVectors[i-1], rotationAxis, angle);
         up.normalize();
 
         upVectors[i] = up;
@@ -221,8 +221,8 @@ void GraphicsPainter::drawSpline(const QList<Point3g> &points, GraphicsFloat rad
     for(int i = 0; i < points.size(); i++){
         const Point3g &point = points.at(i);
 
-        GraphicsVector upVector = upVectors[i];
-        GraphicsVector rightVector = upVector.cross(axisVectors[i]);
+        Vector3g upVector = upVectors[i];
+        Vector3g rightVector = upVector.cross(axisVectors[i]);
 
         // 8 points around a square surrounding point
 
@@ -262,7 +262,7 @@ void GraphicsPainter::drawSpline(const QList<Point3g> &points, GraphicsFloat rad
         controlPoints[i*9+8] = right;
     }
 
-    // build knot GraphicsVector
+    // build knot vector
     QVector<GraphicsFloat> uKnots(points.size() + order);
     for(int i = 0; i < uKnots.size(); i++){
         if(i < order)
