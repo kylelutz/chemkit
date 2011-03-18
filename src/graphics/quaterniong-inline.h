@@ -29,7 +29,7 @@
 
 namespace chemkit {
 
-// === GraphicsQuaterion =================================================== //
+// === Quaterniong ========================================================= //
 /// \class Quaterniong quaterniong.h chemkit/quateriong.h
 /// \ingroup chemkit-graphics
 /// \brief The Quaterniong class represents a quaternion.
@@ -80,9 +80,9 @@ inline Quaterniong Quaterniong::rotation(const Vector3g &axis, GraphicsFloat ang
 inline Quaterniong Quaterniong::rotationRadians(const Vector3g &axis, GraphicsFloat angle)
 {
     return Quaterniong(axis.x() * sin(angle/2.0),
-                              axis.y() * sin(angle/2.0),
-                              axis.z() * sin(angle/2.0),
-                              cos(angle/2.0));
+                       axis.y() * sin(angle/2.0),
+                       axis.z() * sin(angle/2.0),
+                       cos(angle/2.0));
 }
 
 inline Point3g Quaterniong::rotate(const Point3g &point, const Vector3g &axis, GraphicsFloat angle)
