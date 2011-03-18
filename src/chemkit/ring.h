@@ -58,7 +58,7 @@ class CHEMKIT_EXPORT Ring
         bool contains(const Element &element) const;
         int heteroatomCount() const;
         bool isHeterocycle() const;
-        Atom *root() const;
+        Atom* root() const;
         int position(const Atom *atom, const Atom *root = 0) const;
         bool isFusedTo(const Ring *ring) const;
 
