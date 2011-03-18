@@ -23,19 +23,26 @@
 // This file implements the RP-Path ring perception algorithm. See
 // [Lee 2009].
 
-#include "molecule.h"
 #include "moleculargraph.h"
+
+#include <set>
+#include <algorithm>
+
+#include "ring.h"
 
 namespace chemkit {
 
 namespace {
 
+// === DistanceMatrix ====================================================== //
 class DistanceMatrix
 {
     public:
+        // construction and destruction
         DistanceMatrix(int size);
         ~DistanceMatrix();
 
+        // operators
         int operator()(int i, int j) const;
         int& operator()(int i, int j);
 
@@ -48,7 +55,7 @@ DistanceMatrix::DistanceMatrix(int size)
 {
     m_size = size;
     m_values = new int[size*size];
-    qMemSet(m_values, 0, size*size*sizeof(*m_values));
+    memset(m_values, 0, size*size*sizeof(int));
 }
 
 DistanceMatrix::~DistanceMatrix()
@@ -58,53 +65,41 @@ DistanceMatrix::~DistanceMatrix()
 
 int DistanceMatrix::operator()(int i, int j) const
 {
-    return m_values[(i*m_size)+j];
+    return m_values[i * m_size + j];
 }
 
 int& DistanceMatrix::operator()(int i, int j)
 {
-    return m_values[(i*m_size)+j];
+    return m_values[i * m_size + j];
 }
 
-// path-included distance matrix
+// === PidMatrix =========================================================== //
+// The PidMatrix class implements a path-included distance matrix.
 class PidMatrix
 {
     public:
+        // construction and destruction
         PidMatrix(int size);
-        PidMatrix(const Molecule *molecule);
         ~PidMatrix();
 
-        void setPath(int i, int j, QVector<int> path);
-        void setPath(int i, int j, QVector<QVector<int> > paths);
-        void appendPath(int i, int j, QVector<QVector<int> > paths);
-        void clearPath(int i, int j);
+        // paths
+        std::vector<std::vector<int> >& paths(int i, int j);
+        void addPaths(int i, int j, const std::vector<std::vector<int> > &paths);
+        std::vector<std::vector<int> > splice(int i, int j, int k);
 
-        const Atom* atom(int index) const;
-        void setDistance(int i, int j, int distance);
-        int distance(int i, int j) const;
-
-        void setShortPath(int i, int j, const QVector<int> &path);
-        void setShortPaths(int i, int j, QVector<QVector<int> > paths);
-        void appendShortPath(int i, int j, const QVector<int> &path);
-        void setLongPath(int i, int j, const QVector<int> &path);
-        void appendLongPath(int i, int j, const QVector<int> &path);
-
-        QVector<QVector<int> > paths(int i, int j) const { return m_values[(i*m_size)+j]; }
-
-        QVector<QVector<int> > operator()(int i, int j) const;
-        QVector<QVector<int> >& operator()(int i, int j);
-
-        QVector<QVector<int> > splice(int i, int j, int k);
+        // operators
+        std::vector<std::vector<int> >& operator()(int i, int j);
 
     private:
         int m_size;
-        QVector<QVector<int> > *m_values;
+        std::vector<std::vector<int> > *m_values;
 };
 
+// --- Construction and Destruction ---------------------------------------- //
 PidMatrix::PidMatrix(int size)
 {
     m_size = size;
-    m_values = new QVector<QVector<int> >[size*size];
+    m_values = new std::vector<std::vector<int> >[size*size];
 }
 
 PidMatrix::~PidMatrix()
@@ -112,67 +107,57 @@ PidMatrix::~PidMatrix()
     delete [] m_values;
 }
 
-void PidMatrix::setPath(int i, int j, QVector<QVector<int> > paths)
+// --- Paths --------------------------------------------------------------- //
+std::vector<std::vector<int> >& PidMatrix::paths(int i, int j)
 {
-    m_values[(i*m_size)+j].clear();
-    m_values[(i*m_size)+j] = paths;
+    return m_values[i * m_size + j];
 }
 
-void PidMatrix::setPath(int i, int j, QVector<int> path)
+void PidMatrix::addPaths(int i, int j, const std::vector<std::vector<int> > &paths)
 {
-    m_values[(i*m_size)+j].clear();
-    m_values[(i*m_size)+j].append(path);
+    std::vector<std::vector<int> > &current = m_values[i * m_size + j];
+    current.insert(current.end(), paths.begin(), paths.end());
 }
 
-void PidMatrix::appendPath(int i, int j, QVector<QVector<int> > paths)
+std::vector<std::vector<int> >& PidMatrix::operator()(int i, int j)
 {
-    foreach(QVector<int> path, paths){
-        m_values[(i*m_size)+j].append(path);
+    return paths(i, j);
+}
+
+std::vector<std::vector<int> > PidMatrix::splice(int i, int j, int k)
+{
+    std::vector<std::vector<int> > splicedPaths;
+
+    std::vector<std::vector<int> > ijPaths = paths(i, j);
+    std::vector<std::vector<int> > jkPaths = paths(j, k);
+
+    if(ijPaths.empty() && jkPaths.empty()){
+        std::vector<int> path;
+        path.push_back(j);
+        splicedPaths.push_back(path);
     }
-}
-
-QVector<QVector<int> > PidMatrix::operator()(int i, int j) const
-{
-    return m_values[(i*m_size)+j];
-}
-
-QVector<QVector<int> >& PidMatrix::operator()(int i, int j)
-{
-    return m_values[(i*m_size)+j];
-}
-
-QVector<QVector<int> > PidMatrix::splice(int i, int j, int k)
-{
-    QVector<QVector<int> > splicedPaths;
-
-    QVector<QVector<int> > ij_paths = paths(i, j);
-    QVector<QVector<int> > jk_paths = paths(j, k);
-
-    if(ij_paths.isEmpty() && jk_paths.isEmpty()){
-        QVector<int> path;
-        path.append(j);
-        splicedPaths.append(path);
-    }
-    else if(ij_paths.isEmpty()){
-        foreach(QVector<int> jk_path, jk_paths){
-            QVector<int> path;
-            path.append(j);
-            path += jk_path;
-            splicedPaths.append(path);
+    else if(ijPaths.empty()){
+        foreach(const std::vector<int> &jkPath, jkPaths){
+            std::vector<int> path;
+            path.push_back(j);
+            path.insert(path.end(), jkPath.begin(), jkPath.end());
+            splicedPaths.push_back(path);
         }
     }
-    else if(jk_paths.isEmpty()){
-        foreach(QVector<int> ij_path, ij_paths){
-            QVector<int> path = ij_path;
-            path.append(j);
-            splicedPaths.append(path);
+    else if(jkPaths.empty()){
+        foreach(const std::vector<int> &ijPath, ijPaths){
+            std::vector<int> path = ijPath;
+            path.push_back(j);
+            splicedPaths.push_back(path);
         }
     }
     else{
-        foreach(QVector<int> ij_path, ij_paths){
-            foreach(QVector<int> jk_path, jk_paths){
-                QVector<int> path = ij_path + (QVector<int>()<<j) + jk_path;
-                splicedPaths.append(path);
+        foreach(const std::vector<int> &ijPath, ijPaths){
+            foreach(const std::vector<int> &jkPath, jkPaths){
+                std::vector<int> path = ijPath;
+                path.push_back(j);
+                path.insert(path.end(), jkPath.begin(), jkPath.end());
+                splicedPaths.push_back(path);
             }
         }
     }
@@ -180,16 +165,20 @@ QVector<QVector<int> > PidMatrix::splice(int i, int j, int k)
     return splicedPaths;
 }
 
+// === RingCandidate ======================================================= //
 class RingCandidate
 {
     public:
-        RingCandidate(int size, int start, int end) : m_size(size), m_start(start), m_end(end) { }
+        // construction and destruction
+        RingCandidate(int size, int start, int end);
 
-        int size() const { return m_size; }
-        int start() const { return m_start; }
-        int end() const { return m_end; }
+        // properties
+        int size() const;
+        int start() const;
+        int end() const;
 
-        static bool compareSize(RingCandidate *a, RingCandidate *b) { return a->size() < b->size(); }
+        // static methods
+        static bool compareSize(const RingCandidate &a, const RingCandidate &b);
 
     private:
         int m_size;
@@ -197,46 +186,95 @@ class RingCandidate
         int m_end;
 };
 
-bool isUnique(const QVector<int> &path, const QList<QVector<int> > &sssr)
+// --- Construction and Destruction ---------------------------------------- //
+RingCandidate::RingCandidate(int size, int start, int end)
 {
+    m_size = size;
+    m_start = start;
+    m_end = end;
+}
 
-    QSet<int> pathSet = QSet<int>::fromList(path.toList());
+// --- Properties ---------------------------------------------------------- //
+int RingCandidate::size() const
+{
+    return m_size;
+}
 
-    QVector<int> ringPath;
-    foreach(ringPath, sssr){
-        QSet<int> ringPathSet = QSet<int>::fromList(ringPath.toList());
-        if(ringPathSet.subtract(pathSet).isEmpty()){
+int RingCandidate::start() const
+{
+    return m_start;
+}
+
+int RingCandidate::end() const
+{
+    return m_end;
+}
+
+// --- Static Methods ------------------------------------------------------ //
+bool RingCandidate::compareSize(const RingCandidate &a, const RingCandidate &b)
+{
+    return a.size() < b.size();
+}
+
+// --- Functions ----------------------------------------------------------- //
+bool isValid(const std::vector<int> &path)
+{
+    // check for any duplicate atoms
+    for(unsigned int i = 0; i < path.size(); i++){
+        for(unsigned int j = i + 1; j < path.size(); j++){
+            if(path[i] == path[j]){
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
+
+bool isUnique(const std::vector<int> &path, const std::vector<std::vector<int> > &sssr)
+{
+    // check if a ring with the same atoms is already in the sssr
+    foreach(const std::vector<int> &ring, sssr){
+        std::vector<int> difference;
+        std::set_difference(path.begin(), path.end(),
+                            ring.begin(), ring.end(),
+                            std::inserter(difference, difference.end()));
+
+        if(difference.empty()){
             return false;
         }
     }
 
-    QSet<QPair<int, int> > ringBonds;
-    foreach(ringPath, sssr){
-        for(int i = 0; i < ringPath.size()-1; i++){
-            ringBonds.insert(qMakePair(qMin(ringPath[i], ringPath[i+1]),
-                                       qMax(ringPath[i], ringPath[i+1])));
+    // count number of unique bonds
+    std::set<std::pair<int, int> > ringBonds;
+    foreach(const std::vector<int> &ring, sssr){
+
+        // add ring bonds
+        for(unsigned int i = 0; i < ring.size()-1; i++){
+            ringBonds.insert(std::make_pair(qMin(ring[i], ring[i+1]),
+                                            qMax(ring[i], ring[i+1])));
         }
-        ringBonds.insert(qMakePair(qMin(ringPath.first(), ringPath.last()),
-                                   qMax(ringPath.first(), ringPath.last())));
+
+        // add closure bond
+        ringBonds.insert(std::make_pair(qMin(ring.front(), ring.back()),
+                                        qMax(ring.front(), ring.back())));
     }
 
-    int uniqueBonds = 0;
-    for(int i = 0; i < path.size()-1; i++){
-        if(!ringBonds.contains(qMakePair(qMin(path[i], path[i+1]),
-                                         qMax(path[i], path[i+1])))){
-            uniqueBonds++;
+    int uniqueBondCount = 0;
+    for(unsigned int i = 0; i < path.size()-1; i++){
+        if(ringBonds.find(std::make_pair(qMin(path[i], path[i+1]),
+                                         qMax(path[i], path[i+1]))) == ringBonds.end()){
+            uniqueBondCount++;
         }
     }
-    if(!ringBonds.contains(qMakePair(qMin(path.first(), path.last()),
-                                     qMax(path.first(), path.last())))){
-        uniqueBonds++;
+
+    // count closure bond
+    if(ringBonds.find(std::make_pair(qMin(path.front(), path.back()),
+                                     qMax(path.front(), path.back()))) == ringBonds.end()){
+        uniqueBondCount++;
     }
 
-    if(uniqueBonds == 0){
-        return false;
-    }
-
-    return true;
+    return uniqueBondCount > 0;
 }
 
 } // end anonymous namespace
@@ -247,23 +285,24 @@ bool isUnique(const QVector<int> &path, const QList<QVector<int> > &sssr)
 // verticies should have degree >= 2).
 QList<Ring *> MolecularGraph::sssr_rpPath(const MolecularGraph *graph)
 {
-    int n = graph->size();
+    unsigned int n = graph->size();
 
-    int ringCount = graph->bondCount() - graph->atomCount() + 1;
-    if(ringCount < 1)
+    unsigned int ringCount = graph->bondCount() - graph->atomCount() + 1;
+    if(ringCount == 0){
         return QList<Ring *>();
+    }
 
     // algorithm 1 - create the distance and pid matrices
     DistanceMatrix D(n);
     PidMatrix P(n);
     PidMatrix Pt(n);
 
-    for(int i = 0; i < n; i++){
-        for(int j = 0; j < n; j++){
+    for(unsigned int i = 0; i < n; i++){
+        for(unsigned int j = 0; j < n; j++){
             if(i == j){
                 D(i, j) = 0;
             }
-            else if(graph->adjacent(i, j)){
+            else if(graph->isAdjacent(i, j)){
                 D(i, j) = 1;
             }
             else{
@@ -272,11 +311,12 @@ QList<Ring *> MolecularGraph::sssr_rpPath(const MolecularGraph *graph)
         }
     }
 
-    for(int k = 0; k < n; k++){
-        for(int i = 0; i < n; i++){
-            for(int j = 0; j < n; j++){
-                if(i == j || i == k || k == j)
+    for(unsigned int k = 0; k < n; k++){
+        for(unsigned int i = 0; i < n; i++){
+            for(unsigned int j = 0; j < n; j++){
+                if(i == j || i == k || k == j){
                     continue;
+                }
 
                 if(D(i, j) > D(i, k) + D(k, j)){
                     if(D(i, j) == D(i, k) + D(k, j) + 1){
@@ -290,19 +330,19 @@ QList<Ring *> MolecularGraph::sssr_rpPath(const MolecularGraph *graph)
                     P(i, j) = P.splice(i, k, j);
                 }
                 else if(D(i, j) == D(i, k) + D(k, j)){
-                    P(i, j) += P.splice(i, k, j);
+                    P.addPaths(i, j, P.splice(i, k, j));
                 }
                 else if(D(i, j) == D(i, k) + D(k, j) - 1){
-                    Pt(i, j) += P.splice(i, k, j);
+                    Pt.addPaths(i, j, P.splice(i, k, j));
                 }
             }
         }
     }
 
     // algorithm 2 - create the ring candidate set
-    QList<RingCandidate *> ringCandidates;
-    for(int i = 0; i < n; i++){
-        for(int j = i + 1; j < n; j++){
+    std::vector<RingCandidate> candidates;
+    for(unsigned int i = 0; i < n; i++){
+        for(unsigned int j = i + 1; j < n; j++){
             if(P(i, j).size() == 1 && Pt(i, j).size() == 0){
                 continue;
             }
@@ -317,39 +357,37 @@ QList<Ring *> MolecularGraph::sssr_rpPath(const MolecularGraph *graph)
                 }
 
                 if(size > 2){
-                    ringCandidates.append(new RingCandidate(size, i, j));
+                    candidates.push_back(RingCandidate(size, i, j));
                 }
             }
         }
     }
-    qSort(ringCandidates.begin(), ringCandidates.end(), &RingCandidate::compareSize);
+
+    // sort candidates
+    std::sort(candidates.begin(), candidates.end(), RingCandidate::compareSize);
 
     // algorithm 3 - find sssr from the ring candidate set
-    QList<QVector<int> > sssr;
-    foreach(RingCandidate *ringCandidate, ringCandidates){
+    std::vector<std::vector<int> > sssr;
+    sssr.reserve(ringCount);
+
+    foreach(const RingCandidate &candidate, candidates){
 
         // odd sized ring
-        if(ringCandidate->size() & 1){
-            for(int j = 0; j < Pt(ringCandidate->start(), ringCandidate->end()).size(); j++){
-                QVector<int> path;
-                path.append(ringCandidate->start());
-                path += Pt(ringCandidate->start(), ringCandidate->end())[j];
-                path.append(ringCandidate->end());
-                if(P(ringCandidate->end(), ringCandidate->start()).size()){
-                    path += P(ringCandidate->end(), ringCandidate->start())[0];
+        if(candidate.size() & 1){
+            for(unsigned int i = 0; i < Pt(candidate.start(), candidate.end()).size(); i++){
+                std::vector<int> ring;
+                ring.push_back(candidate.start());
+                std::vector<int> &path = Pt(candidate.start(), candidate.end())[i];
+                ring.insert(ring.end(), path.begin(), path.end());
+                ring.push_back(candidate.end());
+                if(!P(candidate.end(), candidate.start()).empty()){
+                    path = P(candidate.end(), candidate.start())[0];
+                    ring.insert(ring.end(), path.begin(), path.end());
                 }
 
-                // check if ring is valid
-                bool valid = true;
-                foreach(int atom, path){
-                    if(path.count(atom) > 1){
-                        valid = false;
-                        break;
-                    }
-                }
-
-                if(valid && isUnique(path, sssr)){
-                    sssr.append(path);
+                // check if ring is valid and unique
+                if(isValid(ring) && isUnique(ring, sssr)){
+                    sssr.push_back(ring);
                     break;
                 }
             }
@@ -357,24 +395,18 @@ QList<Ring *> MolecularGraph::sssr_rpPath(const MolecularGraph *graph)
 
         // even sized ring
         else{
-            for(int j = 0; j < P(ringCandidate->start(), ringCandidate->end()).size()-1; j++){
-                QVector<int> path;
-                path.append(ringCandidate->start());
-                path += P(ringCandidate->start(), ringCandidate->end())[j];
-                path.append(ringCandidate->end());
-                path += P(ringCandidate->end(), ringCandidate->start())[j+1];
+            for(unsigned int i = 0; i < P(candidate.start(), candidate.end()).size()-1; i++){
+                std::vector<int> ring;
+                ring.push_back(candidate.start());
+                std::vector<int> &path = P(candidate.start(), candidate.end())[i];
+                ring.insert(ring.end(), path.begin(), path.end());
+                ring.push_back(candidate.end());
+                path = P(candidate.end(), candidate.start())[i+1];
+                ring.insert(ring.end(), path.begin(), path.end());
 
-                // check if ring is valid
-                bool valid = true;
-                foreach(int atom, path){
-                    if(path.count(atom) > 1){
-                        valid = false;
-                         break;
-                    }
-                }
-
-                if(valid && isUnique(path, sssr)){
-                    sssr.append(path);
+                // check if ring is valid and unique
+                if(isValid(ring) && isUnique(ring, sssr)){
+                    sssr.push_back(ring);
                     break;
                 }
             }
@@ -385,17 +417,16 @@ QList<Ring *> MolecularGraph::sssr_rpPath(const MolecularGraph *graph)
         }
     }
 
-    qDeleteAll(ringCandidates);
-
+    // build list of rings
     QList<Ring *> rings;
-    foreach(const QVector<int> &path, sssr){
-        QList<Atom *> atomPath;
+    foreach(const std::vector<int> &ring, sssr){
+        QList<Atom *> atoms;
 
-        foreach(int atomIndex, path){
-            atomPath.append(const_cast<Atom *>(graph->atom(atomIndex)));
+        foreach(int atomIndex, ring){
+            atoms.append(graph->atom(atomIndex));
         }
 
-        rings.append(new Ring(atomPath));
+        rings.append(new Ring(atoms));
     }
 
     return rings;

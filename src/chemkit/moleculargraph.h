@@ -25,7 +25,9 @@
 
 #include "chemkit.h"
 
-#include <QtCore>
+#include <vector>
+
+#include <QList>
 
 namespace chemkit {
 
@@ -42,42 +44,41 @@ class CHEMKIT_EXPORT MolecularGraph
         // construction and destruction
         MolecularGraph(const Molecule *molecule);
         MolecularGraph(const Fragment *fragment);
-        MolecularGraph(const QList<Atom *> &atoms);
-        MolecularGraph(const QList<const Atom *> &atoms);
+        MolecularGraph(const std::vector<Atom *> &atoms);
         ~MolecularGraph();
 
         // properties
-        const Molecule* molecule() const { return m_molecule; }
-        const Atom* atom(int index) const { return m_atoms[index]; }
-        const Bond* bond(int index) const { return m_bonds[index]; }
-        int bond(int i, int j) const;
-        int indexOf(const Atom *atom) const { return m_atoms.indexOf(atom); }
-        int indexOf(const Bond *bond) const { return m_bonds.indexOf(bond); }
-        void setAtomLabel(int atom, int label);
-        int atomLabel(int atom) const;
-        void setBondLabel(int bond, int label);
-        int bondLabel(int bond) const;
-        int size() const { return atomCount(); }
-        bool isEmpty() const { return size() == 0; }
-        int atomCount() const { return m_atoms.size(); }
-        int bondCount() const { return m_bonds.size(); }
-        const QVector<int>& neighbors(int index) const;
-        int neighborCount(int index) const;
-        bool adjacent(int i, int j) const;
+        const Molecule* molecule() const;
+        Atom* atom(unsigned int index) const;
+        Bond* bond(unsigned int index) const;
+        unsigned int bond(unsigned int i, unsigned int j) const;
+        int indexOf(const Atom *atom) const;
+        int indexOf(const Bond *bond) const;
+        unsigned int size() const;
+        bool isEmpty() const;
+        unsigned int atomCount() const;
+        unsigned int bondCount() const;
+        const std::vector<int>& neighbors(unsigned int index) const;
+        unsigned int neighborCount(unsigned int index) const;
+        bool isAdjacent(unsigned int i, unsigned int j) const;
+
+        // labels
+        void setAtomLabel(unsigned int atom, int label);
+        int atomLabel(unsigned int atom) const;
+        void setBondLabel(unsigned int bond, int label);
+        int bondLabel(unsigned int bond) const;
 
         // static methods
         static MolecularGraph* cyclicGraph(const Molecule *molecule);
         static MolecularGraph* cyclicGraph(const Fragment *fragment);
         static MolecularGraph* cyclicGraph(const QList<Atom *> &atoms);
-        static MolecularGraph* cyclicGraph(const QList<const Atom *> &atoms);
         static MolecularGraph* hydrogenDepletedGraph(const Molecule *molecule);
-        static MolecularGraph* hydrogenDepletedGraph(const Fragment *fragment);
-        static MolecularGraph* hydrogenDepletedGraph(const QList<Atom *> &atoms);
-        static MolecularGraph* hydrogenDepletedGraph(const QList<const Atom *> &atoms);
         static AtomMapping isomorphism(const MolecularGraph *a, const MolecularGraph *b);
 
     private:
         MolecularGraph();
+        void addBond(unsigned int i, unsigned int j);
+        void removeBond(unsigned int i, unsigned int j);
         void cyclicize();
         void initializeLabels();
         static QList<Ring *> sssr(const Molecule *molecule);
@@ -89,11 +90,11 @@ class CHEMKIT_EXPORT MolecularGraph
 
     private:
         const Molecule *m_molecule;
-        QVector<const Atom *> m_atoms;
-        QVector<const Bond *> m_bonds;
-        QVector<QVector<int> > m_adjacencyList;
-        QVector<int> m_atomLabels;
-        QVector<int> m_bondLabels;
+        std::vector<Atom *> m_atoms;
+        std::vector<Bond *> m_bonds;
+        std::vector<std::vector<int> > m_adjacencyList;
+        std::vector<int> m_atomLabels;
+        std::vector<int> m_bondLabels;
 };
 
 } // end chemkit namespace

@@ -25,7 +25,6 @@
 
 #include "moleculargraph.h"
 
-#include "molecule.h"
 #include "atommapping.h"
 
 namespace chemkit {
@@ -38,15 +37,15 @@ namespace {
 class SharedState
 {
     public:
-        SharedState(int sourceSize, int targetSize);
+        SharedState(unsigned int sourceSize, unsigned int targetSize);
 
-        QVector<int> sourceMapping;
-        QVector<int> targetMapping;
-        QVector<int> sourceTerminalSet;
-        QVector<int> targetTerminalSet;
+        std::vector<int> sourceMapping;
+        std::vector<int> targetMapping;
+        std::vector<unsigned int> sourceTerminalSet;
+        std::vector<unsigned int> targetTerminalSet;
 };
 
-SharedState::SharedState(int sourceSize, int targetSize)
+SharedState::SharedState(unsigned int sourceSize, unsigned int targetSize)
     : sourceMapping(sourceSize, -1),
       targetMapping(targetSize, -1),
       sourceTerminalSet(sourceSize, 0),
@@ -63,25 +62,25 @@ class State
         State(const State *state);
         ~State();
 
-        int size() const { return m_size; }
+        unsigned int size() const { return m_size; }
         const MolecularGraph* source() const { return m_source; }
         const MolecularGraph* target() const { return m_target; }
         const Atom* sourceAtom(int index) { return m_source->atom(index); }
         const Atom* targetAtom(int index) { return m_target->atom(index); }
         AtomMapping mapping() const;
         bool succeeded() const;
-        void addPair(const QPair<int, int> &candidate);
-        QPair<int, int> nextCandidate(const QPair<int, int> &lastCandidate);
-        bool isFeasible(const QPair<int, int> &candidate);
+        void addPair(const std::pair<int, int> &candidate);
+        std::pair<int, int> nextCandidate(const std::pair<int, int> &lastCandidate);
+        bool isFeasible(const std::pair<int, int> &candidate);
         void backTrack();
 
     private:
-        int m_size;
-        int m_sourceTerminalSize;
-        int m_targetTerminalSize;
+        unsigned int m_size;
+        unsigned int m_sourceTerminalSize;
+        unsigned int m_targetTerminalSize;
         const MolecularGraph *m_source;
         const MolecularGraph *m_target;
-        QPair<int, int> m_lastAddition;
+        std::pair<int, int> m_lastAddition;
         SharedState *m_sharedState;
         bool m_ownSharedState;
 };
@@ -127,7 +126,7 @@ AtomMapping State::mapping() const
 {
     AtomMapping mapping(m_source->molecule(), m_target->molecule());
 
-    for(int i = 0; i < m_size; i++){
+    for(unsigned int i = 0; i < m_size; i++){
         mapping.add(m_source->atom(i), m_target->atom(m_sharedState->sourceMapping[i]));
     }
 
@@ -137,7 +136,7 @@ AtomMapping State::mapping() const
 // Returns the next candidate pair (sourceAtom, targetAtom) to be added to the
 // state. The candidate should be checked for feasibility and then added using
 // the addPair() method.
-QPair<int, int> State::nextCandidate(const QPair<int, int> &lastCandidate)
+std::pair<int, int> State::nextCandidate(const std::pair<int, int> &lastCandidate)
 {
     int lastSourceAtom = lastCandidate.first;
     int lastTargetAtom = lastCandidate.second;
@@ -184,15 +183,15 @@ QPair<int, int> State::nextCandidate(const QPair<int, int> &lastCandidate)
     }
 
     if(lastSourceAtom < sourceSize && lastTargetAtom < targetSize){
-        return qMakePair(lastSourceAtom, lastTargetAtom);
+        return std::make_pair(lastSourceAtom, lastTargetAtom);
     }
 
-    return qMakePair(-1, -1);
+    return std::make_pair(-1, -1);
 }
 
 // Adds the candidate pair (sourceAtom, targetAtom) to the state. The candidate
 // pair must be feasible to add it to the state.
-void State::addPair(const QPair<int, int> &candidate)
+void State::addPair(const std::pair<int, int> &candidate)
 {
     m_size++;
     m_lastAddition = candidate;
@@ -259,10 +258,10 @@ void State::backTrack()
     m_sharedState->sourceMapping[addedSourceAtom] = -1;
     m_sharedState->targetMapping[addedTargetAtom] = -1;
     m_size--;
-    m_lastAddition = qMakePair(-1, -1);
+    m_lastAddition = std::make_pair(-1, -1);
 }
 
-bool State::isFeasible(const QPair<int, int> &candidate)
+bool State::isFeasible(const std::pair<int, int> &candidate)
 {
     int sourceAtom = candidate.first;
     int targetAtom = candidate.second;
@@ -286,7 +285,7 @@ bool State::isFeasible(const QPair<int, int> &candidate)
         if(m_sharedState->sourceMapping[neighbor] != -1){
             int targetNeighbor = m_sharedState->sourceMapping[neighbor];
 
-            if(!m_target->adjacent(targetAtom, targetNeighbor))
+            if(!m_target->isAdjacent(targetAtom, targetNeighbor))
                 return false;
 
             int targetBond = m_target->bond(targetAtom, targetNeighbor);
@@ -330,11 +329,11 @@ bool match(State *state, AtomMapping &mapping)
         return true;
     }
 
-    QPair<int, int> lastCanidate(-1, -1);
+    std::pair<int, int> lastCanidate(-1, -1);
 
     bool found = false;
     while(!found){
-        QPair<int, int> candidate = state->nextCandidate(lastCanidate);
+        std::pair<int, int> candidate = state->nextCandidate(lastCanidate);
 
         if(candidate.first == -1)
             return false;

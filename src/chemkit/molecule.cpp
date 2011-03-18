@@ -630,7 +630,7 @@ AtomMapping Molecule::mapping(const Molecule *molecule, CompareFlags flags) cons
     const int aromaticBondLabel = 10;
 
     if(flags & CompareAromaticity){
-        for(int i = 0; i < source->bondCount(); i++){
+        for(unsigned int i = 0; i < source->bondCount(); i++){
             const Bond *bond = source->bond(i);
 
             if(bond->isAromatic()){
@@ -638,7 +638,7 @@ AtomMapping Molecule::mapping(const Molecule *molecule, CompareFlags flags) cons
             }
         }
 
-        for(int i = 0; i < target->bondCount(); i++){
+        for(unsigned int i = 0; i < target->bondCount(); i++){
             const Bond *bond = target->bond(i);
 
             if(bond->isAromatic()){

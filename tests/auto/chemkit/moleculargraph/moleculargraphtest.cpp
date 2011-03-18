@@ -78,33 +78,29 @@ void MolecularGraphTest::basic()
 {
     chemkit::MolecularGraph graph(m_ethanol);
     QVERIFY(graph.molecule() == m_ethanol);
-    QCOMPARE(graph.atomCount(), 9);
-    QCOMPARE(graph.bondCount(), 8);
-    QCOMPARE(graph.size(), 9);
+    QCOMPARE(graph.atomCount(), 9U);
+    QCOMPARE(graph.bondCount(), 8U);
+    QCOMPARE(graph.size(), 9U);
     QCOMPARE(graph.isEmpty(), false);
 
-    for(int i = 0; i < graph.size(); i++){
+    for(unsigned int i = 0; i < graph.size(); i++){
         const chemkit::Atom *atom = graph.atom(i);
-        QCOMPARE(graph.indexOf(atom), i);
 
         if(atom->is(chemkit::Atom::Carbon)){
-            QCOMPARE(graph.neighborCount(i), 4);
-            QCOMPARE(graph.neighbors(i).size(), 4);
+            QCOMPARE(graph.neighborCount(i), 4U);
         }
         else if(atom->is(chemkit::Atom::Hydrogen)){
-            QCOMPARE(graph.neighborCount(i), 1);
-            QCOMPARE(graph.neighbors(i).size(), 1);
+            QCOMPARE(graph.neighborCount(i), 1U);
         }
         else if(atom->is(chemkit::Atom::Oxygen)){
-            QCOMPARE(graph.neighborCount(i), 2);
-            QCOMPARE(graph.neighbors(i).size(), 2);
+            QCOMPARE(graph.neighborCount(i), 2U);
         }
     }
 
     graph = chemkit::MolecularGraph(m_empty);
-    QCOMPARE(graph.atomCount(), 0);
-    QCOMPARE(graph.bondCount(), 0);
-    QCOMPARE(graph.size(), 0);
+    QCOMPARE(graph.atomCount(), 0U);
+    QCOMPARE(graph.bondCount(), 0U);
+    QCOMPARE(graph.size(), 0U);
 }
 
 void MolecularGraphTest::cyclicGraph()
@@ -113,32 +109,32 @@ void MolecularGraphTest::cyclicGraph()
 
     // empty
     graph = chemkit::MolecularGraph::cyclicGraph(m_empty);
-    QCOMPARE(graph->size(), 0);
+    QCOMPARE(graph->size(), 0U);
     delete graph;
 
     // benzene
     graph = chemkit::MolecularGraph::cyclicGraph(m_benzene);
-    QCOMPARE(graph->size(), 6);
+    QCOMPARE(graph->size(), 6U);
     delete graph;
 
     // diphenyl ether
     graph = chemkit::MolecularGraph::cyclicGraph(m_diphenylEther);
-    QCOMPARE(graph->size(), 13);
+    QCOMPARE(graph->size(), 13U);
     delete graph;
 
     // ethanol
     graph = chemkit::MolecularGraph::cyclicGraph(m_ethanol);
-    QCOMPARE(graph->size(), 0);
+    QCOMPARE(graph->size(), 0U);
     delete graph;
 
     // octane
     graph = chemkit::MolecularGraph::cyclicGraph(m_octane);
-    QCOMPARE(graph->size(), 0);
+    QCOMPARE(graph->size(), 0U);
     delete graph;
 
     // tyrosine
     graph = chemkit::MolecularGraph::cyclicGraph(m_tyrosine);
-    QCOMPARE(graph->size(), 6);
+    QCOMPARE(graph->size(), 6U);
     delete graph;
 }
 
@@ -148,41 +144,41 @@ void MolecularGraphTest::hydrogenDepletedGraph()
 
     // empty
     graph = chemkit::MolecularGraph::hydrogenDepletedGraph(m_empty);
-    QCOMPARE(graph->size(), 0);
+    QCOMPARE(graph->size(), 0U);
     delete graph;
 
     // benzene
     graph = chemkit::MolecularGraph::hydrogenDepletedGraph(m_benzene);
-    QCOMPARE(graph->size(), 6);
-    for(int i = 0; i < graph->size(); i++)
+    QCOMPARE(graph->size(), 6U);
+    for(unsigned int i = 0; i < graph->size(); i++)
         QCOMPARE(graph->atom(i)->isTerminalHydrogen(), false);
     delete graph;
 
     // diphenyl ether
     graph = chemkit::MolecularGraph::hydrogenDepletedGraph(m_diphenylEther);
-    QCOMPARE(graph->size(), 13);
-    for(int i = 0; i < graph->size(); i++)
+    QCOMPARE(graph->size(), 13U);
+    for(unsigned int i = 0; i < graph->size(); i++)
         QCOMPARE(graph->atom(i)->isTerminalHydrogen(), false);
     delete graph;
 
     // ethanol
     graph = chemkit::MolecularGraph::hydrogenDepletedGraph(m_ethanol);
-    QCOMPARE(graph->size(), 3);
-    for(int i = 0; i < graph->size(); i++)
+    QCOMPARE(graph->size(), 3U);
+    for(unsigned int i = 0; i < graph->size(); i++)
         QCOMPARE(graph->atom(i)->isTerminalHydrogen(), false);
     delete graph;
 
     // octane
     graph = chemkit::MolecularGraph::hydrogenDepletedGraph(m_octane);
-    QCOMPARE(graph->size(), 8);
-    for(int i = 0; i < graph->size(); i++)
+    QCOMPARE(graph->size(), 8U);
+    for(unsigned int i = 0; i < graph->size(); i++)
         QCOMPARE(graph->atom(i)->isTerminalHydrogen(), false);
     delete graph;
 
     // tyrosine
     graph = chemkit::MolecularGraph::hydrogenDepletedGraph(m_tyrosine);
-    QCOMPARE(graph->size(), 13);
-    for(int i = 0; i < graph->size(); i++)
+    QCOMPARE(graph->size(), 13U);
+    for(unsigned int i = 0; i < graph->size(); i++)
         QCOMPARE(graph->atom(i)->isTerminalHydrogen(), false);
     delete graph;
 }
