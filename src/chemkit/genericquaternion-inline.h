@@ -36,7 +36,7 @@ namespace chemkit {
 /// The GenericQuaternion template has one parameter:
 ///     - \b T: The coordinate type.
 ///
-/// \see Quaternion, GraphicsQuaternion
+/// \see Quaternion
 
 // --- Construction and Destruction ---------------------------------------- //
 /// Creates a new, null quaternion.

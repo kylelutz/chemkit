@@ -20,105 +20,105 @@
 **
 ******************************************************************************/
 
-#ifndef CHEMKIT_GRAPHICSQUATERNION_INLINE_H
-#define CHEMKIT_GRAPHICSQUATERNION_INLINE_H
+#ifndef CHEMKIT_QUATERNIONG_INLINE_H
+#define CHEMKIT_QUATERNIONG_INLINE_H
 
-#include "graphicsquaternion.h"
+#include "quaterniong.h"
 
 #include <chemkit/constants.h>
 
 namespace chemkit {
 
 // === GraphicsQuaterion =================================================== //
-/// \class GraphicsQuaternion graphicsquaternion.h chemkit/graphicsquaternion.h
+/// \class Quaterniong quaterniong.h chemkit/quateriong.h
 /// \ingroup chemkit-graphics
-/// \brief The GraphicsQuaternion class represents a quaternion.
+/// \brief The Quaterniong class represents a quaternion.
 
 // --- Construction and Destruction ---------------------------------------- //    
-inline GraphicsQuaternion::GraphicsQuaternion(GraphicsFloat x, GraphicsFloat y, GraphicsFloat z, GraphicsFloat r)
+inline Quaterniong::Quaterniong(GraphicsFloat x, GraphicsFloat y, GraphicsFloat z, GraphicsFloat r)
     : GenericQuaternion<GraphicsFloat>(x, y, z, r)
 {
 }
 
-inline GraphicsQuaternion::GraphicsQuaternion(const Point3g &point, GraphicsFloat r)
+inline Quaterniong::Quaterniong(const Point3g &point, GraphicsFloat r)
     : GenericQuaternion<GraphicsFloat>(point.x(), point.y(), point.z(), r)
 {
 }
 
-inline GraphicsQuaternion::GraphicsQuaternion(const Vector3g &vector, GraphicsFloat r)
+inline Quaterniong::Quaterniong(const Vector3g &vector, GraphicsFloat r)
     : GenericQuaternion<GraphicsFloat>(vector.x(), vector.y(), vector.z(), r)
 {
 }
 
-inline GraphicsQuaternion::GraphicsQuaternion(const GenericQuaternion<GraphicsFloat> &quaternion)
+inline Quaterniong::Quaterniong(const GenericQuaternion<GraphicsFloat> &quaternion)
     : GenericQuaternion<GraphicsFloat>(quaternion)
 {
 }
 
-inline GraphicsQuaternion::GraphicsQuaternion(const StaticVector<GraphicsFloat, 4> &quaternion)
+inline Quaterniong::Quaterniong(const StaticVector<GraphicsFloat, 4> &quaternion)
     : GenericQuaternion<GraphicsFloat>(quaternion)
 {
 }
 
 // --- Properties ---------------------------------------------------------- //
-inline Point3g GraphicsQuaternion::toPoint3() const
+inline Point3g Quaterniong::toPoint3() const
 {
     return Point3g(x(), y(), z());
 }
 
-inline Vector3g GraphicsQuaternion::toVector() const
+inline Vector3g Quaterniong::toVector3() const
 {
     return Vector3g(x(), y(), z());
 }
 
 // --- Static Methods ------------------------------------------------------ //
-inline GraphicsQuaternion GraphicsQuaternion::rotation(const Vector3g &axis, GraphicsFloat angle)
+inline Quaterniong Quaterniong::rotation(const Vector3g &axis, GraphicsFloat angle)
 {
     return rotationRadians(axis, angle * chemkit::constants::DegreesToRadians);
 }
 
-inline GraphicsQuaternion GraphicsQuaternion::rotationRadians(const Vector3g &axis, GraphicsFloat angle)
+inline Quaterniong Quaterniong::rotationRadians(const Vector3g &axis, GraphicsFloat angle)
 {
-    return GraphicsQuaternion(axis.x() * sin(angle/2.0),
+    return Quaterniong(axis.x() * sin(angle/2.0),
                               axis.y() * sin(angle/2.0),
                               axis.z() * sin(angle/2.0),
                               cos(angle/2.0));
 }
 
-inline Point3g GraphicsQuaternion::rotate(const Point3g &point, const Vector3g &axis, GraphicsFloat angle)
+inline Point3g Quaterniong::rotate(const Point3g &point, const Vector3g &axis, GraphicsFloat angle)
 {
     return rotateRadians(point, axis, angle * constants::DegreesToRadians);
 }
 
-inline Point3g GraphicsQuaternion::rotateRadians(const Point3g &point, const Vector3g &axis, GraphicsFloat angle)
+inline Point3g Quaterniong::rotateRadians(const Point3g &point, const Vector3g &axis, GraphicsFloat angle)
 {
-    GraphicsQuaternion p(point.x(), point.y(), point.z(), 0);
-    GraphicsQuaternion q = rotationRadians(axis, angle);
-    GraphicsQuaternion qc = q.conjugate();
+    Quaterniong p(point.x(), point.y(), point.z(), 0);
+    Quaterniong q = rotationRadians(axis, angle);
+    Quaterniong qc = q.conjugate();
 
-    GraphicsQuaternion qp = q.multiply(p);
-    GraphicsQuaternion r = qp.multiply(qc);
+    Quaterniong qp = q.multiply(p);
+    Quaterniong r = qp.multiply(qc);
 
     return r.toPoint3();
 }
 
-inline Vector3g GraphicsQuaternion::rotate(const Vector3g &vector, const Vector3g &axis, GraphicsFloat angle)
+inline Vector3g Quaterniong::rotate(const Vector3g &vector, const Vector3g &axis, GraphicsFloat angle)
 {
     return rotateRadians(vector, axis, angle * constants::DegreesToRadians);
 }
 
-inline Vector3g GraphicsQuaternion::rotateRadians(const Vector3g &vector, const Vector3g &axis, GraphicsFloat angle)
+inline Vector3g Quaterniong::rotateRadians(const Vector3g &vector, const Vector3g &axis, GraphicsFloat angle)
 {
-    GraphicsQuaternion p(vector.x(), vector.y(), vector.z(), 0);
-    GraphicsQuaternion q = rotationRadians(axis, angle);
-    GraphicsQuaternion qc = q.conjugate();
+    Quaterniong p(vector.x(), vector.y(), vector.z(), 0);
+    Quaterniong q = rotationRadians(axis, angle);
+    Quaterniong qc = q.conjugate();
 
-    GraphicsQuaternion qp = q.multiply(p);
-    GraphicsQuaternion r = qp.multiply(qc);
+    Quaterniong qp = q.multiply(p);
+    Quaterniong r = qp.multiply(qc);
 
-    return r.toVector();
+    return r.toVector3();
 }
 
 } // end chemkit namespace
 
-#endif // CHEMKIT_GRAPHICSQUATERNION_INLINE_H
+#endif // CHEMKIT_QUATERNIONG_INLINE_H

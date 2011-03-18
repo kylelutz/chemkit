@@ -20,8 +20,8 @@
 **
 ******************************************************************************/
 
-#ifndef CHEMKIT_GRAPHICSQUATERNION_H
-#define CHEMKIT_GRAPHICSQUATERNION_H
+#ifndef CHEMKIT_QUATERNIONG_H
+#define CHEMKIT_QUATERNIONG_H
 
 #include "graphics.h"
 
@@ -32,23 +32,23 @@
 
 namespace chemkit {
 
-class CHEMKIT_GRAPHICS_EXPORT GraphicsQuaternion : public GenericQuaternion<GraphicsFloat>
+class CHEMKIT_GRAPHICS_EXPORT Quaterniong : public GenericQuaternion<GraphicsFloat>
 {
     public:
         // construction and destruction
-        GraphicsQuaternion(GraphicsFloat x, GraphicsFloat y, GraphicsFloat z, GraphicsFloat r);
-        GraphicsQuaternion(const Point3g &point, GraphicsFloat r);
-        GraphicsQuaternion(const Vector3g &vector, GraphicsFloat r);
-        GraphicsQuaternion(const GenericQuaternion<GraphicsFloat> &quaternion);
-        GraphicsQuaternion(const StaticVector<GraphicsFloat, 4> &quaternion);
+        Quaterniong(GraphicsFloat x, GraphicsFloat y, GraphicsFloat z, GraphicsFloat r);
+        Quaterniong(const Point3g &point, GraphicsFloat r);
+        Quaterniong(const Vector3g &vector, GraphicsFloat r);
+        Quaterniong(const GenericQuaternion<GraphicsFloat> &quaternion);
+        Quaterniong(const StaticVector<GraphicsFloat, 4> &quaternion);
 
         // properties
         Point3g toPoint3() const;
-        Vector3g toVector() const;
+        Vector3g toVector3() const;
 
         // static methods
-        static GraphicsQuaternion rotation(const Vector3g &axis, GraphicsFloat angle);
-        static GraphicsQuaternion rotationRadians(const Vector3g &axis, GraphicsFloat angle);
+        static Quaterniong rotation(const Vector3g &axis, GraphicsFloat angle);
+        static Quaterniong rotationRadians(const Vector3g &axis, GraphicsFloat angle);
         static Point3g rotate(const Point3g &point, const Vector3g &axis, GraphicsFloat angle);
         static Point3g rotateRadians(const Point3g &point, const Vector3g &axis, GraphicsFloat angle);
         static Vector3g rotate(const Vector3g &vector, const Vector3g &axis, GraphicsFloat angle);
@@ -57,6 +57,6 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsQuaternion : public GenericQuaternion<Grap
 
 } // end chemkit namespace
 
-#include "graphicsquaternion-inline.h"
+#include "quaterniong-inline.h"
 
-#endif // CHEMKIT_GRAPHICSQUATERNION_H
+#endif // CHEMKIT_QUATERNIONG_H

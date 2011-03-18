@@ -22,7 +22,7 @@
 
 #include "graphicscamera.h"
 
-#include "graphicsquaternion.h"
+#include "quaterniong.h"
 
 namespace chemkit {
 
@@ -179,11 +179,11 @@ void GraphicsCamera::moveBackward(GraphicsFloat distance)
 /// be rotated.
 void GraphicsCamera::rotate(const Vector3g &axis, GraphicsFloat angle, bool rotateDirection)
 {
-    setPosition(GraphicsQuaternion::rotate(position(), axis, angle));
+    setPosition(Quaterniong::rotate(position(), axis, angle));
 
     if(rotateDirection){
-        setDirection(GraphicsQuaternion::rotate(direction(), axis, angle));
-        setUpVector(GraphicsQuaternion::rotate(upVector(), axis, angle));
+        setDirection(Quaterniong::rotate(direction(), axis, angle));
+        setUpVector(Quaterniong::rotate(upVector(), axis, angle));
     }
 }
 
@@ -274,7 +274,7 @@ Vector3g GraphicsCamera::upVector() const
 /// Tilts the camera by \p angle degrees.
 void GraphicsCamera::tilt(GraphicsFloat angle)
 {
-    setUpVector(GraphicsQuaternion::rotate(upVector(), direction(), angle));
+    setUpVector(Quaterniong::rotate(upVector(), direction(), angle));
 }
 
 // --- Internal Methods ---------------------------------------------------- //

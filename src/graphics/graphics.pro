@@ -57,8 +57,6 @@ HEADERS += graphics.h \
     graphicsproteinhelixitem.h \
     graphicsproteinitem.h \
     graphicsproteinsheetitem.h \
-    graphicsquaternion.h \
-    graphicsquaternion-inline.h \
     graphicsray.h \
     graphicsringitem.h \
     graphicsscene.h \
@@ -70,6 +68,8 @@ HEADERS += graphics.h \
     graphicsvertexbuffer.h \
     point3g.h \
     point3g-inline.h \
+    quaterniong.h \
+    quaterniong-inline.h \
     vector3g.h \
     vector3g-inline.h
 RESOURCES = shaders.qrc

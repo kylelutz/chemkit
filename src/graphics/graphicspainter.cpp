@@ -22,10 +22,10 @@
 
 #include "graphicspainter.h"
 
+#include "quaterniong.h"
 #include "graphicssphere.h"
 #include "graphicscylinder.h"
 #include "graphicsmaterial.h"
-#include "graphicsquaternion.h"
 #include "graphicsvertexbuffer.h"
 
 #include <chemkit/constants.h>
@@ -138,7 +138,7 @@ void GraphicsPainter::drawCircle(const Point3g &center, GraphicsFloat radius, co
     glVertex3f(center.x(), center.y(), center.z());
 
     for(int angle = 0; angle <= 360; angle += 10){
-        Point3g point = center.movedBy(radius, GraphicsQuaternion::rotate(right, normal, angle));
+        Point3g point = center.movedBy(radius, Quaterniong::rotate(right, normal, angle));
 
         glNormal3f(normal.x(), normal.y(), normal.z());
         glVertex3f(point.x(), point.y(), point.z());
@@ -202,14 +202,14 @@ void GraphicsPainter::drawSpline(const QList<Point3g> &points, GraphicsFloat rad
         if(i != (points.size() - 1)){
             GraphicsFloat angle = axis.angle(points[i+1] - points[i]);
             Vector3g rotationAxis = (points[i] - points[i-1]).cross(points[i+1] - points[i]).normalized();
-            axis = GraphicsQuaternion::rotate(axis, rotationAxis, angle / 2.0);
+            axis = Quaterniong::rotate(axis, rotationAxis, angle / 2.0);
         }
 
         axisVectors[i] = axis.normalized();
 
         Vector3g rotationAxis = axisVectors[i-1].cross(axisVectors[i]);
         GraphicsFloat angle = axis.angle(axisVectors[i-1]);
-        Vector3g up = GraphicsQuaternion::rotate(upVectors[i-1], rotationAxis, angle);
+        Vector3g up = Quaterniong::rotate(upVectors[i-1], rotationAxis, angle);
         up.normalize();
 
         upVectors[i] = up;

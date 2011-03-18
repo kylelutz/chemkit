@@ -25,11 +25,11 @@
 #include <chemkit/molecule.h>
 #include <chemkit/alphashape.h>
 
+#include "quaterniong.h"
 #include "graphicsscene.h"
 #include "graphicssphere.h"
 #include "graphicspainter.h"
 #include "graphicsmaterial.h"
-#include "graphicsquaternion.h"
 #include "graphicsmoleculeitem.h"
 #include "graphicsvertexbuffer.h"
 
@@ -118,7 +118,7 @@ GraphicsVertexBuffer* ClippedSphere::tesselate() const
                     Vector3g up = invalidPoint.cross(planeNormal).normalized();
 
                     // set new vertex position
-                    verticies[vertexIndex] = GraphicsQuaternion::rotateRadians(invalidPoint, up, -theta);
+                    verticies[vertexIndex] = Quaterniong::rotateRadians(invalidPoint, up, -theta);
 
                     // update normal
                     normals[vertexIndex] = verticies[vertexIndex].normalized();

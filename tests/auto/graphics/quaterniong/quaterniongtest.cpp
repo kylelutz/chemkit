@@ -22,14 +22,14 @@
 
 #include <QtTest>
 
-#include <chemkit/graphicsquaternion.h>
+#include <chemkit/quaterniong.h>
 
-class GraphicsQuaternionTest : public QObject
+class QuaterniongTest : public QObject
 {
     Q_OBJECT
 
     private slots:
 };
 
-QTEST_APPLESS_MAIN(GraphicsQuaternionTest)
-#include "graphicsquaterniontest.moc"
+QTEST_APPLESS_MAIN(QuaterniongTest)
+#include "quaterniongtest.moc"

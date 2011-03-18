@@ -1,8 +1,8 @@
 TEMPLATE = subdirs
 SUBDIRS = graphicscamera \
-    graphicsquaternion \
     graphicsray \
     graphicsscene \
     graphicstransform \
     point3g \
+    quaterniong \
     vector3g
