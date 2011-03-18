@@ -49,7 +49,7 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsRingItem : public GraphicsItem
         virtual void paint(GraphicsPainter *painter);
 
     private:
-        GraphicsPoint ringCenter(const Ring *ring) const;
+        Point3g ringCenter(const Ring *ring) const;
 
     private:
         GraphicsRingItemPrivate* const d;

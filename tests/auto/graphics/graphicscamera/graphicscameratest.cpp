@@ -52,16 +52,16 @@ void GraphicsCameraTest::view()
 void GraphicsCameraTest::position()
 {
     chemkit::GraphicsCamera camera;
-    QCOMPARE(camera.position(), chemkit::GraphicsPoint(0, 0, 0));
+    QCOMPARE(camera.position(), chemkit::Point3g(0, 0, 0));
 
     camera.setPosition(10, 11, 12);
-    QCOMPARE(camera.position(), chemkit::GraphicsPoint(10, 11, 12));
+    QCOMPARE(camera.position(), chemkit::Point3g(10, 11, 12));
     QCOMPARE(camera.x(), chemkit::GraphicsFloat(10));
     QCOMPARE(camera.y(), chemkit::GraphicsFloat(11));
     QCOMPARE(camera.z(), chemkit::GraphicsFloat(12));
 
-    camera.setPosition(chemkit::GraphicsPoint(1, -2, 3));
-    QCOMPARE(camera.position(), chemkit::GraphicsPoint(1, -2, 3));
+    camera.setPosition(chemkit::Point3g(1, -2, 3));
+    QCOMPARE(camera.position(), chemkit::Point3g(1, -2, 3));
 }
 
 void GraphicsCameraTest::direction()

@@ -176,7 +176,7 @@ void BuildTool::mousePressEvent(QMouseEvent *event)
         else{
             // add new atom
             chemkit::Atom *atom = addAtom(m_element.atomicNumber());
-            chemkit::GraphicsPoint position = view()->unproject(event->x(), event->y(), editor()->molecule()->center());
+            chemkit::Point3g position = view()->unproject(event->x(), event->y(), editor()->molecule()->center());
             setAtomPosition(atom, position.toPoint3());
             m_intialAtom = atom;
             m_intialElement = m_element.atomicNumber();
@@ -249,7 +249,7 @@ void BuildTool::mouseMoveEvent(QMouseEvent *event)
             setAtomAtomicNumber(m_intialAtom, m_intialElement);
             m_movingAtom = addAtom(m_element.atomicNumber());
             addBond(m_intialAtom, m_movingAtom, bondOrder());
-            chemkit::GraphicsPoint position = view()->unproject(event->x(), event->y(), m_intialAtom->position());
+            chemkit::Point3g position = view()->unproject(event->x(), event->y(), m_intialAtom->position());
             setAtomPosition(m_movingAtom, position.toPoint3());
 
             if(m_newBond){
@@ -259,7 +259,7 @@ void BuildTool::mouseMoveEvent(QMouseEvent *event)
             }
         }
         else{
-            chemkit::GraphicsPoint newPosition = view()->unproject(event->x(), event->y(), m_movingAtom->position());
+            chemkit::Point3g newPosition = view()->unproject(event->x(), event->y(), m_movingAtom->position());
             setAtomPosition(m_movingAtom, newPosition.toPoint3());
         }
     }
@@ -279,7 +279,7 @@ void BuildTool::mouseMoveEvent(QMouseEvent *event)
         }
         // over moving atom
         else if(atom == m_movingAtom){
-            chemkit::GraphicsPoint newPosition = view()->unproject(event->x(), event->y(), m_movingAtom->position());
+            chemkit::Point3g newPosition = view()->unproject(event->x(), event->y(), m_movingAtom->position());
             setAtomPosition(m_movingAtom, newPosition.toPoint3());
         }
         // over new atom

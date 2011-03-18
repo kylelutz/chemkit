@@ -22,8 +22,8 @@
 
 #include "manipulatetool.h"
 
+#include <chemkit/point3g.h>
 #include <chemkit/vector3.h>
-#include <chemkit/graphicspoint.h>
 #include <chemkit/graphicscamera.h>
 #include <chemkit/graphicsoverlay.h>
 
@@ -92,7 +92,7 @@ void ManipulateTool::mouseMoveEvent(QMouseEvent *event)
         else if(event->buttons() & Qt::RightButton){
             int dy = event->y() - m_lastPosition.y();
 
-            chemkit::GraphicsPoint position = atom->position();
+            chemkit::Point3g position = atom->position();
             position.moveBy(dy * 0.1, -view()->camera()->direction());
             editor()->setAtomPosition(atom, position.toPoint3());
         }

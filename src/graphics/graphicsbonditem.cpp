@@ -22,8 +22,8 @@
 
 #include "graphicsbonditem.h"
 
+#include "point3g.h"
 #include "graphicsray.h"
-#include "graphicspoint.h"
 #include "graphicsvector.h"
 #include "graphicspainter.h"
 #include "graphicsmoleculeitem.h"
@@ -175,11 +175,11 @@ void GraphicsBondItem::paint(GraphicsPainter *painter)
         GraphicsFloat initialOffset = 1.5 * (bondOrder - 1) * radius;
 
         // a vector pointing to the right (with normal pointing up)
-        GraphicsVector right = GraphicsVector(GraphicsPoint(atom2->position()) - GraphicsPoint(atom1->position())).cross(d->normal);
+        GraphicsVector right = GraphicsVector(Point3g(atom2->position()) - Point3g(atom1->position())).cross(d->normal);
 
         // positions for the first cylinder
-        GraphicsPoint a = GraphicsPoint(atom1->position()).movedBy(-initialOffset, right);
-        GraphicsPoint b = GraphicsPoint(atom2->position()).movedBy(-initialOffset, right);
+        Point3g a = Point3g(atom1->position()).movedBy(-initialOffset, right);
+        Point3g b = Point3g(atom2->position()).movedBy(-initialOffset, right);
 
         // draw each cylinder
         for(int i = 0; i < bondOrder; i++){
@@ -189,7 +189,7 @@ void GraphicsBondItem::paint(GraphicsPainter *painter)
                     painter->drawCylinder(a, b, radius);
                 }
                 else{
-                    GraphicsPoint midpoint = GraphicsPoint::midpoint(a, b);
+                    Point3g midpoint = Point3g::midpoint(a, b);
                     painter->setColor(GraphicsMoleculeItem::atomColor(atom1));
                     painter->drawCylinder(a, midpoint, radius);
                     painter->setColor(GraphicsMoleculeItem::atomColor(atom2));
@@ -217,7 +217,7 @@ void GraphicsBondItem::paint(GraphicsPainter *painter)
                 painter->drawCylinder(atom1->position(), atom2->position(), radius);
             }
             else{
-                GraphicsPoint midpoint = atom1->position().midpoint(atom2->position());
+                Point3g midpoint = atom1->position().midpoint(atom2->position());
                 painter->setColor(GraphicsMoleculeItem::atomColor(atom1));
                 painter->drawCylinder(atom1->position(), midpoint, radius);
                 painter->setColor(GraphicsMoleculeItem::atomColor(atom2));

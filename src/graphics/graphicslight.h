@@ -25,7 +25,7 @@
 
 #include "graphics.h"
 
-#include "graphicspoint.h"
+#include "point3g.h"
 #include "graphicsvector.h"
 
 namespace chemkit {
@@ -40,8 +40,8 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsLight
         ~GraphicsLight();
 
         // properties
-        void setPosition(const GraphicsPoint &position);
-        GraphicsPoint position() const;
+        void setPosition(const Point3g &position);
+        Point3g position() const;
         void setDirection(const GraphicsVector &direction);
         GraphicsVector direction() const;
 

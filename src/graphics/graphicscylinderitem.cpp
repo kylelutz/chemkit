@@ -30,8 +30,8 @@ namespace chemkit {
 class GraphicsCylinderItemPrivate
 {
     public:
-        GraphicsPoint top;
-        GraphicsPoint bottom;
+        Point3g top;
+        Point3g bottom;
         GraphicsFloat radius;
         QColor color;
 };
@@ -44,7 +44,7 @@ class GraphicsCylinderItemPrivate
 // --- Construction and Destruction ---------------------------------------- //
 /// Creates a new cylinder item with positions \p top and \p bottom
 /// and with \p radius.
-GraphicsCylinderItem::GraphicsCylinderItem(const GraphicsPoint &top, const GraphicsPoint &bottom, GraphicsFloat radius)
+GraphicsCylinderItem::GraphicsCylinderItem(const Point3g &top, const Point3g &bottom, GraphicsFloat radius)
     : GraphicsItem(),
       d(new GraphicsCylinderItemPrivate)
 {
@@ -62,25 +62,25 @@ GraphicsCylinderItem::~GraphicsCylinderItem()
 
 // --- Properties ---------------------------------------------------------- //
 /// Sets the top position of the cylinder to \p top.
-void GraphicsCylinderItem::setTop(const GraphicsPoint &top)
+void GraphicsCylinderItem::setTop(const Point3g &top)
 {
     d->top = top;
 }
 
 /// Returns the top position of the cylinder.
-GraphicsPoint GraphicsCylinderItem::top() const
+Point3g GraphicsCylinderItem::top() const
 {
     return d->top;
 }
 
 /// Sets the bottom position of the cylinder to \p bottom.
-void GraphicsCylinderItem::setBottom(const GraphicsPoint &bottom)
+void GraphicsCylinderItem::setBottom(const Point3g &bottom)
 {
     d->bottom = bottom;
 }
 
 /// Returns the bottom position of the cylinder.
-GraphicsPoint GraphicsCylinderItem::bottom() const
+Point3g GraphicsCylinderItem::bottom() const
 {
     return d->bottom;
 }

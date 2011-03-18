@@ -25,7 +25,7 @@
 
 #include "graphics.h"
 
-#include "graphicspoint.h"
+#include "point3g.h"
 #include "graphicsvector.h"
 
 namespace chemkit {
@@ -35,23 +35,23 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsRay
     public:
         // construction and destruction
         GraphicsRay();
-        GraphicsRay(const GraphicsPoint &origin, const GraphicsVector &direction);
-        GraphicsRay(const GraphicsPoint &origin, const GraphicsPoint &point);
+        GraphicsRay(const Point3g &origin, const GraphicsVector &direction);
+        GraphicsRay(const Point3g &origin, const Point3g &point);
         ~GraphicsRay();
 
         // properties
-        void setOrigin(const GraphicsPoint &origin);
-        GraphicsPoint origin() const;
+        void setOrigin(const Point3g &origin);
+        Point3g origin() const;
         void setDirection(const GraphicsVector &direction);
         GraphicsVector direction() const;
 
         // geometry
-        GraphicsPoint pointAt(GraphicsFloat distance) const;
-        bool intersectsSphere(const GraphicsPoint &center, GraphicsFloat radius, GraphicsFloat *distance = 0) const;
-        bool intersectsCylinder(const GraphicsPoint &a, const GraphicsPoint &b, GraphicsFloat radius, GraphicsFloat *distance = 0) const;
+        Point3g pointAt(GraphicsFloat distance) const;
+        bool intersectsSphere(const Point3g &center, GraphicsFloat radius, GraphicsFloat *distance = 0) const;
+        bool intersectsCylinder(const Point3g &a, const Point3g &b, GraphicsFloat radius, GraphicsFloat *distance = 0) const;
 
     private:
-        GraphicsPoint m_origin;
+        Point3g m_origin;
         GraphicsVector m_direction;
 };
 

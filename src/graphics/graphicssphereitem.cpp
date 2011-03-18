@@ -30,7 +30,7 @@ namespace chemkit {
 class GraphicsSphereItemPrivate
 {
     public:
-        GraphicsPoint position;
+        Point3g position;
         GraphicsFloat radius;
         QColor color;
 };
@@ -42,7 +42,7 @@ class GraphicsSphereItemPrivate
 
 // --- Construction and Destruction ---------------------------------------- //
 /// Creates a new sphere item at \p position with \p radius.
-GraphicsSphereItem::GraphicsSphereItem(const GraphicsPoint &position, GraphicsFloat radius)
+GraphicsSphereItem::GraphicsSphereItem(const Point3g &position, GraphicsFloat radius)
     : GraphicsItem(),
       d(new GraphicsSphereItemPrivate)
 {
@@ -69,7 +69,7 @@ GraphicsSphereItem::~GraphicsSphereItem()
 
 // --- Properties ---------------------------------------------------------- //
 /// Sets the sphere's position to \p position.
-void GraphicsSphereItem::setPosition(const GraphicsPoint &position)
+void GraphicsSphereItem::setPosition(const Point3g &position)
 {
     d->position = position;
 
@@ -79,11 +79,11 @@ void GraphicsSphereItem::setPosition(const GraphicsPoint &position)
 /// Sets the sphere's position to (\p x, \p y, \p z).
 void GraphicsSphereItem::setPosition(GraphicsFloat x, GraphicsFloat y, GraphicsFloat z)
 {
-    setPosition(GraphicsPoint(x, y, z));
+    setPosition(Point3g(x, y, z));
 }
 
 /// Returns the sphere's position.
-GraphicsPoint GraphicsSphereItem::position() const
+Point3g GraphicsSphereItem::position() const
 {
     return d->position;
 }

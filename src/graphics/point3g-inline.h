@@ -20,59 +20,59 @@
 **
 ******************************************************************************/
 
-#ifndef CHEMKIT_GRAPHICSPOINT_INLINE_H
-#define CHEMKIT_GRAPHICSPOINT_INLINE_H
+#ifndef CHEMKIT_POINT3G_INLINE_H
+#define CHEMKIT_POINT3G_INLINE_H
 
-#include "graphicspoint.h"
+#include "point3g.h"
 
 namespace chemkit {
 
-// === GraphicsPoint ======================================================= //
-/// \class GraphicsPoint graphicspoint.h chemkit/graphicspoint.h
+// === Point3g ============================================================= //
+/// \class Point3g point3g.h chemkit/point3g.h
 /// \ingroup chemkit-graphics
-/// \brief The GraphicsPoint class represent a location in
+/// \brief The Point3g class represent a location in
 ///        three-dimensional space.
 
 // --- Construction and Destruction ---------------------------------------- //
 /// Create a new point at (\c 0, \c 0, \c 0).
-inline GraphicsPoint::GraphicsPoint()
+inline Point3g::Point3g()
     : GenericPoint<GraphicsFloat>()
 {
 }
 
 /// Create a new point at (\p x, \p y, \p z).
-inline GraphicsPoint::GraphicsPoint(GraphicsFloat x, GraphicsFloat y, GraphicsFloat z)
+inline Point3g::Point3g(GraphicsFloat x, GraphicsFloat y, GraphicsFloat z)
     : GenericPoint<GraphicsFloat>(x, y, z)
 {
 }
 
-inline GraphicsPoint::GraphicsPoint(const GenericPoint<float> &point)
+inline Point3g::Point3g(const GenericPoint<float> &point)
     : GenericPoint<GraphicsFloat>(point)
 {
 }
 
-inline GraphicsPoint::GraphicsPoint(const GenericPoint<double> &point)
+inline Point3g::Point3g(const GenericPoint<double> &point)
     : GenericPoint<GraphicsFloat>(point)
 {
 }
 
-inline GraphicsPoint::GraphicsPoint(const StaticVector<float, 3> &point)
+inline Point3g::Point3g(const StaticVector<float, 3> &point)
     : GenericPoint<GraphicsFloat>(point)
 {
 
 }
 
-inline GraphicsPoint::GraphicsPoint(const StaticVector<double, 3> &point)
+inline Point3g::Point3g(const StaticVector<double, 3> &point)
     : GenericPoint<GraphicsFloat>(point)
 {
 }
 
 // --- Properties ---------------------------------------------------------- //
-inline Point3 GraphicsPoint::toPoint3() const
+inline Point3 Point3g::toPoint3() const
 {
     return Point3(x(), y(), z());
 }
 
 } // end chemkit namespace
 
-#endif // CHEMKIT_GRAPHICSPOINT_INLINE_H
+#endif // CHEMKIT_POINT3G_INLINE_H

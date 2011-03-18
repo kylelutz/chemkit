@@ -40,7 +40,7 @@ inline GraphicsQuaternion::GraphicsQuaternion(GraphicsFloat x, GraphicsFloat y, 
 {
 }
 
-inline GraphicsQuaternion::GraphicsQuaternion(const GraphicsPoint &point, GraphicsFloat r)
+inline GraphicsQuaternion::GraphicsQuaternion(const Point3g &point, GraphicsFloat r)
     : GenericQuaternion<GraphicsFloat>(point.x(), point.y(), point.z(), r)
 {
 }
@@ -61,9 +61,9 @@ inline GraphicsQuaternion::GraphicsQuaternion(const StaticVector<GraphicsFloat, 
 }
 
 // --- Properties ---------------------------------------------------------- //
-inline GraphicsPoint GraphicsQuaternion::toPoint() const
+inline Point3g GraphicsQuaternion::toPoint3() const
 {
-    return GraphicsPoint(x(), y(), z());
+    return Point3g(x(), y(), z());
 }
 
 inline GraphicsVector GraphicsQuaternion::toVector() const
@@ -85,12 +85,12 @@ inline GraphicsQuaternion GraphicsQuaternion::rotationRadians(const GraphicsVect
                               cos(angle/2.0));
 }
 
-inline GraphicsPoint GraphicsQuaternion::rotate(const GraphicsPoint &point, const GraphicsVector &axis, GraphicsFloat angle)
+inline Point3g GraphicsQuaternion::rotate(const Point3g &point, const GraphicsVector &axis, GraphicsFloat angle)
 {
     return rotateRadians(point, axis, angle * constants::DegreesToRadians);
 }
 
-inline GraphicsPoint GraphicsQuaternion::rotateRadians(const GraphicsPoint &point, const GraphicsVector &axis, GraphicsFloat angle)
+inline Point3g GraphicsQuaternion::rotateRadians(const Point3g &point, const GraphicsVector &axis, GraphicsFloat angle)
 {
     GraphicsQuaternion p(point.x(), point.y(), point.z(), 0);
     GraphicsQuaternion q = rotationRadians(axis, angle);
@@ -99,7 +99,7 @@ inline GraphicsPoint GraphicsQuaternion::rotateRadians(const GraphicsPoint &poin
     GraphicsQuaternion qp = q.multiply(p);
     GraphicsQuaternion r = qp.multiply(qc);
 
-    return r.toPoint();
+    return r.toPoint3();
 }
 
 inline GraphicsVector GraphicsQuaternion::rotate(const GraphicsVector &vector, const GraphicsVector &axis, GraphicsFloat angle)

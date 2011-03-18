@@ -28,7 +28,7 @@ namespace chemkit {
 class GraphicsLightPrivate
 {
     public:
-        GraphicsPoint position;
+        Point3g position;
         GraphicsVector direction;
 };
 
@@ -53,13 +53,13 @@ GraphicsLight::~GraphicsLight()
 
 // --- Properties ---------------------------------------------------------- //
 /// Sets the position of the light to \p position.
-void GraphicsLight::setPosition(const GraphicsPoint &position)
+void GraphicsLight::setPosition(const Point3g &position)
 {
     d->position = position;
 }
 
 /// Returns the position of the light.
-GraphicsPoint GraphicsLight::position() const
+Point3g GraphicsLight::position() const
 {
     return d->position;
 }

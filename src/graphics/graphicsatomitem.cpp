@@ -22,8 +22,8 @@
 
 #include "graphicsatomitem.h"
 
+#include "point3g.h"
 #include "graphicsray.h"
-#include "graphicspoint.h"
 #include "graphicssphere.h"
 #include "graphicspainter.h"
 #include "graphicsmoleculeitem.h"
@@ -60,7 +60,7 @@ GraphicsAtomItem::GraphicsAtomItem(const Atom *atom, GraphicsFloat radius)
     d->sphere = GraphicsSphere(radius);
 
     if(atom){
-        translate(GraphicsPoint(atom->position()));
+        translate(Point3g(atom->position()));
     }
 }
 
@@ -78,7 +78,7 @@ void GraphicsAtomItem::setAtom(const Atom *atom)
     d->atom = atom;
 
     if(atom){
-        setTransform(GraphicsTransform::translation(GraphicsPoint(atom->position())));
+        setTransform(GraphicsTransform::translation(Point3g(atom->position())));
     }
 }
 

@@ -43,12 +43,12 @@ class ClippedSphere
     public:
         ClippedSphere(GraphicsFloat radius);
 
-        void addClipPlane(const GraphicsPoint &point, const GraphicsVector &normal);
+        void addClipPlane(const Point3g &point, const GraphicsVector &normal);
         GraphicsVertexBuffer* tesselate() const;
 
     private:
         GraphicsFloat m_radius;
-        QList<QPair<GraphicsPoint, GraphicsVector> > m_clipPlanes;
+        QList<QPair<Point3g, GraphicsVector> > m_clipPlanes;
 };
 
 ClippedSphere::ClippedSphere(GraphicsFloat radius)
@@ -56,7 +56,7 @@ ClippedSphere::ClippedSphere(GraphicsFloat radius)
 {
 }
 
-void ClippedSphere::addClipPlane(const GraphicsPoint &point, const GraphicsVector &normal)
+void ClippedSphere::addClipPlane(const Point3g &point, const GraphicsVector &normal)
 {
     m_clipPlanes.append(qMakePair(point, normal));
 }
@@ -65,7 +65,7 @@ GraphicsVertexBuffer* ClippedSphere::tesselate() const
 {
     GraphicsVertexBuffer *buffer = GraphicsSphere(m_radius).tesselate();
 
-    QVector<GraphicsPoint> verticies = buffer->verticies();
+    QVector<Point3g> verticies = buffer->verticies();
     QVector<GraphicsVector> normals = buffer->normals();
     QVector<unsigned short> indicies = buffer->indicies();
 
@@ -76,15 +76,15 @@ GraphicsVertexBuffer* ClippedSphere::tesselate() const
         unsigned short ib = indicies[triangleIndex*3+1];
         unsigned short ic = indicies[triangleIndex*3+2];
 
-        const GraphicsPoint &a = verticies[ia];
-        const GraphicsPoint &b = verticies[ib];
-        const GraphicsPoint &c = verticies[ic];
+        const Point3g &a = verticies[ia];
+        const Point3g &b = verticies[ib];
+        const Point3g &c = verticies[ic];
 
         // check triangle against each clipping plane
         bool clipTriangle = false;
 
         for(int clipPlaneIndex = 0; clipPlaneIndex < m_clipPlanes.size(); clipPlaneIndex++){
-            const GraphicsPoint &planePoint = m_clipPlanes[clipPlaneIndex].first;
+            const Point3g &planePoint = m_clipPlanes[clipPlaneIndex].first;
             const GraphicsVector &planeNormal = m_clipPlanes[clipPlaneIndex].second;
 
             QList<unsigned short> invalidVerticies;
@@ -111,7 +111,7 @@ GraphicsVertexBuffer* ClippedSphere::tesselate() const
             // clip part of the triangle
             else{
                 foreach(unsigned short vertexIndex, invalidVerticies){
-                    GraphicsPoint invalidPoint = verticies[vertexIndex];
+                    Point3g invalidPoint = verticies[vertexIndex];
 
                     GraphicsFloat d = -(planePoint - invalidPoint).dot(planeNormal);
                     GraphicsFloat theta = acos(planePoint.norm() / m_radius) - acos((planePoint.norm() + d) / m_radius);
@@ -144,10 +144,10 @@ GraphicsVertexBuffer* ClippedSphere::tesselate() const
 class ContactPatchItem : public GraphicsItem
 {
     public:
-        ContactPatchItem(GraphicsMolecularSurfaceItem *parent, const GraphicsPoint &center, GraphicsFloat radius);
+        ContactPatchItem(GraphicsMolecularSurfaceItem *parent, const Point3g &center, GraphicsFloat radius);
         ~ContactPatchItem();
 
-        GraphicsPoint center() const;
+        Point3g center() const;
         GraphicsFloat radius() const;
         void setColor(const QColor &color);
         void addIntersection(const ContactPatchItem *item);
@@ -156,14 +156,14 @@ class ContactPatchItem : public GraphicsItem
 
     private:
         GraphicsMolecularSurfaceItem *m_parent;
-        GraphicsPoint m_center;
+        Point3g m_center;
         GraphicsFloat m_radius;
         QColor m_color;
         GraphicsVertexBuffer *m_buffer;
         QList<const ContactPatchItem *> m_intersections;
 };
 
-ContactPatchItem::ContactPatchItem(GraphicsMolecularSurfaceItem *parent, const GraphicsPoint &center, GraphicsFloat radius)
+ContactPatchItem::ContactPatchItem(GraphicsMolecularSurfaceItem *parent, const Point3g &center, GraphicsFloat radius)
     : GraphicsItem(),
       m_parent(parent),
       m_center(center),
@@ -180,7 +180,7 @@ ContactPatchItem::~ContactPatchItem()
     delete m_buffer;
 }
 
-GraphicsPoint ContactPatchItem::center() const
+Point3g ContactPatchItem::center() const
 {
     return m_center;
 }
@@ -207,16 +207,16 @@ void ContactPatchItem::paint(GraphicsPainter *painter)
 
         // calculate and add clip plane for each intersection
         foreach(const ContactPatchItem *item, m_intersections){
-            const GraphicsPoint &a = m_center;
+            const Point3g &a = m_center;
             GraphicsFloat ra = m_radius;
-            const GraphicsPoint &b = item->center();
+            const Point3g &b = item->center();
             GraphicsFloat rb = item->radius();
 
             const GraphicsFloat d = a.distance(b);
             const GraphicsFloat x = (d*d - rb*rb + ra*ra) / (2 * d);
 
             GraphicsVector planeNormal = (b - a).normalized();
-            const GraphicsPoint planeCenter = planeNormal * x;
+            const Point3g planeCenter = planeNormal * x;
 
             clippedSphere.addClipPlane(planeCenter, planeNormal);
         }

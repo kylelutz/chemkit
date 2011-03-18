@@ -22,9 +22,9 @@
 
 #include <QtTest>
 
-#include <chemkit/graphicspoint.h>
+#include <chemkit/point3g.h>
 
-class GraphicsPointTest : public QObject
+class Point3gTest : public QObject
 {
     Q_OBJECT
 
@@ -37,22 +37,22 @@ class GraphicsPointTest : public QObject
         void midpoint();
 };
 
-void GraphicsPointTest::xyz()
+void Point3gTest::xyz()
 {
-    chemkit::GraphicsPoint nullpoint;
+    chemkit::Point3g nullpoint;
     QCOMPARE(nullpoint.x(), 0.0f);
     QCOMPARE(nullpoint.y(), 0.0f);
     QCOMPARE(nullpoint.z(), 0.0f);
 
-    chemkit::GraphicsPoint point(-1.5f, 8.0f, 4.1f);
+    chemkit::Point3g point(-1.5f, 8.0f, 4.1f);
     QCOMPARE(point.x(), -1.5f);
     QCOMPARE(point.y(), 8.0f);
     QCOMPARE(point.z(), 4.1f);
 }
 
-void GraphicsPointTest::moveBy()
+void Point3gTest::moveBy()
 {
-    chemkit::GraphicsPoint point(0, 0, 0);
+    chemkit::Point3g point(0, 0, 0);
     point.moveBy(2, 0, 0);
     QCOMPARE(point.x(), 2.0f);
     QCOMPARE(point.y(), 0.0f);
@@ -64,10 +64,10 @@ void GraphicsPointTest::moveBy()
     QCOMPARE(point.z(), 9.0f);
 }
 
-void GraphicsPointTest::movedBy()
+void Point3gTest::movedBy()
 {
-    chemkit::GraphicsPoint point(-1, 0, 4);
-    chemkit::GraphicsPoint movedPoint = point.movedBy(0, 5, -1);
+    chemkit::Point3g point(-1, 0, 4);
+    chemkit::Point3g movedPoint = point.movedBy(0, 5, -1);
 
     // check that point is the same
     QCOMPARE(point.x(), -1.0f);
@@ -80,40 +80,40 @@ void GraphicsPointTest::movedBy()
     QCOMPARE(movedPoint.z(), 3.0f);
 }
 
-void GraphicsPointTest::isNull()
+void Point3gTest::isNull()
 {
-    chemkit::GraphicsPoint point;
+    chemkit::Point3g point;
     QCOMPARE(point.isNull(), true);
 
-    point = chemkit::GraphicsPoint(1, 2, 3);
+    point = chemkit::Point3g(1, 2, 3);
     QCOMPARE(point.isNull(), false);
 
     point.moveBy(-1, -2, -3);
     QCOMPARE(point.isNull(), true);
 }
 
-void GraphicsPointTest::distance()
+void Point3gTest::distance()
 {
-    chemkit::GraphicsPoint a(0, 0, 0);
-    chemkit::GraphicsPoint b(0, 0, 0);
+    chemkit::Point3g a(0, 0, 0);
+    chemkit::Point3g b(0, 0, 0);
     QCOMPARE(a.distance(b), 0.0f);
 
-    a = chemkit::GraphicsPoint(2, 0, 0);
+    a = chemkit::Point3g(2, 0, 0);
     QCOMPARE(a.distance(b), 2.0f);
 }
 
-void GraphicsPointTest::midpoint()
+void Point3gTest::midpoint()
 {
-    chemkit::GraphicsPoint a(0, 0, 0);
-    chemkit::GraphicsPoint b(0, 0, 0);
-    QVERIFY(a.midpoint(b) == chemkit::GraphicsPoint(0, 0, 0));
+    chemkit::Point3g a(0, 0, 0);
+    chemkit::Point3g b(0, 0, 0);
+    QVERIFY(a.midpoint(b) == chemkit::Point3g(0, 0, 0));
 
-    a = chemkit::GraphicsPoint(0, 4, 0);
-    QVERIFY(a.midpoint(b) == chemkit::GraphicsPoint(0, 2, 0));
+    a = chemkit::Point3g(0, 4, 0);
+    QVERIFY(a.midpoint(b) == chemkit::Point3g(0, 2, 0));
 
-    b = chemkit::GraphicsPoint(0, 2, 0);
-    QVERIFY(b.midpoint(a) == chemkit::GraphicsPoint(0, 3, 0));
+    b = chemkit::Point3g(0, 2, 0);
+    QVERIFY(b.midpoint(a) == chemkit::Point3g(0, 3, 0));
 }
 
-QTEST_APPLESS_MAIN(GraphicsPointTest)
-#include "graphicspointtest.moc"
+QTEST_APPLESS_MAIN(Point3gTest)
+#include "point3gtest.moc"

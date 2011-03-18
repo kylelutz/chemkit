@@ -22,7 +22,7 @@
 
 #include "graphicsnucleicaciditem.h"
 
-#include "graphicspoint.h"
+#include "point3g.h"
 #include "graphicspainter.h"
 
 #include <chemkit/atom.h>
@@ -99,7 +99,7 @@ void GraphicsNucleicAcidItem::paint(GraphicsPainter *painter)
         }
 
         // build a list of points for the spline
-        QList<GraphicsPoint> trace;
+        QList<Point3g> trace;
         GraphicsFloat radius = 0.6f;
         painter->setColor(Qt::cyan);
 

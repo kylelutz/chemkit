@@ -32,20 +32,20 @@ namespace chemkit {
 
 // --- Construction and Destruction ---------------------------------------- //
 GraphicsRay::GraphicsRay()
-    : m_origin(GraphicsPoint()),
+    : m_origin(Point3g()),
       m_direction(-GraphicsVector::Z())
 {
 }
 
 /// Creates a new ray with \p origin and \p direction.
-GraphicsRay::GraphicsRay(const GraphicsPoint &origin, const GraphicsVector &direction)
+GraphicsRay::GraphicsRay(const Point3g &origin, const GraphicsVector &direction)
     : m_origin(origin),
       m_direction(direction.normalized())
 {
 }
 
 /// Creates a new ray with \p origin that points towards \p point.
-GraphicsRay::GraphicsRay(const GraphicsPoint &origin, const GraphicsPoint &point)
+GraphicsRay::GraphicsRay(const Point3g &origin, const Point3g &point)
     : m_origin(origin),
       m_direction((point - origin).normalized())
 {
@@ -58,13 +58,13 @@ GraphicsRay::~GraphicsRay()
 
 // --- Properties ---------------------------------------------------------- //
 /// Sets the origin to \p origin.
-void GraphicsRay::setOrigin(const GraphicsPoint &origin)
+void GraphicsRay::setOrigin(const Point3g &origin)
 {
     m_origin = origin;
 }
 
 /// Returns the origin.
-GraphicsPoint GraphicsRay::origin() const
+Point3g GraphicsRay::origin() const
 {
     return m_origin;
 }
@@ -84,12 +84,12 @@ GraphicsVector GraphicsRay::direction() const
 
 // --- Geometry ------------------------------------------------------------ //
 /// Returns the point at \p distance from the origin along the ray.
-GraphicsPoint GraphicsRay::pointAt(GraphicsFloat distance) const
+Point3g GraphicsRay::pointAt(GraphicsFloat distance) const
 {
     return m_origin.movedBy(distance, direction());
 }
 
-bool GraphicsRay::intersectsSphere(const GraphicsPoint &center, GraphicsFloat radius, GraphicsFloat *distance) const
+bool GraphicsRay::intersectsSphere(const Point3g &center, GraphicsFloat radius, GraphicsFloat *distance) const
 {
     GraphicsVector dst = center - m_origin;
 
@@ -108,7 +108,7 @@ bool GraphicsRay::intersectsSphere(const GraphicsPoint &center, GraphicsFloat ra
     return true;
 }
 
-bool GraphicsRay::intersectsCylinder(const GraphicsPoint &a, const GraphicsPoint &b, GraphicsFloat radius, GraphicsFloat *distance) const
+bool GraphicsRay::intersectsCylinder(const Point3g &a, const Point3g &b, GraphicsFloat radius, GraphicsFloat *distance) const
 {
     GraphicsVector ao = m_origin - a;
     GraphicsVector ab = b - a;
@@ -127,9 +127,9 @@ bool GraphicsRay::intersectsCylinder(const GraphicsPoint &a, const GraphicsPoint
 
     GraphicsFloat t = qMin((-B + sqrt(D)) / (2 * A), (-B - sqrt(D)) / (2 * A));
 
-    GraphicsPoint ip = pointAt(t);
-    GraphicsPoint ip1 = ip - a;
-    GraphicsPoint ip2 = ip - b;
+    Point3g ip = pointAt(t);
+    Point3g ip1 = ip - a;
+    Point3g ip2 = ip - b;
 
     if(ip1.dot(ab) < 0 || ip2.dot(ab) > 0){
         // intersection below base or above top of the cylinder

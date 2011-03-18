@@ -379,7 +379,7 @@ GraphicsFloat vertexOffset(GraphicsFloat a, GraphicsFloat b, GraphicsFloat isova
 
 GraphicsVertexBuffer* marchCubes(const ScalarField *scalarField, GraphicsFloat isovalue)
 {
-    QVector<GraphicsPoint> verticies;
+    QVector<Point3g> verticies;
     QVector<GraphicsVector> normals;
     QVector<unsigned short> indicies;
 
@@ -391,7 +391,7 @@ GraphicsVertexBuffer* marchCubes(const ScalarField *scalarField, GraphicsFloat i
         for(int yIndex = 0; yIndex < scalarField->height(); yIndex++){
             for(int zIndex = 0; zIndex < scalarField->depth(); zIndex++){
                 // position of the cube's origin
-                GraphicsPoint cubeOrigin(xIndex * xStep, yIndex * yStep, zIndex * zStep);
+                Point3g cubeOrigin(xIndex * xStep, yIndex * yStep, zIndex * zStep);
 
                 // set cube vertex values
                 GraphicsFloat cubeValues[8];
@@ -416,13 +416,13 @@ GraphicsVertexBuffer* marchCubes(const ScalarField *scalarField, GraphicsFloat i
                     continue;
                 }
 
-                QVector<GraphicsPoint> cubeVerticies(12);
+                QVector<Point3g> cubeVerticies(12);
 
                 for(int i = 0; i < 12; i++){
                     if(edgeFlags & (1 << i)){
                         GraphicsFloat offset = vertexOffset(cubeValues[EdgeConnection[i][0]], cubeValues[EdgeConnection[i][1]], isovalue);
 
-                        GraphicsPoint vertex((VertexOffset[EdgeConnection[i][0]][0] + offset * EdgeDirection[i][0]) * xStep,
+                        Point3g vertex((VertexOffset[EdgeConnection[i][0]][0] + offset * EdgeDirection[i][0]) * xStep,
                                              (VertexOffset[EdgeConnection[i][0]][1] + offset * EdgeDirection[i][1]) * yStep,
                                              (VertexOffset[EdgeConnection[i][0]][2] + offset * EdgeDirection[i][2]) * zStep);
 
@@ -437,7 +437,7 @@ GraphicsVertexBuffer* marchCubes(const ScalarField *scalarField, GraphicsFloat i
 
                     for(int j = 0; j < 3; j++){
                         int vertexIndex = TriangleConnectionTable[cubeIndex][i*3 + j];
-                        GraphicsPoint vertex = cubeVerticies[vertexIndex];
+                        Point3g vertex = cubeVerticies[vertexIndex];
 
                         indicies.append(indicies.size());
                         verticies.append(vertex);
@@ -463,7 +463,7 @@ GraphicsVertexBuffer* marchCubes(const ScalarField *scalarField, GraphicsFloat i
 class GraphicsIsosurfaceItemPrivate
 {
     public:
-        GraphicsPoint position;
+        Point3g position;
         GraphicsFloat isovalue;
         QColor color;
         QVector<GraphicsFloat> values;
@@ -504,14 +504,14 @@ GraphicsIsosurfaceItem::~GraphicsIsosurfaceItem()
 
 // --- Properties ---------------------------------------------------------- //
 /// Sets the position of the isosurface item to \p position.
-void GraphicsIsosurfaceItem::setPosition(const GraphicsPoint &position)
+void GraphicsIsosurfaceItem::setPosition(const Point3g &position)
 {
     d->position = position;
     setTransform(GraphicsTransform::translation(position));
 }
 
 /// Returns the position of the isosurface item.
-GraphicsPoint GraphicsIsosurfaceItem::position() const
+Point3g GraphicsIsosurfaceItem::position() const
 {
     return d->position;
 }

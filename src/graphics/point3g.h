@@ -20,8 +20,8 @@
 **
 ******************************************************************************/
 
-#ifndef CHEMKIT_GRAPHICSPOINT_H
-#define CHEMKIT_GRAPHICSPOINT_H
+#ifndef CHEMKIT_POINT3G_H
+#define CHEMKIT_POINT3G_H
 
 #include "graphics.h"
 
@@ -30,16 +30,16 @@
 
 namespace chemkit {
 
-class CHEMKIT_GRAPHICS_EXPORT GraphicsPoint : public GenericPoint<GraphicsFloat>
+class CHEMKIT_GRAPHICS_EXPORT Point3g : public GenericPoint<GraphicsFloat>
 {
     public:
         // construction and destruction
-        GraphicsPoint();
-        GraphicsPoint(GraphicsFloat x, GraphicsFloat y, GraphicsFloat z);
-        GraphicsPoint(const GenericPoint<float> &point);
-        GraphicsPoint(const GenericPoint<double> &point);
-        GraphicsPoint(const StaticVector<float, 3> &point);
-        GraphicsPoint(const StaticVector<double, 3> &point);
+        Point3g();
+        Point3g(GraphicsFloat x, GraphicsFloat y, GraphicsFloat z);
+        Point3g(const GenericPoint<float> &point);
+        Point3g(const GenericPoint<double> &point);
+        Point3g(const StaticVector<float, 3> &point);
+        Point3g(const StaticVector<double, 3> &point);
 
         // properties
         Point3 toPoint3() const;
@@ -47,6 +47,6 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsPoint : public GenericPoint<GraphicsFloat>
 
 } // end chemkit namespace
 
-#include "graphicspoint-inline.h"
+#include "point3g-inline.h"
 
-#endif // CHEMKIT_GRAPHICSPOINT_H
+#endif // CHEMKIT_POINT3G_H

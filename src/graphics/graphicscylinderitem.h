@@ -35,14 +35,14 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsCylinderItem : public GraphicsItem
 {
     public:
         // construction and destruction
-        GraphicsCylinderItem(const GraphicsPoint &top, const GraphicsPoint &bottom, GraphicsFloat radius);
+        GraphicsCylinderItem(const Point3g &top, const Point3g &bottom, GraphicsFloat radius);
         ~GraphicsCylinderItem();
 
         // properties
-        void setTop(const GraphicsPoint &top);
-        GraphicsPoint top() const;
-        void setBottom(const GraphicsPoint &bottom);
-        GraphicsPoint bottom() const;
+        void setTop(const Point3g &top);
+        Point3g top() const;
+        void setBottom(const Point3g &bottom);
+        Point3g bottom() const;
         void setRadius(GraphicsFloat radius);
         GraphicsFloat radius() const;
         void setColor(const QColor &color);

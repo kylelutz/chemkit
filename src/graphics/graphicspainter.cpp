@@ -85,7 +85,7 @@ void GraphicsPainter::drawSphere(GraphicsFloat radius)
     delete buffer;
 }
 
-void GraphicsPainter::drawSphere(const GraphicsPoint &center, GraphicsFloat radius)
+void GraphicsPainter::drawSphere(const Point3g &center, GraphicsFloat radius)
 {
     glPushMatrix();
     glTranslated(center.x(), center.y(), center.z());
@@ -105,7 +105,7 @@ void GraphicsPainter::drawCylinder(GraphicsFloat radius, GraphicsFloat length)
     delete buffer;
 }
 
-void GraphicsPainter::drawCylinder(const GraphicsPoint &a, const GraphicsPoint &b, GraphicsFloat radius)
+void GraphicsPainter::drawCylinder(const Point3g &a, const Point3g &b, GraphicsFloat radius)
 {
     glPushMatrix();
 
@@ -128,7 +128,7 @@ void GraphicsPainter::drawCircle(GraphicsFloat radius)
     Q_UNUSED(radius);
 }
 
-void GraphicsPainter::drawCircle(const GraphicsPoint &center, GraphicsFloat radius, const GraphicsVector &normal)
+void GraphicsPainter::drawCircle(const Point3g &center, GraphicsFloat radius, const GraphicsVector &normal)
 {
     GraphicsVector right(normal.y(), -normal.x(), 0); // vector orthogonal to normal
 
@@ -138,7 +138,7 @@ void GraphicsPainter::drawCircle(const GraphicsPoint &center, GraphicsFloat radi
     glVertex3f(center.x(), center.y(), center.z());
 
     for(int angle = 0; angle <= 360; angle += 10){
-        GraphicsPoint point = center.movedBy(radius, GraphicsQuaternion::rotate(right, normal, angle));
+        Point3g point = center.movedBy(radius, GraphicsQuaternion::rotate(right, normal, angle));
 
         glNormal3f(normal.x(), normal.y(), normal.z());
         glVertex3f(point.x(), point.y(), point.z());
@@ -147,10 +147,10 @@ void GraphicsPainter::drawCircle(const GraphicsPoint &center, GraphicsFloat radi
     glEnd();
 }
 
-void GraphicsPainter::drawTriangle(const GraphicsPoint &a, const GraphicsPoint &b, const GraphicsPoint &c)
+void GraphicsPainter::drawTriangle(const Point3g &a, const Point3g &b, const Point3g &c)
 {
     // verticies
-    QVector<GraphicsPoint> verticies(3);
+    QVector<Point3g> verticies(3);
     verticies[0] = a;
     verticies[1] = b;
     verticies[2] = c;
@@ -174,13 +174,13 @@ void GraphicsPainter::drawTriangle(const GraphicsPoint &a, const GraphicsPoint &
     draw(&buffer);
 }
 
-void GraphicsPainter::drawRectangle(const GraphicsPoint &a, const GraphicsPoint &b, const GraphicsPoint &c, const GraphicsPoint &d)
+void GraphicsPainter::drawRectangle(const Point3g &a, const Point3g &b, const Point3g &c, const Point3g &d)
 {
     drawTriangle(a, b, c);
     drawTriangle(a, c, d);
 }
 
-void GraphicsPainter::drawSpline(const QList<GraphicsPoint> &points, GraphicsFloat radius, int order)
+void GraphicsPainter::drawSpline(const QList<Point3g> &points, GraphicsFloat radius, int order)
 {
     if(points.size() < 2){
         return;
@@ -216,10 +216,10 @@ void GraphicsPainter::drawSpline(const QList<GraphicsPoint> &points, GraphicsFlo
     }
 
     // calculate control points
-    QVector<GraphicsPoint> controlPoints(points.size() * 9);
+    QVector<Point3g> controlPoints(points.size() * 9);
 
     for(int i = 0; i < points.size(); i++){
-        const GraphicsPoint &point = points.at(i);
+        const Point3g &point = points.at(i);
 
         GraphicsVector upVector = upVectors[i];
         GraphicsVector rightVector = upVector.cross(axisVectors[i]);
@@ -227,35 +227,35 @@ void GraphicsPainter::drawSpline(const QList<GraphicsPoint> &points, GraphicsFlo
         // 8 points around a square surrounding point
 
         // right
-        GraphicsPoint right = point.movedBy(radius, rightVector);
+        Point3g right = point.movedBy(radius, rightVector);
         controlPoints[i*9+0] = right;
 
         // bottom right
-        GraphicsPoint bottomRight = right.movedBy(-radius, upVector);
+        Point3g bottomRight = right.movedBy(-radius, upVector);
         controlPoints[i*9+1] = bottomRight;
 
         // bottom
-        GraphicsPoint bottom = point.movedBy(-radius, upVector);
+        Point3g bottom = point.movedBy(-radius, upVector);
         controlPoints[i*9+2] = bottom;
 
         // bottom left
-        GraphicsPoint bottomLeft = bottom.movedBy(-radius, rightVector);
+        Point3g bottomLeft = bottom.movedBy(-radius, rightVector);
         controlPoints[i*9+3] = bottomLeft;
 
         // left
-        GraphicsPoint left = point.movedBy(-radius, rightVector);
+        Point3g left = point.movedBy(-radius, rightVector);
         controlPoints[i*9+4] = left;
 
         // top left
-        GraphicsPoint topLeft = left.movedBy(radius, upVector);
+        Point3g topLeft = left.movedBy(radius, upVector);
         controlPoints[i*9+5] = topLeft;
 
         // top
-        GraphicsPoint top = point.movedBy(radius, upVector);
+        Point3g top = point.movedBy(radius, upVector);
         controlPoints[i*9+6] = top;
 
         // top right
-        GraphicsPoint topRight = top.movedBy(radius, rightVector);
+        Point3g topRight = top.movedBy(radius, rightVector);
         controlPoints[i*9+7] = topRight;
 
         // right (again)
@@ -293,7 +293,7 @@ void GraphicsPainter::drawSpline(const QList<GraphicsPoint> &points, GraphicsFlo
     drawCircle(points.last(), radius * 1.08, axisVectors.last());
 }
 
-void GraphicsPainter::drawNurbsSurface(const QVector<GraphicsPoint> &controlPoints, const QVector<GraphicsFloat> &uKnots, const QVector<GraphicsFloat> &vKnots, int uOrder, int vOrder)
+void GraphicsPainter::drawNurbsSurface(const QVector<Point3g> &controlPoints, const QVector<GraphicsFloat> &uKnots, const QVector<GraphicsFloat> &vKnots, int uOrder, int vOrder)
 {
     // nurbs control points
     QVector<GraphicsFloat> points(controlPoints.size() * 3);

@@ -101,14 +101,14 @@ GraphicsTransform GraphicsTransform::inverted() const
 /// Multiplies \p ray by the transform.
 GraphicsRay GraphicsTransform::multiply(const GraphicsRay &ray) const
 {
-    GraphicsPoint origin = multiply(ray.origin());
-    GraphicsPoint direction = multiply(ray.direction());
+    Point3g origin = multiply(ray.origin());
+    Point3g direction = multiply(ray.direction());
 
     return GraphicsRay(origin, direction);
 }
 
 /// Multiplies \p point by the transform.
-GraphicsPoint GraphicsTransform::multiply(const GraphicsPoint &point) const
+Point3g GraphicsTransform::multiply(const Point3g &point) const
 {
     StaticVector<GraphicsFloat, 4> vector4;
     vector4[0] = point.x();
@@ -118,7 +118,7 @@ GraphicsPoint GraphicsTransform::multiply(const GraphicsPoint &point) const
 
     vector4 = m_matrix->multiply(vector4);
 
-    return GraphicsPoint(vector4[0], vector4[1], vector4[2]);
+    return Point3g(vector4[0], vector4[1], vector4[2]);
 }
 
 /// Multiplies \p vector by the transform.
@@ -147,7 +147,7 @@ StaticVector<GraphicsFloat, 4> GraphicsTransform::multiply(const StaticVector<Gr
 }
 
 /// Multiplies \p point by the inverse of the transform.
-GraphicsPoint GraphicsTransform::inverseMultiply(const GraphicsPoint &point) const
+Point3g GraphicsTransform::inverseMultiply(const Point3g &point) const
 {
     StaticVector<GraphicsFloat, 4> vector4;
     vector4[0] = point.x();
@@ -157,7 +157,7 @@ GraphicsPoint GraphicsTransform::inverseMultiply(const GraphicsPoint &point) con
 
     vector4 = m_matrix->inverted().multiply(vector4);
 
-    return GraphicsPoint(vector4[0], vector4[1], vector4[2]);
+    return Point3g(vector4[0], vector4[1], vector4[2]);
 }
 
 /// Multiplies \p vector by the inverse of the transform.
@@ -195,7 +195,7 @@ GraphicsRay GraphicsTransform::operator*(const GraphicsRay &ray) const
     return multiply(ray);
 }
 
-GraphicsPoint GraphicsTransform::operator*(const GraphicsPoint &point) const
+Point3g GraphicsTransform::operator*(const Point3g &point) const
 {
     return multiply(point);
 }

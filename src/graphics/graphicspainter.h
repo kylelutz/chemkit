@@ -27,7 +27,7 @@
 
 namespace chemkit {
 
-class GraphicsPoint;
+class Point3g;
 class GraphicsVector;
 class GraphicsMaterial;
 class GraphicsVertexBuffer;
@@ -54,15 +54,15 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsPainter
         // drawing
         void draw(const GraphicsVertexBuffer *buffer, PrimitiveType type = Triangles);
         void drawSphere(GraphicsFloat radius);
-        void drawSphere(const GraphicsPoint &center, GraphicsFloat radius);
+        void drawSphere(const Point3g &center, GraphicsFloat radius);
         void drawCylinder(GraphicsFloat radius, GraphicsFloat length);
-        void drawCylinder(const GraphicsPoint &a, const GraphicsPoint &b, GraphicsFloat radius);
+        void drawCylinder(const Point3g &a, const Point3g &b, GraphicsFloat radius);
         void drawCircle(GraphicsFloat radius);
-        void drawCircle(const GraphicsPoint &center, GraphicsFloat radius, const GraphicsVector &normal);
-        void drawTriangle(const GraphicsPoint &a, const GraphicsPoint &b, const GraphicsPoint &c);
-        void drawRectangle(const GraphicsPoint &a, const GraphicsPoint &b, const GraphicsPoint &c, const GraphicsPoint &d);
-        void drawSpline(const QList<GraphicsPoint> &points, GraphicsFloat radius, int order);
-        void drawNurbsSurface(const QVector<GraphicsPoint> &controlPoints, const QVector<GraphicsFloat> &uKnots, const QVector<GraphicsFloat> &vKnots, int uOrder, int vOrder);
+        void drawCircle(const Point3g &center, GraphicsFloat radius, const GraphicsVector &normal);
+        void drawTriangle(const Point3g &a, const Point3g &b, const Point3g &c);
+        void drawRectangle(const Point3g &a, const Point3g &b, const Point3g &c, const Point3g &d);
+        void drawSpline(const QList<Point3g> &points, GraphicsFloat radius, int order);
+        void drawNurbsSurface(const QVector<Point3g> &controlPoints, const QVector<GraphicsFloat> &uKnots, const QVector<GraphicsFloat> &vKnots, int uOrder, int vOrder);
         void drawText(const QString &text, const QFont &font = QFont());
         void setColor(const QColor &color);
         void setMaterial(const GraphicsMaterial *material);

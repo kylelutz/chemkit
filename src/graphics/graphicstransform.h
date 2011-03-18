@@ -25,8 +25,8 @@
 
 #include "graphics.h"
 
+#include "point3g.h"
 #include "graphicsray.h"
-#include "graphicspoint.h"
 #include "graphicsvector.h"
 
 #include <chemkit/staticmatrix.h>
@@ -49,11 +49,11 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsTransform
         void invert();
         GraphicsTransform inverted() const;
         GraphicsRay multiply(const GraphicsRay &ray) const;
-        GraphicsPoint multiply(const GraphicsPoint &point) const;
+        Point3g multiply(const Point3g &point) const;
         GraphicsVector multiply(const GraphicsVector &vector) const;
         StaticVector<GraphicsFloat, 4> multiply(const StaticVector<GraphicsFloat, 4> &vector);
         GraphicsTransform multiply(const GraphicsTransform &transform) const;
-        GraphicsPoint inverseMultiply(const GraphicsPoint &point) const;
+        Point3g inverseMultiply(const Point3g &point) const;
         GraphicsVector inverseMultiply(const GraphicsVector &vector) const;
         StaticVector<GraphicsFloat, 4> inverseMultiply(const StaticVector<GraphicsFloat, 4> &vector);
 
@@ -61,7 +61,7 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsTransform
         GraphicsFloat operator()(int row, int column) const;
         GraphicsFloat& operator()(int row, int column);
         GraphicsRay operator*(const GraphicsRay &ray) const;
-        GraphicsPoint operator*(const GraphicsPoint &point) const;
+        Point3g operator*(const Point3g &point) const;
         GraphicsVector operator*(const GraphicsVector &vector) const;
         GraphicsTransform operator*(const GraphicsTransform &transform) const;
         GraphicsTransform& operator*=(const GraphicsTransform &transform);

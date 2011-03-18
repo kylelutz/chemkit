@@ -25,7 +25,7 @@
 #include <chemkit/atom.h>
 #include <chemkit/aminoacid.h>
 
-#include "graphicspoint.h"
+#include "point3g.h"
 #include "graphicspainter.h"
 
 namespace chemkit {
@@ -67,7 +67,7 @@ void GraphicsProteinSheetItem::paint(GraphicsPainter *painter)
         return;
     }
 
-    QVector<GraphicsPoint> trace(d->residues.size());
+    QVector<Point3g> trace(d->residues.size());
     QVector<GraphicsVector> normals(d->residues.size());
 
     for(int i = 0; i < d->residues.size(); i++){
@@ -91,10 +91,10 @@ void GraphicsProteinSheetItem::paint(GraphicsPainter *painter)
     int degree = 3;
     int order = degree + 1;
 
-    QVector<GraphicsPoint> controlPoints(trace.size() * 5);
+    QVector<Point3g> controlPoints(trace.size() * 5);
 
     for(int i = 0; i < trace.size(); i++){
-        const GraphicsPoint &point = trace[i];
+        const Point3g &point = trace[i];
         const GraphicsVector &normal = normals[i];
 
         GraphicsVector axis;
@@ -112,25 +112,25 @@ void GraphicsProteinSheetItem::paint(GraphicsPainter *painter)
         // counter clockwise winding (topLeft -> bottomLeft -> bottomRight -> topRight)
 
         // top left
-        GraphicsPoint topLeft = point;
+        Point3g topLeft = point;
         topLeft.moveBy(halfHeight, normal);
         topLeft.moveBy(-halfWidth, right);
         controlPoints[i*5+0] = topLeft;
 
         // bottom left
-        GraphicsPoint bottomLeft = point;
+        Point3g bottomLeft = point;
         bottomLeft.moveBy(-halfHeight, normal);
         bottomLeft.moveBy(-halfWidth, right);
         controlPoints[i*5+1] = bottomLeft;
 
         // bottom right
-        GraphicsPoint bottomRight = point;
+        Point3g bottomRight = point;
         bottomRight.moveBy(-halfHeight, normal);
         bottomRight.moveBy(halfWidth, right);
         controlPoints[i*5+2] = bottomRight;
 
         // top right
-        GraphicsPoint topRight = point;
+        Point3g topRight = point;
         topRight.moveBy(halfHeight, normal);
         topRight.moveBy(halfWidth, right);
         controlPoints[i*5+3] = topRight;

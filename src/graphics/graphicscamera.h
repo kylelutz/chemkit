@@ -25,7 +25,7 @@
 
 #include "graphics.h"
 
-#include "graphicspoint.h"
+#include "point3g.h"
 #include "graphicsvector.h"
 
 namespace chemkit {
@@ -38,7 +38,7 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsCamera
     public:
         // construction and destruction
         GraphicsCamera();
-        GraphicsCamera(const GraphicsPoint &position);
+        GraphicsCamera(const Point3g &position);
         GraphicsCamera(GraphicsFloat x, GraphicsFloat y, GraphicsFloat z);
         ~GraphicsCamera();
 
@@ -46,13 +46,13 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsCamera
         GraphicsView* view() const;
 
         // position
-        void setPosition(const GraphicsPoint &position);
+        void setPosition(const Point3g &position);
         void setPosition(GraphicsFloat x, GraphicsFloat y, GraphicsFloat z);
-        GraphicsPoint position() const;
+        Point3g position() const;
         GraphicsFloat x() const;
         GraphicsFloat y() const;
         GraphicsFloat z() const;
-        void moveTo(const GraphicsPoint &position);
+        void moveTo(const Point3g &position);
         void moveTo(GraphicsFloat x, GraphicsFloat y, GraphicsFloat z);
         void moveBy(const GraphicsVector &vector);
         void moveBy(GraphicsFloat dx, GraphicsFloat dy, GraphicsFloat dz);
@@ -61,14 +61,14 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsCamera
         void moveBackward(GraphicsFloat distance);
         void rotate(const GraphicsVector &axis, GraphicsFloat angle, bool rotateDirection = true);
         void orbit(GraphicsFloat dx, GraphicsFloat dy, bool rotateDirection = true);
-        void orbit(const GraphicsPoint &point, GraphicsFloat dx, GraphicsFloat dy, bool rotateDirection = true);
+        void orbit(const Point3g &point, GraphicsFloat dx, GraphicsFloat dy, bool rotateDirection = true);
 
         // orientation
         void setDirection(const GraphicsVector &direction);
         GraphicsVector direction() const;
-        void setFocus(const GraphicsPoint &point);
-        GraphicsPoint focus() const;
-        void lookAt(const GraphicsPoint &point);
+        void setFocus(const Point3g &point);
+        Point3g focus() const;
+        void lookAt(const Point3g &point);
         void setUpVector(const GraphicsVector &upVector);
         GraphicsVector upVector() const;
         void tilt(GraphicsFloat angle);

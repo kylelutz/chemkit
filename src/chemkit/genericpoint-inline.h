@@ -36,7 +36,7 @@ namespace chemkit {
 /// The GenericPoint template has one parameter:
 ///     - \b T: The coordinate type.
 ///
-/// \see Point, GraphicsPoint
+/// \see Point
 
 // --- Construction and Destruction ---------------------------------------- //
 /// Creates a new, empty generic point.

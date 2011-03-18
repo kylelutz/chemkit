@@ -25,7 +25,7 @@
 #include <chemkit/atom.h>
 #include <chemkit/aminoacid.h>
 
-#include "graphicspoint.h"
+#include "point3g.h"
 #include "graphicspainter.h"
 
 namespace chemkit {
@@ -93,8 +93,8 @@ void GraphicsProteinHelixItem::paint(GraphicsPainter *painter)
         painter->setColor(Qt::red);
 
         GraphicsFloat radius = 1.5;
-        GraphicsPoint a = d->residues.first()->alphaCarbon()->position();
-        GraphicsPoint b = d->residues.last()->alphaCarbon()->position();
+        Point3g a = d->residues.first()->alphaCarbon()->position();
+        Point3g b = d->residues.last()->alphaCarbon()->position();
         painter->drawCylinder(a, b, radius);
 
         painter->drawCircle(a, radius, (a - b).normalized());
