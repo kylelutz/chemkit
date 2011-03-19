@@ -32,6 +32,9 @@ namespace chemkit {
 /// A three-dimensional point.
 typedef GenericPoint<Float> Point3;
 
+typedef GenericPoint<float> Point3f;
+typedef GenericPoint<double> Point3d;
+
 } // end chemkit namespace
 
 #endif // CHEMKIT_POINT3_H
