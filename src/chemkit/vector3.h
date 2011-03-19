@@ -32,7 +32,10 @@ namespace chemkit {
 /// A three-dimensional vector.
 typedef GenericVector<Float> Vector3;
 
+/// A three-dimensional vector containing \c float values.
 typedef GenericVector<float> Vector3f;
+
+/// A three-dimensional vector containing \c double values.
 typedef GenericVector<double> Vector3d;
 
 } // end chemkit namespace
