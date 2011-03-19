@@ -25,9 +25,9 @@
 
 #include "chemkit.h"
 
-namespace chemkit {
+#include "point3.h"
 
-class Point3;
+namespace chemkit {
 
 namespace geometry {
 

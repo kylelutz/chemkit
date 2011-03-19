@@ -27,11 +27,11 @@
 
 #include <QVector>
 
+#include "point3.h"
 #include "vector3.h"
 
 namespace chemkit {
 
-class Point3;
 class ForceField;
 class ForceFieldAtom;
 class ForceFieldCalculationPrivate;

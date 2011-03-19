@@ -103,7 +103,6 @@ HEADERS += alphashape.h \
     plugin.h \
     pluginmanager.h \
     point3.h \
-    point3-inline.h \
     polymer.h \
     polymerchain.h \
     polymerfile.h \

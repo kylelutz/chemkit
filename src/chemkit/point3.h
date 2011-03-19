@@ -29,18 +29,9 @@
 
 namespace chemkit {
 
-class CHEMKIT_EXPORT Point3 : public GenericPoint<Float>
-{
-    public:
-        // construction and destruction
-        Point3();
-        Point3(Float x, Float y, Float z);
-        Point3(const GenericPoint<Float> &point);
-        Point3(const StaticVector<Float, 3> &vector);
-};
+/// A three-dimensional point.
+typedef GenericPoint<Float> Point3;
 
 } // end chemkit namespace
-
-#include "point3-inline.h"
 
 #endif // CHEMKIT_POINT3_H
