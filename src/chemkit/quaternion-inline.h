@@ -68,66 +68,6 @@ inline Quaternion::Quaternion(const StaticVector<Float, 4> &quaternion)
 {
 }
 
-// --- Static Methods ------------------------------------------------------ //
-/// Returns a quaternion that represents the rotation of \p angle degrees
-/// around \p axis.
-inline Quaternion  Quaternion::rotation(const Vector3 &axis, Float angle)
-{
-    return rotationRadians(axis, angle * chemkit::constants::DegreesToRadians);
-}
-
-/// Returns a quaternion that represents the rotation of \p angle radians
-/// around \p axis.
-inline Quaternion Quaternion::rotationRadians(const Vector3 &axis, Float angle)
-{
-    return Quaternion(axis.x() * sin(angle/2.0),
-                      axis.y() * sin(angle/2.0),
-                      axis.z() * sin(angle/2.0),
-                      cos(angle/2.0));
-}
-
-/// Returns a new point that is the result of rotating the point
-/// angle degrees around axis.
-inline Point3 Quaternion::rotate(const Point3 &point, const Vector3 &axis, Float angle)
-{
-    return rotateRadians(point, axis, angle * chemkit::constants::DegreesToRadians);
-}
-
-/// Returns a new point that is the result of rotating the point
-/// angle radians around axis.
-inline Point3 Quaternion::rotateRadians(const Point3 &point, const Vector3 &axis, Float angle)
-{
-    Quaternion p(point.x(), point.y(), point.z(), 0);
-    Quaternion q = rotationRadians(axis, angle);
-    Quaternion qc = q.conjugate();
-
-    Quaternion qp = q.multiply(p);
-    Quaternion r = qp.multiply(qc);
-
-    return r.toPoint3();
-}
-
-/// Returns a new vector that is the result of rotating the vector
-/// angle degrees around axis.
-inline Vector3 Quaternion::rotate(const Vector3 &vector, const Vector3 &axis, Float angle)
-{
-    return rotateRadians(vector, axis, angle * chemkit::constants::DegreesToRadians);
-}
-
-/// Returns a new vector that is the result of rotating the vector
-/// angle radians areound axis.
-inline Vector3 Quaternion::rotateRadians(const Vector3 &vector, const Vector3 &axis, Float angle)
-{
-    Quaternion p(vector.x(), vector.y(), vector.z(), 0);
-    Quaternion q  = rotationRadians(axis, angle);
-    Quaternion qc = q.conjugate();
-
-    Quaternion qp = q.multiply(p);
-    Quaternion r = qp.multiply(qc);
-
-    return r.toVector3();
-}
-
 // === Quaternionf ========================================================= //
 /// \class Quaternionf quaternion.h chemkit/quaternion.h
 /// \ingroup chemkit
@@ -157,54 +97,6 @@ inline Quaternionf::Quaternionf(const GenericQuaternion<float> &quaternion)
 inline Quaternionf::Quaternionf(const StaticVector<float, 4> &quaternion)
     : GenericQuaternion<float>(quaternion)
 {
-}
-
-// --- Static Methods ------------------------------------------------------ //
-inline Quaternionf Quaternionf::rotation(const Vector3f &axis, float angle)
-{
-    return rotationRadians(axis, angle * chemkit::constants::DegreesToRadians);
-}
-
-inline Quaternionf Quaternionf::rotationRadians(const Vector3f &axis, float angle)
-{
-    return Quaternionf(axis.x() * sin(angle/2.0),
-                       axis.y() * sin(angle/2.0),
-                       axis.z() * sin(angle/2.0),
-                       cos(angle/2.0));
-}
-
-inline Point3f Quaternionf::rotate(const Point3f &point, const Vector3f &axis, float angle)
-{
-    return rotateRadians(point, axis, angle * constants::DegreesToRadians);
-}
-
-inline Point3f Quaternionf::rotateRadians(const Point3f &point, const Vector3f &axis, float angle)
-{
-    Quaternionf p(point.x(), point.y(), point.z(), 0);
-    Quaternionf q = rotationRadians(axis, angle);
-    Quaternionf qc = q.conjugate();
-
-    Quaternionf qp = q.multiply(p);
-    Quaternionf r = qp.multiply(qc);
-
-    return r.toPoint3();
-}
-
-inline Vector3f Quaternionf::rotate(const Vector3f &vector, const Vector3f &axis, float angle)
-{
-    return rotateRadians(vector, axis, angle * constants::DegreesToRadians);
-}
-
-inline Vector3f Quaternionf::rotateRadians(const Vector3f &vector, const Vector3f &axis, float angle)
-{
-    Quaternionf p(vector.x(), vector.y(), vector.z(), 0);
-    Quaternionf q = rotationRadians(axis, angle);
-    Quaternionf qc = q.conjugate();
-
-    Quaternionf qp = q.multiply(p);
-    Quaternionf r = qp.multiply(qc);
-
-    return r.toVector3();
 }
 
 } // end chemkit namespace

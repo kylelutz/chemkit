@@ -147,6 +147,60 @@ inline GenericQuaternion<T> GenericQuaternion<T>::multiply(const GenericQuaterni
     return GenericQuaternion<T>(x, y, z, r);
 }
 
+// --- Static Methods ------------------------------------------------------ //
+template<typename T>
+inline GenericQuaternion<T> GenericQuaternion<T>::rotation(const GenericVector<T> &axis, T angle)
+{
+    return rotationRadians(axis, angle * chemkit::constants::DegreesToRadians);
+}
+
+template<typename T>
+inline GenericQuaternion<T> GenericQuaternion<T>::rotationRadians(const GenericVector<T> &axis, T angle)
+{
+    return GenericQuaternion<T>(axis.x() * sin(angle/2.0),
+                                axis.y() * sin(angle/2.0),
+                                axis.z() * sin(angle/2.0),
+                                cos(angle/2.0));
+}
+
+template<typename T>
+inline GenericPoint<T> GenericQuaternion<T>::rotate(const GenericPoint<T> &point, const GenericVector<T> &axis, T angle)
+{
+    return rotateRadians(point, axis, angle * constants::DegreesToRadians);
+}
+
+template<typename T>
+inline GenericPoint<T> GenericQuaternion<T>::rotateRadians(const GenericPoint<T> &point, const GenericVector<T> &axis, T angle)
+{
+    GenericQuaternion<T> p(point.x(), point.y(), point.z(), 0);
+    GenericQuaternion<T> q = rotationRadians(axis, angle);
+    GenericQuaternion<T> qc = q.conjugate();
+
+    GenericQuaternion<T> qp = q.multiply(p);
+    GenericQuaternion<T> r = qp.multiply(qc);
+
+    return r.toPoint3();
+}
+
+template<typename T>
+inline GenericVector<T> GenericQuaternion<T>::rotate(const GenericVector<T> &vector, const GenericVector<T> &axis, T angle)
+{
+    return rotateRadians(vector, axis, angle * constants::DegreesToRadians);
+}
+
+template<typename T>
+inline GenericVector<T> GenericQuaternion<T>::rotateRadians(const GenericVector<T> &vector, const GenericVector<T> &axis, T angle)
+{
+    GenericQuaternion<T> p(vector.x(), vector.y(), vector.z(), 0);
+    GenericQuaternion<T> q = rotationRadians(axis, angle);
+    GenericQuaternion<T> qc = q.conjugate();
+
+    GenericQuaternion<T> qp = q.multiply(p);
+    GenericQuaternion<T> r = qp.multiply(qc);
+
+    return r.toVector3();
+}
+
 } // end chemkit namespace
 
 #endif // CHEMKIT_GENERICQUATERNION_INLINE_H

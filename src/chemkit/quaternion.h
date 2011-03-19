@@ -40,14 +40,6 @@ class CHEMKIT_EXPORT Quaternion : public GenericQuaternion<Float>
         Quaternion(const Vector3 &vector, Float r);
         Quaternion(const GenericQuaternion<Float> &quaternion);
         Quaternion(const StaticVector<Float, 4> &quaternion);
-
-        // static methods
-        static Quaternion rotation(const Vector3 &axis, Float angle);
-        static Quaternion rotationRadians(const Vector3 &axis, Float angle);
-        static Point3 rotate(const Point3 &point, const Vector3 &axis, Float angle);
-        static Point3 rotateRadians(const Point3 &point, const Vector3 &axis, Float angle);
-        static Vector3 rotate(const Vector3 &vector, const Vector3 &axis, Float angle);
-        static Vector3 rotateRadians(const Vector3 &vector, const Vector3 &axis, Float angle);
 };
 
 class CHEMKIT_EXPORT Quaternionf : public GenericQuaternion<float>
@@ -59,14 +51,6 @@ class CHEMKIT_EXPORT Quaternionf : public GenericQuaternion<float>
         Quaternionf(const Vector3f &vector, float r);
         Quaternionf(const GenericQuaternion<float> &quaternion);
         Quaternionf(const StaticVector<float, 4> &quaternion);
-
-        // static methods
-        static Quaternionf rotation(const Vector3f &axis, float angle);
-        static Quaternionf rotationRadians(const Vector3f &axis, float angle);
-        static Point3f rotate(const Point3f &point, const Vector3f &axis, float angle);
-        static Point3f rotateRadians(const Point3f &point, const Vector3f &axis, float angle);
-        static Vector3f rotate(const Vector3f &vector, const Vector3f &axis, float angle);
-        static Vector3f rotateRadians(const Vector3f &vector, const Vector3f &axis, float angle);
 };
 
 } // end chemkit namespace

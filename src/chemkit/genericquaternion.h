@@ -55,6 +55,14 @@ class GenericQuaternion : public StaticVector<T, 4>
         // operators
         GenericQuaternion<T> operator*(const GenericQuaternion<T> &quaternion) const;
 
+        // static methods
+        static GenericQuaternion<T> rotation(const GenericVector<T> &axis, T angle);
+        static GenericQuaternion<T> rotationRadians(const GenericVector<T> &axis, T angle);
+        static GenericPoint<T> rotate(const GenericPoint<T> &point, const GenericVector<T> &axis, T angle);
+        static GenericPoint<T> rotateRadians(const GenericPoint<T> &point, const GenericVector<T> &axis, T angle);
+        static GenericVector<T> rotate(const GenericVector<T> &vector, const GenericVector<T> &axis, T angle);
+        static GenericVector<T> rotateRadians(const GenericVector<T> &vector, const GenericVector<T> &axis, T angle);
+
     private:
         static GenericQuaternion<T> multiply(const GenericQuaternion<T> &a, const GenericQuaternion<T> &b);
 };
