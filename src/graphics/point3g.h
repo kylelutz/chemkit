@@ -25,25 +25,13 @@
 
 #include "graphics.h"
 
-#include <chemkit/point3.h>
 #include <chemkit/genericpoint.h>
 
 namespace chemkit {
 
-class CHEMKIT_GRAPHICS_EXPORT Point3g : public GenericPoint<GraphicsFloat>
-{
-    public:
-        // construction and destruction
-        Point3g();
-        Point3g(GraphicsFloat x, GraphicsFloat y, GraphicsFloat z);
-        Point3g(const GenericPoint<float> &point);
-        Point3g(const GenericPoint<double> &point);
-        Point3g(const StaticVector<float, 3> &point);
-        Point3g(const StaticVector<double, 3> &point);
-};
+/// A three-dimensional point.
+typedef GenericPoint<GraphicsFloat> Point3g;
 
 } // end chemkit namespace
-
-#include "point3g-inline.h"
 
 #endif // CHEMKIT_POINT3G_H
