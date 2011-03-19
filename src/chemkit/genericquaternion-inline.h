@@ -94,6 +94,20 @@ inline T GenericQuaternion<T>::r() const
     return (*this)[3];
 }
 
+/// Returns the imaginary part of the quaternion as a point.
+template<typename T>
+inline GenericPoint<T> GenericQuaternion<T>::toPoint3() const
+{
+    return GenericPoint<T>(x(), y(), z());
+}
+
+/// Returns the imaginary part of the quaternion as a vector.
+template<typename T>
+inline GenericVector<T> GenericQuaternion<T>::toVector3() const
+{
+    return GenericVector<T>(x(), y(), z());
+}
+
 // --- Math ---------------------------------------------------------------- //
 /// Returns the product of the quaternion mulitplied by \p quaternion.
 ///

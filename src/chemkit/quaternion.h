@@ -41,10 +41,6 @@ class CHEMKIT_EXPORT Quaternion : public GenericQuaternion<Float>
         Quaternion(const GenericQuaternion<Float> &quaternion);
         Quaternion(const StaticVector<Float, 4> &quaternion);
 
-        // properties
-        Point3 toPoint3() const;
-        Vector3 toVector3() const;
-
         // static methods
         static Quaternion rotation(const Vector3 &axis, Float angle);
         static Quaternion rotationRadians(const Vector3 &axis, Float angle);
@@ -63,10 +59,6 @@ class CHEMKIT_EXPORT Quaternionf : public GenericQuaternion<float>
         Quaternionf(const Vector3f &vector, float r);
         Quaternionf(const GenericQuaternion<float> &quaternion);
         Quaternionf(const StaticVector<float, 4> &quaternion);
-
-        // properties
-        Point3f toPoint3() const;
-        Vector3f toVector3() const;
 
         // static methods
         static Quaternionf rotation(const Vector3f &axis, float angle);

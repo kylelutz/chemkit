@@ -68,21 +68,6 @@ inline Quaternion::Quaternion(const StaticVector<Float, 4> &quaternion)
 {
 }
 
-// --- Properties ---------------------------------------------------------- //
-/// Returns the imaginary part of the quaternion as a point.
-/// Equivalent to Point3(x(), y(), z()).
-inline Point3 Quaternion::toPoint3() const
-{
-    return Point3(x(), y(), z());
-}
-
-/// Returns the imaginary part of the quaternion as a vector.
-/// Equivalent to Vector3(x(), y(), z()).
-inline Vector3 Quaternion::toVector3() const
-{
-    return Vector3(x(), y(), z());
-}
-
 // --- Static Methods ------------------------------------------------------ //
 /// Returns a quaternion that represents the rotation of \p angle degrees
 /// around \p axis.
@@ -172,17 +157,6 @@ inline Quaternionf::Quaternionf(const GenericQuaternion<float> &quaternion)
 inline Quaternionf::Quaternionf(const StaticVector<float, 4> &quaternion)
     : GenericQuaternion<float>(quaternion)
 {
-}
-
-// --- Properties ---------------------------------------------------------- //
-inline Point3f Quaternionf::toPoint3() const
-{
-    return Point3f(x(), y(), z());
-}
-
-inline Vector3f Quaternionf::toVector3() const
-{
-    return Vector3f(x(), y(), z());
 }
 
 // --- Static Methods ------------------------------------------------------ //

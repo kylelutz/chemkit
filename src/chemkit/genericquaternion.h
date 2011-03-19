@@ -25,6 +25,8 @@
 
 #include "chemkit.h"
 
+#include "genericpoint.h"
+#include "genericvector.h"
 #include "staticvector.h"
 
 namespace chemkit {
@@ -43,6 +45,8 @@ class GenericQuaternion : public StaticVector<T, 4>
         T y() const;
         T z() const;
         T r() const;
+        GenericPoint<T> toPoint3() const;
+        GenericVector<T> toVector3() const;
 
         // math
         GenericQuaternion<T> multiply(const GenericQuaternion<T> &quaternion) const;
