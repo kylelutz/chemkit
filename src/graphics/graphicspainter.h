@@ -26,10 +26,10 @@
 #include "graphics.h"
 
 #include "point3g.h"
+#include "vector3g.h"
 
 namespace chemkit {
 
-class Vector3g;
 class GraphicsMaterial;
 class GraphicsVertexBuffer;
 class GraphicsPainterPrivate;
