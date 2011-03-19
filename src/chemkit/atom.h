@@ -29,13 +29,13 @@
 
 #include "point3.h"
 #include "element.h"
+#include "vector3.h"
 
 namespace chemkit {
 
 class Bond;
 class Ring;
 class Residue;
-class Vector3;
 class Fragment;
 class Molecule;
 class AtomPrivate;

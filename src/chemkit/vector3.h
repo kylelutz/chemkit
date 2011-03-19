@@ -29,17 +29,9 @@
 
 namespace chemkit {
 
-class CHEMKIT_EXPORT Vector3 : public GenericVector<Float>
-{
-    public:
-        Vector3();
-        Vector3(Float x, Float y, Float z);
-        Vector3(const GenericVector<Float> &vector);
-        Vector3(const StaticVector<Float, 3> &vector);
-};
+/// A three-dimensional vector.
+typedef GenericVector<Float> Vector3;
 
 } // end chemkit namespace
-
-#include "vector3-inline.h"
 
 #endif // CHEMKIT_VECTOR3_H

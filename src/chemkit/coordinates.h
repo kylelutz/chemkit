@@ -29,12 +29,12 @@
 
 #include "matrix.h"
 #include "point3.h"
+#include "vector3.h"
 #include "staticmatrix.h"
 
 namespace chemkit {
 
 class Atom;
-class Vector3;
 class Molecule;
 class Conformer;
 

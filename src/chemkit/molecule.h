@@ -31,13 +31,13 @@
 #include "moiety.h"
 #include "point3.h"
 #include "residue.h"
+#include "vector3.h"
 #include "fragment.h"
 #include "conformer.h"
 #include "atommapping.h"
 
 namespace chemkit {
 
-class Vector3;
 class Coordinates;
 class MoleculePrivate;
 class MoleculeWatcher;
