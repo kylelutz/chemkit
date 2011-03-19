@@ -2,5 +2,4 @@ TEMPLATE = subdirs
 SUBDIRS = graphicscamera \
     graphicsray \
     graphicsscene \
-    graphicstransform \
-    quaterniong
+    graphicstransform

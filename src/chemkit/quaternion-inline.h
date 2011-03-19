@@ -143,6 +143,96 @@ inline Vector3 Quaternion::rotateRadians(const Vector3 &vector, const Vector3 &a
     return r.toVector3();
 }
 
+// === Quaternionf ========================================================= //
+/// \class Quaternionf quaternion.h chemkit/quaternion.h
+/// \ingroup chemkit
+/// \brief The Quaternionf class represents a quaternion.
+
+// --- Construction and Destruction ---------------------------------------- //
+inline Quaternionf::Quaternionf(float x, float y, float z, float r)
+    : GenericQuaternion<float>(x, y, z, r)
+{
+}
+
+inline Quaternionf::Quaternionf(const Point3f &point, float r)
+    : GenericQuaternion<float>(point.x(), point.y(), point.z(), r)
+{
+}
+
+inline Quaternionf::Quaternionf(const Vector3f &vector, float r)
+    : GenericQuaternion<float>(vector.x(), vector.y(), vector.z(), r)
+{
+}
+
+inline Quaternionf::Quaternionf(const GenericQuaternion<float> &quaternion)
+    : GenericQuaternion<float>(quaternion)
+{
+}
+
+inline Quaternionf::Quaternionf(const StaticVector<float, 4> &quaternion)
+    : GenericQuaternion<float>(quaternion)
+{
+}
+
+// --- Properties ---------------------------------------------------------- //
+inline Point3f Quaternionf::toPoint3() const
+{
+    return Point3f(x(), y(), z());
+}
+
+inline Vector3f Quaternionf::toVector3() const
+{
+    return Vector3f(x(), y(), z());
+}
+
+// --- Static Methods ------------------------------------------------------ //
+inline Quaternionf Quaternionf::rotation(const Vector3f &axis, float angle)
+{
+    return rotationRadians(axis, angle * chemkit::constants::DegreesToRadians);
+}
+
+inline Quaternionf Quaternionf::rotationRadians(const Vector3f &axis, float angle)
+{
+    return Quaternionf(axis.x() * sin(angle/2.0),
+                       axis.y() * sin(angle/2.0),
+                       axis.z() * sin(angle/2.0),
+                       cos(angle/2.0));
+}
+
+inline Point3f Quaternionf::rotate(const Point3f &point, const Vector3f &axis, float angle)
+{
+    return rotateRadians(point, axis, angle * constants::DegreesToRadians);
+}
+
+inline Point3f Quaternionf::rotateRadians(const Point3f &point, const Vector3f &axis, float angle)
+{
+    Quaternionf p(point.x(), point.y(), point.z(), 0);
+    Quaternionf q = rotationRadians(axis, angle);
+    Quaternionf qc = q.conjugate();
+
+    Quaternionf qp = q.multiply(p);
+    Quaternionf r = qp.multiply(qc);
+
+    return r.toPoint3();
+}
+
+inline Vector3f Quaternionf::rotate(const Vector3f &vector, const Vector3f &axis, float angle)
+{
+    return rotateRadians(vector, axis, angle * constants::DegreesToRadians);
+}
+
+inline Vector3f Quaternionf::rotateRadians(const Vector3f &vector, const Vector3f &axis, float angle)
+{
+    Quaternionf p(vector.x(), vector.y(), vector.z(), 0);
+    Quaternionf q = rotationRadians(axis, angle);
+    Quaternionf qc = q.conjugate();
+
+    Quaternionf qp = q.multiply(p);
+    Quaternionf r = qp.multiply(qc);
+
+    return r.toVector3();
+}
+
 } // end chemkit namespace
 
 #endif // CHEMKIT_QUATERNION_INLINE_H
