@@ -87,14 +87,14 @@ void ManipulateTool::mouseMoveEvent(QMouseEvent *event)
         chemkit::Atom *atom = const_cast<chemkit::Atom *>(atomItem->atom());
 
         if(event->buttons() & Qt::LeftButton){
-            editor()->setAtomPosition(atom, view()->unproject(event->x(), event->y(), atom->position()).toPoint3());
+            editor()->setAtomPosition(atom, view()->unproject(event->x(), event->y(), atom->position()));
         }
         else if(event->buttons() & Qt::RightButton){
             int dy = event->y() - m_lastPosition.y();
 
             chemkit::Point3g position = atom->position();
             position.moveBy(dy * 0.1, -view()->camera()->direction());
-            editor()->setAtomPosition(atom, position.toPoint3());
+            editor()->setAtomPosition(atom, position);
         }
     }
 

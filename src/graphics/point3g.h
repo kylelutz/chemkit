@@ -40,9 +40,6 @@ class CHEMKIT_GRAPHICS_EXPORT Point3g : public GenericPoint<GraphicsFloat>
         Point3g(const GenericPoint<double> &point);
         Point3g(const StaticVector<float, 3> &point);
         Point3g(const StaticVector<double, 3> &point);
-
-        // properties
-        Point3 toPoint3() const;
 };
 
 } // end chemkit namespace

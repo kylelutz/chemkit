@@ -67,12 +67,6 @@ inline Point3g::Point3g(const StaticVector<double, 3> &point)
 {
 }
 
-// --- Properties ---------------------------------------------------------- //
-inline Point3 Point3g::toPoint3() const
-{
-    return Point3(x(), y(), z());
-}
-
 } // end chemkit namespace
 
 #endif // CHEMKIT_POINT3G_INLINE_H

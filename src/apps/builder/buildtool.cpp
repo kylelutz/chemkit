@@ -177,7 +177,7 @@ void BuildTool::mousePressEvent(QMouseEvent *event)
             // add new atom
             chemkit::Atom *atom = addAtom(m_element.atomicNumber());
             chemkit::Point3g position = view()->unproject(event->x(), event->y(), editor()->molecule()->center());
-            setAtomPosition(atom, position.toPoint3());
+            setAtomPosition(atom, position);
             m_intialAtom = atom;
             m_intialElement = m_element.atomicNumber();
         }
@@ -250,7 +250,7 @@ void BuildTool::mouseMoveEvent(QMouseEvent *event)
             m_movingAtom = addAtom(m_element.atomicNumber());
             addBond(m_intialAtom, m_movingAtom, bondOrder());
             chemkit::Point3g position = view()->unproject(event->x(), event->y(), m_intialAtom->position());
-            setAtomPosition(m_movingAtom, position.toPoint3());
+            setAtomPosition(m_movingAtom, position);
 
             if(m_newBond){
                 removeBond(m_newBond);
@@ -260,7 +260,7 @@ void BuildTool::mouseMoveEvent(QMouseEvent *event)
         }
         else{
             chemkit::Point3g newPosition = view()->unproject(event->x(), event->y(), m_movingAtom->position());
-            setAtomPosition(m_movingAtom, newPosition.toPoint3());
+            setAtomPosition(m_movingAtom, newPosition);
         }
     }
 
@@ -280,7 +280,7 @@ void BuildTool::mouseMoveEvent(QMouseEvent *event)
         // over moving atom
         else if(atom == m_movingAtom){
             chemkit::Point3g newPosition = view()->unproject(event->x(), event->y(), m_movingAtom->position());
-            setAtomPosition(m_movingAtom, newPosition.toPoint3());
+            setAtomPosition(m_movingAtom, newPosition);
         }
         // over new atom
         else{
