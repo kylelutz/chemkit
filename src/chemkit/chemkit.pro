@@ -108,7 +108,6 @@ HEADERS += alphashape.h \
     polymerfile.h \
     polymerfileformat.h \
     quaternion.h \
-    quaternion-inline.h \
     residue.h \
     ring.h \
     ring-inline.h \

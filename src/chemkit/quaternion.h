@@ -25,36 +25,19 @@
 
 #include "chemkit.h"
 
-#include "point3.h"
-#include "vector3.h"
 #include "genericquaternion.h"
 
 namespace chemkit {
 
-class CHEMKIT_EXPORT Quaternion : public GenericQuaternion<Float>
-{
-    public:
-        // construction and destruction
-        Quaternion(Float x, Float y, Float z, Float r);
-        Quaternion(const Point3 &point, Float r);
-        Quaternion(const Vector3 &vector, Float r);
-        Quaternion(const GenericQuaternion<Float> &quaternion);
-        Quaternion(const StaticVector<Float, 4> &quaternion);
-};
+/// A quaternion with Float values.
+typedef GenericQuaternion<Float> Quaternion;
 
-class CHEMKIT_EXPORT Quaternionf : public GenericQuaternion<float>
-{
-    public:
-        // construction and destruction
-        Quaternionf(float x, float y, float z, float r);
-        Quaternionf(const Point3f &point, float r);
-        Quaternionf(const Vector3f &vector, float r);
-        Quaternionf(const GenericQuaternion<float> &quaternion);
-        Quaternionf(const StaticVector<float, 4> &quaternion);
-};
+/// A quaternion with \c float values.
+typedef GenericQuaternion<float> Quaternionf;
+
+/// A quaternion with \c double values.
+typedef GenericQuaternion<double> Quaterniond;
 
 } // end chemkit namespace
-
-#include "quaternion-inline.h"
 
 #endif // CHEMKIT_QUATERNION_H
