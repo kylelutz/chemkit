@@ -97,7 +97,7 @@ class GraphicsVertexBufferPrivate
         bool readyToDraw;
         GLuint vertexBuffer;
         GLuint indexBuffer;
-        QVector<Point3g> verticies;
+        QVector<Point3f> verticies;
         QVector<Vector3g> normals;
         QVector<unsigned short> indicies;
 };
@@ -125,7 +125,7 @@ GraphicsVertexBuffer::GraphicsVertexBuffer()
 }
 
 /// Create a new vertex buffer object and fill it with \p verticies.
-GraphicsVertexBuffer::GraphicsVertexBuffer(const QVector<Point3g> &verticies)
+GraphicsVertexBuffer::GraphicsVertexBuffer(const QVector<Point3f> &verticies)
     : d(new GraphicsVertexBufferPrivate)
 {
     d->readyToDraw = false;
@@ -171,13 +171,13 @@ void GraphicsVertexBuffer::clear()
 
 // --- Verticies ----------------------------------------------------------- //
 /// Sets the verticies to \p verticies.
-void GraphicsVertexBuffer::setVerticies(const QVector<Point3g> &verticies)
+void GraphicsVertexBuffer::setVerticies(const QVector<Point3f> &verticies)
 {
     d->verticies = verticies;
 }
 
 /// Returns the verticies contained in the vertex buffer.
-QVector<Point3g> GraphicsVertexBuffer::verticies() const
+QVector<Point3f> GraphicsVertexBuffer::verticies() const
 {
     return d->verticies;
 }
@@ -235,7 +235,7 @@ void GraphicsVertexBuffer::draw() const
 
     glBindBuffer(GL_ARRAY_BUFFER, d->vertexBuffer);
     glVertexPointer(3, GL_FLOAT, 0, 0);
-    glNormalPointer(GL_FLOAT, 0, reinterpret_cast<void *>(d->verticies.size() * sizeof(Point3g)));
+    glNormalPointer(GL_FLOAT, 0, reinterpret_cast<void *>(d->verticies.size() * sizeof(Point3f)));
 
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_NORMAL_ARRAY);
@@ -254,19 +254,19 @@ void GraphicsVertexBuffer::prepareToDraw() const
 
     // allocate space
     glBufferData(GL_ARRAY_BUFFER,
-                 d->verticies.size() * sizeof(Point3g) + d->normals.size() * sizeof(Vector3g),
+                 d->verticies.size() * sizeof(Point3f) + d->normals.size() * sizeof(Vector3g),
                  0,
                  GL_STATIC_DRAW);
 
     // load verticies
     glBufferSubData(GL_ARRAY_BUFFER,
                     0,
-                    d->verticies.size() * sizeof(Point3g),
+                    d->verticies.size() * sizeof(Point3f),
                     d->verticies.data());
 
     // load normals
     glBufferSubData(GL_ARRAY_BUFFER,
-                    d->verticies.size() * sizeof(Point3g),
+                    d->verticies.size() * sizeof(Point3f),
                     d->normals.size() * sizeof(Vector3g),
                     d->normals.data());
 

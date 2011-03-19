@@ -25,7 +25,8 @@
 
 #include "graphics.h"
 
-#include "point3g.h"
+#include <chemkit/point3.h>
+
 #include "vector3g.h"
 
 namespace chemkit {
@@ -55,15 +56,15 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsPainter
         // drawing
         void draw(const GraphicsVertexBuffer *buffer, PrimitiveType type = Triangles);
         void drawSphere(float radius);
-        void drawSphere(const Point3g &center, float radius);
+        void drawSphere(const Point3f &center, float radius);
         void drawCylinder(float radius, float length);
-        void drawCylinder(const Point3g &a, const Point3g &b, float radius);
+        void drawCylinder(const Point3f &a, const Point3f &b, float radius);
         void drawCircle(float radius);
-        void drawCircle(const Point3g &center, float radius, const Vector3g &normal);
-        void drawTriangle(const Point3g &a, const Point3g &b, const Point3g &c);
-        void drawRectangle(const Point3g &a, const Point3g &b, const Point3g &c, const Point3g &d);
-        void drawSpline(const QList<Point3g> &points, float radius, int order);
-        void drawNurbsSurface(const QVector<Point3g> &controlPoints, const QVector<float> &uKnots, const QVector<float> &vKnots, int uOrder, int vOrder);
+        void drawCircle(const Point3f &center, float radius, const Vector3g &normal);
+        void drawTriangle(const Point3f &a, const Point3f &b, const Point3f &c);
+        void drawRectangle(const Point3f &a, const Point3f &b, const Point3f &c, const Point3f &d);
+        void drawSpline(const QList<Point3f> &points, float radius, int order);
+        void drawNurbsSurface(const QVector<Point3f> &controlPoints, const QVector<float> &uKnots, const QVector<float> &vKnots, int uOrder, int vOrder);
         void drawText(const QString &text, const QFont &font = QFont());
         void setColor(const QColor &color);
         void setMaterial(const GraphicsMaterial *material);

@@ -30,7 +30,7 @@ namespace chemkit {
 class GraphicsOverlayPrivate
 {
     public:
-        QHash<QGraphicsItem *, Point3g> bindings;
+        QHash<QGraphicsItem *, Point3f> bindings;
 };
 
 // === GraphicsOverlay ===================================================== //
@@ -64,7 +64,7 @@ void GraphicsOverlay::removeItem(QGraphicsItem *item)
 }
 
 // --- Binding ------------------------------------------------------------- //
-void GraphicsOverlay::bindItemTo(QGraphicsItem *item, const Point3g &position)
+void GraphicsOverlay::bindItemTo(QGraphicsItem *item, const Point3f &position)
 {
     d->bindings[item] = position;
 }

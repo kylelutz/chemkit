@@ -25,7 +25,8 @@
 
 #include "graphics.h"
 
-#include "point3g.h"
+#include <chemkit/point3.h>
+
 #include "vector3g.h"
 
 namespace chemkit {
@@ -44,7 +45,7 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsVertexBuffer
 
         // construction and destruction
         GraphicsVertexBuffer();
-        GraphicsVertexBuffer(const QVector<Point3g> &verticies);
+        GraphicsVertexBuffer(const QVector<Point3f> &verticies);
         ~GraphicsVertexBuffer();
 
         // properties
@@ -53,8 +54,8 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsVertexBuffer
         void clear();
 
         // verticies
-        void setVerticies(const QVector<Point3g> &verticies);
-        QVector<Point3g> verticies() const;
+        void setVerticies(const QVector<Point3f> &verticies);
+        QVector<Point3f> verticies() const;
         int vertexCount() const;
 
         // normals

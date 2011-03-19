@@ -359,7 +359,7 @@ GraphicsCamera* GraphicsView::camera() const
 }
 
 /// Projects a point from the scene to the window.
-QPointF GraphicsView::project(const Point3g &point) const
+QPointF GraphicsView::project(const Point3f &point) const
 {
     StaticVector<float, 4> vector(point.data(), 3);
     vector[3] = 0;
@@ -382,7 +382,7 @@ QPointF GraphicsView::project(const Point3g &point) const
 }
 
 /// Unprojects a point from the window to the scene.
-Point3g GraphicsView::unproject(qreal x, qreal y, qreal z) const
+Point3f GraphicsView::unproject(qreal x, qreal y, qreal z) const
 {
     // flip y
     y = height() - y;
@@ -399,18 +399,18 @@ Point3g GraphicsView::unproject(qreal x, qreal y, qreal z) const
     point = transform.inverseMultiply(point);
     point.scale(1.0 / point.value(3));
 
-    return Point3g(point[0], point[1], point[2]);
+    return Point3f(point[0], point[1], point[2]);
 }
 
 /// Unprojects a point from the window to the scene using the
 /// depth of \p reference for the z coordinate.
-Point3g GraphicsView::unproject(qreal x, qreal y, const Point3g &reference) const
+Point3f GraphicsView::unproject(qreal x, qreal y, const Point3f &reference) const
 {
     return unproject(x, y, depth(reference));
 }
 
 /// Returns the depth of point in the scene.
-float GraphicsView::depth(const Point3g &point) const
+float GraphicsView::depth(const Point3f &point) const
 {
     StaticVector<float, 4> viewPoint(point.data(), 3);
     viewPoint[3] = 1;
@@ -737,8 +737,8 @@ void GraphicsView::wheelEvent(QWheelEvent *event)
 // --- Internal Methods ---------------------------------------------------- //
 GraphicsRay GraphicsView::buildPickRay(int x, int y) const
 {
-    Point3g nearPoint = unproject(x, y, 0);
-    Point3g farPoint = unproject(x, y, 1);
+    Point3f nearPoint = unproject(x, y, 0);
+    Point3f farPoint = unproject(x, y, 1);
 
     return GraphicsRay(nearPoint, farPoint);
 }

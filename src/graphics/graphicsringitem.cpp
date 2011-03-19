@@ -97,7 +97,7 @@ void GraphicsRingItem::paint(GraphicsPainter *painter)
     color.setAlphaF(opacity());
     painter->setColor(color);
 
-    Point3g center = ringCenter(d->ring);
+    Point3f center = ringCenter(d->ring);
     QList<Atom *> atoms = d->ring->atoms();
 
     for(int i = 0; i < atoms.size(); i++){
@@ -110,7 +110,7 @@ void GraphicsRingItem::paint(GraphicsPainter *painter)
 }
 
 // --- Internal Methods ---------------------------------------------------- //
-Point3g GraphicsRingItem::ringCenter(const Ring *ring) const
+Point3f GraphicsRingItem::ringCenter(const Ring *ring) const
 {
     float sx = 0;
     float sy = 0;
@@ -124,7 +124,7 @@ Point3g GraphicsRingItem::ringCenter(const Ring *ring) const
 
     int n = ring->atomCount();
 
-    return Point3g(sx/n, sy/n, sz/n);
+    return Point3f(sx/n, sy/n, sz/n);
 }
 
 } // end chemkit namespace

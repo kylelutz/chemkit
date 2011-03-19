@@ -25,7 +25,8 @@
 
 #include "graphics.h"
 
-#include "point3g.h"
+#include <chemkit/point3.h>
+
 #include "graphicsitem.h"
 
 namespace chemkit {
@@ -46,7 +47,7 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsOverlay : public QGraphicsScene
         void removeItem(QGraphicsItem *item);
 
         // binding
-        void bindItemTo(QGraphicsItem *item, const Point3g &position);
+        void bindItemTo(QGraphicsItem *item, const Point3f &position);
         void bindItemTo(QGraphicsItem *item, GraphicsItem *sceneItem);
         void removeBinding(QGraphicsItem *item);
         void updateBindings(GraphicsView *view);

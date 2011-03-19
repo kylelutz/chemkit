@@ -25,7 +25,8 @@
 
 #include "graphics.h"
 
-#include "point3g.h"
+#include <chemkit/point3.h>
+
 #include "graphicsray.h"
 
 namespace chemkit {
@@ -73,10 +74,10 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsView : public QGLWidget
         float nearClipDistance() const;
         void setFarClipDistance(float distance);
         float farClipDistance() const;
-        QPointF project(const Point3g &point) const;
-        Point3g unproject(qreal x, qreal y, qreal z) const;
-        Point3g unproject(qreal x, qreal y, const Point3g &reference) const;
-        float depth(const Point3g &point) const;
+        QPointF project(const Point3f &point) const;
+        Point3f unproject(qreal x, qreal y, qreal z) const;
+        Point3f unproject(qreal x, qreal y, const Point3f &reference) const;
+        float depth(const Point3f &point) const;
 
         // lighting
         void addLight(GraphicsLight *light);

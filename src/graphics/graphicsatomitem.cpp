@@ -22,7 +22,6 @@
 
 #include "graphicsatomitem.h"
 
-#include "point3g.h"
 #include "graphicsray.h"
 #include "graphicssphere.h"
 #include "graphicspainter.h"
@@ -30,6 +29,7 @@
 #include "graphicsvertexbuffer.h"
 
 #include <chemkit/atom.h>
+#include <chemkit/point3.h>
 
 namespace chemkit {
 
@@ -60,7 +60,7 @@ GraphicsAtomItem::GraphicsAtomItem(const Atom *atom, float radius)
     d->sphere = GraphicsSphere(radius);
 
     if(atom){
-        translate(Point3g(atom->position()));
+        translate(Point3f(atom->position()));
     }
 }
 
@@ -78,7 +78,7 @@ void GraphicsAtomItem::setAtom(const Atom *atom)
     d->atom = atom;
 
     if(atom){
-        setTransform(GraphicsTransform::translation(Point3g(atom->position())));
+        setTransform(GraphicsTransform::translation(Point3f(atom->position())));
     }
 }
 

@@ -206,7 +206,7 @@ void GraphicsProteinItem::paint(GraphicsPainter *painter)
         float radius = 0.35f;
 
         foreach(const PolymerChain *chain, d->polymer->chains()){
-            QList<Point3g> trace;
+            QList<Point3f> trace;
 
             foreach(const Residue *residue, chain->residues()){
                 const AminoAcid *aminoAcid = static_cast<const AminoAcid *>(residue);

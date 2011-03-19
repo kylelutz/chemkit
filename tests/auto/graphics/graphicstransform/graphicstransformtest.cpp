@@ -44,15 +44,15 @@ void GraphicsTransformTest::data()
 
 void GraphicsTransformTest::multiplyPoint()
 {
-    chemkit::Point3g point(1, 2, 3);
+    chemkit::Point3f point(1, 2, 3);
     chemkit::GraphicsTransform identity = chemkit::GraphicsTransform::identity();
 
     point = identity.multiply(point);
-    QCOMPARE(point, chemkit::Point3g(1, 2, 3));
+    QCOMPARE(point, chemkit::Point3f(1, 2, 3));
 
     chemkit::GraphicsTransform rotation = chemkit::GraphicsTransform::rotation(chemkit::Vector3g::X(), 180);
     point = rotation.multiply(point);
-    QCOMPARE(point, chemkit::Point3g(1, -2, -3));
+    QCOMPARE(point, chemkit::Point3f(1, -2, -3));
 }
 
 void GraphicsTransformTest::multiplyVector()
@@ -114,17 +114,17 @@ void GraphicsTransformTest::translation()
     QCOMPARE(qRound(transform(2, 3)), 3);
     QCOMPARE(qRound(transform(3, 3)), 1);
 
-    chemkit::Point3g point(0, 0, 0);
-    QCOMPARE(point, chemkit::Point3g(0, 0, 0));
+    chemkit::Point3f point(0, 0, 0);
+    QCOMPARE(point, chemkit::Point3f(0, 0, 0));
 
     point = transform * point;
-    QCOMPARE(point, chemkit::Point3g(5, 4, 3));
+    QCOMPARE(point, chemkit::Point3f(5, 4, 3));
 
     point = transform * point;
-    QCOMPARE(point, chemkit::Point3g(10, 8, 6));
+    QCOMPARE(point, chemkit::Point3f(10, 8, 6));
 
     point = transform * point;
-    QCOMPARE(point, chemkit::Point3g(15, 12, 9));
+    QCOMPARE(point, chemkit::Point3f(15, 12, 9));
 }
 
 QTEST_APPLESS_MAIN(GraphicsTransformTest)

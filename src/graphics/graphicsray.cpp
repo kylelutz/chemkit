@@ -32,20 +32,20 @@ namespace chemkit {
 
 // --- Construction and Destruction ---------------------------------------- //
 GraphicsRay::GraphicsRay()
-    : m_origin(Point3g()),
+    : m_origin(Point3f()),
       m_direction(-Vector3g::Z())
 {
 }
 
 /// Creates a new ray with \p origin and \p direction.
-GraphicsRay::GraphicsRay(const Point3g &origin, const Vector3g &direction)
+GraphicsRay::GraphicsRay(const Point3f &origin, const Vector3g &direction)
     : m_origin(origin),
       m_direction(direction.normalized())
 {
 }
 
 /// Creates a new ray with \p origin that points towards \p point.
-GraphicsRay::GraphicsRay(const Point3g &origin, const Point3g &point)
+GraphicsRay::GraphicsRay(const Point3f &origin, const Point3f &point)
     : m_origin(origin),
       m_direction((point - origin).normalized())
 {
@@ -58,13 +58,13 @@ GraphicsRay::~GraphicsRay()
 
 // --- Properties ---------------------------------------------------------- //
 /// Sets the origin to \p origin.
-void GraphicsRay::setOrigin(const Point3g &origin)
+void GraphicsRay::setOrigin(const Point3f &origin)
 {
     m_origin = origin;
 }
 
 /// Returns the origin.
-Point3g GraphicsRay::origin() const
+Point3f GraphicsRay::origin() const
 {
     return m_origin;
 }
@@ -84,12 +84,12 @@ Vector3g GraphicsRay::direction() const
 
 // --- Geometry ------------------------------------------------------------ //
 /// Returns the point at \p distance from the origin along the ray.
-Point3g GraphicsRay::pointAt(float distance) const
+Point3f GraphicsRay::pointAt(float distance) const
 {
     return m_origin.movedBy(distance, direction());
 }
 
-bool GraphicsRay::intersectsSphere(const Point3g &center, float radius, float *distance) const
+bool GraphicsRay::intersectsSphere(const Point3f &center, float radius, float *distance) const
 {
     Vector3g dst = center - m_origin;
 
@@ -108,7 +108,7 @@ bool GraphicsRay::intersectsSphere(const Point3g &center, float radius, float *d
     return true;
 }
 
-bool GraphicsRay::intersectsCylinder(const Point3g &a, const Point3g &b, float radius, float *distance) const
+bool GraphicsRay::intersectsCylinder(const Point3f &a, const Point3f &b, float radius, float *distance) const
 {
     Vector3g ao = m_origin - a;
     Vector3g ab = b - a;
@@ -127,9 +127,9 @@ bool GraphicsRay::intersectsCylinder(const Point3g &a, const Point3g &b, float r
 
     float t = qMin((-B + sqrt(D)) / (2 * A), (-B - sqrt(D)) / (2 * A));
 
-    Point3g ip = pointAt(t);
-    Point3g ip1 = ip - a;
-    Point3g ip2 = ip - b;
+    Point3f ip = pointAt(t);
+    Point3f ip1 = ip - a;
+    Point3f ip2 = ip - b;
 
     if(ip1.dot(ab) < 0 || ip2.dot(ab) > 0){
         // intersection below base or above top of the cylinder

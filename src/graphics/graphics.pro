@@ -66,7 +66,6 @@ HEADERS += graphics.h \
     graphicstransform.h \
     graphicsview.h \
     graphicsvertexbuffer.h \
-    point3g.h \
     quaterniong.h \
     quaterniong-inline.h \
     vector3g.h

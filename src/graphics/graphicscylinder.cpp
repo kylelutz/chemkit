@@ -99,7 +99,7 @@ GraphicsVertexBuffer* GraphicsCylinder::tesselate(int slices, int stacks) const
     float twoPi = chemkit::constants::Pi * 2;
     float sliceAngle = twoPi / slices;
 
-    QVector<Point3g> verticies;
+    QVector<Point3f> verticies;
 
     for(int i = 0; i < slices; i++){
         float angle = i * sliceAngle;
@@ -107,21 +107,21 @@ GraphicsVertexBuffer* GraphicsCylinder::tesselate(int slices, int stacks) const
         float x = cos(angle) * m_radius;
         float y = sin(angle) * m_radius;
 
-        verticies.append(Point3g(x, y, 0));
+        verticies.append(Point3f(x, y, 0));
     }
 
     Float stackHeight = m_length / stacks;
 
     for(int i = 1; i < stacks + 1; i++){
         for(int j = 0; j < slices; j++){
-            Point3g lowerPoint = verticies[(i-1)*slices + j];
+            Point3f lowerPoint = verticies[(i-1)*slices + j];
 
             verticies.append(lowerPoint.movedBy(0, 0, stackHeight));
         }
     }
 
     QVector<Vector3g> normals;
-    foreach(const Point3g &point, verticies){
+    foreach(const Point3f &point, verticies){
         Vector3g normal(point.x(), point.y(), 0);
         normal.normalize();
         normals.append(normal);

@@ -25,10 +25,10 @@
 
 #include "graphics.h"
 
-#include "point3g.h"
 #include "vector3g.h"
 #include "graphicsray.h"
 
+#include <chemkit/point3.h>
 #include <chemkit/staticmatrix.h>
 
 namespace chemkit {
@@ -49,11 +49,11 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsTransform
         void invert();
         GraphicsTransform inverted() const;
         GraphicsRay multiply(const GraphicsRay &ray) const;
-        Point3g multiply(const Point3g &point) const;
+        Point3f multiply(const Point3f &point) const;
         Vector3g multiply(const Vector3g &vector) const;
         StaticVector<float, 4> multiply(const StaticVector<float, 4> &vector);
         GraphicsTransform multiply(const GraphicsTransform &transform) const;
-        Point3g inverseMultiply(const Point3g &point) const;
+        Point3f inverseMultiply(const Point3f &point) const;
         Vector3g inverseMultiply(const Vector3g &vector) const;
         StaticVector<float, 4> inverseMultiply(const StaticVector<float, 4> &vector);
 
@@ -61,7 +61,7 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsTransform
         float operator()(int row, int column) const;
         float& operator()(int row, int column);
         GraphicsRay operator*(const GraphicsRay &ray) const;
-        Point3g operator*(const Point3g &point) const;
+        Point3f operator*(const Point3f &point) const;
         Vector3g operator*(const Vector3g &vector) const;
         GraphicsTransform operator*(const GraphicsTransform &transform) const;
         GraphicsTransform& operator*=(const GraphicsTransform &transform);

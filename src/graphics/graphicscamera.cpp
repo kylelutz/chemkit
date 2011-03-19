@@ -30,10 +30,10 @@ namespace chemkit {
 class GraphicsCameraPrivate
 {
     public:
-        Point3g position;
+        Point3f position;
         Vector3g direction;
         Vector3g upVector;
-        Point3g focus;
+        Point3f focus;
         GraphicsView *view;
         bool changed;
 };
@@ -49,22 +49,22 @@ class GraphicsCameraPrivate
 GraphicsCamera::GraphicsCamera()
     : d(new GraphicsCameraPrivate)
 {
-    d->position = Point3g(0, 0, 0);
+    d->position = Point3f(0, 0, 0);
     d->direction = -Vector3g::Z();
     d->upVector = Vector3g::Y();
-    d->focus = Point3g(0, 0, 0);
+    d->focus = Point3f(0, 0, 0);
     d->changed = true;
     d->view = 0;
 }
 
 /// Creates a new graphics camera object at \p position.
-GraphicsCamera::GraphicsCamera(const Point3g &position)
+GraphicsCamera::GraphicsCamera(const Point3f &position)
     : d(new GraphicsCameraPrivate)
 {
     d->position = position;
     d->direction = -Vector3g::Z();
     d->upVector = Vector3g::Y();
-    d->focus = Point3g(0, 0, 0);
+    d->focus = Point3f(0, 0, 0);
     d->changed = true;
     d->view = 0;
 }
@@ -73,10 +73,10 @@ GraphicsCamera::GraphicsCamera(const Point3g &position)
 GraphicsCamera::GraphicsCamera(float x, float y, float z)
     : d(new GraphicsCameraPrivate)
 {
-    d->position = Point3g(x, y, z);
+    d->position = Point3f(x, y, z);
     d->direction = -Vector3g::Z();
     d->upVector = Vector3g::Y();
-    d->focus = Point3g(0, 0, 0);
+    d->focus = Point3f(0, 0, 0);
     d->changed = true;
     d->view = 0;
 }
@@ -96,7 +96,7 @@ GraphicsView* GraphicsCamera::view() const
 
 // --- Position ------------------------------------------------------------ //
 /// Sets the position of the camera to \p position.
-void GraphicsCamera::setPosition(const Point3g &position)
+void GraphicsCamera::setPosition(const Point3f &position)
 {
     d->position = position;
     setChanged(true);
@@ -105,11 +105,11 @@ void GraphicsCamera::setPosition(const Point3g &position)
 /// Sets the position of the camera to (\p x, \p y, \p z).
 void GraphicsCamera::setPosition(float x, float y, float z)
 {
-    setPosition(Point3g(x, y, z));
+    setPosition(Point3f(x, y, z));
 }
 
 /// Returns the position of the camera.
-Point3g GraphicsCamera::position() const
+Point3f GraphicsCamera::position() const
 {
     return d->position;
 }
@@ -133,7 +133,7 @@ float GraphicsCamera::z() const
 }
 
 /// Sets the camera's position to \p position.
-void GraphicsCamera::moveTo(const Point3g &position)
+void GraphicsCamera::moveTo(const Point3f &position)
 {
     setPosition(position);
 }
@@ -205,7 +205,7 @@ void GraphicsCamera::orbit(float dx, float dy, bool rotateDirection)
 /// and \p dy degrees on the y-axis. If \p rotateDirection is \c true
 /// the direction will also be rotated so that the camera remains
 /// pointed toward \p point.
-void GraphicsCamera::orbit(const Point3g &point, float dx, float dy, bool rotateDirection)
+void GraphicsCamera::orbit(const Point3f &point, float dx, float dy, bool rotateDirection)
 {
     moveBy(Vector3g(-point.x(), -point.y(), -point.z()));
 
@@ -233,13 +233,13 @@ Vector3g GraphicsCamera::direction() const
 }
 
 /// Sets the camera's focus to \p point.
-void GraphicsCamera::setFocus(const Point3g &point)
+void GraphicsCamera::setFocus(const Point3f &point)
 {
     d->focus = point;
 }
 
 /// Returns the camera's focus.
-Point3g GraphicsCamera::focus() const
+Point3f GraphicsCamera::focus() const
 {
     return d->focus;
 }
@@ -252,7 +252,7 @@ Point3g GraphicsCamera::focus() const
 /// setFocus(point);
 /// setDirection(point - position());
 /// \endcode
-void GraphicsCamera::lookAt(const Point3g &point)
+void GraphicsCamera::lookAt(const Point3f &point)
 {
     setFocus(point);
     setDirection(point - d->position);

@@ -114,10 +114,10 @@ bool GraphicsSphere::intersects(const GraphicsRay &ray, float *distance) const
 GraphicsVertexBuffer* GraphicsSphere::tesselate(int subdivisions) const
 {
     // setup initial verticies
-    QVector<Point3g> verticies(IcosahedronVertexCount);
+    QVector<Point3f> verticies(IcosahedronVertexCount);
     for(int i = 0; i < IcosahedronVertexCount; i++){
         const float *v = &IcosahedronVerticies[i*3];
-        Point3g point(v[0], v[1], v[2]);
+        Point3f point(v[0], v[1], v[2]);
         point.scale(radius() / point.norm());
         verticies[i] = point;
     }
@@ -140,14 +140,14 @@ GraphicsVertexBuffer* GraphicsSphere::tesselate(int subdivisions) const
             int i2 = indicies[i*3+2];
 
             // verticies of the current triangle
-            Point3g v0 = verticies[i0];
-            Point3g v1 = verticies[i1];
-            Point3g v2 = verticies[i2];
+            Point3f v0 = verticies[i0];
+            Point3f v1 = verticies[i1];
+            Point3f v2 = verticies[i2];
 
             // add three new verticies
-            Point3g v01 = v0.midpoint(v1);
-            Point3g v12 = v1.midpoint(v2);
-            Point3g v20 = v2.midpoint(v0);
+            Point3f v01 = v0.midpoint(v1);
+            Point3f v12 = v1.midpoint(v2);
+            Point3f v20 = v2.midpoint(v0);
 
             // scale points to lie on the sphere
             v01.scale(radius() / v01.norm());
@@ -190,7 +190,7 @@ GraphicsVertexBuffer* GraphicsSphere::tesselate(int subdivisions) const
 
     // calculate vertex normals
     QVector<Vector3g> normals;
-    foreach(const Point3g &vertex, verticies){
+    foreach(const Point3f &vertex, verticies){
         normals.append(Vector3g(vertex).normalized());
     }
 

@@ -40,7 +40,7 @@ inline Quaterniong::Quaterniong(float x, float y, float z, float r)
 {
 }
 
-inline Quaterniong::Quaterniong(const Point3g &point, float r)
+inline Quaterniong::Quaterniong(const Point3f &point, float r)
     : GenericQuaternion<float>(point.x(), point.y(), point.z(), r)
 {
 }
@@ -61,9 +61,9 @@ inline Quaterniong::Quaterniong(const StaticVector<float, 4> &quaternion)
 }
 
 // --- Properties ---------------------------------------------------------- //
-inline Point3g Quaterniong::toPoint3() const
+inline Point3f Quaterniong::toPoint3() const
 {
-    return Point3g(x(), y(), z());
+    return Point3f(x(), y(), z());
 }
 
 inline Vector3g Quaterniong::toVector3() const
@@ -85,12 +85,12 @@ inline Quaterniong Quaterniong::rotationRadians(const Vector3g &axis, float angl
                        cos(angle/2.0));
 }
 
-inline Point3g Quaterniong::rotate(const Point3g &point, const Vector3g &axis, float angle)
+inline Point3f Quaterniong::rotate(const Point3f &point, const Vector3g &axis, float angle)
 {
     return rotateRadians(point, axis, angle * constants::DegreesToRadians);
 }
 
-inline Point3g Quaterniong::rotateRadians(const Point3g &point, const Vector3g &axis, float angle)
+inline Point3f Quaterniong::rotateRadians(const Point3f &point, const Vector3g &axis, float angle)
 {
     Quaterniong p(point.x(), point.y(), point.z(), 0);
     Quaterniong q = rotationRadians(axis, angle);

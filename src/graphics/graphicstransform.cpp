@@ -101,14 +101,14 @@ GraphicsTransform GraphicsTransform::inverted() const
 /// Multiplies \p ray by the transform.
 GraphicsRay GraphicsTransform::multiply(const GraphicsRay &ray) const
 {
-    Point3g origin = multiply(ray.origin());
-    Point3g direction = multiply(ray.direction());
+    Point3f origin = multiply(ray.origin());
+    Point3f direction = multiply(ray.direction());
 
     return GraphicsRay(origin, direction);
 }
 
 /// Multiplies \p point by the transform.
-Point3g GraphicsTransform::multiply(const Point3g &point) const
+Point3f GraphicsTransform::multiply(const Point3f &point) const
 {
     StaticVector<float, 4> vector4;
     vector4[0] = point.x();
@@ -118,7 +118,7 @@ Point3g GraphicsTransform::multiply(const Point3g &point) const
 
     vector4 = m_matrix->multiply(vector4);
 
-    return Point3g(vector4[0], vector4[1], vector4[2]);
+    return Point3f(vector4[0], vector4[1], vector4[2]);
 }
 
 /// Multiplies \p vector by the transform.
@@ -147,7 +147,7 @@ StaticVector<float, 4> GraphicsTransform::multiply(const StaticVector<float, 4> 
 }
 
 /// Multiplies \p point by the inverse of the transform.
-Point3g GraphicsTransform::inverseMultiply(const Point3g &point) const
+Point3f GraphicsTransform::inverseMultiply(const Point3f &point) const
 {
     StaticVector<float, 4> vector4;
     vector4[0] = point.x();
@@ -157,7 +157,7 @@ Point3g GraphicsTransform::inverseMultiply(const Point3g &point) const
 
     vector4 = m_matrix->inverted().multiply(vector4);
 
-    return Point3g(vector4[0], vector4[1], vector4[2]);
+    return Point3f(vector4[0], vector4[1], vector4[2]);
 }
 
 /// Multiplies \p vector by the inverse of the transform.
@@ -195,7 +195,7 @@ GraphicsRay GraphicsTransform::operator*(const GraphicsRay &ray) const
     return multiply(ray);
 }
 
-Point3g GraphicsTransform::operator*(const Point3g &point) const
+Point3f GraphicsTransform::operator*(const Point3f &point) const
 {
     return multiply(point);
 }

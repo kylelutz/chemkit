@@ -23,9 +23,9 @@
 #include "graphicsproteincoilitem.h"
 
 #include <chemkit/atom.h>
+#include <chemkit/point3.h>
 #include <chemkit/aminoacid.h>
 
-#include "point3g.h"
 #include "graphicspainter.h"
 
 namespace chemkit {
@@ -93,7 +93,7 @@ int GraphicsProteinCoilItem::curveDegree() const
 void GraphicsProteinCoilItem::paint(GraphicsPainter *painter)
 {
     // build list of positions of all the alpha carbons
-    QList<Point3g> trace;
+    QList<Point3f> trace;
     foreach(const AminoAcid *residue, d->residues){
         const Atom *alphaCarbon = residue->alphaCarbon();
         if(alphaCarbon){

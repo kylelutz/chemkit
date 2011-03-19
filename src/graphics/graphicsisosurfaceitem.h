@@ -40,8 +40,8 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsIsosurfaceItem : public GraphicsItem
         ~GraphicsIsosurfaceItem();
 
         // properties
-        void setPosition(const Point3g &position);
-        Point3g position() const;
+        void setPosition(const Point3f &position);
+        Point3f position() const;
         void setIsovalue(float isovalue);
         float isovalue() const;
         void setColor(const QColor &color);
