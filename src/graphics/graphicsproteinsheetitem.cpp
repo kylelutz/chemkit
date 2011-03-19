@@ -85,8 +85,8 @@ void GraphicsProteinSheetItem::paint(GraphicsPainter *painter)
     }
 
     // surface settings
-    GraphicsFloat width = 2.0;
-    GraphicsFloat height = width / 4.0;
+    float width = 2.0;
+    float height = width / 4.0;
 
     int degree = 3;
     int order = degree + 1;
@@ -105,8 +105,8 @@ void GraphicsProteinSheetItem::paint(GraphicsPainter *painter)
 
         Vector3g right = axis.cross(normal);
 
-        GraphicsFloat halfHeight = height / 2.0;
-        GraphicsFloat halfWidth = width / 2.0;
+        float halfHeight = height / 2.0;
+        float halfWidth = width / 2.0;
 
         // four points for the rectangle
         // counter clockwise winding (topLeft -> bottomLeft -> bottomRight -> topRight)
@@ -139,7 +139,7 @@ void GraphicsProteinSheetItem::paint(GraphicsPainter *painter)
         controlPoints[i*5+4] = topLeft;
     }
 
-    QVector<GraphicsFloat> uKnots(trace.size() + degree + 1);
+    QVector<float> uKnots(trace.size() + degree + 1);
     for(int i = 0; i < uKnots.size(); i++){
         if(i < order)
             uKnots[i] = 0;
@@ -149,7 +149,7 @@ void GraphicsProteinSheetItem::paint(GraphicsPainter *painter)
             uKnots[i] = i-degree;
     }
 
-    QVector<GraphicsFloat> vKnots(7);
+    QVector<float> vKnots(7);
     vKnots[0] = 0;
     vKnots[1] = 0;
     vKnots[2] = 1;

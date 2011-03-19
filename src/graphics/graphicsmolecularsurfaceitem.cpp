@@ -41,17 +41,17 @@ namespace {
 class ClippedSphere
 {
     public:
-        ClippedSphere(GraphicsFloat radius);
+        ClippedSphere(float radius);
 
         void addClipPlane(const Point3g &point, const Vector3g &normal);
         GraphicsVertexBuffer* tesselate() const;
 
     private:
-        GraphicsFloat m_radius;
+        float m_radius;
         QList<QPair<Point3g, Vector3g> > m_clipPlanes;
 };
 
-ClippedSphere::ClippedSphere(GraphicsFloat radius)
+ClippedSphere::ClippedSphere(float radius)
     : m_radius(radius)
 {
 }
@@ -113,8 +113,8 @@ GraphicsVertexBuffer* ClippedSphere::tesselate() const
                 foreach(unsigned short vertexIndex, invalidVerticies){
                     Point3g invalidPoint = verticies[vertexIndex];
 
-                    GraphicsFloat d = -(planePoint - invalidPoint).dot(planeNormal);
-                    GraphicsFloat theta = acos(planePoint.norm() / m_radius) - acos((planePoint.norm() + d) / m_radius);
+                    float d = -(planePoint - invalidPoint).dot(planeNormal);
+                    float theta = acos(planePoint.norm() / m_radius) - acos((planePoint.norm() + d) / m_radius);
                     Vector3g up = invalidPoint.cross(planeNormal).normalized();
 
                     // set new vertex position
@@ -144,11 +144,11 @@ GraphicsVertexBuffer* ClippedSphere::tesselate() const
 class ContactPatchItem : public GraphicsItem
 {
     public:
-        ContactPatchItem(GraphicsMolecularSurfaceItem *parent, const Point3g &center, GraphicsFloat radius);
+        ContactPatchItem(GraphicsMolecularSurfaceItem *parent, const Point3g &center, float radius);
         ~ContactPatchItem();
 
         Point3g center() const;
-        GraphicsFloat radius() const;
+        float radius() const;
         void setColor(const QColor &color);
         void addIntersection(const ContactPatchItem *item);
 
@@ -157,13 +157,13 @@ class ContactPatchItem : public GraphicsItem
     private:
         GraphicsMolecularSurfaceItem *m_parent;
         Point3g m_center;
-        GraphicsFloat m_radius;
+        float m_radius;
         QColor m_color;
         GraphicsVertexBuffer *m_buffer;
         QList<const ContactPatchItem *> m_intersections;
 };
 
-ContactPatchItem::ContactPatchItem(GraphicsMolecularSurfaceItem *parent, const Point3g &center, GraphicsFloat radius)
+ContactPatchItem::ContactPatchItem(GraphicsMolecularSurfaceItem *parent, const Point3g &center, float radius)
     : GraphicsItem(),
       m_parent(parent),
       m_center(center),
@@ -185,7 +185,7 @@ Point3g ContactPatchItem::center() const
     return m_center;
 }
 
-GraphicsFloat ContactPatchItem::radius() const
+float ContactPatchItem::radius() const
 {
     return m_radius;
 }
@@ -208,12 +208,12 @@ void ContactPatchItem::paint(GraphicsPainter *painter)
         // calculate and add clip plane for each intersection
         foreach(const ContactPatchItem *item, m_intersections){
             const Point3g &a = m_center;
-            GraphicsFloat ra = m_radius;
+            float ra = m_radius;
             const Point3g &b = item->center();
-            GraphicsFloat rb = item->radius();
+            float rb = item->radius();
 
-            const GraphicsFloat d = a.distance(b);
-            const GraphicsFloat x = (d*d - rb*rb + ra*ra) / (2 * d);
+            const float d = a.distance(b);
+            const float x = (d*d - rb*rb + ra*ra) / (2 * d);
 
             Vector3g planeNormal = (b - a).normalized();
             const Point3g planeCenter = planeNormal * x;
@@ -340,7 +340,7 @@ MolecularSurface::SurfaceType GraphicsMolecularSurfaceItem::surfaceType() const
 }
 
 /// Sets the probe radius for the surface to \p radius.
-void GraphicsMolecularSurfaceItem::setProbeRadius(GraphicsFloat radius)
+void GraphicsMolecularSurfaceItem::setProbeRadius(float radius)
 {
     d->surface->setProbeRadius(radius);
 
@@ -351,7 +351,7 @@ void GraphicsMolecularSurfaceItem::setProbeRadius(GraphicsFloat radius)
 }
 
 /// Returns the probe radius for the surface.
-GraphicsFloat GraphicsMolecularSurfaceItem::probeRadius() const
+float GraphicsMolecularSurfaceItem::probeRadius() const
 {
     return d->surface->probeRadius();
 }
@@ -439,7 +439,7 @@ void GraphicsMolecularSurfaceItem::recalculate()
 
     // create contact patches
     foreach(const Atom *atom, molecule->atoms()){
-        GraphicsFloat radius = atom->vanDerWaalsRadius();
+        float radius = atom->vanDerWaalsRadius();
         if(surfaceType() == MolecularSurface::SolventAccessible){
             radius += probeRadius();
         }

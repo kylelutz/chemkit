@@ -30,7 +30,7 @@
 namespace chemkit {
 
 /// A three-dimensional point.
-typedef GenericPoint<GraphicsFloat> Point3g;
+typedef GenericPoint<float> Point3g;
 
 } // end chemkit namespace
 

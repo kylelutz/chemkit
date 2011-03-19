@@ -42,7 +42,7 @@ GraphicsCylinder::GraphicsCylinder()
 }
 
 /// Create a new cylinder object with \p radius and \p length.
-GraphicsCylinder::GraphicsCylinder(GraphicsFloat radius, GraphicsFloat length)
+GraphicsCylinder::GraphicsCylinder(float radius, float length)
 {
     m_radius = radius;
     m_length = length;
@@ -55,31 +55,31 @@ GraphicsCylinder::~GraphicsCylinder()
 
 // --- Properties ---------------------------------------------------------- //
 /// Sets the radius of the cylinder to \p radius.
-void GraphicsCylinder::setRadius(GraphicsFloat radius)
+void GraphicsCylinder::setRadius(float radius)
 {
     m_radius = radius;
 }
 
 /// Returns the radius of the cylinder.
-GraphicsFloat GraphicsCylinder::radius() const
+float GraphicsCylinder::radius() const
 {
     return m_radius;
 }
 
 /// Sets the length of the cylinder to \p length.
-void GraphicsCylinder::setLength(GraphicsFloat length)
+void GraphicsCylinder::setLength(float length)
 {
     m_length = length;
 }
 
 /// Returns the length of the cylinder.
-GraphicsFloat GraphicsCylinder::length() const
+float GraphicsCylinder::length() const
 {
     return m_length;
 }
 
 // --- Intersection -------------------------------------------------------- //
-bool GraphicsCylinder::intersects(const GraphicsRay &ray, GraphicsFloat *distance) const
+bool GraphicsCylinder::intersects(const GraphicsRay &ray, float *distance) const
 {
     Q_UNUSED(ray);
     Q_UNUSED(distance);
@@ -96,16 +96,16 @@ GraphicsVertexBuffer* GraphicsCylinder::tesselate(int slices, int stacks) const
     // stacks must be at least 1
     stacks = qMax(1, stacks);
 
-    GraphicsFloat twoPi = chemkit::constants::Pi * 2;
-    GraphicsFloat sliceAngle = twoPi / slices;
+    float twoPi = chemkit::constants::Pi * 2;
+    float sliceAngle = twoPi / slices;
 
     QVector<Point3g> verticies;
 
     for(int i = 0; i < slices; i++){
-        GraphicsFloat angle = i * sliceAngle;
+        float angle = i * sliceAngle;
 
-        GraphicsFloat x = cos(angle) * m_radius;
-        GraphicsFloat y = sin(angle) * m_radius;
+        float x = cos(angle) * m_radius;
+        float y = sin(angle) * m_radius;
 
         verticies.append(Point3g(x, y, 0));
     }

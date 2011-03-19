@@ -69,8 +69,8 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsItem
         void show();
         void hide();
         GraphicsScene* scene() const;
-        void setOpacity(GraphicsFloat opacity);
-        GraphicsFloat opacity() const;
+        void setOpacity(float opacity);
+        float opacity() const;
         bool isOpaque() const;
         bool isTransparent() const;
         bool isTranslucent() const;
@@ -83,9 +83,9 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsItem
         void setTransform(const GraphicsTransform &transform);
         GraphicsTransform transform() const;
         void translate(const Vector3g &vector);
-        void translate(GraphicsFloat x, GraphicsFloat y, GraphicsFloat z);
-        void rotate(const Vector3g &axis, const GraphicsFloat angle);
-        virtual bool intersects(const GraphicsRay &ray, GraphicsFloat *distance = 0) const;
+        void translate(float x, float y, float z);
+        void rotate(const Vector3g &axis, const float angle);
+        virtual bool intersects(const GraphicsRay &ray, float *distance = 0) const;
 
         // drawing
         virtual void paint(GraphicsPainter *painter);

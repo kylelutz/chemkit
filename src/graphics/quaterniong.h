@@ -32,27 +32,27 @@
 
 namespace chemkit {
 
-class CHEMKIT_GRAPHICS_EXPORT Quaterniong : public GenericQuaternion<GraphicsFloat>
+class CHEMKIT_GRAPHICS_EXPORT Quaterniong : public GenericQuaternion<float>
 {
     public:
         // construction and destruction
-        Quaterniong(GraphicsFloat x, GraphicsFloat y, GraphicsFloat z, GraphicsFloat r);
-        Quaterniong(const Point3g &point, GraphicsFloat r);
-        Quaterniong(const Vector3g &vector, GraphicsFloat r);
-        Quaterniong(const GenericQuaternion<GraphicsFloat> &quaternion);
-        Quaterniong(const StaticVector<GraphicsFloat, 4> &quaternion);
+        Quaterniong(float x, float y, float z, float r);
+        Quaterniong(const Point3g &point, float r);
+        Quaterniong(const Vector3g &vector, float r);
+        Quaterniong(const GenericQuaternion<float> &quaternion);
+        Quaterniong(const StaticVector<float, 4> &quaternion);
 
         // properties
         Point3g toPoint3() const;
         Vector3g toVector3() const;
 
         // static methods
-        static Quaterniong rotation(const Vector3g &axis, GraphicsFloat angle);
-        static Quaterniong rotationRadians(const Vector3g &axis, GraphicsFloat angle);
-        static Point3g rotate(const Point3g &point, const Vector3g &axis, GraphicsFloat angle);
-        static Point3g rotateRadians(const Point3g &point, const Vector3g &axis, GraphicsFloat angle);
-        static Vector3g rotate(const Vector3g &vector, const Vector3g &axis, GraphicsFloat angle);
-        static Vector3g rotateRadians(const Vector3g &vector, const Vector3g &axis, GraphicsFloat angle);
+        static Quaterniong rotation(const Vector3g &axis, float angle);
+        static Quaterniong rotationRadians(const Vector3g &axis, float angle);
+        static Point3g rotate(const Point3g &point, const Vector3g &axis, float angle);
+        static Point3g rotateRadians(const Point3g &point, const Vector3g &axis, float angle);
+        static Vector3g rotate(const Vector3g &vector, const Vector3g &axis, float angle);
+        static Vector3g rotateRadians(const Vector3g &vector, const Vector3g &axis, float angle);
 };
 
 } // end chemkit namespace

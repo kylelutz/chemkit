@@ -112,9 +112,9 @@ void GraphicsRingItem::paint(GraphicsPainter *painter)
 // --- Internal Methods ---------------------------------------------------- //
 Point3g GraphicsRingItem::ringCenter(const Ring *ring) const
 {
-    GraphicsFloat sx = 0;
-    GraphicsFloat sy = 0;
-    GraphicsFloat sz = 0;
+    float sx = 0;
+    float sy = 0;
+    float sz = 0;
 
     foreach(const Atom *atom, ring->atoms()){
         sx += atom->x();

@@ -92,7 +92,7 @@ void GraphicsProteinHelixItem::paint(GraphicsPainter *painter)
 
         painter->setColor(Qt::red);
 
-        GraphicsFloat radius = 1.5;
+        float radius = 1.5;
         Point3g a = d->residues.first()->alphaCarbon()->position();
         Point3g b = d->residues.last()->alphaCarbon()->position();
         painter->drawCylinder(a, b, radius);

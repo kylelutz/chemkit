@@ -38,8 +38,8 @@ class GraphicsBondItemPrivate
 {
     public:
         const Bond *bond;
-        GraphicsFloat radius;
-        GraphicsFloat maximumRadius;
+        float radius;
+        float maximumRadius;
         Vector3g normal;
         bool bondOrderVisible;
         bool atomColored;
@@ -56,7 +56,7 @@ class GraphicsBondItemPrivate
 // --- Construction and Destruction ---------------------------------------- //
 /// Creates a new bond item for \p bond with a cylinder of the given
 /// \p radius.
-GraphicsBondItem::GraphicsBondItem(const Bond *bond, GraphicsFloat radius)
+GraphicsBondItem::GraphicsBondItem(const Bond *bond, float radius)
     : GraphicsItem(BondItem),
       d(new GraphicsBondItemPrivate)
 {
@@ -89,23 +89,23 @@ const Bond* GraphicsBondItem::bond() const
 }
 
 /// Sets the radius of the cylinder to \p radius.
-void GraphicsBondItem::setRadius(GraphicsFloat radius)
+void GraphicsBondItem::setRadius(float radius)
 {
     d->radius = radius;
 }
 
 /// Returns the radius of the cylinder.
-GraphicsFloat GraphicsBondItem::radius() const
+float GraphicsBondItem::radius() const
 {
     return d->radius;
 }
 
-void GraphicsBondItem::setMaximumRadius(GraphicsFloat radius)
+void GraphicsBondItem::setMaximumRadius(float radius)
 {
     d->maximumRadius = radius;
 }
 
-GraphicsFloat GraphicsBondItem::maximumRadius() const
+float GraphicsBondItem::maximumRadius() const
 {
     return d->maximumRadius;
 }
@@ -141,9 +141,9 @@ bool GraphicsBondItem::bondOrderVisible() const
 }
 
 // --- Intersection -------------------------------------------------------- //
-bool GraphicsBondItem::intersects(const GraphicsRay &ray, GraphicsFloat *distance) const
+bool GraphicsBondItem::intersects(const GraphicsRay &ray, float *distance) const
 {
-    GraphicsFloat intersectionRadius = qMin(d->radius, d->maximumRadius);
+    float intersectionRadius = qMin(d->radius, d->maximumRadius);
 
     return ray.intersectsCylinder(d->bond->atom1()->position(),
                                   d->bond->atom2()->position(),
@@ -162,17 +162,17 @@ void GraphicsBondItem::paint(GraphicsPainter *painter)
     if(d->bondOrderVisible && bondOrder > 1){
         // radius of each cylinder, clamped to be under
         // the total maximum radius if necessary
-        GraphicsFloat radius = d->radius;
+        float radius = d->radius;
         int radiiCount = 2 * bondOrder - 1;
         if(radius * radiiCount > d->maximumRadius)
             radius = d->maximumRadius / radiiCount;
 
         // distance between the center's of each adjacent cylinder
-        GraphicsFloat offset = 3 * radius;
+        float offset = 3 * radius;
 
         // distance from the atom's positions to the
         // center of the topmost cylinder
-        GraphicsFloat initialOffset = 1.5 * (bondOrder - 1) * radius;
+        float initialOffset = 1.5 * (bondOrder - 1) * radius;
 
         // a vector pointing to the right (with normal pointing up)
         Vector3g right = Vector3g(Point3g(atom2->position()) - Point3g(atom1->position())).cross(d->normal);
@@ -209,7 +209,7 @@ void GraphicsBondItem::paint(GraphicsPainter *painter)
 
     // draw a single cylinder
     else{
-        GraphicsFloat radius = qMin(d->radius, d->maximumRadius);
+        float radius = qMin(d->radius, d->maximumRadius);
 
         if(d->atomColored){
             if(atom1->atomicNumber() == atom2->atomicNumber()){

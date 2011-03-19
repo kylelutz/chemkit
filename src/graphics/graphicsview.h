@@ -69,14 +69,14 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsView : public QGLWidget
         // camera
         void setCamera(GraphicsCamera *camera);
         GraphicsCamera* camera() const;
-        void setNearClipDistance(GraphicsFloat distance);
-        GraphicsFloat nearClipDistance() const;
-        void setFarClipDistance(GraphicsFloat distance);
-        GraphicsFloat farClipDistance() const;
+        void setNearClipDistance(float distance);
+        float nearClipDistance() const;
+        void setFarClipDistance(float distance);
+        float farClipDistance() const;
         QPointF project(const Point3g &point) const;
         Point3g unproject(qreal x, qreal y, qreal z) const;
         Point3g unproject(qreal x, qreal y, const Point3g &reference) const;
-        GraphicsFloat depth(const Point3g &point) const;
+        float depth(const Point3g &point) const;
 
         // lighting
         void addLight(GraphicsLight *light);

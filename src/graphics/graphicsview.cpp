@@ -58,9 +58,9 @@ class GraphicsViewPrivate
         GraphicsTransform modelViewTransform;
         GraphicsTransform projectionTransform;
         QGLShaderProgram *shader;
-        GraphicsFloat nearClipDistance;
-        GraphicsFloat farClipDistance;
-        GraphicsFloat fieldOfView;
+        float nearClipDistance;
+        float farClipDistance;
+        float fieldOfView;
 };
 
 GraphicsViewPrivate::GraphicsViewPrivate()
@@ -361,16 +361,16 @@ GraphicsCamera* GraphicsView::camera() const
 /// Projects a point from the scene to the window.
 QPointF GraphicsView::project(const Point3g &point) const
 {
-    StaticVector<GraphicsFloat, 4> vector(point.data(), 3);
+    StaticVector<float, 4> vector(point.data(), 3);
     vector[3] = 0;
 
     GraphicsTransform transform = projectionTransform() * modelViewTransform();
     vector = transform.multiply(vector);
     vector.scale(1.0 / vector[3]);
 
-    GraphicsFloat winX = width() * (vector[0] + 1) / 2;
-    GraphicsFloat winY = height() * (vector[1] + 1) / 2;
-    GraphicsFloat winZ = (vector[2] + 1) / 2;
+    float winX = width() * (vector[0] + 1) / 2;
+    float winY = height() * (vector[1] + 1) / 2;
+    float winZ = (vector[2] + 1) / 2;
 
     // if winZ is greater than 1.0 the point is not
     // visible (it is either in front of the near clip
@@ -388,7 +388,7 @@ Point3g GraphicsView::unproject(qreal x, qreal y, qreal z) const
     y = height() - y;
 
     // adjust point to normalized window coordinates
-    StaticVector<GraphicsFloat, 4> point;
+    StaticVector<float, 4> point;
     point[0] = 2 * x / width() - 1;
     point[1] = 2 * y / height() - 1;
     point[2] = 2 * z - 1;
@@ -410,42 +410,42 @@ Point3g GraphicsView::unproject(qreal x, qreal y, const Point3g &reference) cons
 }
 
 /// Returns the depth of point in the scene.
-GraphicsFloat GraphicsView::depth(const Point3g &point) const
+float GraphicsView::depth(const Point3g &point) const
 {
-    StaticVector<GraphicsFloat, 4> viewPoint(point.data(), 3);
+    StaticVector<float, 4> viewPoint(point.data(), 3);
     viewPoint[3] = 1;
 
     GraphicsTransform transform = projectionTransform() * modelViewTransform();
     viewPoint = transform.multiply(viewPoint);
     viewPoint.scale(1.0 / viewPoint[3]);
 
-    GraphicsFloat winZ = (viewPoint[2] + 1) / 2;
+    float winZ = (viewPoint[2] + 1) / 2;
 
     return winZ;
 }
 
 /// Sets the near clip distance.
-void GraphicsView::setNearClipDistance(GraphicsFloat distance)
+void GraphicsView::setNearClipDistance(float distance)
 {
     d->nearClipDistance = distance;
     update();
 }
 
 /// Returns the near clip distance.
-GraphicsFloat GraphicsView::nearClipDistance() const
+float GraphicsView::nearClipDistance() const
 {
     return d->nearClipDistance;
 }
 
 /// Sets the far clip distance.
-void GraphicsView::setFarClipDistance(GraphicsFloat distance)
+void GraphicsView::setFarClipDistance(float distance)
 {
     d->farClipDistance = distance;
     update();
 }
 
 /// Returns the far clip distance.
-GraphicsFloat GraphicsView::farClipDistance() const
+float GraphicsView::farClipDistance() const
 {
     return d->farClipDistance;
 }
@@ -665,7 +665,7 @@ void GraphicsView::resizeGL(int width, int height)
 
     // setup projection matrix
     glMatrixMode(GL_PROJECTION);
-    GraphicsFloat aspectRatio = static_cast<GraphicsFloat>(width) / static_cast<GraphicsFloat>(height);
+    float aspectRatio = static_cast<float>(width) / static_cast<float>(height);
     d->projectionTransform = GraphicsTransform::perspective(d->fieldOfView, aspectRatio, d->nearClipDistance, d->farClipDistance);
     glLoadMatrixf(d->projectionTransform.data());
     glMatrixMode(GL_MODELVIEW);

@@ -33,11 +33,4 @@
     #define CHEMKIT_GRAPHICS_EXPORT Q_DECL_IMPORT
 #endif
 
-namespace chemkit {
-
-/// Typedef for a floating point number in OpenGL.
-typedef GLfloat GraphicsFloat;
-
-} // end chemkit namespace
-
 #endif // CHEMKIT_GRAPHICS_H

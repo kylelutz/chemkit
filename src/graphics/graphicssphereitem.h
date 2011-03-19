@@ -35,16 +35,16 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsSphereItem : public GraphicsItem
 {
     public:
         // construction and destruction
-        GraphicsSphereItem(const Point3g &position, GraphicsFloat radius);
-        GraphicsSphereItem(GraphicsFloat x, GraphicsFloat y, GraphicsFloat z, GraphicsFloat radius);
+        GraphicsSphereItem(const Point3g &position, float radius);
+        GraphicsSphereItem(float x, float y, float z, float radius);
         ~GraphicsSphereItem();
 
         // properties
         void setPosition(const Point3g &position);
-        void setPosition(GraphicsFloat x, GraphicsFloat y, GraphicsFloat z);
+        void setPosition(float x, float y, float z);
         Point3g position() const;
-        void setRadius(GraphicsFloat radius);
-        GraphicsFloat radius() const;
+        void setRadius(float radius);
+        float radius() const;
         void setColor(const QColor &color);
         QColor color() const;
 

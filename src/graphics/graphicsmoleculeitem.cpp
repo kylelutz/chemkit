@@ -35,9 +35,9 @@ class GraphicsMoleculeItemPrivate
         const Molecule *molecule;
         MoleculeWatcher *watcher;
         GraphicsMoleculeItem::DisplayType displayType;
-        GraphicsFloat atomRadius;
-        GraphicsFloat bondRadius;
-        GraphicsFloat hydrogenScale;
+        float atomRadius;
+        float bondRadius;
+        float hydrogenScale;
         bool hydrogensVisible;
         bool bondOrderVisible;
         bool atomColoredBonds;
@@ -166,7 +166,7 @@ GraphicsMoleculeItem::DisplayType GraphicsMoleculeItem::displayType() const
 
 /// Sets the radius of the spheres used for displaying the atoms to
 /// \p radius.
-void GraphicsMoleculeItem::setAtomRadius(GraphicsFloat radius)
+void GraphicsMoleculeItem::setAtomRadius(float radius)
 {
     d->atomRadius = radius;
 
@@ -186,14 +186,14 @@ void GraphicsMoleculeItem::setAtomRadius(GraphicsFloat radius)
 }
 
 /// Returns the radius of the spheres used for displaying atoms.
-GraphicsFloat GraphicsMoleculeItem::atomRadius() const
+float GraphicsMoleculeItem::atomRadius() const
 {
     return d->atomRadius;
 }
 
 /// Sets the radius of the cylinders used for displaing bonds to
 /// \p radius.
-void GraphicsMoleculeItem::setBondRadius(GraphicsFloat radius)
+void GraphicsMoleculeItem::setBondRadius(float radius)
 {
     d->bondRadius = radius;
 
@@ -203,7 +203,7 @@ void GraphicsMoleculeItem::setBondRadius(GraphicsFloat radius)
 }
 
 /// Returns the radius of the cylinders used for displaying bonds.
-GraphicsFloat GraphicsMoleculeItem::bondRadius() const
+float GraphicsMoleculeItem::bondRadius() const
 {
     return d->bondRadius;
 }
@@ -233,13 +233,13 @@ bool GraphicsMoleculeItem::hydrogensVisible() const
     return d->hydrogensVisible;
 }
 
-void GraphicsMoleculeItem::setHydrogenScale(GraphicsFloat scale)
+void GraphicsMoleculeItem::setHydrogenScale(float scale)
 {
     d->hydrogenScale = scale;
     update();
 }
 
-GraphicsFloat GraphicsMoleculeItem::hydrogenScale() const
+float GraphicsMoleculeItem::hydrogenScale() const
 {
     return d->hydrogenScale;
 }
@@ -383,7 +383,7 @@ QColor GraphicsMoleculeItem::atomColor(const Atom *atom)
 // --- Slots --------------------------------------------------------------- //
 void GraphicsMoleculeItem::atomAdded(const chemkit::Atom *atom)
 {
-    GraphicsFloat radius;
+    float radius;
     if(d->displayType == SpaceFilling){
         radius = atom->vanDerWaalsRadius();
     }

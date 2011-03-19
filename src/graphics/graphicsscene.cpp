@@ -128,10 +128,10 @@ GraphicsItem* GraphicsScene::item(int index) const
 GraphicsItem* GraphicsScene::item(const GraphicsRay &ray) const
 {
     GraphicsItem *closestItem = 0;
-    GraphicsFloat closestDistance = qInf();
+    float closestDistance = qInf();
 
     foreach(GraphicsItem *item, d->items){
-        GraphicsFloat distance;
+        float distance;
 
         if(item->intersects(ray, &distance)){
             if(!closestItem || distance < closestDistance){
@@ -156,10 +156,10 @@ QList<GraphicsItem *> GraphicsScene::items(const GraphicsRay &ray, bool sorted) 
     QList<GraphicsItem *> items;
 
     if(sorted){
-        QList<GraphicsFloat> distances;
+        QList<float> distances;
 
         foreach(GraphicsItem *item, d->items){
-            GraphicsFloat distance;
+            float distance;
 
             if(item->intersects(ray, &distance)){
                 int index;

@@ -35,24 +35,24 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsCylinder
     public:
         // construction and destruction
         GraphicsCylinder();
-        GraphicsCylinder(GraphicsFloat radius, GraphicsFloat length);
+        GraphicsCylinder(float radius, float length);
         ~GraphicsCylinder();
 
         // properties
-        void setRadius(GraphicsFloat radius);
-        GraphicsFloat radius() const;
-        void setLength(GraphicsFloat length);
-        GraphicsFloat length() const;
+        void setRadius(float radius);
+        float radius() const;
+        void setLength(float length);
+        float length() const;
 
         // intersection
-        bool intersects(const GraphicsRay &ray, GraphicsFloat *distance = 0) const;
+        bool intersects(const GraphicsRay &ray, float *distance = 0) const;
 
         // tesselation
         GraphicsVertexBuffer* tesselate(int slices, int stacks) const;
 
     private:
-        GraphicsFloat m_radius;
-        GraphicsFloat m_length;
+        float m_radius;
+        float m_length;
 };
 
 } // end chemkit namespace

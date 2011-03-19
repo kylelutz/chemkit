@@ -35,21 +35,21 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsSphere
     public:
         // construction and destruction
         GraphicsSphere();
-        GraphicsSphere(GraphicsFloat radius);
+        GraphicsSphere(float radius);
         ~GraphicsSphere();
 
         // properties
-        void setRadius(const GraphicsFloat radius);
-        GraphicsFloat radius() const;
+        void setRadius(const float radius);
+        float radius() const;
 
         // intersection
-        bool intersects(const GraphicsRay &ray, GraphicsFloat *distance = 0) const;
+        bool intersects(const GraphicsRay &ray, float *distance = 0) const;
 
         // tesselation
         GraphicsVertexBuffer* tesselate(int subdivisions = 3) const;
 
     private:
-        GraphicsFloat m_radius;
+        float m_radius;
 };
 
 } // end chemkit namespace

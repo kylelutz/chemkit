@@ -39,11 +39,11 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsTransform
         // construction and destruction
         GraphicsTransform();
         GraphicsTransform(const GraphicsTransform &transform);
-        GraphicsTransform(const StaticMatrix<GraphicsFloat, 4, 4> &matrix);
+        GraphicsTransform(const StaticMatrix<float, 4, 4> &matrix);
         ~GraphicsTransform();
 
         // properties
-        const GraphicsFloat* data() const;
+        const float* data() const;
 
         // math
         void invert();
@@ -51,33 +51,33 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsTransform
         GraphicsRay multiply(const GraphicsRay &ray) const;
         Point3g multiply(const Point3g &point) const;
         Vector3g multiply(const Vector3g &vector) const;
-        StaticVector<GraphicsFloat, 4> multiply(const StaticVector<GraphicsFloat, 4> &vector);
+        StaticVector<float, 4> multiply(const StaticVector<float, 4> &vector);
         GraphicsTransform multiply(const GraphicsTransform &transform) const;
         Point3g inverseMultiply(const Point3g &point) const;
         Vector3g inverseMultiply(const Vector3g &vector) const;
-        StaticVector<GraphicsFloat, 4> inverseMultiply(const StaticVector<GraphicsFloat, 4> &vector);
+        StaticVector<float, 4> inverseMultiply(const StaticVector<float, 4> &vector);
 
         // operators
-        GraphicsFloat operator()(int row, int column) const;
-        GraphicsFloat& operator()(int row, int column);
+        float operator()(int row, int column) const;
+        float& operator()(int row, int column);
         GraphicsRay operator*(const GraphicsRay &ray) const;
         Point3g operator*(const Point3g &point) const;
         Vector3g operator*(const Vector3g &vector) const;
         GraphicsTransform operator*(const GraphicsTransform &transform) const;
         GraphicsTransform& operator*=(const GraphicsTransform &transform);
         GraphicsTransform& operator=(const GraphicsTransform &transform);
-        CommaInitializer<GraphicsFloat> operator<<(const GraphicsFloat value);
+        CommaInitializer<float> operator<<(const float value);
 
         // static methods
         static GraphicsTransform identity();
         static GraphicsTransform translation(const Vector3g &vector);
-        static GraphicsTransform rotation(const Vector3g &axis, GraphicsFloat angle);
-        static GraphicsTransform perspective(GraphicsFloat angle, GraphicsFloat aspectRatio, GraphicsFloat nearDistance, GraphicsFloat farDistance);
-        static GraphicsTransform frustum(GraphicsFloat left, GraphicsFloat right, GraphicsFloat top, GraphicsFloat bottom, GraphicsFloat nearDistance, GraphicsFloat farDistance);
-        static GraphicsTransform orthographic(GraphicsFloat left, GraphicsFloat right, GraphicsFloat top, GraphicsFloat bottom, GraphicsFloat near, GraphicsFloat far);
+        static GraphicsTransform rotation(const Vector3g &axis, float angle);
+        static GraphicsTransform perspective(float angle, float aspectRatio, float nearDistance, float farDistance);
+        static GraphicsTransform frustum(float left, float right, float top, float bottom, float nearDistance, float farDistance);
+        static GraphicsTransform orthographic(float left, float right, float top, float bottom, float near, float far);
 
     private:
-        StaticMatrix<GraphicsFloat, 4, 4> *m_matrix;
+        StaticMatrix<float, 4, 4> *m_matrix;
 };
 
 } // end chemkit namespace

@@ -49,19 +49,19 @@ namespace chemkit {
 **/
 GraphicsTransform::GraphicsTransform()
 {
-    m_matrix = new StaticMatrix<GraphicsFloat, 4, 4>();
+    m_matrix = new StaticMatrix<float, 4, 4>();
 }
 
 /// Creates a new transform as a copy of \p transform.
 GraphicsTransform::GraphicsTransform(const GraphicsTransform &transform)
 {
-    m_matrix = new StaticMatrix<GraphicsFloat, 4, 4>(*transform.m_matrix);
+    m_matrix = new StaticMatrix<float, 4, 4>(*transform.m_matrix);
 }
 
 /// Creates a new transform that contains \p matrix.
-GraphicsTransform::GraphicsTransform(const StaticMatrix<GraphicsFloat, 4, 4> &matrix)
+GraphicsTransform::GraphicsTransform(const StaticMatrix<float, 4, 4> &matrix)
 {
-    m_matrix = new StaticMatrix<GraphicsFloat, 4, 4>(matrix);
+    m_matrix = new StaticMatrix<float, 4, 4>(matrix);
 }
 
 /// Destroys the graphics transform.
@@ -78,7 +78,7 @@ GraphicsTransform::~GraphicsTransform()
 /// \code
 /// glLoadMatrixf(transform.data());
 /// \endcode
-const GraphicsFloat* GraphicsTransform::data() const
+const float* GraphicsTransform::data() const
 {
     return m_matrix->data();
 }
@@ -110,7 +110,7 @@ GraphicsRay GraphicsTransform::multiply(const GraphicsRay &ray) const
 /// Multiplies \p point by the transform.
 Point3g GraphicsTransform::multiply(const Point3g &point) const
 {
-    StaticVector<GraphicsFloat, 4> vector4;
+    StaticVector<float, 4> vector4;
     vector4[0] = point.x();
     vector4[1] = point.y();
     vector4[2] = point.z();
@@ -124,7 +124,7 @@ Point3g GraphicsTransform::multiply(const Point3g &point) const
 /// Multiplies \p vector by the transform.
 Vector3g GraphicsTransform::multiply(const Vector3g &vector) const
 {
-    StaticVector<GraphicsFloat, 4> vector4;
+    StaticVector<float, 4> vector4;
     vector4[0] = vector.x();
     vector4[1] = vector.y();
     vector4[2] = vector.z();
@@ -141,7 +141,7 @@ GraphicsTransform GraphicsTransform::multiply(const GraphicsTransform &transform
     return m_matrix->multiply(*transform.m_matrix);
 }
 
-StaticVector<GraphicsFloat, 4> GraphicsTransform::multiply(const StaticVector<GraphicsFloat, 4> &vector)
+StaticVector<float, 4> GraphicsTransform::multiply(const StaticVector<float, 4> &vector)
 {
     return m_matrix->multiply(vector);
 }
@@ -149,7 +149,7 @@ StaticVector<GraphicsFloat, 4> GraphicsTransform::multiply(const StaticVector<Gr
 /// Multiplies \p point by the inverse of the transform.
 Point3g GraphicsTransform::inverseMultiply(const Point3g &point) const
 {
-    StaticVector<GraphicsFloat, 4> vector4;
+    StaticVector<float, 4> vector4;
     vector4[0] = point.x();
     vector4[1] = point.y();
     vector4[2] = point.z();
@@ -163,7 +163,7 @@ Point3g GraphicsTransform::inverseMultiply(const Point3g &point) const
 /// Multiplies \p vector by the inverse of the transform.
 Vector3g GraphicsTransform::inverseMultiply(const Vector3g &vector) const
 {
-    StaticVector<GraphicsFloat, 4> vector4;
+    StaticVector<float, 4> vector4;
     vector4[0] = vector.x();
     vector4[1] = vector.y();
     vector4[2] = vector.z();
@@ -174,18 +174,18 @@ Vector3g GraphicsTransform::inverseMultiply(const Vector3g &vector) const
     return Vector3g(vector4[0], vector4[1], vector4[2]);
 }
 
-StaticVector<GraphicsFloat, 4> GraphicsTransform::inverseMultiply(const StaticVector<GraphicsFloat, 4> &vector)
+StaticVector<float, 4> GraphicsTransform::inverseMultiply(const StaticVector<float, 4> &vector)
 {
     return m_matrix->inverted().multiply(vector);
 }
 
 // --- Operators ----------------------------------------------------------- //
-GraphicsFloat GraphicsTransform::operator()(int row, int column) const
+float GraphicsTransform::operator()(int row, int column) const
 {
     return m_matrix->operator()(row, column);
 }
 
-GraphicsFloat& GraphicsTransform::operator()(int row, int column)
+float& GraphicsTransform::operator()(int row, int column)
 {
     return m_matrix->operator()(row, column);
 }
@@ -222,11 +222,11 @@ GraphicsTransform& GraphicsTransform::operator=(const GraphicsTransform &transfo
     return *this;
 }
 
-CommaInitializer<GraphicsFloat> GraphicsTransform::operator<<(const GraphicsFloat value)
+CommaInitializer<float> GraphicsTransform::operator<<(const float value)
 {
     m_matrix->data()[0] = value;
 
-    return CommaInitializer<GraphicsFloat>(m_matrix->data(), 4, 4);
+    return CommaInitializer<float>(m_matrix->data(), 4, 4);
 }
 
 // --- Static Methods ------------------------------------------------------ //
@@ -248,7 +248,7 @@ CommaInitializer<GraphicsFloat> GraphicsTransform::operator<<(const GraphicsFloa
 **/
 GraphicsTransform GraphicsTransform::identity()
 {
-    return StaticMatrix<GraphicsFloat, 4, 4>::identity();
+    return StaticMatrix<float, 4, 4>::identity();
 }
 
 /// Returns a transformation matrix that represents the translation by
@@ -281,13 +281,13 @@ GraphicsTransform GraphicsTransform::translation(const Vector3g &vector)
 
 /// Returns a transform that represents a rotation by \p angle
 /// degrees around \p axis.
-GraphicsTransform GraphicsTransform::rotation(const Vector3g &axis, GraphicsFloat angle)
+GraphicsTransform GraphicsTransform::rotation(const Vector3g &axis, float angle)
 {
     GraphicsTransform transform = identity();
 
     Vector3g v = axis.normalized();
-    GraphicsFloat c = cos(angle * chemkit::constants::DegreesToRadians);
-    GraphicsFloat s = sin(angle * chemkit::constants::DegreesToRadians);
+    float c = cos(angle * chemkit::constants::DegreesToRadians);
+    float s = sin(angle * chemkit::constants::DegreesToRadians);
 
     transform(0, 0) = v.x() * v.x() + (1 - v.x() * v.x()) * c;
     transform(0, 1) = v.x() * v.y() * (1 - c) - v.z() * s;
@@ -319,11 +319,11 @@ GraphicsTransform GraphicsTransform::rotation(const Vector3g &axis, GraphicsFloa
 ///   \right]
 /// \f]
 **/
-GraphicsTransform GraphicsTransform::perspective(GraphicsFloat angle, GraphicsFloat aspectRatio, GraphicsFloat nearDistance, GraphicsFloat farDistance)
+GraphicsTransform GraphicsTransform::perspective(float angle, float aspectRatio, float nearDistance, float farDistance)
 {
     GraphicsTransform transform;
 
-    GraphicsFloat f = 1.0 / tan(angle / 2.0);
+    float f = 1.0 / tan(angle / 2.0);
 
     transform(0, 0) = f / aspectRatio;
     transform(1, 1) = f;
@@ -350,7 +350,7 @@ GraphicsTransform GraphicsTransform::perspective(GraphicsFloat angle, GraphicsFl
 ///   \right]
 /// \f]
 **/
-GraphicsTransform GraphicsTransform::frustum(GraphicsFloat left, GraphicsFloat right, GraphicsFloat top, GraphicsFloat bottom, GraphicsFloat nearDistance, GraphicsFloat farDistance)
+GraphicsTransform GraphicsTransform::frustum(float left, float right, float top, float bottom, float nearDistance, float farDistance)
 {
     GraphicsTransform transform;
 
@@ -381,7 +381,7 @@ GraphicsTransform GraphicsTransform::frustum(GraphicsFloat left, GraphicsFloat r
 ///   \right]
 /// \f]
 **/
-GraphicsTransform GraphicsTransform::orthographic(GraphicsFloat left, GraphicsFloat right, GraphicsFloat top, GraphicsFloat bottom, GraphicsFloat nearDistance, GraphicsFloat farDistance)
+GraphicsTransform GraphicsTransform::orthographic(float left, float right, float top, float bottom, float nearDistance, float farDistance)
 {
     GraphicsTransform transform;
 

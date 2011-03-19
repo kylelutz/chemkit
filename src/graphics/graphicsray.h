@@ -46,9 +46,9 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsRay
         Vector3g direction() const;
 
         // geometry
-        Point3g pointAt(GraphicsFloat distance) const;
-        bool intersectsSphere(const Point3g &center, GraphicsFloat radius, GraphicsFloat *distance = 0) const;
-        bool intersectsCylinder(const Point3g &a, const Point3g &b, GraphicsFloat radius, GraphicsFloat *distance = 0) const;
+        Point3g pointAt(float distance) const;
+        bool intersectsSphere(const Point3g &center, float radius, float *distance = 0) const;
+        bool intersectsCylinder(const Point3g &a, const Point3g &b, float radius, float *distance = 0) const;
 
     private:
         Point3g m_origin;

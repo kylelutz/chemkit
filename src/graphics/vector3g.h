@@ -29,7 +29,7 @@
 
 namespace chemkit {
 
-typedef GenericVector<GraphicsFloat> Vector3g;
+typedef GenericVector<float> Vector3g;
 
 } // end chemkit namespace
 

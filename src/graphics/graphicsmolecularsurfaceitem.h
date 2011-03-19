@@ -54,8 +54,8 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsMolecularSurfaceItem : public GraphicsItem
         const Molecule* molecule() const;
         void setSurfaceType(MolecularSurface::SurfaceType type);
         MolecularSurface::SurfaceType surfaceType() const;
-        void setProbeRadius(GraphicsFloat radius);
-        GraphicsFloat probeRadius() const;
+        void setProbeRadius(float radius);
+        float probeRadius() const;
         void setColor(const QColor &color);
         QColor color() const;
         void setColorMode(ColorMode mode);

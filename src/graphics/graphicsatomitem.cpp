@@ -51,7 +51,7 @@ class GraphicsAtomItemPrivate
 // --- Construction and Destruction ---------------------------------------- //
 /// Creates a new atom item that displays \p atom with a sphere of
 /// the given \p radius.
-GraphicsAtomItem::GraphicsAtomItem(const Atom *atom, GraphicsFloat radius)
+GraphicsAtomItem::GraphicsAtomItem(const Atom *atom, float radius)
     : GraphicsItem(AtomItem),
       d(new GraphicsAtomItemPrivate)
 {
@@ -89,7 +89,7 @@ const Atom* GraphicsAtomItem::atom() const
 }
 
 /// Sets the radius of the sphere used to display the atom.
-void GraphicsAtomItem::setRadius(GraphicsFloat radius)
+void GraphicsAtomItem::setRadius(float radius)
 {
     d->sphere.setRadius(radius);
 
@@ -98,14 +98,14 @@ void GraphicsAtomItem::setRadius(GraphicsFloat radius)
 }
 
 /// Returns the radius of the sphere used to display the atom.
-GraphicsFloat GraphicsAtomItem::radius() const
+float GraphicsAtomItem::radius() const
 {
     return d->sphere.radius();
 }
 
 // --- Geometry ------------------------------------------------------------ //
 /// Returns \c true if the item intersects \p ray.
-bool GraphicsAtomItem::intersects(const GraphicsRay &ray, GraphicsFloat *distance) const
+bool GraphicsAtomItem::intersects(const GraphicsRay &ray, float *distance) const
 {
     return ray.intersectsSphere(d->atom->position(), radius(), distance);
 }

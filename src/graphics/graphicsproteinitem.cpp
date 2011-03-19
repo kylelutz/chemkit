@@ -38,7 +38,7 @@ class GraphicsProteinItemPrivate
     public:
         const Polymer *polymer;
         bool secondaryStructureVisible;
-        GraphicsFloat coilRadius;
+        float coilRadius;
         QList<GraphicsProteinCoilItem *> coilItems;
         QList<GraphicsProteinHelixItem *> helixItems;
         QList<GraphicsProteinSheetItem *> sheetItems;
@@ -203,7 +203,7 @@ void GraphicsProteinItem::paint(GraphicsPainter *painter)
 
     // draw a single spline through all of the residues' alpha-carbons for each chain
     if(!d->secondaryStructureVisible){
-        GraphicsFloat radius = 0.35f;
+        float radius = 0.35f;
 
         foreach(const PolymerChain *chain, d->polymer->chains()){
             QList<Point3g> trace;

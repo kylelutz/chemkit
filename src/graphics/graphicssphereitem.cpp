@@ -31,7 +31,7 @@ class GraphicsSphereItemPrivate
 {
     public:
         Point3g position;
-        GraphicsFloat radius;
+        float radius;
         QColor color;
 };
 
@@ -42,7 +42,7 @@ class GraphicsSphereItemPrivate
 
 // --- Construction and Destruction ---------------------------------------- //
 /// Creates a new sphere item at \p position with \p radius.
-GraphicsSphereItem::GraphicsSphereItem(const Point3g &position, GraphicsFloat radius)
+GraphicsSphereItem::GraphicsSphereItem(const Point3g &position, float radius)
     : GraphicsItem(),
       d(new GraphicsSphereItemPrivate)
 {
@@ -52,7 +52,7 @@ GraphicsSphereItem::GraphicsSphereItem(const Point3g &position, GraphicsFloat ra
 }
 
 /// Creates a new sphere item at \p (\p x, \p y, \p z) with \p radius.
-GraphicsSphereItem::GraphicsSphereItem(GraphicsFloat x, GraphicsFloat y, GraphicsFloat z, GraphicsFloat radius)
+GraphicsSphereItem::GraphicsSphereItem(float x, float y, float z, float radius)
     : GraphicsItem(),
       d(new GraphicsSphereItemPrivate)
 {
@@ -77,7 +77,7 @@ void GraphicsSphereItem::setPosition(const Point3g &position)
 }
 
 /// Sets the sphere's position to (\p x, \p y, \p z).
-void GraphicsSphereItem::setPosition(GraphicsFloat x, GraphicsFloat y, GraphicsFloat z)
+void GraphicsSphereItem::setPosition(float x, float y, float z)
 {
     setPosition(Point3g(x, y, z));
 }
@@ -89,13 +89,13 @@ Point3g GraphicsSphereItem::position() const
 }
 
 /// Sets the sphere's radius to \p radius.
-void GraphicsSphereItem::setRadius(GraphicsFloat radius)
+void GraphicsSphereItem::setRadius(float radius)
 {
     d->radius = radius;
 }
 
 /// Returns the sphere's radius.
-GraphicsFloat GraphicsSphereItem::radius() const
+float GraphicsSphereItem::radius() const
 {
     return d->radius;
 }

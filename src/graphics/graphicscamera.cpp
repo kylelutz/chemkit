@@ -70,7 +70,7 @@ GraphicsCamera::GraphicsCamera(const Point3g &position)
 }
 
 /// \overload
-GraphicsCamera::GraphicsCamera(GraphicsFloat x, GraphicsFloat y, GraphicsFloat z)
+GraphicsCamera::GraphicsCamera(float x, float y, float z)
     : d(new GraphicsCameraPrivate)
 {
     d->position = Point3g(x, y, z);
@@ -103,7 +103,7 @@ void GraphicsCamera::setPosition(const Point3g &position)
 }
 
 /// Sets the position of the camera to (\p x, \p y, \p z).
-void GraphicsCamera::setPosition(GraphicsFloat x, GraphicsFloat y, GraphicsFloat z)
+void GraphicsCamera::setPosition(float x, float y, float z)
 {
     setPosition(Point3g(x, y, z));
 }
@@ -115,19 +115,19 @@ Point3g GraphicsCamera::position() const
 }
 
 /// Returns the x component of the camera's position.
-GraphicsFloat GraphicsCamera::x() const
+float GraphicsCamera::x() const
 {
     return position().x();
 }
 
 /// Returns the y component of the camera's position.
-GraphicsFloat GraphicsCamera::y() const
+float GraphicsCamera::y() const
 {
     return position().y();
 }
 
 /// Returns the z component of the camera's position.
-GraphicsFloat GraphicsCamera::z() const
+float GraphicsCamera::z() const
 {
     return position().z();
 }
@@ -139,7 +139,7 @@ void GraphicsCamera::moveTo(const Point3g &position)
 }
 
 /// Sets the camera's postion to (\p x, \p y, \p z).
-void GraphicsCamera::moveTo(GraphicsFloat x, GraphicsFloat y, GraphicsFloat z)
+void GraphicsCamera::moveTo(float x, float y, float z)
 {
     setPosition(x, y, z);
 }
@@ -151,25 +151,25 @@ void GraphicsCamera::moveBy(const Vector3g &vector)
 }
 
 /// Moves the camera by (\p dx, \p dy, \p dz).
-void GraphicsCamera::moveBy(GraphicsFloat dx, GraphicsFloat dy, GraphicsFloat dz)
+void GraphicsCamera::moveBy(float dx, float dy, float dz)
 {
     moveBy(Vector3g(dx, dy, dz));
 }
 
 /// Moves the camera by \p distance in \p direction.
-void GraphicsCamera::moveBy(GraphicsFloat distance, const Vector3g &direction)
+void GraphicsCamera::moveBy(float distance, const Vector3g &direction)
 {
     setPosition(position().movedBy(distance, direction));
 }
 
 /// Moves the camera fowards by \p distance.
-void GraphicsCamera::moveFoward(GraphicsFloat distance)
+void GraphicsCamera::moveFoward(float distance)
 {
     moveBy(distance, direction());
 }
 
 /// Moves the camera backwards by \p distance.
-void GraphicsCamera::moveBackward(GraphicsFloat distance)
+void GraphicsCamera::moveBackward(float distance)
 {
     moveBy(-distance, direction());
 }
@@ -177,7 +177,7 @@ void GraphicsCamera::moveBackward(GraphicsFloat distance)
 /// Rotates the camera around \p axis by \p angle degrees. If
 /// \p rotateDirection is \c true the camera's direction will also
 /// be rotated.
-void GraphicsCamera::rotate(const Vector3g &axis, GraphicsFloat angle, bool rotateDirection)
+void GraphicsCamera::rotate(const Vector3g &axis, float angle, bool rotateDirection)
 {
     setPosition(Quaterniong::rotate(position(), axis, angle));
 
@@ -196,7 +196,7 @@ void GraphicsCamera::rotate(const Vector3g &axis, GraphicsFloat angle, bool rota
 /// \code
 /// orbit(focus(), dx, dy, rotateDirection);
 /// \endcode
-void GraphicsCamera::orbit(GraphicsFloat dx, GraphicsFloat dy, bool rotateDirection)
+void GraphicsCamera::orbit(float dx, float dy, bool rotateDirection)
 {
     orbit(d->focus, dx, dy, rotateDirection);
 }
@@ -205,7 +205,7 @@ void GraphicsCamera::orbit(GraphicsFloat dx, GraphicsFloat dy, bool rotateDirect
 /// and \p dy degrees on the y-axis. If \p rotateDirection is \c true
 /// the direction will also be rotated so that the camera remains
 /// pointed toward \p point.
-void GraphicsCamera::orbit(const Point3g &point, GraphicsFloat dx, GraphicsFloat dy, bool rotateDirection)
+void GraphicsCamera::orbit(const Point3g &point, float dx, float dy, bool rotateDirection)
 {
     moveBy(Vector3g(-point.x(), -point.y(), -point.z()));
 
@@ -272,7 +272,7 @@ Vector3g GraphicsCamera::upVector() const
 }
 
 /// Tilts the camera by \p angle degrees.
-void GraphicsCamera::tilt(GraphicsFloat angle)
+void GraphicsCamera::tilt(float angle)
 {
     setUpVector(Quaterniong::rotate(upVector(), direction(), angle));
 }

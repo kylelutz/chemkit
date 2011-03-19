@@ -35,7 +35,7 @@ class GraphicsProteinCoilItemPrivate
 {
     public:
         int curveDegree;
-        GraphicsFloat radius;
+        float radius;
         QList<AminoAcid *> residues;
 };
 
@@ -66,13 +66,13 @@ GraphicsProteinCoilItem::~GraphicsProteinCoilItem()
 
 // --- Properties ---------------------------------------------------------- //
 /// Sets the radius of the coil to \p radius.
-void GraphicsProteinCoilItem::setRadius(GraphicsFloat radius)
+void GraphicsProteinCoilItem::setRadius(float radius)
 {
     d->radius = radius;
 }
 
 /// Returns the radius of the coil.
-GraphicsFloat GraphicsProteinCoilItem::radius() const
+float GraphicsProteinCoilItem::radius() const
 {
     return d->radius;
 }

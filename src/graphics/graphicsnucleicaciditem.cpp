@@ -100,7 +100,7 @@ void GraphicsNucleicAcidItem::paint(GraphicsPainter *painter)
 
         // build a list of points for the spline
         QList<Point3g> trace;
-        GraphicsFloat radius = 0.6f;
+        float radius = 0.6f;
         painter->setColor(Qt::cyan);
 
         foreach(const Residue *residue, chain->residues()){
@@ -110,7 +110,7 @@ void GraphicsNucleicAcidItem::paint(GraphicsPainter *painter)
                 trace.append(phosphorus->position());
 
                 // draw ladder
-                GraphicsFloat ladderRadius = 0.4f;
+                float ladderRadius = 0.4f;
                 const Atom *centerAtom = residue->atom("C2");
                 if(centerAtom){
                     painter->drawCylinder(phosphorus->position(), centerAtom->position(), ladderRadius);

@@ -32,7 +32,7 @@ class GraphicsCylinderItemPrivate
     public:
         Point3g top;
         Point3g bottom;
-        GraphicsFloat radius;
+        float radius;
         QColor color;
 };
 
@@ -44,7 +44,7 @@ class GraphicsCylinderItemPrivate
 // --- Construction and Destruction ---------------------------------------- //
 /// Creates a new cylinder item with positions \p top and \p bottom
 /// and with \p radius.
-GraphicsCylinderItem::GraphicsCylinderItem(const Point3g &top, const Point3g &bottom, GraphicsFloat radius)
+GraphicsCylinderItem::GraphicsCylinderItem(const Point3g &top, const Point3g &bottom, float radius)
     : GraphicsItem(),
       d(new GraphicsCylinderItemPrivate)
 {
@@ -86,13 +86,13 @@ Point3g GraphicsCylinderItem::bottom() const
 }
 
 /// Sets the cylinder's radius to \p radius.
-void GraphicsCylinderItem::setRadius(GraphicsFloat radius)
+void GraphicsCylinderItem::setRadius(float radius)
 {
     d->radius = radius;
 }
 
 /// Returns the cylinder's radius.
-GraphicsFloat GraphicsCylinderItem::radius() const
+float GraphicsCylinderItem::radius() const
 {
     return d->radius;
 }

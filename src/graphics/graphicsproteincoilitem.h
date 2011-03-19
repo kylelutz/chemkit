@@ -40,8 +40,8 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsProteinCoilItem : public GraphicsItem
         ~GraphicsProteinCoilItem();
 
         // properties
-        void setRadius(GraphicsFloat radius);
-        GraphicsFloat radius() const;
+        void setRadius(float radius);
+        float radius() const;
         void setCurveDegree(int degree);
         int curveDegree() const;
 

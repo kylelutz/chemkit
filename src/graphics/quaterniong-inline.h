@@ -35,28 +35,28 @@ namespace chemkit {
 /// \brief The Quaterniong class represents a quaternion.
 
 // --- Construction and Destruction ---------------------------------------- //    
-inline Quaterniong::Quaterniong(GraphicsFloat x, GraphicsFloat y, GraphicsFloat z, GraphicsFloat r)
-    : GenericQuaternion<GraphicsFloat>(x, y, z, r)
+inline Quaterniong::Quaterniong(float x, float y, float z, float r)
+    : GenericQuaternion<float>(x, y, z, r)
 {
 }
 
-inline Quaterniong::Quaterniong(const Point3g &point, GraphicsFloat r)
-    : GenericQuaternion<GraphicsFloat>(point.x(), point.y(), point.z(), r)
+inline Quaterniong::Quaterniong(const Point3g &point, float r)
+    : GenericQuaternion<float>(point.x(), point.y(), point.z(), r)
 {
 }
 
-inline Quaterniong::Quaterniong(const Vector3g &vector, GraphicsFloat r)
-    : GenericQuaternion<GraphicsFloat>(vector.x(), vector.y(), vector.z(), r)
+inline Quaterniong::Quaterniong(const Vector3g &vector, float r)
+    : GenericQuaternion<float>(vector.x(), vector.y(), vector.z(), r)
 {
 }
 
-inline Quaterniong::Quaterniong(const GenericQuaternion<GraphicsFloat> &quaternion)
-    : GenericQuaternion<GraphicsFloat>(quaternion)
+inline Quaterniong::Quaterniong(const GenericQuaternion<float> &quaternion)
+    : GenericQuaternion<float>(quaternion)
 {
 }
 
-inline Quaterniong::Quaterniong(const StaticVector<GraphicsFloat, 4> &quaternion)
-    : GenericQuaternion<GraphicsFloat>(quaternion)
+inline Quaterniong::Quaterniong(const StaticVector<float, 4> &quaternion)
+    : GenericQuaternion<float>(quaternion)
 {
 }
 
@@ -72,12 +72,12 @@ inline Vector3g Quaterniong::toVector3() const
 }
 
 // --- Static Methods ------------------------------------------------------ //
-inline Quaterniong Quaterniong::rotation(const Vector3g &axis, GraphicsFloat angle)
+inline Quaterniong Quaterniong::rotation(const Vector3g &axis, float angle)
 {
     return rotationRadians(axis, angle * chemkit::constants::DegreesToRadians);
 }
 
-inline Quaterniong Quaterniong::rotationRadians(const Vector3g &axis, GraphicsFloat angle)
+inline Quaterniong Quaterniong::rotationRadians(const Vector3g &axis, float angle)
 {
     return Quaterniong(axis.x() * sin(angle/2.0),
                        axis.y() * sin(angle/2.0),
@@ -85,12 +85,12 @@ inline Quaterniong Quaterniong::rotationRadians(const Vector3g &axis, GraphicsFl
                        cos(angle/2.0));
 }
 
-inline Point3g Quaterniong::rotate(const Point3g &point, const Vector3g &axis, GraphicsFloat angle)
+inline Point3g Quaterniong::rotate(const Point3g &point, const Vector3g &axis, float angle)
 {
     return rotateRadians(point, axis, angle * constants::DegreesToRadians);
 }
 
-inline Point3g Quaterniong::rotateRadians(const Point3g &point, const Vector3g &axis, GraphicsFloat angle)
+inline Point3g Quaterniong::rotateRadians(const Point3g &point, const Vector3g &axis, float angle)
 {
     Quaterniong p(point.x(), point.y(), point.z(), 0);
     Quaterniong q = rotationRadians(axis, angle);
@@ -102,12 +102,12 @@ inline Point3g Quaterniong::rotateRadians(const Point3g &point, const Vector3g &
     return r.toPoint3();
 }
 
-inline Vector3g Quaterniong::rotate(const Vector3g &vector, const Vector3g &axis, GraphicsFloat angle)
+inline Vector3g Quaterniong::rotate(const Vector3g &vector, const Vector3g &axis, float angle)
 {
     return rotateRadians(vector, axis, angle * constants::DegreesToRadians);
 }
 
-inline Vector3g Quaterniong::rotateRadians(const Vector3g &vector, const Vector3g &axis, GraphicsFloat angle)
+inline Vector3g Quaterniong::rotateRadians(const Vector3g &vector, const Vector3g &axis, float angle)
 {
     Quaterniong p(vector.x(), vector.y(), vector.z(), 0);
     Quaterniong q = rotationRadians(axis, angle);

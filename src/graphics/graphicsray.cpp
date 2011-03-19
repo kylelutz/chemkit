@@ -84,18 +84,18 @@ Vector3g GraphicsRay::direction() const
 
 // --- Geometry ------------------------------------------------------------ //
 /// Returns the point at \p distance from the origin along the ray.
-Point3g GraphicsRay::pointAt(GraphicsFloat distance) const
+Point3g GraphicsRay::pointAt(float distance) const
 {
     return m_origin.movedBy(distance, direction());
 }
 
-bool GraphicsRay::intersectsSphere(const Point3g &center, GraphicsFloat radius, GraphicsFloat *distance) const
+bool GraphicsRay::intersectsSphere(const Point3g &center, float radius, float *distance) const
 {
     Vector3g dst = center - m_origin;
 
-    GraphicsFloat B = dst.dot(m_direction);
-    GraphicsFloat C = dst.dot(dst) - (radius * radius);
-    GraphicsFloat D = B*B - C;
+    float B = dst.dot(m_direction);
+    float C = dst.dot(dst) - (radius * radius);
+    float D = B*B - C;
 
     if(D < 0){
         return false;
@@ -108,24 +108,24 @@ bool GraphicsRay::intersectsSphere(const Point3g &center, GraphicsFloat radius, 
     return true;
 }
 
-bool GraphicsRay::intersectsCylinder(const Point3g &a, const Point3g &b, GraphicsFloat radius, GraphicsFloat *distance) const
+bool GraphicsRay::intersectsCylinder(const Point3g &a, const Point3g &b, float radius, float *distance) const
 {
     Vector3g ao = m_origin - a;
     Vector3g ab = b - a;
     Vector3g aoxab = ao.cross(ab);
     Vector3g vxab = direction().cross(ab);
 
-    GraphicsFloat A = vxab.dot(vxab);
-    GraphicsFloat B = 2 * vxab.dot(aoxab);
-    GraphicsFloat C = aoxab.dot(aoxab) - ab.dot(ab) * (radius * radius);
-    GraphicsFloat D = B*B - 4*A*C;
+    float A = vxab.dot(vxab);
+    float B = 2 * vxab.dot(aoxab);
+    float C = aoxab.dot(aoxab) - ab.dot(ab) * (radius * radius);
+    float D = B*B - 4*A*C;
 
     if(D < 0){
         // no intersection
         return false;
     }
 
-    GraphicsFloat t = qMin((-B + sqrt(D)) / (2 * A), (-B - sqrt(D)) / (2 * A));
+    float t = qMin((-B + sqrt(D)) / (2 * A), (-B - sqrt(D)) / (2 * A));
 
     Point3g ip = pointAt(t);
     Point3g ip1 = ip - a;

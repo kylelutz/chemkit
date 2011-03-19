@@ -36,7 +36,7 @@ class GraphicsItemPrivate
         int type;
         bool visible;
         GraphicsScene *scene;
-        GraphicsFloat opacity;
+        float opacity;
         GraphicsMaterial *material;
         GraphicsTransform transform;
 };
@@ -109,14 +109,14 @@ GraphicsScene* GraphicsItem::scene() const
     return d->scene;
 }
 
-void GraphicsItem::setOpacity(GraphicsFloat opacity)
+void GraphicsItem::setOpacity(float opacity)
 {
     d->opacity = opacity;
 
     itemChanged(ItemOpacityChanged);
 }
 
-GraphicsFloat GraphicsItem::opacity() const
+float GraphicsItem::opacity() const
 {
     return d->opacity;
 }
@@ -165,17 +165,17 @@ void GraphicsItem::translate(const Vector3g &vector)
     d->transform *= GraphicsTransform::translation(vector);
 }
 
-void GraphicsItem::translate(GraphicsFloat x, GraphicsFloat y, GraphicsFloat z)
+void GraphicsItem::translate(float x, float y, float z)
 {
     translate(Vector3g(x, y, z));
 }
 
-void GraphicsItem::rotate(const Vector3g &axis, const GraphicsFloat angle)
+void GraphicsItem::rotate(const Vector3g &axis, const float angle)
 {
     d->transform *= GraphicsTransform::rotation(axis, angle);
 }
 
-bool GraphicsItem::intersects(const GraphicsRay &ray, GraphicsFloat *distance) const
+bool GraphicsItem::intersects(const GraphicsRay &ray, float *distance) const
 {
     Q_UNUSED(ray);
     Q_UNUSED(distance);

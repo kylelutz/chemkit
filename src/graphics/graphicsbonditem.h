@@ -37,16 +37,16 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsBondItem : public GraphicsItem
 {
     public:
         // construction and destruction
-        GraphicsBondItem(const Bond *bond, GraphicsFloat radius = 0.15);
+        GraphicsBondItem(const Bond *bond, float radius = 0.15);
         ~GraphicsBondItem();
 
         // properties
         void setBond(const Bond *bond);
         const Bond* bond() const;
-        void setRadius(GraphicsFloat radius);
-        GraphicsFloat radius() const;
-        void setMaximumRadius(GraphicsFloat radius);
-        GraphicsFloat maximumRadius() const;
+        void setRadius(float radius);
+        float radius() const;
+        void setMaximumRadius(float radius);
+        float maximumRadius() const;
         void setNormal(const Vector3g &normal);
         Vector3g normal() const;
         void setAtomColored(bool atomColored);
@@ -55,7 +55,7 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsBondItem : public GraphicsItem
         bool bondOrderVisible() const;
 
         // intersection
-        virtual bool intersects(const GraphicsRay &ray, GraphicsFloat *distance = 0) const;
+        virtual bool intersects(const GraphicsRay &ray, float *distance = 0) const;
 
         // drawing
         void paint(GraphicsPainter *painter);

@@ -72,7 +72,7 @@ void GraphicsRayTest::setDirection()
 void GraphicsRayTest::intersectsSphere()
 {
     chemkit::GraphicsRay ray(chemkit::Point3g(0, 0, 0), chemkit::Vector3g(0, 1, 0));
-    chemkit::GraphicsFloat distance;
+    float distance;
 
     QCOMPARE(ray.intersectsSphere(chemkit::Point3g(0, 2, 0), 1.0), true);
 
@@ -93,7 +93,7 @@ void GraphicsRayTest::intersectsSphere()
 void GraphicsRayTest::intersectsCylinder()
 {
     chemkit::GraphicsRay ray(chemkit::Point3g(0, 0, 0), chemkit::Vector3g(0, 1, 0));
-    chemkit::GraphicsFloat distance;
+    float distance;
 
     QCOMPARE(ray.intersectsCylinder(chemkit::Point3g(2, 2, 0), chemkit::Point3g(-2, 2, 0), 1.0, &distance), true);
     QCOMPARE(distance, 1.0f);

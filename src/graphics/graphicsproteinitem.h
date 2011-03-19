@@ -47,8 +47,8 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsProteinItem : public GraphicsItem
         const Polymer* polymer() const;
         void setSecondaryStructureVisible(bool visible);
         bool secondaryStructureVisible() const;
-        void setCoilRadius(GraphicsFloat radius);
-        GraphicsFloat coilRadius() const;
+        void setCoilRadius(float radius);
+        float coilRadius() const;
         void setHelixDisplayType(GraphicsProteinHelixItem::DisplayType type);
         GraphicsProteinHelixItem::DisplayType helixDisplayType() const;
 

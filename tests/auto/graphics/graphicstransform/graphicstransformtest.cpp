@@ -76,10 +76,10 @@ void GraphicsTransformTest::multiplyTransform()
     chemkit::GraphicsTransform I = chemkit::GraphicsTransform::identity();
 
     // fill transform A with the values from 1 to 16
-    chemkit::GraphicsFloat A_data[] = {1, 2, 3, 4,
-                                       5, 6, 7, 8,
-                                       9, 10, 11, 12,
-                                       13, 14, 15, 16};
+    float A_data[] = {1, 2, 3, 4,
+                      5, 6, 7, 8,
+                      9, 10, 11, 12,
+                      13, 14, 15, 16};
     chemkit::GraphicsTransform A = chemkit::GraphicsTransform(A_data);
 
     // multiply by identity matrix

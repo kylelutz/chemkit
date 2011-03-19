@@ -39,7 +39,7 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsCamera
         // construction and destruction
         GraphicsCamera();
         GraphicsCamera(const Point3g &position);
-        GraphicsCamera(GraphicsFloat x, GraphicsFloat y, GraphicsFloat z);
+        GraphicsCamera(float x, float y, float z);
         ~GraphicsCamera();
 
         // properties
@@ -47,21 +47,21 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsCamera
 
         // position
         void setPosition(const Point3g &position);
-        void setPosition(GraphicsFloat x, GraphicsFloat y, GraphicsFloat z);
+        void setPosition(float x, float y, float z);
         Point3g position() const;
-        GraphicsFloat x() const;
-        GraphicsFloat y() const;
-        GraphicsFloat z() const;
+        float x() const;
+        float y() const;
+        float z() const;
         void moveTo(const Point3g &position);
-        void moveTo(GraphicsFloat x, GraphicsFloat y, GraphicsFloat z);
+        void moveTo(float x, float y, float z);
         void moveBy(const Vector3g &vector);
-        void moveBy(GraphicsFloat dx, GraphicsFloat dy, GraphicsFloat dz);
-        void moveBy(GraphicsFloat distance, const Vector3g &direction);
-        void moveFoward(GraphicsFloat distance);
-        void moveBackward(GraphicsFloat distance);
-        void rotate(const Vector3g &axis, GraphicsFloat angle, bool rotateDirection = true);
-        void orbit(GraphicsFloat dx, GraphicsFloat dy, bool rotateDirection = true);
-        void orbit(const Point3g &point, GraphicsFloat dx, GraphicsFloat dy, bool rotateDirection = true);
+        void moveBy(float dx, float dy, float dz);
+        void moveBy(float distance, const Vector3g &direction);
+        void moveFoward(float distance);
+        void moveBackward(float distance);
+        void rotate(const Vector3g &axis, float angle, bool rotateDirection = true);
+        void orbit(float dx, float dy, bool rotateDirection = true);
+        void orbit(const Point3g &point, float dx, float dy, bool rotateDirection = true);
 
         // orientation
         void setDirection(const Vector3g &direction);
@@ -71,7 +71,7 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsCamera
         void lookAt(const Point3g &point);
         void setUpVector(const Vector3g &upVector);
         Vector3g upVector() const;
-        void tilt(GraphicsFloat angle);
+        void tilt(float angle);
 
     private:
         // internal methods

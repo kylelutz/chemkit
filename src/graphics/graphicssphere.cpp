@@ -30,13 +30,13 @@ namespace chemkit {
 namespace {
 
 // (1 + sqrt(5)) / 2
-const GraphicsFloat GoldenRatio = GraphicsFloat(1.61803399);
+const float GoldenRatio = 1.61803399f;
 
-const GraphicsFloat s = sqrt(1 + GoldenRatio*GoldenRatio);
-const GraphicsFloat t = GoldenRatio / s;
-const GraphicsFloat one = 1 / s;
+const float s = sqrt(1 + GoldenRatio*GoldenRatio);
+const float t = GoldenRatio / s;
+const float one = 1 / s;
 
-const GraphicsFloat IcosahedronVerticies[] = {
+const float IcosahedronVerticies[] = {
     t, one, 0,
     -t, one, 0,
     t, -one, 0,
@@ -78,7 +78,7 @@ GraphicsSphere::GraphicsSphere()
 }
 
 /// Creates a new sphere with \p radius.
-GraphicsSphere::GraphicsSphere(GraphicsFloat radius)
+GraphicsSphere::GraphicsSphere(float radius)
 {
     m_radius = radius;
 }
@@ -90,19 +90,19 @@ GraphicsSphere::~GraphicsSphere()
 
 // --- Properties ---------------------------------------------------------- //
 /// Sets the radius of the sphere to \p radius.
-void GraphicsSphere::setRadius(const GraphicsFloat radius)
+void GraphicsSphere::setRadius(const float radius)
 {
     m_radius = radius;
 }
 
 /// Returns the radius of the sphere.
-GraphicsFloat GraphicsSphere::radius() const
+float GraphicsSphere::radius() const
 {
     return m_radius;
 }
 
 // --- Intersection -------------------------------------------------------- //
-bool GraphicsSphere::intersects(const GraphicsRay &ray, GraphicsFloat *distance) const
+bool GraphicsSphere::intersects(const GraphicsRay &ray, float *distance) const
 {
     Q_UNUSED(ray);
     Q_UNUSED(distance);
@@ -116,7 +116,7 @@ GraphicsVertexBuffer* GraphicsSphere::tesselate(int subdivisions) const
     // setup initial verticies
     QVector<Point3g> verticies(IcosahedronVertexCount);
     for(int i = 0; i < IcosahedronVertexCount; i++){
-        const GraphicsFloat *v = &IcosahedronVerticies[i*3];
+        const float *v = &IcosahedronVerticies[i*3];
         Point3g point(v[0], v[1], v[2]);
         point.scale(radius() / point.norm());
         verticies[i] = point;

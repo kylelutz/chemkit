@@ -36,17 +36,17 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsAtomItem : public GraphicsItem
 {
     public:
         // construction and destruction
-        GraphicsAtomItem(const Atom *atom, GraphicsFloat radius = 0.5);
+        GraphicsAtomItem(const Atom *atom, float radius = 0.5);
         ~GraphicsAtomItem();
 
         // properties
         void setAtom(const Atom *atom);
         const Atom* atom() const;
-        void setRadius(GraphicsFloat radius);
-        GraphicsFloat radius() const;
+        void setRadius(float radius);
+        float radius() const;
 
         // geometry
-        bool intersects(const GraphicsRay &ray, GraphicsFloat *distance = 0) const;
+        bool intersects(const GraphicsRay &ray, float *distance = 0) const;
 
         // drawing
         virtual void paint(GraphicsPainter *painter);
