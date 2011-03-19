@@ -40,9 +40,6 @@ class CHEMKIT_GRAPHICS_EXPORT Vector3g : public GenericVector<GraphicsFloat>
         Vector3g(const GenericVector<double> &vector);
         Vector3g(const StaticVector<float, 3> &vector);
         Vector3g(const StaticVector<double, 3> &vector);
-
-        // properties
-        Vector3 toVector3() const;
 };
 
 } // end chemkit namespace

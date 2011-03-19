@@ -66,12 +66,6 @@ inline Vector3g::Vector3g(const StaticVector<double, 3> &vector)
 {
 }
 
-// --- Properties ---------------------------------------------------------- //
-inline Vector3 Vector3g::toVector3() const
-{
-    return Vector3(x(), y(), z());
-}
-
 } // end chemkit namespace
 
 #endif // CHEMKIT_VECTOR3G_INLINE_H

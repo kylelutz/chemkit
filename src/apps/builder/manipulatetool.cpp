@@ -231,7 +231,7 @@ void ManipulateTool::moveSelectionBy(int x, int y)
     foreach(chemkit::Atom *atom, m_selection){
         chemkit::Vector3g delta = view()->unproject(finalPosition.x(), finalPosition.y(), atom->position()) -
                                         view()->unproject(initialPosition.x(), initialPosition.y(), atom->position());
-        editor()->setAtomPosition(atom, atom->position() + delta.toVector3());
+        editor()->setAtomPosition(atom, atom->position() + delta);
     }
 
     view()->update();
