@@ -237,7 +237,7 @@ Point3 orthocenter(const Point3 &a, const Point3 &b, const Point3 &c, const Poin
 /// weighted verticies (\p a, \p b).
 Float orthoradius(const Point3 &a, const Point3 &b, Float wa, Float wb)
 {
-    GenericVector<double> ap = a - orthocenter(a, b, wa, wb);
+    Vector3d ap = a - orthocenter(a, b, wa, wb);
 
     return ap.lengthSquared() - wa;
 }
@@ -246,8 +246,8 @@ Float orthoradius(const Point3 &a, const Point3 &b, Float wa, Float wb)
 /// with weighted verticies (\p a, \p b, \p c).
 Float orthoradius(const Point3 &a, const Point3 &b, const Point3 &c, Float wa, Float wb, Float wc)
 {
-    GenericVector<double> r = a - c;
-    GenericVector<double> s = b - c;
+    Vector3d r = a - c;
+    Vector3d s = b - c;
 
     double r2 = r.lengthSquared() + (wc - wa);
     double s2 = s.lengthSquared() + (wc - wb);
@@ -273,15 +273,15 @@ Float orthoradius(const Point3 &a, const Point3 &b, const Point3 &c, Float wa, F
 /// with weighted verticies (\p a, \p b, \p c, \p d).
 Float orthoradius(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d, Float wa, Float wb, Float wc, Float wd)
 {
-    GenericVector<double> t = a - d;
-    GenericVector<double> u = b - d;
-    GenericVector<double> v = c - d;
+    Vector3d t = a - d;
+    Vector3d u = b - d;
+    Vector3d v = c - d;
 
-    GenericVector<double> i = u.cross(v).scaled(t.lengthSquared() + (wd - wa));
-    GenericVector<double> j = v.cross(t).scaled(u.lengthSquared() + (wd - wb));
-    GenericVector<double> k = t.cross(u).scaled(v.lengthSquared() + (wd - wc));
+    Vector3d i = u.cross(v).scaled(t.lengthSquared() + (wd - wa));
+    Vector3d j = v.cross(t).scaled(u.lengthSquared() + (wd - wb));
+    Vector3d k = t.cross(u).scaled(v.lengthSquared() + (wd - wc));
 
-    GenericVector<double> l = i + j + k;
+    Vector3d l = i + j + k;
 
     double V = tetrahedronVolume(a, b, c, d);
 
@@ -326,9 +326,9 @@ Float tetrahedronVolume(const Point3 &a, const Point3 &b, const Point3 &c, const
 **/
 Float planeOrientation(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &p)
 {
-    GenericVector<double> t = a - p;
-    GenericVector<double> u = b - p;
-    GenericVector<double> v = c - p;
+    Vector3d t = a - p;
+    Vector3d u = b - p;
+    Vector3d v = c - p;
 
     return t.scalarTriple(u, v);
 }
@@ -357,10 +357,10 @@ Float planeOrientation(const Point3 &a, const Point3 &b, const Point3 &c, const 
 **/
 Float sphereOrientation(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d, const Point3 &p)
 {
-    GenericVector<double> t = a - p;
-    GenericVector<double> u = b - p;
-    GenericVector<double> v = c - p;
-    GenericVector<double> w = d - p;
+    Vector3d t = a - p;
+    Vector3d u = b - p;
+    Vector3d v = c - p;
+    Vector3d w = d - p;
 
     StaticMatrix<double, 4, 4> matrix;
 
@@ -396,10 +396,10 @@ Float sphereOrientation(const Point3 &a, const Point3 &b, const Point3 &c, const
 **/
 Float sphereOrientation(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d, const Point3 &p, Float wa, Float wb, Float wc, Float wd, Float wp)
 {
-    GenericVector<double> t = a - p;
-    GenericVector<double> u = b - p;
-    GenericVector<double> v = c - p;
-    GenericVector<double> w = d - p;
+    Vector3d t = a - p;
+    Vector3d u = b - p;
+    Vector3d v = c - p;
+    Vector3d w = d - p;
 
     StaticMatrix<double, 4, 4> matrix;
 
