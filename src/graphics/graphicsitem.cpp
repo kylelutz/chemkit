@@ -160,17 +160,17 @@ GraphicsTransform GraphicsItem::transform() const
     return d->transform;
 }
 
-void GraphicsItem::translate(const Vector3g &vector)
+void GraphicsItem::translate(const Vector3f &vector)
 {
     d->transform *= GraphicsTransform::translation(vector);
 }
 
 void GraphicsItem::translate(float x, float y, float z)
 {
-    translate(Vector3g(x, y, z));
+    translate(Vector3f(x, y, z));
 }
 
-void GraphicsItem::rotate(const Vector3g &axis, const float angle)
+void GraphicsItem::rotate(const Vector3f &axis, const float angle)
 {
     d->transform *= GraphicsTransform::rotation(axis, angle);
 }

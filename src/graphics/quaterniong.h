@@ -26,9 +26,8 @@
 #include "graphics.h"
 
 #include <chemkit/point3.h>
+#include <chemkit/vector3.h>
 #include <chemkit/genericquaternion.h>
-
-#include "vector3g.h"
 
 namespace chemkit {
 
@@ -38,21 +37,21 @@ class CHEMKIT_GRAPHICS_EXPORT Quaterniong : public GenericQuaternion<float>
         // construction and destruction
         Quaterniong(float x, float y, float z, float r);
         Quaterniong(const Point3f &point, float r);
-        Quaterniong(const Vector3g &vector, float r);
+        Quaterniong(const Vector3f &vector, float r);
         Quaterniong(const GenericQuaternion<float> &quaternion);
         Quaterniong(const StaticVector<float, 4> &quaternion);
 
         // properties
         Point3f toPoint3() const;
-        Vector3g toVector3() const;
+        Vector3f toVector3() const;
 
         // static methods
-        static Quaterniong rotation(const Vector3g &axis, float angle);
-        static Quaterniong rotationRadians(const Vector3g &axis, float angle);
-        static Point3f rotate(const Point3f &point, const Vector3g &axis, float angle);
-        static Point3f rotateRadians(const Point3f &point, const Vector3g &axis, float angle);
-        static Vector3g rotate(const Vector3g &vector, const Vector3g &axis, float angle);
-        static Vector3g rotateRadians(const Vector3g &vector, const Vector3g &axis, float angle);
+        static Quaterniong rotation(const Vector3f &axis, float angle);
+        static Quaterniong rotationRadians(const Vector3f &axis, float angle);
+        static Point3f rotate(const Point3f &point, const Vector3f &axis, float angle);
+        static Point3f rotateRadians(const Point3f &point, const Vector3f &axis, float angle);
+        static Vector3f rotate(const Vector3f &vector, const Vector3f &axis, float angle);
+        static Vector3f rotateRadians(const Vector3f &vector, const Vector3f &axis, float angle);
 };
 
 } // end chemkit namespace

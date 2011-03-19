@@ -120,9 +120,9 @@ GraphicsVertexBuffer* GraphicsCylinder::tesselate(int slices, int stacks) const
         }
     }
 
-    QVector<Vector3g> normals;
+    QVector<Vector3f> normals;
     foreach(const Point3f &point, verticies){
-        Vector3g normal(point.x(), point.y(), 0);
+        Vector3f normal(point.x(), point.y(), 0);
         normal.normalize();
         normals.append(normal);
     }

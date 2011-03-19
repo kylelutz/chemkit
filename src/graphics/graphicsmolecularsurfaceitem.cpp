@@ -43,12 +43,12 @@ class ClippedSphere
     public:
         ClippedSphere(float radius);
 
-        void addClipPlane(const Point3f &point, const Vector3g &normal);
+        void addClipPlane(const Point3f &point, const Vector3f &normal);
         GraphicsVertexBuffer* tesselate() const;
 
     private:
         float m_radius;
-        QList<QPair<Point3f, Vector3g> > m_clipPlanes;
+        QList<QPair<Point3f, Vector3f> > m_clipPlanes;
 };
 
 ClippedSphere::ClippedSphere(float radius)
@@ -56,7 +56,7 @@ ClippedSphere::ClippedSphere(float radius)
 {
 }
 
-void ClippedSphere::addClipPlane(const Point3f &point, const Vector3g &normal)
+void ClippedSphere::addClipPlane(const Point3f &point, const Vector3f &normal)
 {
     m_clipPlanes.append(qMakePair(point, normal));
 }
@@ -66,7 +66,7 @@ GraphicsVertexBuffer* ClippedSphere::tesselate() const
     GraphicsVertexBuffer *buffer = GraphicsSphere(m_radius).tesselate();
 
     QVector<Point3f> verticies = buffer->verticies();
-    QVector<Vector3g> normals = buffer->normals();
+    QVector<Vector3f> normals = buffer->normals();
     QVector<unsigned short> indicies = buffer->indicies();
 
     QVector<unsigned short> clippedIndicies;
@@ -85,7 +85,7 @@ GraphicsVertexBuffer* ClippedSphere::tesselate() const
 
         for(int clipPlaneIndex = 0; clipPlaneIndex < m_clipPlanes.size(); clipPlaneIndex++){
             const Point3f &planePoint = m_clipPlanes[clipPlaneIndex].first;
-            const Vector3g &planeNormal = m_clipPlanes[clipPlaneIndex].second;
+            const Vector3f &planeNormal = m_clipPlanes[clipPlaneIndex].second;
 
             QList<unsigned short> invalidVerticies;
 
@@ -115,7 +115,7 @@ GraphicsVertexBuffer* ClippedSphere::tesselate() const
 
                     float d = -(planePoint - invalidPoint).dot(planeNormal);
                     float theta = acos(planePoint.norm() / m_radius) - acos((planePoint.norm() + d) / m_radius);
-                    Vector3g up = invalidPoint.cross(planeNormal).normalized();
+                    Vector3f up = invalidPoint.cross(planeNormal).normalized();
 
                     // set new vertex position
                     verticies[vertexIndex] = Quaterniong::rotateRadians(invalidPoint, up, -theta);
@@ -215,7 +215,7 @@ void ContactPatchItem::paint(GraphicsPainter *painter)
             const float d = a.distance(b);
             const float x = (d*d - rb*rb + ra*ra) / (2 * d);
 
-            Vector3g planeNormal = (b - a).normalized();
+            Vector3f planeNormal = (b - a).normalized();
             const Point3f planeCenter = planeNormal * x;
 
             clippedSphere.addClipPlane(planeCenter, planeNormal);

@@ -82,9 +82,9 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsItem
         // geometry
         void setTransform(const GraphicsTransform &transform);
         GraphicsTransform transform() const;
-        void translate(const Vector3g &vector);
+        void translate(const Vector3f &vector);
         void translate(float x, float y, float z);
-        void rotate(const Vector3g &axis, const float angle);
+        void rotate(const Vector3f &axis, const float angle);
         virtual bool intersects(const GraphicsRay &ray, float *distance = 0) const;
 
         // drawing

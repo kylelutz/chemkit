@@ -26,8 +26,7 @@
 #include "graphics.h"
 
 #include <chemkit/point3.h>
-
-#include "vector3g.h"
+#include <chemkit/vector3.h>
 
 namespace chemkit {
 
@@ -55,23 +54,23 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsCamera
         float z() const;
         void moveTo(const Point3f &position);
         void moveTo(float x, float y, float z);
-        void moveBy(const Vector3g &vector);
+        void moveBy(const Vector3f &vector);
         void moveBy(float dx, float dy, float dz);
-        void moveBy(float distance, const Vector3g &direction);
+        void moveBy(float distance, const Vector3f &direction);
         void moveFoward(float distance);
         void moveBackward(float distance);
-        void rotate(const Vector3g &axis, float angle, bool rotateDirection = true);
+        void rotate(const Vector3f &axis, float angle, bool rotateDirection = true);
         void orbit(float dx, float dy, bool rotateDirection = true);
         void orbit(const Point3f &point, float dx, float dy, bool rotateDirection = true);
 
         // orientation
-        void setDirection(const Vector3g &direction);
-        Vector3g direction() const;
+        void setDirection(const Vector3f &direction);
+        Vector3f direction() const;
         void setFocus(const Point3f &point);
         Point3f focus() const;
         void lookAt(const Point3f &point);
-        void setUpVector(const Vector3g &upVector);
-        Vector3g upVector() const;
+        void setUpVector(const Vector3f &upVector);
+        Vector3f upVector() const;
         void tilt(float angle);
 
     private:

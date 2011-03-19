@@ -68,13 +68,13 @@ void GraphicsProteinSheetItem::paint(GraphicsPainter *painter)
     }
 
     QVector<Point3f> trace(d->residues.size());
-    QVector<Vector3g> normals(d->residues.size());
+    QVector<Vector3f> normals(d->residues.size());
 
     for(int i = 0; i < d->residues.size(); i++){
         const AminoAcid *residue = d->residues[i];
         trace[i] = residue->alphaCarbon()->position();
 
-        Vector3g normal = Vector3g(residue->peptidePlaneNormal());
+        Vector3f normal = Vector3f(residue->peptidePlaneNormal());
 
         // flip every other normal
         if(i & 1){
@@ -95,15 +95,15 @@ void GraphicsProteinSheetItem::paint(GraphicsPainter *painter)
 
     for(int i = 0; i < trace.size(); i++){
         const Point3f &point = trace[i];
-        const Vector3g &normal = normals[i];
+        const Vector3f &normal = normals[i];
 
-        Vector3g axis;
+        Vector3f axis;
         if(i == 0)
             axis = trace[i+1] - trace[i];
         else
             axis = trace[i] - trace[i-1];
 
-        Vector3g right = axis.cross(normal);
+        Vector3f right = axis.cross(normal);
 
         float halfHeight = height / 2.0;
         float halfWidth = width / 2.0;

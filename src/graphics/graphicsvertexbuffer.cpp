@@ -98,7 +98,7 @@ class GraphicsVertexBufferPrivate
         GLuint vertexBuffer;
         GLuint indexBuffer;
         QVector<Point3f> verticies;
-        QVector<Vector3g> normals;
+        QVector<Vector3f> normals;
         QVector<unsigned short> indicies;
 };
 
@@ -190,13 +190,13 @@ int GraphicsVertexBuffer::vertexCount() const
 
 // --- Normals ------------------------------------------------------------- //
 /// Sets the vertex normals to \p normals.
-void GraphicsVertexBuffer::setNormals(const QVector<Vector3g> &normals)
+void GraphicsVertexBuffer::setNormals(const QVector<Vector3f> &normals)
 {
     d->normals = normals;
 }
 
 /// Returns a list containing the vertex normals in the buffer.
-QVector<Vector3g> GraphicsVertexBuffer::normals() const
+QVector<Vector3f> GraphicsVertexBuffer::normals() const
 {
     return d->normals;
 }
@@ -254,7 +254,7 @@ void GraphicsVertexBuffer::prepareToDraw() const
 
     // allocate space
     glBufferData(GL_ARRAY_BUFFER,
-                 d->verticies.size() * sizeof(Point3f) + d->normals.size() * sizeof(Vector3g),
+                 d->verticies.size() * sizeof(Point3f) + d->normals.size() * sizeof(Vector3f),
                  0,
                  GL_STATIC_DRAW);
 
@@ -267,7 +267,7 @@ void GraphicsVertexBuffer::prepareToDraw() const
     // load normals
     glBufferSubData(GL_ARRAY_BUFFER,
                     d->verticies.size() * sizeof(Point3f),
-                    d->normals.size() * sizeof(Vector3g),
+                    d->normals.size() * sizeof(Vector3f),
                     d->normals.data());
 
     d->readyToDraw = true;

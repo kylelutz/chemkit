@@ -189,9 +189,9 @@ GraphicsVertexBuffer* GraphicsSphere::tesselate(int subdivisions) const
     }
 
     // calculate vertex normals
-    QVector<Vector3g> normals;
+    QVector<Vector3f> normals;
     foreach(const Point3f &vertex, verticies){
-        normals.append(Vector3g(vertex).normalized());
+        normals.append(Vector3f(vertex).normalized());
     }
 
     // create vertex buffer

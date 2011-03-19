@@ -25,7 +25,8 @@
 
 #include "graphics.h"
 
-#include "vector3g.h"
+#include <chemkit/vector3.h>
+
 #include "graphicsitem.h"
 
 namespace chemkit {
@@ -47,8 +48,8 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsBondItem : public GraphicsItem
         float radius() const;
         void setMaximumRadius(float radius);
         float maximumRadius() const;
-        void setNormal(const Vector3g &normal);
-        Vector3g normal() const;
+        void setNormal(const Vector3f &normal);
+        Vector3f normal() const;
         void setAtomColored(bool atomColored);
         bool atomColored() const;
         void setBondOrderVisible(bool showBondOrder);

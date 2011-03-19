@@ -67,8 +67,7 @@ HEADERS += graphics.h \
     graphicsview.h \
     graphicsvertexbuffer.h \
     quaterniong.h \
-    quaterniong-inline.h \
-    vector3g.h
+    quaterniong-inline.h
 RESOURCES = shaders.qrc
 OTHER_FILES += shaders/phong.frag \
     shaders/phong.vert \

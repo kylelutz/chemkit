@@ -26,8 +26,7 @@
 #include "graphics.h"
 
 #include <chemkit/point3.h>
-
-#include "vector3g.h"
+#include <chemkit/vector3.h>
 
 namespace chemkit {
 
@@ -60,7 +59,7 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsPainter
         void drawCylinder(float radius, float length);
         void drawCylinder(const Point3f &a, const Point3f &b, float radius);
         void drawCircle(float radius);
-        void drawCircle(const Point3f &center, float radius, const Vector3g &normal);
+        void drawCircle(const Point3f &center, float radius, const Vector3f &normal);
         void drawTriangle(const Point3f &a, const Point3f &b, const Point3f &c);
         void drawRectangle(const Point3f &a, const Point3f &b, const Point3f &c, const Point3f &d);
         void drawSpline(const QList<Point3f> &points, float radius, int order);

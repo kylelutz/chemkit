@@ -45,7 +45,7 @@ inline Quaterniong::Quaterniong(const Point3f &point, float r)
 {
 }
 
-inline Quaterniong::Quaterniong(const Vector3g &vector, float r)
+inline Quaterniong::Quaterniong(const Vector3f &vector, float r)
     : GenericQuaternion<float>(vector.x(), vector.y(), vector.z(), r)
 {
 }
@@ -66,18 +66,18 @@ inline Point3f Quaterniong::toPoint3() const
     return Point3f(x(), y(), z());
 }
 
-inline Vector3g Quaterniong::toVector3() const
+inline Vector3f Quaterniong::toVector3() const
 {
-    return Vector3g(x(), y(), z());
+    return Vector3f(x(), y(), z());
 }
 
 // --- Static Methods ------------------------------------------------------ //
-inline Quaterniong Quaterniong::rotation(const Vector3g &axis, float angle)
+inline Quaterniong Quaterniong::rotation(const Vector3f &axis, float angle)
 {
     return rotationRadians(axis, angle * chemkit::constants::DegreesToRadians);
 }
 
-inline Quaterniong Quaterniong::rotationRadians(const Vector3g &axis, float angle)
+inline Quaterniong Quaterniong::rotationRadians(const Vector3f &axis, float angle)
 {
     return Quaterniong(axis.x() * sin(angle/2.0),
                        axis.y() * sin(angle/2.0),
@@ -85,12 +85,12 @@ inline Quaterniong Quaterniong::rotationRadians(const Vector3g &axis, float angl
                        cos(angle/2.0));
 }
 
-inline Point3f Quaterniong::rotate(const Point3f &point, const Vector3g &axis, float angle)
+inline Point3f Quaterniong::rotate(const Point3f &point, const Vector3f &axis, float angle)
 {
     return rotateRadians(point, axis, angle * constants::DegreesToRadians);
 }
 
-inline Point3f Quaterniong::rotateRadians(const Point3f &point, const Vector3g &axis, float angle)
+inline Point3f Quaterniong::rotateRadians(const Point3f &point, const Vector3f &axis, float angle)
 {
     Quaterniong p(point.x(), point.y(), point.z(), 0);
     Quaterniong q = rotationRadians(axis, angle);
@@ -102,12 +102,12 @@ inline Point3f Quaterniong::rotateRadians(const Point3f &point, const Vector3g &
     return r.toPoint3();
 }
 
-inline Vector3g Quaterniong::rotate(const Vector3g &vector, const Vector3g &axis, float angle)
+inline Vector3f Quaterniong::rotate(const Vector3f &vector, const Vector3f &axis, float angle)
 {
     return rotateRadians(vector, axis, angle * constants::DegreesToRadians);
 }
 
-inline Vector3g Quaterniong::rotateRadians(const Vector3g &vector, const Vector3g &axis, float angle)
+inline Vector3f Quaterniong::rotateRadians(const Vector3f &vector, const Vector3f &axis, float angle)
 {
     Quaterniong p(vector.x(), vector.y(), vector.z(), 0);
     Quaterniong q = rotationRadians(axis, angle);

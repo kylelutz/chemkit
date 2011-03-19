@@ -69,14 +69,14 @@ void GraphicsCameraTest::direction()
     chemkit::GraphicsCamera camera;
 
     // default direction is on the -Z axis
-    QCOMPARE(camera.direction(), chemkit::Vector3g(0, 0, -1));
+    QCOMPARE(camera.direction(), chemkit::Vector3f(0, 0, -1));
 
-    camera.setDirection(chemkit::Vector3g(1, 0, 0));
-    QCOMPARE(camera.direction(), chemkit::Vector3g(1, 0, 0));
+    camera.setDirection(chemkit::Vector3f(1, 0, 0));
+    QCOMPARE(camera.direction(), chemkit::Vector3f(1, 0, 0));
 
     // ensure direction is normalized when set
-    camera.setDirection(chemkit::Vector3g(0, 5, 0));
-    QCOMPARE(camera.direction(), chemkit::Vector3g(0, 1, 0));
+    camera.setDirection(chemkit::Vector3f(0, 5, 0));
+    QCOMPARE(camera.direction(), chemkit::Vector3f(0, 1, 0));
 }
 
 void GraphicsCameraTest::upVector()
@@ -84,14 +84,14 @@ void GraphicsCameraTest::upVector()
     chemkit::GraphicsCamera camera;
 
     // default up vector is on the Y axis
-    QCOMPARE(camera.upVector(), chemkit::Vector3g(0, 1, 0));
+    QCOMPARE(camera.upVector(), chemkit::Vector3f(0, 1, 0));
 
-    camera.setUpVector(chemkit::Vector3g(1, 0, 0));
-    QCOMPARE(camera.upVector(), chemkit::Vector3g(1, 0, 0));
+    camera.setUpVector(chemkit::Vector3f(1, 0, 0));
+    QCOMPARE(camera.upVector(), chemkit::Vector3f(1, 0, 0));
 
     // ensure up vector is normalized when set
-    camera.setUpVector(chemkit::Vector3g(-3, 0, 0));
-    QCOMPARE(camera.upVector(), chemkit::Vector3g(-1, 0, 0));
+    camera.setUpVector(chemkit::Vector3f(-3, 0, 0));
+    QCOMPARE(camera.upVector(), chemkit::Vector3f(-1, 0, 0));
 }
 
 QTEST_MAIN(GraphicsCameraTest)

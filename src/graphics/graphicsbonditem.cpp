@@ -22,14 +22,14 @@
 
 #include "graphicsbonditem.h"
 
-#include "vector3g.h"
-#include "graphicsray.h"
-#include "graphicspainter.h"
-#include "graphicsmoleculeitem.h"
-
 #include <chemkit/atom.h>
 #include <chemkit/bond.h>
 #include <chemkit/point3.h>
+#include <chemkit/vector3.h>
+
+#include "graphicsray.h"
+#include "graphicspainter.h"
+#include "graphicsmoleculeitem.h"
 
 namespace chemkit {
 
@@ -40,7 +40,7 @@ class GraphicsBondItemPrivate
         const Bond *bond;
         float radius;
         float maximumRadius;
-        Vector3g normal;
+        Vector3f normal;
         bool bondOrderVisible;
         bool atomColored;
 };
@@ -63,7 +63,7 @@ GraphicsBondItem::GraphicsBondItem(const Bond *bond, float radius)
     d->bond = bond;
     d->radius = radius;
     d->maximumRadius = 0.5;
-    d->normal = -Vector3g::Z();
+    d->normal = -Vector3f::Z();
     d->bondOrderVisible = true;
     d->atomColored = true;
 }
@@ -110,12 +110,12 @@ float GraphicsBondItem::maximumRadius() const
     return d->maximumRadius;
 }
 
-void GraphicsBondItem::setNormal(const Vector3g &normal)
+void GraphicsBondItem::setNormal(const Vector3f &normal)
 {
     d->normal = normal;
 }
 
-Vector3g GraphicsBondItem::normal() const
+Vector3f GraphicsBondItem::normal() const
 {
     return d->normal;
 }
@@ -175,7 +175,7 @@ void GraphicsBondItem::paint(GraphicsPainter *painter)
         float initialOffset = 1.5 * (bondOrder - 1) * radius;
 
         // a vector pointing to the right (with normal pointing up)
-        Vector3g right = Vector3g(Point3f(atom2->position()) - Point3f(atom1->position())).cross(d->normal);
+        Vector3f right = Vector3f(Point3f(atom2->position()) - Point3f(atom1->position())).cross(d->normal);
 
         // positions for the first cylinder
         Point3f a = Point3f(atom1->position()).movedBy(-initialOffset, right);

@@ -50,24 +50,24 @@ void GraphicsTransformTest::multiplyPoint()
     point = identity.multiply(point);
     QCOMPARE(point, chemkit::Point3f(1, 2, 3));
 
-    chemkit::GraphicsTransform rotation = chemkit::GraphicsTransform::rotation(chemkit::Vector3g::X(), 180);
+    chemkit::GraphicsTransform rotation = chemkit::GraphicsTransform::rotation(chemkit::Vector3f::X(), 180);
     point = rotation.multiply(point);
     QCOMPARE(point, chemkit::Point3f(1, -2, -3));
 }
 
 void GraphicsTransformTest::multiplyVector()
 {
-    chemkit::Vector3g vector(1, 2, 3);
+    chemkit::Vector3f vector(1, 2, 3);
     chemkit::GraphicsTransform identity = chemkit::GraphicsTransform::identity();
 
     vector = identity.multiply(vector);
-    QCOMPARE(vector, chemkit::Vector3g(1, 2, 3));
+    QCOMPARE(vector, chemkit::Vector3f(1, 2, 3));
 
     // translation matrix should have no effect on vectors
-    chemkit::Vector3g translationVector(5, 5, 5);
+    chemkit::Vector3f translationVector(5, 5, 5);
     chemkit::GraphicsTransform translation = chemkit::GraphicsTransform::translation(translationVector);
     vector = translation.multiply(vector);
-    QCOMPARE(vector, chemkit::Vector3g(1, 2, 3));
+    QCOMPARE(vector, chemkit::Vector3f(1, 2, 3));
 }
 
 void GraphicsTransformTest::multiplyTransform()
@@ -107,7 +107,7 @@ void GraphicsTransformTest::inverseMultiplyVector()
 
 void GraphicsTransformTest::translation()
 {
-    chemkit::Vector3g translationVector(5, 4, 3);
+    chemkit::Vector3f translationVector(5, 4, 3);
     chemkit::GraphicsTransform transform = chemkit::GraphicsTransform::translation(translationVector);
     QCOMPARE(qRound(transform(0, 3)), 5);
     QCOMPARE(qRound(transform(1, 3)), 4);

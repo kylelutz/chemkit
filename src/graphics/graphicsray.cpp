@@ -33,12 +33,12 @@ namespace chemkit {
 // --- Construction and Destruction ---------------------------------------- //
 GraphicsRay::GraphicsRay()
     : m_origin(Point3f()),
-      m_direction(-Vector3g::Z())
+      m_direction(-Vector3f::Z())
 {
 }
 
 /// Creates a new ray with \p origin and \p direction.
-GraphicsRay::GraphicsRay(const Point3f &origin, const Vector3g &direction)
+GraphicsRay::GraphicsRay(const Point3f &origin, const Vector3f &direction)
     : m_origin(origin),
       m_direction(direction.normalized())
 {
@@ -71,13 +71,13 @@ Point3f GraphicsRay::origin() const
 
 /// Sets the direction to \p direction. The direction vector will be
 /// normalized.
-void GraphicsRay::setDirection(const Vector3g &direction)
+void GraphicsRay::setDirection(const Vector3f &direction)
 {
     m_direction = direction.normalized();
 }
 
 /// Returns the direction vector.
-Vector3g GraphicsRay::direction() const
+Vector3f GraphicsRay::direction() const
 {
     return m_direction;
 }
@@ -91,7 +91,7 @@ Point3f GraphicsRay::pointAt(float distance) const
 
 bool GraphicsRay::intersectsSphere(const Point3f &center, float radius, float *distance) const
 {
-    Vector3g dst = center - m_origin;
+    Vector3f dst = center - m_origin;
 
     float B = dst.dot(m_direction);
     float C = dst.dot(dst) - (radius * radius);
@@ -110,10 +110,10 @@ bool GraphicsRay::intersectsSphere(const Point3f &center, float radius, float *d
 
 bool GraphicsRay::intersectsCylinder(const Point3f &a, const Point3f &b, float radius, float *distance) const
 {
-    Vector3g ao = m_origin - a;
-    Vector3g ab = b - a;
-    Vector3g aoxab = ao.cross(ab);
-    Vector3g vxab = direction().cross(ab);
+    Vector3f ao = m_origin - a;
+    Vector3f ab = b - a;
+    Vector3f aoxab = ao.cross(ab);
+    Vector3f vxab = direction().cross(ab);
 
     float A = vxab.dot(vxab);
     float B = 2 * vxab.dot(aoxab);
