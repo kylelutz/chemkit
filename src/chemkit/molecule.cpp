@@ -398,6 +398,11 @@ bool Molecule::contains(const Element &element) const
 /// they are already bonded the existing bond is returned.
 Bond* Molecule::addBond(Atom *a, Atom *b, int order)
 {
+    // ensure that the atoms are not the same
+    if(a == b){
+        return 0;
+    }
+
     // ensure that this molecule contains both atoms
     if(!contains(a) || !contains(b)){
         return 0;
