@@ -82,10 +82,6 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsMoleculeItem : public QObject, public Grap
         // painting
         virtual void paint(GraphicsPainter *painter);
 
-        // static methods
-        static QColor atomColor(int atomicNumber);
-        static QColor atomColor(const Atom *atom);
-
     protected:
         // events
         void itemChanged(ItemChange change);

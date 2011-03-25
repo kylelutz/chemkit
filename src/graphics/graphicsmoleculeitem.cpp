@@ -335,36 +335,6 @@ void GraphicsMoleculeItem::paint(GraphicsPainter *painter)
     Q_UNUSED(painter);
 }
 
-// --- Static Methods ------------------------------------------------------ //
-QColor GraphicsMoleculeItem::atomColor(int atomicNumber)
-{
-    switch(atomicNumber){
-        case 1: return QColor(255, 255, 255);
-        case 2: return QColor(217, 255, 255);
-        case 3: return QColor(204, 128, 255);
-        case 4: return QColor(194, 255, 0);
-        case 5: return QColor(255, 181, 181);
-        case 6: return QColor(80, 80, 80);
-        case 7: return QColor(48, 80, 248);
-        case 8: return QColor(255, 13, 13);
-        case 9: return QColor(144, 224, 80);
-        case 10: return QColor(179, 227, 245);
-        case 11: return QColor(171, 92, 242);
-        case 12: return QColor(138, 255, 0);
-        case 13: return QColor(191, 166, 166);
-        case 14: return QColor(240, 200, 160);
-        case 15: return QColor(255, 128, 0);
-        case 16: return QColor(255, 255, 48);
-        case 17: return QColor(31, 240, 31);
-        case 18: return QColor(128, 209, 227);
-        case 19: return QColor(143, 64, 212);
-        case 20: return QColor(61, 255, 0);
-        case 35: return QColor(166, 41, 41);
-        case 53: return QColor(148, 0, 148);
-        default: return QColor(255, 20, 147);
-    }
-}
-
 // --- Events -------------------------------------------------------------- //
 void GraphicsMoleculeItem::itemChanged(ItemChange change)
 {
@@ -390,11 +360,6 @@ void GraphicsMoleculeItem::itemChanged(ItemChange change)
             item->setVisible(isVisible());
         }
     }
-}
-
-QColor GraphicsMoleculeItem::atomColor(const Atom *atom)
-{
-    return atomColor(atom->atomicNumber());
 }
 
 // --- Slots --------------------------------------------------------------- //
