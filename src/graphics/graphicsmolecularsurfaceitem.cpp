@@ -257,6 +257,11 @@ class GraphicsMolecularSurfaceItemPrivate
 ///
 /// \see MolecularSurface
 
+/// \enum GraphicsMolecularSurfaceItem::ColorMode
+/// Provides different modes for coloring the surface.
+///     - \c SolidColor
+///     - \c AtomColor
+
 // --- Construction and Destruction ---------------------------------------- //
 /// Creates a new molecular surface item for \p molecule.
 GraphicsMolecularSurfaceItem::GraphicsMolecularSurfaceItem(const Molecule *molecule)
