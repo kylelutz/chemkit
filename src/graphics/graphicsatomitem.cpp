@@ -62,7 +62,6 @@ GraphicsAtomItem::GraphicsAtomItem(const Atom *atom, float radius)
 
     if(atom){
         translate(Point3f(atom->position()));
-        setColor(GraphicsMoleculeItem::atomColor(atom));
     }
 }
 
@@ -81,7 +80,6 @@ void GraphicsAtomItem::setAtom(const Atom *atom)
 
     if(atom){
         setTransform(GraphicsTransform::translation(Point3f(atom->position())));
-        setColor(GraphicsMoleculeItem::atomColor(atom));
     }
 }
 

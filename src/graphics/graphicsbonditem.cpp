@@ -84,9 +84,6 @@ GraphicsBondItem::~GraphicsBondItem()
 void GraphicsBondItem::setBond(const Bond *bond)
 {
     d->bond = bond;
-
-    d->atomColors.first = GraphicsMoleculeItem::atomColor(bond->atom1());
-    d->atomColors.second = GraphicsMoleculeItem::atomColor(bond->atom2());
 }
 
 /// Returns the bond being displayed by the item or \c 0 if no bond

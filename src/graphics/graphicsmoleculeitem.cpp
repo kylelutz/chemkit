@@ -414,6 +414,7 @@ void GraphicsMoleculeItem::atomAdded(const chemkit::Atom *atom)
 
     GraphicsAtomItem *item = new GraphicsAtomItem(const_cast<Atom *>(atom), radius);
     item->setVisible(isVisible());
+    item->setColor(d->colorMap->color(atom));
 
     if(scene()){
         scene()->addItem(item);
@@ -442,7 +443,7 @@ void GraphicsMoleculeItem::atomRemoved(const chemkit::Atom *atom)
 void GraphicsMoleculeItem::atomAtomicNumberChanged(const chemkit::Atom *atom)
 {
     GraphicsAtomItem *item = atomItem(atom);
-    item->setAtom(atom);
+    item->setColor(d->colorMap->color(atom));
 
     if(d->displayType == SpaceFilling){
         item->setRadius(atom->vanDerWaalsRadius());
@@ -456,7 +457,8 @@ void GraphicsMoleculeItem::atomAtomicNumberChanged(const chemkit::Atom *atom)
 
     foreach(const Bond *bond, atom->bonds()){
         GraphicsBondItem *item = bondItem(bond);
-        item->setBond(bond);
+        item->setAtomColors(d->colorMap->color(bond->atom1()),
+                            d->colorMap->color(bond->atom2()));
     }
 
     update();
@@ -482,6 +484,9 @@ void GraphicsMoleculeItem::bondAdded(const chemkit::Bond *bond)
 {
     GraphicsBondItem *item = new GraphicsBondItem(const_cast<Bond *>(bond));
     item->setVisible(isVisible());
+
+    item->setAtomColors(d->colorMap->color(bond->atom1()),
+                        d->colorMap->color(bond->atom2()));
 
     if(scene()){
         scene()->addItem(item);
