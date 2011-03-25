@@ -399,7 +399,7 @@ bool Molecule::contains(const Element &element) const
 Bond* Molecule::addBond(Atom *a, Atom *b, int order)
 {
     // ensure that this molecule contains both atoms
-    if(!contains(a) || !contains(b) || a->isBondedTo(b)){
+    if(!contains(a) || !contains(b)){
         return 0;
     }
 

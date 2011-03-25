@@ -163,7 +163,7 @@ void MoleculeTest::addBond()
     QVERIFY(molecule.bonds()[0] == H1_H2);
 
     chemkit::Bond *H1_H2_again = molecule.addBond(H1, H2);
-    QVERIFY(H1_H2_again == 0);
+    QVERIFY(H1_H2_again == H1_H2);
     QCOMPARE(molecule.bondCount(), 1);
 }
 
