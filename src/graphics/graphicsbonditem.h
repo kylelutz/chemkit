@@ -54,6 +54,10 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsBondItem : public GraphicsItem
         bool atomColored() const;
         void setBondOrderVisible(bool showBondOrder);
         bool bondOrderVisible() const;
+        void setColor(const QColor &color);
+        QColor color() const;
+        void setAtomColors(const QColor &a, const QColor &b);
+        QPair<QColor, QColor> atomColors();
 
         // intersection
         virtual bool intersects(const GraphicsRay &ray, float *distance = 0) const;

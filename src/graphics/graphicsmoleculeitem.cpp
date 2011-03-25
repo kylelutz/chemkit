@@ -454,6 +454,11 @@ void GraphicsMoleculeItem::atomAtomicNumberChanged(const chemkit::Atom *atom)
         item->setRadius(d->atomRadius);
     }
 
+    foreach(const Bond *bond, atom->bonds()){
+        GraphicsBondItem *item = bondItem(bond);
+        item->setBond(bond);
+    }
+
     update();
 }
 

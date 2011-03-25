@@ -43,6 +43,8 @@ class GraphicsBondItemPrivate
         Vector3f normal;
         bool bondOrderVisible;
         bool atomColored;
+        QColor color;
+        QPair<QColor, QColor> atomColors;
 };
 
 // === GraphicsBondItem ==================================================== //
@@ -66,6 +68,9 @@ GraphicsBondItem::GraphicsBondItem(const Bond *bond, float radius)
     d->normal = -Vector3f::Z();
     d->bondOrderVisible = true;
     d->atomColored = true;
+    d->color = Qt::darkGray;
+
+    setBond(bond);
 }
 
 /// Destoys the bond item.
@@ -79,6 +84,9 @@ GraphicsBondItem::~GraphicsBondItem()
 void GraphicsBondItem::setBond(const Bond *bond)
 {
     d->bond = bond;
+
+    d->atomColors.first = GraphicsMoleculeItem::atomColor(bond->atom1());
+    d->atomColors.second = GraphicsMoleculeItem::atomColor(bond->atom2());
 }
 
 /// Returns the bond being displayed by the item or \c 0 if no bond
@@ -140,6 +148,30 @@ bool GraphicsBondItem::bondOrderVisible() const
     return d->bondOrderVisible;
 }
 
+/// Sets the color for the bond to \p color.
+void GraphicsBondItem::setColor(const QColor &color)
+{
+    d->color = color;
+}
+
+/// Returns the color for the bond.
+QColor GraphicsBondItem::color() const
+{
+    return d->color;
+}
+
+/// Sets the color for the bond to \p a and \p b.
+void GraphicsBondItem::setAtomColors(const QColor &a, const QColor &b)
+{
+    d->atomColors = qMakePair(a, b);
+}
+
+/// Returns the atom colors for the bond.
+QPair<QColor, QColor> GraphicsBondItem::atomColors()
+{
+    return d->atomColors;
+}
+
 // --- Intersection -------------------------------------------------------- //
 bool GraphicsBondItem::intersects(const GraphicsRay &ray, float *distance) const
 {
@@ -184,20 +216,20 @@ void GraphicsBondItem::paint(GraphicsPainter *painter)
         // draw each cylinder
         for(int i = 0; i < bondOrder; i++){
             if(d->atomColored){
-                if(atom1->atomicNumber() == atom2->atomicNumber()){
-                    painter->setColor(GraphicsMoleculeItem::atomColor(atom1));
+                if(d->atomColors.first == d->atomColors.second){
+                    painter->setColor(d->atomColors.first);
                     painter->drawCylinder(a, b, radius);
                 }
                 else{
                     Point3f midpoint = Point3f::midpoint(a, b);
-                    painter->setColor(GraphicsMoleculeItem::atomColor(atom1));
+                    painter->setColor(d->atomColors.first);
                     painter->drawCylinder(a, midpoint, radius);
-                    painter->setColor(GraphicsMoleculeItem::atomColor(atom2));
+                    painter->setColor(d->atomColors.second);
                     painter->drawCylinder(midpoint, b, radius);
                 }
             }
             else{
-                painter->setColor(Qt::darkGray);
+                painter->setColor(d->color);
                 painter->drawCylinder(a, b, radius);
             }
 
@@ -212,20 +244,20 @@ void GraphicsBondItem::paint(GraphicsPainter *painter)
         float radius = qMin(d->radius, d->maximumRadius);
 
         if(d->atomColored){
-            if(atom1->atomicNumber() == atom2->atomicNumber()){
-                painter->setColor(GraphicsMoleculeItem::atomColor(atom1));
+            if(d->atomColors.first == d->atomColors.second){
+                painter->setColor(d->atomColors.first);
                 painter->drawCylinder(atom1->position(), atom2->position(), radius);
             }
             else{
                 Point3f midpoint = atom1->position().midpoint(atom2->position());
-                painter->setColor(GraphicsMoleculeItem::atomColor(atom1));
+                painter->setColor(d->atomColors.first);
                 painter->drawCylinder(atom1->position(), midpoint, radius);
-                painter->setColor(GraphicsMoleculeItem::atomColor(atom2));
+                painter->setColor(d->atomColors.second);
                 painter->drawCylinder(midpoint, atom2->position(), radius);
             }
         }
         else{
-            painter->setColor(Qt::darkGray);
+            painter->setColor(d->color);
             painter->drawCylinder(atom1->position(), atom2->position(), radius);
         }
     }
