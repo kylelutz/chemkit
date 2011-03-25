@@ -26,6 +26,7 @@
 #include "graphics.h"
 
 #include "graphicsitem.h"
+#include "graphicsatomcolormap.h"
 
 #include <chemkit/molecularsurface.h>
 
@@ -60,6 +61,8 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsMolecularSurfaceItem : public GraphicsItem
         QColor color() const;
         void setColorMode(ColorMode mode);
         ColorMode colorMode() const;
+        void setAtomColorMap(GraphicsAtomColorMap *colorMap);
+        GraphicsAtomColorMap* colorMap() const;
 
     private:
         void itemChanged(ItemChange change);
