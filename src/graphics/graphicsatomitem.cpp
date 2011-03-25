@@ -38,6 +38,7 @@ class GraphicsAtomItemPrivate
     public:
         const Atom *atom;
         GraphicsSphere sphere;
+        QColor color;
         GraphicsVertexBuffer *vertexBuffer;
 };
 
@@ -61,6 +62,7 @@ GraphicsAtomItem::GraphicsAtomItem(const Atom *atom, float radius)
 
     if(atom){
         translate(Point3f(atom->position()));
+        setColor(GraphicsMoleculeItem::atomColor(atom));
     }
 }
 
@@ -79,6 +81,7 @@ void GraphicsAtomItem::setAtom(const Atom *atom)
 
     if(atom){
         setTransform(GraphicsTransform::translation(Point3f(atom->position())));
+        setColor(GraphicsMoleculeItem::atomColor(atom));
     }
 }
 
@@ -103,6 +106,18 @@ float GraphicsAtomItem::radius() const
     return d->sphere.radius();
 }
 
+/// Sets the color for the atom item to \p color.
+void GraphicsAtomItem::setColor(const QColor &color)
+{
+    d->color = color;
+}
+
+/// Returns the color for the atom item.
+QColor GraphicsAtomItem::color() const
+{
+    return d->color;
+}
+
 // --- Geometry ------------------------------------------------------------ //
 /// Returns \c true if the item intersects \p ray.
 bool GraphicsAtomItem::intersects(const GraphicsRay &ray, float *distance) const
@@ -117,7 +132,7 @@ void GraphicsAtomItem::paint(GraphicsPainter *painter)
         d->vertexBuffer = d->sphere.tesselate();
     }
 
-    painter->setColor(GraphicsMoleculeItem::atomColor(d->atom));
+    painter->setColor(d->color);
     painter->draw(d->vertexBuffer);
 }
 

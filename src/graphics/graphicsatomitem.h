@@ -44,6 +44,8 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsAtomItem : public GraphicsItem
         const Atom* atom() const;
         void setRadius(float radius);
         float radius() const;
+        void setColor(const QColor &color);
+        QColor color() const;
 
         // geometry
         bool intersects(const GraphicsRay &ray, float *distance = 0) const;
