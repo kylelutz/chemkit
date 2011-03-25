@@ -41,6 +41,7 @@ class GraphicsMoleculeItemPrivate
         bool hydrogensVisible;
         bool bondOrderVisible;
         bool atomColoredBonds;
+        GraphicsAtomColorMap *colorMap;
         QList<GraphicsAtomItem *> atomItems;
         QList<GraphicsBondItem *> bondItems;
         QList<const Atom *> hiddenAtoms;
@@ -86,6 +87,7 @@ GraphicsMoleculeItem::GraphicsMoleculeItem(const Molecule *molecule)
     d->bondOrderVisible = true;
     d->atomColoredBonds = true;
     d->displayType = BallAndStick;
+    d->colorMap = new GraphicsAtomColorMap(GraphicsAtomColorMap::DefaultColorScheme);
 
     connect(d->watcher, SIGNAL(atomAdded(const chemkit::Atom*)), SLOT(atomAdded(const chemkit::Atom*)));
     connect(d->watcher, SIGNAL(atomRemoved(const chemkit::Atom*)), SLOT(atomRemoved(const chemkit::Atom*)));
@@ -105,6 +107,7 @@ GraphicsMoleculeItem::~GraphicsMoleculeItem()
     qDeleteAll(d->bondItems);
 
     delete d->watcher;
+    delete d->colorMap;
 }
 
 // --- Properties ---------------------------------------------------------- //
@@ -287,6 +290,20 @@ void GraphicsMoleculeItem::setAtomVisible(const Atom *atom, bool visible)
 bool GraphicsMoleculeItem::atomVisible(const Atom *atom) const
 {
     return !d->hiddenAtoms.contains(atom);
+}
+
+/// Sets the color map for the molecule item to \p colorMap.
+void GraphicsMoleculeItem::setAtomColorMap(GraphicsAtomColorMap *colorMap)
+{
+    delete d->colorMap;
+
+    d->colorMap = colorMap;
+}
+
+/// Returns the color map for the molecule item.
+GraphicsAtomColorMap* GraphicsMoleculeItem::atomColorMap() const
+{
+    return d->colorMap;
 }
 
 // --- Items --------------------------------------------------------------- //

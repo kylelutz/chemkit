@@ -31,6 +31,7 @@
 #include "graphicsitem.h"
 #include "graphicsatomitem.h"
 #include "graphicsbonditem.h"
+#include "graphicsatomcolormap.h"
 
 namespace chemkit {
 
@@ -71,6 +72,8 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsMoleculeItem : public QObject, public Grap
         bool bondOrderVisible() const;
         void setAtomColoredBonds(bool atomColoredBonds);
         bool atomColoredBonds() const;
+        void setAtomColorMap(GraphicsAtomColorMap *colorMap);
+        GraphicsAtomColorMap* atomColorMap() const;
 
         // items
         GraphicsAtomItem* atomItem(const Atom *atom) const;
