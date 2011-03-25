@@ -215,7 +215,7 @@ class CHEMKIT_EXPORT Atom
             Radium = 88,
             Actinium = 89,
             Thorium = 90,
-            Protactnium = 91,
+            Protactinium = 91,
             Uranium = 92,
             Neptunium = 93,
             Plutonium = 94,
