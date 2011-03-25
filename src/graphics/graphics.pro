@@ -9,6 +9,7 @@ LIBS += -L../../lib \
     -llapack
 DEFINES += CHEMKIT_GRAPHICS_LIBRARY
 SOURCES += graphics.cpp \
+    graphicsatomcolormap.cpp \
     graphicsatomitem.cpp \
     graphicsbonditem.cpp \
     graphicscamera.cpp \
@@ -38,6 +39,7 @@ SOURCES += graphics.cpp \
     graphicsview.cpp \
     graphicsvertexbuffer.cpp
 HEADERS += graphics.h \
+    graphicsatomcolormap.h \
     graphicsatomitem.h \
     graphicsbonditem.h \
     graphicscamera.h \
