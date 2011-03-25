@@ -442,6 +442,7 @@ void GraphicsMoleculeItem::atomRemoved(const chemkit::Atom *atom)
 void GraphicsMoleculeItem::atomAtomicNumberChanged(const chemkit::Atom *atom)
 {
     GraphicsAtomItem *item = atomItem(atom);
+    item->setAtom(atom);
 
     if(d->displayType == SpaceFilling){
         item->setRadius(atom->vanDerWaalsRadius());
