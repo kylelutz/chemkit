@@ -209,7 +209,7 @@ class CHEMKIT_EXPORT Atom
             Lead = 82,
             Bismuth = 83,
             Polonium = 84,
-            Astanine = 85,
+            Astatine = 85,
             Radon = 86,
             Francium = 87,
             Radium = 88,

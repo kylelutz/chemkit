@@ -322,7 +322,7 @@ bool Element::isNonmetal() const
            (m_atomicNumber >= Atom::Silicon && m_atomicNumber <= Atom::Argon) ||
            (m_atomicNumber >= Atom::Germanium && m_atomicNumber <= Atom::Krypton) ||
            (m_atomicNumber >= Atom::Tellurium && m_atomicNumber <= Atom::Xenon) ||
-           (m_atomicNumber >= Atom::Astanine && m_atomicNumber <= Atom::Radon);
+           (m_atomicNumber >= Atom::Astatine && m_atomicNumber <= Atom::Radon);
 }
 
 // --- Static Methods ------------------------------------------------------ //
