@@ -234,13 +234,26 @@ bool isValid(const std::vector<int> &path)
 bool isUnique(const std::vector<int> &path, const std::vector<std::vector<int> > &sssr)
 {
     // check if a ring with the same atoms is already in the sssr
-    foreach(const std::vector<int> &ring, sssr){
-        std::vector<int> difference;
-        std::set_difference(path.begin(), path.end(),
-                            ring.begin(), ring.end(),
-                            std::inserter(difference, difference.end()));
+    std::vector<int> sortedPath(path.begin(), path.end());
+    std::sort(sortedPath.begin(), sortedPath.end());
 
-        if(difference.empty()){
+    foreach(const std::vector<int> &ring, sssr){
+        if(path.size() != ring.size()){
+            continue;
+        }
+
+        std::vector<int> sortedRing(ring.begin(), ring.end());
+        std::sort(sortedRing.begin(), sortedRing.end());
+
+        bool different = false;
+        for(unsigned int i = 0; i < path.size(); i++){
+            if(sortedPath[i] != sortedRing[i]){
+                different = true;
+                break;
+            }
+        }
+
+        if(!different){
             return false;
         }
     }
