@@ -162,7 +162,7 @@ class SmilesTest : public QObject
         void cox2();
 
     private:
-        void COMPARE_SMILES(const chemkit::Molecule *molecule, const QString &smiles);
+        void COMPARE_SMILES(const chemkit::Molecule *molecule, const std::string &smiles);
 };
 
 void SmilesTest::initTestCase()
@@ -171,15 +171,15 @@ void SmilesTest::initTestCase()
     QVERIFY(chemkit::ChemicalFileFormat::formats().contains("smi"));
 }
 
-void SmilesTest::COMPARE_SMILES(const chemkit::Molecule *molecule, const QString &smiles)
+void SmilesTest::COMPARE_SMILES(const chemkit::Molecule *molecule, const std::string &smiles)
 {
-    chemkit::Molecule moleculeFromSmiles(smiles, "smiles");
+    chemkit::Molecule moleculeFromSmiles(smiles.c_str(), "smiles");
 
     bool equal = molecule->equals(&moleculeFromSmiles, chemkit::Molecule::CompareAromaticity);
     if(!equal){
-        qDebug() << "Actual SMILES: " << molecule->formula("smiles");
+        qDebug() << "Actual SMILES: " << molecule->formula("smiles").c_str();
         qDebug() << "Actual formula: " << moleculeFromSmiles.formula().c_str();
-        qDebug() << "Expected SMILES: " << smiles;
+        qDebug() << "Expected SMILES: " << smiles.c_str();
         qDebug() << "Expected formula: " << molecule->formula().c_str();
     }
     QVERIFY(equal);
@@ -604,7 +604,7 @@ void SmilesTest::dihydrogen()
     QCOMPARE(molecule.formula(), std::string("H2"));
     QCOMPARE(molecule.bondCount(), 1);
 
-    QCOMPARE(molecule.formula("smiles"), QString("[H][H]"));
+    QCOMPARE(molecule.formula("smiles"), std::string("[H][H]"));
     //COMPARE_SMILES(&molecule, molecule.formula("smiles"));
 }
 
@@ -613,7 +613,7 @@ void SmilesTest::dinitrogen()
     chemkit::Molecule molecule("N#N", "smiles");
     QCOMPARE(molecule.formula(), std::string("N2"));
 
-    QCOMPARE(molecule.formula("smiles"), QString("N#N"));
+    QCOMPARE(molecule.formula("smiles"), std::string("N#N"));
     COMPARE_SMILES(&molecule, molecule.formula("smiles"));
 }
 
@@ -622,7 +622,7 @@ void SmilesTest::ethane()
     chemkit::Molecule molecule("CC", "smiles");
     QCOMPARE(molecule.formula(), std::string("C2H6"));
 
-    QCOMPARE(molecule.formula("smiles"), QString("CC"));
+    QCOMPARE(molecule.formula("smiles"), std::string("CC"));
     COMPARE_SMILES(&molecule, molecule.formula("smiles"));
 }
 
@@ -695,7 +695,7 @@ void SmilesTest::heavyWater()
         }
     }
 
-    QCOMPARE(molecule.formula("smiles"), QString("[2H]O[2H]"));
+    QCOMPARE(molecule.formula("smiles"), std::string("[2H]O[2H]"));
     COMPARE_SMILES(&molecule, molecule.formula("smiles"));
 }
 
@@ -730,7 +730,7 @@ void SmilesTest::hydronium()
         }
     }
 
-    QCOMPARE(molecule.formula("smiles"), QString("[OH3+]"));
+    QCOMPARE(molecule.formula("smiles"), std::string("[OH3+]"));
     COMPARE_SMILES(&molecule, molecule.formula("smiles"));
 }
 
@@ -1006,7 +1006,7 @@ void SmilesTest::proton()
     QCOMPARE(molecule.formula(), std::string("H"));
     QCOMPARE(molecule.bondCount(), 0);
 
-    QCOMPARE(molecule.formula("smiles"), QString("[H+]"));
+    QCOMPARE(molecule.formula("smiles"), std::string("[H+]"));
     COMPARE_SMILES(&molecule, molecule.formula("smiles"));
 }
 
@@ -1132,7 +1132,7 @@ void SmilesTest::sodiumChloride()
     QCOMPARE(molecule.bondCount(), 0);
     QCOMPARE(molecule.fragmentCount(), 2);
 
-    QCOMPARE(molecule.formula("smiles"), QString("[Na+].[Cl-]"));
+    QCOMPARE(molecule.formula("smiles"), std::string("[Na+].[Cl-]"));
     COMPARE_SMILES(&molecule, molecule.formula("smiles"));
 }
 

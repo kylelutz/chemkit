@@ -272,7 +272,7 @@ QString PubChem::standardizeFormula(const QString &formula, const QString &input
 /// \endcode
 QString PubChem::standardizeFormula(const Molecule *molecule, const QString &format) const
 {
-    return standardizeFormula(molecule->formula("smiles"), "smiles", format);
+    return standardizeFormula(molecule->formula("smiles").c_str(), "smiles", format);
 }
 
 // --- Error Handling ------------------------------------------------------ //

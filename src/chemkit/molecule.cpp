@@ -230,7 +230,7 @@ std::string Molecule::formula() const
 }
 
 /// Returns the the formula of the molecule using the specified
-/// format. Returns a null QString if format is not supported or if
+/// format. Returns an empty string if format is not supported or if
 /// an error occurs.
 ///
 /// The following example returns the InChI formula for a molecule:
@@ -239,13 +239,14 @@ std::string Molecule::formula() const
 /// \endcode
 ///
 /// \see LineFormat
-QString Molecule::formula(const QString &format) const
+std::string Molecule::formula(const std::string &format) const
 {
-    LineFormat *lineFormat = LineFormat::create(format.toStdString());
-    if(!lineFormat)
-        return QString();
+    LineFormat *lineFormat = LineFormat::create(format);
+    if(!lineFormat){
+        return std::string();
+    }
 
-    QString formula = lineFormat->write(this).c_str();
+    std::string formula = lineFormat->write(this);
 
     delete lineFormat;
 

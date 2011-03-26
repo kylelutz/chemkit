@@ -43,7 +43,7 @@ MoleculePropertiesDialog::MoleculePropertiesDialog(const chemkit::Molecule *mole
     ui->atomCountValue->setText(QString::number(molecule->atomCount()));
     ui->bondCountValue->setText(QString::number(molecule->bondCount()));
     ui->molarMassValue->setText(QString("%1 g/mol").arg(molecule->mass()));
-    ui->lineFormatValue->setText(molecule->formula("inchi"));
+    ui->lineFormatValue->setText(molecule->formula("inchi").c_str());
 }
 
 MoleculePropertiesDialog::~MoleculePropertiesDialog()
@@ -56,17 +56,17 @@ void MoleculePropertiesDialog::lineFormatChanged(int index)
 {
     // inchi
     if(index == 0){
-        ui->lineFormatValue->setText(m_molecule->formula("inchi"));
+        ui->lineFormatValue->setText(m_molecule->formula("inchi").c_str());
     }
 
     // inchikey
     else if(index == 1){
-        ui->lineFormatValue->setText(m_molecule->formula("inchikey"));
+        ui->lineFormatValue->setText(m_molecule->formula("inchikey").c_str());
     }
 
     // smiles
     else if(index == 2){
-        ui->lineFormatValue->setText(m_molecule->formula("smiles"));
+        ui->lineFormatValue->setText(m_molecule->formula("smiles").c_str());
     }
 }
 
