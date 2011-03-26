@@ -29,30 +29,30 @@ InchiKeyLineFormat::InchiKeyLineFormat()
 {
 }
 
-QString InchiKeyLineFormat::write(const chemkit::Molecule *molecule)
+std::string InchiKeyLineFormat::write(const chemkit::Molecule *molecule)
 {
     LineFormat *inchiLineFormat = chemkit::LineFormat::create("inchi");
     if(!inchiLineFormat){
         setErrorString("Failed to load the InChI line format.");
-        return QString();
+        return std::string();
     }
 
-    QString inchi = inchiLineFormat->write(molecule);
-    if(inchi.isNull()){
+    std::string inchi = inchiLineFormat->write(molecule);
+    if(inchi.empty()){
         setErrorString(inchiLineFormat->errorString());
         delete inchiLineFormat;
-        return QString();
+        return std::string();
     }
 
     delete inchiLineFormat;
 
     char inchiKey[28]; // 27 characters + null terminator
 
-    int ret = GetStdINCHIKeyFromStdINCHI(inchi.toAscii().constData(), inchiKey);
+    int ret = GetStdINCHIKeyFromStdINCHI(inchi.c_str(), inchiKey);
     if(ret != INCHIKEY_OK){
-        setErrorString(QString("InChIKey failed: the generator returned '%1'.").arg(ret));
-        return QString();
+        setErrorString(QString("InChIKey failed: the generator returned '%1'.").arg(ret).toStdString());
+        return std::string();
     }
 
-    return QString(inchiKey);
+    return std::string(inchiKey);
 }

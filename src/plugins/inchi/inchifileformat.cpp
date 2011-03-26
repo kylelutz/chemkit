@@ -53,7 +53,7 @@ bool InchiFileFormat::read(QIODevice *iodev, chemkit::ChemicalFile *file)
             continue;
         }
 
-        QString inchi = splitLine[0];
+        std::string inchi = splitLine[0].toStdString();
         chemkit::Molecule *molecule = inchiFormat->read(inchi);
         if(!molecule)
             continue;
@@ -82,8 +82,8 @@ bool InchiFileFormat::write(const chemkit::ChemicalFile *file, QIODevice *iodev)
     }
 
     foreach(const chemkit::Molecule *molecule, file->molecules()){
-        QString inchi = inchiFormat->write(molecule);
-        iodev->write(inchi.toAscii());
+        std::string inchi = inchiFormat->write(molecule);
+        iodev->write(inchi.c_str());
 
         if(!molecule->name().empty()){
             iodev->write(" ");

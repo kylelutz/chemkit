@@ -33,7 +33,7 @@ class InchiKeyLineFormat : public chemkit::LineFormat
     public:
         InchiKeyLineFormat();
 
-        QString write(const chemkit::Molecule *molecule);
+        std::string write(const chemkit::Molecule *molecule);
 };
 
 #endif // INCHIKEYLINEFORMAT_H

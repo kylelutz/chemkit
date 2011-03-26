@@ -32,12 +32,12 @@ class SmilesLineFormat : public chemkit::LineFormat
         SmilesLineFormat();
 
         // options
-        virtual QVariant defaultOption(const QString &name) const;
+        virtual QVariant defaultOption(const std::string &name) const;
 
         // input and output
-        bool read(const QString &formula, chemkit::Molecule *molecule);
+        bool read(const std::string &formula, chemkit::Molecule *molecule);
         bool read(const char *formula, chemkit::Molecule *molecule);
-        QString write(const chemkit::Molecule *molecule);
+        std::string write(const chemkit::Molecule *molecule);
 };
 
 #endif // SMILESLINEFORMAT_H

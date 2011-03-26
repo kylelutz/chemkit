@@ -27,18 +27,18 @@ FormulaLineFormat::FormulaLineFormat()
 {
 }
 
-bool FormulaLineFormat::read(const QString &formula, chemkit::Molecule *molecule)
+bool FormulaLineFormat::read(const std::string &formula, chemkit::Molecule *molecule)
 {
     bool inSymbol = false;
     bool inNumber = false;
     QString symbol;
     QString number;
 
-    foreach(const QChar &c, formula){
-        if(c.isSpace()){
+    foreach(const char &c, formula){
+        if(isspace(c)){
             continue;
         }
-        else if(c.isDigit()){
+        else if(isdigit(c)){
             if(inSymbol){
                 inSymbol = false;
             }
@@ -51,7 +51,7 @@ bool FormulaLineFormat::read(const QString &formula, chemkit::Molecule *molecule
                 number = c;
             }
         }
-        else if(c.isLetter()){
+        else if(isalpha(c)){
             if(inNumber){
                 for(int i = 0; i < number.toInt(); i++){
                     molecule->addAtom(symbol.toStdString());
@@ -61,10 +61,10 @@ bool FormulaLineFormat::read(const QString &formula, chemkit::Molecule *molecule
                 inNumber = false;
             }
 
-            if(inSymbol && c.isLower()){
+            if(inSymbol && islower(c)){
                 symbol += c;
             }
-            else if(inSymbol && c.isUpper()){
+            else if(inSymbol && isupper(c)){
                 molecule->addAtom(symbol.toStdString());
                 symbol = c;
             }
@@ -88,8 +88,8 @@ bool FormulaLineFormat::read(const QString &formula, chemkit::Molecule *molecule
     return true;
 }
 
-QString FormulaLineFormat::write(const chemkit::Molecule *molecule)
+std::string FormulaLineFormat::write(const chemkit::Molecule *molecule)
 {
-    return molecule->formula().c_str();
+    return molecule->formula();
 }
 

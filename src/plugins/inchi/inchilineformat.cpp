@@ -29,18 +29,19 @@ InchiLineFormat::InchiLineFormat()
 {
 }
 
-bool InchiLineFormat::read(const QString &formula, chemkit::Molecule *molecule)
+bool InchiLineFormat::read(const std::string &formula, chemkit::Molecule *molecule)
 {
     // verify formula
-    if(formula.isEmpty()){
+    if(formula.empty()){
         return 0;
     }
 
-    QString formulaString = formula;
+    QString formulaString = formula.c_str();
 
     // add `InChI=` to the start if it is not there
-    if(!formula.startsWith("InChI="))
+    if(formula.compare(0, 6, "InChI=") != 0){
         formulaString.prepend("InChI=");
+    }
 
     // setup input struct
     inchi_InputINCHI input;
@@ -94,12 +95,12 @@ bool InchiLineFormat::read(const QString &formula, chemkit::Molecule *molecule)
     return true;
 }
 
-QString InchiLineFormat::write(const chemkit::Molecule *molecule)
+std::string InchiLineFormat::write(const chemkit::Molecule *molecule)
 {
     // check for valid molecule
     if(molecule->atomCount() > 1024){
         setErrorString("InChI does not support molecules with more that 1024 atoms.");
-        return QString();
+        return std::string();
     }
 
     // setup inchi input structure
@@ -222,7 +223,10 @@ QString InchiLineFormat::write(const chemkit::Molecule *molecule)
     ret = STDINCHIGEN_DoSerialization(generator, &generatorData, &output);
 
     // get inchi string from output
-    QString inchiString(output.szInChI);
+    std::string inchiString;
+    if(output.szInChI){
+        inchiString = output.szInChI;
+    }
 
     // destroy inchi input structure
     delete [] input.atom;
@@ -234,7 +238,7 @@ QString InchiLineFormat::write(const chemkit::Molecule *molecule)
     return inchiString;
 }
 
-QVariant InchiLineFormat::defaultOption(const QString &name) const
+QVariant InchiLineFormat::defaultOption(const std::string &name) const
 {
     if(name == "stereochemistry")
         return QVariant(true);

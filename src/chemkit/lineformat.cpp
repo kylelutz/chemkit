@@ -36,8 +36,8 @@ QHash<QString, LineFormat::CreateFunction> pluginFormats;
 class LineFormatPrivate
 {
     public:
-        QString name;
-        QString errorString;
+        std::string name;
+        std::string errorString;
         QHash<QString, QVariant> options;
 };
 
@@ -55,10 +55,10 @@ class LineFormatPrivate
 ///   - \c smiles
 
 // --- Construction and Destruction ---------------------------------------- //
-LineFormat::LineFormat(const QString &name)
+LineFormat::LineFormat(const std::string &name)
     : d(new LineFormatPrivate)
 {
-    d->name = name.toLower();
+    d->name = QString(name.c_str()).toLower().toStdString();
 }
 
 /// Destroys the line format object.
@@ -69,25 +69,25 @@ LineFormat::~LineFormat()
 
 // --- Properties ---------------------------------------------------------- //
 /// Returns the name of the line format.
-QString LineFormat::name() const
+std::string LineFormat::name() const
 {
     return d->name;
 }
 
 // --- Options ------------------------------------------------------------- //
 /// Sets an option for the line format.
-void LineFormat::setOption(const QString &name, const QVariant &value)
+void LineFormat::setOption(const std::string &name, const QVariant &value)
 {
-    d->options[name] = value;
+    d->options[name.c_str()] = value;
 }
 
 /// Returns the value of an option for the line format.
-QVariant LineFormat::option(const QString &name) const
+QVariant LineFormat::option(const std::string &name) const
 {
-    return d->options.value(name, defaultOption(name));
+    return d->options.value(name.c_str(), defaultOption(name));
 }
 
-QVariant LineFormat::defaultOption(const QString &name) const
+QVariant LineFormat::defaultOption(const std::string &name) const
 {
     Q_UNUSED(name);
 
@@ -97,19 +97,19 @@ QVariant LineFormat::defaultOption(const QString &name) const
 // --- Input and Output ---------------------------------------------------- //
 /// Reads \p formula and adds its contents to \p molecule. Returns
 /// \c false if \p formula could not be read.
-bool LineFormat::read(const QString &formula, Molecule *molecule)
+bool LineFormat::read(const std::string &formula, Molecule *molecule)
 {
     Q_UNUSED(formula);
     Q_UNUSED(molecule);
 
-    setErrorString(QString("'%1' read not supported.").arg(name()));
+    setErrorString(QString("'%1' read not supported.").arg(name().c_str()).toStdString());
     return false;
 }
 
 /// Reads and returns the molecule represented by the given
 /// \p formula. Returns \c 0 if \p formula could not be
 /// read.
-Molecule* LineFormat::read(const QString &formula)
+Molecule* LineFormat::read(const std::string &formula)
 {
     Molecule *molecule = new Molecule;
 
@@ -123,34 +123,34 @@ Molecule* LineFormat::read(const QString &formula)
 }
 
 /// Write and return the formula of a molecule.
-QString LineFormat::write(const Molecule *molecule)
+std::string LineFormat::write(const Molecule *molecule)
 {
     Q_UNUSED(molecule);
 
-    setErrorString(QString("'%1' write not supported.").arg(name()));
-    return QString();
+    setErrorString(QString("'%1' write not supported.").arg(name().c_str()).toStdString());
+    return std::string();
 }
 
 // --- Error Handling ------------------------------------------------------ //
-void LineFormat::setErrorString(const QString &error)
+void LineFormat::setErrorString(const std::string &error)
 {
     d->errorString = error;
 }
 
 /// Returns a string describing the last error that occured.
-QString LineFormat::errorString() const
+std::string LineFormat::errorString() const
 {
     return d->errorString;
 }
 
 // --- Static Methods ------------------------------------------------------ //
 /// Creates a new line format object.
-LineFormat* LineFormat::create(const QString &name)
+LineFormat* LineFormat::create(const std::string &name)
 {
     // ensure default plugins are loaded
     PluginManager::instance()->loadDefaultPlugins();
 
-    CreateFunction createFunction = pluginFormats.value(name.toLower());
+    CreateFunction createFunction = pluginFormats.value(QString(name.c_str()).toLower());
     if(createFunction)
         return createFunction();
 
@@ -158,20 +158,25 @@ LineFormat* LineFormat::create(const QString &name)
 }
 
 /// Returns a list of all the supported line formats.
-QStringList LineFormat::formats()
+QList<std::string> LineFormat::formats()
 {
     // ensure default plugins are loaded
     PluginManager::instance()->loadDefaultPlugins();
 
-    return pluginFormats.keys();
+    QList<std::string> formats;
+    foreach(const QString &format, pluginFormats.keys()){
+        formats.append(format.toStdString());
+    }
+
+    return formats;
 }
 
-void LineFormat::registerFormat(const QString &name, CreateFunction function)
+void LineFormat::registerFormat(const std::string &name, CreateFunction function)
 {
-    pluginFormats[name.toLower()] = function;
+    pluginFormats[QString(name.c_str()).toLower()] = function;
 }
 
-void LineFormat::unregisterFormat(const QString &name, CreateFunction function)
+void LineFormat::unregisterFormat(const std::string &name, CreateFunction function)
 {
     Q_UNUSED(name);
     Q_UNUSED(function);

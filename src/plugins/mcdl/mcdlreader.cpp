@@ -36,9 +36,9 @@ McdlReader::~McdlReader()
 }
 
 // --- Reading ------------------------------------------------------------- //
-bool McdlReader::read(const QString &formula, chemkit::Molecule *molecule)
+bool McdlReader::read(const std::string &formula, chemkit::Molecule *molecule)
 {
-    return read(formula.toAscii().constData(), molecule);
+    return read(formula.c_str(), molecule);
 }
 
 bool McdlReader::read(const char *formula, chemkit::Molecule *molecule)
@@ -73,12 +73,12 @@ bool McdlReader::read(const char *formula, chemkit::Molecule *molecule)
 }
 
 // --- Error Handling ------------------------------------------------------ //
-void McdlReader::setErrorString(const QString &error)
+void McdlReader::setErrorString(const std::string &error)
 {
     m_errorString = error;
 }
 
-QString McdlReader::errorString() const
+std::string McdlReader::errorString() const
 {
     return m_errorString;
 }
@@ -122,7 +122,7 @@ bool McdlReader::readCompositionModule()
 
                 chemkit::Atom *terminalAtom = m_molecule->addAtom(atomicNumber);
                 if(!terminalAtom){
-                    setErrorString(QString("Invalid terminal element in formula: %1").arg(atomicNumber));
+                    setErrorString(QString("Invalid terminal element in formula: %1").arg(atomicNumber).toStdString());
                     return false;
                 }
 
@@ -134,7 +134,7 @@ bool McdlReader::readCompositionModule()
 
                 atom = m_molecule->addAtom(atomicNumber);
                 if(!atom){
-                    setErrorString(QString("Invalid element in formula: %1").arg(atomicNumber));
+                    setErrorString(QString("Invalid element in formula: %1").arg(atomicNumber).toStdString());
                     return false;
                 }
 
@@ -144,7 +144,7 @@ bool McdlReader::readCompositionModule()
             p++;
         }
         else{
-            setErrorString(QString("Invalid character in formula: %1").arg(*p));
+            setErrorString(QString("Invalid character in formula: %1").arg(*p).toStdString());
             return false;
         }
     }
@@ -185,7 +185,7 @@ bool McdlReader::readConnectionModule()
             p++;
         }
         else{
-            setErrorString(QString("Invalid character in formula: %1").arg(*p));
+            setErrorString(QString("Invalid character in formula: %1").arg(*p).toStdString());
             return false;
         }
     }

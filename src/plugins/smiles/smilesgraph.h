@@ -25,6 +25,9 @@
 
 #include <QtCore>
 
+#include <string>
+#include <sstream>
+
 #include <chemkit/atom.h>
 #include <chemkit/bond.h>
 #include <chemkit/molecule.h>
@@ -40,8 +43,8 @@ class SmilesGraphNode
         SmilesGraphNode* parent() const;
         int childCount() const;
         QList<SmilesGraphNode *> children() const;
-        QString toString(bool kekulize) const;
-        void write(QString &string, bool kekulize) const;
+        std::string toString(bool kekulize) const;
+        void write(std::stringstream &string, bool kekulize) const;
 
         void setHydrogenCount(int hydrogenCount);
         int hydrogenCount() const;
@@ -63,7 +66,7 @@ class SmilesGraph
     public:
         SmilesGraph(const chemkit::Molecule *molecule);
 
-        QString toString(bool kekulize) const;
+        std::string toString(bool kekulize) const;
 
     private:
         QList<SmilesGraphNode *> m_rootNodes;

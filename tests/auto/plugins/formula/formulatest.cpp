@@ -84,14 +84,14 @@ void FormulaTest::write()
 
     // empty
     chemkit::Molecule empty;
-    QCOMPARE(formulaFormat->write(&empty), QString());
+    QCOMPARE(formulaFormat->write(&empty), std::string());
 
     // water
     chemkit::Molecule water;
     water.addAtom("H");
     water.addAtom("H");
     water.addAtom("O");
-    QCOMPARE(formulaFormat->write(&water), QString("H2O"));
+    QCOMPARE(formulaFormat->write(&water), std::string("H2O"));
 
     delete formulaFormat;
 }

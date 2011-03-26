@@ -123,16 +123,16 @@ int main(int argc, char *argv[])
     }
 
     // create input line format
-    chemkit::LineFormat *patternFormat = chemkit::LineFormat::create(inputFormat);
+    chemkit::LineFormat *patternFormat = chemkit::LineFormat::create(inputFormat.toStdString());
     if(!patternFormat){
         err << "Error: failed to create line format\n";
         return -1;
     }
 
     // read input molecule
-    chemkit::Molecule *patternMolecule = patternFormat->read(inputPattern);
+    chemkit::Molecule *patternMolecule = patternFormat->read(inputPattern.toStdString());
     if(!patternMolecule){
-        err << "Error: failed to read pattern molecule: " << patternFormat->errorString() << "\n";
+        err << "Error: failed to read pattern molecule: " << patternFormat->errorString().c_str() << "\n";
         delete patternFormat;
         return -1;
     }

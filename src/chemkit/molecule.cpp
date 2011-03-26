@@ -128,12 +128,12 @@ Molecule::Molecule()
 Molecule::Molecule(const QString &formula, const QString &format)
     : d(new MoleculePrivate)
 {
-    LineFormat *lineFormat = LineFormat::create(format);
+    LineFormat *lineFormat = LineFormat::create(format.toStdString());
     if(!lineFormat){
         return;
     }
 
-    lineFormat->read(formula, this);
+    lineFormat->read(formula.toStdString(), this);
 
     delete lineFormat;
 }
@@ -241,11 +241,11 @@ std::string Molecule::formula() const
 /// \see LineFormat
 QString Molecule::formula(const QString &format) const
 {
-    LineFormat *lineFormat = LineFormat::create(format);
+    LineFormat *lineFormat = LineFormat::create(format.toStdString());
     if(!lineFormat)
         return QString();
 
-    QString formula = lineFormat->write(this);
+    QString formula = lineFormat->write(this).c_str();
 
     delete lineFormat;
 

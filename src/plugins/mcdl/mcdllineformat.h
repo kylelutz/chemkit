@@ -33,8 +33,8 @@ class McdlLineFormat : public chemkit::LineFormat
         ~McdlLineFormat();
 
         // input and output
-        bool read(const QString &formula, chemkit::Molecule *molecule);
-        QString write(const chemkit::Molecule *molecule);
+        bool read(const std::string &formula, chemkit::Molecule *molecule);
+        std::string write(const chemkit::Molecule *molecule);
 };
 
 #endif // MCDLLINEFORMAT_H

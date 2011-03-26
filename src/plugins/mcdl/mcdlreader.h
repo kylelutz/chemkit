@@ -35,11 +35,11 @@ class McdlReader
         ~McdlReader();
 
         // reading
-        bool read(const QString &formula, chemkit::Molecule *molecule);
+        bool read(const std::string &formula, chemkit::Molecule *molecule);
         bool read(const char *formula, chemkit::Molecule *molecule);
 
         // error handling
-        QString errorString() const;
+        std::string errorString() const;
 
     private:
         bool readCompositionModule();
@@ -48,14 +48,14 @@ class McdlReader
         int readElement(const char **p);
         void addFragmentCopies(chemkit::Atom *atom, int quantity);
         void addFragmentConnections(const QList<int> &connections, int fragment);
-        void setErrorString(const QString &error);
+        void setErrorString(const std::string &error);
 
     private:
         const char *p;
         const char *m_formula;
         chemkit::Molecule *m_molecule;
         QList<chemkit::Atom *> m_fragments;
-        QString m_errorString;
+        std::string m_errorString;
 };
 
 #endif // MCDLREADER_H

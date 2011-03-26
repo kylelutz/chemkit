@@ -165,7 +165,7 @@ SmilesLineFormat::SmilesLineFormat()
 }
 
 // --- Options ------------------------------------------------------------- //
-QVariant SmilesLineFormat::defaultOption(const QString &name) const
+QVariant SmilesLineFormat::defaultOption(const std::string &name) const
 {
     if(name == "stereochemistry")
         return QVariant(true);
@@ -178,9 +178,9 @@ QVariant SmilesLineFormat::defaultOption(const QString &name) const
 }
 
 // --- Input and Output ---------------------------------------------------- //
-bool SmilesLineFormat::read(const QString &formula, chemkit::Molecule *molecule)
+bool SmilesLineFormat::read(const std::string &formula, chemkit::Molecule *molecule)
 {
-    return read(formula.toAscii().constData(), molecule);
+    return read(formula.c_str(), molecule);
 }
 
 bool SmilesLineFormat::read(const char *formula, chemkit::Molecule *molecule)
@@ -512,13 +512,15 @@ end_branch:
 parse_error:
     setErrorString(QString("Error parsing smiles at character #%1 ('%2').")
                        .arg(p - formula)
-                       .arg(*p));
+                       .arg(*p)
+                       .toStdString());
     goto error;
 
 invalid_atom_error:
     setErrorString(QString("Invalid atom symbol at character #%1 ('%2').")
                         .arg(p - formula)
-                        .arg(*p));
+                        .arg(*p)
+                        .toStdString());
     goto error;
 
 error:
@@ -543,7 +545,7 @@ done:
     return true;
 }
 
-QString SmilesLineFormat::write(const chemkit::Molecule *molecule)
+std::string SmilesLineFormat::write(const chemkit::Molecule *molecule)
 {
     bool kekulize = option("kekulize").toBool();
 

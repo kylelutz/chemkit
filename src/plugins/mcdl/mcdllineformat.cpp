@@ -36,7 +36,7 @@ McdlLineFormat::~McdlLineFormat()
 }
 
 // --- Input and Output ---------------------------------------------------- //
-bool McdlLineFormat::read(const QString &formula, chemkit::Molecule *molecule)
+bool McdlLineFormat::read(const std::string &formula, chemkit::Molecule *molecule)
 {
     McdlReader reader;
 
@@ -48,11 +48,11 @@ bool McdlLineFormat::read(const QString &formula, chemkit::Molecule *molecule)
     return ok;
 }
 
-QString McdlLineFormat::write(const chemkit::Molecule *molecule)
+std::string McdlLineFormat::write(const chemkit::Molecule *molecule)
 {
     Q_UNUSED(molecule);
 
     setErrorString("MCDL write not supported.");
 
-    return QString();
+    return std::string();
 }

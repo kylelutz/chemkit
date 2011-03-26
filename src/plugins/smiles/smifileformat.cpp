@@ -52,11 +52,11 @@ bool SmiFileFormat::read(QIODevice *iodev, chemkit::ChemicalFile *file)
             continue;
         }
 
-        QString smiles = splitLine[0];
+        std::string smiles = splitLine[0].toStdString();
         chemkit::Molecule *molecule = smilesFormat->read(smiles);
         if(!molecule){
-            qDebug() << "Error with smiles: " << smiles;
-            qDebug() << smilesFormat->errorString();
+            qDebug() << "Error with smiles: " << smiles.c_str();
+            qDebug() << smilesFormat->errorString().c_str();
             continue;
         }
 
@@ -84,8 +84,8 @@ bool SmiFileFormat::write(const chemkit::ChemicalFile *file, QIODevice *iodev)
     }
 
     foreach(const chemkit::Molecule *molecule, file->molecules()){
-        QString smiles = smilesFormat->write(molecule);
-        iodev->write(smiles.toAscii());
+        std::string smiles = smilesFormat->write(molecule);
+        iodev->write(smiles.c_str());
 
         if(!molecule->name().empty()){
             iodev->write(" ");
@@ -99,4 +99,3 @@ bool SmiFileFormat::write(const chemkit::ChemicalFile *file, QIODevice *iodev)
 
     return true;
 }
-

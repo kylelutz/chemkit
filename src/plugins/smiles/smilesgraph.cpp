@@ -193,9 +193,9 @@ void SmilesGraphNode::addRing(int ringNumber, int bondOrder)
     m_ringBondOrders.append(bondOrder);
 }
 
-QString SmilesGraphNode::toString(bool kekulize) const
+std::string SmilesGraphNode::toString(bool kekulize) const
 {
-    QString string;
+    std::stringstream string;
 
     if(m_bondOrder == 0){
         // do nothing
@@ -204,57 +204,57 @@ QString SmilesGraphNode::toString(bool kekulize) const
         // do nothing
     }
     else if(m_bondOrder == chemkit::Bond::Double){
-        string += "=";
+        string << "=";
     }
     else if(m_bondOrder == chemkit::Bond::Triple){
-        string += "#";
+        string << "#";
     }
     else if(m_bondOrder == chemkit::Bond::Quadruple){
-        string += "$";
+        string << "$";
     }
 
     if(!kekulize && isAromaticAtom(m_atom)){
         if(m_atom->is(chemkit::Atom::Nitrogen) && m_atom->neighborCount(chemkit::Atom::Hydrogen) == 1){
-            string += "[nH]";
+            string << "[nH]";
         }
         else{
-            string += QString(m_atom->symbol().c_str()).toLower();
+            string << QString(m_atom->symbol().c_str()).toLower().toStdString();
         }
     }
     else if(isOrganicAtom(m_atom)){
-        string += m_atom->symbol().c_str();
+        string << m_atom->symbol().c_str();
     }
     else{
-        string += "[";
+        string << "[";
 
         // mass number
         if(isIsotope(m_atom)){
-            string += QString::number(m_atom->massNumber());
+            string << m_atom->massNumber();
         }
 
-        string += m_atom->symbol().c_str();
+        string << m_atom->symbol().c_str();
 
         if(m_hydrogenCount > 0){
-            string += "H";
+            string << "H";
 
             if(m_hydrogenCount > 1){
-                string += QString::number(m_hydrogenCount);
+                string << m_hydrogenCount;
             }
         }
 
         int charge = m_atom->formalCharge();
         if(charge > 0){
-            string += "+";
+            string << "+";
         }
         else if(charge < 0){
-            string += "-";
+            string << "-";
         }
 
         if(qAbs(charge) > 1){
-            string += QString::number(qAbs(charge));
+            string << qAbs(charge);
         }
 
-        string += "]";
+        string << "]";
     }
 
     for(int i = 0; i < m_rings.size(); i++){
@@ -264,23 +264,23 @@ QString SmilesGraphNode::toString(bool kekulize) const
         if(isAromaticAtom(m_atom)){
         }
         else if(bondOrder == chemkit::Bond::Double)
-            string += "=";
+            string << "=";
         else if(bondOrder == chemkit::Bond::Triple)
-            string += "#";
+            string << "#";
 
         if(ringNumber > 9){
-            string += "%";
+            string << "%";
         }
 
-        string += QString::number(ringNumber);
+        string << ringNumber;
     }
 
-    return string;
+    return string.str();
 }
 
-void SmilesGraphNode::write(QString &string, bool kekulize) const
+void SmilesGraphNode::write(std::stringstream &string, bool kekulize) const
 {
-    string += toString(kekulize);
+    string << toString(kekulize);
 
     if(childCount() == 1){
         m_children[0]->write(string, kekulize);
@@ -290,9 +290,9 @@ void SmilesGraphNode::write(QString &string, bool kekulize) const
         const SmilesGraphNode *firstChild = children.takeFirst();
 
         foreach(SmilesGraphNode *child, children){
-            string += "(";
+            string << "(";
             child->write(string, kekulize);
-            string += ")";
+            string << ")";
         }
 
         firstChild->write(string, kekulize);
@@ -399,24 +399,27 @@ SmilesGraph::SmilesGraph(const chemkit::Molecule *molecule)
     }
 }
 
-QString SmilesGraph::toString(bool kekulize) const
+std::string SmilesGraph::toString(bool kekulize) const
 {
     if(m_rootNodes.isEmpty()){
-        return QString();
+        return std::string();
     }
     else if(m_rootNodes.size() == 1){
-        QString string;
-        m_rootNodes.first()->write(string, kekulize);
-        return string;
+        std::stringstream stream;
+        m_rootNodes.first()->write(stream, kekulize);
+        return stream.str();
     }
     else{
-        QStringList fragments;
+        std::stringstream stream;
         foreach(const SmilesGraphNode *rootNode, m_rootNodes){
-            QString string;
-            rootNode->write(string, kekulize);
-            fragments.append(string);
+            rootNode->write(stream, kekulize);
+            stream << ".";
         }
 
-        return fragments.join(".");
+        // remove trailing '.'
+        std::string string = stream.str();
+        string.erase(string.end()-1);
+
+        return string;
     }
 }

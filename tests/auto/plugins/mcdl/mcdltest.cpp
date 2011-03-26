@@ -74,9 +74,9 @@ void McdlTest::read()
     QFETCH(int, ringCount);
 
     chemkit::Molecule molecule;
-    bool ok = mcdlFormat->read(mcdl, &molecule);
+    bool ok = mcdlFormat->read(mcdl.toStdString(), &molecule);
     if(!ok)
-        qDebug() << mcdlFormat->errorString();
+        qDebug() << mcdlFormat->errorString().c_str();
     QVERIFY(ok);
 
     QCOMPARE(molecule.formula(), formula.toStdString());

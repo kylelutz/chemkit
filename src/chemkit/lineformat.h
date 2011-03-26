@@ -25,6 +25,8 @@
 
 #include "chemkit.h"
 
+#include <string>
+
 #include "molecule.h"
 
 namespace chemkit {
@@ -41,30 +43,30 @@ class CHEMKIT_EXPORT LineFormat
         virtual ~LineFormat();
 
         // properties
-        QString name() const;
+        std::string name() const;
 
         // options
-        void setOption(const QString &name, const QVariant &value);
-        QVariant option(const QString &name) const;
+        void setOption(const std::string &name, const QVariant &value);
+        QVariant option(const std::string &name) const;
 
         // input and output
-        virtual bool read(const QString &formula, Molecule *molecule);
-        Molecule* read(const QString &formula);
-        virtual QString write(const Molecule *molecule);
+        virtual bool read(const std::string &formula, Molecule *molecule);
+        Molecule* read(const std::string &formula);
+        virtual std::string write(const Molecule *molecule);
 
         // error handling
-        QString errorString() const;
+        std::string errorString() const;
 
         // static methods
-        static LineFormat *create(const QString &name);
-        static QStringList formats();
-        static void registerFormat(const QString &name, CreateFunction function);
-        static void unregisterFormat(const QString &name, CreateFunction function);
+        static LineFormat *create(const std::string &name);
+        static QList<std::string> formats();
+        static void registerFormat(const std::string &name, CreateFunction function);
+        static void unregisterFormat(const std::string &name, CreateFunction function);
 
     protected:
-        LineFormat(const QString &name);
-        void setErrorString(const QString &error);
-        virtual QVariant defaultOption(const QString &name) const;
+        LineFormat(const std::string &name);
+        void setErrorString(const std::string &error);
+        virtual QVariant defaultOption(const std::string &name) const;
 
     private:
         LineFormatPrivate* const d;

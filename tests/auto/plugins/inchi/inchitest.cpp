@@ -95,7 +95,7 @@ void InchiTest::write()
 
     // empty molecule
     chemkit::Molecule empty;
-    QCOMPARE(inchi->write(&empty), QString(""));
+    QCOMPARE(inchi->write(&empty), std::string(""));
 
     // methane molecule
     chemkit::Molecule methane;
@@ -105,8 +105,8 @@ void InchiTest::write()
         methane.addBond(methane_c1, h);
     }
     QCOMPARE(methane.formula(), std::string("CH4"));
-    QCOMPARE(inchi->write(&methane), QString("InChI=1S/CH4/h1H4"));
-    QCOMPARE(inchikey->write(&methane), QString("VNWKTOKETHGBQD-UHFFFAOYSA-N"));
+    QCOMPARE(inchi->write(&methane), std::string("InChI=1S/CH4/h1H4"));
+    QCOMPARE(inchikey->write(&methane), std::string("VNWKTOKETHGBQD-UHFFFAOYSA-N"));
 
     // ethanol
     chemkit::Molecule ethanol;
@@ -115,8 +115,8 @@ void InchiTest::write()
     chemkit::Atom *ethanol_o1 = ethanol.addAtom("O");
     ethanol.addBond(ethanol_c1, ethanol_c2);
     ethanol.addBond(ethanol_c2, ethanol_o1);
-    QCOMPARE(inchi->write(&ethanol), QString("InChI=1S/C2H6O/c1-2-3/h3H,2H2,1H3"));
-    QCOMPARE(inchikey->write(&ethanol), QString("LFQSCWFLJHTTHZ-UHFFFAOYSA-N"));
+    QCOMPARE(inchi->write(&ethanol), std::string("InChI=1S/C2H6O/c1-2-3/h3H,2H2,1H3"));
+    QCOMPARE(inchikey->write(&ethanol), std::string("LFQSCWFLJHTTHZ-UHFFFAOYSA-N"));
 
     // benzene
     chemkit::Molecule benzene;
@@ -132,8 +132,8 @@ void InchiTest::write()
     benzene.addBond(benzene_c4, benzene_c5, 2);
     benzene.addBond(benzene_c5, benzene_c6, 1);
     benzene.addBond(benzene_c6, benzene_c1, 2);
-    QCOMPARE(inchi->write(&benzene), QString("InChI=1S/C6H6/c1-2-4-6-5-3-1/h1-6H"));
-    QCOMPARE(inchikey->write(&benzene), QString("UHOVQNZJYSORNB-UHFFFAOYSA-N"));
+    QCOMPARE(inchi->write(&benzene), std::string("InChI=1S/C6H6/c1-2-4-6-5-3-1/h1-6H"));
+    QCOMPARE(inchikey->write(&benzene), std::string("UHOVQNZJYSORNB-UHFFFAOYSA-N"));
 
     delete inchi;
     delete inchikey;
@@ -162,25 +162,25 @@ void InchiTest::stereochemistry()
     bromochlorofluoromethane.addBond(C1, Cl3);
     bromochlorofluoromethane.addBond(C1, F4);
     bromochlorofluoromethane.addBond(C1, H5);
-    QCOMPARE(inchi->write(&bromochlorofluoromethane), QString("InChI=1S/CHBrClF/c2-1(3)4/h1H"));
+    QCOMPARE(inchi->write(&bromochlorofluoromethane), std::string("InChI=1S/CHBrClF/c2-1(3)4/h1H"));
 
     // set stererochemistry to true
     inchi->setOption("stereochemistry", true);
     QCOMPARE(inchi->option("stereochemistry").toBool(), true);
 
     C1->setChirality(chemkit::Atom::R);
-    QCOMPARE(inchi->write(&bromochlorofluoromethane), QString("InChI=1S/CHBrClF/c2-1(3)4/h1H/t1-/m0/s1"));
+    QCOMPARE(inchi->write(&bromochlorofluoromethane), std::string("InChI=1S/CHBrClF/c2-1(3)4/h1H/t1-/m0/s1"));
 
     C1->setChirality(chemkit::Atom::S);
-    QCOMPARE(inchi->write(&bromochlorofluoromethane), QString("InChI=1S/CHBrClF/c2-1(3)4/h1H/t1-/m1/s1"));
+    QCOMPARE(inchi->write(&bromochlorofluoromethane), std::string("InChI=1S/CHBrClF/c2-1(3)4/h1H/t1-/m1/s1"));
 
     C1->setChirality(chemkit::Atom::NoChirality);
-    QCOMPARE(inchi->write(&bromochlorofluoromethane), QString("InChI=1S/CHBrClF/c2-1(3)4/h1H"));
+    QCOMPARE(inchi->write(&bromochlorofluoromethane), std::string("InChI=1S/CHBrClF/c2-1(3)4/h1H"));
 
     // set stereochemistry to off
     inchi->setOption("stereochemistry", false);
     C1->setChirality(chemkit::Atom::R);
-    QCOMPARE(inchi->write(&bromochlorofluoromethane), QString("InChI=1S/CHBrClF/c2-1(3)4/h1H"));
+    QCOMPARE(inchi->write(&bromochlorofluoromethane), std::string("InChI=1S/CHBrClF/c2-1(3)4/h1H"));
 
     delete inchi;
 }

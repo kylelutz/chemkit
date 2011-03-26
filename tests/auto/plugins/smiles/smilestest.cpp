@@ -1354,10 +1354,10 @@ void SmilesTest::kekulize()
     QCOMPARE(format->option("kekulize").toBool(), false);
 
     chemkit::Molecule benzene("c1ccccc1", "smiles");
-    QCOMPARE(format->write(&benzene), QString("c1ccccc1"));
+    QCOMPARE(format->write(&benzene), std::string("c1ccccc1"));
 
     format->setOption("kekulize", true);
-    QCOMPARE(format->write(&benzene), QString("C1=CC=CC=C1"));
+    QCOMPARE(format->write(&benzene), std::string("C1=CC=CC=C1"));
 
     delete format;
 }
@@ -1385,7 +1385,7 @@ void SmilesTest::extraParenthesis()
 
     chemkit::Molecule *molecule = format->read("C(C=O))C");
     QVERIFY(molecule == 0);
-    QVERIFY(format->errorString().isEmpty() == false);
+    QVERIFY(format->errorString().empty() == false);
 
     delete format;
 }
@@ -1397,7 +1397,7 @@ void SmilesTest::invalidAtom()
 
     chemkit::Molecule *molecule = format->read("CCX");
     QVERIFY(molecule == 0);
-    QVERIFY(format->errorString().isEmpty() == false);
+    QVERIFY(format->errorString().empty() == false);
 
     delete format;
 }
@@ -1409,7 +1409,7 @@ void SmilesTest::wildcardAtom()
 
     chemkit::Molecule *molecule = format->read("C*C");
     QVERIFY(molecule == 0);
-    QVERIFY(format->errorString().isEmpty() == false);
+    QVERIFY(format->errorString().empty() == false);
 
     delete format;
 }
