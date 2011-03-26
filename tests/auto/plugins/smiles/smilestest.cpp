@@ -173,7 +173,7 @@ void SmilesTest::initTestCase()
 
 void SmilesTest::COMPARE_SMILES(const chemkit::Molecule *molecule, const std::string &smiles)
 {
-    chemkit::Molecule moleculeFromSmiles(smiles.c_str(), "smiles");
+    chemkit::Molecule moleculeFromSmiles(smiles, "smiles");
 
     bool equal = molecule->equals(&moleculeFromSmiles, chemkit::Molecule::CompareAromaticity);
     if(!equal){

@@ -125,15 +125,15 @@ Molecule::Molecule()
 /// \endcode
 ///
 /// \see LineFormat
-Molecule::Molecule(const QString &formula, const QString &format)
+Molecule::Molecule(const std::string &formula, const std::string &format)
     : d(new MoleculePrivate)
 {
-    LineFormat *lineFormat = LineFormat::create(format.toStdString());
+    LineFormat *lineFormat = LineFormat::create(format);
     if(!lineFormat){
         return;
     }
 
-    lineFormat->read(formula.toStdString(), this);
+    lineFormat->read(formula, this);
 
     delete lineFormat;
 }

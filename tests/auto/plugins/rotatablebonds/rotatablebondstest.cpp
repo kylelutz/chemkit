@@ -58,7 +58,7 @@ void RotatableBondsTest::test()
     QFETCH(QString, smiles);
     QFETCH(int, rotatableBonds);
 
-    chemkit::Molecule molecule(smiles, "smiles");
+    chemkit::Molecule molecule(smiles.toStdString(), "smiles");
     if(molecule.isEmpty()){
         qDebug() << "failed to load molecule";
     }

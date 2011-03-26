@@ -78,7 +78,7 @@ class CHEMKIT_EXPORT Molecule
 
         // construction and destruction
         Molecule();
-        Molecule(const QString &formula, const QString &format);
+        Molecule(const std::string &formula, const std::string &format);
         Molecule(const Molecule &molecule);
         ~Molecule();
 
