@@ -67,11 +67,11 @@ void BuildTool::setElement(const chemkit::Element &element)
             m_elementSelector->setCurrentIndex(m_elements.indexOf(element.atomicNumber()));
         }
         else if(m_addedElements.contains(element.atomicNumber())){
-            m_elementSelector->setCurrentIndex(m_elementSelector->findText(element.name()));
+            m_elementSelector->setCurrentIndex(m_elementSelector->findText(element.name().c_str()));
         }
         else{
             m_elementSelector->removeItem(m_elementSelector->count() - 1);
-            m_elementSelector->addItem(element.name(), element.atomicNumber());
+            m_elementSelector->addItem(element.name().c_str(), element.atomicNumber());
             m_elementSelector->addItem("Other", -1);
             m_elementSelector->update();
             m_addedElements.append(element.atomicNumber());
@@ -109,11 +109,11 @@ QWidget* BuildTool::settingsWidget()
     // element selector
     m_elementSelector = new QComboBox;
     foreach(int element, m_elements){
-        m_elementSelector->addItem(chemkit::Element(element).name(), element);
+        m_elementSelector->addItem(chemkit::Element(element).name().c_str(), element);
     }
     if(!m_addedElements.isEmpty()){
         foreach(int element, m_addedElements){
-            m_elementSelector->addItem(chemkit::Element(element).name(), element);
+            m_elementSelector->addItem(chemkit::Element(element).name().c_str(), element);
         }
     }
     m_elementSelector->addItem("Other", -1);

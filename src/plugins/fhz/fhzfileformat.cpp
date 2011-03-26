@@ -62,7 +62,7 @@ bool FhzFileFormat::read(QIODevice *iodev, chemkit::ChemicalFile *file)
         }
 
         // create atom
-        chemkit::Atom *atom = molecule->addAtom(lineItems[0]);
+        chemkit::Atom *atom = molecule->addAtom(lineItems[0].toStdString());
         if(!atom){
             continue;
         }

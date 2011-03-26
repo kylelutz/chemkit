@@ -54,7 +54,7 @@ bool FormulaLineFormat::read(const QString &formula, chemkit::Molecule *molecule
         else if(c.isLetter()){
             if(inNumber){
                 for(int i = 0; i < number.toInt(); i++){
-                    molecule->addAtom(symbol);
+                    molecule->addAtom(symbol.toStdString());
                 }
 
                 number.clear();
@@ -65,7 +65,7 @@ bool FormulaLineFormat::read(const QString &formula, chemkit::Molecule *molecule
                 symbol += c;
             }
             else if(inSymbol && c.isUpper()){
-                molecule->addAtom(symbol);
+                molecule->addAtom(symbol.toStdString());
                 symbol = c;
             }
             else{
@@ -81,7 +81,7 @@ bool FormulaLineFormat::read(const QString &formula, chemkit::Molecule *molecule
         }
 
         for(int i = 0; i < number.toInt(); i++){
-            molecule->addAtom(symbol);
+            molecule->addAtom(symbol.toStdString());
         }
     }
 

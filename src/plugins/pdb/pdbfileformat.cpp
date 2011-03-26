@@ -67,7 +67,7 @@ PdbAtom::PdbAtom(const char *data)
     for(int i = 77; i < 79 && isalpha(data[i]); i++){
         symbol += data[i];
     }
-    atomicNumber = chemkit::Element::atomicNumber(symbol.trimmed());
+    atomicNumber = chemkit::Element::atomicNumber(symbol.trimmed().toStdString());
 }
 
 // === PdbResidue ========================================================== //

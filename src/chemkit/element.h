@@ -25,6 +25,8 @@
 
 #include "chemkit.h"
 
+#include <string>
+
 namespace chemkit {
 
 class CHEMKIT_EXPORT Element
@@ -34,13 +36,13 @@ class CHEMKIT_EXPORT Element
         Element();
         Element(int atomicNumber);
         Element(const char *symbol);
-        Element(const QString &symbol);
+        Element(const std::string &symbol);
 
         // properties
         void setAtomicNumber(int atomicNumber);
         int atomicNumber() const;
-        QString symbol() const;
-        QString name() const;
+        std::string symbol() const;
+        std::string name() const;
         int period() const;
         Float mass() const;
         Float electronegativity() const;
@@ -55,12 +57,12 @@ class CHEMKIT_EXPORT Element
         bool operator==(const Element &element) const;
 
         // static methods
-        static int atomicNumber(const QString &symbol);
+        static int atomicNumber(const std::string &symbol);
         static int atomicNumber(const char *symbol);
         static int atomicNumber(const char *symbol, int length);
         static int atomicNumber(char symbol);
         static bool isValidAtomicNumber(int atomicNumber);
-        static bool isValidSymbol(const QString &symbol);
+        static bool isValidSymbol(const std::string &symbol);
 
     private:
         int m_atomicNumber;

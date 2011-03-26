@@ -64,7 +64,7 @@ bool CmlHandler::startElement(const QString &namespaceURI, const QString &localN
         QString symbol = atts.value("elementType");
 
         if(!symbol.isEmpty()){
-            chemkit::Atom *atom = m_molecule->addAtom(symbol);
+            chemkit::Atom *atom = m_molecule->addAtom(symbol.toStdString());
             if(!atom){
                 qDebug() << "invalid atom symbol: " << symbol;
                 return true;

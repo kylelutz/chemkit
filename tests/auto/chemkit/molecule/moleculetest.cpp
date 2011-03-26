@@ -134,7 +134,7 @@ void MoleculeTest::addAtom()
     QVERIFY(atom1 != 0);
     QCOMPARE(atom1->symbol(), QString("C"));
 
-    atom2 = molecule.addAtom(QString());
+    atom2 = molecule.addAtom(std::string());
     QVERIFY(atom2 == 0);
 
     atom2 = molecule.addAtom("");

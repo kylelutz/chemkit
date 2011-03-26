@@ -35,7 +35,7 @@ class PeriodicTableDialogTest : public QObject
 void PeriodicTableDialogTest::getElement()
 {
     chemkit::Element element = chemkit::PeriodicTableDialog::getElement(0, "Get Element Test");
-    qDebug() << "Element: " << element.name();
+    qDebug() << "Element: " << element.name().c_str();
 }
 
 QTEST_MAIN(PeriodicTableDialogTest)

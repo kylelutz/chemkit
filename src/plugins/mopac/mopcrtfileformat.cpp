@@ -55,7 +55,7 @@ bool MopcrtFileFormat::read(QIODevice *iodev, chemkit::ChemicalFile *file)
             break;
         }
 
-        chemkit::Atom *atom = molecule->addAtom(lineItems[0]);
+        chemkit::Atom *atom = molecule->addAtom(lineItems[0].toStdString());
         if(!atom){
             continue;
         }

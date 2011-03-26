@@ -165,14 +165,14 @@ Float Atom::partialCharge() const
 /// Returns the elemental symbol for the atom. (e.g. "H" or "Sn").
 QString Atom::symbol() const
 {
-    return m_element.symbol();
+    return m_element.symbol().c_str();
 }
 
 /// Returns the elemental name of the atom. (e.g. "Hydrogen" or
 /// "Tin").
 QString Atom::name() const
 {
-    return m_element.name();
+    return m_element.name().c_str();
 }
 
 /// Returns the molar mass of the atom. Mass is in g/mol.

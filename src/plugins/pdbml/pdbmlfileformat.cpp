@@ -116,7 +116,7 @@ bool PdbmlFileFormat::read(QIODevice *iodev, chemkit::PolymerFile *file)
                 }
 
                 // add atom and set its data
-                chemkit::Atom *atom = polymer->addAtom(symbol);
+                chemkit::Atom *atom = polymer->addAtom(symbol.toStdString());
                 if(atom){
                     // atomic coordinates
                     atom->setPosition(x.toDouble(), y.toDouble(), z.toDouble());

@@ -87,7 +87,7 @@ bool Mol2FileFormat::read(QIODevice *iodev, chemkit::ChemicalFile *file)
                         symbol = symbol[0] + symbol.mid(1).toLower();
                     }
 
-                    chemkit::Atom *atom = molecule->addAtom(symbol);
+                    chemkit::Atom *atom = molecule->addAtom(symbol.toStdString());
                     if(!atom){
                         qDebug() << "chemkit: Mol2FileFormat: Invalid atom symbol: " << symbol;
                         continue;

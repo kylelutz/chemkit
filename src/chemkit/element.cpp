@@ -38,7 +38,7 @@ struct ElementData {
 };
 
 const struct ElementData ElementData[] = {
-    {0, 0, 0, 0, 0, 0},
+    {"", "", 0, 0, 0, 0},
     {"Hydrogen", "H", 1.00794, 2.1, 1.20, 0.32},
     {"Helium", "He", 4.0026, 0, 1.40, 0.28},
     {"Lithium", "Li", 6.941, 0.98, 1.82, 1.29},
@@ -194,7 +194,7 @@ Element::Element(const char *symbol)
 }
 
 /// Creates a new element with the given symbol.
-Element::Element(const QString &symbol)
+Element::Element(const std::string &symbol)
 {
     m_atomicNumber = 0;
 
@@ -217,13 +217,13 @@ void Element::setAtomicNumber(int atomicNumber)
 }
 
 /// Returns the element's symbol.
-QString Element::symbol() const
+std::string Element::symbol() const
 {
     return ElementData[m_atomicNumber].symbol;
 }
 
 /// Returns the element's name.
-QString Element::name() const
+std::string Element::name() const
 {
     return ElementData[m_atomicNumber].name;
 }
@@ -328,7 +328,7 @@ bool Element::isNonmetal() const
 // --- Static Methods ------------------------------------------------------ //
 /// Returns the atomic number for \p symbol. If \p symbol is invalid
 /// then \c 0 is returned.
-int Element::atomicNumber(const QString &symbol)
+int Element::atomicNumber(const std::string &symbol)
 {
     return Element(symbol).atomicNumber();
 }
@@ -382,7 +382,7 @@ bool Element::isValidAtomicNumber(int atomicNumber)
 }
 
 /// Returns \c true if the element symbol is valid.
-bool Element::isValidSymbol(const QString &symbol)
+bool Element::isValidSymbol(const std::string &symbol)
 {
     return Element(symbol).isValid();
 }

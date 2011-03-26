@@ -83,7 +83,7 @@ PeriodicTableWidget::PeriodicTableWidget(QWidget *parent)
 
             Element element(atomicNumber);
 
-            QPushButton *button = new QPushButton(element.symbol());
+            QPushButton *button = new QPushButton(element.symbol().c_str());
             button->setMinimumWidth(30);
 
             connect(button, SIGNAL(clicked()), d->signalMapper, SLOT(map()));
