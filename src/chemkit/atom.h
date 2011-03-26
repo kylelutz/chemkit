@@ -62,8 +62,8 @@ class CHEMKIT_EXPORT Atom
         int formalCharge() const;
         void setPartialCharge(Float charge);
         Float partialCharge() const;
-        QString symbol() const;
-        QString name() const;
+        std::string symbol() const;
+        std::string name() const;
         Float mass() const;
         Float electronegativity() const;
         Float covalentRadius() const;

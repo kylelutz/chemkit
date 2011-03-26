@@ -95,20 +95,20 @@ void AtomTest::symbol()
 {
     chemkit::Molecule molecule;
     chemkit::Atom *atom = molecule.addAtom("H");
-    QCOMPARE(atom->symbol(), QString("H"));
+    QCOMPARE(atom->symbol(), std::string("H"));
 
     atom->setAtomicNumber(chemkit::Atom::Carbon);
-    QCOMPARE(atom->symbol(), QString("C"));
+    QCOMPARE(atom->symbol(), std::string("C"));
 }
 
 void AtomTest::name()
 {
     chemkit::Molecule molecule;
     chemkit::Atom *atom = molecule.addAtom("H");
-    QCOMPARE(atom->name(), QString("Hydrogen"));
+    QCOMPARE(atom->name(), std::string("Hydrogen"));
 
     atom->setAtomicNumber(chemkit::Atom::Carbon);
-    QCOMPARE(atom->name(), QString("Carbon"));
+    QCOMPARE(atom->name(), std::string("Carbon"));
 }
 
 void AtomTest::electronegativity()

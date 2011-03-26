@@ -35,5 +35,5 @@ MockAtomTyper::~MockAtomTyper()
 
 QVariant MockAtomTyper::type(int index) const
 {
-    return molecule()->atom(index)->symbol();
+    return molecule()->atom(index)->symbol().c_str();
 }

@@ -123,7 +123,7 @@ bool TxyzFileFormat::write(const chemkit::ChemicalFile *file, QIODevice *iodev)
     foreach(const chemkit::Atom *atom, molecule->atoms()){
         // write atom line: index, symbol, x, y, z, 0
         iodev->write(QString("%1%2%3%4%5%6").arg(index+1, 6)
-                                            .arg(atom->symbol(), 3)
+                                            .arg(atom->symbol().c_str(), 3)
                                             .arg(atom->x(), 10)
                                             .arg(atom->y(), 10)
                                             .arg(atom->z(), 10)

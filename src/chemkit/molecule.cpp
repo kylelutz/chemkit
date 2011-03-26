@@ -196,7 +196,7 @@ std::string Molecule::formula() const
     // a map of atomic symbols to their quantity
     std::map<std::string, int> composition;
     foreach(const Atom *atom, m_atoms){
-        composition[atom->symbol().toStdString()]++;
+        composition[atom->symbol()]++;
     }
 
     std::stringstream formula;

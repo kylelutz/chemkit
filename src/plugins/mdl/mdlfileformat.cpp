@@ -291,7 +291,7 @@ void MdlFileFormat::writeAtomBlock(const chemkit::Molecule *molecule, QIODevice 
         sprintf(line, "%10.4f%10.4f%10.4f %3s 0  0  0  0  0\n", atom->x(),
                                                                 atom->y(),
                                                                 atom->z(),
-                                                                qPrintable(atom->symbol()));
+                                                                atom->symbol().c_str());
         iodev->write(line, sizeof(line) - 1);
     }
 }

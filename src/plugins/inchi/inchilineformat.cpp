@@ -140,7 +140,7 @@ QString InchiLineFormat::write(const chemkit::Molecule *molecule)
         inputAtom->num_bonds = neighborCount;
 
         // element symbol
-        strncpy(inputAtom->elname, qPrintable(atom->symbol()), ATOM_EL_LEN);
+        strncpy(inputAtom->elname, atom->symbol().c_str(), ATOM_EL_LEN);
 
         // isotopic hydrogens
         inputAtom->num_iso_H[0] = -1;

@@ -22,6 +22,8 @@
 
 #include "smilesgraph.h"
 
+#include <algorithm>
+
 #include <chemkit/atom.h>
 #include <chemkit/bond.h>
 #include <chemkit/molecule.h>
@@ -216,11 +218,11 @@ QString SmilesGraphNode::toString(bool kekulize) const
             string += "[nH]";
         }
         else{
-            string += m_atom->symbol().toLower();
+            string += QString(m_atom->symbol().c_str()).toLower();
         }
     }
     else if(isOrganicAtom(m_atom)){
-        string += m_atom->symbol();
+        string += m_atom->symbol().c_str();
     }
     else{
         string += "[";
@@ -230,7 +232,7 @@ QString SmilesGraphNode::toString(bool kekulize) const
             string += QString::number(m_atom->massNumber());
         }
 
-        string += m_atom->symbol();
+        string += m_atom->symbol().c_str();
 
         if(m_hydrogenCount > 0){
             string += "H";

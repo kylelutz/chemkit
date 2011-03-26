@@ -93,7 +93,7 @@ bool XyzFileFormat::write(const chemkit::ChemicalFile *file, QIODevice *iodev)
     iodev->write("\n");                                                    // comment line
 
     foreach(chemkit::Atom *atom, molecule->atoms()){
-        QString line = QString("%1 %2 %3 %4\n").arg(atom->symbol())
+        QString line = QString("%1 %2 %3 %4\n").arg(atom->symbol().c_str())
                                                .arg(QString::number(atom->x()))
                                                .arg(QString::number(atom->y()))
                                                .arg(QString::number(atom->z()));

@@ -184,7 +184,7 @@ bool CmlFileFormat::write(const chemkit::ChemicalFile *file, QIODevice *iodev)
         foreach(const chemkit::Atom *atom, molecule->atoms()){
             stream.writeStartElement("atom");
             stream.writeAttribute("id", QString("a%1").arg(atom->index()+1));
-            stream.writeAttribute("elementType", atom->symbol());
+            stream.writeAttribute("elementType", atom->symbol().c_str());
             stream.writeAttribute("x3", QString::number(atom->x()));
             stream.writeAttribute("y3", QString::number(atom->y()));
             stream.writeAttribute("z3", QString::number(atom->z()));

@@ -174,12 +174,12 @@ bool Mol2FileFormat::write(const chemkit::ChemicalFile *file, QIODevice *iodev)
         foreach(chemkit::Atom *atom, molecule->atoms()){
             QString line;
             line.sprintf("%9u %s%u %g %g %g %s %u <%u> %g\n", atomNumber,
-                                                              qPrintable(atom->symbol()),
+                                                              atom->symbol().c_str(),
                                                               atomNumber,
                                                               atom->x(),
                                                               atom->y(),
                                                               atom->z(),
-                                                              qPrintable(atom->symbol()),
+                                                              atom->symbol().c_str(),
                                                               1,
                                                               1,
                                                               atom->partialCharge());
