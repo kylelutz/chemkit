@@ -58,7 +58,7 @@ void MoleculeListDock::fileChanged(chemkit::ChemicalFile *file)
 
         for(int i = 0; i < file->moleculeCount(); i++){
             chemkit::Molecule *molecule = file->molecule(i);
-            QTableWidgetItem *item = new QTableWidgetItem(molecule->name());
+            QTableWidgetItem *item = new QTableWidgetItem(molecule->name().c_str());
             ui->tableWidget->setItem(i, 0, item);
         }
         ui->tableWidget->setCurrentCell(0, 0);
@@ -91,8 +91,8 @@ void MoleculeListDock::itemChanged(QTableWidgetItem *item)
     if(!molecule)
         return;
 
-    if(molecule->name() != item->text()){
-        molecule->setName(item->text());
+    if(molecule->name() != item->text().toStdString()){
+        molecule->setName(item->text().toStdString());
     }
 }
 

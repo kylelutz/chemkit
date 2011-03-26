@@ -43,7 +43,7 @@ bool MopinFileFormat::read(QIODevice *iodev, chemkit::ChemicalFile *file)
     // title line
     line = iodev->readLine();
     QString name = line.trimmed();
-    molecule->setName(name);
+    molecule->setName(name.toStdString());
 
     // blank line
     iodev->readLine();

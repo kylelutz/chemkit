@@ -103,7 +103,7 @@ bool MdlFileFormat::readMolFile(QIODevice *iodev, chemkit::ChemicalFile *file)
     // create molecule
     chemkit::Molecule *molecule = new chemkit::Molecule;
     if(!title.isEmpty()){
-        molecule->setName(title);
+        molecule->setName(title.toStdString());
     }
 
     // read atoms
@@ -257,7 +257,7 @@ bool MdlFileFormat::readDataBlock(QIODevice *iodev, const chemkit::Molecule *mol
 void MdlFileFormat::writeMolFile(const chemkit::Molecule *molecule, QIODevice *iodev)
 {
     // name, creator, and comment lines
-    iodev->write(qPrintable(molecule->name()));
+    iodev->write(molecule->name().c_str());
     iodev->write("\n\n\n");
 
     // counts line

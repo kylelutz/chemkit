@@ -116,7 +116,7 @@ bool TxyzFileFormat::write(const chemkit::ChemicalFile *file, QIODevice *iodev)
 
     // write atom count and molecule name
     iodev->write(QString("%1 %2\n").arg(molecule->atomCount())
-                                   .arg(molecule->name())
+                                   .arg(molecule->name().c_str())
                                    .toAscii());
 
     int index = 0;

@@ -67,7 +67,7 @@ void PubChemTest::downloadMultiFile()
     for(int i = 0; i < ids.size(); i++){
         chemkit::Molecule *molecule = file->molecule(i);
         QVERIFY(molecule != 0);
-        QCOMPARE(molecule->name(), ids[i]);
+        QCOMPARE(molecule->name(), ids[i].toStdString());
     }
 
     delete file;

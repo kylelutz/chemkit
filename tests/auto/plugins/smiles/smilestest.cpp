@@ -1425,9 +1425,9 @@ void SmilesTest::herg()
     QVERIFY(ok);
 
     QCOMPARE(file.moleculeCount(), 31);
-    QCOMPARE(file.molecule(0)->name(), QString("Amitriptyline"));
+    QCOMPARE(file.molecule(0)->name(), std::string("Amitriptyline"));
     QCOMPARE(file.molecule(0)->formula(), QString("C20H23N"));
-    QCOMPARE(file.molecule(30)->name(), QString("Verapamil"));
+    QCOMPARE(file.molecule(30)->name(), std::string ("Verapamil"));
     QCOMPARE(file.molecule(30)->formula(), QString("C27H38N2O4"));
 }
 

@@ -65,7 +65,7 @@ bool Mol2FileFormat::read(QIODevice *iodev, chemkit::ChemicalFile *file)
             molecule = new chemkit::Molecule();
 
             if(!name.isEmpty())
-                molecule->setName(name);
+                molecule->setName(name.toStdString());
         }
         else if(!molecule){
             continue;
@@ -160,7 +160,7 @@ bool Mol2FileFormat::write(const chemkit::ChemicalFile *file, QIODevice *iodev)
 
     foreach(chemkit::Molecule *molecule, file->molecules()){
         iodev->write("@<TRIPOS>MOLECULE\n");
-        iodev->write(molecule->name().toAscii() + "\n");
+        iodev->write((molecule->name() + "\n").c_str());
         QString countsLine;
         countsLine.sprintf("%4u%4u%3u%3u%3u\n", molecule->atomCount(), molecule->bondCount(), 0, 0, 0);
         iodev->write(countsLine.toAscii());

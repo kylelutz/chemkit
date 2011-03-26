@@ -60,17 +60,17 @@ class MoleculeTest : public QObject
 void MoleculeTest::name()
 {
     chemkit::Molecule molecule;
-    QCOMPARE(molecule.name(), QString());
+    QCOMPARE(molecule.name(), std::string());
 
     molecule.addAtom("C");
     molecule.addAtom("O");
-    QCOMPARE(molecule.name(), QString());
+    QCOMPARE(molecule.name(), std::string());
 
     molecule.setName("carbonAndOxygen");
-    QCOMPARE(molecule.name(), QString("carbonAndOxygen"));
+    QCOMPARE(molecule.name(), std::string("carbonAndOxygen"));
 
-    molecule.setName(QString());
-    QCOMPARE(molecule.name(), QString());
+    molecule.setName(std::string());
+    QCOMPARE(molecule.name(), std::string());
 }
 
 void MoleculeTest::formula()

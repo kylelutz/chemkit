@@ -45,7 +45,7 @@ class MoleculePrivate
     public:
         MoleculePrivate();
 
-        QString name;
+        std::string name;
         QList<Bond *> bonds;
         QList<Residue *> residues;
         QList<Conformer *> conformers;
@@ -175,14 +175,14 @@ Molecule::~Molecule()
 
 // --- Properties ---------------------------------------------------------- //
 /// Sets the name of the molecule.
-void Molecule::setName(const QString &name)
+void Molecule::setName(const std::string &name)
 {
     d->name = name;
     notifyObservers(NameChanged);
 }
 
 /// Returns the name of the molecule.
-QString Molecule::name() const
+std::string Molecule::name() const
 {
     return d->name;
 }

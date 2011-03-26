@@ -170,7 +170,7 @@ int main(int argc, char *argv[])
 
     if(NAMES_ONLY_FLAG){
         foreach(const chemkit::Molecule *molecule, outputFile.molecules()){
-            out << molecule->name() << "\n";
+            out << molecule->name().c_str() << "\n";
         }
     }
     else{

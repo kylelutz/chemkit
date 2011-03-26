@@ -178,7 +178,7 @@ bool CmlFileFormat::write(const chemkit::ChemicalFile *file, QIODevice *iodev)
     foreach(const chemkit::Molecule *molecule, file->molecules()){
         stream.writeStartElement("molecule");
 
-        stream.writeTextElement("name", molecule->name());
+        stream.writeTextElement("name", molecule->name().c_str());
 
         stream.writeStartElement("atomArray");
         foreach(const chemkit::Atom *atom, molecule->atoms()){

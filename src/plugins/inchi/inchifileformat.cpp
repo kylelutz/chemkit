@@ -60,7 +60,7 @@ bool InchiFileFormat::read(QIODevice *iodev, chemkit::ChemicalFile *file)
 
         if(splitLine.size() >= 2){
             QString name = splitLine[1];
-            molecule->setName(name);
+            molecule->setName(name.toStdString());
         }
 
         file->addMolecule(molecule);
@@ -85,9 +85,9 @@ bool InchiFileFormat::write(const chemkit::ChemicalFile *file, QIODevice *iodev)
         QString inchi = inchiFormat->write(molecule);
         iodev->write(inchi.toAscii());
 
-        if(!molecule->name().isEmpty()){
+        if(!molecule->name().empty()){
             iodev->write(" ");
-            iodev->write(molecule->name().toAscii());
+            iodev->write(molecule->name().c_str());
         }
 
         iodev->write("\n");

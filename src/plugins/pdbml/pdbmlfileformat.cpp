@@ -55,7 +55,7 @@ bool PdbmlFileFormat::read(QIODevice *iodev, chemkit::PolymerFile *file)
 
     QString name = datablockElement.attribute("datablockName");
     if(!name.isEmpty()){
-        polymer->setName(name);
+        polymer->setName(name.toStdString());
     }
 
     QDomElement element = datablockElement.firstChildElement();

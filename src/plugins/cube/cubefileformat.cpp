@@ -47,7 +47,7 @@ bool CubeFileFormat::read(QIODevice *iodev, chemkit::ChemicalFile *file)
     QString line = iodev->readLine();
     QStringList lineItems = line.split(" ", QString::SkipEmptyParts);
     if(lineItems.size() > 0){
-        molecule->setName(lineItems[0]);
+        molecule->setName(lineItems[0].toStdString());
     }
 
     // comment line

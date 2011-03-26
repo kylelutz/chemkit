@@ -79,7 +79,7 @@ void MmffTest::validate()
         bool failed = false;
 
         // check for correct expected molecule
-        QCOMPARE(expectedMolecule.attribute("name"), molecule->name());
+        QCOMPARE(expectedMolecule.attribute("name").toStdString(), molecule->name());
 
         // create mmff force field
         chemkit::ForceField *forceField = chemkit::ForceField::create("mmff");
@@ -148,7 +148,7 @@ void MmffTest::validate()
             const chemkit::Molecule *molecule = forceField->molecules()[0];
 
             actualFile.write(QString("  <molecule name=\"%1\" energy=\"%2\" atomCount=\"%3\">\n")
-                                .arg(molecule->name())
+                                .arg(molecule->name().c_str())
                                 .arg(forceField->energy())
                                 .arg(forceField->atomCount())
                                 .toAscii());

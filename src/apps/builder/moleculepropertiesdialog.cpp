@@ -38,7 +38,7 @@ MoleculePropertiesDialog::MoleculePropertiesDialog(const chemkit::Molecule *mole
 
     connect(ui->lineFormatComboBox, SIGNAL(currentIndexChanged(int)), SLOT(lineFormatChanged(int)));
 
-    ui->nameValue->setText(molecule->name());
+    ui->nameValue->setText(molecule->name().c_str());
     ui->formulaValue->setText(formattedFormula(molecule));
     ui->atomCountValue->setText(QString::number(molecule->atomCount()));
     ui->bondCountValue->setText(QString::number(molecule->bondCount()));

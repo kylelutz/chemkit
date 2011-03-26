@@ -63,7 +63,7 @@ void MdlTest::read_methanol()
     QCOMPARE(molecule->formula(), QString("CH4O"));
 
     // check data
-    QCOMPARE(molecule->name(), QString("887"));
+    QCOMPARE(molecule->name(), std::string("887"));
     QCOMPARE(file.moleculeData(molecule, "PUBCHEM_COMPOUND_CID").toString(), QString("887"));
     QCOMPARE(file.moleculeData(molecule, "PUBCHEM_HEAVY_ATOM_COUNT").toInt(), 2);
 }
@@ -85,7 +85,7 @@ void MdlTest::read_guanine()
     QCOMPARE(file.moleculeCount(), 1);
     chemkit::Molecule *guanine = file.molecule();
     QCOMPARE(guanine->formula(), QString("C5H5N5O"));
-    QCOMPARE(guanine->name(), QString("Guanine"));
+    QCOMPARE(guanine->name(), std::string("Guanine"));
     QCOMPARE(guanine->atomCount(), 16);
     QCOMPARE(guanine->bondCount(), 17);
 }
@@ -108,7 +108,7 @@ void MdlTest::read_benzenes()
 
     // check molecule data
     foreach(const chemkit::Molecule *molecule, file.molecules()){
-        QCOMPARE(molecule->name(), file.moleculeData(molecule, "PUBCHEM_COMPOUND_CID").toString());
+        QCOMPARE(molecule->name(), file.moleculeData(molecule, "PUBCHEM_COMPOUND_CID").toString().toStdString());
     }
 }
 

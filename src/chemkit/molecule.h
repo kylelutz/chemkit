@@ -25,6 +25,8 @@
 
 #include "chemkit.h"
 
+#include <string>
+
 #include "atom.h"
 #include "bond.h"
 #include "ring.h"
@@ -81,8 +83,8 @@ class CHEMKIT_EXPORT Molecule
         ~Molecule();
 
         // properties
-        void setName(const QString &name);
-        QString name() const;
+        void setName(const std::string &name);
+        std::string name() const;
         QString formula() const;
         QString formula(const QString &format) const;
         QVariant descriptor(const QString &name) const;
