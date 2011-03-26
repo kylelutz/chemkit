@@ -66,7 +66,7 @@ void XyzTest::read()
     QCOMPARE(file.moleculeCount(), 1);
     chemkit::Molecule *molecule = file.molecule();
     QVERIFY(molecule != 0);
-    QCOMPARE(molecule->formula(), formula);
+    QCOMPARE(molecule->formula(), formula.toStdString());
 }
 
 QTEST_APPLESS_MAIN(XyzTest)

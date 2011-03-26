@@ -60,7 +60,7 @@ void ProteinDataBankTest::downloadLigand()
     chemkit::Molecule *molecule = pdb.downloadLigand("ADP");
     QVERIFY(molecule != 0);
     QCOMPARE(molecule->name(), std::string("ADP"));
-    QCOMPARE(molecule->formula(), QString("C10H15N5O10P2"));
+    QCOMPARE(molecule->formula(), std::string("C10H15N5O10P2"));
 }
 
 QTEST_MAIN(ProteinDataBankTest)

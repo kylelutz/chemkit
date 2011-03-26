@@ -47,7 +47,7 @@ void PubChemTest::downloadFile()
 
     QCOMPARE(file->moleculeCount(), 1);
     chemkit::Molecule *molecule = file->molecule();
-    QCOMPARE(molecule->formula(), QString("C3H7NO2"));
+    QCOMPARE(molecule->formula(), std::string("C3H7NO2"));
 
     delete file;
 }

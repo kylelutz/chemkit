@@ -90,6 +90,6 @@ bool FormulaLineFormat::read(const QString &formula, chemkit::Molecule *molecule
 
 QString FormulaLineFormat::write(const chemkit::Molecule *molecule)
 {
-    return molecule->formula();
+    return molecule->formula().c_str();
 }
 

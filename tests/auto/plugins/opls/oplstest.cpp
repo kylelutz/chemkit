@@ -68,7 +68,7 @@ void OplsTest::energy()
 
     chemkit::Molecule *molecule = chemkit::ChemicalFile::quickRead(dataPath + fileName);
     QVERIFY(molecule != 0);
-    QCOMPARE(molecule->formula(), formula);
+    QCOMPARE(molecule->formula(), formula.toStdString());
 
     chemkit::ForceField *opls = chemkit::ForceField::create("opls");
     QVERIFY(opls != 0);

@@ -65,25 +65,25 @@ class SubstructureSearchTest : public QObject
 void SubstructureSearchTest::initTestCase()
 {
     m_benzene = new chemkit::Molecule("InChI=1/C6H6/c1-2-4-6-5-3-1/h1-6H", "inchi");
-    QCOMPARE(m_benzene->formula(), QString("C6H6"));
+    QCOMPARE(m_benzene->formula(), std::string("C6H6"));
     m_butane = new chemkit::Molecule("InChI=1/C4H10/c1-3-4-2/h3-4H2,1-2H3", "inchi");
-    QCOMPARE(m_butane->formula(), QString("C4H10"));
+    QCOMPARE(m_butane->formula(), std::string("C4H10"));
     m_cyclopropane = new chemkit::Molecule("InChI=1/C3H6/c1-2-3-1/h1-3H2", "inchi");
-    QCOMPARE(m_cyclopropane->formula(), QString("C3H6"));
+    QCOMPARE(m_cyclopropane->formula(), std::string("C3H6"));
     m_ethane = new chemkit::Molecule("InChI=1/C2H6/c1-2/h1-2H3", "inchi");
-    QCOMPARE(m_ethane->formula(), QString("C2H6"));
+    QCOMPARE(m_ethane->formula(), std::string("C2H6"));
     m_ethanol = new chemkit::Molecule("InChI=1/C2H6O/c1-2-3/h3H,2H2,1H3", "inchi");
-    QCOMPARE(m_ethanol->formula(), QString("C2H6O"));
+    QCOMPARE(m_ethanol->formula(), std::string("C2H6O"));
     m_indole = new chemkit::Molecule("InChI=1/C8H7N/c1-2-4-8-7(3-1)5-6-9-8/h1-6,9H", "inchi");
-    QCOMPARE(m_indole->formula(), QString("C8H7N"));
+    QCOMPARE(m_indole->formula(), std::string("C8H7N"));
     m_methane = new chemkit::Molecule("InChI=1/CH4/h1H4", "inchi");
-    QCOMPARE(m_methane->formula(), QString("CH4"));
+    QCOMPARE(m_methane->formula(), std::string("CH4"));
     m_methanol = new chemkit::Molecule("InChI=1/CH4O/c1-2/h2H,1H3", "inchi");
-    QCOMPARE(m_methanol->formula(), QString("CH4O"));
+    QCOMPARE(m_methanol->formula(), std::string("CH4O"));
     m_propane = new chemkit::Molecule("InChI=1/C3H8/c1-3-2/h3H2,1-2H3", "inchi");
-    QCOMPARE(m_propane->formula(), QString("C3H8"));
+    QCOMPARE(m_propane->formula(), std::string("C3H8"));
     m_phenol = new chemkit::Molecule("InChI=1/C6H6O/c7-6-4-2-1-3-5-6/h1-5,7H", "inchi");
-    QCOMPARE(m_phenol->formula(), QString("C6H6O"));
+    QCOMPARE(m_phenol->formula(), std::string("C6H6O"));
 }
 
 void SubstructureSearchTest::cleanupTestCase()

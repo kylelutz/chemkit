@@ -79,7 +79,7 @@ void McdlTest::read()
         qDebug() << mcdlFormat->errorString();
     QVERIFY(ok);
 
-    QCOMPARE(molecule.formula(), formula);
+    QCOMPARE(molecule.formula(), formula.toStdString());
     QCOMPARE(molecule.atomCount(), atomCount);
     QCOMPARE(molecule.bondCount(), bondCount);
     QCOMPARE(molecule.ringCount(), ringCount);

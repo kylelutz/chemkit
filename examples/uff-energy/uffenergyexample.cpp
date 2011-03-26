@@ -68,7 +68,7 @@ int main(int argc, char *argv[])
 
     chemkit::Float energy = uff->energy();
 
-    out << "Formula: " << molecule->formula() << "\n";
+    out << "Formula: " << molecule->formula().c_str() << "\n";
     out << "Energy: " << energy << " kcal/mol\n";
 
     delete uff;

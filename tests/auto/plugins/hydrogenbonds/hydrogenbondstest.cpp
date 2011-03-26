@@ -30,21 +30,21 @@ class HydrogenBondsTest : public QObject
     Q_OBJECT
 
     private slots:
-		void initTestCase();
+        void initTestCase();
         void ethanol();
         void guanine();
 };
 
 void HydrogenBondsTest::initTestCase()
 {
-	QVERIFY(chemkit::MolecularDescriptor::descriptors().contains("hydrogen-bond-donors"));
-	QVERIFY(chemkit::MolecularDescriptor::descriptors().contains("hydrogen-bond-acceptors"));
+    QVERIFY(chemkit::MolecularDescriptor::descriptors().contains("hydrogen-bond-donors"));
+    QVERIFY(chemkit::MolecularDescriptor::descriptors().contains("hydrogen-bond-acceptors"));
 }
 
 void HydrogenBondsTest::ethanol()
 {
     chemkit::Molecule ethanol("CCO", "smiles");
-    QCOMPARE(ethanol.formula(), QString("C2H6O"));
+    QCOMPARE(ethanol.formula(), std::string("C2H6O"));
 
     QCOMPARE(ethanol.descriptor("hydrogen-bond-donors").toInt(), 1);
     QCOMPARE(ethanol.descriptor("hydrogen-bond-acceptors").toInt(), 1);
@@ -53,7 +53,7 @@ void HydrogenBondsTest::ethanol()
 void HydrogenBondsTest::guanine()
 {
     chemkit::Molecule guanine("c1[nH]c2c(n1)c(=O)[nH]c(n2)N", "smiles");
-    QCOMPARE(guanine.formula(), QString("C5H5N5O"));
+    QCOMPARE(guanine.formula(), std::string("C5H5N5O"));
 
     QCOMPARE(guanine.descriptor("hydrogen-bond-donors").toInt(), 4);
     QCOMPARE(guanine.descriptor("hydrogen-bond-acceptors").toInt(), 6);

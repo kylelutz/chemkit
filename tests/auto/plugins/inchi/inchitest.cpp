@@ -60,7 +60,7 @@ void InchiTest::read()
     QVERIFY(methane != 0);
     QCOMPARE(methane->atomCount(), 5);
     QCOMPARE(methane->bondCount(), 4);
-    QCOMPARE(methane->formula(), QString("CH4"));
+    QCOMPARE(methane->formula(), std::string("CH4"));
     delete methane;
 
     // ethanol
@@ -68,7 +68,7 @@ void InchiTest::read()
     QVERIFY(ethanol != 0);
     QCOMPARE(ethanol->atomCount(), 9);
     QCOMPARE(ethanol->bondCount(), 8);
-    QCOMPARE(ethanol->formula(), QString("C2H6O"));
+    QCOMPARE(ethanol->formula(), std::string("C2H6O"));
     delete ethanol;
 
     // benzene
@@ -76,7 +76,7 @@ void InchiTest::read()
     QVERIFY(benzene != 0);
     QCOMPARE(benzene->atomCount(), 12);
     QCOMPARE(benzene->bondCount(), 12);
-    QCOMPARE(benzene->formula(), QString("C6H6"));
+    QCOMPARE(benzene->formula(), std::string("C6H6"));
     QCOMPARE(benzene->ringCount(), 1);
     chemkit::Ring *benzeneRing = benzene->rings()[0];
     QCOMPARE(benzeneRing->isAromatic(), true);
@@ -104,7 +104,7 @@ void InchiTest::write()
         chemkit::Atom *h = methane.addAtom("H");
         methane.addBond(methane_c1, h);
     }
-    QCOMPARE(methane.formula(), QString("CH4"));
+    QCOMPARE(methane.formula(), std::string("CH4"));
     QCOMPARE(inchi->write(&methane), QString("InChI=1S/CH4/h1H4"));
     QCOMPARE(inchikey->write(&methane), QString("VNWKTOKETHGBQD-UHFFFAOYSA-N"));
 
@@ -202,14 +202,14 @@ void InchiTest::addHydrogens()
     inchi->setOption("add-hydrogens", true);
     octane = inchi->read("InChI=1/C8H18/c1-3-5-7-8-6-4-2/h3-8H2,1-2H3");
     QVERIFY(octane != 0);
-    QCOMPARE(octane->formula(), QString("C8H18"));
+    QCOMPARE(octane->formula(), std::string("C8H18"));
     delete octane;
 
     // read octane molecule with add-hydrogens disabled
     inchi->setOption("add-hydrogens", false);
     octane = inchi->read("InChI=1/C8H18/c1-3-5-7-8-6-4-2/h3-8H2,1-2H3");
     QVERIFY(octane != 0);
-    QCOMPARE(octane->formula(), QString("C8"));
+    QCOMPARE(octane->formula(), std::string("C8"));
     delete octane;
 }
 

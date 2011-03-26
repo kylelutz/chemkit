@@ -64,7 +64,7 @@ void GasteigerTest::methane()
     molecule.addBond(C1, H3);
     molecule.addBond(C1, H4);
     molecule.addBond(C1, H5);
-    QCOMPARE(molecule.formula(), QString("CH4"));
+    QCOMPARE(molecule.formula(), std::string("CH4"));
 
     chemkit::PartialChargePredictor *predictor = chemkit::PartialChargePredictor::create("gasteiger");
     QVERIFY(predictor != 0);
@@ -87,7 +87,7 @@ void GasteigerTest::fluoromethane()
     molecule.addBond(C1, H3);
     molecule.addBond(C1, H4);
     molecule.addBond(C1, H5);
-    QCOMPARE(molecule.formula(), QString("CH3F"));
+    QCOMPARE(molecule.formula(), std::string("CH3F"));
 
     chemkit::PartialChargePredictor *predictor = chemkit::PartialChargePredictor::create("gasteiger");
     QVERIFY(predictor != 0);
@@ -120,7 +120,7 @@ void GasteigerTest::ethane()
     molecule.addBond(C5, H6);
     molecule.addBond(C5, H7);
     molecule.addBond(C5, H8);
-    QCOMPARE(molecule.formula(), QString("C2H6"));
+    QCOMPARE(molecule.formula(), std::string("C2H6"));
 
     chemkit::PartialChargePredictor *predictor = chemkit::PartialChargePredictor::create("gasteiger");
     QVERIFY(predictor != 0);
@@ -150,7 +150,7 @@ void GasteigerTest::fluoroethane()
     molecule.addBond(C5, F6);
     molecule.addBond(C5, H7);
     molecule.addBond(C5, H8);
-    QCOMPARE(molecule.formula(), QString("C2H5F"));
+    QCOMPARE(molecule.formula(), std::string("C2H5F"));
 
     chemkit::PartialChargePredictor *predictor = chemkit::PartialChargePredictor::create("gasteiger");
     QVERIFY(predictor != 0);

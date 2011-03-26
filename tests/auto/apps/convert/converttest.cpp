@@ -53,7 +53,7 @@ void ConvertTest::convertEthanol()
     QCOMPARE(ok, true);
     QCOMPARE(inputFile.moleculeCount(), 1);
     chemkit::Molecule *inputEthanol = inputFile.molecule();
-    QCOMPARE(inputEthanol->formula(), QString("C2H6O"));
+    QCOMPARE(inputEthanol->formula(), std::string("C2H6O"));
 
     // setup output file
     QTemporaryFile output("XXXXXX.mol");

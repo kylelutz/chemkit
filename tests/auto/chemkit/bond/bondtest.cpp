@@ -144,7 +144,7 @@ void BondTest::isTerminal()
 void BondTest::rings()
 {
     chemkit::Molecule benzene("InChI=1/C6H6/c1-2-4-6-5-3-1/h1-6H", "inchi");
-    QCOMPARE(benzene.formula(), QString("C6H6"));
+    QCOMPARE(benzene.formula(), std::string("C6H6"));
     QCOMPARE(benzene.ringCount(), 1);
     chemkit::Ring *benzeneRing = benzene.rings()[0];
 

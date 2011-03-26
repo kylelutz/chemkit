@@ -53,7 +53,7 @@ void CubeTest::readBenzene()
     QCOMPARE(file.moleculeCount(), 1);
     chemkit::Molecule *molecule = file.molecule();
     QVERIFY(molecule != 0);
-    QCOMPARE(molecule->formula(), QString("C6H6"));
+    QCOMPARE(molecule->formula(), std::string("C6H6"));
 }
 
 QTEST_APPLESS_MAIN(CubeTest)

@@ -76,24 +76,24 @@ void MoleculeTest::name()
 void MoleculeTest::formula()
 {
     chemkit::Molecule molecule;
-    QCOMPARE(molecule.formula(), QString());
+    QCOMPARE(molecule.formula(), std::string());
 
     molecule.addAtom("O");
     molecule.addAtom("O");
-    QCOMPARE(molecule.formula(), QString("O2"));
+    QCOMPARE(molecule.formula(), std::string("O2"));
 
     molecule.addAtom("Ac");
-    QCOMPARE(molecule.formula(), QString("AcO2"));
+    QCOMPARE(molecule.formula(), std::string("AcO2"));
 
     molecule.addAtom("C");
-    QCOMPARE(molecule.formula(), QString("CAcO2"));
+    QCOMPARE(molecule.formula(), std::string("CAcO2"));
 
     molecule.addAtom("H");
     molecule.addAtom("H");
-    QCOMPARE(molecule.formula(), QString("CH2AcO2"));
+    QCOMPARE(molecule.formula(), std::string("CH2AcO2"));
 
     molecule.clear();
-    QCOMPARE(molecule.formula(), QString());
+    QCOMPARE(molecule.formula(), std::string());
 }
 
 void MoleculeTest::mass()
@@ -296,7 +296,7 @@ void MoleculeTest::substructure()
     QCOMPARE(propane.contains(&propane), true);
 
     chemkit::Molecule benzene("InChI=1/C6H6/c1-2-4-6-5-3-1/h1-6H", "inchi");
-    QCOMPARE(benzene.formula(), QString("C6H6"));
+    QCOMPARE(benzene.formula(), std::string("C6H6"));
     QCOMPARE(benzene.isSubstructureOf(&benzene), true);
 
     QCOMPARE(methane.isSubstructureOf(&benzene), true);
@@ -304,7 +304,7 @@ void MoleculeTest::substructure()
     QCOMPARE(propane.isSubstructureOf(&benzene), false);
 
     chemkit::Molecule phenol("InChI=1/C6H6O/c7-6-4-2-1-3-5-6/h1-5,7H", "inchi");
-    QCOMPARE(phenol.formula(), QString("C6H6O"));
+    QCOMPARE(phenol.formula(), std::string("C6H6O"));
     QCOMPARE(phenol.isSubstructureOf(&phenol), true);
     QCOMPARE(benzene.isSubstructureOf(&phenol), true);
     QCOMPARE(benzene.contains(&phenol), false);
@@ -529,15 +529,15 @@ void MoleculeTest::removeFragment()
     chemkit::Atom *H5 = molecule.addAtom("H");
     molecule.addBond(O3, H4);
     molecule.addBond(O3, H5);
-    QCOMPARE(molecule.formula(), QString("H4O2"));
+    QCOMPARE(molecule.formula(), std::string("H4O2"));
     QCOMPARE(molecule.fragmentCount(), 2);
 
     molecule.removeFragment(O3->fragment());
-    QCOMPARE(molecule.formula(), QString("H2O"));
+    QCOMPARE(molecule.formula(), std::string("H2O"));
     QCOMPARE(molecule.fragmentCount(), 1);
 
     molecule.removeFragment(H1->fragment());
-    QCOMPARE(molecule.formula(), QString());
+    QCOMPARE(molecule.formula(), std::string());
     QCOMPARE(molecule.fragmentCount(), 0);
 }
 

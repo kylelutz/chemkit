@@ -54,7 +54,7 @@ void MopacTest::ethanol()
     QCOMPARE(file.moleculeCount(), 1);
 
     const chemkit::Molecule *molecule = file.molecule(0);
-    QCOMPARE(molecule->formula(), QString("C2H6O"));
+    QCOMPARE(molecule->formula(), std::string("C2H6O"));
 }
 
 void MopacTest::guanine()
@@ -67,7 +67,7 @@ void MopacTest::guanine()
     QCOMPARE(file.moleculeCount(), 1);
 
     const chemkit::Molecule *molecule = file.molecule(0);
-    QCOMPARE(molecule->formula(), QString("C5H5N5O"));
+    QCOMPARE(molecule->formula(), std::string("C5H5N5O"));
 }
 
 QTEST_APPLESS_MAIN(MopacTest)

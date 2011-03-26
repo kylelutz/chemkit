@@ -22,6 +22,8 @@
 
 #include "molecule.h"
 
+#include <sstream>
+
 #include "atom.h"
 #include "bond.h"
 #include "ring.h"
@@ -189,41 +191,42 @@ std::string Molecule::name() const
 
 /// Returns the chemical formula (e.g. "H2O") for the molecule. The
 /// formula is formated according to the Hill system.
-QString Molecule::formula() const
+std::string Molecule::formula() const
 {
     // a map of atomic symbols to their quantity
-    QMap<QString, int> composition;
+    std::map<std::string, int> composition;
     foreach(const Atom *atom, m_atoms){
-        composition[atom->symbol()]++;
+        composition[atom->symbol().toStdString()]++;
     }
 
-    QString formula;
+    std::stringstream formula;
 
-    if(composition.contains("C")){
-        formula += "C";
-        if(composition["C"] > 1)
-            formula += QString::number(composition["C"]);
-        composition.remove("C");
-
-        if(composition.contains("H")){
-            formula += "H";
-            if(composition["H"] > 1)
-                formula += QString::number(composition["H"]);
+    if(composition.count("C") != 0){
+        formula << "C";
+        if(composition["C"] > 1){
+            formula << composition["C"];
         }
-        composition.remove("H");
+        composition.erase("C");
+
+        if(composition.count("H") != 0){
+            formula << "H";
+            if(composition["H"] > 1){
+                formula << composition["H"];
+            }
+        }
+        composition.erase("H");
     }
 
-    QMapIterator<QString, int> iter(composition);
+    std::map<std::string, int>::iterator iter;
+    for(iter = composition.begin(); iter != composition.end(); ++iter){
+        formula << iter->first;
 
-    while(iter.hasNext()){
-        iter.next();
-
-        formula += iter.key();
-        if(iter.value() > 1)
-            formula += QString::number(iter.value());
+        if(iter->second > 1){
+            formula << iter->second;
+        }
     }
 
-    return formula;
+    return formula.str();
 }
 
 /// Returns the the formula of the molecule using the specified

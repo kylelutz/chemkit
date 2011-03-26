@@ -60,7 +60,7 @@ void MdlTest::read_methanol()
     // check molecule
     QCOMPARE(file.moleculeCount(), 1);
     chemkit::Molecule *molecule = file.molecule();
-    QCOMPARE(molecule->formula(), QString("CH4O"));
+    QCOMPARE(molecule->formula(), std::string("CH4O"));
 
     // check data
     QCOMPARE(molecule->name(), std::string("887"));
@@ -84,7 +84,7 @@ void MdlTest::read_guanine()
     // check molecule
     QCOMPARE(file.moleculeCount(), 1);
     chemkit::Molecule *guanine = file.molecule();
-    QCOMPARE(guanine->formula(), QString("C5H5N5O"));
+    QCOMPARE(guanine->formula(), std::string("C5H5N5O"));
     QCOMPARE(guanine->name(), std::string("Guanine"));
     QCOMPARE(guanine->atomCount(), 16);
     QCOMPARE(guanine->bondCount(), 17);

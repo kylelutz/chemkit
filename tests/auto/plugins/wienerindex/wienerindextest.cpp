@@ -30,19 +30,19 @@ class WienerIndexTest : public QObject
     Q_OBJECT
 
     private slots:
-		void initTestCase();
+        void initTestCase();
         void ethane();
 };
 
 void WienerIndexTest::initTestCase()
 {
-	QVERIFY(chemkit::MolecularDescriptor::descriptors().contains("wiener-index"));
+    QVERIFY(chemkit::MolecularDescriptor::descriptors().contains("wiener-index"));
 }
 
 void WienerIndexTest::ethane()
 {
     chemkit::Molecule ethane("CC", "smiles");
-    QCOMPARE(ethane.formula(), QString("C2H6"));
+    QCOMPARE(ethane.formula(), std::string("C2H6"));
 
     QCOMPARE(ethane.descriptor("wiener-index").toInt(), 58);
 }

@@ -51,17 +51,17 @@ class MolecularGraphTest : public QObject
 void MolecularGraphTest::initTestCase()
 {
     m_empty = new chemkit::Molecule;
-    QCOMPARE(m_empty->formula(), QString());
+    QCOMPARE(m_empty->formula(), std::string());
     m_benzene = new chemkit::Molecule("1/C6H6/c1-2-4-6-5-3-1/h1-6H", "inchi");
-    QCOMPARE(m_benzene->formula(), QString("C6H6"));
+    QCOMPARE(m_benzene->formula(), std::string("C6H6"));
     m_diphenylEther = new chemkit::Molecule("1/C12H10O/c1-3-7-11(8-4-1)13-12-9-5-2-6-10-12/h1-10H", "inchi");
-    QCOMPARE(m_diphenylEther->formula(), QString("C12H10O"));
+    QCOMPARE(m_diphenylEther->formula(), std::string("C12H10O"));
     m_ethanol = new chemkit::Molecule("1/C2H6O/c1-2-3/h3H,2H2,1H3", "inchi");
-    QCOMPARE(m_ethanol->formula(), QString("C2H6O"));
+    QCOMPARE(m_ethanol->formula(), std::string("C2H6O"));
     m_octane = new chemkit::Molecule("1/C8H18/c1-3-5-7-8-6-4-2/h3-8H2,1-2H3", "inchi");
-    QCOMPARE(m_octane->formula(), QString("C8H18"));
+    QCOMPARE(m_octane->formula(), std::string("C8H18"));
     m_tyrosine = new chemkit::Molecule("1/C9H11NO3/c10-8(9(12)13)5-6-1-3-7(11)4-2-6/h1-4,8,11H,5,10H2,(H,12,13)", "inchi");
-    QCOMPARE(m_tyrosine->formula(), QString("C9H11NO3"));
+    QCOMPARE(m_tyrosine->formula(), std::string("C9H11NO3"));
 }
 
 void MolecularGraphTest::cleanupTestCase()

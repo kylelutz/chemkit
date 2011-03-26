@@ -30,7 +30,7 @@ class RandicIndexTest : public QObject
     Q_OBJECT
 
     private slots:
-		void initTestCase();
+        void initTestCase();
         void ethane();
         void isobutane();
         void dimethylpropane();
@@ -39,13 +39,13 @@ class RandicIndexTest : public QObject
 
 void RandicIndexTest::initTestCase()
 {
-	QVERIFY(chemkit::MolecularDescriptor::descriptors().contains("randic-index"));
+    QVERIFY(chemkit::MolecularDescriptor::descriptors().contains("randic-index"));
 }
 
 void RandicIndexTest::ethane()
 {
     chemkit::Molecule ethane("CC", "smiles");
-    QCOMPARE(ethane.formula(), QString("C2H6"));
+    QCOMPARE(ethane.formula(), std::string("C2H6"));
 
     // index = 1.0
     QCOMPARE(ethane.descriptor("randic-index").toInt(), 1);
@@ -54,7 +54,7 @@ void RandicIndexTest::ethane()
 void RandicIndexTest::isobutane()
 {
     chemkit::Molecule isobutane("CC(C)C", "smiles");
-    QCOMPARE(isobutane.formula(), QString("C4H10"));
+    QCOMPARE(isobutane.formula(), std::string("C4H10"));
 
     // index = 1.7321
     QCOMPARE(qRound(isobutane.descriptor("randic-index").toDouble()), 2);
@@ -63,7 +63,7 @@ void RandicIndexTest::isobutane()
 void RandicIndexTest::dimethylpropane()
 {
     chemkit::Molecule dimethylpropane("CC(C)(C)C", "smiles");
-    QCOMPARE(dimethylpropane.formula(), QString("C5H12"));
+    QCOMPARE(dimethylpropane.formula(), std::string("C5H12"));
 
     // index = 2.0
     QCOMPARE(qRound(dimethylpropane.descriptor("randic-index").toDouble()), 2);
@@ -72,7 +72,7 @@ void RandicIndexTest::dimethylpropane()
 void RandicIndexTest::octane()
 {
     chemkit::Molecule octane("CCCCCCCC", "smiles");
-    QCOMPARE(octane.formula(), QString("C8H18"));
+    QCOMPARE(octane.formula(), std::string("C8H18"));
 
     // index = 3.9142
     QCOMPARE(qRound(octane.descriptor("randic-index").toDouble()), 4);

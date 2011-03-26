@@ -61,9 +61,9 @@ void GrepTest::ironComposition()
     QVERIFY(ok);
     QCOMPARE(file.moleculeCount(), 2);
     QCOMPARE(file.molecule(0)->name(), std::string("FE2PW3"));
-    QCOMPARE(file.molecule(0)->formula(), QString("FeH6O3"));
+    QCOMPARE(file.molecule(0)->formula(), std::string("FeH6O3"));
     QCOMPARE(file.molecule(1)->name(), std::string("FE3PW3"));
-    QCOMPARE(file.molecule(1)->formula(), QString("FeH6O3"));
+    QCOMPARE(file.molecule(1)->formula(), std::string("FeH6O3"));
 }
 
 void GrepTest::benzoicAcid()
