@@ -55,20 +55,20 @@ Nucleotide::~Nucleotide()
 }
 
 // --- Properties ---------------------------------------------------------- //
-/// Returns the single letter symbol of the nucleotide (e.g. "G" or
-/// "A").
-QString Nucleotide::letter() const
+/// Returns the single letter symbol of the nucleotide (e.g. 'G' or
+/// 'A').
+char Nucleotide::letter() const
 {
     switch(d->type){
-        case Adenine: return "A";
-        case Guanine: return "G";
-        case Cytosine: return "C";
-        case Thymine: return "T";
-        case Uracil: return "U";
+        case Adenine: return 'A';
+        case Guanine: return 'G';
+        case Cytosine: return 'C';
+        case Thymine: return 'T';
+        case Uracil: return 'U';
 
         case UnspecifiedType:
         default:
-            return "X";
+            return 'X';
     }
 }
 
@@ -76,7 +76,7 @@ QString Nucleotide::letter() const
 /// "A"). Same as letter().
 QString Nucleotide::symbol() const
 {
-    return letter();
+    return QString(QChar(letter()));
 }
 
 /// Returns the name of the nucleotide (e.g. "Guanine" or "Adenine").

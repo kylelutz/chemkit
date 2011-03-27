@@ -74,9 +74,9 @@ int Residue::size() const
 }
 
 /// Returns a one letter symbol for the residue;
-QString Residue::letter() const
+char Residue::letter() const
 {
-    return " ";
+    return ' ';
 }
 
 /// Returns the molecule the residue is a part of.

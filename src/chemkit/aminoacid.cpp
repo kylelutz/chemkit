@@ -250,35 +250,35 @@ QString AminoAcid::symbol() const
     }
 }
 
-/// Returns the single letter symbol of the amino acid. (e.g. "W" or
-/// "E").
-QString AminoAcid::letter() const
+/// Returns the single letter symbol of the amino acid. (e.g. 'W' or
+/// 'E').
+char AminoAcid::letter() const
 {
     switch(type()){
-        case Alanine: return "A";
-        case Arganine: return "R";
-        case Asparagine: return "N";
-        case AsparticAcid: return "D";
-        case Cystenine: return "C";
-        case GlutamicAcid: return "E";
-        case Glutamine: return "Q";
-        case Glycine: return "G";
-        case Histadine: return "H";
-        case Isoleucine: return "I";
-        case Leucine: return "L";
-        case Lysine: return "K";
-        case Methionine: return "M";
-        case Phenylalanine: return "F";
-        case Proline: return "P";
-        case Serine: return "S";
-        case Threonine: return "T";
-        case Tryptophan: return "W";
-        case Tyrosine: return "Y";
-        case Valine: return "V";
+        case Alanine: return 'A';
+        case Arganine: return 'R';
+        case Asparagine: return 'N';
+        case AsparticAcid: return 'D';
+        case Cystenine: return 'C';
+        case GlutamicAcid: return 'E';
+        case Glutamine: return 'Q';
+        case Glycine: return 'G';
+        case Histadine: return 'H';
+        case Isoleucine: return 'I';
+        case Leucine: return 'L';
+        case Lysine: return 'K';
+        case Methionine: return 'M';
+        case Phenylalanine: return 'F';
+        case Proline: return 'P';
+        case Serine: return 'S';
+        case Threonine: return 'T';
+        case Tryptophan: return 'W';
+        case Tyrosine: return 'Y';
+        case Valine: return 'V';
 
         case UnspecifiedType:
         default:
-            return "X";
+            return 'X';
     }
 }
 

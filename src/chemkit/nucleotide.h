@@ -59,7 +59,7 @@ class CHEMKIT_EXPORT Nucleotide : public Residue
         void setType(NucleotideType type);
         void setType(const QString &symbol);
         NucleotideType type() const;
-        QString letter() const;
+        char letter() const;
         QString symbol() const;
         QString name() const;
         void setSugarType(SugarType type);

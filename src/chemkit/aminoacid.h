@@ -77,7 +77,7 @@ class CHEMKIT_EXPORT AminoAcid : public Residue
         AminoAcidType type() const;
         QString name() const;
         QString symbol() const;
-        QString letter() const;
+        char letter() const;
         void setConformation(Conformation conformation);
         Conformation conformation() const;
 
