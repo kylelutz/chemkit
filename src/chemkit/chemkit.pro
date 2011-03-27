@@ -76,6 +76,7 @@ HEADERS += alphashape.h \
     forcefieldcalculation.h \
     forcefieldcalculation-inline.h \
     forcefieldinteractions.h \
+    foreach.h \
     fragment.h \
     fragment-inline.h \
     genericmatrix.h \
