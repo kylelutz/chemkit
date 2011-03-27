@@ -48,12 +48,12 @@ Fragment::Fragment(Atom *root)
     while(!row.isEmpty()){
         QList<Atom *> nextRow;
 
-        foreach(Atom *atom, row){
+        Q_FOREACH(Atom *atom, row){
             if(!atom->m_fragment){
                 atom->m_fragment = this;
                 m_atoms.append(atom);
 
-                foreach(Atom *neighbor, atom->neighbors()){
+                Q_FOREACH(Atom *neighbor, atom->neighbors()){
                     nextRow.append(neighbor);
                 }
             }
@@ -74,8 +74,8 @@ QList<Bond *> Fragment::bonds() const
 {
     QList<Bond *> bonds;
 
-    foreach(Atom *atom, atoms()){
-        foreach(Bond *bond, atom->bonds()){
+    Q_FOREACH(Atom *atom, atoms()){
+        Q_FOREACH(Bond *bond, atom->bonds()){
             if(!bonds.contains(bond)){
                 bonds.append(bond);
             }

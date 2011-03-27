@@ -125,7 +125,7 @@ Float ForceFieldAtom::energy() const
 {
     Float energy = 0;
 
-    foreach(const ForceFieldCalculation *calculation, forceField()->calculations()){
+    Q_FOREACH(const ForceFieldCalculation *calculation, forceField()->calculations()){
         if(calculation->contains(this)){
             energy += calculation->energy();
         }
@@ -148,11 +148,11 @@ bool ForceFieldAtom::isOneFour(const ForceFieldAtom *atom) const
     const Atom *thisAtom = this->atom();
     const Atom *otherAtom = atom->atom();
 
-    foreach(const Atom *neighbor, thisAtom->neighbors()){
+    Q_FOREACH(const Atom *neighbor, thisAtom->neighbors()){
         if(neighbor == otherAtom)
             return false;
 
-        foreach(const Atom *secondNeighbor, neighbor->neighbors()){
+        Q_FOREACH(const Atom *secondNeighbor, neighbor->neighbors()){
             if(secondNeighbor == otherAtom)
                 return false;
 

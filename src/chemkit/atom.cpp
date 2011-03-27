@@ -266,7 +266,7 @@ int Atom::valence() const
 {
     int valence = 0;
 
-    foreach(const Bond *bond, d->bonds){
+    Q_FOREACH(const Bond *bond, d->bonds){
         valence += bond->order();
     }
 
@@ -276,7 +276,7 @@ int Atom::valence() const
 /// Returns the bond between the atom and the other atom.
 Bond* Atom::bondTo(const Atom *atom) const
 {
-    foreach(Bond *bond, d->bonds){
+    Q_FOREACH(Bond *bond, d->bonds){
         if(bond->otherAtom(this) == atom){
             return bond;
         }
@@ -297,7 +297,7 @@ QList<Atom *> Atom::neighbors() const
 {
     QList<Atom *> neighbors;
 
-    foreach(Bond *bond, d->bonds){
+    Q_FOREACH(Bond *bond, d->bonds){
         neighbors.append(bond->otherAtom(this));
     }
 
@@ -315,7 +315,7 @@ int Atom::neighborCount(const Element &element) const
 {
     int count = 0;
 
-    foreach(const Bond *bond, d->bonds){
+    Q_FOREACH(const Bond *bond, d->bonds){
         if(bond->otherAtom(this)->is(element)){
             count++;
         }
@@ -347,7 +347,7 @@ int Atom::atomCountTo(const Atom *atom, int maxCount) const
 /// Returns the other neighboring atom for a divalent atom.
 Atom* Atom::otherNeighbor(const Atom *neighbor) const
 {
-    foreach(Atom *atom, neighbors()){
+    Q_FOREACH(Atom *atom, neighbors()){
         if(atom != neighbor){
             return atom;
         }
@@ -366,7 +366,7 @@ bool Atom::isBondedTo(const Atom *atom) const
 /// \p element.
 bool Atom::isBondedTo(const Element &element) const
 {
-    foreach(const Bond *bond, bonds()){
+    Q_FOREACH(const Bond *bond, bonds()){
         if(bond->otherAtom(this)->is(element)){
             return true;
         }
@@ -379,7 +379,7 @@ bool Atom::isBondedTo(const Element &element) const
 /// \p element via a bond with \p bondOrder.
 bool Atom::isBondedTo(const Element &element, int bondOrder) const
 {
-    foreach(const Bond *bond, bonds()){
+    Q_FOREACH(const Bond *bond, bonds()){
         if(bond->otherAtom(this)->is(element) && bond->order() == bondOrder){
             return true;
         }
@@ -419,7 +419,7 @@ QList<Ring *> Atom::rings() const
 {
     QList<Ring *> rings;
 
-    foreach(Ring *ring, molecule()->rings()){
+    Q_FOREACH(Ring *ring, molecule()->rings()){
         if(ring->contains(this)){
             rings.append(ring);
         }
@@ -438,7 +438,7 @@ int Atom::ringCount() const
 /// (i.e. ringCount() >= 1).
 bool Atom::isInRing() const
 {
-    foreach(const Ring *ring, m_molecule->rings()){
+    Q_FOREACH(const Ring *ring, m_molecule->rings()){
         if(ring->contains(this)){
             return true;
         }
@@ -450,7 +450,7 @@ bool Atom::isInRing() const
 /// Returns \c true if the atom is a member of a ring of given size.
 bool Atom::isInRing(int size) const
 {
-    foreach(const Ring *ring, m_molecule->rings()){
+    Q_FOREACH(const Ring *ring, m_molecule->rings()){
         if(ring->size() == size && ring->contains(this)){
             return true;
         }
@@ -465,7 +465,7 @@ Ring* Atom::smallestRing() const
 {
     Ring *smallest = 0;
 
-    foreach(Ring *ring, rings()){
+    Q_FOREACH(Ring *ring, rings()){
         if(!smallest || ring->size() < smallest->size()){
             smallest = ring;
         }
@@ -477,7 +477,7 @@ Ring* Atom::smallestRing() const
 /// Returns \c true if the atom is in an aromatic ring.
 bool Atom::isAromatic() const
 {
-    foreach(const Ring *ring, rings()){
+    Q_FOREACH(const Ring *ring, rings()){
         if(ring->isAromatic()){
             return true;
         }

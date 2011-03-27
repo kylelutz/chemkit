@@ -83,7 +83,7 @@ inline bool Ring::contains(const Bond *bond) const
 /// Returns \c true if the ring contains an atom with atomicNumber.
 inline bool Ring::contains(const Element &element) const
 {
-    foreach(Atom *atom, m_atoms){
+    Q_FOREACH(Atom *atom, m_atoms){
         if(atom->is(element)){
             return true;
         }

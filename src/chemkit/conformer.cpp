@@ -49,7 +49,7 @@ Conformer::Conformer(const Molecule *molecule)
 {
     d->molecule = molecule;
 
-    foreach(const Atom *atom, molecule->atoms()){
+    Q_FOREACH(const Atom *atom, molecule->atoms()){
         setPosition(atom, atom->position());
     }
 }

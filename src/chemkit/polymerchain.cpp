@@ -166,7 +166,7 @@ QString PolymerChain::sequenceString() const
 {
     QString string;
 
-    foreach(const Residue *residue, d->residues){
+    Q_FOREACH(const Residue *residue, d->residues){
         string.append(residue->letter());
     }
 

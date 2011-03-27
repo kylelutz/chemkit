@@ -146,7 +146,7 @@ void BondPredictor::predictBonds(Molecule *molecule)
     BondPredictor predictor(molecule);
 
     QPair<Atom *, Atom *> bond;
-    foreach(bond, predictor.predictedBonds()){
+    Q_FOREACH(bond, predictor.predictedBonds()){
         molecule->addBond(bond.first, bond.second);
     }
 }

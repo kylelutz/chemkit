@@ -155,7 +155,7 @@ Float AlphaShape::volume() const
 {
     Float volume = 0;
 
-    foreach(const QVector<int> &tetrahedron, tetrahedra()){
+    Q_FOREACH(const QVector<int> &tetrahedron, tetrahedra()){
         const Point3 &a = position(tetrahedron[0]);
         const Point3 &b = position(tetrahedron[1]);
         const Point3 &c = position(tetrahedron[2]);
@@ -172,7 +172,7 @@ Float AlphaShape::surfaceArea() const
 {
     Float surfaceArea = 0;
 
-//    foreach(const QVector<int> triangle, triangles(Regular | Singular)){
+//    Q_FOREACH(const QVector<int> triangle, triangles(Regular | Singular)){
 //        const Point &a = position(triangle[0]);
 //        const Point &b = position(triangle[1]);
 //        const Point &c = position(triangle[2]);

@@ -146,12 +146,12 @@ Molecule::Molecule(const Molecule &molecule)
 
     QHash<const Atom *, Atom *> oldToNew;
 
-    foreach(const Atom *atom, molecule.atoms()){
+    Q_FOREACH(const Atom *atom, molecule.atoms()){
         Atom *newAtom = addAtomCopy(atom);
         oldToNew[atom] = newAtom;
     }
 
-    foreach(const Bond *bond, molecule.bonds()){
+    Q_FOREACH(const Bond *bond, molecule.bonds()){
         Bond *newBond = addBond(oldToNew[bond->atom1()], oldToNew[bond->atom2()]);
         newBond->setOrder(bond->order());
     }
@@ -161,15 +161,15 @@ Molecule::Molecule(const Molecule &molecule)
 /// and residues that the molecule contains.
 Molecule::~Molecule()
 {
-    foreach(Atom *atom, m_atoms)
+    Q_FOREACH(Atom *atom, m_atoms)
         delete atom;
-    foreach(Bond *bond, d->bonds)
+    Q_FOREACH(Bond *bond, d->bonds)
         delete bond;
-    foreach(Ring *ring, d->rings)
+    Q_FOREACH(Ring *ring, d->rings)
         delete ring;
-    foreach(Fragment *fragment, d->fragments)
+    Q_FOREACH(Fragment *fragment, d->fragments)
         delete fragment;
-    foreach(Conformer *conformer, d->conformers)
+    Q_FOREACH(Conformer *conformer, d->conformers)
         delete conformer;
 
     delete d;
@@ -195,7 +195,7 @@ std::string Molecule::formula() const
 {
     // a map of atomic symbols to their quantity
     std::map<std::string, int> composition;
-    foreach(const Atom *atom, m_atoms){
+    Q_FOREACH(const Atom *atom, m_atoms){
         composition[atom->symbol()]++;
     }
 
@@ -278,7 +278,7 @@ Float Molecule::mass() const
 {
     Float mass = 0;
 
-    foreach(const Atom *atom, m_atoms)
+    Q_FOREACH(const Atom *atom, m_atoms)
         mass += atom->mass();
 
     return mass;
@@ -345,7 +345,7 @@ void Molecule::removeAtom(Atom *atom)
     }
 
     // remove all bonds to/from the atom first
-    foreach(Bond *bond, atom->bonds()){
+    Q_FOREACH(Bond *bond, atom->bonds()){
         removeBond(bond);
     }
 
@@ -364,7 +364,7 @@ int Molecule::atomCount(const Element &element) const
 {
     int count = 0;
 
-    foreach(Atom *atom, m_atoms){
+    Q_FOREACH(Atom *atom, m_atoms){
         if(atom->is(element)){
             count++;
         }
@@ -389,7 +389,7 @@ bool Molecule::contains(const Atom *atom) const
 /// \p element.
 bool Molecule::contains(const Element &element) const
 {
-    foreach(const Atom *atom, m_atoms){
+    Q_FOREACH(const Atom *atom, m_atoms){
         if(atom->is(element)){
             return true;
         }
@@ -527,7 +527,7 @@ void Molecule::addResidue(Residue *residue)
 
     d->residues.append(residue);
 
-    foreach(Atom *atom, residue->atoms()){
+    Q_FOREACH(Atom *atom, residue->atoms()){
         atom->setResidue(residue);
     }
 }
@@ -541,7 +541,7 @@ void Molecule::removeResidue(Residue *residue)
 
     d->residues.removeAll(residue);
 
-    foreach(Atom *atom, residue->atoms()){
+    Q_FOREACH(Atom *atom, residue->atoms()){
         atom->setResidue(0);
     }
 }
@@ -561,13 +561,13 @@ int Molecule::residueCount() const
 /// Removes all atoms, bonds, and residues from the molecule.
 void Molecule::clear()
 {
-    foreach(Bond *bond, d->bonds){
+    Q_FOREACH(Bond *bond, d->bonds){
         removeBond(bond);
     }
-    foreach(Atom *atom, m_atoms){
+    Q_FOREACH(Atom *atom, m_atoms){
         removeAtom(atom);
     }
-    foreach(Residue *residue, d->residues){
+    Q_FOREACH(Residue *residue, d->residues){
         removeResidue(residue);
     }
 }
@@ -688,7 +688,7 @@ Moiety Molecule::find(const Molecule *moiety, CompareFlags flags) const
     }
 
     QList<const Atom *> moietyAtoms;
-    foreach(Atom *atom, moiety->atoms()){
+    Q_FOREACH(Atom *atom, moiety->atoms()){
         moietyAtoms.append(mapping.map(atom));
     }
 
@@ -741,7 +741,7 @@ void Molecule::setRingsPerceived(bool perceived) const
     }
 
     if(perceived == false){
-        foreach(Ring *ring, d->rings){
+        Q_FOREACH(Ring *ring, d->rings){
             delete ring;
         }
 
@@ -778,7 +778,7 @@ Fragment* Molecule::fragment(int index) const
 QList<Fragment *> Molecule::fragments() const
 {
     if(!fragmentsPerceived()){
-        foreach(Atom *atom, m_atoms){
+        Q_FOREACH(Atom *atom, m_atoms){
             if(!atom->m_fragment){
                 d->fragments.append(new Fragment(atom));
             }
@@ -809,14 +809,14 @@ void Molecule::removeFragment(Fragment *fragment)
 {
     QList<Atom *> atoms = fragment->atoms();
 
-    foreach(Atom *atom, atoms){
+    Q_FOREACH(Atom *atom, atoms){
         removeAtom(atom);
     }
 }
 
 Fragment* Molecule::fragment(const Atom *atom) const
 {
-    foreach(Fragment *fragment, fragments()){
+    Q_FOREACH(Fragment *fragment, fragments()){
         if(fragment->contains(atom)){
             return fragment;
         }
@@ -831,13 +831,13 @@ void Molecule::setFragmentsPerceived(bool perceived) const
         return;
 
     if(!perceived){
-        foreach(const Fragment *fragment, d->fragments){
+        Q_FOREACH(const Fragment *fragment, d->fragments){
             delete fragment;
         }
 
         d->fragments.clear();
 
-        foreach(Atom *atom, m_atoms){
+        Q_FOREACH(Atom *atom, m_atoms){
             atom->m_fragment = 0;
         }
     }
@@ -939,7 +939,7 @@ Point3 Molecule::center() const
     Float sy = 0;
     Float sz = 0;
 
-    foreach(const Atom *atom, m_atoms){
+    Q_FOREACH(const Atom *atom, m_atoms){
         sx += atom->x();
         sy += atom->y();
         sz += atom->z();
@@ -965,7 +965,7 @@ Point3 Molecule::centerOfMass() const
     // sum of weights
     Float sw = 0;
 
-    foreach(const Atom *atom, m_atoms){
+    Q_FOREACH(const Atom *atom, m_atoms){
         Float w = atom->mass();
 
         sx += w * atom->x();
@@ -983,7 +983,7 @@ Point3 Molecule::centerOfMass() const
 /// Moves all the atoms in the molecule by \p vector.
 void Molecule::moveBy(const Vector3 &vector)
 {
-    foreach(Atom *atom, m_atoms){
+    Q_FOREACH(Atom *atom, m_atoms){
         atom->moveBy(vector);
     }
 }
@@ -991,7 +991,7 @@ void Molecule::moveBy(const Vector3 &vector)
 /// Moves all of the atoms in the molecule by (\p dx, \p dy, \p dz).
 void Molecule::moveBy(Float dx, Float dy, Float dz)
 {
-    foreach(Atom *atom, m_atoms){
+    Q_FOREACH(Atom *atom, m_atoms){
         atom->moveBy(dx, dy, dz);
     }
 }
@@ -1000,7 +1000,7 @@ void Molecule::moveBy(Float dx, Float dy, Float dz)
 /// by \p angle degrees around \p axis.
 void Molecule::rotate(const Vector3 &axis, Float angle)
 {
-    foreach(Atom *atom, m_atoms){
+    Q_FOREACH(Atom *atom, m_atoms){
         atom->setPosition(Quaternion::rotate(atom->position(), axis, angle));
     }
 }
@@ -1009,7 +1009,7 @@ void Molecule::rotate(const Vector3 &axis, Float angle)
 /// atoms.
 bool Molecule::hasCoordinates() const
 {
-    foreach(const Atom *atom, m_atoms){
+    Q_FOREACH(const Atom *atom, m_atoms){
         if(!atom->position().isNull()){
             return true;
         }
@@ -1021,7 +1021,7 @@ bool Molecule::hasCoordinates() const
 /// Removes all of the atomic coordinates in the molecule.
 void Molecule::clearCoordinates()
 {
-    foreach(Atom *atom, m_atoms){
+    Q_FOREACH(Atom *atom, m_atoms){
         atom->setPosition(Point3());
     }
 }
@@ -1066,7 +1066,7 @@ void Molecule::setConformer(Conformer *conformer)
         return;
     }
 
-    foreach(Atom *atom, m_atoms){
+    Q_FOREACH(Atom *atom, m_atoms){
         atom->setPosition(conformer->position(atom));
     }
 
@@ -1124,13 +1124,13 @@ Molecule& Molecule::operator=(const Molecule &molecule)
         QHash<const Atom *, Atom *> oldToNew;
 
         // add new atoms
-        foreach(const Atom *atom, molecule.atoms()){
+        Q_FOREACH(const Atom *atom, molecule.atoms()){
             Atom *newAtom = addAtomCopy(atom);
             oldToNew[atom] = newAtom;
         }
 
         // add new bonds
-        foreach(const Bond *bond, molecule.bonds()){
+        Q_FOREACH(const Bond *bond, molecule.bonds()){
             Bond *newBond = addBond(oldToNew[bond->atom1()], oldToNew[bond->atom2()]);
             newBond->setOrder(bond->order());
         }
@@ -1159,7 +1159,7 @@ QList<Atom *> Molecule::atomPathBetween(const Atom *a, const Atom *b) const
 
     QList<QList<Atom *> > paths;
 
-    foreach(Atom *neighbor, a->neighbors()){
+    Q_FOREACH(Atom *neighbor, a->neighbors()){
         visited.setBit(neighbor->index());
         QList<Atom *> path;
         path.append(neighbor);
@@ -1174,7 +1174,7 @@ QList<Atom *> Molecule::atomPathBetween(const Atom *a, const Atom *b) const
             return path;
         }
         else{
-            foreach(Atom *neighbor, lastAtom->neighbors()){
+            Q_FOREACH(Atom *neighbor, lastAtom->neighbors()){
                 if(visited[neighbor->index()])
                     continue;
 
@@ -1238,21 +1238,21 @@ int Molecule::bondCountBetween(const Atom *a, const Atom *b, int maxCount) const
 
 void Molecule::notifyObservers(ChangeType type)
 {
-    foreach(MoleculeWatcher *watcher, d->watchers){
+    Q_FOREACH(MoleculeWatcher *watcher, d->watchers){
         watcher->notifyObservers(this, type);
     }
 }
 
 void Molecule::notifyObservers(const Atom *atom, ChangeType type)
 {
-    foreach(MoleculeWatcher *watcher, d->watchers){
+    Q_FOREACH(MoleculeWatcher *watcher, d->watchers){
         watcher->notifyObservers(atom, type);
     }
 }
 
 void Molecule::notifyObservers(const Bond *bond, ChangeType type)
 {
-    foreach(MoleculeWatcher *watcher, d->watchers){
+    Q_FOREACH(MoleculeWatcher *watcher, d->watchers){
         watcher->notifyObservers(bond, type);
     }
 }
@@ -1273,10 +1273,10 @@ bool Molecule::isSubsetOf(const Molecule *molecule, CompareFlags flags) const
 
     QList<Atom *> otherAtoms = molecule->atoms();
 
-    foreach(const Atom *atom, m_atoms){
+    Q_FOREACH(const Atom *atom, m_atoms){
         bool found = false;
 
-        foreach(Atom *otherAtom, otherAtoms){
+        Q_FOREACH(Atom *otherAtom, otherAtoms){
             if(atom->atomicNumber() == otherAtom->atomicNumber()){
                 otherAtoms.removeOne(otherAtom);
                 found = true;

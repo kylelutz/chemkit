@@ -5,6 +5,7 @@ INCLUDEPATH += ../../include
 LIBS += -lblas \
     -llapack
 QT -= gui
+CONFIG += no_keywords
 DEFINES += CHEMKIT_LIBRARY
 SOURCES += alphashape.cpp \
     aminoacid.cpp \

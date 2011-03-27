@@ -76,7 +76,7 @@ QList<QPair<const ForceFieldAtom *, const ForceFieldAtom *> > ForceFieldInteract
 {
     QList<QPair<const ForceFieldAtom *, const ForceFieldAtom *> > bondedPairs;
 
-    foreach(const Bond *bond, d->molecule->bonds()){
+    Q_FOREACH(const Bond *bond, d->molecule->bonds()){
         const ForceFieldAtom *a = forceField()->atom(bond->atom1());
         const ForceFieldAtom *b = forceField()->atom(bond->atom2());
         bondedPairs.append(qMakePair(a, b));
@@ -90,7 +90,7 @@ QList<QVector<const ForceFieldAtom *> > ForceFieldInteractions::angleGroups()
 {
     QList<QVector<const ForceFieldAtom *> > angleGroups;
 
-    foreach(const Atom *atom, d->molecule->atoms()){
+    Q_FOREACH(const Atom *atom, d->molecule->atoms()){
         if(!atom->isTerminal()){
             QList<Atom *> neighbors = atom->neighbors();
             for(int i = 0; i < neighbors.size(); i++){
@@ -115,7 +115,7 @@ QList<QVector<const ForceFieldAtom *> > ForceFieldInteractions::torsionGroups()
     QList<QVector<const ForceFieldAtom *> > torsionGroups;
 
     QList<QPair<Atom *, Atom *> > pairs;
-    foreach(const Bond *bond, d->molecule->bonds()){
+    Q_FOREACH(const Bond *bond, d->molecule->bonds()){
         if(!bond->atom1()->isTerminal() && !bond->atom2()->isTerminal()){
             pairs.append(qMakePair(bond->atom1(), bond->atom2()));
         }
@@ -125,15 +125,15 @@ QList<QVector<const ForceFieldAtom *> > ForceFieldInteractions::torsionGroups()
     //  \      /
     //   b -- c
     QPair<Atom *, Atom *> pair;
-    foreach(pair, pairs){
+    Q_FOREACH(pair, pairs){
         const Atom *b = pair.first;
         const Atom *c = pair.second;
 
-        foreach(const Atom *a, b->neighbors()){
+        Q_FOREACH(const Atom *a, b->neighbors()){
             if(a == c)
                 continue;
 
-            foreach(const Atom *d, c->neighbors()){
+            Q_FOREACH(const Atom *d, c->neighbors()){
                 if(d == b || d == a)
                     continue;
 
@@ -174,7 +174,7 @@ QList<QPair<const ForceFieldAtom *, const ForceFieldAtom *> > ForceFieldInteract
 // --- Internal Methods ---------------------------------------------------- //
 bool ForceFieldInteractions::atomsWithinTwoBonds(const Atom *a, const Atom *b)
 {
-    foreach(const Atom *neighbor, a->neighbors()){
+    Q_FOREACH(const Atom *neighbor, a->neighbors()){
         if(neighbor == b)
             return true;
         else if(neighbor->neighbors().contains(const_cast<Atom *>(b)))

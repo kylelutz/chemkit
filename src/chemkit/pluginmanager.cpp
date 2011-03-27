@@ -53,7 +53,7 @@ PluginManager::PluginManager()
 
 PluginManager::~PluginManager()
 {
-    foreach(Plugin *plugin, d->plugins){
+    Q_FOREACH(Plugin *plugin, d->plugins){
         delete plugin;
     }
 
@@ -65,7 +65,7 @@ PluginManager::~PluginManager()
 // \p name is loaded.
 Plugin* PluginManager::plugin(const QString &name) const
 {
-    foreach(Plugin *plugin, d->plugins){
+    Q_FOREACH(Plugin *plugin, d->plugins){
         if(plugin->name() == name){
             return plugin;
         }
@@ -103,7 +103,7 @@ bool PluginManager::loadPlugin(const QString &fileName)
 
     d->plugins.append(instance);
 
-    emit pluginLoaded(instance);
+    Q_EMIT pluginLoaded(instance);
 
     return true;
 }
@@ -117,7 +117,7 @@ void PluginManager::loadPlugins(const QString &directory)
         return;
     }
 
-    foreach(const QString &fileName, dir.entryList(QDir::Files)){
+    Q_FOREACH(const QString &fileName, dir.entryList(QDir::Files)){
         if(QLibrary::isLibrary(fileName)){
             loadPlugin(dir.filePath(fileName));
         }
@@ -149,7 +149,7 @@ void PluginManager::loadDefaultPlugins()
     }
 
     // load plugins from each directory
-    foreach(const QString &directory, directories){
+    Q_FOREACH(const QString &directory, directories){
         loadPlugins(directory);
     }
 
@@ -159,7 +159,7 @@ void PluginManager::loadDefaultPlugins()
 /// Unloads the plugin.
 bool PluginManager::unloadPlugin(Plugin *plugin)
 {
-    emit pluginUnloaded(plugin);
+    Q_EMIT pluginUnloaded(plugin);
 
     return false;
 }

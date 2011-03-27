@@ -218,7 +218,7 @@ MolecularGraph* MolecularGraph::cyclicGraph(const QList<Atom *> &atoms)
 {
     std::vector<Atom *> nonterminalAtoms;
 
-    foreach(Atom *atom, atoms){
+    Q_FOREACH(Atom *atom, atoms){
         if(atom->neighborCount() >= 2){
             nonterminalAtoms.push_back(atom);
         }
@@ -234,7 +234,7 @@ MolecularGraph* MolecularGraph::hydrogenDepletedGraph(const Molecule *molecule)
 {
     std::vector<Atom *> heavyAtoms;
 
-    foreach(Atom *atom, molecule->atoms()){
+    Q_FOREACH(Atom *atom, molecule->atoms()){
         if(!atom->isTerminalHydrogen()){
             heavyAtoms.push_back(atom);
         }
@@ -279,7 +279,7 @@ void MolecularGraph::cyclicize()
 
         for(unsigned int i = 0; i < m_atoms.size(); i++){
             if(neighborCount(i) && neighborCount(i) < 2){
-                foreach(unsigned int neighbor, neighbors(i)){
+                Q_FOREACH(unsigned int neighbor, neighbors(i)){
                     removeBond(i, neighbor);
                 }
 
@@ -340,7 +340,7 @@ QList<Ring *> MolecularGraph::sssr(const Molecule *molecule)
 {
     QList<Ring *> rings;
 
-    foreach(const Fragment *fragment, molecule->fragments()){
+    Q_FOREACH(const Fragment *fragment, molecule->fragments()){
         rings += sssr(fragment);
     }
 

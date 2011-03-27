@@ -164,7 +164,7 @@ QList<std::string> LineFormat::formats()
     PluginManager::instance()->loadDefaultPlugins();
 
     QList<std::string> formats;
-    foreach(const QString &format, pluginFormats.keys()){
+    Q_FOREACH(const QString &format, pluginFormats.keys()){
         formats.append(format.toStdString());
     }
 

@@ -106,7 +106,7 @@ MolecularSurface::MolecularSurface(const Molecule *molecule, SurfaceType type)
     d->probeRadius = 1.4;
 
     if(molecule){
-        foreach(const Atom *atom, molecule->atoms()){
+        Q_FOREACH(const Atom *atom, molecule->atoms()){
             d->points.append(atom->position());
             d->radii.append(atom->vanDerWaalsRadius());
         }
@@ -231,17 +231,17 @@ Float MolecularSurface::volume() const
         }
 
         // subtract volume from each edge
-        foreach(QVector<int> edge, alphaShape->edges()){
+        Q_FOREACH(QVector<int> edge, alphaShape->edges()){
             d->volume -= intersectionVolume(edge[0], edge[1]);
         }
 
         // add volume from each triangle
-        foreach(const QVector<int> &triangle, alphaShape->triangles()){
+        Q_FOREACH(const QVector<int> &triangle, alphaShape->triangles()){
             d->volume += intersectionVolume(triangle[0], triangle[1], triangle[2]);
         }
 
         // subtract volume from each tetrahedron
-        foreach(QVector<int> tetrahedron, alphaShape->tetrahedra()){
+        Q_FOREACH(QVector<int> tetrahedron, alphaShape->tetrahedra()){
             d->volume -= intersectionVolume(tetrahedron[0], tetrahedron[1], tetrahedron[2], tetrahedron[3]);
         }
 
@@ -275,17 +275,17 @@ Float MolecularSurface::surfaceArea() const
         }
 
         // subtract volume and area from each edge
-        foreach(QVector<int> edge, alphaShape->edges()){
+        Q_FOREACH(QVector<int> edge, alphaShape->edges()){
             d->surfaceArea -= intersectionArea(edge[0], edge[1]);
         }
 
         // add volume and area from each triangle
-        foreach(const QVector<int> &triangle, alphaShape->triangles()){
+        Q_FOREACH(const QVector<int> &triangle, alphaShape->triangles()){
             d->surfaceArea += intersectionArea(triangle[0], triangle[1], triangle[2]);
         }
 
         // subtract volume and area from each tetrahedron
-        foreach(QVector<int> tetrahedron, alphaShape->tetrahedra()){
+        Q_FOREACH(QVector<int> tetrahedron, alphaShape->tetrahedra()){
             d->surfaceArea -= intersectionArea(tetrahedron[0], tetrahedron[1], tetrahedron[2], tetrahedron[3]);
         }
 

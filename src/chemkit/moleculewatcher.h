@@ -49,7 +49,7 @@ class CHEMKIT_EXPORT MoleculeWatcher : public QObject
         void setMolecule(const Molecule *molecule);
         const Molecule* molecule() const;
 
-    signals:
+    Q_SIGNALS:
         void atomAdded(const chemkit::Atom *atom);
         void atomRemoved(const chemkit::Atom *atom);
         void atomAtomicNumberChanged(const chemkit::Atom *atom);

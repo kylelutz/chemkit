@@ -239,7 +239,7 @@ QList<QVector<int> > DelaunayTriangulation::edges() const
         QList<QVector<int> > edges;
         EdgeSet edgeSet(d->verticies.size());
 
-        foreach(const QVector<int> &tetrahedron, tetrahedra()){
+        Q_FOREACH(const QVector<int> &tetrahedron, tetrahedra()){
             for(int i = 0; i < 4; i++){
                 for(int j = i + 1; j < 4; j++){
                     QVector<int> edge(2);
@@ -319,7 +319,7 @@ QList<QVector<int> > DelaunayTriangulation::tetrahedra() const
     if(d->delaunayTetrahedra.isEmpty()){
         QList<QVector<int> > tetrahedra;
 
-        foreach(const Tetrahedron &tetrahedron, d->tetrahedra){
+        Q_FOREACH(const Tetrahedron &tetrahedron, d->tetrahedra){
             if(!tetrahedron.valid){
                 continue;
             }
@@ -362,7 +362,7 @@ Float DelaunayTriangulation::volume() const
 {
     Float volume = 0;
 
-    foreach(const QVector<int> &tetrahedron, tetrahedra()){
+    Q_FOREACH(const QVector<int> &tetrahedron, tetrahedra()){
         const Point3 &a = position(tetrahedron[0]);
         const Point3 &b = position(tetrahedron[1]);
         const Point3 &c = position(tetrahedron[2]);
@@ -387,7 +387,7 @@ QList<QVector<int> > DelaunayTriangulation::alphaShapeEdges(const AlphaShape *al
         QList<QVector<int> > alphaShapeEdges;
         EdgeSet alphaEdgeSet(d->verticies.size());
 
-        foreach(const QVector<int> &triangle, alphaShapeTriangles(alphaShape)){
+        Q_FOREACH(const QVector<int> &triangle, alphaShapeTriangles(alphaShape)){
             for(int i = 0; i < 3; i++){
                 for(int j = i + 1; j < 3; j++){
                     QVector<int> edge(2);
@@ -405,7 +405,7 @@ QList<QVector<int> > DelaunayTriangulation::alphaShapeEdges(const AlphaShape *al
 
         EdgeSet attachedEdgeSet(d->verticies.size());
 
-        foreach(const QVector<int> &triangle, triangles()){
+        Q_FOREACH(const QVector<int> &triangle, triangles()){
             int a = triangle[0];
             int b = triangle[1];
             int c = triangle[2];
@@ -420,7 +420,7 @@ QList<QVector<int> > DelaunayTriangulation::alphaShapeEdges(const AlphaShape *al
                 attachedEdgeSet.insert(b, c);
         }
 
-        foreach(const QVector<int> edge, edges()){
+        Q_FOREACH(const QVector<int> edge, edges()){
             if(alphaEdgeSet.contains(edge[0], edge[1])){
                 continue;
             }
@@ -741,7 +741,7 @@ void DelaunayTriangulation::insertPoint(int index)
     QList<QPair<int, int> > faceNeighbor;
     QList<int> count;
 
-    foreach(int index, containingTetrahedra){
+    Q_FOREACH(int index, containingTetrahedra){
         const Tetrahedron &tetrahedron = d->tetrahedra[index];
         for(int i = 0; i < 4; i++){
             for(int j = i + 1; j < 4; j++){
@@ -778,7 +778,7 @@ void DelaunayTriangulation::insertPoint(int index)
     }
 
     // remove containing tetrahedra
-    foreach(int tetrahedron, containingTetrahedra){
+    Q_FOREACH(int tetrahedron, containingTetrahedra){
         d->tetrahedra[tetrahedron].valid = false;
     }
 

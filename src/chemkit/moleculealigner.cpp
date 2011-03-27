@@ -201,12 +201,12 @@ Vector3 MoleculeAligner::displacementVector() const
 void MoleculeAligner::align(Molecule *molecule)
 {
     StaticMatrix<Float, 3, 3> matrix = rotationMatrix();
-    foreach(Atom *atom, molecule->atoms()){
+    Q_FOREACH(Atom *atom, molecule->atoms()){
         atom->setPosition(matrix.multiply(atom->position()));
     }
 
     Vector3 displacement = displacementVector();
-    foreach(Atom *atom, molecule->atoms()){
+    Q_FOREACH(Atom *atom, molecule->atoms()){
         atom->moveBy(displacement);
     }
 }

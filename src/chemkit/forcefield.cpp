@@ -105,12 +105,12 @@ ForceField::ForceField(const QString &name)
 ForceField::~ForceField()
 {
     // delete all calculations
-    foreach(ForceFieldCalculation *calculation, d->calculations){
+    Q_FOREACH(ForceFieldCalculation *calculation, d->calculations){
         delete calculation;
     }
 
     // delete all atoms
-    foreach(ForceFieldAtom *atom, d->atoms){
+    Q_FOREACH(ForceFieldAtom *atom, d->atoms){
         delete atom;
     }
 
@@ -163,7 +163,7 @@ ForceFieldAtom* ForceField::atom(int index) const
 /// Returns the force field atom that represents atom.
 ForceFieldAtom* ForceField::atom(const Atom *atom) const
 {
-    foreach(ForceFieldAtom *forceFieldAtom, d->atoms){
+    Q_FOREACH(ForceFieldAtom *forceFieldAtom, d->atoms){
         if(forceFieldAtom->atom() == atom){
             return forceFieldAtom;
         }
@@ -210,11 +210,11 @@ void ForceField::removeAtom(ForceFieldAtom *atom)
 /// Removes all of the molecules in the force field.
 void ForceField::clear()
 {
-    foreach(const Molecule *molecule, d->molecules){
+    Q_FOREACH(const Molecule *molecule, d->molecules){
         removeMolecule(molecule);
     }
 
-    foreach(ForceFieldCalculation *calculation, d->calculations){
+    Q_FOREACH(ForceFieldCalculation *calculation, d->calculations){
         removeCalculation(calculation);
     }
 }
@@ -228,7 +228,7 @@ bool ForceField::setup()
 /// Returns \c true if the force field is setup.
 bool ForceField::isSetup() const
 {
-    foreach(const ForceFieldCalculation *calculation, d->calculations){
+    Q_FOREACH(const ForceFieldCalculation *calculation, d->calculations){
         if(!calculation->isSetup()){
             return false;
         }
@@ -318,7 +318,7 @@ Float ForceField::energy() const
 
     if(d->calculations.size() < parallelThreshold){
         // calculate energy sequentially
-        foreach(const ForceFieldCalculation *calculation, d->calculations){
+        Q_FOREACH(const ForceFieldCalculation *calculation, d->calculations){
             energy += calculation->energy();
         }
     }
@@ -354,7 +354,7 @@ QVector<Vector3> ForceField::gradient() const
     if(d->flags.testFlag(AnalyticalGradient)){
         QVector<Vector3> gradient(atomCount());
 
-        foreach(const ForceFieldCalculation *calculation, d->calculations){
+        Q_FOREACH(const ForceFieldCalculation *calculation, d->calculations){
             QVector<Vector3> atomGradients = calculation->gradient();
 
             for(int i = 0; i < atomGradients.size(); i++){
@@ -452,7 +452,7 @@ Float ForceField::rootMeanSquareGradient() const
 /// Updates the coordinates of molecule in the force field.
 void ForceField::readCoordinates(const Molecule *molecule)
 {
-    foreach(const Atom *atom, molecule->atoms()){
+    Q_FOREACH(const Atom *atom, molecule->atoms()){
         readCoordinates(atom);
     }
 }
@@ -470,7 +470,7 @@ void ForceField::readCoordinates(const Atom *atom)
 /// Writes the coordinates to molecule from the force field.
 void ForceField::writeCoordinates(Molecule *molecule) const
 {
-    foreach(Atom *atom, molecule->atoms()){
+    Q_FOREACH(Atom *atom, molecule->atoms()){
         writeCoordinates(atom);
     }
 }

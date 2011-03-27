@@ -56,7 +56,7 @@ int Ring::atomCount(const Element &element) const
 {
     int count = 0;
 
-    foreach(const Atom *atom, m_atoms){
+    Q_FOREACH(const Atom *atom, m_atoms){
         if(atom->is(element)){
             count++;
         }
@@ -98,8 +98,8 @@ QList<Bond *> Ring::exocyclicBonds() const
 {
     QSet<Bond *> bonds;
 
-    foreach(Atom *atom, m_atoms){
-        foreach(Bond *bond, atom->bonds()){
+    Q_FOREACH(Atom *atom, m_atoms){
+        Q_FOREACH(Bond *bond, atom->bonds()){
             if(!contains(bond)){
                 bonds.insert(bond);
             }
@@ -120,7 +120,7 @@ int Ring::heteroatomCount() const
 {
     int count = 0;
 
-    foreach(const Atom *atom, m_atoms){
+    Q_FOREACH(const Atom *atom, m_atoms){
         if(!atom->is(Atom::Carbon)){
             count++;
         }
@@ -143,7 +143,7 @@ Atom* Ring::root() const
     int highestAtomicNumber = 0;
     QList<Atom *> candidates;
 
-    foreach(Atom *atom, m_atoms){
+    Q_FOREACH(Atom *atom, m_atoms){
         if(atom->is(Atom::Carbon))
             continue;
 
@@ -164,7 +164,7 @@ Atom* Ring::root() const
     Atom *root = 0;
     int highestNeighborCount = 0;
 
-    foreach(Atom *atom, candidates){
+    Q_FOREACH(Atom *atom, candidates){
         if(atom->neighborCount() > highestNeighborCount){
             root = atom;
             highestNeighborCount = atom->neighborCount();
@@ -208,7 +208,7 @@ bool Ring::isFusedTo(const Ring *ring) const
     if(ring == this)
         return false;
 
-    foreach(const Bond *bond, ring->bonds()){
+    Q_FOREACH(const Bond *bond, ring->bonds()){
         if(contains(bond)){
             return true;
         }
@@ -257,7 +257,7 @@ bool Ring::isAromatic() const
     }
 
     // add pi electrons from exocyclic double bonds
-    foreach(const Bond *bond, exocyclicBonds()){
+    Q_FOREACH(const Bond *bond, exocyclicBonds()){
         if(bond->order() == Bond::Double){
             piCount += 1;
         }
@@ -322,7 +322,7 @@ const Bond* Ring::previousBond(const Atom *atom) const
 
 bool Ring::isPlanar() const
 {
-    foreach(const Atom *atom, m_atoms){
+    Q_FOREACH(const Atom *atom, m_atoms){
         if(atom->is(Atom::Carbon) && atom->neighborCount() != 3){
             return false;
         }
@@ -365,7 +365,7 @@ int Ring::piElectronCount() const
 
         else{
             // exocyclic double bonds
-            foreach(const Bond *bond, atom->bonds()){
+            Q_FOREACH(const Bond *bond, atom->bonds()){
                 if(bond == nextBond || bond == previousBond){
                     // skip ring bonds
                     continue;

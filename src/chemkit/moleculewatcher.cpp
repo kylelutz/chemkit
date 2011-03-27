@@ -141,7 +141,7 @@ void MoleculeWatcher::notifyObservers(const Molecule *molecule, Molecule::Change
 {
     switch(changeType){
         case Molecule::NameChanged:
-            emit nameChanged(molecule);
+            Q_EMIT nameChanged(molecule);
             break;
         default:
             break;
@@ -152,16 +152,16 @@ void MoleculeWatcher::notifyObservers(const Atom *atom, Molecule::ChangeType cha
 {
     switch(changeType){
         case Molecule::AtomAdded:
-            emit atomAdded(atom);
+            Q_EMIT atomAdded(atom);
             break;
         case Molecule::AtomRemoved:
-            emit atomRemoved(atom);
+            Q_EMIT atomRemoved(atom);
             break;
         case Molecule::AtomAtomicNumberChanged:
-            emit atomAtomicNumberChanged(atom);
+            Q_EMIT atomAtomicNumberChanged(atom);
             break;
         case Molecule::AtomPositionChanged:
-            emit atomPositionChanged(atom);
+            Q_EMIT atomPositionChanged(atom);
             break;
         default:
             break;
@@ -172,13 +172,13 @@ void MoleculeWatcher::notifyObservers(const Bond *bond, Molecule::ChangeType cha
 {
     switch(changeType){
         case Molecule::BondAdded:
-            emit bondAdded(bond);
+            Q_EMIT bondAdded(bond);
             break;
         case Molecule::BondRemoved:
-            emit bondRemoved(bond);
+            Q_EMIT bondRemoved(bond);
             break;
         case Molecule::BondOrderChanged:
-            emit bondOrderChanged(bond);
+            Q_EMIT bondOrderChanged(bond);
         default:
             break;
     }
@@ -188,10 +188,10 @@ void MoleculeWatcher::notifyObservers(const Residue *residue, Molecule::ChangeTy
 {
     switch(changeType){
         case Molecule::ResidueAdded:
-            emit residueAdded(residue);
+            Q_EMIT residueAdded(residue);
             break;
         case Molecule::ResidueRemoved:
-            emit residueRemoved(residue);
+            Q_EMIT residueRemoved(residue);
             break;
         default:
             break;
@@ -202,10 +202,10 @@ void MoleculeWatcher::notifyObservers(const Conformer *conformer, Molecule::Chan
 {
     switch(changeType){
         case Molecule::ConformerAdded:
-            emit conformerAdded(conformer);
+            Q_EMIT conformerAdded(conformer);
             break;
         case Molecule::ConformerRemoved:
-            emit conformerRemoved(conformer);
+            Q_EMIT conformerRemoved(conformer);
             break;
         default:
             break;

@@ -183,7 +183,7 @@ QList<Ring *> Bond::rings() const
 {
     QList<Ring *> rings;
 
-    foreach(Ring *ring, molecule()->rings()){
+    Q_FOREACH(Ring *ring, molecule()->rings()){
         if(ring->contains(this)){
             rings.append(ring);
         }
@@ -202,7 +202,7 @@ int Bond::ringCount() const
 /// (i.e. ringCount() >= 1).
 bool Bond::isInRing() const
 {
-    foreach(const Ring *ring, molecule()->rings()){
+    Q_FOREACH(const Ring *ring, molecule()->rings()){
         if(ring->contains(this)){
             return true;
         }
@@ -214,7 +214,7 @@ bool Bond::isInRing() const
 /// Returns \c true if the bond is in a ring of given size.
 bool Bond::isInRing(int size) const
 {
-    foreach(const Ring *ring, molecule()->rings()){
+    Q_FOREACH(const Ring *ring, molecule()->rings()){
         if(ring->size() == size && ring->contains(this)){
             return true;
         }
@@ -229,7 +229,7 @@ Ring* Bond::smallestRing() const
 {
     Ring *smallest = 0;
 
-    foreach(Ring *ring, rings()){
+    Q_FOREACH(Ring *ring, rings()){
         if(!smallest || ring->size() < smallest->size()){
             smallest = ring;
         }
@@ -243,7 +243,7 @@ Ring* Bond::smallestRing() const
 /// \see Ring::isAromatic()
 bool Bond::isAromatic() const
 {
-    foreach(const Ring *ring, rings()){
+    Q_FOREACH(const Ring *ring, rings()){
         if(ring->isAromatic()){
             return true;
         }
