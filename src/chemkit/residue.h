@@ -25,6 +25,8 @@
 
 #include "chemkit.h"
 
+#include <string>
+
 #include <QtCore>
 
 namespace chemkit {
@@ -65,9 +67,9 @@ class CHEMKIT_EXPORT Residue
         bool contains(const Bond *bond) const;
 
         // atom types
-        void setAtomType(const Atom *atom, const QString &type);
-        QString atomType(const Atom *atom) const;
-        Atom* atom(const QString &type) const;
+        void setAtomType(const Atom *atom, const std::string &type);
+        std::string atomType(const Atom *atom) const;
+        Atom* atom(const std::string &type) const;
 
     private:
         Q_DISABLE_COPY(Residue)

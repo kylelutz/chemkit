@@ -148,7 +148,7 @@ bool PdbmlFileFormat::read(QIODevice *iodev, chemkit::PolymerFile *file)
                         else if(atomType == "N"){
                             residue->setAminoNitrogen(atom);
                         }
-                        residue->setAtomType(atom, atomType);
+                        residue->setAtomType(atom, atomType.toStdString());
                     }
                 }
 

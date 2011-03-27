@@ -51,16 +51,16 @@ void ResidueTest::atomType()
     chemkit::Atom *c2 = molecule.addAtom("C");
     residue->addAtom(c1);
     residue->addAtom(c2);
-    QCOMPARE(residue->atomType(c1), QString());
-    QCOMPARE(residue->atomType(c2), QString());
+    QCOMPARE(residue->atomType(c1), std::string());
+    QCOMPARE(residue->atomType(c2), std::string());
 
     residue->setAtomType(c1, "C1");
-    QCOMPARE(residue->atomType(c1), QString("C1"));
+    QCOMPARE(residue->atomType(c1), std::string("C1"));
     QVERIFY(residue->atom("C1") == c1);
     QVERIFY(residue->atom("C2") == 0);
 
     residue->setAtomType(c2, "C2");
-    QCOMPARE(residue->atomType(c2), QString("C2"));
+    QCOMPARE(residue->atomType(c2), std::string("C2"));
     QVERIFY(residue->atom("C2") == c2);
 }
 

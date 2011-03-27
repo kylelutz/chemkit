@@ -22,6 +22,8 @@
 
 #include "residue.h"
 
+#include <map>
+
 #include "atom.h"
 #include "molecule.h"
 
@@ -34,7 +36,7 @@ class ResiduePrivate
         int type;
         Molecule *molecule;
         QList<Atom *> atoms;
-        QHash<QString, const Atom *> types;
+        std::map<std::string, const Atom *> types;
 };
 
 // === Residue ============================================================= //
@@ -164,21 +166,27 @@ bool Residue::contains(const Bond *bond) const
 
 // --- Atom Types ---------------------------------------------------------- //
 /// Sets the type for atom in the residue.
-void Residue::setAtomType(const Atom *atom, const QString &type)
+void Residue::setAtomType(const Atom *atom, const std::string &type)
 {
     d->types[type] = atom;
 }
 
 /// Returns the type for atom in the residue.
-QString Residue::atomType(const Atom *atom) const
+std::string Residue::atomType(const Atom *atom) const
 {
-    return d->types.key(atom, QString());
+    for(std::map<std::string, const Atom *>::iterator i = d->types.begin(); i != d->types.end(); ++i){
+        if(i->second == atom){
+            return i->first;
+        }
+    }
+
+    return std::string();
 }
 
 /// Returns the atom with type or 0 if no atom has type.
-Atom* Residue::atom(const QString &type) const
+Atom* Residue::atom(const std::string &type) const
 {
-    return const_cast<Atom *>(d->types.value(type, 0));
+    return const_cast<Atom *>(d->types[type]);
 }
 
 } // end chemkit namespace
