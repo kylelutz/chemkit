@@ -29,6 +29,7 @@
 #include <algorithm>
 
 #include "ring.h"
+#include "foreach.h"
 
 namespace chemkit {
 
@@ -137,7 +138,7 @@ std::vector<std::vector<int> > PidMatrix::splice(int i, int j, int k)
         splicedPaths.push_back(path);
     }
     else if(ijPaths.empty()){
-        Q_FOREACH(const std::vector<int> &jkPath, jkPaths){
+        foreach(const std::vector<int> &jkPath, jkPaths){
             std::vector<int> path;
             path.push_back(j);
             path.insert(path.end(), jkPath.begin(), jkPath.end());
@@ -145,15 +146,15 @@ std::vector<std::vector<int> > PidMatrix::splice(int i, int j, int k)
         }
     }
     else if(jkPaths.empty()){
-        Q_FOREACH(const std::vector<int> &ijPath, ijPaths){
+        foreach(const std::vector<int> &ijPath, ijPaths){
             std::vector<int> path = ijPath;
             path.push_back(j);
             splicedPaths.push_back(path);
         }
     }
     else{
-        Q_FOREACH(const std::vector<int> &ijPath, ijPaths){
-            Q_FOREACH(const std::vector<int> &jkPath, jkPaths){
+        foreach(const std::vector<int> &ijPath, ijPaths){
+            foreach(const std::vector<int> &jkPath, jkPaths){
                 std::vector<int> path = ijPath;
                 path.push_back(j);
                 path.insert(path.end(), jkPath.begin(), jkPath.end());
@@ -237,7 +238,7 @@ bool isUnique(const std::vector<int> &path, const std::vector<std::vector<int> >
     std::vector<int> sortedPath(path.begin(), path.end());
     std::sort(sortedPath.begin(), sortedPath.end());
 
-    Q_FOREACH(const std::vector<int> &ring, sssr){
+    foreach(const std::vector<int> &ring, sssr){
         if(path.size() != ring.size()){
             continue;
         }
@@ -260,7 +261,7 @@ bool isUnique(const std::vector<int> &path, const std::vector<std::vector<int> >
 
     // count number of unique bonds
     std::set<std::pair<int, int> > ringBonds;
-    Q_FOREACH(const std::vector<int> &ring, sssr){
+    foreach(const std::vector<int> &ring, sssr){
 
         // add ring bonds
         for(unsigned int i = 0; i < ring.size()-1; i++){
@@ -383,7 +384,7 @@ QList<Ring *> MolecularGraph::sssr_rpPath(const MolecularGraph *graph)
     std::vector<std::vector<int> > sssr;
     sssr.reserve(ringCount);
 
-    Q_FOREACH(const RingCandidate &candidate, candidates){
+    foreach(const RingCandidate &candidate, candidates){
 
         // odd sized ring
         if(candidate.size() & 1){
@@ -432,10 +433,10 @@ QList<Ring *> MolecularGraph::sssr_rpPath(const MolecularGraph *graph)
 
     // build list of rings
     QList<Ring *> rings;
-    Q_FOREACH(const std::vector<int> &ring, sssr){
+    foreach(const std::vector<int> &ring, sssr){
         QList<Atom *> atoms;
 
-        Q_FOREACH(int atomIndex, ring){
+        foreach(int atomIndex, ring){
             atoms.append(graph->atom(atomIndex));
         }
 

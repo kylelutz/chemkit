@@ -25,6 +25,7 @@
 
 #include "moleculargraph.h"
 
+#include "foreach.h"
 #include "atommapping.h"
 
 namespace chemkit {
@@ -212,14 +213,14 @@ void State::addPair(const std::pair<int, int> &candidate)
     m_sharedState->sourceMapping[sourceAtom] = targetAtom;
     m_sharedState->targetMapping[targetAtom] = sourceAtom;
 
-    Q_FOREACH(int neighbor, m_source->neighbors(sourceAtom)){
+    foreach(int neighbor, m_source->neighbors(sourceAtom)){
         if(!m_sharedState->sourceTerminalSet[neighbor]){
             m_sharedState->sourceTerminalSet[neighbor] = m_size;
             m_sourceTerminalSize++;
         }
     }
 
-    Q_FOREACH(int neighbor, m_target->neighbors(targetAtom)){
+    foreach(int neighbor, m_target->neighbors(targetAtom)){
         if(!m_sharedState->targetTerminalSet[neighbor]){
             m_sharedState->targetTerminalSet[neighbor] = m_size;
             m_targetTerminalSize++;
@@ -237,7 +238,7 @@ void State::backTrack()
         m_sharedState->sourceTerminalSet[addedSourceAtom] = 0;
     }
 
-    Q_FOREACH(int neighbor, m_source->neighbors(addedSourceAtom)){
+    foreach(int neighbor, m_source->neighbors(addedSourceAtom)){
         if(m_sharedState->sourceTerminalSet[neighbor] == m_size){
             m_sharedState->sourceTerminalSet[neighbor] = 0;
         }
@@ -249,7 +250,7 @@ void State::backTrack()
         m_sharedState->targetTerminalSet[addedTargetAtom] = 0;
     }
 
-    Q_FOREACH(int neighbor, m_target->neighbors(addedTargetAtom)){
+    foreach(int neighbor, m_target->neighbors(addedTargetAtom)){
         if(m_sharedState->targetTerminalSet[neighbor] == m_size){
             m_sharedState->targetTerminalSet[neighbor] = 0;
         }
@@ -278,7 +279,7 @@ bool State::isFeasible(const std::pair<int, int> &candidate)
     int sourceNewNeighborCount = 0;
     int targetNewNeighborCount = 0;
 
-    Q_FOREACH(int neighbor, m_source->neighbors(sourceAtom)){
+    foreach(int neighbor, m_source->neighbors(sourceAtom)){
         int sourceBond = m_source->bond(sourceAtom, neighbor);
         int sourceBondLabel = m_source->bondLabel(sourceBond);
 
@@ -302,7 +303,7 @@ bool State::isFeasible(const std::pair<int, int> &candidate)
         }
     }
 
-    Q_FOREACH(int neighbor, m_target->neighbors(targetAtom)){
+    foreach(int neighbor, m_target->neighbors(targetAtom)){
         if(m_sharedState->targetMapping[neighbor] != -1){
             //int sourceNeighbor = m_sharedState->targetMapping[neighbor];
 

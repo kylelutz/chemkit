@@ -25,6 +25,7 @@
 #include "atom.h"
 #include "bond.h"
 #include "ring.h"
+#include "foreach.h"
 #include "molecule.h"
 #include "atommapping.h"
 
@@ -279,7 +280,7 @@ void MolecularGraph::cyclicize()
 
         for(unsigned int i = 0; i < m_atoms.size(); i++){
             if(neighborCount(i) && neighborCount(i) < 2){
-                Q_FOREACH(unsigned int neighbor, neighbors(i)){
+                foreach(unsigned int neighbor, neighbors(i)){
                     removeBond(i, neighbor);
                 }
 
