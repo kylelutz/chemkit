@@ -188,7 +188,7 @@ AminoAcid::AminoAcidType AminoAcid::type() const
 
 /// Returns the name of the amino acid. (e.g. "Tryptophan" or
 /// "Glutamic Acid").
-QString AminoAcid::name() const
+std::string AminoAcid::name() const
 {
     switch(type()){
         case Alanine: return "Alanine";
@@ -220,7 +220,7 @@ QString AminoAcid::name() const
 
 /// Returns the three letter symbol of the amino acid. (e.g. "Trp" or
 /// "Glu").
-QString AminoAcid::symbol() const
+std::string AminoAcid::symbol() const
 {
     switch(type()){
         case Alanine: return "Ala";
