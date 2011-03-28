@@ -37,7 +37,7 @@ class MolecularDescriptorTest : public QObject
 void MolecularDescriptorTest::name()
 {
     MockDescriptor descriptor;
-    QCOMPARE(descriptor.name(), QString("mock"));
+    QCOMPARE(descriptor.name(), std::string("mock"));
 }
 
 QTEST_APPLESS_MAIN(MolecularDescriptorTest)

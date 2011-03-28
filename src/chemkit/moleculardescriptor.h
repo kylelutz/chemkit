@@ -25,9 +25,10 @@
 
 #include "chemkit.h"
 
-#include <QString>
+#include <string>
+
+#include <QList>
 #include <QVariant>
-#include <QStringList>
 
 namespace chemkit {
 
@@ -44,19 +45,19 @@ class CHEMKIT_EXPORT MolecularDescriptor
         virtual ~MolecularDescriptor();
 
         // properties
-        QString name() const;
+        std::string name() const;
 
         // descriptor
         virtual QVariant value(const Molecule *molecule) const;
 
         // static methods
-        static MolecularDescriptor* create(const QString &name);
-        static QStringList descriptors();
-        static void registerDescriptor(const QString &name, CreateFunction function);
-        static void unregisterDescriptor(const QString &name, CreateFunction function);
+        static MolecularDescriptor* create(const std::string &name);
+        static QList<std::string> descriptors();
+        static void registerDescriptor(const std::string &name, CreateFunction function);
+        static void unregisterDescriptor(const std::string &name, CreateFunction function);
 
     protected:
-        MolecularDescriptor(const QString &name);
+        MolecularDescriptor(const std::string &name);
 
     private:
         MolecularDescriptorPrivate* const d;

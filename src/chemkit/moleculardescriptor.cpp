@@ -22,13 +22,17 @@
 
 #include "moleculardescriptor.h"
 
+#include <map>
+#include <boost/algorithm/string.hpp>
+
+#include "foreach.h"
 #include "pluginmanager.h"
 
 namespace chemkit {
 
 namespace {
 
-QHash<QString, MolecularDescriptor::CreateFunction> pluginDescriptors;
+std::map<std::string, MolecularDescriptor::CreateFunction> descriptorPlugins;
 
 } // end anonymous namespace
 
@@ -36,7 +40,7 @@ QHash<QString, MolecularDescriptor::CreateFunction> pluginDescriptors;
 class MolecularDescriptorPrivate
 {
     public:
-        QString name;
+        std::string name;
 };
 
 // === MolecularDescriptor ================================================= //
@@ -73,7 +77,7 @@ class MolecularDescriptorPrivate
 
 // --- Construction and Destruction ---------------------------------------- //
 /// Creates a new molecular descriptor object.
-MolecularDescriptor::MolecularDescriptor(const QString &name)
+MolecularDescriptor::MolecularDescriptor(const std::string &name)
     : d(new MolecularDescriptorPrivate)
 {
     d->name = name;
@@ -87,7 +91,7 @@ MolecularDescriptor::~MolecularDescriptor()
 
 // --- Properties ---------------------------------------------------------- //
 /// Returns the name of the descriptor.
-QString MolecularDescriptor::name() const
+std::string MolecularDescriptor::name() const
 {
     return d->name;
 }
@@ -103,33 +107,41 @@ QVariant MolecularDescriptor::value(const Molecule *molecule) const
 
 // --- Static Methods ------------------------------------------------------ //
 /// Creates a new molecular descriptor.
-MolecularDescriptor* MolecularDescriptor::create(const QString &name)
+MolecularDescriptor* MolecularDescriptor::create(const std::string &name)
 {
     // ensure default plugins are loaded
     PluginManager::instance()->loadDefaultPlugins();
 
-    CreateFunction createFunction = pluginDescriptors.value(name.toLower());
-    if(createFunction)
-        return createFunction();
+    std::map<std::string, CreateFunction>::iterator location = descriptorPlugins.find(boost::algorithm::to_lower_copy(name));
+    if(location != descriptorPlugins.end()){
+        return location->second();
+    }
 
     return 0;
 }
 
 /// Returns a list of available molecular descriptors.
-QStringList MolecularDescriptor::descriptors()
+QList<std::string> MolecularDescriptor::descriptors()
 {
     // ensure default plugins are loaded
     PluginManager::instance()->loadDefaultPlugins();
 
-    return pluginDescriptors.keys();
+    QList<std::string> descriptors;
+
+    std::pair<std::string, CreateFunction> plugin;
+    foreach(plugin, descriptorPlugins){
+        descriptors.append(plugin.first);
+    }
+
+    return descriptors;
 }
 
-void MolecularDescriptor::registerDescriptor(const QString &name, CreateFunction function)
+void MolecularDescriptor::registerDescriptor(const std::string &name, CreateFunction function)
 {
-    pluginDescriptors[name.toLower()] = function;
+    descriptorPlugins[boost::algorithm::to_lower_copy(name)] = function;
 }
 
-void MolecularDescriptor::unregisterDescriptor(const QString &name, CreateFunction function)
+void MolecularDescriptor::unregisterDescriptor(const std::string &name, CreateFunction function)
 {
     Q_UNUSED(name);
     Q_UNUSED(function);
