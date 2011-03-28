@@ -38,7 +38,7 @@ class CHEMKIT_EXPORT PluginManager : public QObject
 
     public:
         // properties
-        Plugin* plugin(const QString &name) const;
+        Plugin* plugin(const std::string &name) const;
         QList<Plugin *> plugins() const;
         int pluginCount() const;
 

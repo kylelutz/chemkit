@@ -28,7 +28,7 @@ namespace chemkit {
 class PluginPrivate
 {
     public:
-        QString name;
+        std::string name;
         QString fileName;
 };
 
@@ -41,7 +41,7 @@ class PluginPrivate
 /// \sa PluginManager
 
 // --- Construction and Destruction ---------------------------------------- //
-Plugin::Plugin(const QString &name)
+Plugin::Plugin(const std::string &name)
     : QObject(),
       d(new PluginPrivate)
 {
@@ -55,14 +55,14 @@ Plugin::~Plugin()
 
 // --- Properties ---------------------------------------------------------- //
 /// Returns the name of the plugin.
-QString Plugin::name() const
+std::string Plugin::name() const
 {
     return d->name;
 }
 
 QString Plugin::dataPath() const
 {
-    return QFileInfo(d->fileName).path() + "/data/" + d->name + "/";
+    return QFileInfo(d->fileName).path() + "/data/" + d->name.c_str() + "/";
 }
 
 // --- Internal Methods ---------------------------------------------------- //

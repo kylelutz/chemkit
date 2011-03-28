@@ -25,6 +25,8 @@
 
 #include "chemkit.h"
 
+#include <string>
+
 #include <QtCore>
 
 namespace chemkit {
@@ -37,12 +39,12 @@ class CHEMKIT_EXPORT Plugin : public QObject
 
     public:
         // properties
-        QString name() const;
+        std::string name() const;
         QString dataPath() const;
 
     protected:
         // construction and destruction
-        Plugin(const QString &name);
+        Plugin(const std::string &name);
         virtual ~Plugin();
 
     private:

@@ -63,7 +63,7 @@ PluginManager::~PluginManager()
 // --- Properties ---------------------------------------------------------- //
 /// Returns the plugin with \p name. Returns \c 0 if no plugin with
 // \p name is loaded.
-Plugin* PluginManager::plugin(const QString &name) const
+Plugin* PluginManager::plugin(const std::string &name) const
 {
     Q_FOREACH(Plugin *plugin, d->plugins){
         if(plugin->name() == name){
