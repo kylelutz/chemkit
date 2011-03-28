@@ -45,6 +45,7 @@ class CHEMKIT_EXPORT Plugin : public QObject
         Plugin(const QString &name);
         virtual ~Plugin();
 
+    private:
         void setFileName(const QString &fileName);
 
         friend class PluginManager;
