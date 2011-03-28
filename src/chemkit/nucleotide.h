@@ -60,8 +60,8 @@ class CHEMKIT_EXPORT Nucleotide : public Residue
         void setType(const QString &symbol);
         NucleotideType type() const;
         char letter() const;
-        QString symbol() const;
-        QString name() const;
+        std::string symbol() const;
+        std::string name() const;
         void setSugarType(SugarType type);
         SugarType sugarType() const;
         bool isPurine() const;

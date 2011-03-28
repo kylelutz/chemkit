@@ -74,13 +74,13 @@ char Nucleotide::letter() const
 
 /// Returns the single letter symbol of the nucleotide (e.g. "G" or
 /// "A"). Same as letter().
-QString Nucleotide::symbol() const
+std::string Nucleotide::symbol() const
 {
-    return QString(QChar(letter()));
+    return std::string(1, letter());
 }
 
 /// Returns the name of the nucleotide (e.g. "Guanine" or "Adenine").
-QString Nucleotide::name() const
+std::string Nucleotide::name() const
 {
     switch(d->type){
         case Adenine: return "Adenine";
