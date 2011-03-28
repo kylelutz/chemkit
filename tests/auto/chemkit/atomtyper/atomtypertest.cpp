@@ -68,7 +68,7 @@ void AtomTyperTest::name()
 {
     chemkit::AtomTyper *typer = chemkit::AtomTyper::create("mock");
     QVERIFY(typer != 0);
-    QCOMPARE(typer->name(), QString("mock"));
+    QCOMPARE(typer->name(), std::string("mock"));
     delete typer;
 }
 

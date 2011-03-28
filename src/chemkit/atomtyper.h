@@ -3,6 +3,8 @@
 
 #include "chemkit.h"
 
+#include <string>
+
 #include <QtCore>
 
 namespace chemkit {
@@ -21,7 +23,7 @@ class CHEMKIT_EXPORT AtomTyper
         virtual ~AtomTyper();
 
         // properties
-        QString name() const;
+        std::string name() const;
         void setMolecule(const Molecule *molecule);
         const Molecule* molecule() const;
 
@@ -34,13 +36,13 @@ class CHEMKIT_EXPORT AtomTyper
         virtual QString typeString(const Atom *atom) const;
 
         // static methods
-        static AtomTyper* create(const QString &name);
-        static QStringList typers();
-        static void registerTyper(const QString &name, CreateFunction function);
-        static void unregisterTyper(const QString &name, CreateFunction function);
+        static AtomTyper* create(const std::string &name);
+        static QList<std::string> typers();
+        static void registerTyper(const std::string &name, CreateFunction function);
+        static void unregisterTyper(const std::string &name, CreateFunction function);
 
     protected:
-        AtomTyper(const QString &name);
+        AtomTyper(const std::string &name);
         virtual void assignTypes(const Molecule *molecule);
 
     private:

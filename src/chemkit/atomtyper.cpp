@@ -22,7 +22,11 @@
 
 #include "atomtyper.h"
 
+#include <map>
+#include <boost/algorithm/string.hpp>
+
 #include "atom.h"
+#include "foreach.h"
 #include "molecule.h"
 #include "pluginmanager.h"
 
@@ -30,7 +34,7 @@ namespace chemkit {
 
 namespace {
 
-QHash<QString, AtomTyper::CreateFunction> typerPlugins;
+std::map<std::string, AtomTyper::CreateFunction> typerPlugins;
 
 } // end anonymous namespace
 
@@ -38,7 +42,7 @@ QHash<QString, AtomTyper::CreateFunction> typerPlugins;
 class AtomTyperPrivate
 {
     public:
-        QString name;
+        std::string name;
         const Molecule *molecule;
 };
 
@@ -50,7 +54,7 @@ class AtomTyperPrivate
 /// To create atom typer objects use the AtomTyper::create() method.
 
 // --- Construction and Destruction ---------------------------------------- //
-AtomTyper::AtomTyper(const QString &name)
+AtomTyper::AtomTyper(const std::string &name)
     : d(new AtomTyperPrivate)
 {
     d->name = name;
@@ -65,7 +69,7 @@ AtomTyper::~AtomTyper()
 
 // --- Properties ---------------------------------------------------------- //
 /// Returns the name of the atom typer.
-QString AtomTyper::name() const
+std::string AtomTyper::name() const
 {
     return d->name;
 }
@@ -126,37 +130,48 @@ QString AtomTyper::typeString(const Atom *atom) const
 // --- Static Methods ------------------------------------------------------ //
 /// Creates and returns a new atom typer with \p name. Returns \c 0
 /// if \p name is invalid.
-AtomTyper* AtomTyper::create(const QString &name)
+AtomTyper* AtomTyper::create(const std::string &name)
 {
     // ensure default plugins are loaded
     PluginManager::instance()->loadDefaultPlugins();
 
-    CreateFunction createFunction = typerPlugins.value(name.toLower());
-    if(createFunction){
-        return createFunction();
+    std::map<std::string, CreateFunction>::iterator location = typerPlugins.find(boost::algorithm::to_lower_copy(name));
+    if(location != typerPlugins.end()){
+        return location->second();
     }
 
     return 0;
 }
 
 /// Returns a list of names of all the available atom typers.
-QStringList AtomTyper::typers()
+QList<std::string> AtomTyper::typers()
 {
     // ensure default plugins are loaded
     PluginManager::instance()->loadDefaultPlugins();
 
-    return typerPlugins.keys();
+    QList<std::string> typers;
+
+    std::pair<std::string, CreateFunction> plugin;
+    foreach(plugin, typerPlugins){
+        typers.append(plugin.first);
+    }
+
+    return typers;
 }
 
-void AtomTyper::registerTyper(const QString &name, CreateFunction function)
+void AtomTyper::registerTyper(const std::string &name, CreateFunction function)
 {
-    typerPlugins.insert(name.toLower(), function);
+    typerPlugins[boost::algorithm::to_lower_copy(name)] = function;
 }
 
-void AtomTyper::unregisterTyper(const QString &name, CreateFunction function)
+void AtomTyper::unregisterTyper(const std::string &name, CreateFunction function)
 {
-    if(typerPlugins.value(name.toLower()) == function){
-        typerPlugins.remove(name.toLower());
+    std::map<std::string, CreateFunction>::iterator location = typerPlugins.find(boost::algorithm::to_lower_copy(name));
+
+    if(location != typerPlugins.end()){
+        if(location->second == function){
+            typerPlugins.erase(location);
+        }
     }
 }
 
