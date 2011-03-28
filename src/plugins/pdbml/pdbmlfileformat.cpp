@@ -131,7 +131,7 @@ bool PdbmlFileFormat::read(QIODevice *iodev, chemkit::PolymerFile *file)
 
                         if(sequenceNumber != currentSequenceNumber){
                             residue = new chemkit::AminoAcid(polymer);
-                            residue->setType(residueSymbol);
+                            residue->setType(residueSymbol.toStdString());
                             chain->addResidue(residue);
                             currentSequenceNumber = sequenceNumber;
                         }

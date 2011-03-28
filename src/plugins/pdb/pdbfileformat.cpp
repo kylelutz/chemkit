@@ -380,7 +380,7 @@ void PdbFile::writePolymerFile(chemkit::PolymerFile *file)
                 aminoAcid = new chemkit::AminoAcid(polymer);
                 residue = aminoAcid;
 
-                aminoAcid->setType(pdbResidue->name());
+                aminoAcid->setType(pdbResidue->name().toStdString());
             }
             else{
                 nucleotide = new chemkit::Nucleotide(polymer);

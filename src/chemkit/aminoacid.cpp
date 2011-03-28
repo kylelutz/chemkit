@@ -22,6 +22,8 @@
 
 #include "aminoacid.h"
 
+#include <boost/algorithm/string.hpp>
+
 #include "atom.h"
 
 namespace chemkit {
@@ -81,11 +83,11 @@ void AminoAcid::setType(AminoAcidType type)
 
 /// Sets the amino acid's type from its single letter symbol (e.g.
 /// "W", "E") or its three letter symbol (e.g. "Trp", "Glu").
-void AminoAcid::setType(const QString &letterOrSymbol)
+void AminoAcid::setType(const std::string &letterOrSymbol)
 {
     // set by 1-character letter
     if(letterOrSymbol.length() == 1){
-        QChar letter = letterOrSymbol.at(0).toUpper();
+        char letter = std::toupper(letterOrSymbol[0]);
 
         if(letter == 'A')
             setType(Alanine);
@@ -133,7 +135,7 @@ void AminoAcid::setType(const QString &letterOrSymbol)
 
     // set by 3-character symbol
     else if(letterOrSymbol.length() == 3){
-        QString symbol = letterOrSymbol.toUpper();
+        std::string symbol = boost::algorithm::to_upper_copy(letterOrSymbol);
 
         if(symbol == "ALA")
             setType(Alanine);
