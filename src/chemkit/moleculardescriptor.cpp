@@ -35,8 +35,8 @@ QHash<QString, MolecularDescriptor::CreateFunction> pluginDescriptors;
 // === MolecularDescriptorPrivate ========================================== //
 class MolecularDescriptorPrivate
 {
-	public:
-		QString name;
+    public:
+        QString name;
 };
 
 // === MolecularDescriptor ================================================= //
@@ -74,31 +74,31 @@ class MolecularDescriptorPrivate
 // --- Construction and Destruction ---------------------------------------- //
 /// Creates a new molecular descriptor object.
 MolecularDescriptor::MolecularDescriptor(const QString &name)
-	: d(new MolecularDescriptorPrivate)
+    : d(new MolecularDescriptorPrivate)
 {
-	d->name = name;
+    d->name = name;
 }
 
 /// Destroys the molecular descriptor object.
 MolecularDescriptor::~MolecularDescriptor()
 {
-	delete d;
+    delete d;
 }
 
 // --- Properties ---------------------------------------------------------- //
 /// Returns the name of the descriptor.
 QString MolecularDescriptor::name() const
 {
-	return d->name;
+    return d->name;
 }
 
 // --- Descriptor ---------------------------------------------------------- //
 /// Calculates the value of the descriptor for \p molecule.
 QVariant MolecularDescriptor::value(const Molecule *molecule) const
 {
-	Q_UNUSED(molecule);
+    Q_UNUSED(molecule);
 
-	return QVariant();
+    return QVariant();
 }
 
 // --- Static Methods ------------------------------------------------------ //
