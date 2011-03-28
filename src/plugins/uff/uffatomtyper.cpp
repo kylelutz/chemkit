@@ -39,7 +39,7 @@ UffAtomTyper::~UffAtomTyper()
 // --- Types --------------------------------------------------------------- //
 std::string UffAtomTyper::typeString(int index) const
 {
-    return m_types.value(index, 0);
+    return m_types.value(index, std::string());
 }
 
 std::string UffAtomTyper::typeString(const chemkit::Atom *atom) const
