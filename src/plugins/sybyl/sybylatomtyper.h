@@ -30,13 +30,13 @@ class SybylAtomTyper : public chemkit::AtomTyper
         ~SybylAtomTyper();
 
         // types
-        QString typeString(int index) const;
-        QString typeString(const chemkit::Atom *atom) const;
+        std::string typeString(int index) const;
+        std::string typeString(const chemkit::Atom *atom) const;
 
     protected:
-        QString atomType(const chemkit::Atom *atom) const;
+        std::string atomType(const chemkit::Atom *atom) const;
         void assignTypes(const chemkit::Molecule *molecule);
 
     private:
-        QVector<QString> m_types;
+        QVector<std::string> m_types;
 };

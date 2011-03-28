@@ -68,7 +68,7 @@ bool UffForceField::setup()
             chemkit::ForceFieldAtom *forceFieldAtom = new chemkit::ForceFieldAtom(this, atom);
             atoms[atom] = forceFieldAtom;
             addAtom(forceFieldAtom);
-            forceFieldAtom->setType(typer.typeString(atom));
+            forceFieldAtom->setType(typer.typeString(atom).c_str());
         }
 
         chemkit::ForceFieldInteractions interactions(molecule, this);

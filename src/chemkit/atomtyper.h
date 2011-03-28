@@ -32,8 +32,8 @@ class CHEMKIT_EXPORT AtomTyper
         virtual QVariant type(const Atom *atom) const;
         virtual int typeNumber(int index) const;
         virtual int typeNumber(const Atom *atom) const;
-        virtual QString typeString(int index) const;
-        virtual QString typeString(const Atom *atom) const;
+        virtual std::string typeString(int index) const;
+        virtual std::string typeString(const Atom *atom) const;
 
         // static methods
         static AtomTyper* create(const std::string &name);

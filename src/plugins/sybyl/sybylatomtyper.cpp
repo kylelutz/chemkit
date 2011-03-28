@@ -36,18 +36,18 @@ SybylAtomTyper::~SybylAtomTyper()
 }
 
 // --- Types --------------------------------------------------------------- //
-QString SybylAtomTyper::typeString(int index) const
+std::string SybylAtomTyper::typeString(int index) const
 {
     return m_types.value(index);
 }
 
-QString SybylAtomTyper::typeString(const chemkit::Atom *atom) const
+std::string SybylAtomTyper::typeString(const chemkit::Atom *atom) const
 {
     return typeString(atom->index());
 }
 
 // --- Internal Methods ---------------------------------------------------- //
-QString SybylAtomTyper::atomType(const chemkit::Atom *atom) const
+std::string SybylAtomTyper::atomType(const chemkit::Atom *atom) const
 {
     if(atom->is(chemkit::Atom::Hydrogen)){
         return "H"; // hydrogen
@@ -190,7 +190,7 @@ QString SybylAtomTyper::atomType(const chemkit::Atom *atom) const
         return "I"; // iodine
     }
 
-    return QString();
+    return std::string();
 }
 
 void SybylAtomTyper::assignTypes(const chemkit::Molecule *molecule)
@@ -200,7 +200,7 @@ void SybylAtomTyper::assignTypes(const chemkit::Molecule *molecule)
         return;
     }
 
-    m_types = QVector<QString>(molecule->atomCount());
+    m_types = QVector<std::string>(molecule->atomCount());
 
     for(int i = 0; i < molecule->atomCount(); i++){
         m_types[i] = atomType(molecule->atom(i));

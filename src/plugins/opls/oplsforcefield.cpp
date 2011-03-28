@@ -85,7 +85,7 @@ bool OplsForceField::setupMolecule(const chemkit::Molecule *molecule)
 
     foreach(const chemkit::Atom *atom, molecule->atoms()){
         chemkit::ForceFieldAtom *forceFieldAtom = new chemkit::ForceFieldAtom(this, atom);
-        forceFieldAtom->setType(typer.typeString(atom));
+        forceFieldAtom->setType(typer.typeString(atom).c_str());
         addAtom(forceFieldAtom);
     }
 

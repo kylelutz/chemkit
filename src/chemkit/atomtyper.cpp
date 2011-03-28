@@ -116,15 +116,15 @@ int AtomTyper::typeNumber(const Atom *atom) const
 }
 
 /// Returns the symbolic type for the atom at \p index as a string.
-QString AtomTyper::typeString(int index) const
+std::string AtomTyper::typeString(int index) const
 {
-    return type(index).toString();
+    return type(index).toString().toStdString();
 }
 
 /// Returns the symbolic type for \p atom as a string.
-QString AtomTyper::typeString(const Atom *atom) const
+std::string AtomTyper::typeString(const Atom *atom) const
 {
-    return type(atom).toString();
+    return type(atom).toString().toStdString();
 }
 
 // --- Static Methods ------------------------------------------------------ //

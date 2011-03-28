@@ -36,7 +36,7 @@ class OplsAtomTyper : public chemkit::AtomTyper
 
         // types
         int typeNumber(const chemkit::Atom *atom) const;
-        QString typeString(const chemkit::Atom *atom) const;
+        std::string typeString(const chemkit::Atom *atom) const;
 
     protected:
         void assignTypes(const chemkit::Molecule *molecule);

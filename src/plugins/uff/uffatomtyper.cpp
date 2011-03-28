@@ -37,18 +37,18 @@ UffAtomTyper::~UffAtomTyper()
 }
 
 // --- Types --------------------------------------------------------------- //
-QString UffAtomTyper::typeString(int index) const
+std::string UffAtomTyper::typeString(int index) const
 {
     return m_types.value(index, 0);
 }
 
-QString UffAtomTyper::typeString(const chemkit::Atom *atom) const
+std::string UffAtomTyper::typeString(const chemkit::Atom *atom) const
 {
     return typeString(atom->index());
 }
 
 // --- Internal Methods ---------------------------------------------------- //
-QString UffAtomTyper::atomType(const chemkit::Atom *atom) const
+std::string UffAtomTyper::atomType(const chemkit::Atom *atom) const
 {
     if(atom->is(chemkit::Atom::Hydrogen)){
         if(atom->isTerminal()){
@@ -215,7 +215,7 @@ QString UffAtomTyper::atomType(const chemkit::Atom *atom) const
         return "I_";
     }
 
-    return QString();
+    return std::string();
 }
 
 void UffAtomTyper::assignTypes(const chemkit::Molecule *molecule)
@@ -225,7 +225,7 @@ void UffAtomTyper::assignTypes(const chemkit::Molecule *molecule)
         return;
     }
 
-    m_types = QVector<QString>(molecule->atomCount());
+    m_types = QVector<std::string>(molecule->atomCount());
 
     for(int index = 0; index < molecule->size(); index++){
         const chemkit::Atom *atom = molecule->atom(index);

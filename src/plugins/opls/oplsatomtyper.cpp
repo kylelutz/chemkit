@@ -44,9 +44,9 @@ int OplsAtomTyper::typeNumber(const chemkit::Atom *atom) const
     return m_typeNumbers[atom->index()];
 }
 
-QString OplsAtomTyper::typeString(const chemkit::Atom *atom) const
+std::string OplsAtomTyper::typeString(const chemkit::Atom *atom) const
 {
-    return QString::number(typeNumber(atom));
+    return QString::number(typeNumber(atom)).toStdString();
 }
 
 void OplsAtomTyper::assignTypes(const chemkit::Molecule *molecule)
