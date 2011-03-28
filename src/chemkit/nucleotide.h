@@ -57,7 +57,7 @@ class CHEMKIT_EXPORT Nucleotide : public Residue
 
         // properties
         void setType(NucleotideType type);
-        void setType(const QString &symbol);
+        void setType(const std::string &symbol);
         NucleotideType type() const;
         char letter() const;
         std::string symbol() const;

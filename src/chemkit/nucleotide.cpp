@@ -102,19 +102,19 @@ void Nucleotide::setType(Nucleotide::NucleotideType type)
 }
 
 /// Sets the nucleotide type from its one letter symbol.
-void Nucleotide::setType(const QString &letter)
+void Nucleotide::setType(const std::string &symbol)
 {
-    if(letter == "A")
+    if(symbol == "A")
         setType(Adenine);
-    else if(letter == "G")
+    else if(symbol == "G")
         setType(Guanine);
-    else if(letter == "C")
+    else if(symbol == "C")
         setType(Cytosine);
-    else if(letter == "T")
+    else if(symbol == "T")
         setType(Thymine);
-    else if(letter == "U")
+    else if(symbol == "U")
         setType(Uracil);
-    else if(letter == "X")
+    else if(symbol == "X")
         setType(UnspecifiedType);
 }
 
