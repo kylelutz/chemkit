@@ -263,9 +263,9 @@ std::string Molecule::formula(const std::string &format) const
 /// \endcode
 ///
 /// \see MolecularDescriptor
-QVariant Molecule::descriptor(const QString &name) const
+QVariant Molecule::descriptor(const std::string &name) const
 {
-    QScopedPointer<MolecularDescriptor> descriptor(MolecularDescriptor::create(name.toStdString()));
+    QScopedPointer<MolecularDescriptor> descriptor(MolecularDescriptor::create(name));
     if(!descriptor){
         return QVariant();
     }

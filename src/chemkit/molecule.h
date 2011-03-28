@@ -87,7 +87,7 @@ class CHEMKIT_EXPORT Molecule
         std::string name() const;
         std::string formula() const;
         std::string formula(const std::string &format) const;
-        QVariant descriptor(const QString &name) const;
+        QVariant descriptor(const std::string &name) const;
         int size() const;
         bool isEmpty() const;
         Float mass() const;
