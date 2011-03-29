@@ -28,17 +28,11 @@
 
 namespace chemkit {
 
-namespace {
-
-QHash<QString, PartialChargePredictor::CreateFunction> predictorPlugins;
-
-} // end anonymous namespace
-
 // === PartialChargePredictorPrivate ======================================= //
 class PartialChargePredictorPrivate
 {
     public:
-        QString name;
+        std::string name;
         const Molecule *molecule;
 };
 
@@ -49,7 +43,7 @@ class PartialChargePredictorPrivate
 ///        interface to partial charge prediction algorithms.
 
 // --- Construction and Destruction ---------------------------------------- //
-PartialChargePredictor::PartialChargePredictor(const QString &name)
+PartialChargePredictor::PartialChargePredictor(const std::string &name)
     : d(new PartialChargePredictorPrivate)
 {
     d->name = name;
@@ -64,7 +58,7 @@ PartialChargePredictor::~PartialChargePredictor()
 
 // --- Properties ---------------------------------------------------------- //
 /// Returns the name of the partial charge predictor.
-QString PartialChargePredictor::name() const
+std::string PartialChargePredictor::name() const
 {
     return d->name;
 }
@@ -106,41 +100,18 @@ void PartialChargePredictor::assignPartialCharges(const Molecule *molecule)
 // --- Static Methods ------------------------------------------------------ //
 /// Creates a new partial charge predictor with \p name. Returns \c 0
 /// if \p name is invalid.
-PartialChargePredictor* PartialChargePredictor::create(const QString &name)
+PartialChargePredictor* PartialChargePredictor::create(const std::string &name)
 {
-    // ensure default plugins are loaded
-    PluginManager::instance()->loadDefaultPlugins();
-
-    CreateFunction createFunction = predictorPlugins.value(name.toLower());
-    if(createFunction){
-        return createFunction();
-    }
-
-    return 0;
+    return PluginManager::instance()->createPluginClass<PartialChargePredictor>(name);
 }
 
 /// Returns a list of available partial charge predictors.
-QStringList PartialChargePredictor::predictors()
+std::vector<std::string> PartialChargePredictor::predictors()
 {
-    // ensure default plugins are loaded
-    PluginManager::instance()->loadDefaultPlugins();
-
-    return predictorPlugins.keys();
+    return PluginManager::instance()->pluginClassNames<PartialChargePredictor>();
 }
 
-void PartialChargePredictor::registerPredictor(const QString &name, CreateFunction function)
-{
-    predictorPlugins.insert(name.toLower(), function);
-}
-
-void PartialChargePredictor::unregisterPredictor(const QString &name, CreateFunction function)
-{
-    if(predictorPlugins.value(name.toLower()) == function){
-        predictorPlugins.remove(name.toLower());
-    }
-}
-
-bool PartialChargePredictor::predictPartialCharges(Molecule *molecule, const QString &predictorName)
+bool PartialChargePredictor::predictPartialCharges(Molecule *molecule, const std::string &predictorName)
 {
     PartialChargePredictor *predictor = create(predictorName);
     if(!predictor){

@@ -25,7 +25,8 @@
 
 #include "chemkit.h"
 
-#include <QtCore>
+#include <string>
+#include <vector>
 
 namespace chemkit {
 
@@ -43,7 +44,7 @@ class CHEMKIT_EXPORT PartialChargePredictor
         virtual ~PartialChargePredictor();
 
         // properties
-        QString name() const;
+        std::string name() const;
         void setMolecule(const Molecule *molecule);
         const Molecule* molecule() const;
 
@@ -52,14 +53,12 @@ class CHEMKIT_EXPORT PartialChargePredictor
         virtual Float partialCharge(const Atom *atom) const;
 
         // static methods
-        static PartialChargePredictor* create(const QString &name);
-        static QStringList predictors();
-        static void registerPredictor(const QString &name, CreateFunction function);
-        static void unregisterPredictor(const QString &name, CreateFunction function);
-        static bool predictPartialCharges(Molecule *molecule, const QString &predictorName);
+        static PartialChargePredictor* create(const std::string &name);
+        static std::vector<std::string> predictors();
+        static bool predictPartialCharges(Molecule *molecule, const std::string &predictorName);
 
     protected:
-        PartialChargePredictor(const QString &name);
+        PartialChargePredictor(const std::string &name);
         virtual void assignPartialCharges(const Molecule *molecule);
 
     private:

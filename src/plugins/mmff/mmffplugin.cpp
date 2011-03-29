@@ -31,9 +31,9 @@ MmffPlugin::MmffPlugin()
     : chemkit::Plugin("mmff")
 {
     registerPluginClass<chemkit::AtomTyper>("mmff", createMmffAtomTyper);
+    registerPluginClass<chemkit::PartialChargePredictor>("mmff", createMmffPartialChargePredictor);
 
     chemkit::ForceField::registerForceField("mmff", &createMmffForceField);
-    chemkit::PartialChargePredictor::registerPredictor("mmff", createMmffPartialChargePredictor);
 }
 
 MmffPlugin::~MmffPlugin()
@@ -43,9 +43,9 @@ MmffPlugin::~MmffPlugin()
     }
 
     unregisterPluginClass<chemkit::AtomTyper>("mmff");
+    unregisterPluginClass<chemkit::PartialChargePredictor>("mmff");
 
     chemkit::ForceField::unregisterForceField("mmff", createMmffForceField);
-    chemkit::PartialChargePredictor::unregisterPredictor("mmff", createMmffPartialChargePredictor);
 }
 
 void MmffPlugin::storeParameters(const QString &name, MmffParametersData *parameters)

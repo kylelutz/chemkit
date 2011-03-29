@@ -47,8 +47,10 @@ void MmffTest::initTestCase()
     std::vector<std::string> typers = chemkit::AtomTyper::typers();
     QVERIFY(std::find(typers.begin(), typers.end(), "mmff") != typers.end());
 
+    std::vector<std::string> predictors = chemkit::PartialChargePredictor::predictors();
+    QVERIFY(std::find(predictors.begin(), predictors.end(), "mmff") != predictors.end());
+
     QVERIFY(chemkit::ForceField::forceFields().contains("mmff"));
-    QVERIFY(chemkit::PartialChargePredictor::predictors().contains("mmff"));
 }
 
 // The validate() method validates the MMFF force field using the MMFF94

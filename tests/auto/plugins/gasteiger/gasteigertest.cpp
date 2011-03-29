@@ -22,6 +22,8 @@
 
 #include <QtTest>
 
+#include <algorithm>
+
 #include <chemkit/molecule.h>
 #include <chemkit/partialchargepredictor.h>
 
@@ -40,14 +42,15 @@ class GasteigerTest : public QObject
 
 void GasteigerTest::initTestCase()
 {
-    QVERIFY(chemkit::PartialChargePredictor::predictors().contains("gasteiger"));
+    std::vector<std::string> predictors = chemkit::PartialChargePredictor::predictors();
+    QVERIFY(std::find(predictors.begin(), predictors.end(), "gasteiger") != predictors.end());
 }
 
 void GasteigerTest::name()
 {
     chemkit::PartialChargePredictor *predictor = chemkit::PartialChargePredictor::create("gasteiger");
     QVERIFY(predictor != 0);
-    QCOMPARE(predictor->name(), QString("gasteiger"));
+    QCOMPARE(predictor->name(), std::string("gasteiger"));
 
     delete predictor;
 }
