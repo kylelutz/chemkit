@@ -22,6 +22,8 @@
 
 #include <QtTest>
 
+#include <algorithm>
+
 #include <chemkit/molecule.h>
 #include <chemkit/atomtyper.h>
 
@@ -31,9 +33,6 @@ class AtomTyperTest : public QObject
 {
     Q_OBJECT
 
-    private:
-        static chemkit::AtomTyper* createMockTyper();
-
     private slots:
         void initTestCase();
         void create();
@@ -41,17 +40,17 @@ class AtomTyperTest : public QObject
         void molecule();
         void type();
         void cleanupTestCase();
-};
 
-chemkit::AtomTyper* AtomTyperTest::createMockTyper()
-{
-    return new MockAtomTyper;
-}
+    private:
+        MockAtomTyperPlugin *m_plugin;
+};
 
 void AtomTyperTest::initTestCase()
 {
-    chemkit::AtomTyper::registerTyper("mock", createMockTyper);
-    QVERIFY(chemkit::AtomTyper::typers().contains("mock") == true);
+    m_plugin = new MockAtomTyperPlugin;
+
+    std::vector<std::string> typers = chemkit::AtomTyper::typers();
+    QVERIFY(std::find(typers.begin(), typers.end(), "mock") != typers.end());
 }
 
 void AtomTyperTest::create()
@@ -105,8 +104,10 @@ void AtomTyperTest::type()
 
 void AtomTyperTest::cleanupTestCase()
 {
-    chemkit::AtomTyper::unregisterTyper("mock", createMockTyper);
-    QVERIFY(chemkit::AtomTyper::typers().contains("mock") == false);
+    delete m_plugin;
+
+    std::vector<std::string> typers = chemkit::AtomTyper::typers();
+    QVERIFY(std::find(typers.begin(), typers.end(), "mock") == typers.end());
 }
 
 QTEST_APPLESS_MAIN(AtomTyperTest)

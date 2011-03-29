@@ -28,13 +28,15 @@
 UffPlugin::UffPlugin()
     : chemkit::Plugin("uff")
 {
-    chemkit::AtomTyper::registerTyper("uff", createUffAtomTyper);
+    registerPluginClass<chemkit::AtomTyper>("uff", createUffAtomTyper);
+
     chemkit::ForceField::registerForceField("uff", &createUffForceField);
 }
 
 UffPlugin::~UffPlugin()
 {
-    chemkit::AtomTyper::unregisterTyper("uff", createUffAtomTyper);
+    unregisterPluginClass<chemkit::AtomTyper>("uff");
+
     chemkit::ForceField::unregisterForceField("uff", createUffForceField);
 }
 

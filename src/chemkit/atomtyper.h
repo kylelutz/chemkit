@@ -37,9 +37,7 @@ class CHEMKIT_EXPORT AtomTyper
 
         // static methods
         static AtomTyper* create(const std::string &name);
-        static QList<std::string> typers();
-        static void registerTyper(const std::string &name, CreateFunction function);
-        static void unregisterTyper(const std::string &name, CreateFunction function);
+        static std::vector<std::string> typers();
 
     protected:
         AtomTyper(const std::string &name);

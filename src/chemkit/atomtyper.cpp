@@ -22,21 +22,12 @@
 
 #include "atomtyper.h"
 
-#include <map>
-#include <boost/algorithm/string.hpp>
-
 #include "atom.h"
 #include "foreach.h"
 #include "molecule.h"
 #include "pluginmanager.h"
 
 namespace chemkit {
-
-namespace {
-
-std::map<std::string, AtomTyper::CreateFunction> typerPlugins;
-
-} // end anonymous namespace
 
 // === AtomTyperPrivate ==================================================== //
 class AtomTyperPrivate
@@ -132,47 +123,13 @@ std::string AtomTyper::typeString(const Atom *atom) const
 /// if \p name is invalid.
 AtomTyper* AtomTyper::create(const std::string &name)
 {
-    // ensure default plugins are loaded
-    PluginManager::instance()->loadDefaultPlugins();
-
-    std::map<std::string, CreateFunction>::iterator location = typerPlugins.find(boost::algorithm::to_lower_copy(name));
-    if(location != typerPlugins.end()){
-        return location->second();
-    }
-
-    return 0;
+    return PluginManager::instance()->createPluginClass<AtomTyper>(name);
 }
 
 /// Returns a list of names of all the available atom typers.
-QList<std::string> AtomTyper::typers()
+std::vector<std::string> AtomTyper::typers()
 {
-    // ensure default plugins are loaded
-    PluginManager::instance()->loadDefaultPlugins();
-
-    QList<std::string> typers;
-
-    std::pair<std::string, CreateFunction> plugin;
-    foreach(plugin, typerPlugins){
-        typers.append(plugin.first);
-    }
-
-    return typers;
-}
-
-void AtomTyper::registerTyper(const std::string &name, CreateFunction function)
-{
-    typerPlugins[boost::algorithm::to_lower_copy(name)] = function;
-}
-
-void AtomTyper::unregisterTyper(const std::string &name, CreateFunction function)
-{
-    std::map<std::string, CreateFunction>::iterator location = typerPlugins.find(boost::algorithm::to_lower_copy(name));
-
-    if(location != typerPlugins.end()){
-        if(location->second == function){
-            typerPlugins.erase(location);
-        }
-    }
+    return PluginManager::instance()->pluginClassNames<AtomTyper>();
 }
 
 // --- Internal Methods ---------------------------------------------------- //

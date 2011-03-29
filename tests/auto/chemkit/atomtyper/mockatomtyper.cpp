@@ -24,6 +24,7 @@
 
 #include <chemkit/molecule.h>
 
+// === MockAtomTyper ======================================================= //
 MockAtomTyper::MockAtomTyper()
     : chemkit::AtomTyper("mock")
 {
@@ -36,4 +37,21 @@ MockAtomTyper::~MockAtomTyper()
 QVariant MockAtomTyper::type(int index) const
 {
     return molecule()->atom(index)->symbol().c_str();
+}
+
+// === MockAtomTyperPlugin ================================================= //
+MockAtomTyperPlugin::MockAtomTyperPlugin()
+    : chemkit::Plugin("mock")
+{
+    registerPluginClass<chemkit::AtomTyper>("mock", createMockAtomTyper);
+}
+
+MockAtomTyperPlugin::~MockAtomTyperPlugin()
+{
+    unregisterPluginClass<chemkit::AtomTyper>("mock");
+}
+
+chemkit::AtomTyper* MockAtomTyperPlugin::createMockAtomTyper()
+{
+    return new MockAtomTyper;
 }

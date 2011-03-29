@@ -23,6 +23,8 @@
 #include <QtTest>
 #include <QtXml>
 
+#include <algorithm>
+
 #include <chemkit/molecule.h>
 #include <chemkit/atomtyper.h>
 #include <chemkit/forcefield.h>
@@ -42,7 +44,9 @@ class MmffTest : public QObject
 
 void MmffTest::initTestCase()
 {
-    QVERIFY(chemkit::AtomTyper::typers().contains("mmff"));
+    std::vector<std::string> typers = chemkit::AtomTyper::typers();
+    QVERIFY(std::find(typers.begin(), typers.end(), "mmff") != typers.end());
+
     QVERIFY(chemkit::ForceField::forceFields().contains("mmff"));
     QVERIFY(chemkit::PartialChargePredictor::predictors().contains("mmff"));
 }

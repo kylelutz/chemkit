@@ -22,6 +22,8 @@
 
 #include <QtTest>
 
+#include <algorithm>
+
 #include <chemkit/molecule.h>
 #include <chemkit/atomtyper.h>
 #include <chemkit/forcefield.h>
@@ -37,7 +39,9 @@ class UffTest : public QObject
 
 void UffTest::initTestCase()
 {
-    QVERIFY(chemkit::AtomTyper::typers().contains("uff"));
+    std::vector<std::string> typers = chemkit::AtomTyper::typers();
+    QVERIFY(std::find(typers.begin(), typers.end(), "uff") != typers.end());
+
     QVERIFY(chemkit::ForceField::forceFields().contains("uff"));
 }
 

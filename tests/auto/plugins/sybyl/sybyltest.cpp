@@ -22,6 +22,8 @@
 
 #include <QtTest>
 
+#include <algorithm>
+
 #include <chemkit/molecule.h>
 #include <chemkit/atomtyper.h>
 #include <chemkit/chemicalfile.h>
@@ -41,7 +43,9 @@ class SybylTest : public QObject
 
 void SybylTest::initTestCase()
 {
-    QVERIFY(chemkit::AtomTyper::typers().contains("sybyl"));
+    std::vector<std::string> typers = chemkit::AtomTyper::typers();
+    QVERIFY(std::find(typers.begin(), typers.end(), "sybyl") != typers.end());
+
     QVERIFY(chemkit::ChemicalFileFormat::formats().contains("mol2"));
 }
 

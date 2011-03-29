@@ -23,6 +23,7 @@
 #ifndef MOCKATOMTYPER_H
 #define MOCKATOMTYPER_H
 
+#include <chemkit/plugin.h>
 #include <chemkit/atomtyper.h>
 
 class MockAtomTyper : public chemkit::AtomTyper
@@ -32,6 +33,15 @@ class MockAtomTyper : public chemkit::AtomTyper
         ~MockAtomTyper();
 
         virtual QVariant type(int index) const;
+};
+
+class MockAtomTyperPlugin : public chemkit::Plugin
+{
+    public:
+        MockAtomTyperPlugin();
+        ~MockAtomTyperPlugin();
+
+        static chemkit::AtomTyper* createMockAtomTyper();
 };
 
 #endif // MOCKATOMTYPER_H
