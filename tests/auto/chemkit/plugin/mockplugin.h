@@ -20,47 +20,23 @@
 **
 ******************************************************************************/
 
-#ifndef CHEMKIT_PLUGIN_H
-#define CHEMKIT_PLUGIN_H
+#ifndef MOCKPLUGIN_H
+#define MOCKPLUGIN_H
 
-#include "chemkit.h"
+#include <chemkit/plugin.h>
 
-#include <string>
+#include "mockclass.h"
 
-#include <QtCore>
-
-namespace chemkit {
-
-class PluginPrivate;
-
-class CHEMKIT_EXPORT Plugin : public QObject
+class MockPlugin : public chemkit::Plugin
 {
-    Q_OBJECT
-
     public:
-        // properties
-        std::string name() const;
-        QString dataPath() const;
+        MockPlugin();
+        ~MockPlugin();
 
-    protected:
-        // construction and destruction
-        Plugin(const std::string &name);
-        virtual ~Plugin();
+        bool registerClass(const std::string &name);
+        bool unregisterClass(const std::string &name);
 
-        template<class T> bool registerPluginClass(const std::string &name, typename T::CreateFunction function);
-        template<class T> bool unregisterPluginClass(const std::string &name);
-
-    private:
-        void setFileName(const QString &fileName);
-
-        friend class PluginManager;
-
-    private:
-        PluginPrivate* const d;
+        static MockClass* createMockClass();
 };
 
-} // end chemkit namespace
-
-#include "plugin-inline.h"
-
-#endif // CHEMKIT_PLUGIN_H
+#endif // MOCKPLUGIN_H

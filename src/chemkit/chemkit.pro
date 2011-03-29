@@ -103,7 +103,9 @@ HEADERS += alphashape.h \
     nucleotide.h \
     partialchargepredictor.h \
     plugin.h \
+    plugin-inline.h \
     pluginmanager.h \
+    pluginmanager-inline.h \
     point3.h \
     polymer.h \
     polymerchain.h \

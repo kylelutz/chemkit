@@ -20,47 +20,40 @@
 **
 ******************************************************************************/
 
-#ifndef CHEMKIT_PLUGIN_H
-#define CHEMKIT_PLUGIN_H
+#ifndef CHEMKIT_PLUGINMANAGER_INLINE_H
+#define CHEMKIT_PLUGINMANAGER_INLINE_H
 
-#include "chemkit.h"
+#include "pluginmanager.h"
 
-#include <string>
-
-#include <QtCore>
+#include <typeinfo>
 
 namespace chemkit {
 
-class PluginPrivate;
-
-class CHEMKIT_EXPORT Plugin : public QObject
+// --- Plugin Classes ------------------------------------------------------ //
+/// Creates and returns a new instance of a plugin class \p T from
+/// \p pluginName. Returns \c 0 if \p pluginName is not found.
+///
+/// The ownership of the returned object is passed to the caller.
+template<class T>
+inline T* PluginManager::createPluginClass(const std::string &pluginName) const
 {
-    Q_OBJECT
+    typename T::CreateFunction function = reinterpret_cast<typename T::CreateFunction>(pluginClassFunction(typeid(T).name(), pluginName));
 
-    public:
-        // properties
-        std::string name() const;
-        QString dataPath() const;
+    if(function){
+        return function();
+    }
 
-    protected:
-        // construction and destruction
-        Plugin(const std::string &name);
-        virtual ~Plugin();
+    return 0;
+}
 
-        template<class T> bool registerPluginClass(const std::string &name, typename T::CreateFunction function);
-        template<class T> bool unregisterPluginClass(const std::string &name);
-
-    private:
-        void setFileName(const QString &fileName);
-
-        friend class PluginManager;
-
-    private:
-        PluginPrivate* const d;
-};
+/// Returns a vector of the names of the plugins registered for the
+/// class \p T.
+template<class T>
+inline std::vector<std::string> PluginManager::pluginClassNames() const
+{
+    return pluginClassNames(typeid(T).name());
+}
 
 } // end chemkit namespace
 
-#include "plugin-inline.h"
-
-#endif // CHEMKIT_PLUGIN_H
+#endif // CHEMKIT_PLUGINMANAGER_INLINE_H

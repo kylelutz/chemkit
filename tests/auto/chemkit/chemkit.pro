@@ -23,6 +23,7 @@ SUBDIRS = alphashape \
     molecule \
     moleculealigner \
     nucleotide \
+    plugin \
     point3 \
     polymer \
     quaternion \

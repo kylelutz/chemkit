@@ -25,6 +25,8 @@
 
 #include "chemkit.h"
 
+#include <string>
+
 #include <QtCore>
 
 namespace chemkit {
@@ -37,6 +39,9 @@ class CHEMKIT_EXPORT PluginManager : public QObject
     Q_OBJECT
 
     public:
+        // enumerations
+        typedef void (*Function)();
+
         // properties
         Plugin* plugin(const std::string &name) const;
         QList<Plugin *> plugins() const;
@@ -48,6 +53,10 @@ class CHEMKIT_EXPORT PluginManager : public QObject
         void loadDefaultPlugins();
         bool unloadPlugin(Plugin *plugin);
         bool unloadPlugin(const QString &name);
+
+        // plugin classes
+        template<class T> T* createPluginClass(const std::string &pluginName) const;
+        template<class T> std::vector<std::string> pluginClassNames() const;
 
         // error handling
         QString errorString() const;
@@ -64,13 +73,21 @@ class CHEMKIT_EXPORT PluginManager : public QObject
         ~PluginManager();
 
         void setErrorString(const QString &errorString);
+        bool registerPluginClass(const std::string &className, const std::string &pluginName, Function function);
+        bool unregisterPluginClass(const std::string &className, const std::string &pluginName);
+        std::vector<std::string> pluginClassNames(const std::string &className) const;
+        Function pluginClassFunction(const std::string &className, const std::string &pluginName) const;
 
         Q_DISABLE_COPY(PluginManager);
+
+        friend class Plugin;
 
     private:
         PluginManagerPrivate* const d;
 };
 
 } // end chemkit namespace
+
+#include "pluginmanager-inline.h"
 
 #endif // CHEMKIT_PLUGINMANAGER_H

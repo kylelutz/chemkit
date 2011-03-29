@@ -22,6 +22,9 @@
 
 #include "pluginmanager.h"
 
+#include <map>
+#include <boost/algorithm/string/case_conv.hpp>
+
 #include "plugin.h"
 
 namespace chemkit {
@@ -33,6 +36,7 @@ class PluginManagerPrivate
         QList<Plugin *> plugins;
         QString errorString;
         bool defaultPluginsLoaded;
+        std::map<std::string, std::map<std::string, PluginManager::Function> > pluginClasses;
 };
 
 // === PluginManager ======================================================= //
@@ -201,5 +205,74 @@ PluginManager* PluginManager::instance()
 /// \fn void PluginManager::pluginUnloaded(const chemkit::Plugin *plugin)
 ///
 /// This signal is emitted when a plugin is unloaded.
+
+// --- Internal Methods ---------------------------------------------------- //
+/// Registers a new plugin function for \p className and
+/// \p pluginName.
+bool PluginManager::registerPluginClass(const std::string &className, const std::string &pluginName, Function function)
+{
+    std::map<std::string, Function> &classPlugins = d->pluginClasses[className];
+
+    // use lower case plugin name
+    std::string lowerCasePluginName = boost::algorithm::to_lower_copy(pluginName);
+
+    // prevent overwriting of previously registered plugins
+    if(classPlugins.find(lowerCasePluginName) != classPlugins.end()){
+        return false;
+    }
+
+    // add plugin class
+    classPlugins[lowerCasePluginName] = function;
+
+    return true;
+}
+
+/// Unregisters a plugin function for \p className and \p pluginName.
+bool PluginManager::unregisterPluginClass(const std::string &className, const std::string &pluginName)
+{
+    std::map<std::string, Function> &classPlugins = d->pluginClasses[className];
+
+    // use lower case plugin name
+    std::string lowerCasePluginName = boost::algorithm::to_lower_copy(pluginName);
+
+    // remove plugin class
+    return classPlugins.erase(lowerCasePluginName) > 0;
+}
+
+/// Returns a vector of strings containing the names of registered
+/// plugins for \p className.
+std::vector<std::string> PluginManager::pluginClassNames(const std::string &className) const
+{
+    // ensure default plugins are loaded
+    const_cast<PluginManager *>(this)->loadDefaultPlugins();
+
+    const std::map<std::string, Function> &classPlugins = d->pluginClasses[className];
+
+    std::vector<std::string> names;
+    for(std::map<std::string, Function>::const_iterator i = classPlugins.begin(); i != classPlugins.end(); ++i){
+        names.push_back(i->first);
+    }
+
+    return names;
+}
+
+/// Returns the registered function for the given \p className and \p pluginName.
+PluginManager::Function PluginManager::pluginClassFunction(const std::string &className, const std::string &pluginName) const
+{
+    // ensure default plugins are loaded
+    const_cast<PluginManager *>(this)->loadDefaultPlugins();
+
+    // use lower case plugin name
+    std::string lowerCasePluginName = boost::algorithm::to_lower_copy(pluginName);
+
+    const std::map<std::string, Function> &classPlugins = d->pluginClasses[className];
+
+    std::map<std::string, Function>::const_iterator location = classPlugins.find(lowerCasePluginName);
+    if(location == classPlugins.end()){
+        return 0;
+    }
+
+    return location->second;
+}
 
 } // end chemkit namespace

@@ -20,47 +20,31 @@
 **
 ******************************************************************************/
 
-#ifndef CHEMKIT_PLUGIN_H
-#define CHEMKIT_PLUGIN_H
+#ifndef CHEMKIT_PLUGIN_INLINE_H
+#define CHEMKIT_PLUGIN_INLINE_H
 
-#include "chemkit.h"
+#include "plugin.h"
 
-#include <string>
+#include <typeinfo>
 
-#include <QtCore>
+#include "pluginmanager.h"
 
 namespace chemkit {
 
-class PluginPrivate;
-
-class CHEMKIT_EXPORT Plugin : public QObject
+/// Registers a new plugin class with \p name and \p function.
+template<class T>
+inline bool Plugin::registerPluginClass(const std::string &name, typename T::CreateFunction function)
 {
-    Q_OBJECT
+    return PluginManager::instance()->registerPluginClass(typeid(T).name(), name, reinterpret_cast<PluginManager::Function>(function));
+}
 
-    public:
-        // properties
-        std::string name() const;
-        QString dataPath() const;
-
-    protected:
-        // construction and destruction
-        Plugin(const std::string &name);
-        virtual ~Plugin();
-
-        template<class T> bool registerPluginClass(const std::string &name, typename T::CreateFunction function);
-        template<class T> bool unregisterPluginClass(const std::string &name);
-
-    private:
-        void setFileName(const QString &fileName);
-
-        friend class PluginManager;
-
-    private:
-        PluginPrivate* const d;
-};
+/// Unregisters the plugin class with \p name.
+template<class T>
+inline bool Plugin::unregisterPluginClass(const std::string &name)
+{
+    return PluginManager::instance()->unregisterPluginClass(typeid(T).name(), name);
+}
 
 } // end chemkit namespace
 
-#include "plugin-inline.h"
-
-#endif // CHEMKIT_PLUGIN_H
+#endif // CHEMKIT_PLUGIN_INLINE_H
