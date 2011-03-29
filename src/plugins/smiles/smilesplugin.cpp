@@ -28,8 +28,14 @@
 SmilesPlugin::SmilesPlugin()
     : chemkit::Plugin("smiles")
 {
-    chemkit::LineFormat::registerFormat("smiles", &createSmilesFormat);
+    registerPluginClass<chemkit::LineFormat>("smiles", createSmilesFormat);
+
     chemkit::ChemicalFileFormat::registerFormat("smi", &createSmiFormat);
+}
+
+SmilesPlugin::~SmilesPlugin()
+{
+    unregisterPluginClass<chemkit::LineFormat>("smiles");
 }
 
 chemkit::LineFormat* SmilesPlugin::createSmilesFormat()

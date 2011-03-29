@@ -26,6 +26,7 @@
 #include "chemkit.h"
 
 #include <string>
+#include <vector>
 
 #include "molecule.h"
 
@@ -58,10 +59,8 @@ class CHEMKIT_EXPORT LineFormat
         std::string errorString() const;
 
         // static methods
-        static LineFormat *create(const std::string &name);
-        static QList<std::string> formats();
-        static void registerFormat(const std::string &name, CreateFunction function);
-        static void unregisterFormat(const std::string &name, CreateFunction function);
+        static LineFormat* create(const std::string &name);
+        static std::vector<std::string> formats();
 
     protected:
         LineFormat(const std::string &name);

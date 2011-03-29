@@ -22,6 +22,8 @@
 
 #include <QtTest>
 
+#include <algorithm>
+
 #include <chemkit/molecule.h>
 #include <chemkit/lineformat.h>
 
@@ -37,7 +39,8 @@ class McdlTest : public QObject
 
 void McdlTest::initTestCase()
 {
-    QVERIFY(chemkit::LineFormat::formats().contains("mcdl"));
+    std::vector<std::string> formats = chemkit::LineFormat::formats();
+    QVERIFY(std::find(formats.begin(), formats.end(), "mcdl") != formats.end());
 }
 
 void McdlTest::read_data()

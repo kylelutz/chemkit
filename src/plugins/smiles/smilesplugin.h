@@ -35,6 +35,7 @@ class SmilesPlugin : public chemkit::Plugin
 
     public:
         SmilesPlugin();
+        ~SmilesPlugin();
 
         static chemkit::LineFormat* createSmilesFormat();
         static chemkit::ChemicalFileFormat* createSmiFormat();

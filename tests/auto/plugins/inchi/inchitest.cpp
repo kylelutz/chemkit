@@ -22,6 +22,8 @@
 
 #include <QtTest>
 
+#include <algorithm>
+
 #include <chemkit/chemkit.h>
 #include <chemkit/molecule.h>
 #include <chemkit/lineformat.h>
@@ -41,8 +43,10 @@ class InchiTest : public QObject
 
 void InchiTest::initTestCase()
 {
-    QVERIFY(chemkit::LineFormat::formats().contains("inchi"));
-    QVERIFY(chemkit::LineFormat::formats().contains("inchikey"));
+    std::vector<std::string> lineFormats = chemkit::LineFormat::formats();
+    QVERIFY(std::find(lineFormats.begin(), lineFormats.end(), "inchi") != lineFormats.end());
+    QVERIFY(std::find(lineFormats.begin(), lineFormats.end(), "inchikey") != lineFormats.end());
+
     QVERIFY(chemkit::ChemicalFileFormat::formats().contains("inchi"));
 }
 

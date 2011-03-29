@@ -27,10 +27,15 @@
 FormulaPlugin::FormulaPlugin()
     : chemkit::Plugin("formula")
 {
-    chemkit::LineFormat::registerFormat("formula", &create);
+    registerPluginClass<chemkit::LineFormat>("formula", createFormulaFormat);
 }
 
-chemkit::LineFormat* FormulaPlugin::create()
+FormulaPlugin::~FormulaPlugin()
+{
+    unregisterPluginClass<chemkit::LineFormat>("formula");
+}
+
+chemkit::LineFormat* FormulaPlugin::createFormulaFormat()
 {
     return new FormulaLineFormat;
 }

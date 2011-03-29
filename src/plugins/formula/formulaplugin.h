@@ -34,8 +34,9 @@ class FormulaPlugin : public chemkit::Plugin
 
     public:
         FormulaPlugin();
+        ~FormulaPlugin();
 
-        static chemkit::LineFormat* create();
+        static chemkit::LineFormat* createFormulaFormat();
 };
 
 #endif // FORMULAPLUGIN_H

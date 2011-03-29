@@ -22,6 +22,8 @@
 
 #include <QtTest>
 
+#include <algorithm>
+
 #include <chemkit/molecule.h>
 #include <chemkit/lineformat.h>
 
@@ -37,7 +39,8 @@ class FormulaTest : public QObject
 
 void FormulaTest::initTestCase()
 {
-    QVERIFY(chemkit::LineFormat::formats().contains("formula"));
+    std::vector<std::string> formats = chemkit::LineFormat::formats();
+    QVERIFY(std::find(formats.begin(), formats.end(), "formula") != formats.end());
 }
 
 void FormulaTest::read()

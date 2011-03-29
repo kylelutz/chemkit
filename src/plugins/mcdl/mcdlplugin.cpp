@@ -27,7 +27,12 @@
 McdlPlugin::McdlPlugin()
     : chemkit::Plugin("mcdl")
 {
-    chemkit::LineFormat::registerFormat("mcdl", &createMcdlFormat);
+    registerPluginClass<chemkit::LineFormat>("mcdl", createMcdlFormat);
+}
+
+McdlPlugin::~McdlPlugin()
+{
+    unregisterPluginClass<chemkit::LineFormat>("mcdl");
 }
 
 chemkit::LineFormat* McdlPlugin::createMcdlFormat()

@@ -35,6 +35,7 @@ class InchiPlugin : public chemkit::Plugin
 
     public:
         InchiPlugin();
+        ~InchiPlugin();
 
         static chemkit::LineFormat* createInchiFormat();
         static chemkit::LineFormat* createInchiKeyFormat();

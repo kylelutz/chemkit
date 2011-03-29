@@ -147,39 +147,13 @@ std::string LineFormat::errorString() const
 /// Creates a new line format object.
 LineFormat* LineFormat::create(const std::string &name)
 {
-    // ensure default plugins are loaded
-    PluginManager::instance()->loadDefaultPlugins();
-
-    CreateFunction createFunction = pluginFormats.value(QString(name.c_str()).toLower());
-    if(createFunction)
-        return createFunction();
-
-    return 0;
+    return PluginManager::instance()->createPluginClass<LineFormat>(name);
 }
 
 /// Returns a list of all the supported line formats.
-QList<std::string> LineFormat::formats()
+std::vector<std::string> LineFormat::formats()
 {
-    // ensure default plugins are loaded
-    PluginManager::instance()->loadDefaultPlugins();
-
-    QList<std::string> formats;
-    Q_FOREACH(const QString &format, pluginFormats.keys()){
-        formats.append(format.toStdString());
-    }
-
-    return formats;
-}
-
-void LineFormat::registerFormat(const std::string &name, CreateFunction function)
-{
-    pluginFormats[QString(name.c_str()).toLower()] = function;
-}
-
-void LineFormat::unregisterFormat(const std::string &name, CreateFunction function)
-{
-    Q_UNUSED(name);
-    Q_UNUSED(function);
+    return PluginManager::instance()->pluginClassNames<LineFormat>();
 }
 
 } // end chemkit namespace

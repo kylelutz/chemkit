@@ -34,6 +34,7 @@ class McdlPlugin : public chemkit::Plugin
 
     public:
         McdlPlugin();
+        ~McdlPlugin();
 
         static chemkit::LineFormat* createMcdlFormat();
 };

@@ -22,6 +22,8 @@
 
 #include <QtTest>
 
+#include <algorithm>
+
 #include <chemkit/molecule.h>
 #include <chemkit/lineformat.h>
 #include <chemkit/chemicalfile.h>
@@ -167,7 +169,9 @@ class SmilesTest : public QObject
 
 void SmilesTest::initTestCase()
 {
-    QVERIFY(chemkit::LineFormat::formats().contains("smiles"));
+    std::vector<std::string> lineFormats = chemkit::LineFormat::formats();
+    QVERIFY(std::find(lineFormats.begin(), lineFormats.end(), "smiles") != lineFormats.end());
+
     QVERIFY(chemkit::ChemicalFileFormat::formats().contains("smi"));
 }
 
