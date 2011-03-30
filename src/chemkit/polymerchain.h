@@ -25,6 +25,8 @@
 
 #include "chemkit.h"
 
+#include <string>
+
 #include <QtCore>
 
 namespace chemkit {
@@ -37,8 +39,8 @@ class CHEMKIT_EXPORT PolymerChain
 {
     public:
         // properties
-        void setName(const QString &name);
-        QString name() const;
+        void setName(const std::string &name);
+        std::string name() const;
         int size() const;
         bool isEmpty() const;
         Polymer* polymer() const;
