@@ -43,18 +43,13 @@ void reduceEnergy(Float &result, const Float &energy)
     result += energy;
 }
 
-// The forceFieldPlugins hash table contains the names of each
-// registered force field plugin and a pointer to its create()
-// function.
-QHash<QString, ForceField::CreateFunction> forceFieldPlugins;
-
 } // end anonymous namespace
 
 // === ForceFieldPrivate =================================================== //
 class ForceFieldPrivate
 {
     public:
-        QString name;
+        std::string name;
         ForceField::Flags flags;
         QList<ForceFieldAtom *> atoms;
         QList<ForceFieldCalculation *> calculations;
@@ -95,7 +90,7 @@ class ForceFieldPrivate
 /// \endcode
 
 // --- Construction and Destruction ---------------------------------------- //
-ForceField::ForceField(const QString &name)
+ForceField::ForceField(const std::string &name)
     : d(new ForceFieldPrivate)
 {
     d->name = name;
@@ -119,7 +114,7 @@ ForceField::~ForceField()
 
 // --- Properties ---------------------------------------------------------- //
 /// Returns the name of the force field.
-QString ForceField::name() const
+std::string ForceField::name() const
 {
     return d->name;
 }
@@ -618,38 +613,15 @@ QString ForceField::errorString() const
 // --- Static Methods ------------------------------------------------------ //
 /// Create a new force field from \p name. If \p name is invalid or
 /// a force field with \p name is not available \c 0 is returned.
-ForceField* ForceField::create(const QString &name)
+ForceField* ForceField::create(const std::string &name)
 {
-    // ensure default plugins are loaded
-    PluginManager::instance()->loadDefaultPlugins();
-
-    CreateFunction createFunction = forceFieldPlugins.value(name.toLower());
-    if(createFunction){
-        return createFunction();
-    }
-
-    return 0;
+    return PluginManager::instance()->createPluginClass<ForceField>(name);
 }
 
 /// Returns a list of names of all supported force fields.
-QStringList ForceField::forceFields()
+std::vector<std::string> ForceField::forceFields()
 {
-    // ensure default plugins are loaded
-    PluginManager::instance()->loadDefaultPlugins();
-
-    return forceFieldPlugins.keys();
-}
-
-void ForceField::registerForceField(const QString &name, CreateFunction function)
-{
-    forceFieldPlugins[name.toLower()] = function;
-}
-
-void ForceField::unregisterForceField(const QString &name, CreateFunction function)
-{
-    if(forceFieldPlugins.contains(name) && forceFieldPlugins[name] == function){
-        forceFieldPlugins.remove(name);
-    }
+    return PluginManager::instance()->pluginClassNames<ForceField>();
 }
 
 } // end chemkit namespace

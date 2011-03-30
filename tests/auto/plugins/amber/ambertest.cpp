@@ -22,6 +22,8 @@
 
 #include <QtTest>
 
+#include <algorithm>
+
 #include <chemkit/molecule.h>
 #include <chemkit/forcefield.h>
 #include <chemkit/chemicalfile.h>
@@ -42,7 +44,8 @@ class AmberTest : public QObject
 
 void AmberTest::initTestCase()
 {
-    QVERIFY(chemkit::ForceField::forceFields().contains("amber"));
+    std::vector<std::string> forceFields = chemkit::ForceField::forceFields();
+    QVERIFY(std::find(forceFields.begin(), forceFields.end(), "amber") != forceFields.end());
 }
 
 void AmberTest::adenosine()

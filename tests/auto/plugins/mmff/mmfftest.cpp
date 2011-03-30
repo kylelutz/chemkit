@@ -50,7 +50,8 @@ void MmffTest::initTestCase()
     std::vector<std::string> predictors = chemkit::PartialChargePredictor::predictors();
     QVERIFY(std::find(predictors.begin(), predictors.end(), "mmff") != predictors.end());
 
-    QVERIFY(chemkit::ForceField::forceFields().contains("mmff"));
+    std::vector<std::string> forceFields = chemkit::ForceField::forceFields();
+    QVERIFY(std::find(forceFields.begin(), forceFields.end(), "mmff") != forceFields.end());
 }
 
 // The validate() method validates the MMFF force field using the MMFF94

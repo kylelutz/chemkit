@@ -22,6 +22,8 @@
 
 #include <QtTest>
 
+#include <algorithm>
+
 #include <chemkit/chemkit.h>
 #include <chemkit/molecule.h>
 #include <chemkit/forcefield.h>
@@ -33,7 +35,7 @@ class ForceFieldTest : public QObject
     Q_OBJECT
 
     private:
-        static chemkit::ForceField* createMockForceField();
+        MockForceFieldPlugin *m_plugin;
 
     private slots:
         void initTestCase();
@@ -42,15 +44,12 @@ class ForceFieldTest : public QObject
         void cleanupTestCase();
 };
 
-chemkit::ForceField* ForceFieldTest::createMockForceField()
-{
-    return new MockForceField;
-}
-
 void ForceFieldTest::initTestCase()
 {
-    chemkit::ForceField::registerForceField("mock", &createMockForceField);
-    QVERIFY(chemkit::ForceField::forceFields().contains("mock"));
+    m_plugin = new MockForceFieldPlugin;
+
+    std::vector<std::string> forceFields = chemkit::ForceField::forceFields();
+    QVERIFY(std::find(forceFields.begin(), forceFields.end(), "mock") != forceFields.end());
 }
 
 void ForceFieldTest::create()
@@ -66,14 +65,16 @@ void ForceFieldTest::create()
 void ForceFieldTest::name()
 {
     chemkit::ForceField *forceField = chemkit::ForceField::create("mock");
-    QCOMPARE(forceField->name(), QString("mock"));
+    QCOMPARE(forceField->name(), std::string("mock"));
     delete forceField;
 }
 
 void ForceFieldTest::cleanupTestCase()
 {
-    chemkit::ForceField::unregisterForceField("mock", &createMockForceField);
-    QVERIFY(!chemkit::ForceField::forceFields().contains("mock"));
+    delete m_plugin;
+
+    std::vector<std::string> forceFields = chemkit::ForceField::forceFields();
+    QVERIFY(std::find(forceFields.begin(), forceFields.end(), "mock") == forceFields.end());
 }
 
 QTEST_APPLESS_MAIN(ForceFieldTest)

@@ -23,6 +23,7 @@
 #ifndef MOCKFORCEFIELD_H
 #define MOCKFORCEFIELD_H
 
+#include <chemkit/plugin.h>
 #include <chemkit/forcefield.h>
 
 class MockForceField : public chemkit::ForceField
@@ -31,6 +32,15 @@ class MockForceField : public chemkit::ForceField
         // construction and destruction
         MockForceField();
         ~MockForceField();
+};
+
+class MockForceFieldPlugin : public chemkit::Plugin
+{
+    public:
+        MockForceFieldPlugin();
+        ~MockForceFieldPlugin();
+
+        static chemkit::ForceField* createMockForceField();
 };
 
 #endif // MOCKFORCEFIELD_H

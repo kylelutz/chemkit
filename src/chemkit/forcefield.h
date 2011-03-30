@@ -27,6 +27,9 @@
 
 #include <QtCore>
 
+#include <string>
+#include <vector>
+
 #include "point3.h"
 #include "vector3.h"
 #include "forcefieldatom.h"
@@ -54,7 +57,7 @@ class CHEMKIT_EXPORT ForceField
         virtual ~ForceField();
 
         // properties
-        QString name() const;
+        std::string name() const;
         ForceField::Flags flags() const;
         int size() const;
         QList<ForceFieldAtom *> atoms() const;
@@ -110,13 +113,11 @@ class CHEMKIT_EXPORT ForceField
         QString errorString() const;
 
         // static methods
-        static ForceField* create(const QString &name);
-        static QStringList forceFields();
-        static void registerForceField(const QString &name, CreateFunction function);
-        static void unregisterForceField(const QString &name, CreateFunction function);
+        static ForceField* create(const std::string &name);
+        static std::vector<std::string> forceFields();
 
     protected:
-        ForceField(const QString &name);
+        ForceField(const std::string &name);
         void setFlags(Flags flags);
         void addAtom(ForceFieldAtom *atom);
         void removeAtom(ForceFieldAtom *atom);

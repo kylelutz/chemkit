@@ -42,7 +42,8 @@ void UffTest::initTestCase()
     std::vector<std::string> typers = chemkit::AtomTyper::typers();
     QVERIFY(std::find(typers.begin(), typers.end(), "uff") != typers.end());
 
-    QVERIFY(chemkit::ForceField::forceFields().contains("uff"));
+    std::vector<std::string> forceFields = chemkit::ForceField::forceFields();
+    QVERIFY(std::find(forceFields.begin(), forceFields.end(), "uff") != forceFields.end());
 }
 
 QTEST_APPLESS_MAIN(UffTest)

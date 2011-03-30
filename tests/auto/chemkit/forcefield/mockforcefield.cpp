@@ -22,6 +22,7 @@
 
 #include "mockforcefield.h"
 
+// === MockForceField ====================================================== //
 // --- Construction and Destruction ---------------------------------------- //
 MockForceField::MockForceField()
     : chemkit::ForceField("mock")
@@ -30,4 +31,21 @@ MockForceField::MockForceField()
 
 MockForceField::~MockForceField()
 {
+}
+
+// === MockForceFieldPlugin ================================================ //
+MockForceFieldPlugin::MockForceFieldPlugin()
+    : chemkit::Plugin("mock")
+{
+    registerPluginClass<chemkit::ForceField>("mock", createMockForceField);
+}
+
+MockForceFieldPlugin::~MockForceFieldPlugin()
+{
+    unregisterPluginClass<chemkit::ForceField>("mock");
+}
+
+chemkit::ForceField* MockForceFieldPlugin::createMockForceField()
+{
+    return new MockForceField;
 }
