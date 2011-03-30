@@ -112,7 +112,7 @@ const AmberParameters* AmberForceField::parameters() const
 }
 
 // --- Internal Methods ---------------------------------------------------- //
-QString AmberForceField::atomType(const chemkit::Atom *atom) const
+std::string AmberForceField::atomType(const chemkit::Atom *atom) const
 {
     if(atom->is(chemkit::Atom::Hydrogen)){
         if(atom->isTerminal()){
@@ -345,5 +345,5 @@ QString AmberForceField::atomType(const chemkit::Atom *atom) const
         return "Zn";
     }
 
-    return QString();
+    return std::string();
 }

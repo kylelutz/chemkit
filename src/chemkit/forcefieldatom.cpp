@@ -34,7 +34,7 @@ class ForceFieldAtomPrivate
 {
     public:
         const Atom *atom;
-        QString type;
+        std::string type;
         Float charge;
         Point3 position;
         bool setup;
@@ -81,7 +81,7 @@ int ForceFieldAtom::index() const
 }
 
 /// Sets the symbolic type for the atom.
-bool ForceFieldAtom::setType(const QString &type)
+bool ForceFieldAtom::setType(const std::string &type)
 {
     d->type = type;
 
@@ -89,7 +89,7 @@ bool ForceFieldAtom::setType(const QString &type)
 }
 
 /// Returns the symbolic type for the atom.
-QString ForceFieldAtom::type() const
+std::string ForceFieldAtom::type() const
 {
     return d->type;
 }

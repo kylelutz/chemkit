@@ -39,7 +39,7 @@ class AmberForceField : public chemkit::ForceField
         const AmberParameters* parameters() const;
 
     private:
-        QString atomType(const chemkit::Atom *atom) const;
+        std::string atomType(const chemkit::Atom *atom) const;
 
     private:
         AmberParameters *m_parameters;

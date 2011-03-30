@@ -22,6 +22,8 @@
 
 #include "oplscalculation.h"
 
+#include <boost/lexical_cast.hpp>
+
 // === OplsCalculation ===================================================== //
 OplsCalculation::OplsCalculation(int type, int atomCount, int parameterCount)
     : chemkit::ForceFieldCalculation(type, atomCount, parameterCount)
@@ -41,8 +43,8 @@ bool OplsBondStrechCalculation::setup(const OplsParameters *parameters)
     const chemkit::ForceFieldAtom *a = atom(0);
     const chemkit::ForceFieldAtom *b = atom(1);
 
-    int typeA = a->type().toInt();
-    int typeB = b->type().toInt();
+    int typeA = boost::lexical_cast<int>(a->type());
+    int typeB = boost::lexical_cast<int>(b->type());
 
     const OplsBondStrechParameters *p = parameters->bondStrechParameters(typeA, typeB);
     if(!p){
@@ -104,9 +106,9 @@ bool OplsAngleBendCalculation::setup(const OplsParameters *parameters)
     const chemkit::ForceFieldAtom *b = atom(1);
     const chemkit::ForceFieldAtom *c = atom(2);
 
-    int typeA = a->type().toInt();
-    int typeB = b->type().toInt();
-    int typeC = c->type().toInt();
+    int typeA = boost::lexical_cast<int>(a->type());
+    int typeB = boost::lexical_cast<int>(b->type());
+    int typeC = boost::lexical_cast<int>(c->type());
 
     const OplsAngleBendParameters *p = parameters->angleBendParameters(typeA, typeB, typeC);
     if(!p){
@@ -173,10 +175,10 @@ bool OplsTorsionCalculation::setup(const OplsParameters *parameters)
     const chemkit::ForceFieldAtom *c = atom(2);
     const chemkit::ForceFieldAtom *d = atom(3);
 
-    int typeA = a->type().toInt();
-    int typeB = b->type().toInt();
-    int typeC = c->type().toInt();
-    int typeD = d->type().toInt();
+    int typeA = boost::lexical_cast<int>(a->type());
+    int typeB = boost::lexical_cast<int>(b->type());
+    int typeC = boost::lexical_cast<int>(c->type());
+    int typeD = boost::lexical_cast<int>(d->type());
 
     const OplsTorsionParameters *p = parameters->torsionParameters(typeA, typeB, typeC, typeD);
     if(!p){
@@ -245,8 +247,8 @@ bool OplsNonbondedCalculation::setup(const OplsParameters *parameters)
     const chemkit::ForceFieldAtom *a = atom(0);
     const chemkit::ForceFieldAtom *b = atom(1);
 
-    int typeA = a->type().toInt();
-    int typeB = b->type().toInt();
+    int typeA = boost::lexical_cast<int>(a->type());
+    int typeB = boost::lexical_cast<int>(b->type());
 
     const OplsVanDerWaalsParameters *pa = parameters->vanDerWaalsParameters(typeA);
     const OplsVanDerWaalsParameters *pb = parameters->vanDerWaalsParameters(typeB);

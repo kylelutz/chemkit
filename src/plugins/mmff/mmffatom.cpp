@@ -22,6 +22,8 @@
 
 #include "mmffatom.h"
 
+#include <boost/lexical_cast.hpp>
+
 #include "mmffforcefield.h"
 #include "mmffparameters.h"
 
@@ -45,9 +47,9 @@ void MmffAtom::setType(int typeNumber, chemkit::Float formalCharge)
     m_formalCharge = formalCharge;
 }
 
-QString MmffAtom::type() const
+std::string MmffAtom::type() const
 {
-    return QString::number(m_typeNumber);
+    return boost::lexical_cast<std::string>(m_typeNumber);
 }
 
 int MmffAtom::typeNumber() const

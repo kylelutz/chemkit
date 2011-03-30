@@ -109,8 +109,8 @@ void MmffTest::validate()
         QDomElement expectedAtom = expectedMolecule.firstChildElement();
         QCOMPARE(expectedAtom.tagName(), QString("atom"));
         foreach(const chemkit::ForceFieldAtom *forceFieldAtom, forceField->atoms()){
-            QString type = forceFieldAtom->type();
-            QString expectedType = expectedAtom.attribute("type");
+            std::string type = forceFieldAtom->type();
+            std::string expectedType = expectedAtom.attribute("type").toStdString();
             if(type != expectedType){
                 failed = true;
             }
@@ -162,7 +162,7 @@ void MmffTest::validate()
 
             foreach(const chemkit::ForceFieldAtom *forceFieldAtom, forceField->atoms()){
                 actualFile.write(QString("    <atom type=\"%1\" charge=\"%2\"/>\n")
-                                    .arg(forceFieldAtom->type())
+                                    .arg(forceFieldAtom->type().c_str())
                                     .arg(forceFieldAtom->charge())
                                     .toAscii());
             }

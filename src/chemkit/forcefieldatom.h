@@ -25,8 +25,6 @@
 
 #include "chemkit.h"
 
-#include <QtCore>
-
 #include "point3.h"
 #include "vector3.h"
 
@@ -46,8 +44,8 @@ class CHEMKIT_EXPORT ForceFieldAtom
         // properties
         const Atom* atom() const;
         int index() const;
-        virtual bool setType(const QString &type);
-        virtual QString type() const;
+        virtual bool setType(const std::string &type);
+        virtual std::string type() const;
         void setCharge(Float charge);
         Float charge() const;
         bool isSetup() const;

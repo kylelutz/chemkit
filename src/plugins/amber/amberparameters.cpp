@@ -653,10 +653,10 @@ const AmberAngleParameters* AmberParameters::angleParameters(const chemkit::Forc
 
 const AmberTorsionParameters* AmberParameters::torsionParameters(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b, const chemkit::ForceFieldAtom *c, const chemkit::ForceFieldAtom *d) const
 {
-    QString typeA = a->type();
-    QString typeB = b->type();
-    QString typeC = c->type();
-    QString typeD = d->type();
+    std::string typeA = a->type();
+    std::string typeB = b->type();
+    std::string typeC = c->type();
+    std::string typeD = d->type();
 
     if(typeB > typeC){
         qSwap(typeB, typeC);
