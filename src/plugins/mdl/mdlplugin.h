@@ -34,6 +34,7 @@ class MdlPlugin : public chemkit::Plugin
 
     public:
         MdlPlugin();
+        ~MdlPlugin();
 
         static chemkit::ChemicalFileFormat* createMdlFormat();
         static chemkit::ChemicalFileFormat* createMolFormat();

@@ -31,7 +31,7 @@
 #include <chemkit/chemicalfile.h>
 
 // --- Construction and Destruction ---------------------------------------- //
-MdlFileFormat::MdlFileFormat(const QString &name)
+MdlFileFormat::MdlFileFormat(const std::string &name)
     : chemkit::ChemicalFileFormat(name)
 {
 }

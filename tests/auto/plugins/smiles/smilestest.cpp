@@ -172,7 +172,8 @@ void SmilesTest::initTestCase()
     std::vector<std::string> lineFormats = chemkit::LineFormat::formats();
     QVERIFY(std::find(lineFormats.begin(), lineFormats.end(), "smiles") != lineFormats.end());
 
-    QVERIFY(chemkit::ChemicalFileFormat::formats().contains("smi"));
+    std::vector<std::string> fileFormats = chemkit::ChemicalFileFormat::formats();
+    QVERIFY(std::find(fileFormats.begin(), fileFormats.end(), "smi") != fileFormats.end());
 }
 
 void SmilesTest::COMPARE_SMILES(const chemkit::Molecule *molecule, const std::string &smiles)

@@ -34,6 +34,7 @@ class CubePlugin : public chemkit::Plugin
 
     public:
         CubePlugin();
+        ~CubePlugin();
 
         static chemkit::ChemicalFileFormat* createCubeFormat();
 };

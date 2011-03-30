@@ -22,6 +22,8 @@
 
 #include <QtTest>
 
+#include <algorithm>
+
 #include <chemkit/molecule.h>
 #include <chemkit/chemicalfile.h>
 #include <chemkit/chemicalfileformat.h>
@@ -42,10 +44,11 @@ class MdlTest : public QObject
 
 void MdlTest::initTestCase()
 {
-    QVERIFY(chemkit::ChemicalFileFormat::formats().contains("mol"));
-    QVERIFY(chemkit::ChemicalFileFormat::formats().contains("mdl"));
-    QVERIFY(chemkit::ChemicalFileFormat::formats().contains("sdf"));
-    QVERIFY(chemkit::ChemicalFileFormat::formats().contains("sd"));
+    std::vector<std::string> formats = chemkit::ChemicalFileFormat::formats();
+    QVERIFY(std::find(formats.begin(), formats.end(), "mol") != formats.end());
+    QVERIFY(std::find(formats.begin(), formats.end(), "mdl") != formats.end());
+    QVERIFY(std::find(formats.begin(), formats.end(), "sdf") != formats.end());
+    QVERIFY(std::find(formats.begin(), formats.end(), "sd") != formats.end());
 }
 
 void MdlTest::read_methanol()
@@ -79,7 +82,7 @@ void MdlTest::read_guanine()
 
     // check format
     QVERIFY(file.format() != 0);
-    QCOMPARE(file.formatName(), QString("mol"));
+    QCOMPARE(file.formatName(), std::string("mol"));
 
     // check molecule
     QCOMPARE(file.moleculeCount(), 1);
@@ -101,7 +104,7 @@ void MdlTest::read_benzenes()
 
     // check format
     QVERIFY(file.format() != 0);
-    QCOMPARE(file.formatName(), QString("sdf"));
+    QCOMPARE(file.formatName(), std::string("sdf"));
 
     // check molecules
     QCOMPARE(file.moleculeCount(), 416);

@@ -27,10 +27,18 @@
 MdlPlugin::MdlPlugin()
     : chemkit::Plugin("mdl")
 {
-    chemkit::ChemicalFileFormat::registerFormat("mdl", &createMdlFormat);
-    chemkit::ChemicalFileFormat::registerFormat("mol", &createMolFormat);
-    chemkit::ChemicalFileFormat::registerFormat("sdf", &createSdfFormat);
-    chemkit::ChemicalFileFormat::registerFormat("sd", &createSdFormat);
+    registerPluginClass<chemkit::ChemicalFileFormat>("mdl", createMdlFormat);
+    registerPluginClass<chemkit::ChemicalFileFormat>("mol", createMolFormat);
+    registerPluginClass<chemkit::ChemicalFileFormat>("sdf", createSdfFormat);
+    registerPluginClass<chemkit::ChemicalFileFormat>("sd", createSdFormat);
+}
+
+MdlPlugin::~MdlPlugin()
+{
+    unregisterPluginClass<chemkit::ChemicalFileFormat>("mdl");
+    unregisterPluginClass<chemkit::ChemicalFileFormat>("mol");
+    unregisterPluginClass<chemkit::ChemicalFileFormat>("sdf");
+    unregisterPluginClass<chemkit::ChemicalFileFormat>("sd");
 }
 
 chemkit::ChemicalFileFormat* MdlPlugin::createMdlFormat()

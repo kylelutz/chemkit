@@ -27,7 +27,12 @@
 CubePlugin::CubePlugin()
     : chemkit::Plugin("cube")
 {
-    chemkit::ChemicalFileFormat::registerFormat("cube", &createCubeFormat);
+    registerPluginClass<chemkit::ChemicalFileFormat>("cube", createCubeFormat);
+}
+
+CubePlugin::~CubePlugin()
+{
+    unregisterPluginClass<chemkit::ChemicalFileFormat>("cube");
 }
 
 chemkit::ChemicalFileFormat* CubePlugin::createCubeFormat()

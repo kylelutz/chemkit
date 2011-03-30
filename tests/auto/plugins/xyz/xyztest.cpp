@@ -22,6 +22,8 @@
 
 #include <QtTest>
 
+#include <algorithm>
+
 #include <chemkit/molecule.h>
 #include <chemkit/chemicalfile.h>
 #include <chemkit/chemicalfileformat.h>
@@ -40,7 +42,8 @@ class XyzTest : public QObject
 
 void XyzTest::initTestCase()
 {
-    QVERIFY(chemkit::ChemicalFileFormat::formats().contains("xyz"));
+    std::vector<std::string> formats = chemkit::ChemicalFileFormat::formats();
+    QVERIFY(std::find(formats.begin(), formats.end(), "xyz") != formats.end());
 }
 
 void XyzTest::read_data()

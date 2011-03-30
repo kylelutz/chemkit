@@ -22,6 +22,8 @@
 
 #include <QtTest>
 
+#include <algorithm>
+
 #include <chemkit/molecule.h>
 #include <chemkit/chemicalfile.h>
 #include <chemkit/chemicalfileformat.h>
@@ -39,7 +41,8 @@ class TxyzTest : public QObject
 
 void TxyzTest::initTestCase()
 {
-    QVERIFY(chemkit::ChemicalFileFormat::formats().contains("txyz"));
+    std::vector<std::string> formats = chemkit::ChemicalFileFormat::formats();
+    QVERIFY(std::find(formats.begin(), formats.end(), "txyz") != formats.end());
 }
 
 void TxyzTest::uridine()

@@ -22,6 +22,8 @@
 
 #include <QtTest>
 
+#include <algorithm>
+
 #include <chemkit/molecule.h>
 #include <chemkit/chemicalfile.h>
 #include <chemkit/chemicalfileformat.h>
@@ -39,7 +41,8 @@ class CubeTest : public QObject
 
 void CubeTest::initTestCase()
 {
-    QVERIFY(chemkit::ChemicalFileFormat::formats().contains("cube"));
+    std::vector<std::string> formats = chemkit::ChemicalFileFormat::formats();
+    QVERIFY(std::find(formats.begin(), formats.end(), "cube") != formats.end());
 }
 
 void CubeTest::readBenzene()

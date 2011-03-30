@@ -46,7 +46,8 @@ void SybylTest::initTestCase()
     std::vector<std::string> typers = chemkit::AtomTyper::typers();
     QVERIFY(std::find(typers.begin(), typers.end(), "sybyl") != typers.end());
 
-    QVERIFY(chemkit::ChemicalFileFormat::formats().contains("mol2"));
+    std::vector<std::string> fileFormats = chemkit::ChemicalFileFormat::formats();
+    QVERIFY(std::find(fileFormats.begin(), fileFormats.end(), "mol2") != fileFormats.end());
 }
 
 void SybylTest::readMol2_data()

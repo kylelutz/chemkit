@@ -29,15 +29,13 @@ SybylPlugin::SybylPlugin()
     : chemkit::Plugin("sybyl")
 {
     registerPluginClass<chemkit::AtomTyper>("sybyl", createSybylAtomTyper);
-
-    chemkit::ChemicalFileFormat::registerFormat("mol2", createMol2FileFormat);
+    registerPluginClass<chemkit::ChemicalFileFormat>("mol2", createMol2FileFormat);
 }
 
 SybylPlugin::~SybylPlugin()
 {
     unregisterPluginClass<chemkit::AtomTyper>("sybyl");
-
-    chemkit::ChemicalFileFormat::unregisterFormat("mol2", createMol2FileFormat);
+    unregisterPluginClass<chemkit::ChemicalFileFormat>("mol2");
 }
 
 chemkit::AtomTyper* SybylPlugin::createSybylAtomTyper()

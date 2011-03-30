@@ -116,14 +116,14 @@ int main(int argc, char *argv[])
 
     // read input
     chemkit::ChemicalFile inputFile(inputFileName);
-    inputFile.setFormat(inputFormatName);
+    inputFile.setFormat(inputFormatName.toStdString());
     if(!inputFile.read()){
         err << "Error: failed to read input file: " << inputFile.errorString() << "\n";
         return -1;
     }
 
     // write output
-    if(!inputFile.write(outputFileName, outputFormatName)){
+    if(!inputFile.write(outputFileName, outputFormatName.toStdString())){
         err << "Error: failed to write output file: " << inputFile.errorString() << "\n";
         return -1;
     }

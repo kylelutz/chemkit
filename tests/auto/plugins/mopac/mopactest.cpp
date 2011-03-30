@@ -22,6 +22,8 @@
 
 #include <QtTest>
 
+#include <algorithm>
+
 #include <chemkit/molecule.h>
 #include <chemkit/chemicalfile.h>
 #include <chemkit/chemicalfileformat.h>
@@ -40,8 +42,9 @@ class MopacTest : public QObject
 
 void MopacTest::initTestCase()
 {
-    QVERIFY(chemkit::ChemicalFileFormat::formats().contains("mopin"));
-    QVERIFY(chemkit::ChemicalFileFormat::formats().contains("mopcrt"));
+    std::vector<std::string> formats = chemkit::ChemicalFileFormat::formats();
+    QVERIFY(std::find(formats.begin(), formats.end(), "mopin") != formats.end());
+    QVERIFY(std::find(formats.begin(), formats.end(), "mopcrt") != formats.end());
 }
 
 void MopacTest::ethanol()

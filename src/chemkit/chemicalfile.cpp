@@ -122,7 +122,7 @@ void ChemicalFile::setFormat(ChemicalFileFormat *format)
 /// Sets the format of the file to \p name. If name is not a valid
 /// format the current format will remain unchanged and \c false
 /// will be returned.
-bool ChemicalFile::setFormat(const QString &name)
+bool ChemicalFile::setFormat(const std::string &name)
 {
     ChemicalFileFormat *format = ChemicalFileFormat::create(name);
 
@@ -142,13 +142,13 @@ ChemicalFileFormat* ChemicalFile::format() const
 }
 
 /// Returns the name of the format for this file.
-QString ChemicalFile::formatName() const
+std::string ChemicalFile::formatName() const
 {
     if(d->format){
-        return d->format->name();  
+        return d->format->name();
     }
 
-    return QString();
+    return std::string();
 }
 
 /// Returns the number of molecules in the file.
@@ -282,11 +282,11 @@ bool ChemicalFile::read(const QString &fileName)
 {
     QString format = QFileInfo(fileName).suffix();
 
-    return read(fileName, format);
+    return read(fileName, format.toStdString());
 }
 
 /// Reads the file from \p fileName using format.
-bool ChemicalFile::read(const QString &fileName, const QString &format)
+bool ChemicalFile::read(const QString &fileName, const std::string &format)
 {
     QFile file(fileName);
     if(!file.open(QIODevice::ReadOnly)){
@@ -298,12 +298,12 @@ bool ChemicalFile::read(const QString &fileName, const QString &format)
 }
 
 /// Reads the file from \p iodev using \p format.
-bool ChemicalFile::read(QIODevice *iodev, const QString &format)
+bool ChemicalFile::read(QIODevice *iodev, const std::string &format)
 {
     if(d->format == 0 || d->format->name() != format){
         d->format = ChemicalFileFormat::create(format);
         if(!d->format){
-            setErrorString(QString("Format '%1' is not supported").arg(format));
+            setErrorString(QString("Format '%1' is not supported").arg(format.c_str()));
             iodev->close();
             return false;
         }
@@ -328,11 +328,11 @@ bool ChemicalFile::write(const QString &fileName)
 {
     QString format = QFileInfo(fileName).suffix();
 
-    return write(fileName, format);
+    return write(fileName, format.toStdString());
 }
 
 /// Writes the file to \p fileName using \p format.
-bool ChemicalFile::write(const QString &fileName, const QString &format)
+bool ChemicalFile::write(const QString &fileName, const std::string &format)
 {
     QFile file(fileName);
     if(!file.open(QIODevice::WriteOnly)){
@@ -358,12 +358,12 @@ bool ChemicalFile::write(QIODevice *iodev)
 }
 
 /// Writes the file to \p iodev using \p format.
-bool ChemicalFile::write(QIODevice *iodev, const QString &format)
+bool ChemicalFile::write(QIODevice *iodev, const std::string &format)
 {
     if(!d->format || d->format->name() != format){
         d->format = ChemicalFileFormat::create(format);
         if(!d->format){
-            setErrorString(QString("Format '%1' is not supported").arg(format));
+            setErrorString(QString("Format '%1' is not supported").arg(format.c_str()));
             iodev->close();
             return false;
         }
@@ -386,7 +386,7 @@ QString ChemicalFile::errorString() const
 
 // --- Static Methods ------------------------------------------------------ //
 /// Returns a list of all supported chemical file formats.
-QStringList ChemicalFile::formats()
+std::vector<std::string> ChemicalFile::formats()
 {
     return ChemicalFileFormat::formats();
 }

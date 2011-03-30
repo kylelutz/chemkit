@@ -28,14 +28,14 @@
 MopacPlugin::MopacPlugin()
     : chemkit::Plugin("mopac")
 {
-    chemkit::ChemicalFileFormat::registerFormat("mopin", createMopinFormat);
-    chemkit::ChemicalFileFormat::registerFormat("mopcrt", createMopcrtFormat);
+    registerPluginClass<chemkit::ChemicalFileFormat>("mopin", createMopinFormat);
+    registerPluginClass<chemkit::ChemicalFileFormat>("mopcrt", createMopcrtFormat);
 }
 
 MopacPlugin::~MopacPlugin()
 {
-    chemkit::ChemicalFileFormat::unregisterFormat("mopin", createMopinFormat);
-    chemkit::ChemicalFileFormat::unregisterFormat("mopcrt", createMopcrtFormat);
+    unregisterPluginClass<chemkit::ChemicalFileFormat>("mopin");
+    unregisterPluginClass<chemkit::ChemicalFileFormat>("mopcrt");
 }
 
 chemkit::ChemicalFileFormat* MopacPlugin::createMopinFormat()

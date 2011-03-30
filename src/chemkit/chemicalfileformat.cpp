@@ -22,21 +22,17 @@
 
 #include "chemicalfileformat.h"
 
+#include <boost/algorithm/string/case_conv.hpp>
+
 #include "pluginmanager.h"
 
 namespace chemkit {
-
-namespace {
-
-QHash<QString, ChemicalFileFormat::CreateFunction> pluginFormats;
-
-} // end anonymous namespace
 
 // === ChemicalFileFormatPrivate =========================================== //
 class ChemicalFileFormatPrivate
 {
     public:
-        QString name;
+        std::string name;
         QString errorString;
         QHash<QString, QVariant> options;
 };
@@ -56,10 +52,10 @@ class ChemicalFileFormatPrivate
 
 // --- Construction and Destruction ---------------------------------------- //
 /// Construct a chemical file format.
-ChemicalFileFormat::ChemicalFileFormat(const QString &name)
+ChemicalFileFormat::ChemicalFileFormat(const std::string &name)
     : d(new ChemicalFileFormatPrivate)
 {
-    d->name = name.toLower();
+    d->name = boost::algorithm::to_lower_copy(name);
 }
 
 /// Destroys a chemical file format.
@@ -70,7 +66,7 @@ ChemicalFileFormat::~ChemicalFileFormat()
 
 // --- Properties ---------------------------------------------------------- //
 /// Returns the name of the format.
-QString ChemicalFileFormat::name() const
+std::string ChemicalFileFormat::name() const
 {
     return d->name;
 }
@@ -95,7 +91,7 @@ bool ChemicalFileFormat::read(QIODevice *iodev, ChemicalFile *file)
     Q_UNUSED(iodev);
     Q_UNUSED(file);
 
-    setErrorString(QString("'%1' reading not supported.").arg(name()));
+    setErrorString(QString("'%1' reading not supported.").arg(name().c_str()));
     return false;
 }
 
@@ -105,7 +101,7 @@ bool ChemicalFileFormat::write(const ChemicalFile *file, QIODevice *iodev)
     Q_UNUSED(file);
     Q_UNUSED(iodev);
 
-    setErrorString(QString("'%1' writing not supported.").arg(name()));
+    setErrorString(QString("'%1' writing not supported.").arg(name().c_str()));
     return false;
 }
 
@@ -124,36 +120,15 @@ QString ChemicalFileFormat::errorString() const
 
 // --- Static Methods ------------------------------------------------------ //
 /// Creates a new chemical file format.
-ChemicalFileFormat* ChemicalFileFormat::create(const QString &name)
+ChemicalFileFormat* ChemicalFileFormat::create(const std::string &name)
 {
-    // ensure default plugins are loaded
-    PluginManager::instance()->loadDefaultPlugins();
-
-    CreateFunction createFunction = pluginFormats.value(name.toLower());
-    if(createFunction)
-        return createFunction();
-
-    return 0;
+    return PluginManager::instance()->createPluginClass<ChemicalFileFormat>(name);
 }
 
 /// Returns a list of all supported file formats.
-QStringList ChemicalFileFormat::formats()
+std::vector<std::string> ChemicalFileFormat::formats()
 {
-    // ensure default plugins are loaded
-    PluginManager::instance()->loadDefaultPlugins();
-
-    return pluginFormats.keys();
-}
-
-void ChemicalFileFormat::registerFormat(const QString &name, CreateFunction function)
-{
-    pluginFormats[name.toLower()] = function;
-}
-
-void ChemicalFileFormat::unregisterFormat(const QString &name, CreateFunction function)
-{
-    Q_UNUSED(name);
-    Q_UNUSED(function);
+    return PluginManager::instance()->pluginClassNames<ChemicalFileFormat>();
 }
 
 } // end chemkit namespace

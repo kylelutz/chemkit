@@ -27,7 +27,12 @@
 CmlPlugin::CmlPlugin()
     : chemkit::Plugin("cml")
 {
-    chemkit::ChemicalFileFormat::registerFormat("cml", &createCmlFormat);
+    registerPluginClass<chemkit::ChemicalFileFormat>("cml", createCmlFormat);
+}
+
+CmlPlugin::~CmlPlugin()
+{
+    unregisterPluginClass<chemkit::ChemicalFileFormat>("cml");
 }
 
 chemkit::ChemicalFileFormat* CmlPlugin::createCmlFormat()

@@ -34,6 +34,7 @@ class CmlPlugin : public chemkit::Plugin
 
     public:
         CmlPlugin();
+        ~CmlPlugin();
 
         static chemkit::ChemicalFileFormat* createCmlFormat();
 };

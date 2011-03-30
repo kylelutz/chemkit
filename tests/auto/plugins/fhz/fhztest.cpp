@@ -22,6 +22,8 @@
 
 #include <QtTest>
 
+#include <algorithm>
+
 #include <chemkit/molecule.h>
 #include <chemkit/chemicalfile.h>
 #include <chemkit/chemicalfileformat.h>
@@ -40,8 +42,9 @@ class FhzTest : public QObject
 
 void FhzTest::initTestCase()
 {
-    QVERIFY(chemkit::ChemicalFileFormat::formats().contains("fh"));
-    QVERIFY(chemkit::ChemicalFileFormat::formats().contains("fhz"));
+    std::vector<std::string> formats = chemkit::ChemicalFileFormat::formats();
+    QVERIFY(std::find(formats.begin(), formats.end(), "fh") != formats.end());
+    QVERIFY(std::find(formats.begin(), formats.end(), "fhz") != formats.end());
 }
 
 void FhzTest::read_data()

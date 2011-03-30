@@ -23,6 +23,8 @@
 #include "builderwindow.h"
 #include "ui_builderwindow.h"
 
+#include <algorithm>
+
 #include <chemkit/bondpredictor.h>
 #include <chemkit/graphicscamera.h>
 
@@ -295,14 +297,14 @@ void BuilderWindow::openFile(const QString &fileName)
 
 void BuilderWindow::openFile()
 {
-    QStringList formatList = chemkit::ChemicalFile::formats();
-    formatList.sort();
+    std::vector<std::string> formats = chemkit::ChemicalFile::formats();
+    std::sort(formats.begin(), formats.end());
 
-    QString formats;
-    foreach(const QString &format, formatList)
-        formats += QString("*.%1 ").arg(format);
+    QString formatsString;
+    foreach(const QString &format, formatsString)
+        formatsString += QString("*.%1 ").arg(format);
 
-    QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"), 0, QString("Molecule Files (%1);;All Files (*.*)").arg(formats));
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"), 0, QString("Molecule Files (%1);;All Files (*.*)").arg(formatsString));
 
     if(!fileName.isEmpty()){
         openFile(fileName);

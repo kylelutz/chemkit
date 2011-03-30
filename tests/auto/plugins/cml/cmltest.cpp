@@ -22,6 +22,8 @@
 
 #include <QtTest>
 
+#include <algorithm>
+
 #include <chemkit/molecule.h>
 #include <chemkit/chemicalfileformat.h>
 
@@ -39,7 +41,8 @@ class CmlTest : public QObject
 
 void CmlTest::initTestCase()
 {
-    QVERIFY(chemkit::ChemicalFileFormat::formats().contains("cml"));
+    std::vector<std::string> formats = chemkit::ChemicalFileFormat::formats();
+    QVERIFY(std::find(formats.begin(), formats.end(), "cml") != formats.end());
 }
 
 void CmlTest::read_data()

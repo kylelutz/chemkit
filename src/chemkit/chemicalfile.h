@@ -25,6 +25,9 @@
 
 #include "chemkit.h"
 
+#include <string>
+#include <vector>
+
 #include <QtCore>
 
 namespace chemkit {
@@ -45,9 +48,9 @@ class CHEMKIT_EXPORT ChemicalFile
         void setFileName(const QString &fileName);
         QString fileName() const;
         void setFormat(ChemicalFileFormat *format);
-        bool setFormat(const QString &name);
+        bool setFormat(const std::string &name);
         ChemicalFileFormat* format() const;
-        QString formatName() const;
+        std::string formatName() const;
         int size() const;
         bool isEmpty() const;
 
@@ -72,19 +75,19 @@ class CHEMKIT_EXPORT ChemicalFile
         // input and output
         bool read();
         bool read(const QString &fileName);
-        bool read(const QString &fileName, const QString &format);
-        bool read(QIODevice *iodev, const QString &format);
+        bool read(const QString &fileName, const std::string &format);
+        bool read(QIODevice *iodev, const std::string &format);
         bool write();
         bool write(const QString &fileName);
-        bool write(const QString &fileName, const QString &format);
+        bool write(const QString &fileName, const std::string &format);
         bool write(QIODevice *iodev);
-        bool write(QIODevice *iodev, const QString &format);
+        bool write(QIODevice *iodev, const std::string &format);
 
         // error handling
         QString errorString() const;
 
         // static methods
-        static QStringList formats();
+        static std::vector<std::string> formats();
         static Molecule* quickRead(const QString &fileName);
         static void quickWrite(const Molecule *molecule, const QString &fileName);
 

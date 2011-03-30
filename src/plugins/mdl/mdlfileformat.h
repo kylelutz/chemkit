@@ -32,7 +32,7 @@ class MdlFileFormat : public chemkit::ChemicalFileFormat
 {
     public:
         // construction and destruction
-        MdlFileFormat(const QString &name);
+        MdlFileFormat(const std::string &name);
         ~MdlFileFormat();
 
         // input and output

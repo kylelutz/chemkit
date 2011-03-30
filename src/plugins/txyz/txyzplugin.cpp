@@ -27,7 +27,12 @@
 TxyzPlugin::TxyzPlugin()
     : chemkit::Plugin("txyz")
 {
-    chemkit::ChemicalFileFormat::registerFormat("txyz", &createTxyzFormat);
+    registerPluginClass<chemkit::ChemicalFileFormat>("txyz", createTxyzFormat);
+}
+
+TxyzPlugin::~TxyzPlugin()
+{
+    unregisterPluginClass<chemkit::ChemicalFileFormat>("txyz");
 }
 
 chemkit::ChemicalFileFormat* TxyzPlugin::createTxyzFormat()

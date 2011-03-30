@@ -25,6 +25,9 @@
 
 #include "chemkit.h"
 
+#include <string>
+#include <vector>
+
 #include "chemicalfile.h"
 
 namespace chemkit {
@@ -41,7 +44,7 @@ class CHEMKIT_EXPORT ChemicalFileFormat
         virtual ~ChemicalFileFormat();
 
         // properties
-        QString name() const;
+        std::string name() const;
 
         // options
         void setOption(const QString &name, const QVariant &value);
@@ -55,13 +58,11 @@ class CHEMKIT_EXPORT ChemicalFileFormat
         QString errorString() const;
 
         // static methods
-        static ChemicalFileFormat* create(const QString &format);
-        static QStringList formats();
-        static void registerFormat(const QString &name, CreateFunction function);
-        static void unregisterFormat(const QString &name, CreateFunction function);
+        static ChemicalFileFormat* create(const std::string &format);
+        static std::vector<std::string> formats();
 
     protected:
-        ChemicalFileFormat(const QString &name);
+        ChemicalFileFormat(const std::string &name);
         void setErrorString(const QString &error);
 
     private:

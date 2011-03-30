@@ -47,7 +47,8 @@ void InchiTest::initTestCase()
     QVERIFY(std::find(lineFormats.begin(), lineFormats.end(), "inchi") != lineFormats.end());
     QVERIFY(std::find(lineFormats.begin(), lineFormats.end(), "inchikey") != lineFormats.end());
 
-    QVERIFY(chemkit::ChemicalFileFormat::formats().contains("inchi"));
+    std::vector<std::string> fileFormats = chemkit::ChemicalFileFormat::formats();
+    QVERIFY(std::find(fileFormats.begin(), fileFormats.end(), "inchi") != fileFormats.end());
 }
 
 void InchiTest::read()
