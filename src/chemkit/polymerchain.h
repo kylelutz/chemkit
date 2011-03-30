@@ -56,7 +56,7 @@ class CHEMKIT_EXPORT PolymerChain
         QList<Residue *> residues() const;
         int residueCount() const;
         int indexOf(const Residue *residue) const;
-        QString sequenceString() const;
+        std::string sequenceString() const;
         int sequenceNumber(const Residue *residue) const;
 
     private:

@@ -22,6 +22,8 @@
 
 #include "polymerchain.h"
 
+#include <sstream>
+
 #include "residue.h"
 
 namespace chemkit {
@@ -162,15 +164,15 @@ int PolymerChain::indexOf(const Residue *residue) const
 /// Returns the residue sequence as a string of one letter symbols.
 ///
 /// \see Residue::letter()
-QString PolymerChain::sequenceString() const
+std::string PolymerChain::sequenceString() const
 {
-    QString string;
+    std::stringstream stream;
 
     Q_FOREACH(const Residue *residue, d->residues){
-        string.append(residue->letter());
+        stream << residue->letter();
     }
 
-    return string;
+    return stream.str();
 }
 
 /// Returns the sequence number of \p residue. Sequence numbers start

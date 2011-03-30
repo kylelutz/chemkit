@@ -70,11 +70,11 @@ void PdbTest::read_1BNA()
     // check chains
     chemkit::PolymerChain *chainA = polymer->chain(0);
     QCOMPARE(chainA->residueCount(), 12);
-    QCOMPARE(chainA->sequenceString(), QString("CGCGAATTCGCG"));
+    QCOMPARE(chainA->sequenceString(), std::string("CGCGAATTCGCG"));
 
     chemkit::PolymerChain *chainB = polymer->chain(1);
     QCOMPARE(chainB->residueCount(), 12);
-    QCOMPARE(chainB->sequenceString(), QString("CGCGAATTCGCG"));
+    QCOMPARE(chainB->sequenceString(), std::string("CGCGAATTCGCG"));
 }
 
 void PdbTest::read_1UBQ()
@@ -102,9 +102,9 @@ void PdbTest::read_1UBQ()
     QCOMPARE(chain->residueCount(), 76);
 
     // check sequence
-    QCOMPARE(chain->sequenceString(), QString("MQIFVKTLTGKTITLEVEPSDTIENVKAKIQ"
-                                              "DKEGIPPDQQRLIFAGKQLEDGRTLSDYNIQ"
-                                              "KESTLHLVLRLRGG"));
+    QCOMPARE(chain->sequenceString(), std::string("MQIFVKTLTGKTITLEVEPSDTIENVKAKIQ"
+                                                  "DKEGIPPDQQRLIFAGKQLEDGRTLSDYNIQ"
+                                                  "KESTLHLVLRLRGG"));
 }
 
 void PdbTest::read_2DHB()
@@ -127,20 +127,20 @@ void PdbTest::read_2DHB()
     // chain A
     chemkit::PolymerChain *chainA = polymer->chain(0);
     QCOMPARE(chainA->residueCount(), 141);
-    QCOMPARE(chainA->sequenceString(), QString("VLSAADKTNVKAAWSKVGGHAGEYGAEALE"
-                                               "RMFLGFPTTKTYFPHFDLSHGSAQVKAHGK"
-                                               "KVADGLTLAVGHLDDLPGALSDLSNLHAHK"
-                                               "LRVDPVNFKLLSHCLLSTLAVHLPNDFTPA"
-                                               "VHASLDKFLSSVSTVLTSKYR"));
+    QCOMPARE(chainA->sequenceString(), std::string("VLSAADKTNVKAAWSKVGGHAGEYGAEALE"
+                                                   "RMFLGFPTTKTYFPHFDLSHGSAQVKAHGK"
+                                                   "KVADGLTLAVGHLDDLPGALSDLSNLHAHK"
+                                                   "LRVDPVNFKLLSHCLLSTLAVHLPNDFTPA"
+                                                   "VHASLDKFLSSVSTVLTSKYR"));
 
     // chain B
     chemkit::PolymerChain *chainB = polymer->chain(1);
     QCOMPARE(chainB->residueCount(), 146);
-    QCOMPARE(chainB->sequenceString(), QString("VQLSGEEKAAVLALWDKVNEEEVGGEALGR"
-                                               "LLVVYPWTQRFFDSFGDLSNPGAVMGNPKV"
-                                               "KAHGKKVLHSFGEGVHHLDNLKGTFAALSE"
-                                               "LHCDKLHVDPENFRLLGNVLALVVARHFGK"
-                                               "DFTPELQASYQKVVAGVANALAHKYH"));
+    QCOMPARE(chainB->sequenceString(), std::string("VQLSGEEKAAVLALWDKVNEEEVGGEALGR"
+                                                   "LLVVYPWTQRFFDSFGDLSNPGAVMGNPKV"
+                                                   "KAHGKKVLHSFGEGVHHLDNLKGTFAALSE"
+                                                   "LHCDKLHVDPENFRLLGNVLALVVARHFGK"
+                                                   "DFTPELQASYQKVVAGVANALAHKYH"));
 }
 
 void PdbTest::read_alphabet()
@@ -162,7 +162,7 @@ void PdbTest::read_alphabet()
 
     chemkit::PolymerChain *chain = polymer->chain(0);
     QCOMPARE(chain->residueCount(), 20);
-    QCOMPARE(chain->sequenceString(), QString("ADNRCEQGHILKMFPSTWYV"));
+    QCOMPARE(chain->sequenceString(), std::string("ADNRCEQGHILKMFPSTWYV"));
 }
 
 void PdbTest::read_fmc()

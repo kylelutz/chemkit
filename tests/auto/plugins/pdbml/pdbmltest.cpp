@@ -65,9 +65,9 @@ void PdbmlTest::read_1UBQ()
     chemkit::PolymerChain *chain = protein->chain(0);
     QVERIFY(chain != 0);
     QCOMPARE(chain->residueCount(), 76);
-    QCOMPARE(chain->sequenceString(), QString("MQIFVKTLTGKTITLEVEPSDTIENVKAKIQ"
-                                              "DKEGIPPDQQRLIFAGKQLEDGRTLSDYNIQ"
-                                              "KESTLHLVLRLRGG"));
+    QCOMPARE(chain->sequenceString(), std::string("MQIFVKTLTGKTITLEVEPSDTIENVKAKIQ"
+                                                  "DKEGIPPDQQRLIFAGKQLEDGRTLSDYNIQ"
+                                                  "KESTLHLVLRLRGG"));
 
     // molecule
     QCOMPARE(protein->atomCount(), 660);
@@ -90,20 +90,20 @@ void PdbmlTest::read_2DHB()
     // chain A
     chemkit::PolymerChain *chainA = protein->chain(0);
     QCOMPARE(chainA->residueCount(), 141);
-    QCOMPARE(chainA->sequenceString(), QString("VLSAADKTNVKAAWSKVGGHAGEYGAEALE"
-                                               "RMFLGFPTTKTYFPHFDLSHGSAQVKAHGK"
-                                               "KVADGLTLAVGHLDDLPGALSDLSNLHAHK"
-                                               "LRVDPVNFKLLSHCLLSTLAVHLPNDFTPA"
-                                               "VHASLDKFLSSVSTVLTSKYR"));
+    QCOMPARE(chainA->sequenceString(), std::string("VLSAADKTNVKAAWSKVGGHAGEYGAEALE"
+                                                   "RMFLGFPTTKTYFPHFDLSHGSAQVKAHGK"
+                                                   "KVADGLTLAVGHLDDLPGALSDLSNLHAHK"
+                                                   "LRVDPVNFKLLSHCLLSTLAVHLPNDFTPA"
+                                                   "VHASLDKFLSSVSTVLTSKYR"));
 
     // chain B
     chemkit::PolymerChain *chainB = protein->chain(1);
     QCOMPARE(chainB->residueCount(), 146);
-    QCOMPARE(chainB->sequenceString(), QString("VQLSGEEKAAVLALWDKVNEEEVGGEALGR"
-                                               "LLVVYPWTQRFFDSFGDLSNPGAVMGNPKV"
-                                               "KAHGKKVLHSFGEGVHHLDNLKGTFAALSE"
-                                               "LHCDKLHVDPENFRLLGNVLALVVARHFGK"
-                                               "DFTPELQASYQKVVAGVANALAHKYH"));
+    QCOMPARE(chainB->sequenceString(), std::string("VQLSGEEKAAVLALWDKVNEEEVGGEALGR"
+                                                   "LLVVYPWTQRFFDSFGDLSNPGAVMGNPKV"
+                                                   "KAHGKKVLHSFGEGVHHLDNLKGTFAALSE"
+                                                   "LHCDKLHVDPENFRLLGNVLALVVARHFGK"
+                                                   "DFTPELQASYQKVVAGVANALAHKYH"));
 }
 
 QTEST_APPLESS_MAIN(PdbmlTest)
