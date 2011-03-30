@@ -27,12 +27,12 @@
 PdbPlugin::PdbPlugin()
     : chemkit::Plugin("pdb")
 {
-    chemkit::PolymerFileFormat::registerFormat("pdb", createPdbFormat);
+    registerPluginClass<chemkit::PolymerFileFormat>("pdb", createPdbFormat);
 }
 
 PdbPlugin::~PdbPlugin()
 {
-    chemkit::PolymerFileFormat::unregisterFormat("pdb", createPdbFormat);
+    unregisterPluginClass<chemkit::PolymerFileFormat>("pdb");
 }
 
 chemkit::PolymerFileFormat* PdbPlugin::createPdbFormat()

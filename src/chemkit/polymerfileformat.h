@@ -25,6 +25,9 @@
 
 #include "chemkit.h"
 
+#include <string>
+#include <vector>
+
 #include <QtCore>
 
 namespace chemkit {
@@ -42,7 +45,7 @@ class CHEMKIT_EXPORT PolymerFileFormat
         virtual ~PolymerFileFormat();
 
         // properties
-        QString name() const;
+        std::string name() const;
 
         // input and output
         virtual bool read(QIODevice *iodev, PolymerFile *file);
@@ -52,13 +55,11 @@ class CHEMKIT_EXPORT PolymerFileFormat
         QString errorString() const;
 
         // static methods
-        static PolymerFileFormat* create(const QString &name);
-        static QStringList formats();
-        static void registerFormat(const QString &name, CreateFunction function);
-        static void unregisterFormat(const QString &name, CreateFunction function);
+        static PolymerFileFormat* create(const std::string &name);
+        static std::vector<std::string> formats();
 
     protected:
-        PolymerFileFormat(const QString &name);
+        PolymerFileFormat(const std::string &name);
         void setErrorString(const QString &errorString);
 
     private:

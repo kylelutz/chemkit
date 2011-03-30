@@ -89,7 +89,7 @@ void PolymerFile::setFormat(PolymerFileFormat *format)
 
 /// Sets the format for the file to \p name. Returns \c false if an
 /// error occured.
-bool PolymerFile::setFormat(const QString &name)
+bool PolymerFile::setFormat(const std::string &name)
 {
     PolymerFileFormat *format = PolymerFileFormat::create(name);
     if(!format){
@@ -107,13 +107,13 @@ PolymerFileFormat* PolymerFile::format() const
 }
 
 /// Returns the name of the file format for the file.
-QString PolymerFile::formatName() const
+std::string PolymerFile::formatName() const
 {
     if(d->format){
         return d->format->name();
     }
 
-    return QString();
+    return std::string();
 }
 
 /// Returns the number of polymers in the file.
@@ -204,11 +204,11 @@ bool PolymerFile::read(const QString &fileName)
 {
     QString format = QFileInfo(fileName).suffix();
 
-    return read(fileName, format);
+    return read(fileName, format.toStdString());
 }
 
 /// Reads the file from \p fileName using format.
-bool PolymerFile::read(const QString &fileName, const QString &format)
+bool PolymerFile::read(const QString &fileName, const std::string &format)
 {
     QFile file(fileName);
     if(!file.open(QIODevice::ReadOnly)){
@@ -220,12 +220,12 @@ bool PolymerFile::read(const QString &fileName, const QString &format)
 }
 
 /// Reads the file from \p iodev using \p format.
-bool PolymerFile::read(QIODevice *iodev, const QString &format)
+bool PolymerFile::read(QIODevice *iodev, const std::string &format)
 {
     if(d->format == 0 || d->format->name() != format){
         d->format = PolymerFileFormat::create(format);
         if(!d->format){
-            setErrorString(QString("Format '%1' is not supported").arg(format));
+            setErrorString(QString("Format '%1' is not supported").arg(format.c_str()));
             iodev->close();
             return false;
         }
@@ -251,11 +251,11 @@ bool PolymerFile::write(const QString &fileName)
 {
     QString format = QFileInfo(fileName).suffix();
 
-    return write(fileName, format);
+    return write(fileName, format.toStdString());
 }
 
 /// Writes the file to \p fileName using \p format.
-bool PolymerFile::write(const QString &fileName, const QString &format)
+bool PolymerFile::write(const QString &fileName, const std::string &format)
 {
     QFile file(fileName);
     if(!file.open(QIODevice::WriteOnly)){
@@ -282,12 +282,12 @@ bool PolymerFile::write(QIODevice *iodev)
 }
 
 /// Writes the file to \p iodev using \p format.
-bool PolymerFile::write(QIODevice *iodev, const QString &format)
+bool PolymerFile::write(QIODevice *iodev, const std::string &format)
 {
     if(!d->format || d->format->name() != format){
         d->format = PolymerFileFormat::create(format);
         if(!d->format){
-            setErrorString(QString("Format '%1' is not supported").arg(format));
+            setErrorString(QString("Format '%1' is not supported").arg(format.c_str()));
             iodev->close();
             return false;
         }
@@ -310,7 +310,7 @@ QString PolymerFile::errorString() const
 
 // --- Static Methods ------------------------------------------------------ //
 /// Returns a list of all supported polymer file formats.
-QStringList PolymerFile::formats()
+std::vector<std::string> PolymerFile::formats()
 {
     return PolymerFileFormat::formats();
 }

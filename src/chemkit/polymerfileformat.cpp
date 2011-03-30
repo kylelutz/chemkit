@@ -26,17 +26,11 @@
 
 namespace chemkit {
 
-namespace {
-
-QHash<QString, PolymerFileFormat::CreateFunction> pluginFormats;
-
-} // end anonymous namespace
-
 // === PolymerFileFormatPrivate ============================================ //
 class PolymerFileFormatPrivate
 {
     public:
-        QString name;
+        std::string name;
         QString errorString;
 };
 
@@ -48,7 +42,7 @@ class PolymerFileFormatPrivate
 
 // --- Construction and Destruction ---------------------------------------- //
 /// Creates a new polymer file format with \p name.
-PolymerFileFormat::PolymerFileFormat(const QString &name)
+PolymerFileFormat::PolymerFileFormat(const std::string &name)
     : d(new PolymerFileFormatPrivate)
 {
     d->name = name;
@@ -62,7 +56,7 @@ PolymerFileFormat::~PolymerFileFormat()
 
 // --- Properties ---------------------------------------------------------- //
 /// Returns the name of the file format.
-QString PolymerFileFormat::name() const
+std::string PolymerFileFormat::name() const
 {
     return d->name;
 }
@@ -74,7 +68,7 @@ bool PolymerFileFormat::read(QIODevice *iodev, PolymerFile *file)
     Q_UNUSED(iodev);
     Q_UNUSED(file);
 
-    setErrorString(QString("'%1' reading not supported.").arg(name()));
+    setErrorString(QString("'%1' reading not supported.").arg(name().c_str()));
     return false;
 }
 
@@ -84,7 +78,7 @@ bool PolymerFileFormat::write(const PolymerFile *file, QIODevice *iodev)
     Q_UNUSED(file);
     Q_UNUSED(iodev);
 
-    setErrorString(QString("'%1' writing not supported.").arg(name()));
+    setErrorString(QString("'%1' writing not supported.").arg(name().c_str()));
     return false;
 }
 
@@ -103,38 +97,15 @@ QString PolymerFileFormat::errorString() const
 // --- Static Methods ------------------------------------------------------ //
 /// Creates a new polymer file format with \p name. Returns \c 0 if
 /// \p name is invalid.
-PolymerFileFormat* PolymerFileFormat::create(const QString &name)
+PolymerFileFormat* PolymerFileFormat::create(const std::string &name)
 {
-    // ensure default plugins are loaded
-    PluginManager::instance()->loadDefaultPlugins();
-
-    CreateFunction createFunction = pluginFormats.value(name.toLower());
-    if(createFunction){
-        return createFunction();
-    }
-
-    return 0;
+    return PluginManager::instance()->createPluginClass<PolymerFileFormat>(name);
 }
 
 /// Returns a list of available polymer file formats.
-QStringList PolymerFileFormat::formats()
+std::vector<std::string> PolymerFileFormat::formats()
 {
-    // ensure default plugins are loaded
-    PluginManager::instance()->loadDefaultPlugins();
-
-    return pluginFormats.keys();
-}
-
-void PolymerFileFormat::registerFormat(const QString &name, CreateFunction function)
-{
-    pluginFormats.insert(name.toLower(), function);
-}
-
-void PolymerFileFormat::unregisterFormat(const QString &name, CreateFunction function)
-{
-    if(pluginFormats.value(name.toLower()) == function){
-        pluginFormats.remove(name.toLower());
-    }
+    return PluginManager::instance()->pluginClassNames<PolymerFileFormat>();
 }
 
 } // end chemkit namespace

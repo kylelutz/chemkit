@@ -22,6 +22,8 @@
 
 #include <QtTest>
 
+#include <algorithm>
+
 #include <chemkit/polymer.h>
 #include <chemkit/polymerfile.h>
 #include <chemkit/polymerchain.h>
@@ -41,7 +43,8 @@ class PdbmlTest : public QObject
 
 void PdbmlTest::initTestCase()
 {
-    QVERIFY(chemkit::PolymerFileFormat::formats().contains("pdbml"));
+    std::vector<std::string> formats = chemkit::PolymerFileFormat::formats();
+    QVERIFY(std::find(formats.begin(), formats.end(), "pdbml") != formats.end());
 }
 
 void PdbmlTest::read_1UBQ()

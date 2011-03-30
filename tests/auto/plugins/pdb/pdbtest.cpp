@@ -22,6 +22,8 @@
 
 #include <QtTest>
 
+#include <algorithm>
+
 #include <chemkit/polymer.h>
 #include <chemkit/polymerfile.h>
 #include <chemkit/polymerchain.h>
@@ -44,7 +46,8 @@ class PdbTest : public QObject
 
 void PdbTest::initTestCase()
 {
-    QVERIFY(chemkit::PolymerFileFormat::formats().contains("pdb"));
+    std::vector<std::string> formats = chemkit::PolymerFileFormat::formats();
+    QVERIFY(std::find(formats.begin(), formats.end(), "pdb") != formats.end());
 }
 
 void PdbTest::read_1BNA()

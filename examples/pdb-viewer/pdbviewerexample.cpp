@@ -106,7 +106,7 @@ void PdbViewerWindow::openFile(const QString &fileName)
     // close current file
     setFile(0);
 
-    QString format = QFileInfo(fileName).suffix();
+    std::string format = QFileInfo(fileName).suffix().toStdString();
     if(format == "xml")
         format = "pdbml";
 
