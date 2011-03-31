@@ -34,7 +34,7 @@ class ChemicalFileFormatPrivate
 {
     public:
         std::string name;
-        QString errorString;
+        std::string errorString;
         std::map<std::string, QVariant> options;
 };
 
@@ -97,7 +97,7 @@ bool ChemicalFileFormat::read(QIODevice *iodev, ChemicalFile *file)
     Q_UNUSED(iodev);
     Q_UNUSED(file);
 
-    setErrorString(QString("'%1' reading not supported.").arg(name().c_str()));
+    setErrorString(QString("'%1' reading not supported.").arg(name().c_str()).toStdString());
     return false;
 }
 
@@ -107,19 +107,19 @@ bool ChemicalFileFormat::write(const ChemicalFile *file, QIODevice *iodev)
     Q_UNUSED(file);
     Q_UNUSED(iodev);
 
-    setErrorString(QString("'%1' writing not supported.").arg(name().c_str()));
+    setErrorString(QString("'%1' writing not supported.").arg(name().c_str()).toStdString());
     return false;
 }
 
 // --- Error Handling ------------------------------------------------------ //
 /// Sets a string describing the last error that occured.
-void ChemicalFileFormat::setErrorString(const QString &error)
+void ChemicalFileFormat::setErrorString(const std::string &error)
 {
     d->errorString = error;
 }
 
 /// Returns a string describing the last error that occured.
-QString ChemicalFileFormat::errorString() const
+std::string ChemicalFileFormat::errorString() const
 {
     return d->errorString;
 }

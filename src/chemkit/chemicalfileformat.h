@@ -55,7 +55,7 @@ class CHEMKIT_EXPORT ChemicalFileFormat
         virtual bool write(const ChemicalFile *file, QIODevice *iodev);
 
         // error handling
-        QString errorString() const;
+        std::string errorString() const;
 
         // static methods
         static ChemicalFileFormat* create(const std::string &format);
@@ -63,7 +63,7 @@ class CHEMKIT_EXPORT ChemicalFileFormat
 
     protected:
         ChemicalFileFormat(const std::string &name);
-        void setErrorString(const QString &error);
+        void setErrorString(const std::string &error);
 
     private:
         ChemicalFileFormatPrivate* const d;

@@ -163,7 +163,7 @@ bool CmlFileFormat::read(QIODevice *iodev, chemkit::ChemicalFile *file)
 
     bool ok = xml.parse(source);
     if(!ok)
-        setErrorString(QString("XML Parsing failed: %1").arg(handler.errorString()));
+        setErrorString(QString("XML Parsing failed: %1").arg(handler.errorString()).toStdString());
 
     return ok;
 }

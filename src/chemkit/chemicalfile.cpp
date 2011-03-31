@@ -312,7 +312,7 @@ bool ChemicalFile::read(QIODevice *iodev, const std::string &format)
 
     bool ok = d->format->read(iodev, this);
     if(!ok)
-        setErrorString(d->format->errorString());
+        setErrorString(QString::fromStdString(d->format->errorString()));
 
     iodev->close();
     return ok;
@@ -352,7 +352,7 @@ bool ChemicalFile::write(QIODevice *iodev)
 
     bool ok = d->format->write(this, iodev);
     if(!ok)
-        setErrorString(d->format->errorString());
+        setErrorString(QString::fromStdString(d->format->errorString()));
 
     iodev->close();
     return ok;
