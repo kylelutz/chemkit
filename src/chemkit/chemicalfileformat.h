@@ -47,8 +47,8 @@ class CHEMKIT_EXPORT ChemicalFileFormat
         std::string name() const;
 
         // options
-        void setOption(const QString &name, const QVariant &value);
-        QVariant option(const QString &name) const;
+        void setOption(const std::string &name, const QVariant &value);
+        QVariant option(const std::string &name) const;
 
         // input and output
         virtual bool read(QIODevice *iodev, ChemicalFile *file);

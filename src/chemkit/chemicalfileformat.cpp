@@ -22,6 +22,7 @@
 
 #include "chemicalfileformat.h"
 
+#include <map>
 #include <boost/algorithm/string/case_conv.hpp>
 
 #include "pluginmanager.h"
@@ -34,7 +35,7 @@ class ChemicalFileFormatPrivate
     public:
         std::string name;
         QString errorString;
-        QHash<QString, QVariant> options;
+        std::map<std::string, QVariant> options;
 };
 
 // === ChemicalFileFormat ================================================== //
@@ -73,15 +74,20 @@ std::string ChemicalFileFormat::name() const
 
 // --- Options ------------------------------------------------------------- //
 /// Sets an option for the format.
-void ChemicalFileFormat::setOption(const QString &name, const QVariant &value)
+void ChemicalFileFormat::setOption(const std::string &name, const QVariant &value)
 {
     d->options[name] = value;
 }
 
 /// Returns the option for the format.
-QVariant ChemicalFileFormat::option(const QString &name) const
+QVariant ChemicalFileFormat::option(const std::string &name) const
 {
-    return d->options.value(name);
+    std::map<std::string, QVariant>::iterator element = d->options.find(name);
+    if(element != d->options.end()){
+        return element->second;
+    }
+
+    return QVariant();
 }
 
 // --- Input and Output ---------------------------------------------------- //
