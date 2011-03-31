@@ -36,12 +36,12 @@ int main(int argc, char *argv[])
         return -1;
     }
 
-    QString fileName = argv[1];
+    std::string fileName = argv[1];
 
     chemkit::ChemicalFile file(fileName);
     bool ok = file.read();
     if(!ok){
-        err << "Failed to read file: " << fileName << "\n";
+        err << "Failed to read file: " << fileName.c_str() << "\n";
         return -1;
     }
 

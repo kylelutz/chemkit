@@ -40,19 +40,19 @@ class ChemicalFileTest : public QObject
 void ChemicalFileTest::fileName()
 {
     chemkit::ChemicalFile file;
-    QCOMPARE(file.fileName(), QString());
+    QCOMPARE(file.fileName(), std::string());
 
     file.setFileName("foo");
-    QCOMPARE(file.fileName(), QString("foo"));
+    QCOMPARE(file.fileName(), std::string("foo"));
 
     file.setFileName("bar");
-    QCOMPARE(file.fileName(), QString("bar"));
+    QCOMPARE(file.fileName(), std::string("bar"));
 
-    file.setFileName(QString());
-    QCOMPARE(file.fileName(), QString());
+    file.setFileName(std::string());
+    QCOMPARE(file.fileName(), std::string());
 
     chemkit::ChemicalFile fileWithName("foobar");
-    QCOMPARE(fileWithName.fileName(), QString("foobar"));
+    QCOMPARE(fileWithName.fileName(), std::string("foobar"));
 }
 
 void ChemicalFileTest::format()

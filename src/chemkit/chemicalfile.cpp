@@ -31,7 +31,7 @@ namespace chemkit {
 class ChemicalFilePrivate
 {
     public:
-        QString fileName;
+        std::string fileName;
         QString errorString;
         ChemicalFileFormat *format;
         QList<Molecule *> molecules;
@@ -84,7 +84,7 @@ ChemicalFile::ChemicalFile()
 }
 
 /// Creates a new, empty file object with \p fileName.
-ChemicalFile::ChemicalFile(const QString &fileName)
+ChemicalFile::ChemicalFile(const std::string &fileName)
     : d(new ChemicalFilePrivate)
 {
     d->format = 0;
@@ -102,13 +102,13 @@ ChemicalFile::~ChemicalFile()
 
 // --- Properties ---------------------------------------------------------- //
 /// Sets the name of the file to \p fileName.
-void ChemicalFile::setFileName(const QString &fileName)
+void ChemicalFile::setFileName(const std::string &fileName)
 {
     d->fileName = fileName;
 }
 
 /// Returns the name of the file.
-QString ChemicalFile::fileName() const
+std::string ChemicalFile::fileName() const
 {
     return d->fileName;
 }
@@ -271,26 +271,27 @@ QHash<QString, QVariant> ChemicalFile::moleculeData(const Molecule *molecule) co
 /// Reads the file.
 bool ChemicalFile::read()
 {
-    if(d->fileName.isEmpty())
+    if(d->fileName.empty()){
         return false;
+    }
 
     return read(fileName());
 }
 
 /// Reads the file from \p fileName.
-bool ChemicalFile::read(const QString &fileName)
+bool ChemicalFile::read(const std::string &fileName)
 {
-    QString format = QFileInfo(fileName).suffix();
+    std::string format = QFileInfo(fileName.c_str()).suffix().toStdString();
 
-    return read(fileName, format.toStdString());
+    return read(fileName, format);
 }
 
 /// Reads the file from \p fileName using format.
-bool ChemicalFile::read(const QString &fileName, const std::string &format)
+bool ChemicalFile::read(const std::string &fileName, const std::string &format)
 {
-    QFile file(fileName);
+    QFile file(fileName.c_str());
     if(!file.open(QIODevice::ReadOnly)){
-        setErrorString(QString("Failed to open '%1' for reading: %2").arg(fileName).arg(file.errorString()));
+        setErrorString(QString("Failed to open '%1' for reading: %2").arg(fileName.c_str()).arg(file.errorString()));
         return false;
     }
 
@@ -324,19 +325,19 @@ bool ChemicalFile::write()
 }
 
 /// Writes the file to \p fileName.
-bool ChemicalFile::write(const QString &fileName)
+bool ChemicalFile::write(const std::string &fileName)
 {
-    QString format = QFileInfo(fileName).suffix();
+    std::string format = QFileInfo(fileName.c_str()).suffix().toStdString();
 
-    return write(fileName, format.toStdString());
+    return write(fileName, format);
 }
 
 /// Writes the file to \p fileName using \p format.
-bool ChemicalFile::write(const QString &fileName, const std::string &format)
+bool ChemicalFile::write(const std::string &fileName, const std::string &format)
 {
-    QFile file(fileName);
+    QFile file(fileName.c_str());
     if(!file.open(QIODevice::WriteOnly)){
-        setErrorString(QString("Failed to open '%1' for writing: %2").arg(fileName).arg(file.errorString()));
+        setErrorString(QString("Failed to open '%1' for writing: %2").arg(fileName.c_str()).arg(file.errorString()));
         return false;
     }
 
@@ -396,7 +397,7 @@ std::vector<std::string> ChemicalFile::formats()
 ///
 /// This static convenience method allows for the reading of molecule
 /// from a file without explicitly creating a file object.
-Molecule* ChemicalFile::quickRead(const QString &fileName)
+Molecule* ChemicalFile::quickRead(const std::string &fileName)
 {
     ChemicalFile file(fileName);
 
@@ -417,7 +418,7 @@ Molecule* ChemicalFile::quickRead(const QString &fileName)
 ///
 /// This static convenience method allows for the writing of molecule
 /// to a file without explicitly creating a file object.
-void ChemicalFile::quickWrite(const Molecule *molecule, const QString &fileName)
+void ChemicalFile::quickWrite(const Molecule *molecule, const std::string &fileName)
 {
     ChemicalFile file;
     file.addMolecule(const_cast<Molecule *>(molecule));

@@ -98,7 +98,7 @@ void CubeViewerExample::openFile(const QString &fileName)
     closeFile();
 
     // open new file
-    chemkit::ChemicalFile file(fileName);
+    chemkit::ChemicalFile file(fileName.toStdString());
     bool ok = file.read();
     if(!ok){
         QMessageBox::critical(this,

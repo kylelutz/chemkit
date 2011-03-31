@@ -31,7 +31,7 @@
 #include <chemkit/chemicalfile.h>
 #include <chemkit/partialchargepredictor.h>
 
-const QString dataPath = "../../../data/";
+const std::string dataPath = "../../../data/";
 
 class MmffTest : public QObject
 {

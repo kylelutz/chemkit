@@ -29,7 +29,7 @@
 #include <chemkit/chemicalfile.h>
 #include <chemkit/chemicalfileformat.h>
 
-const QString dataPath = "../../../data/";
+const std::string dataPath = "../../../data/";
 
 class SmilesTest : public QObject
 {

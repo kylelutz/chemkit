@@ -138,7 +138,7 @@ int main(int argc, char *argv[])
     }
 
     // read input file
-    chemkit::ChemicalFile inputFile(inputFileName);
+    chemkit::ChemicalFile inputFile(inputFileName.toStdString());
     if(!inputFile.read()){
         err << "Error: failed to read input file: " << inputFile.errorString() << "\n";
         return -1;

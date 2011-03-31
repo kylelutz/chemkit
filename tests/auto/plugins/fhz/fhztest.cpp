@@ -28,7 +28,7 @@
 #include <chemkit/chemicalfile.h>
 #include <chemkit/chemicalfileformat.h>
 
-const QString dataPath = "../../../data/";
+const std::string dataPath = "../../../data/";
 
 class FhzTest : public QObject
 {
@@ -61,7 +61,7 @@ void FhzTest::read()
     QFETCH(QString, fileName);
     QFETCH(QString, formula);
 
-    chemkit::ChemicalFile file(dataPath + fileName);
+    chemkit::ChemicalFile file(dataPath + fileName.toStdString());
     bool ok = file.read();
     if(!ok)
         qDebug() << file.errorString();

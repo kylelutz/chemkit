@@ -26,7 +26,7 @@
 #include <chemkit/forcefield.h>
 #include <chemkit/chemicalfile.h>
 
-const QString dataPath = "../../data/";
+const std::string dataPath = "../../data/";
 
 class UridineMinimizationBenchmark : public QObject
 {

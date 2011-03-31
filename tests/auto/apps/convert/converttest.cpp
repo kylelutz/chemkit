@@ -25,7 +25,7 @@
 #include <chemkit/molecule.h>
 #include <chemkit/chemicalfile.h>
 
-const QString testDataPath = "../../../data/";
+const std::string testDataPath = "../../../data/";
 const QString convertApplication = "../../../../bin/chemkit-convert";
 
 // The ConvertTest class tests the chemkit-convert tool. Each test
@@ -61,7 +61,7 @@ void ConvertTest::convertEthanol()
 
     // setup arguments
     QStringList arguments;
-    arguments.append(inputFile.fileName());
+    arguments.append(inputFile.fileName().c_str());
     arguments.append(output.fileName());
 
     // run chemkit-convert
@@ -72,7 +72,7 @@ void ConvertTest::convertEthanol()
 
     // read and verify the output file
     chemkit::ChemicalFile outputFile;
-    ok = outputFile.read(output.fileName());
+    ok = outputFile.read(output.fileName().toStdString());
     if(!ok){
         qDebug() << outputFile.errorString();
     }
@@ -102,7 +102,7 @@ void ConvertTest::convertBenzenes()
 
     // setup arguments
     QStringList arguments;
-    arguments.append(inputFile.fileName());
+    arguments.append(inputFile.fileName().c_str());
     arguments.append(tempFile.fileName());
 
     // run chemkit-convert
@@ -113,7 +113,7 @@ void ConvertTest::convertBenzenes()
 
     // read and verify the output file
     chemkit::ChemicalFile outputFile;
-    ok = outputFile.read(tempFile.fileName());
+    ok = outputFile.read(tempFile.fileName().toStdString());
     if(!ok){
         qDebug() << outputFile.errorString();
     }

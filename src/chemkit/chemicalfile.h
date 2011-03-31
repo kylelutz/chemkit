@@ -41,12 +41,12 @@ class CHEMKIT_EXPORT ChemicalFile
     public:
         // construction and destruction
         ChemicalFile();
-        ChemicalFile(const QString &fileName);
+        ChemicalFile(const std::string &fileName);
         ~ChemicalFile();
 
         // properties
-        void setFileName(const QString &fileName);
-        QString fileName() const;
+        void setFileName(const std::string &fileName);
+        std::string fileName() const;
         void setFormat(ChemicalFileFormat *format);
         bool setFormat(const std::string &name);
         ChemicalFileFormat* format() const;
@@ -74,12 +74,12 @@ class CHEMKIT_EXPORT ChemicalFile
 
         // input and output
         bool read();
-        bool read(const QString &fileName);
-        bool read(const QString &fileName, const std::string &format);
+        bool read(const std::string &fileName);
+        bool read(const std::string &fileName, const std::string &format);
         bool read(QIODevice *iodev, const std::string &format);
         bool write();
-        bool write(const QString &fileName);
-        bool write(const QString &fileName, const std::string &format);
+        bool write(const std::string &fileName);
+        bool write(const std::string &fileName, const std::string &format);
         bool write(QIODevice *iodev);
         bool write(QIODevice *iodev, const std::string &format);
 
@@ -88,8 +88,8 @@ class CHEMKIT_EXPORT ChemicalFile
 
         // static methods
         static std::vector<std::string> formats();
-        static Molecule* quickRead(const QString &fileName);
-        static void quickWrite(const Molecule *molecule, const QString &fileName);
+        static Molecule* quickRead(const std::string &fileName);
+        static void quickWrite(const Molecule *molecule, const std::string &fileName);
 
     private:
         void setErrorString(const QString &error);

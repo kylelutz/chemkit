@@ -29,7 +29,7 @@
 #include <chemkit/chemicalfile.h>
 #include <chemkit/chemicalfileformat.h>
 
-const QString dataPath = "../../../data/";
+const std::string dataPath = "../../../data/";
 
 class SybylTest : public QObject
 {
@@ -63,7 +63,7 @@ void SybylTest::readMol2()
     QFETCH(QString, fileName);
     QFETCH(QString, formula);
 
-    chemkit::ChemicalFile file(dataPath + fileName);
+    chemkit::ChemicalFile file(dataPath + fileName.toStdString());
     bool ok = file.read();
     if(!ok)
         qDebug() << file.errorString();

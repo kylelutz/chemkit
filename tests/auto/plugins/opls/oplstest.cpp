@@ -29,7 +29,7 @@
 #include <chemkit/forcefield.h>
 #include <chemkit/chemicalfile.h>
 
-const QString dataPath = "../../../data/";
+const std::string dataPath = "../../../data/";
 
 // The OplsTest class validates the OPLS force field implementation
 // in the opls plugin. Energies were checked against those
@@ -71,7 +71,7 @@ void OplsTest::energy()
     QFETCH(QString, formula);
     QFETCH(double, energy);
 
-    chemkit::Molecule *molecule = chemkit::ChemicalFile::quickRead(dataPath + fileName);
+    chemkit::Molecule *molecule = chemkit::ChemicalFile::quickRead(dataPath + fileName.toStdString());
     QVERIFY(molecule != 0);
     QCOMPARE(molecule->formula(), formula.toStdString());
 
