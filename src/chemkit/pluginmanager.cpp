@@ -34,7 +34,7 @@ class PluginManagerPrivate
 {
     public:
         QList<Plugin *> plugins;
-        QString errorString;
+        std::string errorString;
         bool defaultPluginsLoaded;
         std::map<std::string, std::map<std::string, PluginManager::Function> > pluginClasses;
 };
@@ -177,13 +177,13 @@ bool PluginManager::unloadPlugin(const QString &name)
 }
 
 // --- Error Handling ------------------------------------------------------ //
-void PluginManager::setErrorString(const QString &errorString)
+void PluginManager::setErrorString(const std::string &errorString)
 {
     d->errorString = errorString;
 }
 
 /// Returns a string describing the last error that occured.
-QString PluginManager::errorString() const
+std::string PluginManager::errorString() const
 {
     return d->errorString;
 }

@@ -59,7 +59,7 @@ class CHEMKIT_EXPORT PluginManager : public QObject
         template<class T> std::vector<std::string> pluginClassNames() const;
 
         // error handling
-        QString errorString() const;
+        std::string errorString() const;
 
         // static methods
         static PluginManager* instance();
@@ -72,7 +72,7 @@ class CHEMKIT_EXPORT PluginManager : public QObject
         PluginManager();
         ~PluginManager();
 
-        void setErrorString(const QString &errorString);
+        void setErrorString(const std::string &errorString);
         bool registerPluginClass(const std::string &className, const std::string &pluginName, Function function);
         bool unregisterPluginClass(const std::string &className, const std::string &pluginName);
         std::vector<std::string> pluginClassNames(const std::string &className) const;
