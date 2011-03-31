@@ -55,8 +55,8 @@ MmffForceField::MmffForceField()
 {
     const chemkit::Plugin *mmffPlugin = chemkit::PluginManager::instance()->plugin("mmff");
     if(mmffPlugin){
-        QString dataPath = mmffPlugin->dataPath();
-        addParameterSet("mmff94", dataPath + "mmff94.prm");
+        std::string dataPath = mmffPlugin->dataPath();
+        addParameterSet("mmff94", QString::fromStdString(dataPath) + "mmff94.prm");
         setParameterSet("mmff94");
     }
 

@@ -40,7 +40,7 @@ class CHEMKIT_EXPORT Plugin : public QObject
     public:
         // properties
         std::string name() const;
-        QString dataPath() const;
+        std::string dataPath() const;
 
     protected:
         // construction and destruction

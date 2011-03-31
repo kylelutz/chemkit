@@ -42,7 +42,7 @@ OplsForceField::OplsForceField()
 
     const chemkit::Plugin *oplsPlugin = chemkit::PluginManager::instance()->plugin("opls");
     if(oplsPlugin){
-        m_parameters = new OplsParameters(oplsPlugin->dataPath() + "oplsaa.prm");
+        m_parameters = new OplsParameters(QString::fromStdString(oplsPlugin->dataPath()) + "oplsaa.prm");
     }
 }
 

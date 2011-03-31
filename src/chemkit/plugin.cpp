@@ -60,9 +60,9 @@ std::string Plugin::name() const
     return d->name;
 }
 
-QString Plugin::dataPath() const
+std::string Plugin::dataPath() const
 {
-    return QFileInfo(d->fileName.c_str()).path() + "/data/" + d->name.c_str() + "/";
+    return QFileInfo(d->fileName.c_str()).path().toStdString() + "/data/" + d->name.c_str() + "/";
 }
 
 // --- Internal Methods ---------------------------------------------------- //
