@@ -51,7 +51,7 @@ class CHEMKIT_EXPORT Plugin : public QObject
         template<class T> bool unregisterPluginClass(const std::string &name);
 
     private:
-        void setFileName(const QString &fileName);
+        void setFileName(const std::string &fileName);
 
         friend class PluginManager;
 

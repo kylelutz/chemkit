@@ -29,7 +29,7 @@ class PluginPrivate
 {
     public:
         std::string name;
-        QString fileName;
+        std::string fileName;
 };
 
 // === Plugin ============================================================== //
@@ -62,11 +62,11 @@ std::string Plugin::name() const
 
 QString Plugin::dataPath() const
 {
-    return QFileInfo(d->fileName).path() + "/data/" + d->name.c_str() + "/";
+    return QFileInfo(d->fileName.c_str()).path() + "/data/" + d->name.c_str() + "/";
 }
 
 // --- Internal Methods ---------------------------------------------------- //
-void Plugin::setFileName(const QString &fileName)
+void Plugin::setFileName(const std::string &fileName)
 {
     d->fileName = fileName;
 }

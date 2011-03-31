@@ -103,7 +103,7 @@ bool PluginManager::loadPlugin(const QString &fileName)
         return false;
     }
 
-    instance->setFileName(fileName);
+    instance->setFileName(fileName.toStdString());
 
     d->plugins.append(instance);
 
