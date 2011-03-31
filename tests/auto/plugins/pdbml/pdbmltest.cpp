@@ -53,7 +53,7 @@ void PdbmlTest::read_1UBQ()
 
     bool ok = file.read();
     if(!ok)
-        qDebug() << file.errorString();
+        qDebug() << file.errorString().c_str();
     QVERIFY(ok);
     QCOMPARE(file.polymerCount(), 1);
 
@@ -79,7 +79,7 @@ void PdbmlTest::read_2DHB()
 
     bool ok = file.read();
     if(!ok)
-        qDebug() << file.errorString();
+        qDebug() << file.errorString().c_str();
     QVERIFY(ok);
     QCOMPARE(file.polymerCount(), 1);
 

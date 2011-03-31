@@ -46,7 +46,7 @@ void ProteinSurfaceBenchmark::benchmark()
     chemkit::PolymerFile file(dataPath + "2DHB.pdb");
     bool ok = file.read();
     if(!ok)
-        qDebug() << file.errorString();
+        qDebug() << file.errorString().c_str();
     QVERIFY(ok);
 
     chemkit::Polymer *protein = file.polymer();

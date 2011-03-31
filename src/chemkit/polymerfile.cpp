@@ -32,7 +32,7 @@ class PolymerFilePrivate
 {
     public:
         std::string fileName;
-        QString errorString;
+        std::string errorString;
         PolymerFileFormat *format;
         QList<Polymer *> polymers;
 };
@@ -212,7 +212,7 @@ bool PolymerFile::read(const std::string &fileName, const std::string &format)
 {
     QFile file(fileName.c_str());
     if(!file.open(QIODevice::ReadOnly)){
-        setErrorString(QString("Failed to open '%1' for reading: %2").arg(fileName.c_str()).arg(file.errorString()));
+        setErrorString(QString("Failed to open '%1' for reading: %2").arg(fileName.c_str()).arg(file.errorString()).toStdString());
         return false;
     }
 
@@ -225,7 +225,7 @@ bool PolymerFile::read(QIODevice *iodev, const std::string &format)
     if(d->format == 0 || d->format->name() != format){
         d->format = PolymerFileFormat::create(format);
         if(!d->format){
-            setErrorString(QString("Format '%1' is not supported").arg(format.c_str()));
+            setErrorString(QString("Format '%1' is not supported").arg(format.c_str()).toStdString());
             iodev->close();
             return false;
         }
@@ -259,7 +259,7 @@ bool PolymerFile::write(const std::string &fileName, const std::string &format)
 {
     QFile file(fileName.c_str());
     if(!file.open(QIODevice::WriteOnly)){
-        setErrorString(QString("Failed to open '%1' for writing: %2").arg(fileName.c_str()).arg(file.errorString()));
+        setErrorString(QString("Failed to open '%1' for writing: %2").arg(fileName.c_str()).arg(file.errorString()).toStdString());
         return false;
     }
 
@@ -287,7 +287,7 @@ bool PolymerFile::write(QIODevice *iodev, const std::string &format)
     if(!d->format || d->format->name() != format){
         d->format = PolymerFileFormat::create(format);
         if(!d->format){
-            setErrorString(QString("Format '%1' is not supported").arg(format.c_str()));
+            setErrorString(QString("Format '%1' is not supported").arg(format.c_str()).toStdString());
             iodev->close();
             return false;
         }
@@ -297,13 +297,13 @@ bool PolymerFile::write(QIODevice *iodev, const std::string &format)
 }
 
 // --- Error Handling ------------------------------------------------------ //
-void PolymerFile::setErrorString(const QString &errorString)
+void PolymerFile::setErrorString(const std::string &errorString)
 {
     d->errorString = errorString;
 }
 
 /// Returns a string describing the last error that occured.
-QString PolymerFile::errorString() const
+std::string PolymerFile::errorString() const
 {
     return d->errorString;
 }

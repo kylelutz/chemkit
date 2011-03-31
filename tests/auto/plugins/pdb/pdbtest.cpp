@@ -58,7 +58,7 @@ void PdbTest::read_1BNA()
     // read file
     bool ok = file.read(dataPath + "1BNA.pdb");
     if(!ok)
-        qDebug() << "Failed to read file: " << file.errorString();
+        qDebug() << "Failed to read file: " << file.errorString().c_str();
     QVERIFY(ok);
 
     // check nucleic acid
@@ -85,7 +85,7 @@ void PdbTest::read_1UBQ()
     // read file
     bool ok = file.read(dataPath + "1UBQ.pdb");
     if(!ok)
-        qDebug() << "Failed to read file: " << file.errorString();
+        qDebug() << "Failed to read file: " << file.errorString().c_str();
     QVERIFY(ok);
 
     // check protein
@@ -115,7 +115,7 @@ void PdbTest::read_2DHB()
     // read file
     bool ok = file.read(dataPath + "2DHB.pdb");
     if(!ok)
-        qDebug() << "Failed to read file: " << file.errorString();
+        qDebug() << "Failed to read file: " << file.errorString().c_str();
     QVERIFY(ok);
 
     // check protein
@@ -151,7 +151,7 @@ void PdbTest::read_alphabet()
     // read file
     bool ok = file.read();
     if(!ok)
-        qDebug() << "Failed to read file: " << file.errorString();
+        qDebug() << "Failed to read file: " << file.errorString().c_str();
     QVERIFY(ok);
 
     // check protein
@@ -170,7 +170,7 @@ void PdbTest::read_fmc()
     chemkit::PolymerFile file(dataPath + "fmc.pdb");
     bool ok = file.read();
     if(!ok)
-        qDebug() << "Failed to read file: " << file.errorString();
+        qDebug() << "Failed to read file: " << file.errorString().c_str();
     QVERIFY(ok);
 }
 

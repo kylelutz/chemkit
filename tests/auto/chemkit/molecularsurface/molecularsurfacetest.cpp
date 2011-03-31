@@ -264,7 +264,7 @@ void MolecularSurfaceTest::lysozyme()
     chemkit::PolymerFile file(dataPath + "2LYZ.pdb");
     bool ok = file.read();
     if(!ok)
-        qDebug() << file.errorString();
+        qDebug() << file.errorString().c_str();
     QVERIFY(ok);
 
     chemkit::Polymer *protein = file.polymer();
@@ -288,7 +288,7 @@ void MolecularSurfaceTest::cytochrome()
     chemkit::PolymerFile file(dataPath + "3CYT.pdb");
     bool ok = file.read();
     if(!ok)
-        qDebug() << file.errorString();
+        qDebug() << file.errorString().c_str();
     QVERIFY(ok);
 
     chemkit::Polymer *protein = file.polymer();
@@ -312,7 +312,7 @@ void MolecularSurfaceTest::toxin()
     chemkit::PolymerFile file(dataPath + "2SN3.pdb");
     bool ok = file.read();
     if(!ok)
-        qDebug() << file.errorString();
+        qDebug() << file.errorString().c_str();
     QVERIFY(ok);
 
     chemkit::Polymer *protein = file.polymer();
@@ -336,7 +336,7 @@ void MolecularSurfaceTest::hydrolase()
     chemkit::PolymerFile file(dataPath + "1THM.pdb");
     bool ok = file.read();
     if(!ok)
-        qDebug() << file.errorString();
+        qDebug() << file.errorString().c_str();
     QVERIFY(ok);
 
     chemkit::Polymer *protein = file.polymer();
@@ -360,7 +360,7 @@ void MolecularSurfaceTest::hemoglobin()
     chemkit::PolymerFile file(dataPath + "2DHB.pdb");
     bool ok = file.read();
     if(!ok)
-        qDebug() << file.errorString();
+        qDebug() << file.errorString().c_str();
     QVERIFY(ok);
 
     chemkit::Polymer *protein = file.polymer();
@@ -384,7 +384,7 @@ void MolecularSurfaceTest::dna()
     chemkit::PolymerFile file(dataPath + "1BNA.pdb");
     bool ok = file.read();
     if(!ok)
-        qDebug() << file.errorString();
+        qDebug() << file.errorString().c_str();
     QVERIFY(ok);
 
     chemkit::Polymer *nucleicAcid = file.polymer();
@@ -408,7 +408,7 @@ void MolecularSurfaceTest::ribozyme()
     chemkit::PolymerFile file(dataPath + "1MME.pdb");
     bool ok = file.read();
     if(!ok)
-        qDebug() << file.errorString();
+        qDebug() << file.errorString().c_str();
     QVERIFY(ok);
 
     chemkit::Polymer *protein = file.polymer();
@@ -432,7 +432,7 @@ void MolecularSurfaceTest::ubiqutin()
     chemkit::PolymerFile file(dataPath + "1UBQ.pdb");
     bool ok = file.read();
     if(!ok)
-        qDebug() << file.errorString();
+        qDebug() << file.errorString().c_str();
     QVERIFY(ok);
 
     chemkit::Polymer *protein = file.polymer();

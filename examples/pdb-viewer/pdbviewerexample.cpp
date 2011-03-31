@@ -115,7 +115,7 @@ void PdbViewerWindow::openFile(const QString &fileName)
 
     bool ok = file->read(fileName.toStdString(), format);
     if(!ok){
-        QMessageBox::critical(this, "Error Reading File", file->errorString());
+        QMessageBox::critical(this, "Error Reading File", file->errorString().c_str());
         delete file;
         return;
     }

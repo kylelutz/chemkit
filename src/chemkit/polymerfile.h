@@ -76,13 +76,13 @@ class CHEMKIT_EXPORT PolymerFile
         bool write(QIODevice *iodev, const std::string &format);
 
         // error handling
-        QString errorString() const;
+        std::string errorString() const;
 
         // static methods
         static std::vector<std::string> formats();
 
     private:
-        void setErrorString(const QString &errorString);
+        void setErrorString(const std::string &errorString);
 
     private:
         PolymerFilePrivate* const d;

@@ -81,7 +81,7 @@ void MoleculeAlignerTest::ubiquitin()
     chemkit::PolymerFile file(dataPath + "1D3Z.pdb");
     bool ok = file.read();
     if(!ok)
-        qDebug() << file.errorString();
+        qDebug() << file.errorString().c_str();
     QVERIFY(ok);
 
     QCOMPARE(file.polymerCount(), 1);
