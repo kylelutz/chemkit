@@ -93,17 +93,17 @@ int PluginManager::pluginCount() const
 // --- Plugin Loading ------------------------------------------------------ //
 /// Loads a plugin from \p fileName. Returns \c false if an error
 /// occurs.
-bool PluginManager::loadPlugin(const QString &fileName)
+bool PluginManager::loadPlugin(const std::string &fileName)
 {
-    QPluginLoader plugin(fileName);
+    QPluginLoader plugin(QString::fromStdString(fileName));
 
     Plugin *instance = qobject_cast<Plugin *>(plugin.instance());
     if(!instance){
-        qDebug() << "Failed to load plugin (" << fileName << "): " << plugin.errorString();
+        qDebug() << "Failed to load plugin (" << fileName.c_str() << "): " << plugin.errorString();
         return false;
     }
 
-    instance->setFileName(fileName.toStdString());
+    instance->setFileName(fileName);
 
     d->plugins.append(instance);
 
@@ -113,9 +113,9 @@ bool PluginManager::loadPlugin(const QString &fileName)
 }
 
 /// Loads all plugins from \p directory.
-void PluginManager::loadPlugins(const QString &directory)
+void PluginManager::loadPlugins(const std::string &directory)
 {
-    QDir dir(directory);
+    QDir dir(QString::fromStdString(directory));
 
     if(!dir.exists()){
         return;
@@ -123,7 +123,7 @@ void PluginManager::loadPlugins(const QString &directory)
 
     Q_FOREACH(const QString &fileName, dir.entryList(QDir::Files)){
         if(QLibrary::isLibrary(fileName)){
-            loadPlugin(dir.filePath(fileName));
+            loadPlugin(dir.filePath(fileName).toStdString());
         }
     }
 }
@@ -154,7 +154,7 @@ void PluginManager::loadDefaultPlugins()
 
     // load plugins from each directory
     Q_FOREACH(const QString &directory, directories){
-        loadPlugins(directory);
+        loadPlugins(directory.toStdString());
     }
 
     d->defaultPluginsLoaded = true;
@@ -169,7 +169,7 @@ bool PluginManager::unloadPlugin(Plugin *plugin)
 }
 
 /// Unloads the plugin with \p name.
-bool PluginManager::unloadPlugin(const QString &name)
+bool PluginManager::unloadPlugin(const std::string &name)
 {
     Q_UNUSED(name);
 

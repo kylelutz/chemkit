@@ -48,11 +48,11 @@ class CHEMKIT_EXPORT PluginManager : public QObject
         int pluginCount() const;
 
         // plugin loading
-        bool loadPlugin(const QString &fileName);
-        void loadPlugins(const QString &directory);
+        bool loadPlugin(const std::string &fileName);
+        void loadPlugins(const std::string &directory);
         void loadDefaultPlugins();
         bool unloadPlugin(Plugin *plugin);
-        bool unloadPlugin(const QString &name);
+        bool unloadPlugin(const std::string &name);
 
         // plugin classes
         template<class T> T* createPluginClass(const std::string &pluginName) const;
