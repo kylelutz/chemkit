@@ -113,7 +113,7 @@ void PdbViewerWindow::openFile(const QString &fileName)
     // open and read file
     chemkit::PolymerFile *file = new chemkit::PolymerFile;
 
-    bool ok = file->read(fileName, format);
+    bool ok = file->read(fileName.toStdString(), format);
     if(!ok){
         QMessageBox::critical(this, "Error Reading File", file->errorString());
         delete file;

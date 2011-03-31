@@ -28,7 +28,7 @@
 #include <chemkit/polymerchain.h>
 #include <chemkit/moleculealigner.h>
 
-const QString dataPath = "../../../data/";
+const std::string dataPath = "../../../data/";
 
 class MoleculeAlignerTest : public QObject
 {

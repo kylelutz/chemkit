@@ -29,7 +29,7 @@
 #include <chemkit/polymerchain.h>
 #include <chemkit/polymerfileformat.h>
 
-const QString dataPath = "../../../data/";
+const std::string dataPath = "../../../data/";
 
 class PdbTest : public QObject
 {

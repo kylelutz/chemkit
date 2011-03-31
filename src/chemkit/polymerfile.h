@@ -41,12 +41,12 @@ class CHEMKIT_EXPORT PolymerFile
     public:
         // construction and destruction
         PolymerFile();
-        PolymerFile(const QString &fileName);
+        PolymerFile(const std::string &fileName);
         ~PolymerFile();
 
         // properties
-        void setFileName(const QString &fileName);
-        QString fileName() const;
+        void setFileName(const std::string &fileName);
+        std::string fileName() const;
         void setFormat(PolymerFileFormat *format);
         bool setFormat(const std::string &name);
         PolymerFileFormat* format() const;
@@ -66,12 +66,12 @@ class CHEMKIT_EXPORT PolymerFile
 
         // input and output
         bool read();
-        bool read(const QString &fileName);
-        bool read(const QString &fileName, const std::string &format);
+        bool read(const std::string &fileName);
+        bool read(const std::string &fileName, const std::string &format);
         bool read(QIODevice *iodev, const std::string &format);
         bool write();
-        bool write(const QString &fileName);
-        bool write(const QString &fileName, const std::string &format);
+        bool write(const std::string &fileName);
+        bool write(const std::string &fileName, const std::string &format);
         bool write(QIODevice *iodev);
         bool write(QIODevice *iodev, const std::string &format);
 

@@ -31,7 +31,7 @@ namespace chemkit {
 class PolymerFilePrivate
 {
     public:
-        QString fileName;
+        std::string fileName;
         QString errorString;
         PolymerFileFormat *format;
         QList<Polymer *> polymers;
@@ -53,7 +53,7 @@ PolymerFile::PolymerFile()
 }
 
 /// Creates a new polymer file with \p fileName.
-PolymerFile::PolymerFile(const QString &fileName)
+PolymerFile::PolymerFile(const std::string &fileName)
     : d(new PolymerFilePrivate)
 {
     d->format = 0;
@@ -70,13 +70,13 @@ PolymerFile::~PolymerFile()
 
 // --- Properties ---------------------------------------------------------- //
 /// Sets the file name for the file to \p fileName.
-void PolymerFile::setFileName(const QString &fileName)
+void PolymerFile::setFileName(const std::string &fileName)
 {
     d->fileName = fileName;
 }
 
 /// Returns the file name for the file.
-QString PolymerFile::fileName() const
+std::string PolymerFile::fileName() const
 {
     return d->fileName;
 }
@@ -192,7 +192,7 @@ void PolymerFile::clear()
 /// Reads the file.
 bool PolymerFile::read()
 {
-    if(d->fileName.isEmpty()){
+    if(d->fileName.empty()){
         return false;
     }
 
@@ -200,19 +200,19 @@ bool PolymerFile::read()
 }
 
 /// Reads the file from \p fileName.
-bool PolymerFile::read(const QString &fileName)
+bool PolymerFile::read(const std::string &fileName)
 {
-    QString format = QFileInfo(fileName).suffix();
+    std::string format = QFileInfo(fileName.c_str()).suffix().toStdString();
 
-    return read(fileName, format.toStdString());
+    return read(fileName, format);
 }
 
 /// Reads the file from \p fileName using format.
-bool PolymerFile::read(const QString &fileName, const std::string &format)
+bool PolymerFile::read(const std::string &fileName, const std::string &format)
 {
-    QFile file(fileName);
+    QFile file(fileName.c_str());
     if(!file.open(QIODevice::ReadOnly)){
-        setErrorString(QString("Failed to open '%1' for reading: %2").arg(fileName).arg(file.errorString()));
+        setErrorString(QString("Failed to open '%1' for reading: %2").arg(fileName.c_str()).arg(file.errorString()));
         return false;
     }
 
@@ -247,19 +247,19 @@ bool PolymerFile::write()
 }
 
 /// Writes the file to \p fileName.
-bool PolymerFile::write(const QString &fileName)
+bool PolymerFile::write(const std::string &fileName)
 {
-    QString format = QFileInfo(fileName).suffix();
+    std::string format = QFileInfo(fileName.c_str()).suffix().toStdString();
 
-    return write(fileName, format.toStdString());
+    return write(fileName, format);
 }
 
 /// Writes the file to \p fileName using \p format.
-bool PolymerFile::write(const QString &fileName, const std::string &format)
+bool PolymerFile::write(const std::string &fileName, const std::string &format)
 {
-    QFile file(fileName);
+    QFile file(fileName.c_str());
     if(!file.open(QIODevice::WriteOnly)){
-        setErrorString(QString("Failed to open '%1' for writing: %2").arg(fileName).arg(file.errorString()));
+        setErrorString(QString("Failed to open '%1' for writing: %2").arg(fileName.c_str()).arg(file.errorString()));
         return false;
     }
 

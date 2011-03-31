@@ -261,7 +261,7 @@ void MolecularSurfaceTest::adenosine()
 
 void MolecularSurfaceTest::lysozyme()
 {
-    chemkit::PolymerFile file(QString::fromStdString(dataPath) + "2LYZ.pdb");
+    chemkit::PolymerFile file(dataPath + "2LYZ.pdb");
     bool ok = file.read();
     if(!ok)
         qDebug() << file.errorString();
@@ -285,7 +285,7 @@ void MolecularSurfaceTest::lysozyme()
 
 void MolecularSurfaceTest::cytochrome()
 {
-    chemkit::PolymerFile file(QString::fromStdString(dataPath) + "3CYT.pdb");
+    chemkit::PolymerFile file(dataPath + "3CYT.pdb");
     bool ok = file.read();
     if(!ok)
         qDebug() << file.errorString();
@@ -309,7 +309,7 @@ void MolecularSurfaceTest::cytochrome()
 
 void MolecularSurfaceTest::toxin()
 {
-    chemkit::PolymerFile file(QString::fromStdString(dataPath) + "2SN3.pdb");
+    chemkit::PolymerFile file(dataPath + "2SN3.pdb");
     bool ok = file.read();
     if(!ok)
         qDebug() << file.errorString();
@@ -333,7 +333,7 @@ void MolecularSurfaceTest::toxin()
 
 void MolecularSurfaceTest::hydrolase()
 {
-    chemkit::PolymerFile file(QString::fromStdString(dataPath) + "1THM.pdb");
+    chemkit::PolymerFile file(dataPath + "1THM.pdb");
     bool ok = file.read();
     if(!ok)
         qDebug() << file.errorString();
@@ -357,7 +357,7 @@ void MolecularSurfaceTest::hydrolase()
 
 void MolecularSurfaceTest::hemoglobin()
 {
-    chemkit::PolymerFile file(QString::fromStdString(dataPath) + "2DHB.pdb");
+    chemkit::PolymerFile file(dataPath + "2DHB.pdb");
     bool ok = file.read();
     if(!ok)
         qDebug() << file.errorString();
@@ -381,7 +381,7 @@ void MolecularSurfaceTest::hemoglobin()
 
 void MolecularSurfaceTest::dna()
 {
-    chemkit::PolymerFile file(QString::fromStdString(dataPath) + "1BNA.pdb");
+    chemkit::PolymerFile file(dataPath + "1BNA.pdb");
     bool ok = file.read();
     if(!ok)
         qDebug() << file.errorString();
@@ -405,7 +405,7 @@ void MolecularSurfaceTest::dna()
 
 void MolecularSurfaceTest::ribozyme()
 {
-    chemkit::PolymerFile file(QString::fromStdString(dataPath) + "1MME.pdb");
+    chemkit::PolymerFile file(dataPath + "1MME.pdb");
     bool ok = file.read();
     if(!ok)
         qDebug() << file.errorString();
@@ -429,7 +429,7 @@ void MolecularSurfaceTest::ribozyme()
 
 void MolecularSurfaceTest::ubiqutin()
 {
-    chemkit::PolymerFile file(QString::fromStdString(dataPath) + "1UBQ.pdb");
+    chemkit::PolymerFile file(dataPath + "1UBQ.pdb");
     bool ok = file.read();
     if(!ok)
         qDebug() << file.errorString();

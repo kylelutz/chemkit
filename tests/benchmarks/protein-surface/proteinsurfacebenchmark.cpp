@@ -31,7 +31,7 @@
 #include <chemkit/polymerfile.h>
 #include <chemkit/molecularsurface.h>
 
-const QString dataPath = "../../data/";
+const std::string dataPath = "../../data/";
 
 class ProteinSurfaceBenchmark : public QObject
 {
