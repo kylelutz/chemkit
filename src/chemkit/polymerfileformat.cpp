@@ -31,7 +31,7 @@ class PolymerFileFormatPrivate
 {
     public:
         std::string name;
-        QString errorString;
+        std::string errorString;
 };
 
 // === PolymerFileFormat =================================================== //
@@ -68,7 +68,7 @@ bool PolymerFileFormat::read(QIODevice *iodev, PolymerFile *file)
     Q_UNUSED(iodev);
     Q_UNUSED(file);
 
-    setErrorString(QString("'%1' reading not supported.").arg(name().c_str()));
+    setErrorString(QString("'%1' reading not supported.").arg(name().c_str()).toStdString());
     return false;
 }
 
@@ -78,18 +78,18 @@ bool PolymerFileFormat::write(const PolymerFile *file, QIODevice *iodev)
     Q_UNUSED(file);
     Q_UNUSED(iodev);
 
-    setErrorString(QString("'%1' writing not supported.").arg(name().c_str()));
+    setErrorString(QString("'%1' writing not supported.").arg(name().c_str()).toStdString());
     return false;
 }
 
 // --- Error Handling ------------------------------------------------------ //
-void PolymerFileFormat::setErrorString(const QString &errorString)
+void PolymerFileFormat::setErrorString(const std::string &errorString)
 {
     d->errorString = errorString;
 }
 
 /// Returns a string describing the last error that occured.
-QString PolymerFileFormat::errorString() const
+std::string PolymerFileFormat::errorString() const
 {
     return d->errorString;
 }

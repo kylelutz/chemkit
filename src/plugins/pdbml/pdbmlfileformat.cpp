@@ -43,7 +43,7 @@ bool PdbmlFileFormat::read(QIODevice *iodev, chemkit::PolymerFile *file)
     QDomDocument doc;
     bool ok = doc.setContent(iodev, true);
     if(!ok){
-        setErrorString(QString("PDBML parsing failed."));
+        setErrorString("PDBML parsing failed.");
         return false;
     }
 

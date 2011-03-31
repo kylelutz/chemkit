@@ -52,7 +52,7 @@ class CHEMKIT_EXPORT PolymerFileFormat
         virtual bool write(const PolymerFile *file, QIODevice *iodev);
 
         // error handling
-        QString errorString() const;
+        std::string errorString() const;
 
         // static methods
         static PolymerFileFormat* create(const std::string &name);
@@ -60,7 +60,7 @@ class CHEMKIT_EXPORT PolymerFileFormat
 
     protected:
         PolymerFileFormat(const std::string &name);
-        void setErrorString(const QString &errorString);
+        void setErrorString(const std::string &errorString);
 
     private:
         PolymerFileFormatPrivate* const d;

@@ -233,7 +233,7 @@ bool PolymerFile::read(QIODevice *iodev, const std::string &format)
 
     bool ok = d->format->read(iodev, this);
     if(!ok){
-        setErrorString(d->format->errorString());
+        setErrorString(d->format->errorString().c_str());
     }
 
     iodev->close();
@@ -274,7 +274,7 @@ bool PolymerFile::write(QIODevice *iodev)
 
     bool ok = d->format->write(this, iodev);
     if(!ok){
-        setErrorString(d->format->errorString());
+        setErrorString(d->format->errorString().c_str());
     }
 
     iodev->close();
