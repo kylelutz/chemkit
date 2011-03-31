@@ -57,7 +57,7 @@ void MdlTest::read_methanol()
 
     bool ok = file.read();
     if(!ok)
-        qDebug() << file.errorString();
+        qDebug() << file.errorString().c_str();
     QVERIFY(ok);
 
     // check molecule
@@ -77,7 +77,7 @@ void MdlTest::read_guanine()
 
     bool ok = file.read();
     if(!ok)
-        qDebug() << file.errorString();
+        qDebug() << file.errorString().c_str();
     QCOMPARE(ok, true);
 
     // check format
@@ -99,7 +99,7 @@ void MdlTest::read_benzenes()
 
     bool ok = file.read();
     if(!ok)
-        qDebug() << file.errorString();
+        qDebug() << file.errorString().c_str();
     QCOMPARE(ok, true);
 
     // check format

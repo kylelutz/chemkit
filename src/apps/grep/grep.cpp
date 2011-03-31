@@ -140,7 +140,7 @@ int main(int argc, char *argv[])
     // read input file
     chemkit::ChemicalFile inputFile(inputFileName.toStdString());
     if(!inputFile.read()){
-        err << "Error: failed to read input file: " << inputFile.errorString() << "\n";
+        err << "Error: failed to read input file: " << inputFile.errorString().c_str() << "\n";
         return -1;
     }
 
@@ -180,7 +180,7 @@ int main(int argc, char *argv[])
         stdoutFile.close();
 
         if(!ok){
-            err << "Error: failed to write output file: " << outputFile.errorString() << "\n";
+            err << "Error: failed to write output file: " << outputFile.errorString().c_str() << "\n";
             return -1;
         }
     }

@@ -138,7 +138,7 @@ void MolecularSurfaceTest::serine()
     chemkit::ChemicalFile file(dataPath + "serine.mol");
     bool ok = file.read();
     if(!ok)
-        qDebug() << file.errorString();
+        qDebug() << file.errorString().c_str();
     QVERIFY(ok);
 
     chemkit::Molecule *molecule = file.molecule();
@@ -162,7 +162,7 @@ void MolecularSurfaceTest::guanine()
     chemkit::ChemicalFile file(dataPath + "guanine.mol");
     bool ok = file.read();
     if(!ok)
-        qDebug() << file.errorString();
+        qDebug() << file.errorString().c_str();
     QVERIFY(ok);
 
     chemkit::Molecule *molecule = file.molecule();
@@ -186,7 +186,7 @@ void MolecularSurfaceTest::methane()
     chemkit::ChemicalFile file(dataPath + "methane.xyz");
     bool ok = file.read();
     if(!ok)
-        qDebug() << file.errorString();
+        qDebug() << file.errorString().c_str();
     QVERIFY(ok);
 
     chemkit::Molecule *molecule = file.molecule();
@@ -210,7 +210,7 @@ void MolecularSurfaceTest::ethanol()
     chemkit::ChemicalFile file(dataPath + "ethanol.cml");
     bool ok = file.read();
     if(!ok)
-        qDebug() << file.errorString();
+        qDebug() << file.errorString().c_str();
     QVERIFY(ok);
 
     chemkit::Molecule *molecule = file.molecule();
@@ -234,7 +234,7 @@ void MolecularSurfaceTest::adenosine()
     chemkit::ChemicalFile file(dataPath + "adenosine.mol");
     bool ok = file.read();
     if(!ok)
-        qDebug() << file.errorString();
+        qDebug() << file.errorString().c_str();
     QVERIFY(ok);
 
     chemkit::Molecule *molecule = file.molecule();

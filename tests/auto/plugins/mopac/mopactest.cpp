@@ -52,7 +52,7 @@ void MopacTest::ethanol()
     chemkit::ChemicalFile file(dataPath + "ethanol.mopin");
     bool ok = file.read();
     if(!ok)
-        qDebug() << file.errorString();
+        qDebug() << file.errorString().c_str();
     QVERIFY(ok);
     QCOMPARE(file.moleculeCount(), 1);
 
@@ -65,7 +65,7 @@ void MopacTest::guanine()
     chemkit::ChemicalFile file(dataPath + "guanine.mopcrt");
     bool ok = file.read();
     if(!ok)
-        qDebug() << file.errorString();
+        qDebug() << file.errorString().c_str();
     QVERIFY(ok);
     QCOMPARE(file.moleculeCount(), 1);
 

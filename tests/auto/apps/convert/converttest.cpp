@@ -48,7 +48,7 @@ void ConvertTest::convertEthanol()
     chemkit::ChemicalFile inputFile(testDataPath + "ethanol.cml");
     bool ok = inputFile.read();
     if(!ok){
-        qDebug() << inputFile.errorString();
+        qDebug() << inputFile.errorString().c_str();
     }
     QCOMPARE(ok, true);
     QCOMPARE(inputFile.moleculeCount(), 1);
@@ -74,7 +74,7 @@ void ConvertTest::convertEthanol()
     chemkit::ChemicalFile outputFile;
     ok = outputFile.read(output.fileName().toStdString());
     if(!ok){
-        qDebug() << outputFile.errorString();
+        qDebug() << outputFile.errorString().c_str();
     }
     QCOMPARE(ok, true);
     QCOMPARE(outputFile.moleculeCount(), 1);
@@ -91,7 +91,7 @@ void ConvertTest::convertBenzenes()
     chemkit::ChemicalFile inputFile(testDataPath + "pubchem_416_benzenes.sdf");
     bool ok = inputFile.read();
     if(!ok){
-        qDebug() << inputFile.errorString();
+        qDebug() << inputFile.errorString().c_str();
     }
     QCOMPARE(ok, true);
     QCOMPARE(inputFile.moleculeCount(), 416);
@@ -115,7 +115,7 @@ void ConvertTest::convertBenzenes()
     chemkit::ChemicalFile outputFile;
     ok = outputFile.read(tempFile.fileName().toStdString());
     if(!ok){
-        qDebug() << outputFile.errorString();
+        qDebug() << outputFile.errorString().c_str();
     }
     QCOMPARE(ok, true);
     QCOMPARE(outputFile.moleculeCount(), 416);

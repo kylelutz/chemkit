@@ -46,7 +46,7 @@ void BenzeneRingsBenchmark::benchmark()
     chemkit::ChemicalFile file(dataPath + "pubchem_416_benzenes.sdf");
     bool ok = file.read();
     if(!ok)
-        qDebug() << file.errorString();
+        qDebug() << file.errorString().c_str();
     QVERIFY(ok);
 
     // total number of rings in all 416 molecules

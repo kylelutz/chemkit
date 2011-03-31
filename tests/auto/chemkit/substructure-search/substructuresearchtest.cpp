@@ -251,7 +251,7 @@ void SubstructureSearchTest::protein()
     chemkit::ChemicalFile file("../../../data/alphabet.mol2");
     bool ok = file.read();
     if(!ok)
-        qDebug() << file.errorString();
+        qDebug() << file.errorString().c_str();
     QVERIFY(ok);
 
     // load and verify the protein molecule

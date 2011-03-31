@@ -64,7 +64,7 @@ void MmffTest::validate()
     chemkit::ChemicalFile dataFile(dataPath + "MMFF94_hypervalent.mol2");
     bool ok = dataFile.read();
     if(!ok)
-        qDebug() << dataFile.errorString();
+        qDebug() << dataFile.errorString().c_str();
     QVERIFY(ok);
     QCOMPARE(dataFile.moleculeCount(), 753);
 

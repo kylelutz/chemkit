@@ -1426,7 +1426,7 @@ void SmilesTest::herg()
 
     bool ok = file.read();
     if(!ok)
-        qDebug() << "Failed to read file: " << file.errorString();
+        qDebug() << "Failed to read file: " << file.errorString().c_str();
     QVERIFY(ok);
 
     QCOMPARE(file.moleculeCount(), 31);
@@ -1442,7 +1442,7 @@ void SmilesTest::cox2()
 
     bool ok = file.read();
     if(!ok)
-        qDebug() << "Failed to read file: " << file.errorString();
+        qDebug() << "Failed to read file: " << file.errorString().c_str();
     QVERIFY(ok);
 
     QCOMPARE(file.moleculeCount(), 128);

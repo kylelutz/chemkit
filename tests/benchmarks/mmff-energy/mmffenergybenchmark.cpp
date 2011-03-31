@@ -42,7 +42,7 @@ void MmffEnergyBenchmark::benchmark()
     chemkit::ChemicalFile file(dataPath + "MMFF94_hypervalent.mol2");
     bool ok = file.read();
     if(!ok)
-        qDebug() << file.errorString();
+        qDebug() << file.errorString().c_str();
     QVERIFY(ok);
 
     chemkit::ForceField *mmff = chemkit::ForceField::create("mmff");

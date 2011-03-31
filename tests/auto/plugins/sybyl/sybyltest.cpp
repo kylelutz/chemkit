@@ -66,7 +66,7 @@ void SybylTest::readMol2()
     chemkit::ChemicalFile file(dataPath + fileName.toStdString());
     bool ok = file.read();
     if(!ok)
-        qDebug() << file.errorString();
+        qDebug() << file.errorString().c_str();
     QVERIFY(ok);
 
     QCOMPARE(file.moleculeCount(), 1);

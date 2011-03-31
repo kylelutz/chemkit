@@ -53,7 +53,7 @@ void AmberTest::adenosine()
     chemkit::ChemicalFile file(dataPath + "adenosine.mol");
     bool ok = file.read();
     if(!ok)
-        qDebug() << file.errorString();
+        qDebug() << file.errorString().c_str();
     QVERIFY(ok);
 
     QCOMPARE(file.moleculeCount(), 1);
@@ -113,7 +113,7 @@ void AmberTest::serine()
     chemkit::ChemicalFile file(dataPath + "serine.mol");
     bool ok = file.read();
     if(!ok)
-        qDebug() << file.errorString();
+        qDebug() << file.errorString().c_str();
     QVERIFY(ok);
 
     QCOMPARE(file.moleculeCount(), 1);

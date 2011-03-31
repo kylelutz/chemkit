@@ -50,7 +50,7 @@ void TxyzTest::uridine()
     chemkit::ChemicalFile file(dataPath + "uridine.txyz");
     bool ok = file.read();
     if(!ok)
-        qDebug() << file.errorString();
+        qDebug() << file.errorString().c_str();
     QVERIFY(ok);
 
     QCOMPARE(file.moleculeCount(), 1);

@@ -274,7 +274,7 @@ void BuilderWindow::openFile(const QString &fileName)
     // open and read file
     chemkit::ChemicalFile *file = new chemkit::ChemicalFile(fileName.toStdString());
     if(!file->read()){
-        QMessageBox::critical(this, "Error", QString("Error opening file: %1").arg(file->errorString()));
+        QMessageBox::critical(this, "Error", QString("Error opening file: %1").arg(file->errorString().c_str()));
         delete file;
         return;
     }
@@ -321,7 +321,7 @@ void BuilderWindow::saveFile()
     bool ok = m_file->write();
 
     if(!ok){
-        QMessageBox::critical(this, "Error", QString("Error saving file: %1").arg(m_file->errorString()));
+        QMessageBox::critical(this, "Error", QString("Error saving file: %1").arg(m_file->errorString().c_str()));
     }
 }
 

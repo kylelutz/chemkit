@@ -103,7 +103,7 @@ void CubeViewerExample::openFile(const QString &fileName)
     if(!ok){
         QMessageBox::critical(this,
                               "Error Opening File",
-                              QString("Failed to open file: %1").arg(file.errorString()));
+                              QString("Failed to open file: %1").arg(file.errorString().c_str()));
         return;
     }
 

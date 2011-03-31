@@ -84,7 +84,7 @@ class CHEMKIT_EXPORT ChemicalFile
         bool write(QIODevice *iodev, const std::string &format);
 
         // error handling
-        QString errorString() const;
+        std::string errorString() const;
 
         // static methods
         static std::vector<std::string> formats();
@@ -92,7 +92,7 @@ class CHEMKIT_EXPORT ChemicalFile
         static void quickWrite(const Molecule *molecule, const std::string &fileName);
 
     private:
-        void setErrorString(const QString &error);
+        void setErrorString(const std::string &error);
 
     private:
         ChemicalFilePrivate* const d;

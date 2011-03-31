@@ -32,7 +32,7 @@ class ChemicalFilePrivate
 {
     public:
         std::string fileName;
-        QString errorString;
+        std::string errorString;
         ChemicalFileFormat *format;
         QList<Molecule *> molecules;
         QHash<QString, QVariant> fileData;
@@ -291,7 +291,7 @@ bool ChemicalFile::read(const std::string &fileName, const std::string &format)
 {
     QFile file(fileName.c_str());
     if(!file.open(QIODevice::ReadOnly)){
-        setErrorString(QString("Failed to open '%1' for reading: %2").arg(fileName.c_str()).arg(file.errorString()));
+        setErrorString(QString("Failed to open '%1' for reading: %2").arg(fileName.c_str()).arg(file.errorString()).toStdString());
         return false;
     }
 
@@ -304,7 +304,7 @@ bool ChemicalFile::read(QIODevice *iodev, const std::string &format)
     if(d->format == 0 || d->format->name() != format){
         d->format = ChemicalFileFormat::create(format);
         if(!d->format){
-            setErrorString(QString("Format '%1' is not supported").arg(format.c_str()));
+            setErrorString(QString("Format '%1' is not supported").arg(format.c_str()).toStdString());
             iodev->close();
             return false;
         }
@@ -312,7 +312,7 @@ bool ChemicalFile::read(QIODevice *iodev, const std::string &format)
 
     bool ok = d->format->read(iodev, this);
     if(!ok)
-        setErrorString(QString::fromStdString(d->format->errorString()));
+        setErrorString(d->format->errorString());
 
     iodev->close();
     return ok;
@@ -337,7 +337,7 @@ bool ChemicalFile::write(const std::string &fileName, const std::string &format)
 {
     QFile file(fileName.c_str());
     if(!file.open(QIODevice::WriteOnly)){
-        setErrorString(QString("Failed to open '%1' for writing: %2").arg(fileName.c_str()).arg(file.errorString()));
+        setErrorString(QString("Failed to open '%1' for writing: %2").arg(fileName.c_str()).arg(file.errorString()).toStdString());
         return false;
     }
 
@@ -352,7 +352,7 @@ bool ChemicalFile::write(QIODevice *iodev)
 
     bool ok = d->format->write(this, iodev);
     if(!ok)
-        setErrorString(QString::fromStdString(d->format->errorString()));
+        setErrorString(d->format->errorString());
 
     iodev->close();
     return ok;
@@ -364,7 +364,7 @@ bool ChemicalFile::write(QIODevice *iodev, const std::string &format)
     if(!d->format || d->format->name() != format){
         d->format = ChemicalFileFormat::create(format);
         if(!d->format){
-            setErrorString(QString("Format '%1' is not supported").arg(format.c_str()));
+            setErrorString(QString("Format '%1' is not supported").arg(format.c_str()).toStdString());
             iodev->close();
             return false;
         }
@@ -374,13 +374,13 @@ bool ChemicalFile::write(QIODevice *iodev, const std::string &format)
 }
 
 // --- Error Handling ------------------------------------------------------ //
-void ChemicalFile::setErrorString(const QString &error)
+void ChemicalFile::setErrorString(const std::string &error)
 {
     d->errorString = error;
 }
 
 /// Returns a string describing the last error that occured.
-QString ChemicalFile::errorString() const
+std::string ChemicalFile::errorString() const
 {
     return d->errorString;
 }

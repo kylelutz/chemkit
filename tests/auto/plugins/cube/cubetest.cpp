@@ -50,7 +50,7 @@ void CubeTest::readBenzene()
     chemkit::ChemicalFile file(dataPath + "benzene-homo.cube");
     bool ok = file.read();
     if(!ok)
-        qDebug() << file.errorString();
+        qDebug() << file.errorString().c_str();
     QVERIFY(ok);
 
     QCOMPARE(file.moleculeCount(), 1);
