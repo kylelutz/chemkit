@@ -466,7 +466,7 @@ void BuilderWindow::predictBonds()
 
     chemkit::BondPredictor predictor(m_molecule);
 
-    QPair<chemkit::Atom *, chemkit::Atom *> bondedPair;
+    std::pair<chemkit::Atom *, chemkit::Atom *> bondedPair;
     foreach(bondedPair, predictor.predictedBonds()){
         editor()->addBond(bondedPair.first, bondedPair.second);
     }

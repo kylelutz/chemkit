@@ -50,7 +50,7 @@ class CHEMKIT_EXPORT BondPredictor
         Molecule* molecule() const;
 
         // prediction
-        QList<QPair<Atom *, Atom *> > predictedBonds();
+        QList<std::pair<Atom *, Atom *> > predictedBonds();
         bool couldBeBonded(Atom *a, Atom *b) const;
 
         // static methods
