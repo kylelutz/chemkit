@@ -119,11 +119,11 @@ void InternalCoordinates::setCoordinatesRadians(int row, Float r, Float theta, F
 
 /// Returns the distance, angle, and torsion coordinates at \p row.
 /// The returned angles are in degrees.
-QVector<Float> InternalCoordinates::coordinates(int row) const
+std::vector<Float> InternalCoordinates::coordinates(int row) const
 {
     Q_ASSERT(row < d->size);
 
-    QVector<Float> coordinates(3);
+    std::vector<Float> coordinates(3);
 
     coordinates[0] = d->coordinates[row * 3 + 0];
     coordinates[1] = d->coordinates[row * 3 + 1];
@@ -134,11 +134,11 @@ QVector<Float> InternalCoordinates::coordinates(int row) const
 
 /// Returns the distance, angle, and torsion coordinates at \p row.
 /// The returned angles are in radians.
-QVector<Float> InternalCoordinates::coordinatesRadians(int row) const
+std::vector<Float> InternalCoordinates::coordinatesRadians(int row) const
 {
     Q_ASSERT(row < d->size);
 
-    QVector<Float> coordinates = this->coordinates(row);
+    std::vector<Float> coordinates = this->coordinates(row);
 
     for(int i = 0; i < 3; i++){
         coordinates[i] *= chemkit::constants::DegreesToRadians;
@@ -159,11 +159,11 @@ void InternalCoordinates::setConnections(int row, int a, int b, int c)
 }
 
 /// Returns the connections for the coordinates at \p row.
-QVector<int> InternalCoordinates::connections(int row) const
+std::vector<int> InternalCoordinates::connections(int row) const
 {
     Q_ASSERT(row < d->size);
 
-    QVector<int> connections(3);
+    std::vector<int> connections(3);
 
     connections[0] = d->connections[row * 3 + 0];
     connections[1] = d->connections[row * 3 + 1];
@@ -208,7 +208,7 @@ Coordinates* InternalCoordinates::toCartesianCoordinates() const
 
     // set positions for the rest of the atoms
     for(int i = 3; i < d->size; i++){
-        QVector<Float> coordinates = this->coordinates(i);
+        std::vector<Float> coordinates = this->coordinates(i);
         Float r = coordinates[0];
         Float theta = coordinates[1];
         Float phi = coordinates[2];
@@ -222,7 +222,7 @@ Coordinates* InternalCoordinates::toCartesianCoordinates() const
         Float y = r * cosPhi * sinTheta;
         Float z = r * sinPhi * sinTheta;
 
-        QVector<int> connections = this->connections(i);
+        std::vector<int> connections = this->connections(i);
 
         const Point3 &a = cartesianCoordinates->position(connections[2]);
         const Point3 &b = cartesianCoordinates->position(connections[1]);

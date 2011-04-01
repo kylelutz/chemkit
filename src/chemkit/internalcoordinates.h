@@ -25,6 +25,8 @@
 
 #include "chemkit.h"
 
+#include <vector>
+
 #include "point3.h"
 
 namespace chemkit {
@@ -47,10 +49,10 @@ class CHEMKIT_EXPORT InternalCoordinates
         // coordinates
         void setCoordinates(int row, Float r, Float theta = 0, Float phi = 0);
         void setCoordinatesRadians(int row, Float r, Float theta = 0, Float phi = 0);
-        QVector<Float> coordinates(int row) const;
-        QVector<Float> coordinatesRadians(int row) const;
+        std::vector<Float> coordinates(int row) const;
+        std::vector<Float> coordinatesRadians(int row) const;
         void setConnections(int row, int a, int b = 0, int c = 0);
-        QVector<int> connections(int row) const;
+        std::vector<int> connections(int row) const;
 
         // conversions
         Coordinates* toCartesianCoordinates() const;
