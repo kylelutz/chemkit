@@ -110,7 +110,7 @@ class CHEMKIT_EXPORT ForceField
         Float wilsonAngleRadians(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c, const ForceFieldAtom *d) const;
 
         // error handling
-        QString errorString() const;
+        std::string errorString() const;
 
         // static methods
         static ForceField* create(const std::string &name);
@@ -126,7 +126,7 @@ class CHEMKIT_EXPORT ForceField
         void setCalculationSetup(ForceFieldCalculation *calculation, bool setup);
         void addParameterSet(const std::string &name, const std::string &fileName);
         void removeParameterSet(const std::string &name);
-        void setErrorString(const QString &errorString);
+        void setErrorString(const std::string &errorString);
 
     private:
         ForceFieldPrivate* const d;

@@ -58,7 +58,7 @@ class ForceFieldPrivate
         std::string parameterSet;
         std::string parameterFile;
         std::map<std::string, std::string> parameterSets;
-        QString errorString;
+        std::string errorString;
 };
 
 // === ForceField ========================================================== //
@@ -608,13 +608,13 @@ Float ForceField::wilsonAngleRadians(const ForceFieldAtom *a, const ForceFieldAt
 
 // --- Error Handling ------------------------------------------------------ //
 /// Sets a string that describes the last error that occured.
-void ForceField::setErrorString(const QString &errorString)
+void ForceField::setErrorString(const std::string &errorString)
 {
     d->errorString = errorString;
 }
 
 /// Returns a string describing the last error that occured.
-QString ForceField::errorString() const
+std::string ForceField::errorString() const
 {
     return d->errorString;
 }

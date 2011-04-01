@@ -92,7 +92,7 @@ bool MmffForceField::setup()
         m_parameters = new MmffParameters;
         bool ok = m_parameters->read(parameterFile());
         if(!ok){
-            setErrorString(QString("Failed to load parameters: %1").arg(m_parameters->errorString()));
+            setErrorString(QString("Failed to load parameters: %1").arg(m_parameters->errorString()).toStdString());
             delete m_parameters;
             m_parameters = 0;
             return false;
