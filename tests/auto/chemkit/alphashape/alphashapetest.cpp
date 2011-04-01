@@ -34,7 +34,7 @@ class AlphaShapeTest : public QObject
 
 void AlphaShapeTest::alphaValue()
 {
-    QVector<chemkit::Point3> points;
+    std::vector<chemkit::Point3> points;
     chemkit::AlphaShape alphaShape(points);
 
     // default alpha value is 0

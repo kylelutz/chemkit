@@ -25,6 +25,8 @@
 
 #include "chemkit.h"
 
+#include <vector>
+
 #include <QtCore>
 
 #include "point3.h"
@@ -38,8 +40,8 @@ class CHEMKIT_EXPORT DelaunayTriangulation
 {
     public:
         // construction and destruction
-        DelaunayTriangulation(const QVector<Point3> &points);
-        DelaunayTriangulation(const QVector<Point3> &points, const QVector<Float> &weights);
+        DelaunayTriangulation(const std::vector<Point3> &points);
+        DelaunayTriangulation(const std::vector<Point3> &points, const std::vector<Float> &weights);
         ~DelaunayTriangulation();
 
         // properties
@@ -51,11 +53,11 @@ class CHEMKIT_EXPORT DelaunayTriangulation
         // simplicies
         QList<int> verticies() const;
         int vertexCount() const;
-        QList<QVector<int> > edges() const;
+        QList<std::vector<int> > edges() const;
         int edgeCount() const;
-        QList<QVector<int> > triangles() const;
+        QList<std::vector<int> > triangles() const;
         int triangleCount() const;
-        QList<QVector<int> > tetrahedra() const;
+        QList<std::vector<int> > tetrahedra() const;
         int tetrahedronCount() const;
 
         // geometry
@@ -71,9 +73,9 @@ class CHEMKIT_EXPORT DelaunayTriangulation
         bool isExternal(int tetrahedron) const;
 
         // alpha shape
-        QList<QVector<int> > alphaShapeEdges(const AlphaShape *alphaShape) const;
-        QList<QVector<int> > alphaShapeTriangles(const AlphaShape *alphaShape) const;
-        QList<QVector<int> > alphaShapeTetrahedra(const AlphaShape *alphaShape) const;
+        QList<std::vector<int> > alphaShapeEdges(const AlphaShape *alphaShape) const;
+        QList<std::vector<int> > alphaShapeTriangles(const AlphaShape *alphaShape) const;
+        QList<std::vector<int> > alphaShapeTetrahedra(const AlphaShape *alphaShape) const;
         void calculateAlphaShape(const AlphaShape *alphaShape) const;
 
         friend class AlphaShape;

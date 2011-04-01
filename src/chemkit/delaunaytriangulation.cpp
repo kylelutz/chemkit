@@ -22,6 +22,8 @@
 
 #include "delaunaytriangulation.h"
 
+#include <algorithm>
+
 #include "point3.h"
 #include "vector3.h"
 #include "geometry.h"
@@ -42,7 +44,7 @@ class EdgeSet
         bool contains(int a, int b);
 
     private:
-        QVector<QSet<int> > m_edges;
+        std::vector<QSet<int> > m_edges;
 };
 
 EdgeSet::EdgeSet(int vertexCount)
@@ -76,7 +78,7 @@ class Tetrahedron
         bool inAlphaShape;
 
         bool contains(int vertex) const;
-        QVector<int> triangle(int index) const;
+        std::vector<int> triangle(int index) const;
 };
 
 bool Tetrahedron::contains(int vertex) const
@@ -90,9 +92,9 @@ bool Tetrahedron::contains(int vertex) const
     return false;
 }
 
-QVector<int> Tetrahedron::triangle(int index) const
+std::vector<int> Tetrahedron::triangle(int index) const
 {
-    QVector<int> triangle(3);
+    std::vector<int> triangle(3);
 
     // abc
     if(index == 0){
@@ -128,19 +130,19 @@ QVector<int> Tetrahedron::triangle(int index) const
 class DelaunayTriangulationPrivate
 {
     public:
-        QVector<Point3> verticies;
-        QVector<Float> weights;
-        QVector<Tetrahedron> tetrahedra;
+        std::vector<Point3> verticies;
+        std::vector<Float> weights;
+        std::vector<Tetrahedron> tetrahedra;
 
         bool alphaShapeCalculated;
 
-        QList<QVector<int> > delaunayEdges;
-        QList<QVector<int> > delaunayTriangles;
-        QList<QVector<int> > delaunayTetrahedra;
+        QList<std::vector<int> > delaunayEdges;
+        QList<std::vector<int> > delaunayTriangles;
+        QList<std::vector<int> > delaunayTetrahedra;
 
-        QList<QVector<int> > alphaShapeEdges;
-        QList<QVector<int> > alphaShapeTriangles;
-        QList<QVector<int> > alphaShapeTetrahedra;
+        QList<std::vector<int> > alphaShapeEdges;
+        QList<std::vector<int> > alphaShapeTriangles;
+        QList<std::vector<int> > alphaShapeTetrahedra;
 };
 
 // === DelaunayTriangulation =============================================== //
@@ -158,7 +160,7 @@ class DelaunayTriangulationPrivate
 
 // --- Construction and Destruction ---------------------------------------- //
 /// Creates a new delaunay triangulation for \p points.
-DelaunayTriangulation::DelaunayTriangulation(const QVector<Point3> &points)
+DelaunayTriangulation::DelaunayTriangulation(const std::vector<Point3> &points)
     : d(new DelaunayTriangulationPrivate)
 {
     d->verticies = points;
@@ -170,7 +172,7 @@ DelaunayTriangulation::DelaunayTriangulation(const QVector<Point3> &points)
 
 /// Creates a new weighted delaunay triangulation for \p points with
 /// \p weights.
-DelaunayTriangulation::DelaunayTriangulation(const QVector<Point3> &points, const QVector<Float> &weights)
+DelaunayTriangulation::DelaunayTriangulation(const std::vector<Point3> &points, const std::vector<Float> &weights)
     : d(new DelaunayTriangulationPrivate)
 {
     d->verticies = points;
@@ -210,7 +212,7 @@ Float DelaunayTriangulation::weight(int vertex) const
 /// verticies.
 bool DelaunayTriangulation::isWeighted() const
 {
-    return !d->weights.isEmpty();
+    return !d->weights.empty();
 }
 
 // --- Simplicies ---------------------------------------------------------- //
@@ -219,7 +221,7 @@ QList<int> DelaunayTriangulation::verticies() const
 {
     QList<int> verticies;
 
-    for(int i = 0; i < d->verticies.size() - 4; i++){
+    for(unsigned int i = 0; i < d->verticies.size() - 4; i++){
         verticies.append(i);
     }
 
@@ -233,16 +235,16 @@ int DelaunayTriangulation::vertexCount() const
 }
 
 /// Returns a list of edges in the delaunay triangulation.
-QList<QVector<int> > DelaunayTriangulation::edges() const
+QList<std::vector<int> > DelaunayTriangulation::edges() const
 {
     if(d->delaunayEdges.isEmpty()){
-        QList<QVector<int> > edges;
+        QList<std::vector<int> > edges;
         EdgeSet edgeSet(d->verticies.size());
 
-        Q_FOREACH(const QVector<int> &tetrahedron, tetrahedra()){
+        Q_FOREACH(const std::vector<int> &tetrahedron, tetrahedra()){
             for(int i = 0; i < 4; i++){
                 for(int j = i + 1; j < 4; j++){
-                    QVector<int> edge(2);
+                    std::vector<int> edge(2);
                     edge[0] = tetrahedron[i];
                     edge[1] = tetrahedron[j];
 
@@ -267,11 +269,11 @@ int DelaunayTriangulation::edgeCount() const
 }
 
 /// Returns a list of faces in the delaunay triangulation.
-QList<QVector<int> > DelaunayTriangulation::triangles() const
+QList<std::vector<int> > DelaunayTriangulation::triangles() const
 {
     if(d->delaunayTriangles.isEmpty()){
         int initialTetrahedron = 0;
-        for(int i = 0; i < d->tetrahedra.size(); i++){
+        for(unsigned int i = 0; i < d->tetrahedra.size(); i++){
             const Tetrahedron &tetrahedron = d->tetrahedra[i];
             if(!tetrahedron.valid || isExternal(i)){
                 continue;
@@ -314,20 +316,20 @@ int DelaunayTriangulation::triangleCount() const
 }
 
 /// Returns a list of the tetrahedra in the delaunay triangulation.
-QList<QVector<int> > DelaunayTriangulation::tetrahedra() const
+QList<std::vector<int> > DelaunayTriangulation::tetrahedra() const
 {
     if(d->delaunayTetrahedra.isEmpty()){
-        QList<QVector<int> > tetrahedra;
+        QList<std::vector<int> > tetrahedra;
 
         Q_FOREACH(const Tetrahedron &tetrahedron, d->tetrahedra){
             if(!tetrahedron.valid){
                 continue;
             }
 
-            QVector<int> verticies(4);
+            std::vector<int> verticies(4);
             bool external = false;
             for(int i = 0; i < 4; i++){
-                int vertex = tetrahedron.verticies[i];
+                unsigned int vertex = tetrahedron.verticies[i];
 
                 if(vertex >= (d->verticies.size() - 4)){
                     external = true;
@@ -362,7 +364,7 @@ Float DelaunayTriangulation::volume() const
 {
     Float volume = 0;
 
-    Q_FOREACH(const QVector<int> &tetrahedron, tetrahedra()){
+    Q_FOREACH(const std::vector<int> &tetrahedron, tetrahedra()){
         const Point3 &a = position(tetrahedron[0]);
         const Point3 &b = position(tetrahedron[1]);
         const Point3 &c = position(tetrahedron[2]);
@@ -381,16 +383,16 @@ Float DelaunayTriangulation::surfaceArea() const
 }
 
 // --- Alpha Shape --------------------------------------------------------- //
-QList<QVector<int> > DelaunayTriangulation::alphaShapeEdges(const AlphaShape *alphaShape) const
+QList<std::vector<int> > DelaunayTriangulation::alphaShapeEdges(const AlphaShape *alphaShape) const
 {
     if(d->alphaShapeEdges.isEmpty()){
-        QList<QVector<int> > alphaShapeEdges;
+        QList<std::vector<int> > alphaShapeEdges;
         EdgeSet alphaEdgeSet(d->verticies.size());
 
-        Q_FOREACH(const QVector<int> &triangle, alphaShapeTriangles(alphaShape)){
+        Q_FOREACH(const std::vector<int> &triangle, alphaShapeTriangles(alphaShape)){
             for(int i = 0; i < 3; i++){
                 for(int j = i + 1; j < 3; j++){
-                    QVector<int> edge(2);
+                    std::vector<int> edge(2);
                     edge[0] = triangle[i];
                     edge[1] = triangle[j];
 
@@ -405,7 +407,7 @@ QList<QVector<int> > DelaunayTriangulation::alphaShapeEdges(const AlphaShape *al
 
         EdgeSet attachedEdgeSet(d->verticies.size());
 
-        Q_FOREACH(const QVector<int> &triangle, triangles()){
+        Q_FOREACH(const std::vector<int> &triangle, triangles()){
             int a = triangle[0];
             int b = triangle[1];
             int c = triangle[2];
@@ -420,7 +422,7 @@ QList<QVector<int> > DelaunayTriangulation::alphaShapeEdges(const AlphaShape *al
                 attachedEdgeSet.insert(b, c);
         }
 
-        Q_FOREACH(const QVector<int> edge, edges()){
+        Q_FOREACH(const std::vector<int> edge, edges()){
             if(alphaEdgeSet.contains(edge[0], edge[1])){
                 continue;
             }
@@ -439,15 +441,15 @@ QList<QVector<int> > DelaunayTriangulation::alphaShapeEdges(const AlphaShape *al
     return d->alphaShapeEdges;
 }
 
-QList<QVector<int> > DelaunayTriangulation::alphaShapeTriangles(const AlphaShape *alphaShape) const
+QList<std::vector<int> > DelaunayTriangulation::alphaShapeTriangles(const AlphaShape *alphaShape) const
 {
     if(d->alphaShapeTriangles.isEmpty()){
         calculateAlphaShape(alphaShape);
 
-        QList<QVector<int> > triangles;
+        QList<std::vector<int> > triangles;
 
         int initialTetrahedron = 0;
-        for(int i = 0; i < d->tetrahedra.size(); i++){
+        for(unsigned int i = 0; i < d->tetrahedra.size(); i++){
             const Tetrahedron &tetrahedron = d->tetrahedra[i];
             if(!tetrahedron.valid || isExternal(i)){
                 continue;
@@ -483,7 +485,7 @@ QList<QVector<int> > DelaunayTriangulation::alphaShapeTriangles(const AlphaShape
                     visited.insert(neighborIndex);
                 }
 
-                QVector<int> triangle = tetrahedron.triangle(triangleIndex);
+                std::vector<int> triangle = tetrahedron.triangle(triangleIndex);
 
                 if(tetrahedron.inAlphaShape && (!neighborExternal && neighbor.inAlphaShape)){
                     triangles.append(triangle);
@@ -530,18 +532,18 @@ QList<QVector<int> > DelaunayTriangulation::alphaShapeTriangles(const AlphaShape
     return d->alphaShapeTriangles;
 }
 
-QList<QVector<int> > DelaunayTriangulation::alphaShapeTetrahedra(const AlphaShape *alphaShape) const
+QList<std::vector<int> > DelaunayTriangulation::alphaShapeTetrahedra(const AlphaShape *alphaShape) const
 {
     if(d->alphaShapeTetrahedra.isEmpty()){
         calculateAlphaShape(alphaShape);
 
-        for(int i = 0; i < d->tetrahedra.size(); i++){
+        for(unsigned int i = 0; i < d->tetrahedra.size(); i++){
             const Tetrahedron &tetrahedron = d->tetrahedra[i];
             if(!tetrahedron.valid || isExternal(i))
                 continue;
 
             if(tetrahedron.inAlphaShape){
-                QVector<int> verticies(4);
+                std::vector<int> verticies(4);
                 for(int j = 0; j < 4; j++){
                     verticies[j] = tetrahedron.verticies[j];
                 }
@@ -561,7 +563,7 @@ void DelaunayTriangulation::calculateAlphaShape(const AlphaShape *alphaShape) co
         return;
     }
 
-    for(int i = 0; i < d->tetrahedra.size(); i++){
+    for(unsigned int i = 0; i < d->tetrahedra.size(); i++){
         Tetrahedron &tetrahedron = d->tetrahedra[i];
         if(!tetrahedron.valid || isExternal(i)){
             continue;
@@ -591,16 +593,16 @@ void DelaunayTriangulation::triangulate(bool weighted)
 
     // build big tetrahedron which will contain all other points. its
     // vertices will be the last four positions in the vertex vector
-    d->verticies.append(Point3(0, 1e10, 0));
-    d->verticies.append(Point3(1e10, -1e10, 1e10));
-    d->verticies.append(Point3(-1e10, -1e10, 1e10));
-    d->verticies.append(Point3(0, -1e10, -1e10));
+    d->verticies.push_back(Point3(0, 1e10, 0));
+    d->verticies.push_back(Point3(1e10, -1e10, 1e10));
+    d->verticies.push_back(Point3(-1e10, -1e10, 1e10));
+    d->verticies.push_back(Point3(0, -1e10, -1e10));
 
     if(weighted){
-        d->weights.append(0);
-        d->weights.append(0);
-        d->weights.append(0);
-        d->weights.append(0);
+        d->weights.push_back(0);
+        d->weights.push_back(0);
+        d->weights.push_back(0);
+        d->weights.push_back(0);
     }
 
     Tetrahedron big;
@@ -613,7 +615,7 @@ void DelaunayTriangulation::triangulate(bool weighted)
     big.neighbors[2] = -1;
     big.neighbors[3] = -1;
     big.valid = true;
-    d->tetrahedra.append(big);
+    d->tetrahedra.push_back(big);
 
     // insert verticies
     for(int i = 0; i < size; i++){
@@ -737,7 +739,7 @@ void DelaunayTriangulation::insertPoint(int index)
 
     QList<int> containingTetrahedra = findContainingTetrahedra(index);
 
-    QList<QVector<int> > faces;
+    QList<std::vector<int> > faces;
     QList<QPair<int, int> > faceNeighbor;
     QList<int> count;
 
@@ -746,7 +748,7 @@ void DelaunayTriangulation::insertPoint(int index)
         for(int i = 0; i < 4; i++){
             for(int j = i + 1; j < 4; j++){
                 for(int k = j + 1; k < 4; k++){
-                    QVector<int> face(3);
+                    std::vector<int> face(3);
                     face[0] = tetrahedron.verticies[i];
                     face[1] = tetrahedron.verticies[j];
                     face[2] = tetrahedron.verticies[k];
@@ -786,7 +788,7 @@ void DelaunayTriangulation::insertPoint(int index)
     QList<int> newTetrahedra;
     for(int i = 0; i < faces.size(); i++){
         if(count[i] == 1){
-            QVector<int> face = faces[i];
+            std::vector<int> face = faces[i];
             Tetrahedron tetrahedron;
             int tetrahedronIndex = d->tetrahedra.size();
 
@@ -831,7 +833,7 @@ void DelaunayTriangulation::insertPoint(int index)
             tetrahedron.neighbors[3] = -2; // bcd
 
             tetrahedron.valid = true;
-            d->tetrahedra.append(tetrahedron);
+            d->tetrahedra.push_back(tetrahedron);
             newTetrahedra.append(tetrahedronIndex);
         }
     }
@@ -847,25 +849,25 @@ void DelaunayTriangulation::insertPoint(int index)
 
             int otherIndex = newTetrahedra[j];
             const Tetrahedron &other = d->tetrahedra[otherIndex];
-            QVector<int> verticies(4);
+            std::vector<int> verticies(4);
             verticies[0] = other.verticies[0];
             verticies[1] = other.verticies[1];
             verticies[2] = other.verticies[2];
             verticies[3] = other.verticies[3];
 
-            if(verticies.contains(tetrahedron.verticies[0]) &&
-               verticies.contains(tetrahedron.verticies[1]) &&
-               verticies.contains(tetrahedron.verticies[3])){
+            if(std::find(verticies.begin(), verticies.end(), tetrahedron.verticies[0]) != verticies.end() &&
+               std::find(verticies.begin(), verticies.end(), tetrahedron.verticies[1]) != verticies.end() &&
+               std::find(verticies.begin(), verticies.end(), tetrahedron.verticies[3]) != verticies.end()){
                 tetrahedron.neighbors[1] = otherIndex; // abd
             }
-            else if(verticies.contains(tetrahedron.verticies[0]) &&
-                    verticies.contains(tetrahedron.verticies[2]) &&
-                    verticies.contains(tetrahedron.verticies[3])){
+            else if(std::find(verticies.begin(), verticies.end(), tetrahedron.verticies[0]) != verticies.end() &&
+                    std::find(verticies.begin(), verticies.end(), tetrahedron.verticies[2]) != verticies.end() &&
+                    std::find(verticies.begin(), verticies.end(), tetrahedron.verticies[3]) != verticies.end()){
                 tetrahedron.neighbors[2] = otherIndex; // acd
             }
-            else if(verticies.contains(tetrahedron.verticies[1]) &&
-                    verticies.contains(tetrahedron.verticies[2]) &&
-                    verticies.contains(tetrahedron.verticies[3])){
+            else if(std::find(verticies.begin(), verticies.end(), tetrahedron.verticies[1]) != verticies.end() &&
+                    std::find(verticies.begin(), verticies.end(), tetrahedron.verticies[2]) != verticies.end() &&
+                    std::find(verticies.begin(), verticies.end(), tetrahedron.verticies[3]) != verticies.end()){
                 tetrahedron.neighbors[3] = otherIndex; // bcd
             }
         }
@@ -877,7 +879,7 @@ bool DelaunayTriangulation::isExternal(int index) const
     const Tetrahedron &tetrahedron = d->tetrahedra[index];
 
     for(int i = 0; i < 4; i++){
-        int vertex = tetrahedron.verticies[i];
+        unsigned int vertex = tetrahedron.verticies[i];
 
         if(vertex >= (d->verticies.size() - 4)){
             return true;

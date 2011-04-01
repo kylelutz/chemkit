@@ -59,8 +59,8 @@ class MolecularSurfacePrivate
         const Molecule *molecule;
         MolecularSurface::SurfaceType surfaceType;
         Float probeRadius;
-        QVector<Point3> points;
-        QVector<Float> radii;
+        std::vector<Point3> points;
+        std::vector<Float> radii;
         AlphaShape *alphaShape;
         Float volume;
         Float surfaceArea;
@@ -107,8 +107,8 @@ MolecularSurface::MolecularSurface(const Molecule *molecule, SurfaceType type)
 
     if(molecule){
         Q_FOREACH(const Atom *atom, molecule->atoms()){
-            d->points.append(atom->position());
-            d->radii.append(atom->vanDerWaalsRadius());
+            d->points.push_back(atom->position());
+            d->radii.push_back(atom->vanDerWaalsRadius());
         }
     }
 
@@ -187,8 +187,8 @@ const AlphaShape* MolecularSurface::alphaShape() const
 {
     if(!d->alphaShape){
         // calculate weights (weight = radius sqaured)
-        QVector<Float> weights(d->points.size());
-        for(int i = 0; i < d->points.size(); i++){
+        std::vector<Float> weights(d->points.size());
+        for(unsigned int i = 0; i < d->points.size(); i++){
             weights[i] = pow(radius(i), 2);
         }
 
@@ -224,24 +224,24 @@ Float MolecularSurface::volume() const
         const AlphaShape *alphaShape = this->alphaShape();
 
         // add volume and area for each vertex
-        for(int i = 0; i < d->points.size(); i++){
+        for(unsigned int i = 0; i < d->points.size(); i++){
             Float r = radius(i);
 
             d->volume += (4.0/3.0) * pi * r*r*r;
         }
 
         // subtract volume from each edge
-        Q_FOREACH(QVector<int> edge, alphaShape->edges()){
+        Q_FOREACH(std::vector<int> edge, alphaShape->edges()){
             d->volume -= intersectionVolume(edge[0], edge[1]);
         }
 
         // add volume from each triangle
-        Q_FOREACH(const QVector<int> &triangle, alphaShape->triangles()){
+        Q_FOREACH(const std::vector<int> &triangle, alphaShape->triangles()){
             d->volume += intersectionVolume(triangle[0], triangle[1], triangle[2]);
         }
 
         // subtract volume from each tetrahedron
-        Q_FOREACH(QVector<int> tetrahedron, alphaShape->tetrahedra()){
+        Q_FOREACH(std::vector<int> tetrahedron, alphaShape->tetrahedra()){
             d->volume -= intersectionVolume(tetrahedron[0], tetrahedron[1], tetrahedron[2], tetrahedron[3]);
         }
 
@@ -268,24 +268,24 @@ Float MolecularSurface::surfaceArea() const
         const AlphaShape *alphaShape = this->alphaShape();
 
         // add volume and area for each vertex
-        for(int i = 0; i < d->points.size(); i++){
+        for(unsigned int i = 0; i < d->points.size(); i++){
             Float r = radius(i);
 
             d->surfaceArea += 4.0 * pi * r*r;
         }
 
         // subtract volume and area from each edge
-        Q_FOREACH(QVector<int> edge, alphaShape->edges()){
+        Q_FOREACH(std::vector<int> edge, alphaShape->edges()){
             d->surfaceArea -= intersectionArea(edge[0], edge[1]);
         }
 
         // add volume and area from each triangle
-        Q_FOREACH(const QVector<int> &triangle, alphaShape->triangles()){
+        Q_FOREACH(const std::vector<int> &triangle, alphaShape->triangles()){
             d->surfaceArea += intersectionArea(triangle[0], triangle[1], triangle[2]);
         }
 
         // subtract volume and area from each tetrahedron
-        Q_FOREACH(QVector<int> tetrahedron, alphaShape->tetrahedra()){
+        Q_FOREACH(std::vector<int> tetrahedron, alphaShape->tetrahedra()){
             d->surfaceArea -= intersectionArea(tetrahedron[0], tetrahedron[1], tetrahedron[2], tetrahedron[3]);
         }
 

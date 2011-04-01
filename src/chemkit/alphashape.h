@@ -23,6 +23,8 @@
 #ifndef CHEMKIT_ALPHASHAPE_H
 #define CHEMKIT_ALPHASHAPE_H
 
+#include <vector>
+
 #include <QtCore>
 
 #include "point3.h"
@@ -42,8 +44,8 @@ class CHEMKIT_EXPORT AlphaShape
         };
 
         // construction and destruction
-        AlphaShape(const QVector<Point3> &points);
-        AlphaShape(const QVector<Point3> &points, const QVector<Float> &weights);
+        AlphaShape(const std::vector<Point3> &points);
+        AlphaShape(const std::vector<Point3> &points, const std::vector<Float> &weights);
         ~AlphaShape();
 
         // properties
@@ -56,11 +58,11 @@ class CHEMKIT_EXPORT AlphaShape
         // simplicies
         QList<int> verticies() const;
         int vertexCount() const;
-        QList<QVector<int> > edges() const;
+        QList<std::vector<int> > edges() const;
         int edgeCount() const;
-        QList<QVector<int> > triangles() const;
+        QList<std::vector<int> > triangles() const;
         int triangleCount() const;
-        QList<QVector<int> > tetrahedra() const;
+        QList<std::vector<int> > tetrahedra() const;
         int tetrahedronCount() const;
 
         // geometry

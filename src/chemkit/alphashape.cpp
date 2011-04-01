@@ -45,7 +45,7 @@ class AlphaShapePrivate
 
 // --- Construction and Destruction ---------------------------------------- //
 /// Creates a new alpha shape with \p points.
-AlphaShape::AlphaShape(const QVector<Point3> &points)
+AlphaShape::AlphaShape(const std::vector<Point3> &points)
     : d(new AlphaShapePrivate)
 {
     d->alphaValue = 0;
@@ -53,7 +53,7 @@ AlphaShape::AlphaShape(const QVector<Point3> &points)
 }
 
 /// Creates a new alpha shape with \p points and \p weights.
-AlphaShape::AlphaShape(const QVector<Point3> &points, const QVector<Float> &weights)
+AlphaShape::AlphaShape(const std::vector<Point3> &points, const std::vector<Float> &weights)
     : d(new AlphaShapePrivate)
 {
     d->alphaValue = 0;
@@ -114,7 +114,7 @@ int AlphaShape::vertexCount() const
 }
 
 /// Returns a list of edges in the alpha shape.
-QList<QVector<int> > AlphaShape::edges() const
+QList<std::vector<int> > AlphaShape::edges() const
 {
     return d->triangulation->alphaShapeEdges(this);
 }
@@ -126,7 +126,7 @@ int AlphaShape::edgeCount() const
 }
 
 /// Returns a list of the triangles in the alpha shape.
-QList<QVector<int> > AlphaShape::triangles() const
+QList<std::vector<int> > AlphaShape::triangles() const
 {
     return d->triangulation->alphaShapeTriangles(this);
 }
@@ -138,7 +138,7 @@ int AlphaShape::triangleCount() const
 }
 
 /// Returns a list of the tetrahedra in the alpha shape.
-QList<QVector<int> > AlphaShape::tetrahedra() const
+QList<std::vector<int> > AlphaShape::tetrahedra() const
 {
     return d->triangulation->alphaShapeTetrahedra(this);
 }
@@ -155,7 +155,7 @@ Float AlphaShape::volume() const
 {
     Float volume = 0;
 
-    Q_FOREACH(const QVector<int> &tetrahedron, tetrahedra()){
+    Q_FOREACH(const std::vector<int> &tetrahedron, tetrahedra()){
         const Point3 &a = position(tetrahedron[0]);
         const Point3 &b = position(tetrahedron[1]);
         const Point3 &c = position(tetrahedron[2]);
@@ -172,7 +172,7 @@ Float AlphaShape::surfaceArea() const
 {
     Float surfaceArea = 0;
 
-//    Q_FOREACH(const QVector<int> triangle, triangles(Regular | Singular)){
+//    Q_FOREACH(const std::vector<int> triangle, triangles(Regular | Singular)){
 //        const Point &a = position(triangle[0]);
 //        const Point &b = position(triangle[1]);
 //        const Point &c = position(triangle[2]);
