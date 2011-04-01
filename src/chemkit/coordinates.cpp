@@ -298,7 +298,7 @@ Point3 Coordinates::center() const
 
 /// Returns the center of the coordinates after weighting each
 /// position with \p weights.
-Point3 Coordinates::weightedCenter(const QVector<Float> &weights) const
+Point3 Coordinates::weightedCenter(const std::vector<Float> &weights) const
 {
     Q_ASSERT(size() == weights.size());
 
@@ -315,13 +315,13 @@ Point3 Coordinates::weightedCenter(const QVector<Float> &weights) const
     Float sw = 0;
 
     for(int i = 0; i < size(); i++){
-        Float w = weights[i];
+        Float weight = weights[i];
 
-        sx += w * m_matrix.value(i, 0);
-        sy += w * m_matrix.value(i, 1);
-        sz += w * m_matrix.value(i, 2);
+        sx += weight * m_matrix.value(i, 0);
+        sy += weight * m_matrix.value(i, 1);
+        sz += weight * m_matrix.value(i, 2);
 
-        sw += w;
+        sw += weight;
     }
 
     int n = sw * size();
