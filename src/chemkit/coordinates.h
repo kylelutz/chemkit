@@ -25,7 +25,7 @@
 
 #include "chemkit.h"
 
-#include <QtCore>
+#include <vector>
 
 #include "matrix.h"
 #include "point3.h"
@@ -46,8 +46,8 @@ class CHEMKIT_EXPORT Coordinates
         Coordinates(int size);
         Coordinates(const Molecule *molecule);
         Coordinates(const Conformer *conformer);
-        Coordinates(const QList<Atom *> &atoms);
-        Coordinates(const QList<Point3> &points);
+        Coordinates(const std::vector<Atom *> &atoms);
+        Coordinates(const std::vector<Point3> &points);
         Coordinates(const Coordinates &coordinates);
         ~Coordinates();
 

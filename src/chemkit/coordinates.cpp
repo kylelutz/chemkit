@@ -78,12 +78,12 @@ Coordinates::Coordinates(const Conformer *conformer)
 
 /// Creates a new coordinate matrix with the coordinates from
 /// \p atoms.
-Coordinates::Coordinates(const QList<Atom *> &atoms)
+Coordinates::Coordinates(const std::vector<Atom *> &atoms)
     : m_matrix(atoms.size(), 3)
 {
-    int size = atoms.size();
+    unsigned int size = atoms.size();
 
-    for(int i = 0; i < size; i++){
+    for(unsigned int i = 0; i < size; i++){
         Point3 position = atoms[i]->position();
         m_matrix.setValue(i, 0, position.x());
         m_matrix.setValue(i, 1, position.y());
@@ -92,10 +92,10 @@ Coordinates::Coordinates(const QList<Atom *> &atoms)
 }
 
 /// Creates a new coordinate matrix that contains \p points.
-Coordinates::Coordinates(const QList<Point3> &points)
+Coordinates::Coordinates(const std::vector<Point3> &points)
     : m_matrix(points.size(), 3)
 {
-    for(int i = 0; i < points.size(); i++){
+    for(unsigned int i = 0; i < points.size(); i++){
         Point3 position = points[i];
         m_matrix.setValue(i, 0, position.x());
         m_matrix.setValue(i, 1, position.y());
