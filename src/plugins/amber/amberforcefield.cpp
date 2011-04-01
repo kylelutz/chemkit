@@ -60,7 +60,7 @@ bool AmberForceField::setup()
         chemkit::ForceFieldInteractions interactions(molecule, this);
 
         // add bond calculations
-        QPair<const chemkit::ForceFieldAtom *, const chemkit::ForceFieldAtom *> bondedPair;
+        std::pair<const chemkit::ForceFieldAtom *, const chemkit::ForceFieldAtom *> bondedPair;
         foreach(bondedPair, interactions.bondedPairs()){
             addCalculation(new AmberBondCalculation(bondedPair.first,
                                                     bondedPair.second));
@@ -84,7 +84,7 @@ bool AmberForceField::setup()
         }
 
         // add nonbonded calculations
-        QPair<const chemkit::ForceFieldAtom *, const chemkit::ForceFieldAtom *> nonbondedPair;
+        std::pair<const chemkit::ForceFieldAtom *, const chemkit::ForceFieldAtom *> nonbondedPair;
         foreach(nonbondedPair, interactions.nonbondedPairs()){
             addCalculation(new AmberNonbondedCalculation(nonbondedPair.first,
                                                          nonbondedPair.second));

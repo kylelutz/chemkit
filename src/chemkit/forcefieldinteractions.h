@@ -49,10 +49,10 @@ class CHEMKIT_EXPORT ForceFieldInteractions
         const ForceField* forceField() const;
 
         // interactions
-        QList<QPair<const ForceFieldAtom *, const ForceFieldAtom *> > bondedPairs();
+        QList<std::pair<const ForceFieldAtom *, const ForceFieldAtom *> > bondedPairs();
         QList<std::vector<const ForceFieldAtom *> > angleGroups();
         QList<std::vector<const ForceFieldAtom *> > torsionGroups();
-        QList<QPair<const ForceFieldAtom *, const ForceFieldAtom *> > nonbondedPairs();
+        QList<std::pair<const ForceFieldAtom *, const ForceFieldAtom *> > nonbondedPairs();
 
     private:
         bool atomsWithinTwoBonds(const Atom *a, const Atom *b);

@@ -119,10 +119,10 @@ bool MmffForceField::setup()
         }
 
         // add calculations
-       chemkit:: ForceFieldInteractions interactions(molecule, this);
+        chemkit::ForceFieldInteractions interactions(molecule, this);
 
         // bond strech calculations
-        QPair<const chemkit::ForceFieldAtom *, const chemkit::ForceFieldAtom *> bondedPair;
+        std::pair<const chemkit::ForceFieldAtom *, const chemkit::ForceFieldAtom *> bondedPair;
         foreach(bondedPair, interactions.bondedPairs()){
             const MmffAtom *a = static_cast<const MmffAtom *>(bondedPair.first);
             const MmffAtom *b = static_cast<const MmffAtom *>(bondedPair.second);
@@ -168,7 +168,7 @@ bool MmffForceField::setup()
         }
 
         // van der waals and electrostatic calculations
-        QPair<const chemkit::ForceFieldAtom *, const chemkit::ForceFieldAtom *> nonbondedPair;
+        std::pair<const chemkit::ForceFieldAtom *, const chemkit::ForceFieldAtom *> nonbondedPair;
         foreach(nonbondedPair, interactions.nonbondedPairs()){
             const MmffAtom *a = static_cast<const MmffAtom *>(nonbondedPair.first);
             const MmffAtom *b = static_cast<const MmffAtom *>(nonbondedPair.second);

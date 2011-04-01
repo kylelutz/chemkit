@@ -74,7 +74,7 @@ bool UffForceField::setup()
         chemkit::ForceFieldInteractions interactions(molecule, this);
 
         // bond strech
-        QPair<const chemkit::ForceFieldAtom *, const chemkit::ForceFieldAtom *> bondedPair;
+        std::pair<const chemkit::ForceFieldAtom *, const chemkit::ForceFieldAtom *> bondedPair;
         foreach(bondedPair, interactions.bondedPairs()){
             addCalculation(new UffBondStrechCalculation(bondedPair.first,
                                                         bondedPair.second));
@@ -123,7 +123,7 @@ bool UffForceField::setup()
         }
 
         // van der waals
-        QPair<const chemkit::ForceFieldAtom *, const chemkit::ForceFieldAtom *> nonbondedPair;
+        std::pair<const chemkit::ForceFieldAtom *, const chemkit::ForceFieldAtom *> nonbondedPair;
         foreach(nonbondedPair, interactions.nonbondedPairs()){
             addCalculation(new UffVanDerWaalsCalculation(nonbondedPair.first,
                                                          nonbondedPair.second));

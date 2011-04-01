@@ -92,7 +92,7 @@ bool OplsForceField::setupMolecule(const chemkit::Molecule *molecule)
     chemkit::ForceFieldInteractions interactions(molecule, this);
 
     // bond strech pairs
-    QPair<const chemkit::ForceFieldAtom *, const chemkit::ForceFieldAtom *> bondedPair;
+    std::pair<const chemkit::ForceFieldAtom *, const chemkit::ForceFieldAtom *> bondedPair;
     foreach(bondedPair, interactions.bondedPairs()){
         addCalculation(new OplsBondStrechCalculation(bondedPair.first, bondedPair.second));
     }
@@ -110,7 +110,7 @@ bool OplsForceField::setupMolecule(const chemkit::Molecule *molecule)
     }
 
     // nonbonded pairs
-    QPair<const chemkit::ForceFieldAtom *, const chemkit::ForceFieldAtom *> nonbondedPair;
+    std::pair<const chemkit::ForceFieldAtom *, const chemkit::ForceFieldAtom *> nonbondedPair;
     foreach(nonbondedPair, interactions.nonbondedPairs()){
         addCalculation(new OplsNonbondedCalculation(nonbondedPair.first, nonbondedPair.second));
     }
