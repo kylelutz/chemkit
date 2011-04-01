@@ -25,6 +25,8 @@
 
 #include <QtCore>
 
+#include <string>
+
 #include "mmffatom.h"
 
 class MmffParametersData;
@@ -110,8 +112,8 @@ class MmffParameters
         ~MmffParameters();
 
         // parameters
-        QString fileName() const;
-        bool read(const QString &fileName);
+        std::string fileName() const;
+        bool read(const std::string &fileName);
         const MmffBondStrechParameters* bondStrechParameters(const MmffAtom *a, const MmffAtom *b) const;
         const MmffAngleBendParameters* angleBendParameters(const MmffAtom *a, const MmffAtom *b, const MmffAtom *c) const;
         const MmffStrechBendParameters* strechBendParameters(const MmffAtom *a, const MmffAtom *b, const MmffAtom *c) const;
@@ -154,7 +156,7 @@ class MmffParameters
         void setErrorString(const QString &errorString);
 
     private:
-        QString m_fileName;
+        std::string m_fileName;
         QString m_errorString;
         MmffParametersData *d;
 };

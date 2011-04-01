@@ -75,11 +75,11 @@ class CHEMKIT_EXPORT ForceField
         virtual void clear();
 
         // parameters
-        void setParameterSet(const QString &name);
-        QString parameterSet() const;
-        QStringList parameterSets() const;
-        void setParameterFile(const QString &fileName);
-        QString parameterFile() const;
+        void setParameterSet(const std::string &name);
+        std::string parameterSet() const;
+        std::vector<std::string> parameterSets() const;
+        void setParameterFile(const std::string &fileName);
+        std::string parameterFile() const;
 
         // calculations
         QList<ForceFieldCalculation *> calculations() const;
@@ -124,8 +124,8 @@ class CHEMKIT_EXPORT ForceField
         void addCalculation(ForceFieldCalculation *calculation);
         void removeCalculation(ForceFieldCalculation *calculation);
         void setCalculationSetup(ForceFieldCalculation *calculation, bool setup);
-        void addParameterSet(const QString &name, const QString &fileName);
-        void removeParameterSet(const QString &name);
+        void addParameterSet(const std::string &name, const std::string &fileName);
+        void removeParameterSet(const std::string &name);
         void setErrorString(const QString &errorString);
 
     private:

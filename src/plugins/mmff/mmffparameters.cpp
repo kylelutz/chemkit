@@ -252,12 +252,12 @@ MmffParameters::~MmffParameters()
 }
 
 // --- Parameters ---------------------------------------------------------- //
-QString MmffParameters::fileName() const
+std::string MmffParameters::fileName() const
 {
     return m_fileName;
 }
 
-bool MmffParameters::read(const QString &fileName)
+bool MmffParameters::read(const std::string &fileName)
 {
     // delete old parameters data
     if(d){
@@ -268,7 +268,7 @@ bool MmffParameters::read(const QString &fileName)
     // try to load cached parameters
     MmffPlugin *mmffPlugin = static_cast<MmffPlugin *>(chemkit::PluginManager::instance()->plugin("mmff"));
     if(mmffPlugin){
-        d = mmffPlugin->parameters(fileName);
+        d = mmffPlugin->parameters(QString::fromStdString(fileName));
 
         if(d){
             d->ref();
@@ -281,7 +281,7 @@ bool MmffParameters::read(const QString &fileName)
         d = new MmffParametersData;
     }
 
-    QFile file(fileName);
+    QFile file(QString::fromStdString(fileName));
     if(!file.open(QFile::ReadOnly)){
         setErrorString(file.errorString());
         return false;
@@ -450,7 +450,7 @@ bool MmffParameters::read(const QString &fileName)
 
     // store parameters in the cache
     if(mmffPlugin){
-        mmffPlugin->storeParameters(fileName, d);
+        mmffPlugin->storeParameters(QString::fromStdString(fileName), d);
     }
 
     return true;

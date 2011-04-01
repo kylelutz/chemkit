@@ -23,6 +23,7 @@
 #include "forcefield.h"
 
 #include "atom.h"
+#include "foreach.h"
 #include "molecule.h"
 #include "constants.h"
 #include "pluginmanager.h"
@@ -54,9 +55,9 @@ class ForceFieldPrivate
         QList<ForceFieldAtom *> atoms;
         QList<ForceFieldCalculation *> calculations;
         QList<const Molecule *> molecules;
-        QString parameterSet;
-        QString parameterFile;
-        QHash<QString, QString> parameterSets;
+        std::string parameterSet;
+        std::string parameterFile;
+        std::map<std::string, std::string> parameterSets;
         QString errorString;
 };
 
@@ -233,42 +234,50 @@ bool ForceField::isSetup() const
 }
 
 // --- Parameters ---------------------------------------------------------- //
-void ForceField::addParameterSet(const QString &name, const QString &fileName)
+void ForceField::addParameterSet(const std::string &name, const std::string &fileName)
 {
     d->parameterSets[name] = fileName;
 }
 
-void ForceField::removeParameterSet(const QString &name)
+void ForceField::removeParameterSet(const std::string &name)
 {
-    d->parameterSets.remove(name);
+    d->parameterSets.erase(name);
 }
 
-void ForceField::setParameterSet(const QString &name)
+void ForceField::setParameterSet(const std::string &name)
 {
-    if(!d->parameterSets.contains(name)){
+    std::map<std::string, std::string>::iterator element = d->parameterSets.find(name);
+    if(element == d->parameterSets.end()){
         return;
     }
 
     d->parameterSet = name;
-    d->parameterFile = d->parameterSets[name];
+    d->parameterFile = element->second;
 }
 
-QString ForceField::parameterSet() const
+std::string ForceField::parameterSet() const
 {
     return d->parameterSet;
 }
 
-QStringList ForceField::parameterSets() const
+std::vector<std::string> ForceField::parameterSets() const
 {
-    return d->parameterSets.keys();
+    std::vector<std::string> parameterSets;
+
+    std::pair<std::string, std::string> element;
+    foreach(element, d->parameterSets){
+        parameterSets.push_back(element.first);
+    }
+
+    return parameterSets;
 }
 
-void ForceField::setParameterFile(const QString &fileName)
+void ForceField::setParameterFile(const std::string &fileName)
 {
     d->parameterFile = fileName;
 }
 
-QString ForceField::parameterFile() const
+std::string ForceField::parameterFile() const
 {
     return d->parameterFile;
 }

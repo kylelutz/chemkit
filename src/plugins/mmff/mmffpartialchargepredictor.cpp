@@ -42,7 +42,7 @@ MmffPartialChargePredictor::MmffPartialChargePredictor()
     }
 
     m_parameters = new MmffParameters;
-    bool ok = m_parameters->read(QString::fromStdString(mmffPlugin->dataPath()) + "mmff94.prm");
+    bool ok = m_parameters->read(mmffPlugin->dataPath() + "mmff94.prm");
     if(!ok){
         delete m_parameters;
         m_parameters = 0;
