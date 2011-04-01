@@ -38,15 +38,15 @@ inline Float ForceFieldCalculation::distance(const ForceFieldAtom *a, const Forc
 }
 
 /// Returns the gradient of the distance between atoms \p a and \p b.
-inline QVector<Vector3> ForceFieldCalculation::distanceGradient(const ForceFieldAtom *a, const ForceFieldAtom *b) const
+inline std::vector<Vector3> ForceFieldCalculation::distanceGradient(const ForceFieldAtom *a, const ForceFieldAtom *b) const
 {
     return distanceGradient(a->position(), b->position());
 }
 
 /// Returns the gradient of the distance between points \p a and \p b.
-inline QVector<Vector3> ForceFieldCalculation::distanceGradient(const Point3 &a, const Point3 &b) const
+inline std::vector<Vector3> ForceFieldCalculation::distanceGradient(const Point3 &a, const Point3 &b) const
 {
-    QVector<Vector3> gradient(2);
+    std::vector<Vector3> gradient(2);
 
     gradient[0] = (a - b) / a.distance(b);
     gradient[1] = -gradient[0];
@@ -70,11 +70,11 @@ inline Float ForceFieldCalculation::bondAngleRadians(const ForceFieldAtom *a, co
 
 /// Returns the gradient of the bond angle between atoms \p a, \p b
 /// and \p c.
-inline QVector<Vector3> ForceFieldCalculation::bondAngleGradient(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c) const
+inline std::vector<Vector3> ForceFieldCalculation::bondAngleGradient(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c) const
 {
-    QVector<Vector3> gradient = bondAngleGradientRadians(a, b, c);
+    std::vector<Vector3> gradient = bondAngleGradientRadians(a, b, c);
 
-    for(int i = 0; i < gradient.size(); i++){
+    for(unsigned int i = 0; i < gradient.size(); i++){
         gradient[i].scale(chemkit::constants::RadiansToDegrees);
     }
 
@@ -83,16 +83,16 @@ inline QVector<Vector3> ForceFieldCalculation::bondAngleGradient(const ForceFiel
 
 /// Returns the gradient of the bond angle between atoms \p a, \p b
 /// and \p c.
-inline QVector<Vector3> ForceFieldCalculation::bondAngleGradientRadians(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c) const
+inline std::vector<Vector3> ForceFieldCalculation::bondAngleGradientRadians(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c) const
 {
     return bondAngleGradientRadians(a->position(), b->position(), c->position());
 }
 
 /// Returns the gradient of the bond angle between points \p a, \p b
 /// and \p c.
-inline QVector<Vector3> ForceFieldCalculation::bondAngleGradientRadians(const Point3 &a, const Point3 &b, const Point3 &c) const
+inline std::vector<Vector3> ForceFieldCalculation::bondAngleGradientRadians(const Point3 &a, const Point3 &b, const Point3 &c) const
 {
-    QVector<Vector3> gradient(3);
+    std::vector<Vector3> gradient(3);
 
     Float theta = Point3::angleRadians(a, b, c);
 
@@ -124,11 +124,11 @@ inline Float ForceFieldCalculation::torsionAngleRadians(const ForceFieldAtom *a,
 
 /// Returns the gradient of the torsion angle between the atoms \p a,
 /// \p b, \p c, and \p d.
-inline QVector<Vector3> ForceFieldCalculation::torsionAngleGradient(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c, const ForceFieldAtom *d) const
+inline std::vector<Vector3> ForceFieldCalculation::torsionAngleGradient(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c, const ForceFieldAtom *d) const
 {
-    QVector<Vector3> gradient = torsionAngleGradientRadians(a, b, c, d);
+    std::vector<Vector3> gradient = torsionAngleGradientRadians(a, b, c, d);
 
-    for(int i = 0; i < gradient.size(); i++){
+    for(unsigned int i = 0; i < gradient.size(); i++){
         gradient[i].scale(chemkit::constants::RadiansToDegrees);
     }
 
@@ -137,16 +137,16 @@ inline QVector<Vector3> ForceFieldCalculation::torsionAngleGradient(const ForceF
 
 /// Returns the gradient of the torsion angle between the atoms \p a,
 /// \p b, \p c, and \p d.
-inline QVector<Vector3> ForceFieldCalculation::torsionAngleGradientRadians(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c, const ForceFieldAtom *d) const
+inline std::vector<Vector3> ForceFieldCalculation::torsionAngleGradientRadians(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c, const ForceFieldAtom *d) const
 {
     return torsionAngleGradientRadians(a->position(), b->position(), c->position(), d->position());
 }
 
 /// Returns the gradient of the torsion angle between the points
 /// \p a, \p b, \p c, and \p d.
-inline QVector<Vector3> ForceFieldCalculation::torsionAngleGradientRadians(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d) const
+inline std::vector<Vector3> ForceFieldCalculation::torsionAngleGradientRadians(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d) const
 {
-    QVector<Vector3> gradient(4);
+    std::vector<Vector3> gradient(4);
 
     Float phi = Point3::torsionAngleRadians(a, b, c, d);
 
@@ -186,11 +186,11 @@ inline Float ForceFieldCalculation::wilsonAngleRadians(const ForceFieldAtom *a, 
 
 /// Returns the gradient of the wilson angle between the atoms
 /// \p a, \p b, \p c, and \p d.
-inline QVector<Vector3> ForceFieldCalculation::wilsonAngleGradient(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c, const ForceFieldAtom *d) const
+inline std::vector<Vector3> ForceFieldCalculation::wilsonAngleGradient(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c, const ForceFieldAtom *d) const
 {
-    QVector<Vector3> gradient = wilsonAngleGradientRadians(a, b, c, d);
+    std::vector<Vector3> gradient = wilsonAngleGradientRadians(a, b, c, d);
 
-    for(int i = 0; i < gradient.size(); i++){
+    for(unsigned int i = 0; i < gradient.size(); i++){
         gradient[i].scale(chemkit::constants::RadiansToDegrees);
     }
 
@@ -199,14 +199,14 @@ inline QVector<Vector3> ForceFieldCalculation::wilsonAngleGradient(const ForceFi
 
 /// Returns the gradient of the wilson angle between the atoms
 /// \p a, \p b, \p c, and \p d.
-inline QVector<Vector3> ForceFieldCalculation::wilsonAngleGradientRadians(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c, const ForceFieldAtom *d) const
+inline std::vector<Vector3> ForceFieldCalculation::wilsonAngleGradientRadians(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c, const ForceFieldAtom *d) const
 {
     return wilsonAngleGradientRadians(a->position(), b->position(), c->position(), d->position());
 }
 
 /// Returns the gradient of the wilson angle between the points
 /// \p a, \p b, \p c, and \p d.
-inline QVector<Vector3> ForceFieldCalculation::wilsonAngleGradientRadians(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d) const
+inline std::vector<Vector3> ForceFieldCalculation::wilsonAngleGradientRadians(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d) const
 {
     Vector3 ba = a - b;
     Vector3 bc = c - b;
@@ -224,7 +224,7 @@ inline QVector<Vector3> ForceFieldCalculation::wilsonAngleGradientRadians(const 
 
     Float w = Point3::wilsonAngleRadians(a, b, c, d);
 
-    QVector<Vector3> gradient(4);
+    std::vector<Vector3> gradient(4);
 
     gradient[0] = ((bd.cross(bc) / (cos(w) * sin(theta)) - (ba - bc * cos(theta)) * (tan(w) / pow(sin(theta), 2)))) / rba;
     gradient[2] = ((ba.cross(bd) / (cos(w) * sin(theta)) - (bc - ba * cos(theta)) * (tan(w) / pow(sin(theta), 2)))) / rbc;

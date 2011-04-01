@@ -70,7 +70,7 @@ chemkit::Float OplsBondStrechCalculation::energy() const
     return kb * pow(r - r0, 2);
 }
 
-QVector<chemkit::Vector3> OplsBondStrechCalculation::gradient() const
+std::vector<chemkit::Vector3> OplsBondStrechCalculation::gradient() const
 {
     const chemkit::ForceFieldAtom *a = atom(0);
     const chemkit::ForceFieldAtom *b = atom(1);
@@ -80,7 +80,7 @@ QVector<chemkit::Vector3> OplsBondStrechCalculation::gradient() const
 
     chemkit::Float r = distance(a, b);
 
-    QVector<chemkit::Vector3> gradient = distanceGradient(a, b);
+    std::vector<chemkit::Vector3> gradient = distanceGradient(a, b);
 
     // dE/dr
     chemkit::Float de_dr = 2.0 * kb * (r - r0);
@@ -135,7 +135,7 @@ chemkit::Float OplsAngleBendCalculation::energy() const
     return ka * pow(theta - theta0, 2);
 }
 
-QVector<chemkit::Vector3> OplsAngleBendCalculation::gradient() const
+std::vector<chemkit::Vector3> OplsAngleBendCalculation::gradient() const
 {
     const chemkit::ForceFieldAtom *a = atom(0);
     const chemkit::ForceFieldAtom *b = atom(1);
@@ -146,7 +146,7 @@ QVector<chemkit::Vector3> OplsAngleBendCalculation::gradient() const
 
     chemkit::Float theta = bondAngleRadians(a, b, c);
 
-    QVector<chemkit::Vector3> gradient = bondAngleGradientRadians(a, b, c);
+    std::vector<chemkit::Vector3> gradient = bondAngleGradientRadians(a, b, c);
 
     // dE/dtheta
     chemkit::Float de_dtheta = (2.0 * ka * (theta - theta0));
@@ -208,7 +208,7 @@ chemkit::Float OplsTorsionCalculation::energy() const
     return (1.0/2.0) * (v1 * (1.0 + cos(phi)) + v2 * (1.0 - cos(2.0 * phi)) + v3 * (1.0 + cos(3.0 * phi)));
 }
 
-QVector<chemkit::Vector3> OplsTorsionCalculation::gradient() const
+std::vector<chemkit::Vector3> OplsTorsionCalculation::gradient() const
 {
     const chemkit::ForceFieldAtom *a = atom(0);
     const chemkit::ForceFieldAtom *b = atom(1);
@@ -224,7 +224,7 @@ QVector<chemkit::Vector3> OplsTorsionCalculation::gradient() const
     // dE/dphi
     chemkit::Float de_dphi = (1.0/2.0) * (-v1 * sin(phi) + 2.0 * v2 * sin(2.0 * phi) - 3.0 * v3 * sin(3.0 * phi));
 
-    QVector<chemkit::Vector3> gradient = torsionAngleGradientRadians(a, b, c, d);
+    std::vector<chemkit::Vector3> gradient = torsionAngleGradientRadians(a, b, c, d);
 
     gradient[0] *= de_dphi;
     gradient[1] *= de_dphi;
@@ -294,9 +294,9 @@ chemkit::Float OplsNonbondedCalculation::energy() const
     return scale * ((qa * qb * e) / r + 4.0 * epsilon * (pow(sigma / r, 12) - pow(sigma / r, 6)));
 }
 
-QVector<chemkit::Vector3> OplsNonbondedCalculation::gradient() const
+std::vector<chemkit::Vector3> OplsNonbondedCalculation::gradient() const
 {
-    QVector<chemkit::Vector3> gradient(2);
+    std::vector<chemkit::Vector3> gradient(2);
 
     const chemkit::ForceFieldAtom *a = atom(0);
     const chemkit::ForceFieldAtom *b = atom(1);

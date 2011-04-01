@@ -359,9 +359,9 @@ QVector<Vector3> ForceField::gradient() const
         QVector<Vector3> gradient(atomCount());
 
         Q_FOREACH(const ForceFieldCalculation *calculation, d->calculations){
-            QVector<Vector3> atomGradients = calculation->gradient();
+            std::vector<Vector3> atomGradients = calculation->gradient();
 
-            for(int i = 0; i < atomGradients.size(); i++){
+            for(unsigned int i = 0; i < atomGradients.size(); i++){
                 const ForceFieldAtom *atom = calculation->atom(i);
 
                 gradient[atom->index()] += atomGradients[i];

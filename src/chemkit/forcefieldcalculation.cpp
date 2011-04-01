@@ -22,6 +22,8 @@
 
 #include "forcefieldcalculation.h"
 
+#include <algorithm>
+
 #include "forcefieldatom.h"
 
 namespace chemkit {
@@ -32,8 +34,8 @@ class ForceFieldCalculationPrivate
     public:
         int type;
         bool setup;
-        QVector<Float> parameters;
-        QVector<const ForceFieldAtom *> atoms;
+        std::vector<Float> parameters;
+        std::vector<const ForceFieldAtom *> atoms;
 };
 
 // === ForceFieldCalculation =============================================== //
@@ -88,15 +90,15 @@ void ForceFieldCalculation::setAtom(int index, const ForceFieldAtom *atom)
 /// Returns the atom at index in the calculation.
 const ForceFieldAtom* ForceFieldCalculation::atom(int index) const
 {
-    return d->atoms.value(index, 0);
+    return d->atoms[index];
 }
 
 /// Returns the atoms in the calculation.
-QVector<const ForceFieldAtom *> ForceFieldCalculation::atoms() const
+std::vector<const ForceFieldAtom *> ForceFieldCalculation::atoms() const
 {
-    QVector<const ForceFieldAtom *> atoms(d->atoms.size());
+    std::vector<const ForceFieldAtom *> atoms(d->atoms.size());
 
-    for(int i = 0; i < d->atoms.size(); i++){
+    for(unsigned int i = 0; i < d->atoms.size(); i++){
         atoms[i] = d->atoms[i];
     }
 
@@ -112,7 +114,7 @@ int ForceFieldCalculation::atomCount() const
 /// Returns \c true if the calculation contains the atom.
 bool ForceFieldCalculation::contains(const ForceFieldAtom *atom) const
 {
-    return d->atoms.contains(atom);
+    return std::find(d->atoms.begin(), d->atoms.end(), atom) != d->atoms.end();
 }
 
 // --- Parameters ---------------------------------------------------------- //
@@ -125,11 +127,11 @@ void ForceFieldCalculation::setParameter(int index, Float value)
 /// Returns the parameter at index.
 Float ForceFieldCalculation::parameter(int index) const
 {
-    return d->parameters.value(index, 0);
+    return d->parameters[index];
 }
 
 /// Returns all of the parameters in the calculation.
-QVector<Float> ForceFieldCalculation::parameters() const
+std::vector<Float> ForceFieldCalculation::parameters() const
 {
     return d->parameters;
 }
@@ -168,7 +170,7 @@ Float ForceFieldCalculation::energy() const
 ///                \right]
 /// \f]
 **/
-QVector<Vector3> ForceFieldCalculation::gradient() const
+std::vector<Vector3> ForceFieldCalculation::gradient() const
 {
     return numericalGradient();
 }
@@ -178,9 +180,9 @@ QVector<Vector3> ForceFieldCalculation::gradient() const
 /// is used when analytical gradients are not available.
 ///
 /// \see ForceFieldCalculation::gradient()
-QVector<Vector3> ForceFieldCalculation::numericalGradient() const
+std::vector<Vector3> ForceFieldCalculation::numericalGradient() const
 {
-    QVector<Vector3> gradient(atomCount());
+    std::vector<Vector3> gradient(atomCount());
 
     for(int i = 0; i < atomCount(); i++){
         ForceFieldAtom *atom = const_cast<ForceFieldAtom *>(d->atoms[i]);
