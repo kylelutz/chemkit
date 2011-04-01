@@ -26,6 +26,7 @@
 #include "chemkit.h"
 
 #include <string>
+#include <vector>
 
 #include <QtCore>
 
@@ -44,7 +45,7 @@ class CHEMKIT_EXPORT PluginManager : public QObject
 
         // properties
         Plugin* plugin(const std::string &name) const;
-        QList<Plugin *> plugins() const;
+        const std::vector<Plugin *>& plugins() const;
         int pluginCount() const;
 
         // plugin loading

@@ -26,6 +26,7 @@
 #include <boost/algorithm/string/case_conv.hpp>
 
 #include "plugin.h"
+#include "foreach.h"
 
 namespace chemkit {
 
@@ -33,7 +34,7 @@ namespace chemkit {
 class PluginManagerPrivate
 {
     public:
-        QList<Plugin *> plugins;
+        std::vector<Plugin *> plugins;
         std::string errorString;
         bool defaultPluginsLoaded;
         std::map<std::string, std::map<std::string, PluginManager::Function> > pluginClasses;
@@ -69,7 +70,7 @@ PluginManager::~PluginManager()
 // \p name is loaded.
 Plugin* PluginManager::plugin(const std::string &name) const
 {
-    Q_FOREACH(Plugin *plugin, d->plugins){
+    foreach(Plugin *plugin, d->plugins){
         if(plugin->name() == name){
             return plugin;
         }
@@ -79,7 +80,7 @@ Plugin* PluginManager::plugin(const std::string &name) const
 }
 
 /// Returns a list of all the loaded plugins.
-QList<Plugin *> PluginManager::plugins() const
+const std::vector<Plugin *>& PluginManager::plugins() const
 {
     return d->plugins;
 }
@@ -105,7 +106,7 @@ bool PluginManager::loadPlugin(const std::string &fileName)
 
     instance->setFileName(fileName);
 
-    d->plugins.append(instance);
+    d->plugins.push_back(instance);
 
     Q_EMIT pluginLoaded(instance);
 
