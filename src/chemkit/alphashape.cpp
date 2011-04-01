@@ -22,6 +22,7 @@
 
 #include "alphashape.h"
 
+#include "foreach.h"
 #include "vector3.h"
 #include "geometry.h"
 #include "staticmatrix.h"
@@ -100,9 +101,9 @@ Float AlphaShape::alphaValue() const
 
 // --- Simplicies ---------------------------------------------------------- //
 /// Returns a list of verticies in the alpha shape.
-QList<int> AlphaShape::verticies() const
+std::vector<int> AlphaShape::verticies() const
 {
-    QList<int> verticies;
+    std::vector<int> verticies;
 
     return verticies;
 }
@@ -114,7 +115,7 @@ int AlphaShape::vertexCount() const
 }
 
 /// Returns a list of edges in the alpha shape.
-QList<std::vector<int> > AlphaShape::edges() const
+const std::vector<std::vector<int> >& AlphaShape::edges() const
 {
     return d->triangulation->alphaShapeEdges(this);
 }
@@ -126,7 +127,7 @@ int AlphaShape::edgeCount() const
 }
 
 /// Returns a list of the triangles in the alpha shape.
-QList<std::vector<int> > AlphaShape::triangles() const
+const std::vector<std::vector<int> >& AlphaShape::triangles() const
 {
     return d->triangulation->alphaShapeTriangles(this);
 }
@@ -138,7 +139,7 @@ int AlphaShape::triangleCount() const
 }
 
 /// Returns a list of the tetrahedra in the alpha shape.
-QList<std::vector<int> > AlphaShape::tetrahedra() const
+const std::vector<std::vector<int> >& AlphaShape::tetrahedra() const
 {
     return d->triangulation->alphaShapeTetrahedra(this);
 }
@@ -155,7 +156,7 @@ Float AlphaShape::volume() const
 {
     Float volume = 0;
 
-    Q_FOREACH(const std::vector<int> &tetrahedron, tetrahedra()){
+    foreach(const std::vector<int> &tetrahedron, tetrahedra()){
         const Point3 &a = position(tetrahedron[0]);
         const Point3 &b = position(tetrahedron[1]);
         const Point3 &c = position(tetrahedron[2]);
@@ -172,7 +173,7 @@ Float AlphaShape::surfaceArea() const
 {
     Float surfaceArea = 0;
 
-//    Q_FOREACH(const std::vector<int> triangle, triangles(Regular | Singular)){
+//    foreach(const std::vector<int> triangle, triangles(Regular | Singular)){
 //        const Point &a = position(triangle[0]);
 //        const Point &b = position(triangle[1]);
 //        const Point &c = position(triangle[2]);

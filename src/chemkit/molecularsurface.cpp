@@ -26,6 +26,7 @@
 
 #include "molecularsurface.h"
 
+#include "foreach.h"
 #include "vector3.h"
 #include "geometry.h"
 #include "molecule.h"
@@ -231,17 +232,17 @@ Float MolecularSurface::volume() const
         }
 
         // subtract volume from each edge
-        Q_FOREACH(std::vector<int> edge, alphaShape->edges()){
+        foreach(const std::vector<int> &edge, alphaShape->edges()){
             d->volume -= intersectionVolume(edge[0], edge[1]);
         }
 
         // add volume from each triangle
-        Q_FOREACH(const std::vector<int> &triangle, alphaShape->triangles()){
+        foreach(const std::vector<int> &triangle, alphaShape->triangles()){
             d->volume += intersectionVolume(triangle[0], triangle[1], triangle[2]);
         }
 
         // subtract volume from each tetrahedron
-        Q_FOREACH(std::vector<int> tetrahedron, alphaShape->tetrahedra()){
+        foreach(const std::vector<int> &tetrahedron, alphaShape->tetrahedra()){
             d->volume -= intersectionVolume(tetrahedron[0], tetrahedron[1], tetrahedron[2], tetrahedron[3]);
         }
 
@@ -275,17 +276,17 @@ Float MolecularSurface::surfaceArea() const
         }
 
         // subtract volume and area from each edge
-        Q_FOREACH(std::vector<int> edge, alphaShape->edges()){
+        foreach(const std::vector<int> &edge, alphaShape->edges()){
             d->surfaceArea -= intersectionArea(edge[0], edge[1]);
         }
 
         // add volume and area from each triangle
-        Q_FOREACH(const std::vector<int> &triangle, alphaShape->triangles()){
+        foreach(const std::vector<int> &triangle, alphaShape->triangles()){
             d->surfaceArea += intersectionArea(triangle[0], triangle[1], triangle[2]);
         }
 
         // subtract volume and area from each tetrahedron
-        Q_FOREACH(std::vector<int> tetrahedron, alphaShape->tetrahedra()){
+        foreach(const std::vector<int> &tetrahedron, alphaShape->tetrahedra()){
             d->surfaceArea -= intersectionArea(tetrahedron[0], tetrahedron[1], tetrahedron[2], tetrahedron[3]);
         }
 

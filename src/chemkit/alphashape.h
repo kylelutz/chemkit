@@ -25,8 +25,6 @@
 
 #include <vector>
 
-#include <QtCore>
-
 #include "point3.h"
 
 namespace chemkit {
@@ -56,13 +54,13 @@ class CHEMKIT_EXPORT AlphaShape
         Float alphaValue() const;
 
         // simplicies
-        QList<int> verticies() const;
+        std::vector<int> verticies() const;
         int vertexCount() const;
-        QList<std::vector<int> > edges() const;
+        const std::vector<std::vector<int> >& edges() const;
         int edgeCount() const;
-        QList<std::vector<int> > triangles() const;
+        const std::vector<std::vector<int> >& triangles() const;
         int triangleCount() const;
-        QList<std::vector<int> > tetrahedra() const;
+        const std::vector<std::vector<int> >& tetrahedra() const;
         int tetrahedronCount() const;
 
         // geometry

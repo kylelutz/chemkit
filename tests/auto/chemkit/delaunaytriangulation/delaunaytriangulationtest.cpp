@@ -69,10 +69,10 @@ void DelaunayTriangulationTest::joe89()
     expectedTetrahedra.append(QVector<int>() << 2 << 5 << 6 << 7);
     expectedTetrahedra.append(QVector<int>() << 4 << 5 << 6 << 7);
 
-    QList<std::vector<int> > tetrahedra = triangulation.tetrahedra();
-    QCOMPARE(tetrahedra.size(), expectedTetrahedra.size());
+    std::vector<std::vector<int> > tetrahedra = triangulation.tetrahedra();
+    QCOMPARE(tetrahedra.size(), static_cast<unsigned long>(expectedTetrahedra.size()));
 
-    for(int i = 0; i < tetrahedra.size(); i++){
+    for(unsigned int i = 0; i < tetrahedra.size(); i++){
         std::vector<int> tetrahedron = tetrahedra[i];
         std::sort(tetrahedron.begin(), tetrahedron.end());
 
