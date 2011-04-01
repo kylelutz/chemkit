@@ -35,8 +35,8 @@ class ChemicalFilePrivate
         std::string errorString;
         ChemicalFileFormat *format;
         QList<Molecule *> molecules;
-        QHash<QString, QVariant> fileData;
-        QHash<const Molecule *, QHash<QString, QVariant> > moleculeData;
+        std::map<std::string, QVariant> fileData;
+        std::map<const Molecule *, std::map<std::string, QVariant> > moleculeData;
 };
 
 // === ChemicalFile ======================================================== //
@@ -179,7 +179,7 @@ void ChemicalFile::addMolecule(Molecule *molecule)
 /// The ownership of \p molecule is passed to the caller.
 bool ChemicalFile::removeMolecule(Molecule *molecule)
 {
-    d->moleculeData.remove(molecule);
+    d->moleculeData.erase(molecule);
     return d->molecules.removeOne(molecule);
 }
 
@@ -232,39 +232,38 @@ void ChemicalFile::clear()
 
 // --- File Data ----------------------------------------------------------- //
 /// Sets data with \p name to \p value for the file.
-void ChemicalFile::setFileData(const QString &name, const QVariant &value)
+void ChemicalFile::setFileData(const std::string &name, const QVariant &value)
 {
     d->fileData[name] = value;
 }
 
 /// Returns the data for \p name.
-QVariant ChemicalFile::fileData(const QString &name) const
+QVariant ChemicalFile::fileData(const std::string &name) const
 {
-    return d->fileData.value(name);
-}
+    std::map<std::string, QVariant>::iterator element = d->fileData.find(name);
+    if(element != d->fileData.end()){
+        return element->second;
+    }
 
-/// Returns all the data for the file.
-QHash<QString, QVariant> ChemicalFile::fileData() const
-{
-    return d->fileData;
+    return QVariant();
 }
 
 /// Sets data for \p molecule with \p name to \p value in the file.
-void ChemicalFile::setMoleculeData(const Molecule *molecule, const QString &name, const QVariant &value)
+void ChemicalFile::setMoleculeData(const Molecule *molecule, const std::string &name, const QVariant &value)
 {
     d->moleculeData[molecule][name] = value;
 }
 
 /// Returns data for \p molecule with \p name in the file.
-QVariant ChemicalFile::moleculeData(const Molecule *molecule, const QString &name) const
+QVariant ChemicalFile::moleculeData(const Molecule *molecule, const std::string &name) const
 {
-    return d->moleculeData[molecule].value(name);
-}
+    const std::map<std::string, QVariant> &moleculeDataMap = d->moleculeData[molecule];
+    std::map<std::string, QVariant>::const_iterator element = moleculeDataMap.find(name);
+    if(element != moleculeDataMap.end()){
+        return element->second;
+    }
 
-/// Returns all of the data for the molecule in the file.
-QHash<QString, QVariant> ChemicalFile::moleculeData(const Molecule *molecule) const
-{
-    return d->moleculeData.value(molecule);
+    return QVariant();
 }
 
 // --- Input and Output ---------------------------------------------------- //

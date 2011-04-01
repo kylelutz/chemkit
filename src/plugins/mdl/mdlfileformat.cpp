@@ -237,7 +237,7 @@ bool MdlFileFormat::readDataBlock(QIODevice *iodev, const chemkit::Molecule *mol
             readingValue = true;
         }
         else if(readingValue && line.isEmpty()){
-            file->setMoleculeData(molecule, dataName, dataValue);
+            file->setMoleculeData(molecule, dataName.toStdString(), dataValue);
             dataValue.clear();
         }
         else if(readingValue){

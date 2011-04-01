@@ -85,15 +85,12 @@ void ChemicalFileTest::contains()
 void ChemicalFileTest::fileData()
 {
     chemkit::ChemicalFile file;
-    QCOMPARE(file.fileData().isEmpty(), true);
 
     file.setFileData("foo", "bar");
     QCOMPARE(file.fileData("foo").toString(), QString("bar"));
 
     file.setFileData("number", 4);
     QCOMPARE(file.fileData("number").toInt(), 4);
-
-    QCOMPARE(file.fileData().size(), 2);
 }
 
 void ChemicalFileTest::moleculeData()
@@ -101,7 +98,6 @@ void ChemicalFileTest::moleculeData()
     chemkit::ChemicalFile file;
     chemkit::Molecule *molecule = new chemkit::Molecule;
     file.addMolecule(molecule);
-    QCOMPARE(file.moleculeData(molecule).isEmpty(), true);
 
     file.setMoleculeData(molecule, "boilingPoint", 38);
     QCOMPARE(file.moleculeData(molecule, "boilingPoint").toInt(), 38);
