@@ -25,6 +25,8 @@
 
 #include "chemkit.h"
 
+#include <vector>
+
 #include <QtCore>
 
 namespace chemkit {
@@ -48,8 +50,8 @@ class CHEMKIT_EXPORT ForceFieldInteractions
 
         // interactions
         QList<QPair<const ForceFieldAtom *, const ForceFieldAtom *> > bondedPairs();
-        QList<QVector<const ForceFieldAtom *> > angleGroups();
-        QList<QVector<const ForceFieldAtom *> > torsionGroups();
+        QList<std::vector<const ForceFieldAtom *> > angleGroups();
+        QList<std::vector<const ForceFieldAtom *> > torsionGroups();
         QList<QPair<const ForceFieldAtom *, const ForceFieldAtom *> > nonbondedPairs();
 
     private:

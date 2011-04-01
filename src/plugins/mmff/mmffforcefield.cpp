@@ -131,7 +131,7 @@ bool MmffForceField::setup()
         }
 
         // angle bend and strech bend calculations
-        QVector<const chemkit::ForceFieldAtom *> angleGroup;
+        std::vector<const chemkit::ForceFieldAtom *> angleGroup;
         foreach(angleGroup, interactions.angleGroups()){
             const MmffAtom *a = static_cast<const MmffAtom *>(angleGroup[0]);
             const MmffAtom *b = static_cast<const MmffAtom *>(angleGroup[1]);
@@ -157,7 +157,7 @@ bool MmffForceField::setup()
         }
 
         // torsion calculations (for each dihedral)
-        QVector<const chemkit::ForceFieldAtom *> torsionGroup;
+        std::vector<const chemkit::ForceFieldAtom *> torsionGroup;
         foreach(torsionGroup, interactions.torsionGroups()){
             const MmffAtom *a = static_cast<const MmffAtom *>(torsionGroup[0]);
             const MmffAtom *b = static_cast<const MmffAtom *>(torsionGroup[1]);

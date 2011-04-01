@@ -67,7 +67,7 @@ bool AmberForceField::setup()
         }
 
         // add angle calculations
-        QVector<const chemkit::ForceFieldAtom *> angleGroup;
+        std::vector<const chemkit::ForceFieldAtom *> angleGroup;
         foreach(angleGroup, interactions.angleGroups()){
             addCalculation(new AmberAngleCalculation(angleGroup[0],
                                                      angleGroup[1],
@@ -75,7 +75,7 @@ bool AmberForceField::setup()
         }
 
         // add torsion calculations
-        QVector<const chemkit::ForceFieldAtom *> torsionGroup;
+        std::vector<const chemkit::ForceFieldAtom *> torsionGroup;
         foreach(torsionGroup, interactions.torsionGroups()){
             addCalculation(new AmberTorsionCalculation(torsionGroup[0],
                                                        torsionGroup[1],

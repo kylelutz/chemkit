@@ -81,7 +81,7 @@ bool UffForceField::setup()
         }
 
         // angle bend
-        QVector<const chemkit::ForceFieldAtom *> angleGroup;
+        std::vector<const chemkit::ForceFieldAtom *> angleGroup;
         foreach(angleGroup, interactions.angleGroups()){
             addCalculation(new UffAngleBendCalculation(angleGroup[0],
                                                        angleGroup[1],
@@ -89,7 +89,7 @@ bool UffForceField::setup()
         }
 
         // torsion
-        QVector<const chemkit::ForceFieldAtom *> torsionGroup;
+        std::vector<const chemkit::ForceFieldAtom *> torsionGroup;
         foreach(torsionGroup, interactions.torsionGroups()){
             addCalculation(new UffTorsionCalculation(torsionGroup[0],
                                                      torsionGroup[1],

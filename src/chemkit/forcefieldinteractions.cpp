@@ -86,16 +86,16 @@ QList<QPair<const ForceFieldAtom *, const ForceFieldAtom *> > ForceFieldInteract
 }
 
 /// Returns a list of angle groups.
-QList<QVector<const ForceFieldAtom *> > ForceFieldInteractions::angleGroups()
+QList<std::vector<const ForceFieldAtom *> > ForceFieldInteractions::angleGroups()
 {
-    QList<QVector<const ForceFieldAtom *> > angleGroups;
+    QList<std::vector<const ForceFieldAtom *> > angleGroups;
 
     Q_FOREACH(const Atom *atom, d->molecule->atoms()){
         if(!atom->isTerminal()){
             QList<Atom *> neighbors = atom->neighbors();
             for(int i = 0; i < neighbors.size(); i++){
                 for(int j = i + 1; j < neighbors.size(); j++){
-                    QVector<const ForceFieldAtom *> angleGroup(3);
+                    std::vector<const ForceFieldAtom *> angleGroup(3);
                     angleGroup[0] = forceField()->atom(neighbors[i]);
                     angleGroup[1] = forceField()->atom(atom);
                     angleGroup[2] = forceField()->atom(neighbors[j]);
@@ -110,9 +110,9 @@ QList<QVector<const ForceFieldAtom *> > ForceFieldInteractions::angleGroups()
 }
 
 /// Returns a list of torsion groups.
-QList<QVector<const ForceFieldAtom *> > ForceFieldInteractions::torsionGroups()
+QList<std::vector<const ForceFieldAtom *> > ForceFieldInteractions::torsionGroups()
 {
-    QList<QVector<const ForceFieldAtom *> > torsionGroups;
+    QList<std::vector<const ForceFieldAtom *> > torsionGroups;
 
     QList<QPair<Atom *, Atom *> > pairs;
     Q_FOREACH(const Bond *bond, d->molecule->bonds()){
@@ -137,7 +137,7 @@ QList<QVector<const ForceFieldAtom *> > ForceFieldInteractions::torsionGroups()
                 if(d == b || d == a)
                     continue;
 
-                QVector<const ForceFieldAtom *> torsionGroup(4);
+                std::vector<const ForceFieldAtom *> torsionGroup(4);
                 torsionGroup[0] = forceField()->atom(a);
                 torsionGroup[1] = forceField()->atom(b);
                 torsionGroup[2] = forceField()->atom(c);

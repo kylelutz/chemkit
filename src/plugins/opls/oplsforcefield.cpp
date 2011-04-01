@@ -98,13 +98,13 @@ bool OplsForceField::setupMolecule(const chemkit::Molecule *molecule)
     }
 
     // angle bend groups
-    QVector<const chemkit::ForceFieldAtom *> angleGroup;
+    std::vector<const chemkit::ForceFieldAtom *> angleGroup;
     foreach(angleGroup, interactions.angleGroups()){
         addCalculation(new OplsAngleBendCalculation(angleGroup[0], angleGroup[1], angleGroup[2]));
     }
 
     // torsion groups
-    QVector<const chemkit::ForceFieldAtom *> torsionGroup;
+    std::vector<const chemkit::ForceFieldAtom *> torsionGroup;
     foreach(torsionGroup, interactions.torsionGroups()){
         addCalculation(new OplsTorsionCalculation(torsionGroup[0], torsionGroup[1], torsionGroup[2], torsionGroup[3]));
     }
