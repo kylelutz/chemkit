@@ -119,8 +119,8 @@ void CubeViewerExample::openFile(const QString &fileName)
         m_positiveSurfaceItem->setScalarField(m_positiveScalarField);
         m_positiveSurfaceItem->setPosition(m_positiveScalarField->origin());
 
-        QVector<chemkit::Float> values = m_positiveScalarField->data();
-        for(int i = 0; i < values.size(); i++){
+        std::vector<chemkit::Float> values = m_positiveScalarField->data();
+        for(unsigned int i = 0; i < values.size(); i++){
             values[i] = -values[i];
         }
         m_negativeScalarField = new chemkit::ScalarField(m_positiveScalarField->dimensions(),
@@ -183,86 +183,86 @@ chemkit::ScalarField* CubeViewerExample::readVolumeData(const QString &fileName)
         return 0;
     }
 
-	// title line
-	QString line = file.readLine();
+    // title line
+    QString line = file.readLine();
 
-	// comment line
-	line = file.readLine();
+    // comment line
+    line = file.readLine();
 
-	// atom count and origin coordinates line
-	line = file.readLine();
-	QStringList lineItems = line.split(" ", QString::SkipEmptyParts);
-	if(lineItems.size() < 4){
-		qDebug() << "Error: Cube file counts line too short.";
-		return 0;
-	}
+    // atom count and origin coordinates line
+    line = file.readLine();
+    QStringList lineItems = line.split(" ", QString::SkipEmptyParts);
+    if(lineItems.size() < 4){
+        qDebug() << "Error: Cube file counts line too short.";
+        return 0;
+    }
 
-	bool negativeAtomCount = false;
-	int atomCount = lineItems[0].toInt();
-	if(atomCount < 0){
-		negativeAtomCount = true;
-		atomCount = qAbs(atomCount);
-	}
+    bool negativeAtomCount = false;
+    int atomCount = lineItems[0].toInt();
+    if(atomCount < 0){
+        negativeAtomCount = true;
+        atomCount = qAbs(atomCount);
+    }
 
-	chemkit::Point3 origin(lineItems[1].toDouble(),
-			       lineItems[2].toDouble(),
-			       lineItems[3].toDouble());
+    chemkit::Point3 origin(lineItems[1].toDouble(),
+                           lineItems[2].toDouble(),
+                           lineItems[3].toDouble());
 
-	// voxel count and axes
-	QVector<int> dimensions(3);
-	QVector<chemkit::Vector3f> axes(3);
-	for(int i = 0; i < 3; i++){
-		line = file.readLine();
-		lineItems = line.split(" ", QString::SkipEmptyParts);
+    // voxel count and axes
+    std::vector<int> dimensions(3);
+    std::vector<chemkit::Vector3f> axes(3);
+    for(int i = 0; i < 3; i++){
+        line = file.readLine();
+        lineItems = line.split(" ", QString::SkipEmptyParts);
 
-		if(lineItems.size() < 4){
-			continue;
-		}
+        if(lineItems.size() < 4){
+            continue;
+        }
 
-		dimensions[i] = lineItems[0].toInt();
-		axes[i] = chemkit::Vector3(lineItems[1].toDouble(),
-								  lineItems[2].toDouble(),
-								  lineItems[3].toDouble());
-	}
+        dimensions[i] = lineItems[0].toInt();
+        axes[i] = chemkit::Vector3(lineItems[1].toDouble(),
+                                   lineItems[2].toDouble(),
+                                   lineItems[3].toDouble());
+    }
 
-	// read past atoms
-	for(int i = 0; i < atomCount; i++){
-		line = file.readLine();
-	}
+    // read past atoms
+    for(int i = 0; i < atomCount; i++){
+        line = file.readLine();
+    }
 
-	// a negative atom count indicates that the next line will
-	// contain the orbital count and orbital number
-	int orbitalCount = 0;
-	int orbitalNumber = 0;
-	if(negativeAtomCount){
-		line = file.readLine();
-		lineItems = line.split(" ", QString::SkipEmptyParts);
-		if(lineItems.size() >= 2){
-			orbitalCount = lineItems[0].toInt();
-			orbitalNumber = lineItems[1].toInt();
-		}
-	}
+    // a negative atom count indicates that the next line will
+    // contain the orbital count and orbital number
+    int orbitalCount = 0;
+    int orbitalNumber = 0;
+    if(negativeAtomCount){
+        line = file.readLine();
+        lineItems = line.split(" ", QString::SkipEmptyParts);
+        if(lineItems.size() >= 2){
+            orbitalCount = lineItems[0].toInt();
+            orbitalNumber = lineItems[1].toInt();
+        }
+    }
 
-	// read volume data
-	QVector<chemkit::Float> volumeData;
-	while(!file.atEnd()){
-		line = file.readLine();
-		lineItems = line.split(" ", QString::SkipEmptyParts);
+    // read volume data
+    std::vector<chemkit::Float> volumeData;
+    while(!file.atEnd()){
+        line = file.readLine();
+        lineItems = line.split(" ", QString::SkipEmptyParts);
 
-		for(int i = 0; i < lineItems.size(); i++){
-			volumeData.append(lineItems[i].toFloat());
-		}
-	}
+        for(int i = 0; i < lineItems.size(); i++){
+            volumeData.push_back(lineItems[i].toFloat());
+        }
+    }
 
-	QVector<chemkit::Float> cellLengths(3);
-	for(int i = 0; i < 3; i++){
-		cellLengths[i] = axes[i].length();
-	}
+    std::vector<chemkit::Float> cellLengths(3);
+    for(int i = 0; i < 3; i++){
+        cellLengths[i] = axes[i].length();
+    }
 
-	chemkit::ScalarField *scalarField = new chemkit::ScalarField(dimensions, cellLengths, volumeData);
-	scalarField->setOrigin(origin);
+    chemkit::ScalarField *scalarField = new chemkit::ScalarField(dimensions, cellLengths, volumeData);
+    scalarField->setOrigin(origin);
 
-	return scalarField;
+    return scalarField;
 }
 
 // === Main ================================================================ //

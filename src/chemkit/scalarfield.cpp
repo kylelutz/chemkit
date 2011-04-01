@@ -29,9 +29,9 @@ class ScalarFieldPrivate
 {
     public:
         Point3 origin;
-        QVector<int> dimensions;
-        QVector<Float> lengths;
-        QVector<Float> data;
+        std::vector<int> dimensions;
+        std::vector<Float> lengths;
+        std::vector<Float> data;
 };
 
 // === ScalarField ========================================================= //
@@ -45,12 +45,12 @@ class ScalarFieldPrivate
 ScalarField::ScalarField()
     : d(new ScalarFieldPrivate)
 {
-    d->dimensions = QVector<int>() << 0 << 0 << 0;
-    d->lengths = QVector<Float>() << 0 << 0 << 0;
+    d->dimensions = std::vector<int>(3, 0);
+    d->lengths = std::vector<Float>(3, 0);
 }
 
 /// Creates a new scalar field.
-ScalarField::ScalarField(const QVector<int> &dimensions, const QVector<Float> &cellLengths, const QVector<Float> &data)
+ScalarField::ScalarField(const std::vector<int> &dimensions, const std::vector<Float> &cellLengths, const std::vector<Float> &data)
     : d(new ScalarFieldPrivate)
 {
     d->dimensions = dimensions;
@@ -90,7 +90,7 @@ int ScalarField::size() const
 }
 
 /// Returns the dimensions of the scalar field.
-QVector<int> ScalarField::dimensions() const
+std::vector<int> ScalarField::dimensions() const
 {
     return d->dimensions;
 }
@@ -114,7 +114,7 @@ Float ScalarField::cellDepth() const
 }
 
 /// Returns the dimensions of a single cell in the grid.
-QVector<Float> ScalarField::cellDimensions() const
+std::vector<Float> ScalarField::cellDimensions() const
 {
     return d->lengths;
 }
@@ -132,7 +132,7 @@ Point3 ScalarField::origin() const
 }
 
 /// Returns the data values for the scalar field.
-QVector<Float> ScalarField::data() const
+std::vector<Float> ScalarField::data() const
 {
     return d->data;
 }
@@ -141,17 +141,23 @@ QVector<Float> ScalarField::data() const
 /// Sets the value at (\p i, \p j, \p k) to \p value.
 void ScalarField::setValue(int i, int j, int k, Float value)
 {
-    int index = i * d->dimensions[1] * d->dimensions[2] + j * d->dimensions[2] + k;
+    unsigned int index = i * d->dimensions[1] * d->dimensions[2] + j * d->dimensions[2] + k;
 
-    d->data[index] = value;
+    if(index < d->data.size()){
+        d->data[index] = value;
+    }
 }
 
 /// Returns the the value at (\p i, \p j, \p k).
 Float ScalarField::value(int i, int j, int k) const
 {
-    int index = i * d->dimensions[1] * d->dimensions[2] + j * d->dimensions[2] + k;
+    unsigned int index = i * d->dimensions[1] * d->dimensions[2] + j * d->dimensions[2] + k;
 
-    return d->data.value(index);
+    if(index >= d->data.size()){
+        return 0;
+    }
+
+    return d->data[index];
 }
 
 /// Returns the value at the position relative to the origin.
@@ -183,8 +189,8 @@ Float ScalarField::value(const Point3 &position) const
 Point3 ScalarField::position(int i, int j, int k) const
 {
     return Point3(i * d->lengths[0],
-                 j * d->lengths[1],
-                 k * d->lengths[2]);
+                  j * d->lengths[1],
+                  k * d->lengths[2]);
 }
 
 /// Returns the gradient at (\p i, \p j, \p k).
@@ -199,8 +205,8 @@ Vector3 ScalarField::gradient(const Point3 &position) const
     Float h = 1.0e-4;
 
     return Vector3((value(position.movedBy(-h, 0, 0)) - value(position.movedBy(h, 0, 0))) / (2.0 * h),
-                  (value(position.movedBy(0, -h, 0)) - value(position.movedBy(0, h, 0))) / (2.0 * h),
-                  (value(position.movedBy(0, 0, -h)) - value(position.movedBy(0, 0, h))) / (2.0 * h));
+                   (value(position.movedBy(0, -h, 0)) - value(position.movedBy(0, h, 0))) / (2.0 * h),
+                   (value(position.movedBy(0, 0, -h)) - value(position.movedBy(0, 0, h))) / (2.0 * h));
 }
 
 } // end chemkit namespace

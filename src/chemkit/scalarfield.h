@@ -25,7 +25,7 @@
 
 #include "chemkit.h"
 
-#include <QtCore>
+#include <vector>
 
 #include "point3.h"
 #include "vector3.h"
@@ -39,7 +39,7 @@ class CHEMKIT_EXPORT ScalarField
     public:
         // construction and destruction
         ScalarField();
-        ScalarField(const QVector<int> &dimensions, const QVector<Float> &cellLengths, const QVector<Float> &data);
+        ScalarField(const std::vector<int> &dimensions, const std::vector<Float> &cellLengths, const std::vector<Float> &data);
         ~ScalarField();
 
         // properties
@@ -47,14 +47,14 @@ class CHEMKIT_EXPORT ScalarField
         int height() const;
         int depth() const;
         int size() const;
-        QVector<int> dimensions() const;
+        std::vector<int> dimensions() const;
         Float cellWidth() const;
         Float cellHeight() const;
         Float cellDepth() const;
-        QVector<Float> cellDimensions() const;
+        std::vector<Float> cellDimensions() const;
         void setOrigin(const Point3 &origin);
         Point3 origin() const;
-        QVector<Float> data() const;
+        std::vector<Float> data() const;
 
         // values
         void setValue(int i, int j, int k, Float value);
