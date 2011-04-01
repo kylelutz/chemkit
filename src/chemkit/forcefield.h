@@ -85,8 +85,8 @@ class CHEMKIT_EXPORT ForceField
         QList<ForceFieldCalculation *> calculations() const;
         int calculationCount() const;
         virtual Float energy() const;
-        QVector<Vector3> gradient() const;
-        QVector<Vector3> numericalGradient() const;
+        std::vector<Vector3> gradient() const;
+        std::vector<Vector3> numericalGradient() const;
         Float largestGradient() const;
         Float rootMeanSquareGradient() const;
 

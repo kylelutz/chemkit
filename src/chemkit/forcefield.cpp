@@ -353,10 +353,10 @@ Float ForceField::energy() const
 ///                \right]
 /// \f]
 **/
-QVector<Vector3> ForceField::gradient() const
+std::vector<Vector3> ForceField::gradient() const
 {
     if(d->flags.testFlag(AnalyticalGradient)){
-        QVector<Vector3> gradient(atomCount());
+        std::vector<Vector3> gradient(atomCount());
 
         Q_FOREACH(const ForceFieldCalculation *calculation, d->calculations){
             std::vector<Vector3> atomGradients = calculation->gradient();
@@ -380,9 +380,9 @@ QVector<Vector3> ForceField::gradient() const
 /// calculated numerically.
 ///
 /// \see ForceField::gradient()
-QVector<Vector3> ForceField::numericalGradient() const
+std::vector<Vector3> ForceField::numericalGradient() const
 {
-    QVector<Vector3> gradient(atomCount());
+    std::vector<Vector3> gradient(atomCount());
 
     for(int i = 0; i < atomCount(); i++){
         ForceFieldAtom *atom = d->atoms[i];
@@ -422,9 +422,9 @@ Float ForceField::largestGradient() const
 
     Float largest = 0;
 
-    QVector<Vector3> gradient = this->gradient();
+    std::vector<Vector3> gradient = this->gradient();
 
-    for(int i = 0; i < gradient.size(); i++){
+    for(unsigned int i = 0; i < gradient.size(); i++){
         Float length = gradient[i].length();
 
         if(length > largest)
@@ -443,9 +443,9 @@ Float ForceField::rootMeanSquareGradient() const
 
     Float sum = 0;
 
-    QVector<Vector3> gradient = this->gradient();
+    std::vector<Vector3> gradient = this->gradient();
 
-    for(int i = 0; i < gradient.size(); i++){
+    for(unsigned int i = 0; i < gradient.size(); i++){
         sum += gradient[i].lengthSquared();
     }
 
@@ -496,10 +496,10 @@ void ForceField::writeCoordinates(Atom *atom) const
 bool ForceField::minimizationStep(Float converganceValue)
 {
     // calculate gradient
-    QVector<Vector3> gradient = this->gradient();
+    std::vector<Vector3> gradient = this->gradient();
 
     // perform line search
-    QVector<Point3> initialPositions(atomCount());
+    std::vector<Point3> initialPositions(atomCount());
 
     Float step = 0.05;
     Float stepConv = 1e-5;
