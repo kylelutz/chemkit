@@ -106,9 +106,9 @@ Molecule* BondPredictor::molecule() const
 
 // --- Prediction ---------------------------------------------------------- //
 /// Returns a list of pairs of atoms that are predicted to be bonded.
-QList<std::pair<Atom *, Atom *> > BondPredictor::predictedBonds()
+std::vector<std::pair<Atom *, Atom *> > BondPredictor::predictedBonds()
 {
-    QList<std::pair<Atom *, Atom *> >  bonds;
+    std::vector<std::pair<Atom *, Atom *> >  bonds;
 
     if(!d->molecule)
         return bonds;
@@ -118,7 +118,7 @@ QList<std::pair<Atom *, Atom *> > BondPredictor::predictedBonds()
     for(int i = 0; i < atoms.size(); i++){
         for(int j = i+1; j < atoms.size(); j++){
             if(couldBeBonded(atoms[i], atoms[j])){
-                bonds.append(std::make_pair(atoms[i], atoms[j]));
+                bonds.push_back(std::make_pair(atoms[i], atoms[j]));
             }
         }
     }

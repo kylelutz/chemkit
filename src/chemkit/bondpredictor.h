@@ -25,7 +25,7 @@
 
 #include "chemkit.h"
 
-#include <QtCore>
+#include <vector>
 
 namespace chemkit {
 
@@ -50,7 +50,7 @@ class CHEMKIT_EXPORT BondPredictor
         Molecule* molecule() const;
 
         // prediction
-        QList<std::pair<Atom *, Atom *> > predictedBonds();
+        std::vector<std::pair<Atom *, Atom *> > predictedBonds();
         bool couldBeBonded(Atom *a, Atom *b) const;
 
         // static methods
