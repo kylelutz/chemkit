@@ -22,6 +22,7 @@
 
 #include "forcefieldinteractions.h"
 
+#include "foreach.h"
 #include "molecule.h"
 #include "forcefield.h"
 
@@ -72,23 +73,23 @@ const ForceField* ForceFieldInteractions::forceField() const
 
 // --- Interactions -------------------------------------------------------- //
 /// Returns a list of bonded pairs of atoms.
-QList<std::pair<const ForceFieldAtom *, const ForceFieldAtom *> > ForceFieldInteractions::bondedPairs()
+std::vector<std::pair<const ForceFieldAtom *, const ForceFieldAtom *> > ForceFieldInteractions::bondedPairs()
 {
-    QList<std::pair<const ForceFieldAtom *, const ForceFieldAtom *> > bondedPairs;
+    std::vector<std::pair<const ForceFieldAtom *, const ForceFieldAtom *> > bondedPairs;
 
     Q_FOREACH(const Bond *bond, d->molecule->bonds()){
         const ForceFieldAtom *a = forceField()->atom(bond->atom1());
         const ForceFieldAtom *b = forceField()->atom(bond->atom2());
-        bondedPairs.append(std::make_pair(a, b));
+        bondedPairs.push_back(std::make_pair(a, b));
     }
 
     return bondedPairs;
 }
 
 /// Returns a list of angle groups.
-QList<std::vector<const ForceFieldAtom *> > ForceFieldInteractions::angleGroups()
+std::vector<std::vector<const ForceFieldAtom *> > ForceFieldInteractions::angleGroups()
 {
-    QList<std::vector<const ForceFieldAtom *> > angleGroups;
+    std::vector<std::vector<const ForceFieldAtom *> > angleGroups;
 
     Q_FOREACH(const Atom *atom, d->molecule->atoms()){
         if(!atom->isTerminal()){
@@ -100,7 +101,7 @@ QList<std::vector<const ForceFieldAtom *> > ForceFieldInteractions::angleGroups(
                     angleGroup[1] = forceField()->atom(atom);
                     angleGroup[2] = forceField()->atom(neighbors[j]);
 
-                    angleGroups.append(angleGroup);
+                    angleGroups.push_back(angleGroup);
                 }
             }
         }
@@ -110,22 +111,22 @@ QList<std::vector<const ForceFieldAtom *> > ForceFieldInteractions::angleGroups(
 }
 
 /// Returns a list of torsion groups.
-QList<std::vector<const ForceFieldAtom *> > ForceFieldInteractions::torsionGroups()
+std::vector<std::vector<const ForceFieldAtom *> > ForceFieldInteractions::torsionGroups()
 {
-    QList<std::vector<const ForceFieldAtom *> > torsionGroups;
+    std::vector<std::vector<const ForceFieldAtom *> > torsionGroups;
 
-    QList<QPair<Atom *, Atom *> > pairs;
+    std::vector<std::pair<Atom *, Atom *> > pairs;
     Q_FOREACH(const Bond *bond, d->molecule->bonds()){
         if(!bond->atom1()->isTerminal() && !bond->atom2()->isTerminal()){
-            pairs.append(qMakePair(bond->atom1(), bond->atom2()));
+            pairs.push_back(std::make_pair(bond->atom1(), bond->atom2()));
         }
     }
 
     // a        d
     //  \      /
     //   b -- c
-    QPair<Atom *, Atom *> pair;
-    Q_FOREACH(pair, pairs){
+    std::pair<Atom *, Atom *> pair;
+    foreach(pair, pairs){
         const Atom *b = pair.first;
         const Atom *c = pair.second;
 
@@ -143,7 +144,7 @@ QList<std::vector<const ForceFieldAtom *> > ForceFieldInteractions::torsionGroup
                 torsionGroup[2] = forceField()->atom(c);
                 torsionGroup[3] = forceField()->atom(d);
 
-                torsionGroups.append(torsionGroup);
+                torsionGroups.push_back(torsionGroup);
             }
         }
     }
@@ -152,9 +153,9 @@ QList<std::vector<const ForceFieldAtom *> > ForceFieldInteractions::torsionGroup
 }
 
 /// Returns a list of nonbonded pairs.
-QList<std::pair<const ForceFieldAtom *, const ForceFieldAtom *> > ForceFieldInteractions::nonbondedPairs()
+std::vector<std::pair<const ForceFieldAtom *, const ForceFieldAtom *> > ForceFieldInteractions::nonbondedPairs()
 {
-    QList<std::pair<const ForceFieldAtom *, const ForceFieldAtom *> > nonbondedPairs;
+    std::vector<std::pair<const ForceFieldAtom *, const ForceFieldAtom *> > nonbondedPairs;
 
     QList<Atom *> atoms = d->molecule->atoms();
     for(int i = 0; i < atoms.size(); i++){
@@ -163,7 +164,7 @@ QList<std::pair<const ForceFieldAtom *, const ForceFieldAtom *> > ForceFieldInte
                 const ForceFieldAtom *a = forceField()->atom(atoms[i]);
                 const ForceFieldAtom *b = forceField()->atom(atoms[j]);
 
-                nonbondedPairs.append(std::make_pair(a, b));
+                nonbondedPairs.push_back(std::make_pair(a, b));
             }
         }
     }

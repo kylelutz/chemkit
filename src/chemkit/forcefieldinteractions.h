@@ -27,8 +27,6 @@
 
 #include <vector>
 
-#include <QtCore>
-
 namespace chemkit {
 
 class Atom;
@@ -49,10 +47,10 @@ class CHEMKIT_EXPORT ForceFieldInteractions
         const ForceField* forceField() const;
 
         // interactions
-        QList<std::pair<const ForceFieldAtom *, const ForceFieldAtom *> > bondedPairs();
-        QList<std::vector<const ForceFieldAtom *> > angleGroups();
-        QList<std::vector<const ForceFieldAtom *> > torsionGroups();
-        QList<std::pair<const ForceFieldAtom *, const ForceFieldAtom *> > nonbondedPairs();
+        std::vector<std::pair<const ForceFieldAtom *, const ForceFieldAtom *> > bondedPairs();
+        std::vector<std::vector<const ForceFieldAtom *> > angleGroups();
+        std::vector<std::vector<const ForceFieldAtom *> > torsionGroups();
+        std::vector<std::pair<const ForceFieldAtom *, const ForceFieldAtom *> > nonbondedPairs();
 
     private:
         bool atomsWithinTwoBonds(const Atom *a, const Atom *b);
