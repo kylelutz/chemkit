@@ -301,8 +301,8 @@ void BuilderWindow::openFile()
     std::sort(formats.begin(), formats.end());
 
     QString formatsString;
-    foreach(const QString &format, formatsString)
-        formatsString += QString("*.%1 ").arg(format);
+    foreach(const std::string &format, formats)
+        formatsString += QString("*.%1 ").arg(format.c_str());
 
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"), 0, QString("Molecule Files (%1);;All Files (*.*)").arg(formatsString));
 
