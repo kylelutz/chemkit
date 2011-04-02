@@ -1,3 +1,4 @@
+
 /******************************************************************************
 **
 ** Copyright (C) 2009-2011 Kyle Lutz <kyle.r.lutz@gmail.com>
@@ -22,6 +23,8 @@
 
 #include <QtTest>
 
+#include <algorithm>
+
 #include <chemkit/molecule.h>
 #include <chemkit/moleculardescriptor.h>
 
@@ -39,7 +42,8 @@ class RandicIndexTest : public QObject
 
 void RandicIndexTest::initTestCase()
 {
-    QVERIFY(chemkit::MolecularDescriptor::descriptors().contains("randic-index"));
+    std::vector<std::string> descriptors = chemkit::MolecularDescriptor::descriptors();
+    QVERIFY(std::find(descriptors.begin(), descriptors.end(), "randic-index") != descriptors.end());
 }
 
 void RandicIndexTest::ethane()

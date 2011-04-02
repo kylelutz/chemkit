@@ -27,12 +27,12 @@
 RandicIndexPlugin::RandicIndexPlugin()
     : chemkit::Plugin("randicindex")
 {
-    chemkit::MolecularDescriptor::registerDescriptor("randic-index", createRandicIndexDescriptor);
+    registerPluginClass<chemkit::MolecularDescriptor>("randic-index", createRandicIndexDescriptor);
 }
 
 RandicIndexPlugin::~RandicIndexPlugin()
 {
-    chemkit::MolecularDescriptor::unregisterDescriptor("randic-index", createRandicIndexDescriptor);
+    unregisterPluginClass<chemkit::MolecularDescriptor>("randic-index");
 }
 
 chemkit::MolecularDescriptor* RandicIndexPlugin::createRandicIndexDescriptor()

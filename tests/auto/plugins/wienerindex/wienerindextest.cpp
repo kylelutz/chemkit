@@ -22,6 +22,8 @@
 
 #include <QtTest>
 
+#include <algorithm>
+
 #include <chemkit/molecule.h>
 #include <chemkit/moleculardescriptor.h>
 
@@ -36,7 +38,8 @@ class WienerIndexTest : public QObject
 
 void WienerIndexTest::initTestCase()
 {
-    QVERIFY(chemkit::MolecularDescriptor::descriptors().contains("wiener-index"));
+    std::vector<std::string> descriptors = chemkit::MolecularDescriptor::descriptors();
+    QVERIFY(std::find(descriptors.begin(), descriptors.end(), "wiener-index") != descriptors.end());
 }
 
 void WienerIndexTest::ethane()

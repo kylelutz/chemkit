@@ -30,12 +30,6 @@
 
 namespace chemkit {
 
-namespace {
-
-std::map<std::string, MolecularDescriptor::CreateFunction> descriptorPlugins;
-
-} // end anonymous namespace
-
 // === MolecularDescriptorPrivate ========================================== //
 class MolecularDescriptorPrivate
 {
@@ -109,42 +103,13 @@ QVariant MolecularDescriptor::value(const Molecule *molecule) const
 /// Creates a new molecular descriptor.
 MolecularDescriptor* MolecularDescriptor::create(const std::string &name)
 {
-    // ensure default plugins are loaded
-    PluginManager::instance()->loadDefaultPlugins();
-
-    std::map<std::string, CreateFunction>::iterator location = descriptorPlugins.find(boost::algorithm::to_lower_copy(name));
-    if(location != descriptorPlugins.end()){
-        return location->second();
-    }
-
-    return 0;
+    return PluginManager::instance()->createPluginClass<MolecularDescriptor>(name);
 }
 
 /// Returns a list of available molecular descriptors.
-QList<std::string> MolecularDescriptor::descriptors()
+std::vector<std::string> MolecularDescriptor::descriptors()
 {
-    // ensure default plugins are loaded
-    PluginManager::instance()->loadDefaultPlugins();
-
-    QList<std::string> descriptors;
-
-    std::pair<std::string, CreateFunction> plugin;
-    foreach(plugin, descriptorPlugins){
-        descriptors.append(plugin.first);
-    }
-
-    return descriptors;
-}
-
-void MolecularDescriptor::registerDescriptor(const std::string &name, CreateFunction function)
-{
-    descriptorPlugins[boost::algorithm::to_lower_copy(name)] = function;
-}
-
-void MolecularDescriptor::unregisterDescriptor(const std::string &name, CreateFunction function)
-{
-    Q_UNUSED(name);
-    Q_UNUSED(function);
+    return PluginManager::instance()->pluginClassNames<MolecularDescriptor>();
 }
 
 } // end chemkit namespace

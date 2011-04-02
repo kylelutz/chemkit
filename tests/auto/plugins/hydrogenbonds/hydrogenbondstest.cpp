@@ -22,6 +22,8 @@
 
 #include <QtTest>
 
+#include <algorithm>
+
 #include <chemkit/molecule.h>
 #include <chemkit/moleculardescriptor.h>
 
@@ -37,8 +39,9 @@ class HydrogenBondsTest : public QObject
 
 void HydrogenBondsTest::initTestCase()
 {
-    QVERIFY(chemkit::MolecularDescriptor::descriptors().contains("hydrogen-bond-donors"));
-    QVERIFY(chemkit::MolecularDescriptor::descriptors().contains("hydrogen-bond-acceptors"));
+    std::vector<std::string> descriptors = chemkit::MolecularDescriptor::descriptors();
+    QVERIFY(std::find(descriptors.begin(), descriptors.end(), "hydrogen-bond-donors") != descriptors.end());
+    QVERIFY(std::find(descriptors.begin(), descriptors.end(), "hydrogen-bond-acceptors") != descriptors.end());
 }
 
 void HydrogenBondsTest::ethanol()

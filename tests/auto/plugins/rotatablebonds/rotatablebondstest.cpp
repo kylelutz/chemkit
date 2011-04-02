@@ -22,6 +22,8 @@
 
 #include <QtTest>
 
+#include <algorithm>
+
 #include <chemkit/molecule.h>
 #include <chemkit/moleculardescriptor.h>
 
@@ -30,14 +32,15 @@ class RotatableBondsTest : public QObject
     Q_OBJECT
 
     private slots:
-		void initTestCase();
+        void initTestCase();
         void test_data();
         void test();
 };
 
 void RotatableBondsTest::initTestCase()
 {
-	QVERIFY(chemkit::MolecularDescriptor::descriptors().contains("rotatable-bonds"));
+    std::vector<std::string> descriptors = chemkit::MolecularDescriptor::descriptors();
+    QVERIFY(std::find(descriptors.begin(), descriptors.end(), "rotatable-bonds") != descriptors.end());
 }
 
 void RotatableBondsTest::test_data()

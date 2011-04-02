@@ -28,14 +28,14 @@
 HydrogenBondsPlugin::HydrogenBondsPlugin()
     : chemkit::Plugin("hydrogenbonds")
 {
-    chemkit::MolecularDescriptor::registerDescriptor("hydrogen-bond-donors", createDonorsDescriptor);
-    chemkit::MolecularDescriptor::registerDescriptor("hydrogen-bond-acceptors", createAcceptorsDescriptor);
+    registerPluginClass<chemkit::MolecularDescriptor>("hydrogen-bond-donors", createDonorsDescriptor);
+    registerPluginClass<chemkit::MolecularDescriptor>("hydrogen-bond-acceptors", createAcceptorsDescriptor);
 }
 
 HydrogenBondsPlugin::~HydrogenBondsPlugin()
 {
-    chemkit::MolecularDescriptor::unregisterDescriptor("hydrogen-bond-donors", createDonorsDescriptor);
-    chemkit::MolecularDescriptor::unregisterDescriptor("hydrogen-bond-acceptors", createAcceptorsDescriptor);
+    unregisterPluginClass<chemkit::MolecularDescriptor>("hydrogen-bond-donors");
+    unregisterPluginClass<chemkit::MolecularDescriptor>("hydrogen-bond-acceptors");
 }
 
 chemkit::MolecularDescriptor* HydrogenBondsPlugin::createDonorsDescriptor()
