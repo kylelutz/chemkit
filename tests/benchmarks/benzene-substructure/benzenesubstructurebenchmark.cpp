@@ -44,19 +44,19 @@ void BenzeneSubstructureBenchmark::benchmark()
     // create benzene molecule
     chemkit::Molecule benzene("1/C6H6/c1-2-4-6-5-3-1/h1-6H", "inchi");
 
-    // number of substructure matches
-    int count = 0;
-
     QBENCHMARK {
+        // number of substructure matches
+        int count = 0;
+
         foreach(const chemkit::Molecule *molecule, file.molecules()){
             if(benzene.isSubstructureOf(molecule)){
                 count++;
             }
         }
-    }
 
-    // TODO: verify this number
-    QCOMPARE(count, 412);
+        // TODO: verify this number
+        QCOMPARE(count, 412);
+    }
 }
 
 QTEST_APPLESS_MAIN(BenzeneSubstructureBenchmark)
