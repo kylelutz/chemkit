@@ -20,25 +20,12 @@
 **
 ******************************************************************************/
 
-#include <QtTest>
+#include "gasteigertest.h"
 
 #include <algorithm>
 
 #include <chemkit/molecule.h>
 #include <chemkit/partialchargepredictor.h>
-
-class GasteigerTest : public QObject
-{
-    Q_OBJECT
-
-    private slots:
-        void initTestCase();
-        void name();
-        void methane();
-        void fluoromethane();
-        void ethane();
-        void fluoroethane();
-};
 
 void GasteigerTest::initTestCase()
 {
@@ -166,4 +153,3 @@ void GasteigerTest::fluoroethane()
 }
 
 QTEST_APPLESS_MAIN(GasteigerTest)
-#include "gasteigertest.moc"

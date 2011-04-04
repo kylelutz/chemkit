@@ -20,20 +20,11 @@
 **
 ******************************************************************************/
 
-#include <QtTest>
+#include "graphicsscenetest.h"
 
 #include <chemkit/graphicsitem.h>
 #include <chemkit/graphicsview.h>
 #include <chemkit/graphicsscene.h>
-
-class GraphicsSceneTest : public QObject
-{
-    Q_OBJECT
-
-    private slots:
-        void items();
-        void views();
-};
 
 void GraphicsSceneTest::items()
 {
@@ -87,4 +78,3 @@ void GraphicsSceneTest::views()
 }
 
 QTEST_MAIN(GraphicsSceneTest)
-#include "graphicsscenetest.moc"

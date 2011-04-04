@@ -20,7 +20,7 @@
 **
 ******************************************************************************/
 
-#include <QtTest>
+#include "ambertest.h"
 
 #include <algorithm>
 
@@ -30,17 +30,6 @@
 #include <chemkit/forcefieldatom.h>
 
 const std::string dataPath = "../../../data/";
-
-class AmberTest : public QObject
-{
-    Q_OBJECT
-
-    private slots:
-        void initTestCase();
-        void adenosine();
-        void serine();
-        void water();
-};
 
 void AmberTest::initTestCase()
 {
@@ -182,4 +171,3 @@ void AmberTest::water()
 }
 
 QTEST_APPLESS_MAIN(AmberTest)
-#include "ambertest.moc"

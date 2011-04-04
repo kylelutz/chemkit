@@ -20,27 +20,9 @@
 **
 ******************************************************************************/
 
-#include <QtTest>
+#include "moleculeeditortest.h"
 
 #include <chemkit/moleculeeditor.h>
-
-class MoleculeEditorTest : public QObject
-{
-    Q_OBJECT
-
-    private slots:
-        void basic();
-        void setMolecule();
-        void addAtom();
-        void removeAtom();
-        void setAtomAtomicNumber();
-        void setAtomPosition();
-        void addBond();
-        void removeBond();
-        void setBondOrder();
-        void copy();
-        void clearCopyBuffer();
-};
 
 void MoleculeEditorTest::basic()
 {
@@ -298,4 +280,3 @@ void MoleculeEditorTest::clearCopyBuffer()
 }
 
 QTEST_APPLESS_MAIN(MoleculeEditorTest)
-#include "moleculeeditortest.moc"

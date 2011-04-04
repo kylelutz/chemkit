@@ -25,20 +25,12 @@
 //
 // Based on: http://depth-first.com/articles/2009/01/22/mx-performance-comparison-3-substructure-search-in-mx-and-cdk
 
-#include <QtTest>
+#include "benzenesubstructurebenchmark.h"
 
 #include <chemkit/molecule.h>
 #include <chemkit/chemicalfile.h>
 
 const std::string dataPath = "../../data/";
-
-class BenzeneSubstructureBenchmark : public QObject
-{
-    Q_OBJECT
-
-    private slots:
-        void benchmark();
-};
 
 void BenzeneSubstructureBenchmark::benchmark()
 {
@@ -68,4 +60,3 @@ void BenzeneSubstructureBenchmark::benchmark()
 }
 
 QTEST_APPLESS_MAIN(BenzeneSubstructureBenchmark)
-#include "benzenesubstructurebenchmark.moc"

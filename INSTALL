@@ -1,5 +1,6 @@
 === Dependencies ==============================================================
 
+  - CMake - http://www.cmake.org
   - Boost - http://www.boost.org
   - Qt Framework (version 4.7 or later) - http://qt.nokia.com
   - BLAS & LAPACK libraries
@@ -9,7 +10,9 @@
 From the chemkit directory (the same directory this file is in) run the
 following commands:
 
-    qmake
+    mkdir build
+    cd build
+    cmake ..
     make
 
 === Installation ==============================================================

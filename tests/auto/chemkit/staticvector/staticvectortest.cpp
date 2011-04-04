@@ -20,21 +20,9 @@
 **
 ******************************************************************************/
 
-#include <QtTest>
+#include "staticvectortest.h"
 
 #include <chemkit/staticvector.h>
-
-class StaticVectorTest : public QObject
-{
-    Q_OBJECT
-
-    private slots:
-        void value();
-        void isNull();
-        void commaInitializer();
-        void dot();
-        void cross();
-};
 
 void StaticVectorTest::value()
 {
@@ -107,4 +95,3 @@ void StaticVectorTest::cross()
 }
 
 QTEST_APPLESS_MAIN(StaticVectorTest)
-#include "staticvectortest.moc"

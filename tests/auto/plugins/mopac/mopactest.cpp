@@ -20,7 +20,7 @@
 **
 ******************************************************************************/
 
-#include <QtTest>
+#include "mopactest.h"
 
 #include <algorithm>
 
@@ -29,16 +29,6 @@
 #include <chemkit/chemicalfileformat.h>
 
 const std::string dataPath = "../../../data/";
-
-class MopacTest : public QObject
-{
-    Q_OBJECT
-
-    private slots:
-        void initTestCase();
-        void ethanol();
-        void guanine();
-};
 
 void MopacTest::initTestCase()
 {
@@ -74,4 +64,3 @@ void MopacTest::guanine()
 }
 
 QTEST_APPLESS_MAIN(MopacTest)
-#include "mopactest.moc"

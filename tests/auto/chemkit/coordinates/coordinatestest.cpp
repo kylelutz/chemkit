@@ -20,25 +20,10 @@
 **
 ******************************************************************************/
 
-#include <QtTest>
+#include "coordinatestest.h"
 
 #include <chemkit/molecule.h>
 #include <chemkit/coordinates.h>
-
-class CoordinatesTest : public QObject
-{
-    Q_OBJECT
-
-    private slots:
-        void basic();
-        void setPosition();
-        void append();
-        void insert();
-        void remove();
-        void center();
-        void multiply();
-        void distanceMatrix();
-};
 
 void CoordinatesTest::basic()
 {
@@ -188,4 +173,3 @@ void CoordinatesTest::distanceMatrix()
 }
 
 QTEST_APPLESS_MAIN(CoordinatesTest)
-#include "coordinatestest.moc"

@@ -20,7 +20,7 @@
 **
 ******************************************************************************/
 
-#include <QtTest>
+#include "inchitest.h"
 
 #include <algorithm>
 
@@ -28,18 +28,6 @@
 #include <chemkit/molecule.h>
 #include <chemkit/lineformat.h>
 #include <chemkit/chemicalfileformat.h>
-
-class InchiTest : public QObject
-{
-    Q_OBJECT
-
-    private slots:
-        void initTestCase();
-        void read();
-        void write();
-        void stereochemistry();
-        void addHydrogens();
-};
 
 void InchiTest::initTestCase()
 {
@@ -219,4 +207,3 @@ void InchiTest::addHydrogens()
 }
 
 QTEST_APPLESS_MAIN(InchiTest)
-#include "inchitest.moc"

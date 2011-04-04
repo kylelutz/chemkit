@@ -20,33 +20,11 @@
 **
 ******************************************************************************/
 
-#include <QtTest>
+#include "moleculargraphtest.h"
 
 #include <chemkit/molecule.h>
 #include <chemkit/atommapping.h>
 #include <chemkit/moleculargraph.h>
-
-class MolecularGraphTest : public QObject
-{
-    Q_OBJECT
-
-    private slots:
-        void initTestCase();
-        void cleanupTestCase();
-
-        void basic();
-        void cyclicGraph();
-        void hydrogenDepletedGraph();
-        void isomorphism();
-
-    private:
-        chemkit::Molecule *m_empty;
-        chemkit::Molecule *m_benzene;
-        chemkit::Molecule *m_diphenylEther;
-        chemkit::Molecule *m_ethanol;
-        chemkit::Molecule *m_octane;
-        chemkit::Molecule *m_tyrosine;
-};
 
 void MolecularGraphTest::initTestCase()
 {
@@ -198,4 +176,3 @@ void MolecularGraphTest::isomorphism()
 }
 
 QTEST_APPLESS_MAIN(MolecularGraphTest)
-#include "moleculargraphtest.moc"

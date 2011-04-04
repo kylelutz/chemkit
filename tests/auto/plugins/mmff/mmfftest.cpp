@@ -20,7 +20,8 @@
 **
 ******************************************************************************/
 
-#include <QtTest>
+#include "mmfftest.h"
+
 #include <QtXml>
 
 #include <algorithm>
@@ -32,15 +33,6 @@
 #include <chemkit/partialchargepredictor.h>
 
 const std::string dataPath = "../../../data/";
-
-class MmffTest : public QObject
-{
-    Q_OBJECT
-
-    private slots:
-        void initTestCase();
-        void validate();
-};
 
 void MmffTest::initTestCase()
 {
@@ -180,4 +172,3 @@ void MmffTest::validate()
 }
 
 QTEST_APPLESS_MAIN(MmffTest)
-#include "mmfftest.moc"

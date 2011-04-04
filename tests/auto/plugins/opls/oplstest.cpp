@@ -20,7 +20,11 @@
 **
 ******************************************************************************/
 
-#include <QtTest>
+// The OplsTest class validates the OPLS force field implementation
+// in the opls plugin. Energies were checked against those
+// calculated by TINKER.
+
+#include "oplstest.h"
 
 #include <algorithm>
 
@@ -30,19 +34,6 @@
 #include <chemkit/chemicalfile.h>
 
 const std::string dataPath = "../../../data/";
-
-// The OplsTest class validates the OPLS force field implementation
-// in the opls plugin. Energies were checked against those
-// calculated by TINKER.
-class OplsTest : public QObject
-{
-    Q_OBJECT
-
-    private slots:
-        void initTestCase();
-        void energy_data();
-        void energy();
-};
 
 void OplsTest::initTestCase()
 {
@@ -89,4 +80,3 @@ void OplsTest::energy()
 }
 
 QTEST_APPLESS_MAIN(OplsTest)
-#include "oplstest.moc"

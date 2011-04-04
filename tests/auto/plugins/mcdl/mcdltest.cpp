@@ -20,22 +20,12 @@
 **
 ******************************************************************************/
 
-#include <QtTest>
+#include "mcdltest.h"
 
 #include <algorithm>
 
 #include <chemkit/molecule.h>
 #include <chemkit/lineformat.h>
-
-class McdlTest : public QObject
-{
-    Q_OBJECT
-
-    private slots:
-        void initTestCase();
-        void read_data();
-        void read();
-};
 
 void McdlTest::initTestCase()
 {
@@ -91,4 +81,3 @@ void McdlTest::read()
 }
 
 QTEST_APPLESS_MAIN(McdlTest)
-#include "mcdltest.moc"

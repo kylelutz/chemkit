@@ -1,0 +1,5 @@
+add_subdirectory(chemkit)
+add_subdirectory(graphics)
+add_subdirectory(widgets)
+add_subdirectory(plugins)
+add_subdirectory(apps)

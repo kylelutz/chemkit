@@ -20,42 +20,12 @@
 **
 ******************************************************************************/
 
-#include <QtTest>
+#include "moleculetest.h"
 
 #include <chemkit/chemkit.h>
 #include <chemkit/molecule.h>
 #include <chemkit/lineformat.h>
 #include <chemkit/atommapping.h>
-
-class MoleculeTest : public QObject
-{
-    Q_OBJECT
-
-    private slots:
-        void name();
-        void formula();
-        void mass();
-        void addAtom();
-        void addAtomCopy();
-        void addBond();
-        void bond();
-        void size();
-        void isEmpty();
-        void substructure();
-        void mapping();
-        void find();
-        void rings();
-        void distance();
-        void center();
-        void bondAngle();
-        void torsionAngle();
-        void wilsonAngle();
-        void fragments();
-        void isFragmented();
-        void removeFragment();
-        void addConformer();
-        void conformers();
-};
 
 void MoleculeTest::name()
 {
@@ -584,4 +554,3 @@ void MoleculeTest::conformers()
 }
 
 QTEST_APPLESS_MAIN(MoleculeTest)
-#include "moleculetest.moc"

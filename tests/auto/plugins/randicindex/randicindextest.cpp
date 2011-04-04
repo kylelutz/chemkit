@@ -1,4 +1,3 @@
-
 /******************************************************************************
 **
 ** Copyright (C) 2009-2011 Kyle Lutz <kyle.r.lutz@gmail.com>
@@ -21,24 +20,12 @@
 **
 ******************************************************************************/
 
-#include <QtTest>
+#include "randicindextest.h"
 
 #include <algorithm>
 
 #include <chemkit/molecule.h>
 #include <chemkit/moleculardescriptor.h>
-
-class RandicIndexTest : public QObject
-{
-    Q_OBJECT
-
-    private slots:
-        void initTestCase();
-        void ethane();
-        void isobutane();
-        void dimethylpropane();
-        void octane();
-};
 
 void RandicIndexTest::initTestCase()
 {
@@ -83,4 +70,3 @@ void RandicIndexTest::octane()
 }
 
 QTEST_APPLESS_MAIN(RandicIndexTest)
-#include "randicindextest.moc"

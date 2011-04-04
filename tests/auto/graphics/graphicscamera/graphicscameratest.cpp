@@ -20,21 +20,10 @@
 **
 ******************************************************************************/
 
-#include <QtTest>
+#include "graphicscameratest.h"
 
 #include <chemkit/graphicsview.h>
 #include <chemkit/graphicscamera.h>
-
-class GraphicsCameraTest : public QObject
-{
-    Q_OBJECT
-
-    private slots:
-        void view();
-        void position();
-        void direction();
-        void upVector();
-};
 
 void GraphicsCameraTest::view()
 {
@@ -95,4 +84,3 @@ void GraphicsCameraTest::upVector()
 }
 
 QTEST_MAIN(GraphicsCameraTest)
-#include "graphicscameratest.moc"

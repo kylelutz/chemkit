@@ -1,0 +1,7 @@
+add_subdirectory(benzene-rings)
+add_subdirectory(benzene-substructure)
+add_subdirectory(mmff-energy)
+add_subdirectory(molecular-masses)
+add_subdirectory(parse-smiles)
+add_subdirectory(protein-surface)
+add_subdirectory(uridine-minimization)

@@ -20,22 +20,9 @@
 **
 ******************************************************************************/
 
-#include <QtTest>
+#include "point3test.h"
 
 #include <chemkit/point3.h>
-
-class Point3Test : public QObject
-{
-    Q_OBJECT
-
-    private slots:
-        void basic();
-        void moveBy();
-        void movedBy();
-        void isNull();
-        void distance();
-        void midpoint();
-};
 
 void Point3Test::basic()
 {
@@ -90,4 +77,3 @@ void Point3Test::midpoint()
 }
 
 QTEST_APPLESS_MAIN(Point3Test)
-#include "point3test.moc"

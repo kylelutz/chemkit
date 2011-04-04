@@ -20,7 +20,7 @@
 **
 ******************************************************************************/
 
-#include <QtTest>
+#include "plugintest.h"
 
 #include <string>
 #include <vector>
@@ -31,20 +31,6 @@
 
 #include "mockclass.h"
 #include "mockplugin.h"
-
-class PluginTest : public QObject
-{
-    Q_OBJECT
-
-    private slots:
-        void initTestCase();
-        void name();
-        void registerClass();
-        void cleanupTestCase();
-        
-    private:
-        MockPlugin *m_plugin;
-};
 
 void PluginTest::initTestCase()
 {
@@ -79,4 +65,3 @@ void PluginTest::cleanupTestCase()
 }
 
 QTEST_APPLESS_MAIN(PluginTest)
-#include "plugintest.moc"

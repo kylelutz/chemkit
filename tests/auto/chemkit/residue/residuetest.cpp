@@ -20,20 +20,11 @@
 **
 ******************************************************************************/
 
-#include <QtTest>
+#include "residuetest.h"
 
 #include <chemkit/chemkit.h>
 #include <chemkit/residue.h>
 #include <chemkit/molecule.h>
-
-class ResidueTest : public QObject
-{
-    Q_OBJECT
-
-    private slots:
-        void molecule();
-        void atomType();
-};
 
 void ResidueTest::molecule()
 {
@@ -65,4 +56,3 @@ void ResidueTest::atomType()
 }
 
 QTEST_APPLESS_MAIN(ResidueTest)
-#include "residuetest.moc"

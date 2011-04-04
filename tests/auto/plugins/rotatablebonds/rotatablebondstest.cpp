@@ -20,22 +20,12 @@
 **
 ******************************************************************************/
 
-#include <QtTest>
+#include "rotatablebondstest.h"
 
 #include <algorithm>
 
 #include <chemkit/molecule.h>
 #include <chemkit/moleculardescriptor.h>
-
-class RotatableBondsTest : public QObject
-{
-    Q_OBJECT
-
-    private slots:
-        void initTestCase();
-        void test_data();
-        void test();
-};
 
 void RotatableBondsTest::initTestCase()
 {
@@ -71,4 +61,3 @@ void RotatableBondsTest::test()
 }
 
 QTEST_APPLESS_MAIN(RotatableBondsTest)
-#include "rotatablebondstest.moc"

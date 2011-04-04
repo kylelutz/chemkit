@@ -20,21 +20,9 @@
 **
 ******************************************************************************/
 
-#include <QtTest>
+#include "vector3test.h"
 
 #include <chemkit/vector3.h>
-
-class Vector3Test : public QObject
-{
-    Q_OBJECT
-
-    private slots:
-        void constructor();
-        void value();
-        void length();
-        void isNull();
-        void normalize();
-};
 
 void Vector3Test::constructor()
 {
@@ -106,4 +94,3 @@ void Vector3Test::normalize()
 }
 
 QTEST_APPLESS_MAIN(Vector3Test)
-#include "vector3test.moc"

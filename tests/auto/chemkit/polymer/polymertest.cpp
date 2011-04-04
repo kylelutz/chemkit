@@ -20,17 +20,9 @@
 **
 ******************************************************************************/
 
-#include <QtTest>
+#include "polymertest.h" 
 
 #include <chemkit/polymer.h>
-
-class PolymerTest : public QObject
-{
-    Q_OBJECT
-
-    private slots:
-        void chains();
-};
 
 void PolymerTest::chains()
 {
@@ -52,4 +44,3 @@ void PolymerTest::chains()
 }
 
 QTEST_APPLESS_MAIN(PolymerTest)
-#include "polymertest.moc"

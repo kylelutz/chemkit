@@ -20,28 +20,11 @@
 **
 ******************************************************************************/
 
-#include <QtTest>
+#include "bondtest.h"
 
 #include <chemkit/chemkit.h>
 #include <chemkit/molecule.h>
 #include <chemkit/lineformat.h>
-
-class BondTest : public QObject
-{
-    Q_OBJECT
-
-    private slots:
-        void atoms();
-        void otherAtom();
-        void order();
-        void molecule();
-        void residue();
-        void contains();
-        void isTerminal();
-        void rings();
-        void polarity();
-        void length();
-};
 
 void BondTest::atoms()
 {
@@ -207,4 +190,3 @@ void BondTest::length()
 }
 
 QTEST_APPLESS_MAIN(BondTest)
-#include "bondtest.moc"

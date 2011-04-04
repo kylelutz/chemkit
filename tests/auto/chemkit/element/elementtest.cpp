@@ -20,27 +20,9 @@
 **
 ******************************************************************************/
 
-#include <QtTest>
+#include "elementtest.h" 
 
 #include <chemkit/element.h>
-
-class ElementTest : public QObject
-{
-    Q_OBJECT
-
-    private slots:
-        void symbol();
-        void name();
-        void atomicNumber();
-        void mass();
-        void electronegativity();
-        void covalentRadius();
-        void vanDerWaalsRadius();
-        void expectedValence();
-        void isMetal();
-        void isValidAtomicNumber();
-        void isValidSymbol();
-};
 
 void ElementTest::symbol()
 {
@@ -147,4 +129,3 @@ void ElementTest::isValidSymbol()
 }
 
 QTEST_APPLESS_MAIN(ElementTest)
-#include "elementtest.moc"

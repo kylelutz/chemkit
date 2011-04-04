@@ -20,7 +20,7 @@
 **
 ******************************************************************************/
 
-#include <QtTest>
+#include "mdltest.h"
 
 #include <algorithm>
 
@@ -29,18 +29,6 @@
 #include <chemkit/chemicalfileformat.h>
 
 const std::string dataPath = "../../../data/";
-
-class MdlTest : public QObject
-{
-    Q_OBJECT
-
-    private slots:
-        void initTestCase();
-
-        void read_methanol();
-        void read_guanine();
-        void read_benzenes();
-};
 
 void MdlTest::initTestCase()
 {
@@ -116,4 +104,3 @@ void MdlTest::read_benzenes()
 }
 
 QTEST_APPLESS_MAIN(MdlTest)
-#include "mdltest.moc"

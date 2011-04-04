@@ -20,22 +20,10 @@
 **
 ******************************************************************************/
 
-#include <QtTest>
+#include "chemicalfiletest.h"
 
 #include <chemkit/molecule.h>
 #include <chemkit/chemicalfile.h>
-
-class ChemicalFileTest : public QObject
-{
-    Q_OBJECT
-
-    private slots:
-        void fileName();
-        void format();
-        void contains();
-        void fileData();
-        void moleculeData();
-};
 
 void ChemicalFileTest::fileName()
 {
@@ -110,4 +98,3 @@ void ChemicalFileTest::moleculeData()
 }
 
 QTEST_APPLESS_MAIN(ChemicalFileTest)
-#include "chemicalfiletest.moc"

@@ -20,19 +20,10 @@
 **
 ******************************************************************************/
 
-#include <QtTest>
+#include "conformertest.h"
 
 #include <chemkit/molecule.h>
 #include <chemkit/conformer.h>
-
-class ConformerTest : public QObject
-{
-    Q_OBJECT
-
-    private slots:
-        void basic();
-        void atomPosition();
-};
 
 void ConformerTest::basic()
 {
@@ -67,4 +58,3 @@ void ConformerTest::atomPosition()
 }
 
 QTEST_APPLESS_MAIN(ConformerTest)
-#include "conformertest.moc"

@@ -20,23 +20,9 @@
 **
 ******************************************************************************/
 
-#include <QtTest>
+#include "graphicstransformtest.h"
 
 #include <chemkit/graphicstransform.h>
-
-class GraphicsTransformTest : public QObject
-{
-    Q_OBJECT
-
-    private slots:
-        void data();
-        void multiplyPoint();
-        void multiplyVector();
-        void multiplyTransform();
-        void inverseMultiplyPoint();
-        void inverseMultiplyVector();
-        void translation();
-};
 
 void GraphicsTransformTest::data()
 {
@@ -128,4 +114,3 @@ void GraphicsTransformTest::translation()
 }
 
 QTEST_APPLESS_MAIN(GraphicsTransformTest)
-#include "graphicstransformtest.moc"

@@ -1,30 +1,8 @@
-
-# object files
-*~
-*.o
-*.obj
-*.a
-*.so
-*.exe
+# directories
+build/
 
 # vim temp files
 .*.sw*
 
 # qt generated files
-*.moc
-moc_*.cpp
-ui_*.h
-qrc_*.cpp
-*.pro.user*
-Makefile*
-*.Debug
-*.Release
-
-# directories
-bin/
-lib/
-share/
-
-# misc
-gdb.txt
-callgrind.out.*
+CMakeLists.txt.user

@@ -20,16 +20,8 @@
 **
 ******************************************************************************/
 
-#include <QtTest>
+#include "geometrytest.h"
 
 #include <chemkit/geometry.h>
 
-class GeometryTest : public QObject
-{
-    Q_OBJECT
-
-    private slots:
-};
-
 QTEST_APPLESS_MAIN(GeometryTest)
-#include "geometrytest.moc"

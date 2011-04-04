@@ -20,64 +20,15 @@
 **
 ******************************************************************************/
 
-#include <QtTest>
-
-#include <chemkit/chemkit.h>
-#include <chemkit/molecule.h>
-
 // The ring-perception test verifies the ring perception and aromaticity
 // perception algorithms against a large number of molecules. Each molecule
 // is constructed and then each atom and bond it contains is checked for ring
 // membership and aromaticity.
-class RingPerceptionTest : public QObject
-{
-    Q_OBJECT
 
-    private:
-        static void addHydrogens(chemkit::Molecule *molecule);
+#include "ringperceptiontest.h"
 
-    private slots:
-        void anthracene();
-        void anthraquinone();
-        void arsole();
-        void benzene();
-        void benzimidazole();
-        void benzobicyclooctane();
-        void benzonorborene();
-        void bicyclooctane();
-        void biotin();
-        void biphenylene();
-        void cyclobutane();
-        void cyclodecane();
-        void cycloheptane();
-        void cyclohexane();
-        void cyclononane();
-        void cyclooctane();
-        void cyclooctatetraene();
-        void cyclopentane();
-        void cyclopropane();
-        void decalin();
-        void furan();
-        void indole();
-        void imidazole();
-        void ladderane();
-        void naphthalene();
-        void norbornane();
-        void oxazole();
-        void oxirane();
-        void porphin();
-        void pyrazole();
-        void pyrene();
-        void pyridine();
-        void pyrrole();
-        void quinoxaline();
-        void tetralin();
-        void thiophene();
-        void tricyclohexane();
-        void tricyclooctane();
-        void uracil();
-        void vigtua();
-};
+#include <chemkit/chemkit.h>
+#include <chemkit/molecule.h>
 
 void RingPerceptionTest::addHydrogens(chemkit::Molecule *molecule)
 {
@@ -3437,4 +3388,3 @@ void RingPerceptionTest::vigtua()
 }
 
 QTEST_APPLESS_MAIN(RingPerceptionTest)
-#include "ringperceptiontest.moc"

@@ -24,7 +24,7 @@
 // accessible surfaces were validated against the output of the 'asv'
 // program. (http://petitjeanmichel.free.fr/itoweb.petitjean.freeware.html#ASV)
 
-#include <QtTest>
+#include "molecularsurfacetest.h"
 
 #include <chemkit/point3.h>
 #include <chemkit/polymer.h>
@@ -35,34 +35,6 @@
 #include <chemkit/molecularsurface.h>
 
 const std::string dataPath = "../../../data/";
-
-class MolecularSurfaceTest : public QObject
-{
-    Q_OBJECT
-
-    private slots:
-        // function tests
-        void molecule();
-        void probeRadius();
-        void surfaceType();
-
-        // molecule tests
-        void hydrogen();
-        void water();
-        void serine();
-        void guanine();
-        void methane();
-        void ethanol();
-        void adenosine();
-        void lysozyme();
-        void cytochrome();
-        void toxin();
-        void hydrolase();
-        void hemoglobin();
-        void dna();
-        void ribozyme();
-        void ubiqutin();
-};
 
 void MolecularSurfaceTest::molecule()
 {
@@ -452,4 +424,3 @@ void MolecularSurfaceTest::ubiqutin()
 }
 
 QTEST_APPLESS_MAIN(MolecularSurfaceTest)
-#include "molecularsurfacetest.moc"

@@ -20,16 +20,8 @@
 **
 ******************************************************************************/
 
-#include <QtTest>
+#include "moietytest.h"
 
 #include <chemkit/moiety.h>
 
-class MoietyTest : public QObject
-{
-    Q_OBJECT
-
-    private slots:
-};
-
 QTEST_APPLESS_MAIN(MoietyTest)
-#include "moietytest.moc"

@@ -1,0 +1,3 @@
+add_subdirectory(periodictabledialog)
+add_subdirectory(proteindatabank)
+add_subdirectory(pubchem)

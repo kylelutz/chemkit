@@ -20,32 +20,10 @@
 **
 ******************************************************************************/
 
-#include <QtTest>
+#include "atomtest.h"
 
 #include <chemkit/molecule.h>
 #include <chemkit/lineformat.h>
-
-class AtomTest : public QObject
-{
-    Q_OBJECT
-
-    private slots:
-        void atomicNumber();
-        void formalCharge();
-        void partialCharge();
-        void symbol();
-        void name();
-        void electronegativity();
-        void covalentRadius();
-        void vanDerWaalsRadius();
-        void is();
-        void molecule();
-        void rings();
-        void position();
-        void distance();
-        void pathTo();
-        void otherNeighbor();
-};
 
 void AtomTest::atomicNumber()
 {
@@ -474,4 +452,3 @@ void AtomTest::otherNeighbor()
 }
 
 QTEST_APPLESS_MAIN(AtomTest)
-#include "atomtest.moc"

@@ -20,21 +20,9 @@
 **
 ******************************************************************************/
 
-#include <QtTest>
+#include "quaterniontest.h"
 
 #include <chemkit/quaternion.h>
-
-class QuaternionTest : public QObject
-{
-    Q_OBJECT
-
-    private slots:
-        void basic();
-        void add();
-        void subtract();
-        void multiply();
-        void conjugate();
-};
 
 void QuaternionTest::basic()
 {
@@ -91,4 +79,3 @@ void QuaternionTest::conjugate()
 }
 
 QTEST_APPLESS_MAIN(QuaternionTest)
-#include "quaterniontest.moc"

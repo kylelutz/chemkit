@@ -20,21 +20,12 @@
 **
 ******************************************************************************/
 
-#include <QtTest>
+#include "wienerindextest.h"
 
 #include <algorithm>
 
 #include <chemkit/molecule.h>
 #include <chemkit/moleculardescriptor.h>
-
-class WienerIndexTest : public QObject
-{
-    Q_OBJECT
-
-    private slots:
-        void initTestCase();
-        void ethane();
-};
 
 void WienerIndexTest::initTestCase()
 {
@@ -46,9 +37,7 @@ void WienerIndexTest::ethane()
 {
     chemkit::Molecule ethane("CC", "smiles");
     QCOMPARE(ethane.formula(), std::string("C2H6"));
-
     QCOMPARE(ethane.descriptor("wiener-index").toInt(), 58);
 }
 
 QTEST_APPLESS_MAIN(WienerIndexTest)
-#include "wienerindextest.moc"

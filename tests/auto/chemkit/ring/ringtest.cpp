@@ -20,44 +20,12 @@
 **
 ******************************************************************************/
 
-#include <QtTest>
+#include "ringtest.h"
 
 #include <chemkit/chemkit.h>
 #include <chemkit/ring.h>
 #include <chemkit/molecule.h>
 #include <chemkit/lineformat.h>
-
-class RingTest : public QObject
-{
-    Q_OBJECT
-
-    private:
-        chemkit::Molecule *benzene;
-        chemkit::Molecule *furan;
-        chemkit::Molecule *cyclohexane;
-        chemkit::Molecule *cyclopropane;
-
-        chemkit::Ring *benzeneRing;
-        chemkit::Ring *furanRing;
-        chemkit::Ring *cyclohexaneRing;
-        chemkit::Ring *cyclopropaneRing;
-
-    private slots:
-        void initTestCase();
-        void molecule();
-        void atoms();
-        void atomCount();
-        void size();
-        void bonds();
-        void bondCount();
-        void root();
-        void position();
-        void contains();
-        void heteroatomCount();
-        void isHeterocycle();
-        void isAromatic();
-        void cleanupTestCase();
-};
 
 void RingTest::initTestCase()
 {
@@ -235,4 +203,3 @@ void RingTest::cleanupTestCase()
 }
 
 QTEST_APPLESS_MAIN(RingTest)
-#include "ringtest.moc"

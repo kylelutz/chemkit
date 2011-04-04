@@ -20,21 +20,13 @@
 **
 ******************************************************************************/
 
-#include <QtTest>
+#include "uridineminimizationbenchmark.h"
 
 #include <chemkit/molecule.h>
 #include <chemkit/forcefield.h>
 #include <chemkit/chemicalfile.h>
 
 const std::string dataPath = "../../data/";
-
-class UridineMinimizationBenchmark : public QObject
-{
-    Q_OBJECT
-
-    private slots:
-        void benchmark();
-};
 
 void UridineMinimizationBenchmark::benchmark()
 {
@@ -64,4 +56,3 @@ void UridineMinimizationBenchmark::benchmark()
 }
 
 QTEST_APPLESS_MAIN(UridineMinimizationBenchmark)
-#include "uridineminimizationbenchmark.moc"

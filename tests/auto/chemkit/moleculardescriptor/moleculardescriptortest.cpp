@@ -20,19 +20,11 @@
 **
 ******************************************************************************/
 
-#include <QtTest>
+#include "moleculardescriptortest.h"
 
 #include <chemkit/moleculardescriptor.h>
 
 #include "mockdescriptor.h"
-
-class MolecularDescriptorTest : public QObject
-{
-    Q_OBJECT
-
-    private slots:
-        void name();
-};
 
 void MolecularDescriptorTest::name()
 {
@@ -41,4 +33,3 @@ void MolecularDescriptorTest::name()
 }
 
 QTEST_APPLESS_MAIN(MolecularDescriptorTest)
-#include "moleculardescriptortest.moc"

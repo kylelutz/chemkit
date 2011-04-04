@@ -20,14 +20,8 @@
 **
 ******************************************************************************/
 
-#include <QtTest>
+#include "nucleotidetest.h"
 
-class NucleotideTest : public QObject
-{
-    Q_OBJECT
-
-    private slots:
-};
+#include <chemkit/nucleotide.h>
 
 QTEST_APPLESS_MAIN(NucleotideTest)
-#include "nucleotidetest.moc"

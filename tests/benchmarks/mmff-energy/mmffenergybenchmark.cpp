@@ -20,21 +20,13 @@
 **
 ******************************************************************************/
 
-#include <QtTest>
+#include "mmffenergybenchmark.h"
 
 #include <chemkit/molecule.h>
 #include <chemkit/forcefield.h>
 #include <chemkit/chemicalfile.h>
 
 const std::string dataPath = "../../data/";
-
-class MmffEnergyBenchmark : public QObject
-{
-    Q_OBJECT
-
-    private slots:
-        void benchmark();
-};
 
 void MmffEnergyBenchmark::benchmark()
 {
@@ -70,4 +62,3 @@ void MmffEnergyBenchmark::benchmark()
 }
 
 QTEST_APPLESS_MAIN(MmffEnergyBenchmark)
-#include "mmffenergybenchmark.moc"

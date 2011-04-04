@@ -20,22 +20,12 @@
 **
 ******************************************************************************/
 
-#include <QtTest>
+#include "hydrogenbondstest.h"
 
 #include <algorithm>
 
 #include <chemkit/molecule.h>
 #include <chemkit/moleculardescriptor.h>
-
-class HydrogenBondsTest : public QObject
-{
-    Q_OBJECT
-
-    private slots:
-        void initTestCase();
-        void ethanol();
-        void guanine();
-};
 
 void HydrogenBondsTest::initTestCase()
 {
@@ -63,4 +53,3 @@ void HydrogenBondsTest::guanine()
 }
 
 QTEST_APPLESS_MAIN(HydrogenBondsTest)
-#include "hydrogenbondstest.moc"

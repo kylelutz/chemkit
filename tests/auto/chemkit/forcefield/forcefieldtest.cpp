@@ -20,7 +20,7 @@
 **
 ******************************************************************************/
 
-#include <QtTest>
+#include "forcefieldtest.h" 
 
 #include <algorithm>
 
@@ -29,20 +29,6 @@
 #include <chemkit/forcefield.h>
 
 #include "mockforcefield.h"
-
-class ForceFieldTest : public QObject
-{
-    Q_OBJECT
-
-    private:
-        MockForceFieldPlugin *m_plugin;
-
-    private slots:
-        void initTestCase();
-        void create();
-        void name();
-        void cleanupTestCase();
-};
 
 void ForceFieldTest::initTestCase()
 {
@@ -78,4 +64,3 @@ void ForceFieldTest::cleanupTestCase()
 }
 
 QTEST_APPLESS_MAIN(ForceFieldTest)
-#include "forcefieldtest.moc"

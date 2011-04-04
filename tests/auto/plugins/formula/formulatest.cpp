@@ -20,22 +20,12 @@
 **
 ******************************************************************************/
 
-#include <QtTest>
+#include "formulatest.h"
 
 #include <algorithm>
 
 #include <chemkit/molecule.h>
 #include <chemkit/lineformat.h>
-
-class FormulaTest : public QObject
-{
-    Q_OBJECT
-
-    private slots:
-        void initTestCase();
-        void read();
-        void write();
-};
 
 void FormulaTest::initTestCase()
 {
@@ -100,4 +90,3 @@ void FormulaTest::write()
 }
 
 QTEST_APPLESS_MAIN(FormulaTest)
-#include "formulatest.moc"

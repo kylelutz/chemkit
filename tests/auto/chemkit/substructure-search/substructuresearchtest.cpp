@@ -20,47 +20,14 @@
 **
 ******************************************************************************/
 
-#include <QtTest>
-
-#include <chemkit/molecule.h>
-#include <chemkit/chemicalfile.h>
-
 // The substructure-search test checks the Molecule::isSubstructureOf() method
 // against a variety of small molecules. Each one is tested against every other
 // to ensure that substructure mappings are correctly detected.
-class SubstructureSearchTest : public QObject
-{
-    Q_OBJECT
 
-    private slots:
-        void initTestCase();
-        void cleanupTestCase();
+#include "substructuresearchtest.h"
 
-        void benzene();
-        void butane();
-        void cyclopropane();
-        void ethane();
-        void ethanol();
-        void indole();
-        void methane();
-        void methanol();
-        void phenol();
-        void propane();
-
-        void protein();
-
-    private:
-        chemkit::Molecule *m_benzene;
-        chemkit::Molecule *m_butane;
-        chemkit::Molecule *m_cyclopropane;
-        chemkit::Molecule *m_ethane;
-        chemkit::Molecule *m_ethanol;
-        chemkit::Molecule *m_indole;
-        chemkit::Molecule *m_methane;
-        chemkit::Molecule *m_methanol;
-        chemkit::Molecule *m_phenol;
-        chemkit::Molecule *m_propane;
-};
+#include <chemkit/molecule.h>
+#include <chemkit/chemicalfile.h>
 
 void SubstructureSearchTest::initTestCase()
 {
@@ -293,4 +260,3 @@ void SubstructureSearchTest::protein()
 }
 
 QTEST_APPLESS_MAIN(SubstructureSearchTest)
-#include "substructuresearchtest.moc"

@@ -20,17 +20,9 @@
 **
 ******************************************************************************/
 
-#include <QtTest>
+#include "scalarfieldtest.h" 
 
 #include <chemkit/scalarfield.h>
-
-class ScalarFieldTest : public QObject
-{
-    Q_OBJECT
-
-    private slots:
-        void origin();
-};
 
 void ScalarFieldTest::origin()
 {
@@ -42,4 +34,3 @@ void ScalarFieldTest::origin()
 }
 
 QTEST_APPLESS_MAIN(ScalarFieldTest)
-#include "scalarfieldtest.moc"

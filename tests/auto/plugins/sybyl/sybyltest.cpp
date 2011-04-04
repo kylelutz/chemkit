@@ -20,7 +20,7 @@
 **
 ******************************************************************************/
 
-#include <QtTest>
+#include "sybyltest.h"
 
 #include <algorithm>
 
@@ -30,16 +30,6 @@
 #include <chemkit/chemicalfileformat.h>
 
 const std::string dataPath = "../../../data/";
-
-class SybylTest : public QObject
-{
-    Q_OBJECT
-
-    private slots:
-        void initTestCase();
-        void readMol2_data();
-        void readMol2();
-};
 
 void SybylTest::initTestCase()
 {
@@ -76,4 +66,3 @@ void SybylTest::readMol2()
 }
 
 QTEST_APPLESS_MAIN(SybylTest)
-#include "sybyltest.moc"

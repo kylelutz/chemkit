@@ -25,21 +25,13 @@
 // (PDB ID: 2DHB). The protein contains 146 residues and 2201
 // atoms.
 
-#include <QtTest>
+#include "proteinsurfacebenchmark.h"
 
 #include <chemkit/polymer.h>
 #include <chemkit/polymerfile.h>
 #include <chemkit/molecularsurface.h>
 
 const std::string dataPath = "../../data/";
-
-class ProteinSurfaceBenchmark : public QObject
-{
-    Q_OBJECT
-
-    private slots:
-        void benchmark();
-};
 
 void ProteinSurfaceBenchmark::benchmark()
 {
@@ -62,4 +54,3 @@ void ProteinSurfaceBenchmark::benchmark()
 }
 
 QTEST_APPLESS_MAIN(ProteinSurfaceBenchmark)
-#include "proteinsurfacebenchmark.moc"

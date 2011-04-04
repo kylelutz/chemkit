@@ -20,17 +20,9 @@
 **
 ******************************************************************************/
 
-#include <QtTest>
+#include "alphashapetest.h"
 
 #include <chemkit/alphashape.h>
-
-class AlphaShapeTest : public QObject
-{
-    Q_OBJECT
-
-    private slots:
-        void alphaValue();
-};
 
 void AlphaShapeTest::alphaValue()
 {
@@ -45,4 +37,3 @@ void AlphaShapeTest::alphaValue()
 }
 
 QTEST_APPLESS_MAIN(AlphaShapeTest)
-#include "alphashapetest.moc"

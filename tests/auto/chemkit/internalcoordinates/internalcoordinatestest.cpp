@@ -20,16 +20,8 @@
 **
 ******************************************************************************/
 
-#include <QtTest>
+#include "internalcoordinatestest.h"
 
 #include <chemkit/internalcoordinates.h>
 
-class InternalCoordinatesTest : public QObject
-{
-    Q_OBJECT
-
-    private slots:
-};
-
 QTEST_APPLESS_MAIN(InternalCoordinatesTest)
-#include "internalcoordinatestest.moc"

@@ -20,7 +20,7 @@
 **
 ******************************************************************************/
 
-#include <QtTest>
+#include "atomtypertest.h"
 
 #include <algorithm>
 
@@ -28,22 +28,6 @@
 #include <chemkit/atomtyper.h>
 
 #include "mockatomtyper.h"
-
-class AtomTyperTest : public QObject
-{
-    Q_OBJECT
-
-    private slots:
-        void initTestCase();
-        void create();
-        void name();
-        void molecule();
-        void type();
-        void cleanupTestCase();
-
-    private:
-        MockAtomTyperPlugin *m_plugin;
-};
 
 void AtomTyperTest::initTestCase()
 {
@@ -111,4 +95,3 @@ void AtomTyperTest::cleanupTestCase()
 }
 
 QTEST_APPLESS_MAIN(AtomTyperTest)
-#include "atomtypertest.moc"

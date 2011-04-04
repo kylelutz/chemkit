@@ -20,7 +20,7 @@
 **
 ******************************************************************************/
 
-#include <QtTest>
+#include "moleculealignertest.h"
 
 #include <chemkit/polymer.h>
 #include <chemkit/molecule.h>
@@ -29,15 +29,6 @@
 #include <chemkit/moleculealigner.h>
 
 const std::string dataPath = "../../../data/";
-
-class MoleculeAlignerTest : public QObject
-{
-    Q_OBJECT
-
-    private slots:
-        void water();
-        void ubiquitin();
-};
 
 #define COMPARE_DOUBLES(actual, expected) QVERIFY(qAbs(actual - expected) < 0.001)
 
@@ -149,4 +140,3 @@ void MoleculeAlignerTest::ubiquitin()
 }
 
 QTEST_APPLESS_MAIN(MoleculeAlignerTest)
-#include "moleculealignertest.moc"

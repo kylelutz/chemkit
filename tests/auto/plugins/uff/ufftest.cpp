@@ -20,7 +20,7 @@
 **
 ******************************************************************************/
 
-#include <QtTest>
+#include "ufftest.h"
 
 #include <algorithm>
 
@@ -28,14 +28,6 @@
 #include <chemkit/atomtyper.h>
 #include <chemkit/forcefield.h>
 #include <chemkit/chemicalfile.h>
-
-class UffTest : public QObject
-{
-    Q_OBJECT
-
-    private slots:
-        void initTestCase();
-};
 
 void UffTest::initTestCase()
 {
@@ -47,4 +39,3 @@ void UffTest::initTestCase()
 }
 
 QTEST_APPLESS_MAIN(UffTest)
-#include "ufftest.moc"

@@ -20,7 +20,7 @@
 **
 ******************************************************************************/
 
-#include <QtTest>
+#include "cubetest.h"
 
 #include <algorithm>
 
@@ -29,15 +29,6 @@
 #include <chemkit/chemicalfileformat.h>
 
 const std::string dataPath = "../../../data/";
-
-class CubeTest : public QObject
-{
-    Q_OBJECT
-
-    private slots:
-        void initTestCase();
-        void readBenzene();
-};
 
 void CubeTest::initTestCase()
 {
@@ -60,4 +51,3 @@ void CubeTest::readBenzene()
 }
 
 QTEST_APPLESS_MAIN(CubeTest)
-#include "cubetest.moc"

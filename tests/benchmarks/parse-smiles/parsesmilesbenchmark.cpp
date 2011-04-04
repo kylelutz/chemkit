@@ -22,18 +22,10 @@
 
 // This benchmark measures the performance of the SMILES parser.
 
-#include <QtTest>
+#include "parsesmilesbenchmark.h"
 
 #include <chemkit/molecule.h>
 #include <chemkit/chemicalfile.h>
-
-class ParseSmilesBenchmark : public QObject
-{
-    Q_OBJECT
-
-    private slots:
-        void benchmark();
-};
 
 void ParseSmilesBenchmark::benchmark()
 {
@@ -49,4 +41,3 @@ void ParseSmilesBenchmark::benchmark()
 }
 
 QTEST_APPLESS_MAIN(ParseSmilesBenchmark)
-#include "parsesmilesbenchmark.moc"

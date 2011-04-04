@@ -20,22 +20,10 @@
 **
 ******************************************************************************/
 
-#include <QtTest>
+#include "fragmenttest.h"
 
 #include <chemkit/fragment.h>
 #include <chemkit/molecule.h>
-
-class FragmentTest : public QObject
-{
-    Q_OBJECT
-
-    private slots:
-        void basic();
-        void molecule();
-        void atoms();
-        void contains();
-        void bonds();
-};
 
 void FragmentTest::basic()
 {
@@ -113,4 +101,3 @@ void FragmentTest::bonds()
 }
 
 QTEST_APPLESS_MAIN(FragmentTest)
-#include "fragmenttest.moc"

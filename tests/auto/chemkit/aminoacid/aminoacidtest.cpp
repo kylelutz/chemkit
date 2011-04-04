@@ -20,14 +20,6 @@
 **
 ******************************************************************************/
 
-#include <QtTest>
-
-class AminoAcidTest : public QObject
-{
-    Q_OBJECT
-
-    private slots:
-};
+#include "aminoacidtest.h"
 
 QTEST_APPLESS_MAIN(AminoAcidTest)
-#include "aminoacidtest.moc"

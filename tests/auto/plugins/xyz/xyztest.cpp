@@ -20,7 +20,7 @@
 **
 ******************************************************************************/
 
-#include <QtTest>
+#include "xyztest.h"
 
 #include <algorithm>
 
@@ -29,16 +29,6 @@
 #include <chemkit/chemicalfileformat.h>
 
 const std::string dataPath = "../../../data/";
-
-class XyzTest : public QObject
-{
-    Q_OBJECT
-
-    private slots:
-        void initTestCase();
-        void read_data();
-        void read();
-};
 
 void XyzTest::initTestCase()
 {
@@ -73,4 +63,3 @@ void XyzTest::read()
 }
 
 QTEST_APPLESS_MAIN(XyzTest)
-#include "xyztest.moc"

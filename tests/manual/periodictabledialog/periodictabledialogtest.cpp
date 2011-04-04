@@ -20,17 +20,9 @@
 **
 ******************************************************************************/
 
-#include <QtTest>
+#include "periodictabledialogtest.h"
 
 #include <chemkit/periodictabledialog.h>
-
-class PeriodicTableDialogTest : public QObject
-{
-	Q_OBJECT
-
-	private slots:
-        void getElement();
-};
 
 void PeriodicTableDialogTest::getElement()
 {
@@ -39,4 +31,3 @@ void PeriodicTableDialogTest::getElement()
 }
 
 QTEST_MAIN(PeriodicTableDialogTest)
-#include "periodictabledialogtest.moc"

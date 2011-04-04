@@ -20,7 +20,7 @@
 **
 ******************************************************************************/
 
-#include <QtTest>
+#include "cmltest.h" 
 
 #include <algorithm>
 
@@ -28,16 +28,6 @@
 #include <chemkit/chemicalfileformat.h>
 
 const std::string dataPath = "../../../data/";
-
-class CmlTest : public QObject
-{
-    Q_OBJECT
-
-    private slots:
-        void initTestCase();
-        void read_data();
-        void read();
-};
 
 void CmlTest::initTestCase()
 {
@@ -74,4 +64,3 @@ void CmlTest::read()
 }
 
 QTEST_APPLESS_MAIN(CmlTest)
-#include "cmltest.moc"

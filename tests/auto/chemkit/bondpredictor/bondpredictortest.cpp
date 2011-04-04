@@ -20,18 +20,10 @@
 **
 ******************************************************************************/
 
-#include <QtTest>
+#include "bondpredictortest.h"
 
 #include <chemkit/molecule.h>
 #include <chemkit/bondpredictor.h>
-
-class BondPredictorTest : public QObject
-{
-    Q_OBJECT
-
-    private slots:
-        void predictBonds();
-};
 
 void BondPredictorTest::predictBonds()
 {
@@ -60,4 +52,3 @@ void BondPredictorTest::predictBonds()
 }
 
 QTEST_APPLESS_MAIN(BondPredictorTest)
-#include "bondpredictortest.moc"

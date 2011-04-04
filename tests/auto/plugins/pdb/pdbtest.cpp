@@ -20,7 +20,7 @@
 **
 ******************************************************************************/
 
-#include <QtTest>
+#include "pdbtest.h"
 
 #include <algorithm>
 
@@ -30,19 +30,6 @@
 #include <chemkit/polymerfileformat.h>
 
 const std::string dataPath = "../../../data/";
-
-class PdbTest : public QObject
-{
-    Q_OBJECT
-
-    private slots:
-        void initTestCase();
-        void read_1BNA();
-        void read_1UBQ();
-        void read_2DHB();
-        void read_alphabet();
-        void read_fmc();
-};
 
 void PdbTest::initTestCase()
 {
@@ -175,4 +162,3 @@ void PdbTest::read_fmc()
 }
 
 QTEST_APPLESS_MAIN(PdbTest)
-#include "pdbtest.moc"

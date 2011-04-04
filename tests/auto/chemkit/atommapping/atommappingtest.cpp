@@ -20,21 +20,10 @@
 **
 ******************************************************************************/
 
-#include <QtTest>
+#include "atommappingtest.h"
 
 #include <chemkit/molecule.h>
 #include <chemkit/atommapping.h>
-
-class AtomMappingTest : public QObject
-{
-    Q_OBJECT
-
-    private slots:
-        void basic();
-        void size();
-        void isEmpty();
-        void map();
-};
 
 void AtomMappingTest::basic()
 {
@@ -115,4 +104,3 @@ void AtomMappingTest::map()
 }
 
 QTEST_APPLESS_MAIN(AtomMappingTest)
-#include "atommappingtest.moc"

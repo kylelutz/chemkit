@@ -20,22 +20,13 @@
 **
 ******************************************************************************/
 
-#include <QtTest>
+#include "proteindatabanktest.h"
 
 #include <chemkit/polymer.h>
 #include <chemkit/molecule.h>
 #include <chemkit/polymerfile.h>
 #include <chemkit/polymerchain.h>
 #include <chemkit/proteindatabank.h>
-
-class ProteinDataBankTest : public QObject
-{
-	Q_OBJECT
-
-	private slots:
-        void downloadFile();
-        void downloadLigand();
-};
 
 void ProteinDataBankTest::downloadFile()
 {
@@ -64,4 +55,3 @@ void ProteinDataBankTest::downloadLigand()
 }
 
 QTEST_MAIN(ProteinDataBankTest)
-#include "proteindatabanktest.moc"

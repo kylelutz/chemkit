@@ -25,18 +25,10 @@
 //
 // Based on: http://depth-first.com/articles/2009/01/20/open-benchmarks-for-cheminformatics-first-performance-comparison-between-cdk-and-mx
 
-#include <QtTest>
+#include "molecularmassesbenchmark.h"
 
 #include <chemkit/molecule.h>
 #include <chemkit/chemicalfile.h>
-
-class MolecularMassesBenchmark : public QObject
-{
-    Q_OBJECT
-
-    private slots:
-        void benchmark();
-};
 
 void MolecularMassesBenchmark::benchmark()
 {
@@ -58,4 +50,3 @@ void MolecularMassesBenchmark::benchmark()
 }
 
 QTEST_APPLESS_MAIN(MolecularMassesBenchmark)
-#include "molecularmassesbenchmark.moc"

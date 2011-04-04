@@ -20,22 +20,10 @@
 **
 ******************************************************************************/
 
-#include <QtTest>
+#include "staticmatrixtest.h"
 
 #include <chemkit/staticmatrix.h>
 #include <chemkit/staticvector.h>
-
-class StaticMatrixTest : public QObject
-{
-    Q_OBJECT
-
-    private slots:
-        void multiply();
-        void multiplyScalar();
-        void multiplyVector();
-        void determinant();
-        void invert();
-};
 
 void StaticMatrixTest::multiply()
 {
@@ -190,4 +178,3 @@ void StaticMatrixTest::invert()
 }
 
 QTEST_APPLESS_MAIN(StaticMatrixTest)
-#include "staticmatrixtest.moc"

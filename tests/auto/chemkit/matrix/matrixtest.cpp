@@ -20,18 +20,9 @@
 **
 ******************************************************************************/
 
-#include <QtTest>
+#include "matrixtest.h"
 
 #include <chemkit/matrix.h>
-
-class MatrixTest : public QObject
-{
-    Q_OBJECT
-
-    private slots:
-        void multiply();
-        void identity();
-};
 
 void MatrixTest::multiply()
 {
@@ -66,4 +57,3 @@ void MatrixTest::identity()
 }
 
 QTEST_APPLESS_MAIN(MatrixTest)
-#include "matrixtest.moc"

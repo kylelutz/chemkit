@@ -20,21 +20,13 @@
 **
 ******************************************************************************/
 
-#include <QtTest>
+#include "greptest.h"
+ 
 #include <chemkit/molecule.h>
 #include <chemkit/chemicalfile.h>
 
 const QString grepApplication = "../../../../bin/chemkit-grep";
 const QString testDataPath = "../../../data/";
-
-class GrepTest : public QObject
-{
-    Q_OBJECT
-
-    private slots:
-        void ironComposition();
-        void benzoicAcid();
-};
 
 void GrepTest::ironComposition()
 {
@@ -123,4 +115,3 @@ void GrepTest::benzoicAcid()
 }
 
 QTEST_APPLESS_MAIN(GrepTest)
-#include "greptest.moc"

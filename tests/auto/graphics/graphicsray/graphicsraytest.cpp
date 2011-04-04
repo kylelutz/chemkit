@@ -20,22 +20,9 @@
 **
 ******************************************************************************/
 
-#include <QtTest>
+#include "graphicsraytest.h"
 
 #include <chemkit/graphicsray.h>
-
-class GraphicsRayTest : public QObject
-{
-    Q_OBJECT
-
-    private slots:
-        void basic();
-        void setOrigin();
-        void setDirection();
-        void intersectsSphere();
-        void intersectsCylinder();
-        void pointAt();
-};
 
 void GraphicsRayTest::basic()
 {
@@ -111,4 +98,3 @@ void GraphicsRayTest::pointAt()
 }
 
 QTEST_APPLESS_MAIN(GraphicsRayTest)
-#include "graphicsraytest.moc"

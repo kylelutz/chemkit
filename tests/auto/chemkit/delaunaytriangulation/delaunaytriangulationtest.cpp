@@ -20,20 +20,11 @@
 **
 ******************************************************************************/
 
-#include <QtTest>
+#include "delaunaytriangulationtest.h"
 
 #include <algorithm>
 
 #include <chemkit/delaunaytriangulation.h>
-
-class DelaunayTriangulationTest : public QObject
-{
-    Q_OBJECT
-
-    private slots:
-        void joe89();
-        void serine();
-};
 
 // This test case is based on the example presented on page 725 of the
 // paper: "Three dimensional triganulations from local transformations"
@@ -146,4 +137,3 @@ void DelaunayTriangulationTest::serine()
 }
 
 QTEST_APPLESS_MAIN(DelaunayTriangulationTest)
-#include "delaunaytriangulationtest.moc"

@@ -20,27 +20,19 @@
 **
 ******************************************************************************/
 
-#include <QtTest>
+// The ConvertTest class tests the chemkit-convert tool. Each test
+// case converts a file to a different file format. The molecules in
+// the converted file are then verified against the original file to
+// ensure the conversion was correct. Each molecule is verified using
+// the Molecule::name() and Molecule::equals() methods.
+
+#include "converttest.h"
 
 #include <chemkit/molecule.h>
 #include <chemkit/chemicalfile.h>
 
 const std::string testDataPath = "../../../data/";
 const QString convertApplication = "../../../../bin/chemkit-convert";
-
-// The ConvertTest class tests the chemkit-convert tool. Each test
-// case converts a file to a different file format. The molecules in
-// the converted file are then verified against the original file to
-// ensure the conversion was correct. Each molecule is verified using
-// the Molecule::name() and Molecule::equals() methods.
-class ConvertTest : public QObject
-{
-    Q_OBJECT
-
-    private slots:
-        void convertEthanol();
-        void convertBenzenes();
-};
 
 void ConvertTest::convertEthanol()
 {
@@ -131,4 +123,3 @@ void ConvertTest::convertBenzenes()
 }
 
 QTEST_APPLESS_MAIN(ConvertTest)
-#include "converttest.moc"

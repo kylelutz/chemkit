@@ -20,7 +20,7 @@
 **
 ******************************************************************************/
 
-#include <QtTest>
+#include "fhztest.h"
 
 #include <algorithm>
 
@@ -29,16 +29,6 @@
 #include <chemkit/chemicalfileformat.h>
 
 const std::string dataPath = "../../../data/";
-
-class FhzTest : public QObject
-{
-    Q_OBJECT
-
-    private slots:
-        void initTestCase();
-        void read_data();
-        void read();
-};
 
 void FhzTest::initTestCase()
 {
@@ -74,4 +64,3 @@ void FhzTest::read()
 }
 
 QTEST_APPLESS_MAIN(FhzTest)
-#include "fhztest.moc"

@@ -20,22 +20,11 @@
 **
 ******************************************************************************/
 
-#include <QtTest>
+#include "pubchemtest.h"
 
 #include <chemkit/pubchem.h>
 #include <chemkit/molecule.h>
 #include <chemkit/chemicalfile.h>
-
-class PubChemTest : public QObject
-{
-	Q_OBJECT
-
-	private slots:
-        void downloadFile();
-        void downloadMultiFile();
-        void search();
-        void standardizeFormula();
-};
 
 void PubChemTest::downloadFile()
 {
@@ -92,4 +81,3 @@ void PubChemTest::standardizeFormula()
 }
 
 QTEST_MAIN(PubChemTest)
-#include "pubchemtest.moc"
