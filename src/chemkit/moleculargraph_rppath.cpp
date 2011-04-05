@@ -434,10 +434,10 @@ QList<Ring *> MolecularGraph::sssr_rpPath(const MolecularGraph *graph)
     // build list of rings
     QList<Ring *> rings;
     foreach(const std::vector<int> &ring, sssr){
-        QList<Atom *> atoms;
+        std::vector<Atom *> atoms;
 
         foreach(int atomIndex, ring){
-            atoms.append(graph->atom(atomIndex));
+            atoms.push_back(graph->atom(atomIndex));
         }
 
         rings.append(new Ring(atoms));

@@ -22,8 +22,11 @@
 
 #include "ring.h"
 
+#include <algorithm>
+
 #include "atom.h"
 #include "bond.h"
+#include "foreach.h"
 #include "molecule.h"
 
 namespace chemkit {
@@ -39,7 +42,7 @@ namespace chemkit {
 
 // --- Construction and Destruction ---------------------------------------- //
 /// Creates a new ring that contains the atoms is \p path.
-Ring::Ring(QList<Atom *> path)
+Ring::Ring(std::vector<Atom *> path)
     : m_atoms(path)
 {
     Q_ASSERT(isValid());
@@ -56,7 +59,7 @@ int Ring::atomCount(const Element &element) const
 {
     int count = 0;
 
-    Q_FOREACH(const Atom *atom, m_atoms){
+    foreach(const Atom *atom, m_atoms){
         if(atom->is(element)){
             count++;
         }
@@ -80,7 +83,7 @@ QList<Bond *> Ring::bonds() const
         bonds.append(m_atoms[i]->bondTo(m_atoms[i+1]));
     }
 
-    bonds.append(m_atoms.first()->bondTo(m_atoms.last()));
+    bonds.append(m_atoms.front()->bondTo(m_atoms.back()));
 
     return bonds;
 }
@@ -98,7 +101,7 @@ QList<Bond *> Ring::exocyclicBonds() const
 {
     QSet<Bond *> bonds;
 
-    Q_FOREACH(Atom *atom, m_atoms){
+    foreach(Atom *atom, m_atoms){
         Q_FOREACH(Bond *bond, atom->bonds()){
             if(!contains(bond)){
                 bonds.insert(bond);
@@ -120,7 +123,7 @@ int Ring::heteroatomCount() const
 {
     int count = 0;
 
-    Q_FOREACH(const Atom *atom, m_atoms){
+    foreach(const Atom *atom, m_atoms){
         if(!atom->is(Atom::Carbon)){
             count++;
         }
@@ -141,30 +144,30 @@ bool Ring::isHeterocycle() const
 Atom* Ring::root() const
 {
     int highestAtomicNumber = 0;
-    QList<Atom *> candidates;
+    std::vector<Atom *> candidates;
 
-    Q_FOREACH(Atom *atom, m_atoms){
+    foreach(Atom *atom, m_atoms){
         if(atom->is(Atom::Carbon))
             continue;
 
         if(atom->atomicNumber() > highestAtomicNumber){
             candidates.clear();
-            candidates.append(atom);
+            candidates.push_back(atom);
             highestAtomicNumber = atom->atomicNumber();
         }
         else if(atom->atomicNumber() == highestAtomicNumber){
-            candidates.append(atom);
+            candidates.push_back(atom);
         }
     }
 
-    if(candidates.isEmpty()){
+    if(candidates.empty()){
         candidates = m_atoms;
     }
 
     Atom *root = 0;
     int highestNeighborCount = 0;
 
-    Q_FOREACH(Atom *atom, candidates){
+    foreach(Atom *atom, candidates){
         if(atom->neighborCount() > highestNeighborCount){
             root = atom;
             highestNeighborCount = atom->neighborCount();
@@ -178,24 +181,28 @@ Atom* Ring::root() const
 /// root. If root is 0, the atom returned from root() is used.
 int Ring::position(const Atom *atom, const Atom *root) const
 {
-    if(!root || !contains(root))
+    if(!root || !contains(root)){
         root = this->root();
+    }
 
-    int index = m_atoms.indexOf(const_cast<Atom *>(atom));
+    int index = std::distance(m_atoms.begin(), std::find(m_atoms.begin(), m_atoms.end(), atom));
 
-    if(index == -1 || atom == root)
+    if(index == m_atoms.size() || atom == root){
         return 0;
+    }
 
-    for(int i = 1; i <= (m_atoms.size() / 2); i++){
-        int a1, a2;
-        a1 = (index + i) % m_atoms.size();
-        a2 = (index - i) % m_atoms.size();
+    int size = m_atoms.size();
 
-        if(a1 < 0) a1 += m_atoms.size();
-        if(a2 < 0) a2 += m_atoms.size();
+    for(int i = 1; i <= (size / 2); i++){
+        int a1 = (index + i) % size;
+        int a2 = (index - i) % size;
 
-        if(m_atoms[a1] == root || m_atoms[a2] == root)
+        if(a1 < 0) a1 += size;
+        if(a2 < 0) a2 += size;
+
+        if(m_atoms[a1] == root || m_atoms[a2] == root){
             return i;
+        }
     }
 
     // should not get here
@@ -293,14 +300,14 @@ bool Ring::isValid() const
 
 const Atom* Ring::nextAtom(const Atom *atom) const
 {
-    int index = m_atoms.indexOf(const_cast<Atom *>(atom));
+    int index = std::distance(m_atoms.begin(), std::find(m_atoms.begin(), m_atoms.end(), atom));
 
     return m_atoms[(index+1) % size()];
 }
 
 const Atom* Ring::previousAtom(const Atom *atom) const
 {
-    int index = m_atoms.indexOf(const_cast<Atom *>(atom));
+    int index = std::distance(m_atoms.begin(), std::find(m_atoms.begin(), m_atoms.end(), atom));
 
     if(index == 0)
         index = size()-1;
@@ -322,7 +329,7 @@ const Bond* Ring::previousBond(const Atom *atom) const
 
 bool Ring::isPlanar() const
 {
-    Q_FOREACH(const Atom *atom, m_atoms){
+    foreach(const Atom *atom, m_atoms){
         if(atom->is(Atom::Carbon) && atom->neighborCount() != 3){
             return false;
         }

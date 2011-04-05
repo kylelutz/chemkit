@@ -25,6 +25,8 @@
 
 #include "chemkit.h"
 
+#include <vector>
+
 #include <QtCore>
 
 namespace chemkit {
@@ -45,7 +47,7 @@ class CHEMKIT_EXPORT Ring
 
         // structure
         Atom* atom(int index) const;
-        QList<Atom *> atoms() const;
+        std::vector<Atom *> atoms() const;
         int atomCount() const;
         int atomCount(const Element &element) const;
         Bond* bond(int index) const;
@@ -66,7 +68,7 @@ class CHEMKIT_EXPORT Ring
         bool isAromatic() const;
 
     private:
-        Ring(QList<Atom *> path);
+        Ring(std::vector<Atom *> path);
         ~Ring();
 
         // internal methods
@@ -84,7 +86,7 @@ class CHEMKIT_EXPORT Ring
         friend class MolecularGraph;
 
     private:
-        QList<Atom *> m_atoms;
+        std::vector<Atom *> m_atoms;
 };
 
 } // end chemkit namespace

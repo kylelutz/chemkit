@@ -25,6 +25,9 @@
 
 #include "ring.h"
 
+#include <algorithm>
+#include <boost/foreach.hpp>
+
 #include "atom.h"
 #include "bond.h"
 
@@ -53,11 +56,11 @@ inline Fragment* Ring::fragment() const
 /// Returns the atom at \p index in the ring.
 inline Atom* Ring::atom(int index) const
 {
-    return m_atoms.value(index);
+    return m_atoms[index];
 }
 
 /// Returns the atoms in the ring.
-inline QList<Atom *> Ring::atoms() const
+inline std::vector<Atom *> Ring::atoms() const
 {
     return m_atoms;
 }
@@ -71,7 +74,7 @@ inline int Ring::atomCount() const
 /// Returns \c true if the ring contains atom.
 inline bool Ring::contains(const Atom *atom) const
 {
-    return m_atoms.contains(const_cast<Atom *>(atom));
+    return std::find(m_atoms.begin(), m_atoms.end(), atom) != m_atoms.end();
 }
 
 /// Returns \c true if the ring contains bond.
@@ -83,7 +86,7 @@ inline bool Ring::contains(const Bond *bond) const
 /// Returns \c true if the ring contains an atom with atomicNumber.
 inline bool Ring::contains(const Element &element) const
 {
-    Q_FOREACH(Atom *atom, m_atoms){
+    BOOST_FOREACH(Atom *atom, m_atoms){
         if(atom->is(element)){
             return true;
         }
