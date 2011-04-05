@@ -52,7 +52,7 @@ class MoleculePrivate
         std::string name;
         std::vector<Bond *> bonds;
         std::vector<Residue *> residues;
-        QList<Conformer *> conformers;
+        std::vector<Conformer *> conformers;
         Conformer *conformer;
         bool ringsPerceived;
         std::vector<Ring *> rings;
@@ -1023,7 +1023,7 @@ Conformer* Molecule::addConformer()
         conformers();
 
     Conformer *conformer = new Conformer(this);
-    d->conformers.append(conformer);
+    d->conformers.push_back(conformer);
     return conformer;
 }
 
@@ -1031,16 +1031,17 @@ Conformer* Molecule::addConformer()
 /// conformer cannot be removed.
 void Molecule::removeConformer(Conformer *conformer)
 {
-    if(!d->conformers.contains(conformer)){
-        return;
-    }
-
     // forbid removal of the currently active conformer
     if(conformer == d->conformer){
         return;
     }
 
-    d->conformers.removeOne(conformer);
+    std::vector<Conformer *>::iterator location = std::find(d->conformers.begin(), d->conformers.end(), conformer);
+    if(location == d->conformers.end()){
+        return;
+    }
+
+    d->conformers.erase(location);
 
     delete conformer;
 }
@@ -1080,15 +1081,15 @@ Conformer* Molecule::conformer() const
 /// \endcode
 Conformer* Molecule::conformer(int index) const
 {
-    return conformers().value(index, 0);
+    return conformers()[index];
 }
 
 /// Returns a list of all conformers in the molecule.
-QList<Conformer *> Molecule::conformers() const
+std::vector<Conformer *> Molecule::conformers() const
 {
-    if(d->conformers.isEmpty()){
+    if(d->conformers.empty()){
         d->conformer = new Conformer(this);
-        d->conformers.append(d->conformer);
+        d->conformers.push_back(d->conformer);
     }
 
     return d->conformers;

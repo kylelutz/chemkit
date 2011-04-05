@@ -162,7 +162,7 @@ class CHEMKIT_EXPORT Molecule
         void setConformer(Conformer *conformer);
         Conformer* conformer() const;
         Conformer* conformer(int index) const;
-        QList<Conformer *> conformers() const;
+        std::vector<Conformer *> conformers() const;
         int conformerCount() const;
 
         // operators

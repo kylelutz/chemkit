@@ -537,7 +537,7 @@ void MoleculeTest::conformers()
     chemkit::Atom *C1 = molecule.addAtom("C");
     chemkit::Atom *C2 = molecule.addAtom("C");
     QCOMPARE(molecule.conformerCount(), 1);
-    QCOMPARE(molecule.conformers().size(), 1);
+    QCOMPARE(molecule.conformers().size(), 1UL);
     QVERIFY(molecule.conformer() != 0);
 
     chemkit::Conformer *conformer = molecule.addConformer();
