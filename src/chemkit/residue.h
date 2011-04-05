@@ -26,6 +26,7 @@
 #include "chemkit.h"
 
 #include <string>
+#include <vector>
 
 #include <QtCore>
 
@@ -59,7 +60,7 @@ class CHEMKIT_EXPORT Residue
         // structure
         void addAtom(Atom *atom);
         void removeAtom(Atom *atom);
-        QList<Atom *> atoms() const;
+        std::vector<Atom *> atoms() const;
         int atomCount() const;
         QList<Bond *> bonds() const;
         int bondCount() const;

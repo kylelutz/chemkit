@@ -23,6 +23,7 @@
 #include "residue.h"
 
 #include <map>
+#include <algorithm>
 
 #include "atom.h"
 #include "molecule.h"
@@ -35,7 +36,7 @@ class ResiduePrivate
     public:
         int type;
         Molecule *molecule;
-        QList<Atom *> atoms;
+        std::vector<Atom *> atoms;
         std::map<std::string, const Atom *> types;
 };
 
@@ -93,14 +94,15 @@ void Residue::addAtom(Atom *atom)
         return;
     }
 
-    d->atoms.append(atom);
+    d->atoms.push_back(atom);
 }
 
 /// Removes an atom from the residue.
 void Residue::removeAtom(Atom *atom)
 {
-    if(contains(atom)){
-        d->atoms.removeOne(atom);
+    std::vector<Atom *>::iterator location = std::find(d->atoms.begin(), d->atoms.end(), atom);
+    if(location != d->atoms.end()){
+        d->atoms.erase(location);
 
         if(atom->residue() == this){
             atom->setResidue(0);
@@ -109,7 +111,7 @@ void Residue::removeAtom(Atom *atom)
 }
 
 /// Returns a list of all the atoms in the residue.
-QList<Atom *> Residue::atoms() const
+std::vector<Atom *> Residue::atoms() const
 {
     return d->atoms;
 }
@@ -150,7 +152,7 @@ bool Residue::contains(const Atom *atom) const
     if(atom->residue() == this){
         return true;
     }
-    else if(d->atoms.contains(const_cast<Atom *>(atom))){
+    else if(std::find(d->atoms.begin(), d->atoms.end(), atom) != d->atoms.end()){
         return true;
     }
     else{
