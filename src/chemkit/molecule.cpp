@@ -55,7 +55,7 @@ class MoleculePrivate
         QList<Conformer *> conformers;
         Conformer *conformer;
         bool ringsPerceived;
-        QList<Ring *> rings;
+        std::vector<Ring *> rings;
         bool fragmentsPerceived;
         QList<Fragment *> fragments;
         QList<MoleculeWatcher *> watchers;
@@ -695,7 +695,7 @@ Moiety Molecule::find(const Molecule *moiety, CompareFlags flags) const
 /// \endcode
 Ring* Molecule::ring(int index) const
 {
-    return rings().value(index, 0);
+    return rings()[index];
 }
 
 /// Returns a list of all rings in the molecule.
@@ -705,7 +705,7 @@ Ring* Molecule::ring(int index) const
 ///          unchanged. If any atoms or bonds in the molecule are
 ///          added or removed the old results must be discarded and
 ///          this method must be called again.
-QList<Ring *> Molecule::rings() const
+std::vector<Ring *> Molecule::rings() const
 {
     // only run ring perception if neccessary
     if(!ringsPerceived()){
@@ -732,7 +732,7 @@ void Molecule::setRingsPerceived(bool perceived) const
     }
 
     if(perceived == false){
-        Q_FOREACH(Ring *ring, d->rings){
+        foreach(Ring *ring, d->rings){
             delete ring;
         }
 

@@ -297,13 +297,13 @@ bool isUnique(const std::vector<int> &path, const std::vector<std::vector<int> >
 // molecular graph using the RP-Path algorithm. The graph is expected to
 // contain a single fragment and to have all terminal nodes removed (i.e. all
 // verticies should have degree >= 2).
-QList<Ring *> MolecularGraph::sssr_rpPath(const MolecularGraph *graph)
+std::vector<Ring *> MolecularGraph::sssr_rpPath(const MolecularGraph *graph)
 {
     unsigned int n = graph->size();
 
     unsigned int ringCount = graph->bondCount() - graph->atomCount() + 1;
     if(ringCount == 0){
-        return QList<Ring *>();
+        return std::vector<Ring *>();
     }
 
     // algorithm 1 - create the distance and pid matrices
@@ -432,7 +432,7 @@ QList<Ring *> MolecularGraph::sssr_rpPath(const MolecularGraph *graph)
     }
 
     // build list of rings
-    QList<Ring *> rings;
+    std::vector<Ring *> rings;
     foreach(const std::vector<int> &ring, sssr){
         std::vector<Atom *> atoms;
 
@@ -440,7 +440,7 @@ QList<Ring *> MolecularGraph::sssr_rpPath(const MolecularGraph *graph)
             atoms.push_back(graph->atom(atomIndex));
         }
 
-        rings.append(new Ring(atoms));
+        rings.push_back(new Ring(atoms));
     }
 
     return rings;

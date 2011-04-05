@@ -336,21 +336,22 @@ void MolecularGraph::initializeLabels()
     }
 }
 
-QList<Ring *> MolecularGraph::sssr(const Molecule *molecule)
+std::vector<Ring *> MolecularGraph::sssr(const Molecule *molecule)
 {
-    QList<Ring *> rings;
+    std::vector<Ring *> rings;
 
     Q_FOREACH(const Fragment *fragment, molecule->fragments()){
-        rings += sssr(fragment);
+        std::vector<Ring *> fragmentRings = sssr(fragment);
+        rings.insert(rings.end(), fragmentRings.begin(), fragmentRings.end());
     }
 
     return rings;
 }
 
-QList<Ring *> MolecularGraph::sssr(const Fragment *fragment)
+std::vector<Ring *> MolecularGraph::sssr(const Fragment *fragment)
 {
     MolecularGraph *graph = cyclicGraph(fragment);
-    QList<Ring *> rings = sssr_rpPath(graph);
+    std::vector<Ring *> rings = sssr_rpPath(graph);
     delete graph;
     return rings;
 }

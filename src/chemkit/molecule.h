@@ -129,7 +129,7 @@ class CHEMKIT_EXPORT Molecule
 
         // ring perception
         Ring* ring(int index) const;
-        QList<Ring *> rings() const;
+        std::vector<Ring *> rings() const;
         int ringCount() const;
 
         // fragment perception

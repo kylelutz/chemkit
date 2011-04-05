@@ -361,27 +361,27 @@ void MoleculeTest::find()
 void MoleculeTest::rings()
 {
     chemkit::Molecule empty;
-    QCOMPARE(empty.rings().size(), 0);
+    QCOMPARE(empty.rings().size(), 0UL);
     QCOMPARE(empty.ringCount(), 0);
 
     chemkit::Molecule cyclopropane;
     chemkit::Atom *cyclopropane_C1 = cyclopropane.addAtom("C");
     chemkit::Atom *cyclopropane_C2 = cyclopropane.addAtom("C");
     chemkit::Atom *cyclopropane_C3 = cyclopropane.addAtom("C");
-    QCOMPARE(cyclopropane.rings().size(), 0);
+    QCOMPARE(cyclopropane.rings().size(), 0UL);
     QCOMPARE(cyclopropane.ringCount(), 0);
 
     cyclopropane.addBond(cyclopropane_C1, cyclopropane_C2);
     cyclopropane.addBond(cyclopropane_C2, cyclopropane_C3);
-    QCOMPARE(cyclopropane.rings().size(), 0);
+    QCOMPARE(cyclopropane.rings().size(), 0UL);
     QCOMPARE(cyclopropane.ringCount(), 0);
 
     cyclopropane.addBond(cyclopropane_C1, cyclopropane_C3);
-    QCOMPARE(cyclopropane.rings().size(), 1);
+    QCOMPARE(cyclopropane.rings().size(), 1UL);
     QCOMPARE(cyclopropane.ringCount(), 1);
 
     cyclopropane.removeAtom(cyclopropane_C2);
-    QCOMPARE(cyclopropane.rings().size(), 0);
+    QCOMPARE(cyclopropane.rings().size(), 0UL);
     QCOMPARE(cyclopropane.ringCount(), 0);
 }
 

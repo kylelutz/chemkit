@@ -27,8 +27,6 @@
 
 #include <vector>
 
-#include <QList>
-
 namespace chemkit {
 
 class Atom;
@@ -81,9 +79,9 @@ class CHEMKIT_EXPORT MolecularGraph
         void removeBond(unsigned int i, unsigned int j);
         void cyclicize();
         void initializeLabels();
-        static QList<Ring *> sssr(const Molecule *molecule);
-        static QList<Ring *> sssr(const Fragment *fragment);
-        static QList<Ring *> sssr_rpPath(const MolecularGraph *graph);
+        static std::vector<Ring *> sssr(const Molecule *molecule);
+        static std::vector<Ring *> sssr(const Fragment *fragment);
+        static std::vector<Ring *> sssr_rpPath(const MolecularGraph *graph);
         static AtomMapping isomorphism_vf2(const MolecularGraph *a, const MolecularGraph *b);
 
         friend class Molecule;
