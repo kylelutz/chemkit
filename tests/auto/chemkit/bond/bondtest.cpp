@@ -34,8 +34,9 @@ void BondTest::atoms()
     chemkit::Bond *bond = molecule.addBond(H1, H2);
     QVERIFY(bond->atom1() == H1);
     QVERIFY(bond->atom2() == H2);
-    QVERIFY(bond->atoms().contains(H1));
-    QVERIFY(bond->atoms().contains(H2));
+    QCOMPARE(bond->atoms().size(), 2UL);
+    QVERIFY(bond->atoms()[0] == H1);
+    QVERIFY(bond->atoms()[1] == H2);
 }
 
 void BondTest::otherAtom()

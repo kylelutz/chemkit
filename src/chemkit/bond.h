@@ -25,6 +25,8 @@
 
 #include "chemkit.h"
 
+#include <vector>
+
 #include <QtCore>
 
 #include "point3.h"
@@ -53,7 +55,7 @@ class CHEMKIT_EXPORT Bond
         Atom* atom(int index) const;
         Atom* atom1() const;
         Atom* atom2() const;
-        QList<Atom *> atoms() const;
+        std::vector<Atom *> atoms() const;
         Atom* otherAtom(const Atom *atom) const;
         void setOrder(int order);
         int order() const;

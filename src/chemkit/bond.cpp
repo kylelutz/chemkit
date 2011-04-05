@@ -66,11 +66,11 @@ Atom* Bond::atom(int index) const
 }
 
 /// Returns a list containing both atoms in the bond.
-QList<Atom *> Bond::atoms() const
+std::vector<Atom *> Bond::atoms() const
 {
-    QList<Atom *> atoms;
-    atoms.append(m_atom1);
-    atoms.append(m_atom2);
+    std::vector<Atom *> atoms(2);
+    atoms[0] = m_atom1;
+    atoms[1] = m_atom2;
     return atoms;
 }
 
