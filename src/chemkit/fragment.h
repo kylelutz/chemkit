@@ -47,7 +47,7 @@ class CHEMKIT_EXPORT Fragment
         std::vector<Atom *> atoms() const;
         int atomCount() const;
         bool contains(const Atom *atom) const;
-        QList<Bond *> bonds() const;
+        std::vector<Bond *> bonds() const;
         int bondCount() const;
         bool contains(const Bond *bond) const;
 

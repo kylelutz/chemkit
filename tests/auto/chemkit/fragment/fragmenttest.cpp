@@ -101,11 +101,15 @@ void FragmentTest::bonds()
     chemkit::Atom *C3 = molecule.addAtom("C");
     chemkit::Bond *C1_C2 = molecule.addBond(C1, C2);
     QCOMPARE(C1->fragment()->bondCount(), 1);
-    QVERIFY(C1->fragment()->bonds().contains(C1_C2) == true);
+
+    const std::vector<chemkit::Bond *> &C1_bonds = C1->fragment()->bonds();
+    QVERIFY(std::find(C1_bonds.begin(), C1_bonds.end(), C1_C2) != C1_bonds.end());
 
     chemkit::Bond *C2_C3 = molecule.addBond(C2, C3);
     QCOMPARE(C2->fragment()->bondCount(), 2);
-    QVERIFY(C2->fragment()->bonds().contains(C2_C3) == true);
+
+    const std::vector<chemkit::Bond *> &C2_bonds = C2->fragment()->bonds();
+    QVERIFY(std::find(C2_bonds.begin(), C2_bonds.end(), C2_C3) != C2_bonds.end());
 }
 
 QTEST_APPLESS_MAIN(FragmentTest)

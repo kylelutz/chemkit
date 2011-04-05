@@ -71,14 +71,14 @@ Fragment::~Fragment()
 
 // --- Structure ----------------------------------------------------------- //
 /// Returns a list of all the bonds in the fragment.
-QList<Bond *> Fragment::bonds() const
+std::vector<Bond *> Fragment::bonds() const
 {
-    QList<Bond *> bonds;
+    std::vector<Bond *> bonds;
 
     foreach(Atom *atom, m_atoms){
         foreach(Bond *bond, atom->bonds()){
-            if(!bonds.contains(bond)){
-                bonds.append(bond);
+            if(std::find(bonds.begin(), bonds.end(), bond) == bonds.end()){
+                bonds.push_back(bond);
             }
         }
     }
