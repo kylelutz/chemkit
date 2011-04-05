@@ -420,13 +420,13 @@ bool Atom::isTerminalHydrogen() const
 /// Returns a list of rings the atom is a member of.
 ///
 /// \see Molecule::rings()
-QList<Ring *> Atom::rings() const
+std::vector<Ring *> Atom::rings() const
 {
-    QList<Ring *> rings;
+    std::vector<Ring *> rings;
 
-    Q_FOREACH(Ring *ring, molecule()->rings()){
+    foreach(Ring *ring, molecule()->rings()){
         if(ring->contains(this)){
-            rings.append(ring);
+            rings.push_back(ring);
         }
     }
 
@@ -443,7 +443,7 @@ int Atom::ringCount() const
 /// (i.e. ringCount() >= 1).
 bool Atom::isInRing() const
 {
-    Q_FOREACH(const Ring *ring, m_molecule->rings()){
+    foreach(const Ring *ring, m_molecule->rings()){
         if(ring->contains(this)){
             return true;
         }
@@ -455,7 +455,7 @@ bool Atom::isInRing() const
 /// Returns \c true if the atom is a member of a ring of given size.
 bool Atom::isInRing(int size) const
 {
-    Q_FOREACH(const Ring *ring, m_molecule->rings()){
+    foreach(const Ring *ring, m_molecule->rings()){
         if(ring->size() == size && ring->contains(this)){
             return true;
         }
@@ -470,7 +470,7 @@ Ring* Atom::smallestRing() const
 {
     Ring *smallest = 0;
 
-    Q_FOREACH(Ring *ring, rings()){
+    foreach(Ring *ring, rings()){
         if(!smallest || ring->size() < smallest->size()){
             smallest = ring;
         }
@@ -482,7 +482,7 @@ Ring* Atom::smallestRing() const
 /// Returns \c true if the atom is in an aromatic ring.
 bool Atom::isAromatic() const
 {
-    Q_FOREACH(const Ring *ring, rings()){
+    foreach(const Ring *ring, rings()){
         if(ring->isAromatic()){
             return true;
         }

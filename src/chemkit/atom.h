@@ -101,7 +101,7 @@ class CHEMKIT_EXPORT Atom
         bool isTerminalHydrogen() const;
 
         // ring perception
-        QList<Ring *> rings() const;
+        std::vector<Ring *> rings() const;
         int ringCount() const;
         bool isInRing() const;
         bool isInRing(int size) const;
