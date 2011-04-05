@@ -26,6 +26,7 @@
 #include "chemkit.h"
 
 #include <string>
+#include <vector>
 
 #include "atom.h"
 #include "bond.h"
@@ -97,10 +98,9 @@ class CHEMKIT_EXPORT Molecule
         Atom* addAtomCopy(const Atom *atom);
         void removeAtom(Atom *atom);
         Atom* atom(int index) const;
-        QList<Atom *> atoms() const;
+        std::vector<Atom *> atoms() const;
         int atomCount() const;
         int atomCount(const Element &element) const;
-        int indexOf(const Atom *atom) const;
         bool contains(const Atom *atom) const;
         bool contains(const Element &element) const;
         Bond* addBond(Atom *a, Atom *b, int order = Bond::Single);
@@ -198,7 +198,7 @@ class CHEMKIT_EXPORT Molecule
 
     private:
         MoleculePrivate* const d;
-        QList<Atom *> m_atoms;
+        std::vector<Atom *> m_atoms;
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(Molecule::CompareFlags)

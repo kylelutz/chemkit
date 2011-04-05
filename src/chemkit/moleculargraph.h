@@ -71,7 +71,7 @@ class CHEMKIT_EXPORT MolecularGraph
         // static methods
         static MolecularGraph* cyclicGraph(const Molecule *molecule);
         static MolecularGraph* cyclicGraph(const Fragment *fragment);
-        static MolecularGraph* cyclicGraph(const QList<Atom *> &atoms);
+        static MolecularGraph* cyclicGraph(const std::vector<Atom *> &atoms);
         static MolecularGraph* hydrogenDepletedGraph(const Molecule *molecule);
         static AtomMapping isomorphism(const MolecularGraph *a, const MolecularGraph *b);
 

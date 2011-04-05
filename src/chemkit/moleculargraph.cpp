@@ -212,14 +212,14 @@ MolecularGraph* MolecularGraph::cyclicGraph(const Molecule *molecule)
 
 MolecularGraph* MolecularGraph::cyclicGraph(const Fragment *fragment)
 {
-    return cyclicGraph(fragment->atoms());
+    return cyclicGraph(fragment->atoms().toVector().toStdVector());
 }
 
-MolecularGraph* MolecularGraph::cyclicGraph(const QList<Atom *> &atoms)
+MolecularGraph* MolecularGraph::cyclicGraph(const std::vector<Atom *> &atoms)
 {
     std::vector<Atom *> nonterminalAtoms;
 
-    Q_FOREACH(Atom *atom, atoms){
+    foreach(Atom *atom, atoms){
         if(atom->neighborCount() >= 2){
             nonterminalAtoms.push_back(atom);
         }
@@ -235,7 +235,7 @@ MolecularGraph* MolecularGraph::hydrogenDepletedGraph(const Molecule *molecule)
 {
     std::vector<Atom *> heavyAtoms;
 
-    Q_FOREACH(Atom *atom, molecule->atoms()){
+    foreach(Atom *atom, molecule->atoms()){
         if(!atom->isTerminalHydrogen()){
             heavyAtoms.push_back(atom);
         }

@@ -43,7 +43,7 @@ inline bool Molecule::isEmpty() const
 
 // --- Structure ----------------------------------------------------------- //
 /// Returns a list of all the atoms in the molecule.
-inline QList<Atom *> Molecule::atoms() const
+inline std::vector<Atom *> Molecule::atoms() const
 {
     return m_atoms;
 }
@@ -57,7 +57,7 @@ inline int Molecule::atomCount() const
 /// Returns the atom at \p index.
 inline Atom* Molecule::atom(int index) const
 {
-    return m_atoms.value(index, 0);
+    return m_atoms[index];
 }
 
 } // end chemkit namespace

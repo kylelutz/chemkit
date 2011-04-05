@@ -22,6 +22,8 @@
 
 #include "atom.h"
 
+#include <algorithm>
+
 #include "ring.h"
 #include "vector3.h"
 #include "molecule.h"
@@ -224,7 +226,9 @@ Residue* Atom::residue() const
 /// Returns the atom's index.
 int Atom::index() const
 {
-    return m_molecule->indexOf(this);
+    const std::vector<Atom *> &atoms = m_molecule->atoms();
+
+    return std::distance(atoms.begin(), std::find(atoms.begin(), atoms.end(), this));
 }
 
 // --- Structure ----------------------------------------------------------- //

@@ -23,12 +23,14 @@
 #include "molecule.h"
 
 #include <sstream>
+#include <algorithm>
 
 #include "atom.h"
 #include "bond.h"
 #include "ring.h"
 #include "point3.h"
 #include "element.h"
+#include "foreach.h"
 #include "vector3.h"
 #include "constants.h"
 #include "lineformat.h"
@@ -146,7 +148,7 @@ Molecule::Molecule(const Molecule &molecule)
 
     QHash<const Atom *, Atom *> oldToNew;
 
-    Q_FOREACH(const Atom *atom, molecule.atoms()){
+    foreach(const Atom *atom, molecule.atoms()){
         Atom *newAtom = addAtomCopy(atom);
         oldToNew[atom] = newAtom;
     }
@@ -161,7 +163,7 @@ Molecule::Molecule(const Molecule &molecule)
 /// and residues that the molecule contains.
 Molecule::~Molecule()
 {
-    Q_FOREACH(Atom *atom, m_atoms)
+    foreach(Atom *atom, m_atoms)
         delete atom;
     Q_FOREACH(Bond *bond, d->bonds)
         delete bond;
@@ -195,7 +197,7 @@ std::string Molecule::formula() const
 {
     // a map of atomic symbols to their quantity
     std::map<std::string, int> composition;
-    Q_FOREACH(const Atom *atom, m_atoms){
+    foreach(const Atom *atom, m_atoms){
         composition[atom->symbol()]++;
     }
 
@@ -278,7 +280,7 @@ Float Molecule::mass() const
 {
     Float mass = 0;
 
-    Q_FOREACH(const Atom *atom, m_atoms)
+    foreach(const Atom *atom, m_atoms)
         mass += atom->mass();
 
     return mass;
@@ -314,7 +316,7 @@ Atom* Molecule::addAtom(const Element &element)
     }
 
     Atom *atom = new Atom(this, element);
-    m_atoms.append(atom);
+    m_atoms.push_back(atom);
 
     setFragmentsPerceived(false);
     notifyObservers(atom, AtomAdded);
@@ -349,8 +351,7 @@ void Molecule::removeAtom(Atom *atom)
         removeBond(bond);
     }
 
-    Q_ASSERT(m_atoms.contains(atom));
-    m_atoms.removeOne(atom);
+    m_atoms.erase(std::remove(m_atoms.begin(), m_atoms.end(), atom), m_atoms.end());
 
     atom->m_molecule = 0;
     notifyObservers(atom, AtomRemoved);
@@ -364,19 +365,13 @@ int Molecule::atomCount(const Element &element) const
 {
     int count = 0;
 
-    Q_FOREACH(Atom *atom, m_atoms){
+    foreach(Atom *atom, m_atoms){
         if(atom->is(element)){
             count++;
         }
     }
 
     return count;
-}
-
-/// Returns the index of \p atom in the molecule.
-int Molecule::indexOf(const Atom *atom) const
-{
-    return m_atoms.indexOf(const_cast<Atom *>(atom));
 }
 
 /// Returns \c true if the molecule contains atom.
@@ -389,7 +384,7 @@ bool Molecule::contains(const Atom *atom) const
 /// \p element.
 bool Molecule::contains(const Element &element) const
 {
-    Q_FOREACH(const Atom *atom, m_atoms){
+    foreach(const Atom *atom, m_atoms){
         if(atom->is(element)){
             return true;
         }
@@ -778,7 +773,7 @@ Fragment* Molecule::fragment(int index) const
 QList<Fragment *> Molecule::fragments() const
 {
     if(!fragmentsPerceived()){
-        Q_FOREACH(Atom *atom, m_atoms){
+        foreach(Atom *atom, m_atoms){
             if(!atom->m_fragment){
                 d->fragments.append(new Fragment(atom));
             }
@@ -837,7 +832,7 @@ void Molecule::setFragmentsPerceived(bool perceived) const
 
         d->fragments.clear();
 
-        Q_FOREACH(Atom *atom, m_atoms){
+        foreach(Atom *atom, m_atoms){
             atom->m_fragment = 0;
         }
     }
@@ -855,7 +850,7 @@ bool Molecule::fragmentsPerceived() const
 /// \p coordinates.
 void Molecule::setCoordinates(const Coordinates *coordinates)
 {
-    int size = qMin(m_atoms.size(), coordinates->size());
+    int size = std::min(this->size(), coordinates->size());
 
     for(int i = 0; i < size; i++){
         m_atoms[i]->setPosition(coordinates->position(i));
@@ -939,7 +934,7 @@ Point3 Molecule::center() const
     Float sy = 0;
     Float sz = 0;
 
-    Q_FOREACH(const Atom *atom, m_atoms){
+    foreach(const Atom *atom, m_atoms){
         sx += atom->x();
         sy += atom->y();
         sz += atom->z();
@@ -965,7 +960,7 @@ Point3 Molecule::centerOfMass() const
     // sum of weights
     Float sw = 0;
 
-    Q_FOREACH(const Atom *atom, m_atoms){
+    foreach(const Atom *atom, m_atoms){
         Float w = atom->mass();
 
         sx += w * atom->x();
@@ -983,7 +978,7 @@ Point3 Molecule::centerOfMass() const
 /// Moves all the atoms in the molecule by \p vector.
 void Molecule::moveBy(const Vector3 &vector)
 {
-    Q_FOREACH(Atom *atom, m_atoms){
+    foreach(Atom *atom, m_atoms){
         atom->moveBy(vector);
     }
 }
@@ -991,7 +986,7 @@ void Molecule::moveBy(const Vector3 &vector)
 /// Moves all of the atoms in the molecule by (\p dx, \p dy, \p dz).
 void Molecule::moveBy(Float dx, Float dy, Float dz)
 {
-    Q_FOREACH(Atom *atom, m_atoms){
+    foreach(Atom *atom, m_atoms){
         atom->moveBy(dx, dy, dz);
     }
 }
@@ -1000,7 +995,7 @@ void Molecule::moveBy(Float dx, Float dy, Float dz)
 /// by \p angle degrees around \p axis.
 void Molecule::rotate(const Vector3 &axis, Float angle)
 {
-    Q_FOREACH(Atom *atom, m_atoms){
+    foreach(Atom *atom, m_atoms){
         atom->setPosition(Quaternion::rotate(atom->position(), axis, angle));
     }
 }
@@ -1009,7 +1004,7 @@ void Molecule::rotate(const Vector3 &axis, Float angle)
 /// atoms.
 bool Molecule::hasCoordinates() const
 {
-    Q_FOREACH(const Atom *atom, m_atoms){
+    foreach(const Atom *atom, m_atoms){
         if(!atom->position().isNull()){
             return true;
         }
@@ -1021,7 +1016,7 @@ bool Molecule::hasCoordinates() const
 /// Removes all of the atomic coordinates in the molecule.
 void Molecule::clearCoordinates()
 {
-    Q_FOREACH(Atom *atom, m_atoms){
+    foreach(Atom *atom, m_atoms){
         atom->setPosition(Point3());
     }
 }
@@ -1066,7 +1061,7 @@ void Molecule::setConformer(Conformer *conformer)
         return;
     }
 
-    Q_FOREACH(Atom *atom, m_atoms){
+    foreach(Atom *atom, m_atoms){
         atom->setPosition(conformer->position(atom));
     }
 
@@ -1124,7 +1119,7 @@ Molecule& Molecule::operator=(const Molecule &molecule)
         QHash<const Atom *, Atom *> oldToNew;
 
         // add new atoms
-        Q_FOREACH(const Atom *atom, molecule.atoms()){
+        foreach(const Atom *atom, molecule.atoms()){
             Atom *newAtom = addAtomCopy(atom);
             oldToNew[atom] = newAtom;
         }
@@ -1271,14 +1266,14 @@ bool Molecule::isSubsetOf(const Molecule *molecule, CompareFlags flags) const
 {
     Q_UNUSED(flags);
 
-    QList<Atom *> otherAtoms = molecule->atoms();
+    std::vector<Atom *> otherAtoms = molecule->atoms();
 
-    Q_FOREACH(const Atom *atom, m_atoms){
+    foreach(const Atom *atom, m_atoms){
         bool found = false;
 
         Q_FOREACH(Atom *otherAtom, otherAtoms){
             if(atom->atomicNumber() == otherAtom->atomicNumber()){
-                otherAtoms.removeOne(otherAtom);
+                otherAtoms.erase(std::remove(otherAtoms.begin(), otherAtoms.end(), otherAtom), otherAtoms.end());
                 found = true;
                 break;
             }

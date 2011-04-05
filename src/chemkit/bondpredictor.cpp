@@ -113,7 +113,7 @@ std::vector<std::pair<Atom *, Atom *> > BondPredictor::predictedBonds()
     if(!d->molecule)
         return bonds;
 
-    QList<Atom *> atoms = d->molecule->atoms();
+    const std::vector<Atom *> &atoms = d->molecule->atoms();
 
     for(int i = 0; i < atoms.size(); i++){
         for(int j = i+1; j < atoms.size(); j++){

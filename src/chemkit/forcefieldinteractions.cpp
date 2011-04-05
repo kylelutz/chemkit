@@ -157,7 +157,7 @@ std::vector<std::pair<const ForceFieldAtom *, const ForceFieldAtom *> > ForceFie
 {
     std::vector<std::pair<const ForceFieldAtom *, const ForceFieldAtom *> > nonbondedPairs;
 
-    QList<Atom *> atoms = d->molecule->atoms();
+    const std::vector<Atom *> &atoms = d->molecule->atoms();
     for(int i = 0; i < atoms.size(); i++){
         for(int j = i + 1; j < atoms.size(); j++){
             if(!atomsWithinTwoBonds(atoms[i], atoms[j])){

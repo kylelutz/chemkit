@@ -483,7 +483,7 @@ void MoleculeEditor::cut(const QList<Atom *> &atoms)
         endEdit();
     }
 
-    d->copyBuffer = d->cutMolecule->atoms();
+    d->copyBuffer = QVector<Atom *>::fromStdVector(d->cutMolecule->atoms()).toList();
 
     emit canPasteChanged(true);
 }
