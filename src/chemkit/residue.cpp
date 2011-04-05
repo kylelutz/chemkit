@@ -123,16 +123,16 @@ int Residue::atomCount() const
 }
 
 /// Returns a list of all the bonds in the residue.
-QList<Bond *> Residue::bonds() const
+std::vector<Bond *> Residue::bonds() const
 {
-    QList<Bond *> bonds;
+    std::vector<Bond *> bonds;
 
     for(int i = 0; i < atomCount(); i++){
-        for(int j = i+1; j < atomCount(); j++){
+        for(int j = i + 1; j < atomCount(); j++){
             Bond *bond = d->atoms[i]->bondTo(d->atoms[j]);
 
             if(bond){
-                bonds.append(bond);
+                bonds.push_back(bond);
             }
         }
     }
@@ -163,7 +163,9 @@ bool Residue::contains(const Atom *atom) const
 /// Returns \c true if the residue contains the bond.
 bool Residue::contains(const Bond *bond) const
 {
-    return bonds().contains(const_cast<Bond *>(bond));
+    const std::vector<Bond *> &bonds = this->bonds();
+
+    return std::find(bonds.begin(), bonds.end(), bond) != bonds.end();
 }
 
 // --- Atom Types ---------------------------------------------------------- //

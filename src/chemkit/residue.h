@@ -62,7 +62,7 @@ class CHEMKIT_EXPORT Residue
         void removeAtom(Atom *atom);
         std::vector<Atom *> atoms() const;
         int atomCount() const;
-        QList<Bond *> bonds() const;
+        std::vector<Bond *> bonds() const;
         int bondCount() const;
         bool contains(const Atom *atom) const;
         bool contains(const Bond *bond) const;
