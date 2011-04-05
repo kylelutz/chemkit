@@ -25,6 +25,8 @@
 
 #include "chemkit.h"
 
+#include <vector>
+
 #include <QtCore>
 
 #include "point3.h"
@@ -84,7 +86,7 @@ class CHEMKIT_EXPORT Atom
         int valence() const;
         Bond* bondTo(const Atom *atom) const;
         Atom* neighbor(int index) const;
-        QList<Atom *> neighbors() const;
+        std::vector<Atom *> neighbors() const;
         int neighborCount() const;
         int neighborCount(const Element &element) const;
         QList<Atom *> atomPathTo(const Atom *atom) const;

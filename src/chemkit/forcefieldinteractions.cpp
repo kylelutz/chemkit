@@ -93,7 +93,7 @@ std::vector<std::vector<const ForceFieldAtom *> > ForceFieldInteractions::angleG
 
     Q_FOREACH(const Atom *atom, d->molecule->atoms()){
         if(!atom->isTerminal()){
-            QList<Atom *> neighbors = atom->neighbors();
+            const std::vector<Atom *> &neighbors = atom->neighbors();
             for(int i = 0; i < neighbors.size(); i++){
                 for(int j = i + 1; j < neighbors.size(); j++){
                     std::vector<const ForceFieldAtom *> angleGroup(3);
@@ -178,7 +178,7 @@ bool ForceFieldInteractions::atomsWithinTwoBonds(const Atom *a, const Atom *b)
     Q_FOREACH(const Atom *neighbor, a->neighbors()){
         if(neighbor == b)
             return true;
-        else if(neighbor->neighbors().contains(const_cast<Atom *>(b)))
+        else if(neighbor->isBondedTo(b))
             return true;
     }
 

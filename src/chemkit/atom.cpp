@@ -293,16 +293,16 @@ Bond* Atom::bondTo(const Atom *atom) const
 /// Returns the bonded neighbor at \p index.
 Atom* Atom::neighbor(int index) const
 {
-    return neighbors().value(index);
+    return neighbors()[index];
 }
 
 /// Returns a list of atoms that are directly bonded to the atom.
-QList<Atom *> Atom::neighbors() const
+std::vector<Atom *> Atom::neighbors() const
 {
-    QList<Atom *> neighbors;
+    std::vector<Atom *> neighbors;
 
     Q_FOREACH(Bond *bond, d->bonds){
-        neighbors.append(bond->otherAtom(this));
+        neighbors.push_back(bond->otherAtom(this));
     }
 
     return neighbors;

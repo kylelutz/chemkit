@@ -156,7 +156,7 @@ bool ForceFieldAtom::isOneFour(const ForceFieldAtom *atom) const
             if(secondNeighbor == otherAtom)
                 return false;
 
-            if(secondNeighbor->neighbors().contains(const_cast<Atom *>(otherAtom)))
+            if(secondNeighbor->isBondedTo(otherAtom))
                 return true;
         }
     }

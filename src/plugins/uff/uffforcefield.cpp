@@ -105,7 +105,7 @@ bool UffForceField::setup()
                                               atom->is(chemkit::Atom::Arsenic) ||
                                               atom->is(chemkit::Atom::Antimony) ||
                                               atom->is(chemkit::Atom::Bismuth))){
-                QList<chemkit::Atom *> neighbors = atom->neighbors();
+                const std::vector<chemkit::Atom *> &neighbors = atom->neighbors();
 
                 addCalculation(new UffInversionCalculation(atoms[neighbors[0]],
                                                            atoms[atom],
