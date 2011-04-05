@@ -65,18 +65,17 @@ MolecularGraph::MolecularGraph(const Molecule *molecule)
 
 MolecularGraph::MolecularGraph(const Fragment *fragment)
     : m_molecule(fragment->molecule()),
-      m_atoms(fragment->atomCount()),
+      m_atoms(fragment->atoms()),
       m_bonds(fragment->bondCount()),
       m_adjacencyList(fragment->atomCount())
 {
-    for(int i = 0; i < fragment->atomCount(); i++){
-        m_atoms[i] = fragment->atom(i);
-    }
+    const std::vector<Atom *> &atoms = fragment->atoms();
 
     for(int i = 0; i < fragment->bondCount(); i++){
         Bond *bond = fragment->bonds()[i];
         m_bonds[i] = bond;
-        addBond(fragment->atoms().indexOf(bond->atom1()), fragment->atoms().indexOf(bond->atom2()));
+        addBond(std::distance(atoms.begin(), std::find(atoms.begin(), atoms.end(), bond->atom1())),
+                std::distance(atoms.begin(), std::find(atoms.begin(), atoms.end(), bond->atom2())));
     }
 
     initializeLabels();
@@ -212,7 +211,7 @@ MolecularGraph* MolecularGraph::cyclicGraph(const Molecule *molecule)
 
 MolecularGraph* MolecularGraph::cyclicGraph(const Fragment *fragment)
 {
-    return cyclicGraph(fragment->atoms().toVector().toStdVector());
+    return cyclicGraph(fragment->atoms());
 }
 
 MolecularGraph* MolecularGraph::cyclicGraph(const std::vector<Atom *> &atoms)

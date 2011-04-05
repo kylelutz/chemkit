@@ -22,6 +22,7 @@
 
 #include "fragment.h"
 
+#include "foreach.h"
 #include "molecule.h"
 
 namespace chemkit {
@@ -42,19 +43,19 @@ Fragment::Fragment(Atom *root)
 {
     Q_ASSERT(root->m_fragment == 0);
 
-    QList<Atom *> row;
-    row.append(root);
+    std::vector<Atom *> row;
+    row.push_back(root);
 
-    while(!row.isEmpty()){
-        QList<Atom *> nextRow;
+    while(!row.empty()){
+        std::vector<Atom *> nextRow;
 
-        Q_FOREACH(Atom *atom, row){
+        foreach(Atom *atom, row){
             if(!atom->m_fragment){
                 atom->m_fragment = this;
-                m_atoms.append(atom);
+                m_atoms.push_back(atom);
 
-                Q_FOREACH(Atom *neighbor, atom->neighbors()){
-                    nextRow.append(neighbor);
+                foreach(Atom *neighbor, atom->neighbors()){
+                    nextRow.push_back(neighbor);
                 }
             }
         }
@@ -74,8 +75,8 @@ QList<Bond *> Fragment::bonds() const
 {
     QList<Bond *> bonds;
 
-    Q_FOREACH(Atom *atom, atoms()){
-        Q_FOREACH(Bond *bond, atom->bonds()){
+    foreach(Atom *atom, m_atoms){
+        foreach(Bond *bond, atom->bonds()){
             if(!bonds.contains(bond)){
                 bonds.append(bond);
             }

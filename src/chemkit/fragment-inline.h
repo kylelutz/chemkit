@@ -46,11 +46,11 @@ inline Molecule* Fragment::molecule() const
 /// Returns the atom at \p index in the fragment.
 inline Atom* Fragment::atom(int index) const
 {
-    return m_atoms.value(index);
+    return m_atoms[index];
 }
 
 /// Returns a list of all the atoms in the fragment.
-inline QList<Atom *> Fragment::atoms() const
+inline std::vector<Atom *> Fragment::atoms() const
 {
     return m_atoms;
 }
@@ -64,7 +64,7 @@ inline int Fragment::atomCount() const
 /// Returns \c true if the fragment contains the atom.
 inline bool Fragment::contains(const Atom *atom) const
 {
-    return m_atoms.contains(const_cast<Atom *>(atom));
+    return atom->fragment() == this;
 }
 
 } // end chemkit namespace

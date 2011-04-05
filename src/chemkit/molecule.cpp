@@ -802,9 +802,7 @@ bool Molecule::isFragmented() const
 /// the molecule.
 void Molecule::removeFragment(Fragment *fragment)
 {
-    QList<Atom *> atoms = fragment->atoms();
-
-    Q_FOREACH(Atom *atom, atoms){
+    foreach(Atom *atom, fragment->atoms()){
         removeAtom(atom);
     }
 }

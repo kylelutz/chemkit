@@ -25,6 +25,8 @@
 
 #include "chemkit.h"
 
+#include <vector>
+
 #include <QtCore>
 
 namespace chemkit {
@@ -42,7 +44,7 @@ class CHEMKIT_EXPORT Fragment
 
         // structure
         Atom* atom(int index) const;
-        QList<Atom *> atoms() const;
+        std::vector<Atom *> atoms() const;
         int atomCount() const;
         bool contains(const Atom *atom) const;
         QList<Bond *> bonds() const;
@@ -58,7 +60,7 @@ class CHEMKIT_EXPORT Fragment
         friend class Molecule;
 
     private:
-        QList<Atom *> m_atoms;
+        std::vector<Atom *> m_atoms;
 };
 
 } // end chemkit namespace

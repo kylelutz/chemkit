@@ -22,6 +22,8 @@
 
 #include "fragmenttest.h"
 
+#include <algorithm>
+
 #include <chemkit/fragment.h>
 #include <chemkit/molecule.h>
 
@@ -56,14 +58,20 @@ void FragmentTest::atoms()
     chemkit::Atom *C2 = molecule.addAtom("C");
     chemkit::Atom *C3 = molecule.addAtom("C");
     molecule.addBond(C1, C2);
+
+    const std::vector<chemkit::Atom *> C1_atoms = C1->fragment()->atoms();
     QCOMPARE(C1->fragment()->atomCount(), 2);
-    QVERIFY(C1->fragment()->atoms().contains(C1) == true);
-    QVERIFY(C1->fragment()->atoms().contains(C2) == true);
-    QVERIFY(C1->fragment()->atoms().contains(C3) == false);
+    QCOMPARE(C1_atoms.size(), 2UL);
+    QVERIFY(std::find(C1_atoms.begin(), C1_atoms.end(), C1) != C1_atoms.end());
+    QVERIFY(std::find(C1_atoms.begin(), C1_atoms.end(), C2) != C1_atoms.end());
+    QVERIFY(std::find(C1_atoms.begin(), C1_atoms.end(), C3) == C1_atoms.end());
+
+    const std::vector<chemkit::Atom *> C3_atoms = C3->fragment()->atoms();
     QCOMPARE(C3->fragment()->atomCount(), 1);
-    QVERIFY(C3->fragment()->atoms().contains(C1) == false);
-    QVERIFY(C3->fragment()->atoms().contains(C2) == false);
-    QVERIFY(C3->fragment()->atoms().contains(C3) == true);
+    QCOMPARE(C3_atoms.size(), 1UL);
+    QVERIFY(std::find(C3_atoms.begin(), C3_atoms.end(), C1) == C3_atoms.end());
+    QVERIFY(std::find(C3_atoms.begin(), C3_atoms.end(), C2) == C3_atoms.end());
+    QVERIFY(std::find(C3_atoms.begin(), C3_atoms.end(), C3) != C3_atoms.end());
 }
 
 void FragmentTest::contains()
