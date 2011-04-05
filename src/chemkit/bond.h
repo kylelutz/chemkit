@@ -74,7 +74,7 @@ class CHEMKIT_EXPORT Bond
         bool isTerminal() const;
 
         // ring perception
-        QList<Ring *> rings() const;
+        std::vector<Ring *> rings() const;
         int ringCount() const;
         bool isInRing() const;
         bool isInRing(int size) const;

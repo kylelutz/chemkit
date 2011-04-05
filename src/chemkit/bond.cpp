@@ -23,6 +23,7 @@
 #include "bond.h"
 
 #include "atom.h"
+#include "foreach.h"
 #include "molecule.h"
 
 namespace chemkit {
@@ -181,13 +182,13 @@ bool Bond::isTerminal() const
 
 // --- Ring Perception ----------------------------------------------------- //
 /// Returns a list of rings the bond is a member of.
-QList<Ring *> Bond::rings() const
+std::vector<Ring *> Bond::rings() const
 {
-    QList<Ring *> rings;
+    std::vector<Ring *> rings;
 
-    Q_FOREACH(Ring *ring, molecule()->rings()){
+    foreach(Ring *ring, molecule()->rings()){
         if(ring->contains(this)){
-            rings.append(ring);
+            rings.push_back(ring);
         }
     }
 
@@ -204,7 +205,7 @@ int Bond::ringCount() const
 /// (i.e. ringCount() >= 1).
 bool Bond::isInRing() const
 {
-    Q_FOREACH(const Ring *ring, molecule()->rings()){
+    foreach(const Ring *ring, molecule()->rings()){
         if(ring->contains(this)){
             return true;
         }
@@ -216,7 +217,7 @@ bool Bond::isInRing() const
 /// Returns \c true if the bond is in a ring of given size.
 bool Bond::isInRing(int size) const
 {
-    Q_FOREACH(const Ring *ring, molecule()->rings()){
+    foreach(const Ring *ring, molecule()->rings()){
         if(ring->size() == size && ring->contains(this)){
             return true;
         }
@@ -231,7 +232,7 @@ Ring* Bond::smallestRing() const
 {
     Ring *smallest = 0;
 
-    Q_FOREACH(Ring *ring, rings()){
+    foreach(Ring *ring, rings()){
         if(!smallest || ring->size() < smallest->size()){
             smallest = ring;
         }
@@ -245,7 +246,7 @@ Ring* Bond::smallestRing() const
 /// \see Ring::isAromatic()
 bool Bond::isAromatic() const
 {
-    Q_FOREACH(const Ring *ring, rings()){
+    foreach(const Ring *ring, rings()){
         if(ring->isAromatic()){
             return true;
         }
