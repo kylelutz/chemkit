@@ -116,7 +116,7 @@ class CHEMKIT_EXPORT Molecule
         bool contains(const Bond *bond) const;
         void addResidue(Residue *residue);
         void removeResidue(Residue *residue);
-        QList<Residue *> residues() const;
+        std::vector<Residue *> residues() const;
         int residueCount() const;
         void clear();
 

@@ -51,7 +51,7 @@ class MoleculePrivate
 
         std::string name;
         std::vector<Bond *> bonds;
-        QList<Residue *> residues;
+        std::vector<Residue *> residues;
         QList<Conformer *> conformers;
         Conformer *conformer;
         bool ringsPerceived;
@@ -516,9 +516,9 @@ void Molecule::addResidue(Residue *residue)
         return;
     }
 
-    d->residues.append(residue);
+    d->residues.push_back(residue);
 
-    Q_FOREACH(Atom *atom, residue->atoms()){
+    foreach(Atom *atom, residue->atoms()){
         atom->setResidue(residue);
     }
 }
@@ -530,15 +530,15 @@ void Molecule::removeResidue(Residue *residue)
         return;
     }
 
-    d->residues.removeAll(residue);
+    d->residues.erase(std::remove(d->residues.begin(), d->residues.end(), residue), d->residues.end());
 
-    Q_FOREACH(Atom *atom, residue->atoms()){
+    foreach(Atom *atom, residue->atoms()){
         atom->setResidue(0);
     }
 }
 
 /// Returns a list of all residues in the molecule.
-QList<Residue *> Molecule::residues() const
+std::vector<Residue *> Molecule::residues() const
 {
     return d->residues;
 }
