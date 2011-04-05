@@ -134,7 +134,7 @@ class CHEMKIT_EXPORT Molecule
 
         // fragment perception
         Fragment* fragment(int index) const;
-        QList<Fragment *> fragments() const;
+        std::vector<Fragment *> fragments() const;
         int fragmentCount() const;
         bool isFragmented() const;
         void removeFragment(Fragment *fragment);

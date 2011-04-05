@@ -57,7 +57,7 @@ class MoleculePrivate
         bool ringsPerceived;
         std::vector<Ring *> rings;
         bool fragmentsPerceived;
-        QList<Fragment *> fragments;
+        std::vector<Fragment *> fragments;
         QList<MoleculeWatcher *> watchers;
 };
 
@@ -169,7 +169,7 @@ Molecule::~Molecule()
         delete bond;
     Q_FOREACH(Ring *ring, d->rings)
         delete ring;
-    Q_FOREACH(Fragment *fragment, d->fragments)
+    foreach(Fragment *fragment, d->fragments)
         delete fragment;
     Q_FOREACH(Conformer *conformer, d->conformers)
         delete conformer;
@@ -756,7 +756,7 @@ bool Molecule::ringsPerceived() const
 /// \endcode
 Fragment* Molecule::fragment(int index) const
 {
-    return fragments().value(index, 0);
+    return fragments()[index];
 }
 
 /// Returns a list of fragments in the molecule.
@@ -766,12 +766,12 @@ Fragment* Molecule::fragment(int index) const
 ///          unchanged. If any atoms or bonds in the molecule are
 ///          added or removed the old results must be discarded and
 ///          this method must be called again.
-QList<Fragment *> Molecule::fragments() const
+std::vector<Fragment *> Molecule::fragments() const
 {
     if(!fragmentsPerceived()){
         foreach(Atom *atom, m_atoms){
             if(!atom->m_fragment){
-                d->fragments.append(new Fragment(atom));
+                d->fragments.push_back(new Fragment(atom));
             }
         }
 
@@ -805,7 +805,7 @@ void Molecule::removeFragment(Fragment *fragment)
 
 Fragment* Molecule::fragment(const Atom *atom) const
 {
-    Q_FOREACH(Fragment *fragment, fragments()){
+    foreach(Fragment *fragment, fragments()){
         if(fragment->contains(atom)){
             return fragment;
         }
@@ -820,7 +820,7 @@ void Molecule::setFragmentsPerceived(bool perceived) const
         return;
 
     if(!perceived){
-        Q_FOREACH(const Fragment *fragment, d->fragments){
+        foreach(const Fragment *fragment, d->fragments){
             delete fragment;
         }
 
