@@ -123,7 +123,7 @@ void GraphicsProteinItem::setPolymer(const Polymer *polymer)
                     if(conformation == AminoAcid::Coil){
                         residues.append(residue);
 
-                        int index = chain->residues().indexOf(residues.first());
+                        int index = chain->indexOf(residues.first());
                         if(index > 0){
                             residues.prepend(static_cast<AminoAcid *>(chain->residue(index-1)));
                         }

@@ -26,8 +26,7 @@
 #include "chemkit.h"
 
 #include <string>
-
-#include <QtCore>
+#include <vector>
 
 namespace chemkit {
 
@@ -53,7 +52,7 @@ class CHEMKIT_EXPORT PolymerChain
         bool removeResidue(Residue *residue);
         bool deleteResidue(Residue *residue);
         Residue* residue(int index) const;
-        QList<Residue *> residues() const;
+        std::vector<Residue *> residues() const;
         int residueCount() const;
         int indexOf(const Residue *residue) const;
         std::string sequenceString() const;

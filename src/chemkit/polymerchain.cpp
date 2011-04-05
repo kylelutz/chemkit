@@ -23,7 +23,9 @@
 #include "polymerchain.h"
 
 #include <sstream>
+#include <algorithm>
 
+#include "foreach.h"
 #include "residue.h"
 
 namespace chemkit {
@@ -34,7 +36,7 @@ class PolymerChainPrivate
     public:
         Polymer *polymer;
         std::string name;
-        QList<Residue *> residues;
+        std::vector<Residue *> residues;
 };
 
 // === PolymerChain ======================================================== //
@@ -100,13 +102,13 @@ void PolymerChain::addResidue(Residue *residue)
 /// Adds a residue at the end of the chain.
 void PolymerChain::appendResidue(Residue *residue)
 {
-    d->residues.append(residue);
+    d->residues.push_back(residue);
 }
 
 /// Adds a residue at the beginning of the chain.
 void PolymerChain::prependResidue(Residue *residue)
 {
-    d->residues.prepend(residue);
+    d->residues.insert(d->residues.begin(), residue);
 }
 
 /// Adds a residue at \p index of the chain.
@@ -114,7 +116,7 @@ void PolymerChain::prependResidue(Residue *residue)
 /// The polymer chain takes ownership of the residue.
 void PolymerChain::insertResidue(int index, Residue *residue)
 {
-    d->residues.insert(index, residue);
+    d->residues.insert(d->residues.begin() + index, residue);
 }
 
 /// Removes the residue from the chain.
@@ -122,7 +124,13 @@ void PolymerChain::insertResidue(int index, Residue *residue)
 /// The ownership of the residue is passed to the caller.
 bool PolymerChain::removeResidue(Residue *residue)
 {
-    return d->residues.removeOne(residue);
+    std::vector<Residue *>::iterator location = std::find(d->residues.begin(), d->residues.end(), residue);
+    if(location == d->residues.end()){
+        return false;
+    }
+
+    d->residues.erase(location);
+    return true;
 }
 
 /// Removes the residue from the chain and deletes it.
@@ -140,11 +148,11 @@ bool PolymerChain::deleteResidue(Residue *residue)
 /// Returns the residue at \p index in the chain.
 Residue* PolymerChain::residue(int index) const
 {
-    return d->residues.value(index, 0);
+    return d->residues[index];
 }
 
 /// Returns a list of the residues in the chain.
-QList<Residue *> PolymerChain::residues() const
+std::vector<Residue *> PolymerChain::residues() const
 {
     return d->residues;
 }
@@ -158,7 +166,12 @@ int PolymerChain::residueCount() const
 /// Returns the index of \p residue in the chain.
 int PolymerChain::indexOf(const Residue *residue) const
 {
-    return d->residues.indexOf(const_cast<Residue *>(residue));
+    int index = std::distance(d->residues.begin(), std::find(d->residues.begin(), d->residues.end(), residue));
+    if(index == d->residues.size()){
+        return -1;
+    }
+
+    return index;
 }
 
 /// Returns the residue sequence as a string of one letter symbols.
@@ -168,7 +181,7 @@ std::string PolymerChain::sequenceString() const
 {
     std::stringstream stream;
 
-    Q_FOREACH(const Residue *residue, d->residues){
+    foreach(const Residue *residue, d->residues){
         stream << residue->letter();
     }
 
@@ -179,7 +192,12 @@ std::string PolymerChain::sequenceString() const
 /// at \c 1 for the first residue in the chain.
 int PolymerChain::sequenceNumber(const Residue *residue) const
 {
-    return indexOf(residue) + 1;
+    int index = indexOf(residue);
+    if(index == -1){
+        return -1;
+    }
+
+    return index + 1;
 }
 
 } // end chemkit namespace
