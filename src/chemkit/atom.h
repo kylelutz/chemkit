@@ -78,7 +78,7 @@ class CHEMKIT_EXPORT Atom
         int index() const;
 
         // structure
-        QList<Bond *> bonds() const;
+        std::vector<Bond *> bonds() const;
         int bondCount() const;
         QList<Bond *> bondPathTo(const Atom *atom) const;
         int bondCountTo(const Atom *atom) const;

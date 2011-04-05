@@ -25,6 +25,7 @@
 #include <algorithm>
 
 #include "ring.h"
+#include "foreach.h"
 #include "vector3.h"
 #include "molecule.h"
 
@@ -38,7 +39,7 @@ class AtomPrivate
         int massNumber;
         Float partialCharge;
         Point3 position;
-        QList<Bond *> bonds;
+        std::vector<Bond *> bonds;
         Atom::Chirality chirality;
 };
 
@@ -233,7 +234,7 @@ int Atom::index() const
 
 // --- Structure ----------------------------------------------------------- //
 /// Returns a list of bonds that this atom is a member of.
-QList<Bond *> Atom::bonds() const
+std::vector<Bond *> Atom::bonds() const
 {
     return d->bonds;
 }
@@ -270,7 +271,7 @@ int Atom::valence() const
 {
     int valence = 0;
 
-    Q_FOREACH(const Bond *bond, d->bonds){
+    foreach(const Bond *bond, d->bonds){
         valence += bond->order();
     }
 
@@ -280,7 +281,7 @@ int Atom::valence() const
 /// Returns the bond between the atom and the other atom.
 Bond* Atom::bondTo(const Atom *atom) const
 {
-    Q_FOREACH(Bond *bond, d->bonds){
+    foreach(Bond *bond, d->bonds){
         if(bond->otherAtom(this) == atom){
             return bond;
         }
@@ -301,7 +302,7 @@ std::vector<Atom *> Atom::neighbors() const
 {
     std::vector<Atom *> neighbors;
 
-    Q_FOREACH(Bond *bond, d->bonds){
+    foreach(Bond *bond, d->bonds){
         neighbors.push_back(bond->otherAtom(this));
     }
 
@@ -319,7 +320,7 @@ int Atom::neighborCount(const Element &element) const
 {
     int count = 0;
 
-    Q_FOREACH(const Bond *bond, d->bonds){
+    foreach(const Bond *bond, d->bonds){
         if(bond->otherAtom(this)->is(element)){
             count++;
         }
@@ -589,16 +590,12 @@ bool Atom::isChiral() const
 // --- Internal Methods ---------------------------------------------------- //
 void Atom::addBond(Bond *bond)
 {
-    Q_ASSERT(d->bonds.contains(bond) == false);
-
-    d->bonds.append(bond);
+    d->bonds.push_back(bond);
 }
 
 void Atom::removeBond(Bond *bond)
 {
-    Q_ASSERT(d->bonds.contains(bond) == true);
-
-    d->bonds.removeOne(bond);
+    d->bonds.erase(std::remove(d->bonds.begin(), d->bonds.end(), bond));
 }
 
 void Atom::setResidue(Residue *residue)
