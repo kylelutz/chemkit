@@ -25,7 +25,7 @@
 
 #include "chemkit.h"
 
-#include <QList>
+#include <vector>
 
 namespace chemkit {
 
@@ -38,17 +38,17 @@ class CHEMKIT_EXPORT Moiety
     public:
         // construction and destruction
         Moiety();
-        Moiety(const QList<const Atom *> &atoms);
+        Moiety(const std::vector<Atom *> &atoms);
         ~Moiety();
 
         // properties
         int size() const;
         bool isEmpty() const;
-        const Molecule* molecule() const;
+        Molecule* molecule() const;
 
         // structure
-        const Atom* atom(int index) const;
-        QList<const Atom *> atoms() const;
+        Atom* atom(int index) const;
+        std::vector<Atom *> atoms() const;
         int atomCount() const;
 
         // operators

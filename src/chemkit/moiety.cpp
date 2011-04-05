@@ -30,7 +30,7 @@ namespace chemkit {
 class MoietyPrivate
 {
     public:
-        QList<const Atom *> atoms;
+        std::vector<Atom *> atoms;
 };
 
 // === Moiety ============================================================== //
@@ -47,7 +47,7 @@ Moiety::Moiety()
 }
 
 /// Creates a new moiety object containing \p atoms.
-Moiety::Moiety(const QList<const Atom *> &atoms)
+Moiety::Moiety(const std::vector<Atom *> &atoms)
     : d(new MoietyPrivate)
 {
     d->atoms = atoms;
@@ -73,20 +73,20 @@ bool Moiety::isEmpty() const
 }
 
 /// Returns the molecule that the moiety is a part of.
-const Molecule* Moiety::molecule() const
+Molecule* Moiety::molecule() const
 {
     return d->atoms[0]->molecule();
 }
 
 // --- Structure ----------------------------------------------------------- //
 /// Returns the atom at \p index.
-const Atom* Moiety::atom(int index) const
+Atom* Moiety::atom(int index) const
 {
     return d->atoms[index];
 }
 
 /// Returns a list of the atoms in the moiety.
-QList<const Atom *> Moiety::atoms() const
+std::vector<Atom *> Moiety::atoms() const
 {
     return d->atoms;
 }

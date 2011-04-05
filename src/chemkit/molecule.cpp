@@ -678,9 +678,9 @@ Moiety Molecule::find(const Molecule *moiety, CompareFlags flags) const
         return Moiety();
     }
 
-    QList<const Atom *> moietyAtoms;
-    Q_FOREACH(Atom *atom, moiety->atoms()){
-        moietyAtoms.append(mapping.map(atom));
+    std::vector<Atom *> moietyAtoms;
+    foreach(Atom *atom, moiety->atoms()){
+        moietyAtoms.push_back(const_cast<Atom *>(mapping.map(atom)));
     }
 
     return Moiety(moietyAtoms);
