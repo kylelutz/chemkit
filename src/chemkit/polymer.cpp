@@ -30,7 +30,7 @@ namespace chemkit {
 class PolymerPrivate
 {
     public:
-        QList<PolymerChain *> chains;
+        std::vector<PolymerChain *> chains;
 };
 
 // === Polymer ============================================================= //
@@ -59,7 +59,7 @@ Polymer::~Polymer()
 PolymerChain* Polymer::addChain()
 {
     PolymerChain *chain = new PolymerChain(this);
-    d->chains.append(chain);
+    d->chains.push_back(chain);
     return chain;
 }
 
@@ -70,18 +70,18 @@ void Polymer::removeChain(PolymerChain *chain)
         return;
     }
 
-    d->chains.removeOne(chain);
+    d->chains.erase(std::remove(d->chains.begin(), d->chains.end(), chain));
     delete chain;
 }
 
 /// Returns the chain at \p index.
 PolymerChain* Polymer::chain(int index) const
 {
-    return d->chains.value(index, 0);
+    return d->chains[index];
 }
 
 /// Returns a list of all the chains in the polymer.
-QList<PolymerChain *> Polymer::chains() const
+std::vector<PolymerChain *> Polymer::chains() const
 {
     return d->chains;
 }

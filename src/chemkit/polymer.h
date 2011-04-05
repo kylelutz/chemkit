@@ -25,7 +25,7 @@
 
 #include "chemkit.h"
 
-#include <QtCore>
+#include <vector>
 
 #include "molecule.h"
 
@@ -45,7 +45,7 @@ class CHEMKIT_EXPORT Polymer : public Molecule
         PolymerChain* addChain();
         void removeChain(PolymerChain *chain);
         PolymerChain* chain(int index = 0) const;
-        QList<PolymerChain *> chains() const;
+        std::vector<PolymerChain *> chains() const;
         int chainCount() const;
 
     private:
