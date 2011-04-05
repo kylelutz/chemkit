@@ -132,7 +132,9 @@ Residue* Bond::residue() const
 /// Returns the bond's index in the molecule.
 int Bond::index() const
 {
-    return molecule()->indexOf(this);
+    const std::vector<Bond *> &bonds = molecule()->bonds();
+
+    return std::distance(bonds.begin(), std::find(bonds.begin(), bonds.end(), this));
 }
 
 // --- Structure ----------------------------------------------------------- //

@@ -50,7 +50,7 @@ class MoleculePrivate
         MoleculePrivate();
 
         std::string name;
-        QList<Bond *> bonds;
+        std::vector<Bond *> bonds;
         QList<Residue *> residues;
         QList<Conformer *> conformers;
         Conformer *conformer;
@@ -416,7 +416,7 @@ Bond* Molecule::addBond(Atom *a, Atom *b, int order)
 
     bond->atom1()->addBond(bond);
     bond->atom2()->addBond(bond);
-    d->bonds.append(bond);
+    d->bonds.push_back(bond);
 
     setRingsPerceived(false);
     setFragmentsPerceived(false);
@@ -435,10 +435,12 @@ Bond* Molecule::addBond(int a, int b, int order)
 /// Removes \p bond from the molecule.
 void Molecule::removeBond(Bond *bond)
 {
-    bool found = d->bonds.removeOne(bond);
-    if(!found){
+    std::vector<Bond *>::iterator location = std::find(d->bonds.begin(), d->bonds.end(), bond);
+    if(location == d->bonds.end()){
         return;
     }
+
+    d->bonds.erase(location);
 
     bond->atom1()->removeBond(bond);
     bond->atom2()->removeBond(bond);
@@ -469,7 +471,7 @@ void Molecule::removeBond(int a, int b)
 }
 
 /// Returns a list of all the bonds in the molecule.
-QList<Bond *> Molecule::bonds() const
+std::vector<Bond *> Molecule::bonds() const
 {
     return d->bonds;
 }
@@ -483,7 +485,7 @@ int Molecule::bondCount() const
 /// Returns the bond at index.
 Bond* Molecule::bond(int index) const
 {
-    return d->bonds.value(index, 0);
+    return d->bonds[index];
 }
 
 /// Returns the bond between atom \p a and \p b. Returns \c 0 if they
@@ -499,12 +501,6 @@ Bond* Molecule::bond(const Atom *a, const Atom *b) const
 Bond* Molecule::bond(int a, int b) const
 {
     return bond(atom(a), atom(b));
-}
-
-/// Returns the index of \p bond in the molecule.
-int Molecule::indexOf(const Bond *bond) const
-{
-    return d->bonds.indexOf(const_cast<Bond *>(bond));
 }
 
 /// Returns \c true if the molecule contains bond.

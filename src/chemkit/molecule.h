@@ -111,9 +111,8 @@ class CHEMKIT_EXPORT Molecule
         Bond* bond(int index) const;
         Bond* bond(const Atom *a, const Atom *b) const;
         Bond* bond(int a, int b) const;
-        QList<Bond *> bonds() const;
+        std::vector<Bond *> bonds() const;
         int bondCount() const;
-        int indexOf(const Bond *bond) const;
         bool contains(const Bond *bond) const;
         void addResidue(Residue *residue);
         void removeResidue(Residue *residue);
