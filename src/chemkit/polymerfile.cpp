@@ -34,7 +34,7 @@ class PolymerFilePrivate
         std::string fileName;
         std::string errorString;
         PolymerFileFormat *format;
-        QList<Polymer *> polymers;
+        std::vector<Polymer *> polymers;
 };
 
 // === PolymerFile ========================================================= //
@@ -134,7 +134,7 @@ bool PolymerFile::isEmpty() const
 /// The ownership of the polymer is passed to the file.
 void PolymerFile::addPolymer(Polymer *polymer)
 {
-    d->polymers.append(polymer);
+    d->polymers.push_back(polymer);
 }
 
 /// Removes a polymer from the file.
@@ -142,7 +142,14 @@ void PolymerFile::addPolymer(Polymer *polymer)
 /// The ownership of the polymer is passed to the caller.
 bool PolymerFile::removePolymer(Polymer *polymer)
 {
-    return d->polymers.removeOne(polymer);
+    std::vector<Polymer *>::iterator location = std::find(d->polymers.begin(), d->polymers.end(), polymer);
+    if(location == d->polymers.end()){
+        return false;
+    }
+
+    d->polymers.erase(location);
+
+    return true;
 }
 
 /// Removes a polymer from the file and deletes it.
@@ -160,11 +167,11 @@ bool PolymerFile::deletePolymer(Polymer *polymer)
 /// Returns the polymer at \p index in the file.
 Polymer* PolymerFile::polymer(int index) const
 {
-    return d->polymers.value(index, 0);
+    return d->polymers[index];
 }
 
 /// Returns a list of all the polymers in the file.
-QList<Polymer *> PolymerFile::polymers() const
+std::vector<Polymer *> PolymerFile::polymers() const
 {
     return d->polymers;
 }
@@ -178,7 +185,7 @@ int PolymerFile::polymerCount() const
 /// Returns \c true if the file contains \p polymer.
 bool PolymerFile::contains(const Polymer *polymer) const
 {
-    return d->polymers.contains(const_cast<Polymer *>(polymer));
+    return std::find(d->polymers.begin(), d->polymers.end(), polymer) != d->polymers.end();
 }
 
 /// Removes all the polymers from the file.

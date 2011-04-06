@@ -59,7 +59,7 @@ class CHEMKIT_EXPORT PolymerFile
         bool removePolymer(Polymer *polymer);
         bool deletePolymer(Polymer *polymer);
         Polymer* polymer(int index = 0) const;
-        QList<Polymer *> polymers() const;
+        std::vector<Polymer *> polymers() const;
         int polymerCount() const;
         bool contains(const Polymer *polymer) const;
         void clear();
