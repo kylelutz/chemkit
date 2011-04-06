@@ -54,7 +54,7 @@ class ForceFieldPrivate
         ForceField::Flags flags;
         QList<ForceFieldAtom *> atoms;
         QList<ForceFieldCalculation *> calculations;
-        QList<const Molecule *> molecules;
+        std::vector<const Molecule *> molecules;
         std::string parameterSet;
         std::string parameterFile;
         std::map<std::string, std::string> parameterSets;
@@ -172,17 +172,17 @@ ForceFieldAtom* ForceField::atom(const Atom *atom) const
 /// Adds a molecule to the force field.
 void ForceField::addMolecule(const Molecule *molecule)
 {
-    d->molecules.append(molecule);
+    d->molecules.push_back(molecule);
 }
 
 /// Removes a molecule from the force field.
 void ForceField::removeMolecule(const Molecule *molecule)
 {
-    d->molecules.removeAll(molecule);
+    d->molecules.erase(std::remove(d->molecules.begin(), d->molecules.end(), molecule));
 }
 
 /// Returns a list of all the molecules in the force field.
-QList<const Molecule *> ForceField::molecules() const
+std::vector<const Molecule *> ForceField::molecules() const
 {
     return d->molecules;
 }
@@ -206,8 +206,8 @@ void ForceField::removeAtom(ForceFieldAtom *atom)
 /// Removes all of the molecules in the force field.
 void ForceField::clear()
 {
-    Q_FOREACH(const Molecule *molecule, d->molecules){
-        removeMolecule(molecule);
+    while(!d->molecules.empty()){
+        removeMolecule(d->molecules.front());
     }
 
     Q_FOREACH(ForceFieldCalculation *calculation, d->calculations){

@@ -68,7 +68,7 @@ class CHEMKIT_EXPORT ForceField
         // setup
         void addMolecule(const Molecule *molecule);
         void removeMolecule(const Molecule *molecule);
-        QList<const Molecule *> molecules() const;
+        std::vector<const Molecule *> molecules() const;
         int moleculeCount() const;
         virtual bool setup();
         bool isSetup() const;
