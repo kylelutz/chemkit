@@ -60,7 +60,7 @@ class CHEMKIT_EXPORT ForceField
         std::string name() const;
         ForceField::Flags flags() const;
         int size() const;
-        QList<ForceFieldAtom *> atoms() const;
+        std::vector<ForceFieldAtom *> atoms() const;
         int atomCount() const;
         ForceFieldAtom* atom(int index) const;
         ForceFieldAtom* atom(const Atom *atom) const;

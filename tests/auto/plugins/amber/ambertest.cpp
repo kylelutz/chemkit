@@ -57,7 +57,7 @@ void AmberTest::adenosine()
     QVERIFY(forceField->isSetup());
 
     QCOMPARE(forceField->atomCount(), 32);
-    QList<chemkit::ForceFieldAtom *> atoms = forceField->atoms();
+    const std::vector<chemkit::ForceFieldAtom *> &atoms = forceField->atoms();
     QCOMPARE(atoms[0]->type(), std::string("CT"));
     QCOMPARE(atoms[1]->type(), std::string("OS"));
     QCOMPARE(atoms[2]->type(), std::string("CT"));
@@ -117,7 +117,7 @@ void AmberTest::serine()
     QVERIFY(forceField->isSetup());
 
     QCOMPARE(forceField->atomCount(), 14);
-    QList<chemkit::ForceFieldAtom *> atoms = forceField->atoms();
+    const std::vector<chemkit::ForceFieldAtom *> &atoms = forceField->atoms();
     QCOMPARE(atoms[0]->type(), std::string("N3"));
     QCOMPARE(atoms[1]->type(), std::string("CT"));
     QCOMPARE(atoms[2]->type(), std::string("H"));

@@ -52,7 +52,7 @@ class ForceFieldPrivate
     public:
         std::string name;
         ForceField::Flags flags;
-        QList<ForceFieldAtom *> atoms;
+        std::vector<ForceFieldAtom *> atoms;
         QList<ForceFieldCalculation *> calculations;
         std::vector<const Molecule *> molecules;
         std::string parameterSet;
@@ -106,7 +106,7 @@ ForceField::~ForceField()
     }
 
     // delete all atoms
-    Q_FOREACH(ForceFieldAtom *atom, d->atoms){
+    foreach(ForceFieldAtom *atom, d->atoms){
         delete atom;
     }
 
@@ -139,7 +139,7 @@ int ForceField::size() const
 }
 
 /// Returns a list of all the atoms in the force field.
-QList<ForceFieldAtom *> ForceField::atoms() const
+std::vector<ForceFieldAtom *> ForceField::atoms() const
 {
     return d->atoms;
 }
@@ -153,13 +153,13 @@ int ForceField::atomCount() const
 /// Returns the atom at index.
 ForceFieldAtom* ForceField::atom(int index) const
 {
-    return d->atoms.value(index, 0);
+    return d->atoms[index];
 }
 
 /// Returns the force field atom that represents atom.
 ForceFieldAtom* ForceField::atom(const Atom *atom) const
 {
-    Q_FOREACH(ForceFieldAtom *forceFieldAtom, d->atoms){
+    foreach(ForceFieldAtom *forceFieldAtom, d->atoms){
         if(forceFieldAtom->atom() == atom){
             return forceFieldAtom;
         }
@@ -195,12 +195,12 @@ int ForceField::moleculeCount() const
 
 void ForceField::addAtom(ForceFieldAtom *atom)
 {
-    d->atoms.append(atom);
+    d->atoms.push_back(atom);
 }
 
 void ForceField::removeAtom(ForceFieldAtom *atom)
 {
-    d->atoms.removeOne(atom);
+    d->atoms.erase(std::remove(d->atoms.begin(), d->atoms.end(), atom));
 }
 
 /// Removes all of the molecules in the force field.
@@ -456,7 +456,7 @@ Float ForceField::rootMeanSquareGradient() const
 /// Updates the coordinates of molecule in the force field.
 void ForceField::readCoordinates(const Molecule *molecule)
 {
-    Q_FOREACH(const Atom *atom, molecule->atoms()){
+    foreach(const Atom *atom, molecule->atoms()){
         readCoordinates(atom);
     }
 }
@@ -474,7 +474,7 @@ void ForceField::readCoordinates(const Atom *atom)
 /// Writes the coordinates to molecule from the force field.
 void ForceField::writeCoordinates(Molecule *molecule) const
 {
-    Q_FOREACH(Atom *atom, molecule->atoms()){
+    foreach(Atom *atom, molecule->atoms()){
         writeCoordinates(atom);
     }
 }

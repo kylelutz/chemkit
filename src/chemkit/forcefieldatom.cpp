@@ -22,6 +22,8 @@
 
 #include "forcefieldatom.h"
 
+#include <algorithm>
+
 #include "atom.h"
 #include "forcefield.h"
 #include "forcefieldatom.h"
@@ -77,7 +79,9 @@ const Atom* ForceFieldAtom::atom() const
 /// Returns the atom's index.
 int ForceFieldAtom::index() const
 {
-    return forceField()->atoms().indexOf(const_cast<ForceFieldAtom *>(this));
+    const std::vector<ForceFieldAtom *> &atoms = forceField()->atoms();
+
+    return std::distance(atoms.begin(), std::find(atoms.begin(), atoms.end(), this));
 }
 
 /// Sets the symbolic type for the atom.
