@@ -25,20 +25,20 @@
 #include <algorithm>
 
 #include <chemkit/molecule.h>
-#include <chemkit/chemicalfile.h>
-#include <chemkit/chemicalfileformat.h>
+#include <chemkit/moleculefile.h>
+#include <chemkit/moleculefileformat.h>
 
 const std::string dataPath = "../../../data/";
 
 void CubeTest::initTestCase()
 {
-    std::vector<std::string> formats = chemkit::ChemicalFileFormat::formats();
+    std::vector<std::string> formats = chemkit::MoleculeFileFormat::formats();
     QVERIFY(std::find(formats.begin(), formats.end(), "cube") != formats.end());
 }
 
 void CubeTest::readBenzene()
 {
-    chemkit::ChemicalFile file(dataPath + "benzene-homo.cube");
+    chemkit::MoleculeFile file(dataPath + "benzene-homo.cube");
     bool ok = file.read();
     if(!ok)
         qDebug() << file.errorString().c_str();

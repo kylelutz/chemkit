@@ -25,14 +25,14 @@
 #include <algorithm>
 
 #include <chemkit/molecule.h>
-#include <chemkit/chemicalfile.h>
-#include <chemkit/chemicalfileformat.h>
+#include <chemkit/moleculefile.h>
+#include <chemkit/moleculefileformat.h>
 
 const std::string dataPath = "../../../data/";
 
 void XyzTest::initTestCase()
 {
-    std::vector<std::string> formats = chemkit::ChemicalFileFormat::formats();
+    std::vector<std::string> formats = chemkit::MoleculeFileFormat::formats();
     QVERIFY(std::find(formats.begin(), formats.end(), "xyz") != formats.end());
 }
 
@@ -50,7 +50,7 @@ void XyzTest::read()
     QFETCH(QString, fileName);
     QFETCH(QString, formula);
 
-    chemkit::ChemicalFile file(dataPath + fileName.toStdString());
+    chemkit::MoleculeFile file(dataPath + fileName.toStdString());
     bool ok = file.read();
     if(!ok)
         qDebug() << file.errorString().c_str();

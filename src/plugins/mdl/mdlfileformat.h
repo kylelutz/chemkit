@@ -26,9 +26,9 @@
 #include <QtCore>
 
 #include <chemkit/molecule.h>
-#include <chemkit/chemicalfileformat.h>
+#include <chemkit/moleculefileformat.h>
 
-class MdlFileFormat : public chemkit::ChemicalFileFormat
+class MdlFileFormat : public chemkit::MoleculeFileFormat
 {
     public:
         // construction and destruction
@@ -36,18 +36,18 @@ class MdlFileFormat : public chemkit::ChemicalFileFormat
         ~MdlFileFormat();
 
         // input and output
-        bool read(QIODevice *iodev, chemkit::ChemicalFile *file);
-        bool write(const chemkit::ChemicalFile *file, QIODevice *iodev);
+        bool read(QIODevice *iodev, chemkit::MoleculeFile *file);
+        bool write(const chemkit::MoleculeFile *file, QIODevice *iodev);
 
     private:
-        bool readMolFile(QIODevice *iodev, chemkit::ChemicalFile *file);
-        bool readSdfFile(QIODevice *iodev, chemkit::ChemicalFile *file);
+        bool readMolFile(QIODevice *iodev, chemkit::MoleculeFile *file);
+        bool readSdfFile(QIODevice *iodev, chemkit::MoleculeFile *file);
         bool readAtomBlock(QIODevice *iodev, chemkit::Molecule *molecule, int atomCount);
         bool readBondBlock(QIODevice *iodev, chemkit::Molecule *molecule, int bondCount);
         bool readPropertyBlock(QIODevice *iodev, chemkit::Molecule *molecule);
-        bool readDataBlock(QIODevice *iodev, const chemkit::Molecule *molecule, chemkit::ChemicalFile *file);
+        bool readDataBlock(QIODevice *iodev, const chemkit::Molecule *molecule, chemkit::MoleculeFile *file);
         void writeMolFile(const chemkit::Molecule *molecule, QIODevice *iodev);
-        void writeSdfFile(const chemkit::ChemicalFile *file, QIODevice *iodev);
+        void writeSdfFile(const chemkit::MoleculeFile *file, QIODevice *iodev);
         void writeAtomBlock(const chemkit::Molecule *molecule, QIODevice *iodev);
         void writeBondBlock(const chemkit::Molecule *molecule, QIODevice *iodev);
 };

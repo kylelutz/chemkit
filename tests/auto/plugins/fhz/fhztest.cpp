@@ -25,14 +25,14 @@
 #include <algorithm>
 
 #include <chemkit/molecule.h>
-#include <chemkit/chemicalfile.h>
-#include <chemkit/chemicalfileformat.h>
+#include <chemkit/moleculefile.h>
+#include <chemkit/moleculefileformat.h>
 
 const std::string dataPath = "../../../data/";
 
 void FhzTest::initTestCase()
 {
-    std::vector<std::string> formats = chemkit::ChemicalFileFormat::formats();
+    std::vector<std::string> formats = chemkit::MoleculeFileFormat::formats();
     QVERIFY(std::find(formats.begin(), formats.end(), "fh") != formats.end());
     QVERIFY(std::find(formats.begin(), formats.end(), "fhz") != formats.end());
 }
@@ -51,7 +51,7 @@ void FhzTest::read()
     QFETCH(QString, fileName);
     QFETCH(QString, formula);
 
-    chemkit::ChemicalFile file(dataPath + fileName.toStdString());
+    chemkit::MoleculeFile file(dataPath + fileName.toStdString());
     bool ok = file.read();
     if(!ok)
         qDebug() << file.errorString().c_str();

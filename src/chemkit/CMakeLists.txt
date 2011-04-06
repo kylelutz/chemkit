@@ -13,8 +13,6 @@ set(HEADERS
   bond.h
   bond-inline.h
   bondpredictor.h
-  chemicalfile.h
-  chemicalfileformat.h
   chemkit.h
   commainitializer.h
   commainitializer-inline.h
@@ -52,6 +50,8 @@ set(HEADERS
   molecule.h
   molecule-inline.h
   moleculealigner.h
+  moleculefile.h
+  moleculefileformat.h
   moleculewatcher.h
   nucleotide.h
   partialchargepredictor.h
@@ -84,8 +84,6 @@ set(SOURCES
   atomtyper.cpp
   bond.cpp
   bondpredictor.cpp
-  chemicalfile.cpp
-  chemicalfileformat.cpp
   chemkit.cpp
   conformer.cpp
   coordinates.cpp
@@ -108,6 +106,8 @@ set(SOURCES
   molecularsurface.cpp
   molecule.cpp
   moleculealigner.cpp
+  moleculefile.cpp
+  moleculefileformat.cpp
   moleculewatcher.cpp
   nucleotide.cpp
   partialchargepredictor.cpp

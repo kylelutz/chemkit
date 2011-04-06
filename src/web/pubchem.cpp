@@ -30,7 +30,7 @@
 #include "pubchemquerythread.h"
 
 #include <chemkit/molecule.h>
-#include <chemkit/chemicalfile.h>
+#include <chemkit/moleculefile.h>
 
 namespace chemkit {
 
@@ -82,7 +82,7 @@ QUrl PubChem::url() const
 /// The ownership of the returned molecule is passed to the caller.
 Molecule* PubChem::downloadMolecule(const QString &id) const
 {
-    QScopedPointer<ChemicalFile> file(downloadFile(id));
+    QScopedPointer<MoleculeFile> file(downloadFile(id));
     if(!file){
         return 0;
     }
@@ -97,7 +97,7 @@ Molecule* PubChem::downloadMolecule(const QString &id) const
 /// error occurs \c 0 is returned.
 ///
 /// The ownership of the returned file is passed to the caller.
-ChemicalFile* PubChem::downloadFile(const QString &id) const
+MoleculeFile* PubChem::downloadFile(const QString &id) const
 {
     QByteArray data = downloadFileData(id, "sdf");
     if(data.isEmpty()){
@@ -108,7 +108,7 @@ ChemicalFile* PubChem::downloadFile(const QString &id) const
     buffer.setData(data);
     buffer.open(QBuffer::ReadOnly);
 
-    ChemicalFile *file = new ChemicalFile;
+    MoleculeFile *file = new MoleculeFile;
     file->read(&buffer, "sdf");
 
     return file;
@@ -124,9 +124,9 @@ ChemicalFile* PubChem::downloadFile(const QString &id) const
 /// \code
 /// QStringList ids;
 /// ids << "1" << "2" << "3" << "42" << "57";
-/// ChemicalFile *file = pubchem.downloadFile(ids);
+/// MoleculeFile *file = pubchem.downloadFile(ids);
 /// \endcode
-ChemicalFile* PubChem::downloadFile(const QStringList &ids) const
+MoleculeFile* PubChem::downloadFile(const QStringList &ids) const
 {
     QByteArray data = downloadFileData(ids, "sdf");
     if(data.isEmpty()){
@@ -137,7 +137,7 @@ ChemicalFile* PubChem::downloadFile(const QStringList &ids) const
     buffer.setData(data);
     buffer.open(QBuffer::ReadOnly);
 
-    ChemicalFile *file = new ChemicalFile;
+    MoleculeFile *file = new MoleculeFile;
     file->read(&buffer, "sdf");
 
     return file;

@@ -26,7 +26,7 @@
 #include <QtCore>
 
 #include <chemkit/plugin.h>
-#include <chemkit/chemicalfileformat.h>
+#include <chemkit/moleculefileformat.h>
 
 class CmlPlugin : public chemkit::Plugin
 {
@@ -36,7 +36,7 @@ class CmlPlugin : public chemkit::Plugin
         CmlPlugin();
         ~CmlPlugin();
 
-        static chemkit::ChemicalFileFormat* createCmlFormat();
+        static chemkit::MoleculeFileFormat* createCmlFormat();
 };
 
 #endif // CMLPLUGIN_H

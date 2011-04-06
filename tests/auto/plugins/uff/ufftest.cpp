@@ -27,7 +27,7 @@
 #include <chemkit/molecule.h>
 #include <chemkit/atomtyper.h>
 #include <chemkit/forcefield.h>
-#include <chemkit/chemicalfile.h>
+#include <chemkit/moleculefile.h>
 
 void UffTest::initTestCase()
 {

@@ -26,7 +26,7 @@
 #include <QtCore>
 
 #include <chemkit/plugin.h>
-#include <chemkit/chemicalfileformat.h>
+#include <chemkit/moleculefileformat.h>
 
 class CubePlugin : public chemkit::Plugin
 {
@@ -36,7 +36,7 @@ class CubePlugin : public chemkit::Plugin
         CubePlugin();
         ~CubePlugin();
 
-        static chemkit::ChemicalFileFormat* createCubeFormat();
+        static chemkit::MoleculeFileFormat* createCubeFormat();
 };
 
 #endif // CUBEPLUGIN_H

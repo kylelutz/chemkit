@@ -20,12 +20,12 @@
 **
 ******************************************************************************/
 
-#ifndef CHEMICALFILETEST_H
-#define CHEMICALFILETEST_H
+#ifndef MOLECULEFILETEST_H
+#define MOLECULEFILETEST_H
 
 #include <QtTest>
 
-class ChemicalFileTest : public QObject
+class MoleculeFileTest : public QObject
 {
     Q_OBJECT
 
@@ -37,4 +37,4 @@ class ChemicalFileTest : public QObject
         void moleculeData();
 };
 
-#endif // CHEMICALFILETEST_H
+#endif // MOLECULEFILETEST_H

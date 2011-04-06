@@ -98,7 +98,7 @@ MoleculePrivate::MoleculePrivate()
 /// \endcode
 ///
 /// Molecules can also be read from existing files using the
-/// ChemicalFile class.
+/// MoleculeFile class.
 ///
 /// Molecule objects take ownership of all the Atom, Bond, Residue,
 /// Ring, Fragment, and Conformer objects that they contain. Deleting

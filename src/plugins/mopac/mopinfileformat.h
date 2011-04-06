@@ -23,14 +23,14 @@
 #ifndef MOPINFILEFORMAT_H
 #define MOPINFILEFORMAT_H
 
-#include <chemkit/chemicalfileformat.h>
+#include <chemkit/moleculefileformat.h>
 
-class MopinFileFormat : public chemkit::ChemicalFileFormat
+class MopinFileFormat : public chemkit::MoleculeFileFormat
 {
     public:
         MopinFileFormat();
 
-        bool read(QIODevice *iodev, chemkit::ChemicalFile *file);
+        bool read(QIODevice *iodev, chemkit::MoleculeFile *file);
 };
 
 #endif // MOPINFILEFORMAT_H

@@ -26,7 +26,7 @@
 #include <QtGui>
 
 #include <chemkit/molecule.h>
-#include <chemkit/chemicalfile.h>
+#include <chemkit/moleculefile.h>
 
 namespace Ui {
     class MoleculeListDock;
@@ -43,7 +43,7 @@ class MoleculeListDock : public QDockWidget
         ~MoleculeListDock();
 
     private slots:
-        void fileChanged(chemkit::ChemicalFile *file);
+        void fileChanged(chemkit::MoleculeFile *file);
         void moleculeChanged(chemkit::Molecule *molecule);
         void itemSelectionChanged();
         void itemDoubleClicked(QTableWidgetItem *item);

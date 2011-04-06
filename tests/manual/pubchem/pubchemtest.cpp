@@ -24,14 +24,14 @@
 
 #include <chemkit/pubchem.h>
 #include <chemkit/molecule.h>
-#include <chemkit/chemicalfile.h>
+#include <chemkit/moleculefile.h>
 
 void PubChemTest::downloadFile()
 {
     chemkit::PubChem pubchem;
 
     // CID 5950 is alanine
-    chemkit::ChemicalFile *file = pubchem.downloadFile("5950");
+    chemkit::MoleculeFile *file = pubchem.downloadFile("5950");
     QVERIFY(file != 0);
 
     QCOMPARE(file->moleculeCount(), 1);
@@ -48,7 +48,7 @@ void PubChemTest::downloadMultiFile()
     QStringList ids;
     ids << "1" << "4" << "92" << "8" << "109" << "12";
 
-    chemkit::ChemicalFile *file = pubchem.downloadFile(ids);
+    chemkit::MoleculeFile *file = pubchem.downloadFile(ids);
     QVERIFY(file != 0);
 
     QCOMPARE(file->moleculeCount(), 6);

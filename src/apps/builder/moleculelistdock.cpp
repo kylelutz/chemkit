@@ -38,7 +38,7 @@ MoleculeListDock::MoleculeListDock(BuilderWindow *builder)
     connect(ui->tableWidget, SIGNAL(itemChanged(QTableWidgetItem*)), SLOT(itemChanged(QTableWidgetItem*)));
     connect(ui->tableWidget, SIGNAL(customContextMenuRequested(const QPoint&)), SLOT(customContextMenuRequested(const QPoint&)));
 
-    connect(builder, SIGNAL(fileChanged(chemkit::ChemicalFile*)), SLOT(fileChanged(chemkit::ChemicalFile*)));
+    connect(builder, SIGNAL(fileChanged(chemkit::MoleculeFile*)), SLOT(fileChanged(chemkit::MoleculeFile*)));
     connect(builder, SIGNAL(moleculeChanged(chemkit::Molecule*)), SLOT(moleculeChanged(chemkit::Molecule*)));
 
     m_selectedItem = 0;
@@ -49,7 +49,7 @@ MoleculeListDock::~MoleculeListDock()
     delete ui;
 }
 
-void MoleculeListDock::fileChanged(chemkit::ChemicalFile *file)
+void MoleculeListDock::fileChanged(chemkit::MoleculeFile *file)
 {
     ui->tableWidget->clearContents();
 

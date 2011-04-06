@@ -24,7 +24,7 @@
 
 // --- Construction and Destruction ---------------------------------------- //
 SmiFileFormat::SmiFileFormat()
-    : chemkit::ChemicalFileFormat("smi")
+    : chemkit::MoleculeFileFormat("smi")
 {
 
 }
@@ -34,7 +34,7 @@ SmiFileFormat::~SmiFileFormat()
 }
 
 // --- Input/Output -------------------------------------------------------- //
-bool SmiFileFormat::read(QIODevice *iodev, chemkit::ChemicalFile *file)
+bool SmiFileFormat::read(QIODevice *iodev, chemkit::MoleculeFile *file)
 {
     iodev->setTextModeEnabled(true);
 
@@ -73,7 +73,7 @@ bool SmiFileFormat::read(QIODevice *iodev, chemkit::ChemicalFile *file)
     return true;
 }
 
-bool SmiFileFormat::write(const chemkit::ChemicalFile *file, QIODevice *iodev)
+bool SmiFileFormat::write(const chemkit::MoleculeFile *file, QIODevice *iodev)
 {
     iodev->setTextModeEnabled(true);
 

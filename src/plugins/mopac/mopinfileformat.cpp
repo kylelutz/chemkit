@@ -26,11 +26,11 @@
 #include <chemkit/internalcoordinates.h>
 
 MopinFileFormat::MopinFileFormat()
-    : chemkit::ChemicalFileFormat("mopin")
+    : chemkit::MoleculeFileFormat("mopin")
 {
 }
 
-bool MopinFileFormat::read(QIODevice *iodev, chemkit::ChemicalFile *file)
+bool MopinFileFormat::read(QIODevice *iodev, chemkit::MoleculeFile *file)
 {
     iodev->setTextModeEnabled(true);
 

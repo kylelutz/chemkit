@@ -27,7 +27,7 @@
 #include <chemkit/chemkit.h>
 #include <chemkit/molecule.h>
 #include <chemkit/lineformat.h>
-#include <chemkit/chemicalfile.h>
+#include <chemkit/moleculefile.h>
 
 // option flags
 int COMPOSITION_FLAG = 0;
@@ -138,13 +138,13 @@ int main(int argc, char *argv[])
     }
 
     // read input file
-    chemkit::ChemicalFile inputFile(inputFileName.toStdString());
+    chemkit::MoleculeFile inputFile(inputFileName.toStdString());
     if(!inputFile.read()){
         err << "Error: failed to read input file: " << inputFile.errorString().c_str() << "\n";
         return -1;
     }
 
-    chemkit::ChemicalFile outputFile;
+    chemkit::MoleculeFile outputFile;
 
     chemkit::Molecule::CompareFlags flags;
 

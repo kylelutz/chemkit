@@ -28,14 +28,14 @@
 #include "benzeneringsbenchmark.h"
 
 #include <chemkit/molecule.h>
-#include <chemkit/chemicalfile.h>
+#include <chemkit/moleculefile.h>
 
 const std::string dataPath = "../../data/";
 
 void BenzeneRingsBenchmark::benchmark()
 {
     // load test file
-    chemkit::ChemicalFile file(dataPath + "pubchem_416_benzenes.sdf");
+    chemkit::MoleculeFile file(dataPath + "pubchem_416_benzenes.sdf");
     bool ok = file.read();
     if(!ok)
         qDebug() << file.errorString().c_str();

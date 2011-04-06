@@ -23,13 +23,13 @@
 #include "cubefileformat.h"
 
 #include <chemkit/molecule.h>
-#include <chemkit/chemicalfile.h>
+#include <chemkit/moleculefile.h>
 
 // Conversion factor between bohr units and Angstroms.
 const double BohrToAnstroms = 0.52918;
 
 CubeFileFormat::CubeFileFormat()
-    : chemkit::ChemicalFileFormat("cube")
+    : chemkit::MoleculeFileFormat("cube")
 {
 }
 
@@ -37,7 +37,7 @@ CubeFileFormat::~CubeFileFormat()
 {
 }
 
-bool CubeFileFormat::read(QIODevice *iodev, chemkit::ChemicalFile *file)
+bool CubeFileFormat::read(QIODevice *iodev, chemkit::MoleculeFile *file)
 {
     iodev->setTextModeEnabled(true);
 

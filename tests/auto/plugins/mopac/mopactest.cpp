@@ -25,21 +25,21 @@
 #include <algorithm>
 
 #include <chemkit/molecule.h>
-#include <chemkit/chemicalfile.h>
-#include <chemkit/chemicalfileformat.h>
+#include <chemkit/moleculefile.h>
+#include <chemkit/moleculefileformat.h>
 
 const std::string dataPath = "../../../data/";
 
 void MopacTest::initTestCase()
 {
-    std::vector<std::string> formats = chemkit::ChemicalFileFormat::formats();
+    std::vector<std::string> formats = chemkit::MoleculeFileFormat::formats();
     QVERIFY(std::find(formats.begin(), formats.end(), "mopin") != formats.end());
     QVERIFY(std::find(formats.begin(), formats.end(), "mopcrt") != formats.end());
 }
 
 void MopacTest::ethanol()
 {
-    chemkit::ChemicalFile file(dataPath + "ethanol.mopin");
+    chemkit::MoleculeFile file(dataPath + "ethanol.mopin");
     bool ok = file.read();
     if(!ok)
         qDebug() << file.errorString().c_str();
@@ -52,7 +52,7 @@ void MopacTest::ethanol()
 
 void MopacTest::guanine()
 {
-    chemkit::ChemicalFile file(dataPath + "guanine.mopcrt");
+    chemkit::MoleculeFile file(dataPath + "guanine.mopcrt");
     bool ok = file.read();
     if(!ok)
         qDebug() << file.errorString().c_str();

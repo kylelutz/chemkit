@@ -28,12 +28,12 @@
 #include "molecularmassesbenchmark.h"
 
 #include <chemkit/molecule.h>
-#include <chemkit/chemicalfile.h>
+#include <chemkit/moleculefile.h>
 
 void MolecularMassesBenchmark::benchmark()
 {
     QBENCHMARK {
-        chemkit::ChemicalFile file("pubchem_sample_33.sdf");
+        chemkit::MoleculeFile file("pubchem_sample_33.sdf");
         bool ok = file.read();
         if(!ok)
             qDebug() << file.errorString().c_str();

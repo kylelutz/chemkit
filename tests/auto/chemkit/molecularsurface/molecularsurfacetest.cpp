@@ -31,7 +31,7 @@
 #include <chemkit/vector3.h>
 #include <chemkit/molecule.h>
 #include <chemkit/polymerfile.h>
-#include <chemkit/chemicalfile.h>
+#include <chemkit/moleculefile.h>
 #include <chemkit/molecularsurface.h>
 
 const std::string dataPath = "../../../data/";
@@ -107,7 +107,7 @@ void MolecularSurfaceTest::water()
 
 void MolecularSurfaceTest::serine()
 {
-    chemkit::ChemicalFile file(dataPath + "serine.mol");
+    chemkit::MoleculeFile file(dataPath + "serine.mol");
     bool ok = file.read();
     if(!ok)
         qDebug() << file.errorString().c_str();
@@ -131,7 +131,7 @@ void MolecularSurfaceTest::serine()
 
 void MolecularSurfaceTest::guanine()
 {
-    chemkit::ChemicalFile file(dataPath + "guanine.mol");
+    chemkit::MoleculeFile file(dataPath + "guanine.mol");
     bool ok = file.read();
     if(!ok)
         qDebug() << file.errorString().c_str();
@@ -155,7 +155,7 @@ void MolecularSurfaceTest::guanine()
 
 void MolecularSurfaceTest::methane()
 {
-    chemkit::ChemicalFile file(dataPath + "methane.xyz");
+    chemkit::MoleculeFile file(dataPath + "methane.xyz");
     bool ok = file.read();
     if(!ok)
         qDebug() << file.errorString().c_str();
@@ -179,7 +179,7 @@ void MolecularSurfaceTest::methane()
 
 void MolecularSurfaceTest::ethanol()
 {
-    chemkit::ChemicalFile file(dataPath + "ethanol.cml");
+    chemkit::MoleculeFile file(dataPath + "ethanol.cml");
     bool ok = file.read();
     if(!ok)
         qDebug() << file.errorString().c_str();
@@ -203,7 +203,7 @@ void MolecularSurfaceTest::ethanol()
 
 void MolecularSurfaceTest::adenosine()
 {
-    chemkit::ChemicalFile file(dataPath + "adenosine.mol");
+    chemkit::MoleculeFile file(dataPath + "adenosine.mol");
     bool ok = file.read();
     if(!ok)
         qDebug() << file.errorString().c_str();

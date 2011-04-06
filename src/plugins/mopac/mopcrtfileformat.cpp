@@ -25,11 +25,11 @@
 #include <chemkit/molecule.h>
 
 MopcrtFileFormat::MopcrtFileFormat()
-    : chemkit::ChemicalFileFormat("mopcrt")
+    : chemkit::MoleculeFileFormat("mopcrt")
 {
 }
 
-bool MopcrtFileFormat::read(QIODevice *iodev, chemkit::ChemicalFile *file)
+bool MopcrtFileFormat::read(QIODevice *iodev, chemkit::MoleculeFile *file)
 {
     iodev->setTextModeEnabled(true);
 

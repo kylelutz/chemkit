@@ -27,7 +27,7 @@
 #include <chemkit/chemkit.h>
 #include <chemkit/molecule.h>
 #include <chemkit/lineformat.h>
-#include <chemkit/chemicalfileformat.h>
+#include <chemkit/moleculefileformat.h>
 
 void InchiTest::initTestCase()
 {
@@ -35,7 +35,7 @@ void InchiTest::initTestCase()
     QVERIFY(std::find(lineFormats.begin(), lineFormats.end(), "inchi") != lineFormats.end());
     QVERIFY(std::find(lineFormats.begin(), lineFormats.end(), "inchikey") != lineFormats.end());
 
-    std::vector<std::string> fileFormats = chemkit::ChemicalFileFormat::formats();
+    std::vector<std::string> fileFormats = chemkit::MoleculeFileFormat::formats();
     QVERIFY(std::find(fileFormats.begin(), fileFormats.end(), "inchi") != fileFormats.end());
 }
 

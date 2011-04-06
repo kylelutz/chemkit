@@ -20,7 +20,7 @@
 **
 ******************************************************************************/
 
-#include "chemicalfileformat.h"
+#include "moleculefileformat.h"
 
 #include <map>
 #include <boost/algorithm/string/case_conv.hpp>
@@ -29,8 +29,8 @@
 
 namespace chemkit {
 
-// === ChemicalFileFormatPrivate =========================================== //
-class ChemicalFileFormatPrivate
+// === MoleculeFileFormatPrivate =========================================== //
+class MoleculeFileFormatPrivate
 {
     public:
         std::string name;
@@ -38,49 +38,49 @@ class ChemicalFileFormatPrivate
         std::map<std::string, QVariant> options;
 };
 
-// === ChemicalFileFormat ================================================== //
-/// \class ChemicalFileFormat chemicalfileformat.h chemkit/chemicalfileformat.h
+// === MoleculeFileFormat ================================================== //
+/// \class MoleculeFileFormat moleculefileformat.h chemkit/moleculefileformat.h
 /// \ingroup chemkit
-/// \brief The ChemicalFileFormat class represents a chemical file
+/// \brief The MoleculeFileFormat class represents a molecule file
 ///        format.
 ///
-/// The ChemicalFileFormat class allows read and write access to a
-/// chemical file's data. This class only deals with interpreting a
+/// The MoleculeFileFormat class allows read and write access to a
+/// molecule file's data. This class only deals with interpreting a
 /// file format. To access the molecules contained in a file use the
-/// ChemicalFile class.
+/// MoleculeFile class.
 ///
-/// \see ChemicalFile, PolymerFileFormat
+/// \see MoleculeFile, PolymerFileFormat
 
 // --- Construction and Destruction ---------------------------------------- //
-/// Construct a chemical file format.
-ChemicalFileFormat::ChemicalFileFormat(const std::string &name)
-    : d(new ChemicalFileFormatPrivate)
+/// Construct a molecule file format.
+MoleculeFileFormat::MoleculeFileFormat(const std::string &name)
+    : d(new MoleculeFileFormatPrivate)
 {
     d->name = boost::algorithm::to_lower_copy(name);
 }
 
-/// Destroys a chemical file format.
-ChemicalFileFormat::~ChemicalFileFormat()
+/// Destroys a molecule file format.
+MoleculeFileFormat::~MoleculeFileFormat()
 {
     delete d;
 }
 
 // --- Properties ---------------------------------------------------------- //
 /// Returns the name of the format.
-std::string ChemicalFileFormat::name() const
+std::string MoleculeFileFormat::name() const
 {
     return d->name;
 }
 
 // --- Options ------------------------------------------------------------- //
 /// Sets an option for the format.
-void ChemicalFileFormat::setOption(const std::string &name, const QVariant &value)
+void MoleculeFileFormat::setOption(const std::string &name, const QVariant &value)
 {
     d->options[name] = value;
 }
 
 /// Returns the option for the format.
-QVariant ChemicalFileFormat::option(const std::string &name) const
+QVariant MoleculeFileFormat::option(const std::string &name) const
 {
     std::map<std::string, QVariant>::iterator element = d->options.find(name);
     if(element != d->options.end()){
@@ -92,7 +92,7 @@ QVariant ChemicalFileFormat::option(const std::string &name) const
 
 // --- Input and Output ---------------------------------------------------- //
 /// Read from iodev into file.
-bool ChemicalFileFormat::read(QIODevice *iodev, ChemicalFile *file)
+bool MoleculeFileFormat::read(QIODevice *iodev, MoleculeFile *file)
 {
     Q_UNUSED(iodev);
     Q_UNUSED(file);
@@ -102,7 +102,7 @@ bool ChemicalFileFormat::read(QIODevice *iodev, ChemicalFile *file)
 }
 
 /// Write the contents of the file to iodev.
-bool ChemicalFileFormat::write(const ChemicalFile *file, QIODevice *iodev)
+bool MoleculeFileFormat::write(const MoleculeFile *file, QIODevice *iodev)
 {
     Q_UNUSED(file);
     Q_UNUSED(iodev);
@@ -113,28 +113,28 @@ bool ChemicalFileFormat::write(const ChemicalFile *file, QIODevice *iodev)
 
 // --- Error Handling ------------------------------------------------------ //
 /// Sets a string describing the last error that occured.
-void ChemicalFileFormat::setErrorString(const std::string &error)
+void MoleculeFileFormat::setErrorString(const std::string &error)
 {
     d->errorString = error;
 }
 
 /// Returns a string describing the last error that occured.
-std::string ChemicalFileFormat::errorString() const
+std::string MoleculeFileFormat::errorString() const
 {
     return d->errorString;
 }
 
 // --- Static Methods ------------------------------------------------------ //
-/// Creates a new chemical file format.
-ChemicalFileFormat* ChemicalFileFormat::create(const std::string &name)
+/// Creates a new molecule file format.
+MoleculeFileFormat* MoleculeFileFormat::create(const std::string &name)
 {
-    return PluginManager::instance()->createPluginClass<ChemicalFileFormat>(name);
+    return PluginManager::instance()->createPluginClass<MoleculeFileFormat>(name);
 }
 
 /// Returns a list of all supported file formats.
-std::vector<std::string> ChemicalFileFormat::formats()
+std::vector<std::string> MoleculeFileFormat::formats()
 {
-    return PluginManager::instance()->pluginClassNames<ChemicalFileFormat>();
+    return PluginManager::instance()->pluginClassNames<MoleculeFileFormat>();
 }
 
 } // end chemkit namespace

@@ -25,12 +25,12 @@
 #include "parsesmilesbenchmark.h"
 
 #include <chemkit/molecule.h>
-#include <chemkit/chemicalfile.h>
+#include <chemkit/moleculefile.h>
 
 void ParseSmilesBenchmark::benchmark()
 {
     QBENCHMARK {
-        chemkit::ChemicalFile file("pubchem-smiles.smi");
+        chemkit::MoleculeFile file("pubchem-smiles.smi");
         bool ok = file.read();
         if(!ok)
             qDebug() << file.errorString().c_str();

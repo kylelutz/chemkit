@@ -28,7 +28,7 @@
 #include <chemkit/chemkit.h>
 #include <chemkit/molecule.h>
 #include <chemkit/moleculeeditor.h>
-#include <chemkit/chemicalfileformat.h>
+#include <chemkit/moleculefileformat.h>
 #include <chemkit/graphicsview.h>
 #include <chemkit/graphicsmoleculeitem.h>
 
@@ -50,7 +50,7 @@ class BuilderWindow : public QMainWindow
         ~BuilderWindow();
 
         // properties
-        chemkit::ChemicalFile* file() const { return m_file; }
+        chemkit::MoleculeFile* file() const { return m_file; }
 
         // molecule
         void setMolecule(chemkit::Molecule *molecule);
@@ -98,7 +98,7 @@ class BuilderWindow : public QMainWindow
         void moleculeProperties();
 
     signals:
-        void fileChanged(chemkit::ChemicalFile *file);
+        void fileChanged(chemkit::MoleculeFile *file);
         void moleculeChanged(chemkit::Molecule *molecule);
         void toolChanged(BuilderTool *tool);
 
@@ -107,7 +107,7 @@ class BuilderWindow : public QMainWindow
 
     private:
         Ui::BuilderWindow *ui;
-        chemkit::ChemicalFile *m_file;
+        chemkit::MoleculeFile *m_file;
         chemkit::Molecule *m_molecule;
         chemkit::GraphicsMoleculeItem *m_moleculeItem;
         chemkit::MoleculeEditor *m_editor;

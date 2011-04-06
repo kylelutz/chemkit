@@ -27,7 +27,7 @@
 
 #include <chemkit/plugin.h>
 #include <chemkit/lineformat.h>
-#include <chemkit/chemicalfileformat.h>
+#include <chemkit/moleculefileformat.h>
 
 class InchiPlugin : public chemkit::Plugin
 {
@@ -39,7 +39,7 @@ class InchiPlugin : public chemkit::Plugin
 
         static chemkit::LineFormat* createInchiFormat();
         static chemkit::LineFormat* createInchiKeyFormat();
-        static chemkit::ChemicalFileFormat* createInchiFileFormat();
+        static chemkit::MoleculeFileFormat* createInchiFileFormat();
 };
 
 #endif // INCHIPLUGIN_H

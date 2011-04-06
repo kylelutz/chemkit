@@ -28,22 +28,22 @@
 MopacPlugin::MopacPlugin()
     : chemkit::Plugin("mopac")
 {
-    registerPluginClass<chemkit::ChemicalFileFormat>("mopin", createMopinFormat);
-    registerPluginClass<chemkit::ChemicalFileFormat>("mopcrt", createMopcrtFormat);
+    registerPluginClass<chemkit::MoleculeFileFormat>("mopin", createMopinFormat);
+    registerPluginClass<chemkit::MoleculeFileFormat>("mopcrt", createMopcrtFormat);
 }
 
 MopacPlugin::~MopacPlugin()
 {
-    unregisterPluginClass<chemkit::ChemicalFileFormat>("mopin");
-    unregisterPluginClass<chemkit::ChemicalFileFormat>("mopcrt");
+    unregisterPluginClass<chemkit::MoleculeFileFormat>("mopin");
+    unregisterPluginClass<chemkit::MoleculeFileFormat>("mopcrt");
 }
 
-chemkit::ChemicalFileFormat* MopacPlugin::createMopinFormat()
+chemkit::MoleculeFileFormat* MopacPlugin::createMopinFormat()
 {
     return new MopinFileFormat;
 }
 
-chemkit::ChemicalFileFormat* MopacPlugin::createMopcrtFormat()
+chemkit::MoleculeFileFormat* MopacPlugin::createMopcrtFormat()
 {
     return new MopcrtFileFormat;
 }

@@ -98,7 +98,7 @@ GraphicsViewPrivate::GraphicsViewPrivate()
 /// display it in a GraphicsView widget and setup mouse navigation.
 /// \code
 /// // read the molecule from the file
-/// ChemicalFile file("/path/to/guanine.mol");
+/// MoleculeFile file("/path/to/guanine.mol");
 /// file.read();
 /// Molecule *molecule = file.molecule();
 ///

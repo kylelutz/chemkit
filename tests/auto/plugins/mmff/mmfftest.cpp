@@ -29,7 +29,7 @@
 #include <chemkit/molecule.h>
 #include <chemkit/atomtyper.h>
 #include <chemkit/forcefield.h>
-#include <chemkit/chemicalfile.h>
+#include <chemkit/moleculefile.h>
 #include <chemkit/partialchargepredictor.h>
 
 const std::string dataPath = "../../../data/";
@@ -53,7 +53,7 @@ void MmffTest::initTestCase()
 void MmffTest::validate()
 {
     // open molecule data file
-    chemkit::ChemicalFile dataFile(dataPath + "MMFF94_hypervalent.mol2");
+    chemkit::MoleculeFile dataFile(dataPath + "MMFF94_hypervalent.mol2");
     bool ok = dataFile.read();
     if(!ok)
         qDebug() << dataFile.errorString().c_str();

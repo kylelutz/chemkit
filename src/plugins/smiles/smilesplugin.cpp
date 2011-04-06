@@ -29,13 +29,13 @@ SmilesPlugin::SmilesPlugin()
     : chemkit::Plugin("smiles")
 {
     registerPluginClass<chemkit::LineFormat>("smiles", createSmilesFormat);
-    registerPluginClass<chemkit::ChemicalFileFormat>("smi", createSmiFormat);
+    registerPluginClass<chemkit::MoleculeFileFormat>("smi", createSmiFormat);
 }
 
 SmilesPlugin::~SmilesPlugin()
 {
     unregisterPluginClass<chemkit::LineFormat>("smiles");
-    unregisterPluginClass<chemkit::ChemicalFileFormat>("smi");
+    unregisterPluginClass<chemkit::MoleculeFileFormat>("smi");
 }
 
 chemkit::LineFormat* SmilesPlugin::createSmilesFormat()
@@ -43,7 +43,7 @@ chemkit::LineFormat* SmilesPlugin::createSmilesFormat()
     return new SmilesLineFormat;
 }
 
-chemkit::ChemicalFileFormat* SmilesPlugin::createSmiFormat()
+chemkit::MoleculeFileFormat* SmilesPlugin::createSmiFormat()
 {
     return new SmiFileFormat;
 }

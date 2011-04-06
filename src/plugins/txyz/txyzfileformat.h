@@ -24,16 +24,16 @@
 #define TXYZFILEFORMAT_H
 
 #include <chemkit/molecule.h>
-#include <chemkit/chemicalfileformat.h>
+#include <chemkit/moleculefileformat.h>
 
-class TxyzFileFormat : public chemkit::ChemicalFileFormat
+class TxyzFileFormat : public chemkit::MoleculeFileFormat
 {
     public:
         TxyzFileFormat();
         ~TxyzFileFormat();
 
-        bool read(QIODevice *iodev, chemkit::ChemicalFile *file);
-        bool write(const chemkit::ChemicalFile *file, QIODevice *iodev);
+        bool read(QIODevice *iodev, chemkit::MoleculeFile *file);
+        bool write(const chemkit::MoleculeFile *file, QIODevice *iodev);
 };
 
 #endif // TXYZFILEFORMAT_H

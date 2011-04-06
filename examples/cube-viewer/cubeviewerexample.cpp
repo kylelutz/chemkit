@@ -23,7 +23,7 @@
 #include "cubeviewerexample.h"
 #include "ui_cubeviewerexample.h"
 
-#include <chemkit/chemicalfile.h>
+#include <chemkit/moleculefile.h>
 #include <chemkit/bondpredictor.h>
 #include <chemkit/graphicsmaterial.h>
 #include <chemkit/graphicsnavigationtool.h>
@@ -98,7 +98,7 @@ void CubeViewerExample::openFile(const QString &fileName)
     closeFile();
 
     // open new file
-    chemkit::ChemicalFile file(fileName.toStdString());
+    chemkit::MoleculeFile file(fileName.toStdString());
     bool ok = file.read();
     if(!ok){
         QMessageBox::critical(this,

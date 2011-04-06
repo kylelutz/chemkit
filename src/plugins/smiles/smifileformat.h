@@ -25,16 +25,16 @@
 
 #include <chemkit/molecule.h>
 #include <chemkit/lineformat.h>
-#include <chemkit/chemicalfileformat.h>
+#include <chemkit/moleculefileformat.h>
 
-class SmiFileFormat : public chemkit::ChemicalFileFormat
+class SmiFileFormat : public chemkit::MoleculeFileFormat
 {
     public:
         SmiFileFormat();
         ~SmiFileFormat();
 
-        bool read(QIODevice *iodev, chemkit::ChemicalFile *file);
-        bool write(const chemkit::ChemicalFile *file, QIODevice *iodev);
+        bool read(QIODevice *iodev, chemkit::MoleculeFile *file);
+        bool write(const chemkit::MoleculeFile *file, QIODevice *iodev);
 };
 
 #endif // SMIFILEFORMAT_H

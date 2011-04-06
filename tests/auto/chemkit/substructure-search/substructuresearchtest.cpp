@@ -27,7 +27,7 @@
 #include "substructuresearchtest.h"
 
 #include <chemkit/molecule.h>
-#include <chemkit/chemicalfile.h>
+#include <chemkit/moleculefile.h>
 
 void SubstructureSearchTest::initTestCase()
 {
@@ -215,7 +215,7 @@ void SubstructureSearchTest::propane()
 void SubstructureSearchTest::protein()
 {
     // read file
-    chemkit::ChemicalFile file("../../../data/alphabet.mol2");
+    chemkit::MoleculeFile file("../../../data/alphabet.mol2");
     bool ok = file.read();
     if(!ok)
         qDebug() << file.errorString().c_str();

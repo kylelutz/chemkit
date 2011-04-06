@@ -24,15 +24,15 @@
 #define CUBEFILEFORMAT_H
 
 #include <chemkit/molecule.h>
-#include <chemkit/chemicalfileformat.h>
+#include <chemkit/moleculefileformat.h>
 
-class CubeFileFormat : public chemkit::ChemicalFileFormat
+class CubeFileFormat : public chemkit::MoleculeFileFormat
 {
     public:
         CubeFileFormat();
         ~CubeFileFormat();
 
-        bool read(QIODevice *iodev, chemkit::ChemicalFile *file);
+        bool read(QIODevice *iodev, chemkit::MoleculeFile *file);
 };
 
 #endif // CUBEFILEFORMAT_H

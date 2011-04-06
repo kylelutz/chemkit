@@ -26,7 +26,7 @@
 #include <QtCore>
 
 #include <chemkit/plugin.h>
-#include <chemkit/chemicalfileformat.h>
+#include <chemkit/moleculefileformat.h>
 
 class MopacPlugin : public chemkit::Plugin
 {
@@ -36,8 +36,8 @@ class MopacPlugin : public chemkit::Plugin
         MopacPlugin();
         ~MopacPlugin();
 
-        static chemkit::ChemicalFileFormat* createMopinFormat();
-        static chemkit::ChemicalFileFormat* createMopcrtFormat();
+        static chemkit::MoleculeFileFormat* createMopinFormat();
+        static chemkit::MoleculeFileFormat* createMopcrtFormat();
 };
 
 #endif // MOPACPLUGIN_H

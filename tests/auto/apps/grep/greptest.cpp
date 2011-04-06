@@ -23,7 +23,7 @@
 #include "greptest.h"
  
 #include <chemkit/molecule.h>
-#include <chemkit/chemicalfile.h>
+#include <chemkit/moleculefile.h>
 
 const QString grepApplication = "../../../../bin/chemkit-grep";
 const QString testDataPath = "../../../data/";
@@ -45,7 +45,7 @@ void GrepTest::ironComposition()
     process.waitForFinished();
     process.close();
 
-    chemkit::ChemicalFile file;
+    chemkit::MoleculeFile file;
     bool ok = file.read(output.fileName().toStdString(), "mol2");
     if(!ok){
         qDebug() << file.errorString().c_str();

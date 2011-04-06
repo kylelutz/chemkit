@@ -26,7 +26,7 @@
 #include <chemkit/internalcoordinates.h>
 
 FhzFileFormat::FhzFileFormat()
-    : chemkit::ChemicalFileFormat("fhz")
+    : chemkit::MoleculeFileFormat("fhz")
 {
 }
 
@@ -34,7 +34,7 @@ FhzFileFormat::~FhzFileFormat()
 {
 }
 
-bool FhzFileFormat::read(QIODevice *iodev, chemkit::ChemicalFile *file)
+bool FhzFileFormat::read(QIODevice *iodev, chemkit::MoleculeFile *file)
 {
     iodev->setTextModeEnabled(true);
 

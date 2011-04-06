@@ -20,35 +20,35 @@
 **
 ******************************************************************************/
 
-#include "chemicalfile.h"
+#include "moleculefile.h"
 
 #include "molecule.h"
-#include "chemicalfileformat.h"
+#include "moleculefileformat.h"
 
 namespace chemkit {
 
-// === ChemicalFilePrivate ================================================= //
-class ChemicalFilePrivate
+// === MoleculeFilePrivate ================================================= //
+class MoleculeFilePrivate
 {
     public:
         std::string fileName;
         std::string errorString;
-        ChemicalFileFormat *format;
+        MoleculeFileFormat *format;
         std::vector<Molecule *> molecules;
         std::map<std::string, QVariant> fileData;
         std::map<const Molecule *, std::map<std::string, QVariant> > moleculeData;
 };
 
-// === ChemicalFile ======================================================== //
-/// \class ChemicalFile chemicalfile.h chemkit/chemicalfile.h
+// === MoleculeFile ======================================================== //
+/// \class MoleculeFile moleculefile.h chemkit/moleculefile.h
 /// \ingroup chemkit
-/// \brief The ChemicalFile class represents a chemical data file
+/// \brief The MoleculeFile class represents a molecular data file
 ///        containing one or more molecules.
 ///
-/// Chemical files object can be used to both read and write molecule
+/// Molecule files object can be used to both read and write molecule
 /// data contained in files.
 ///
-/// The following chemical file formats are supported in chemkit:
+/// The following molecule file formats are supported in chemkit:
 ///     - \c cml
 ///     - \c inchi
 ///     - \c mdl
@@ -60,11 +60,10 @@ class ChemicalFilePrivate
 ///     - \c txyz
 ///     - \c xyz
 ///
-/// The following example shows how to read a molecule from a chemical
-/// file:
+/// The following example shows how to read a molecule from a file:
 /// \code
 /// // create file
-/// ChemicalFile file("ethanol.mol");
+/// MoleculeFile file("ethanol.mol");
 ///
 /// // read file
 /// file.read();
@@ -77,15 +76,15 @@ class ChemicalFilePrivate
 
 // --- Construction and Destruction ---------------------------------------- //
 /// Creates a new, empty file object.
-ChemicalFile::ChemicalFile()
-    : d(new ChemicalFilePrivate)
+MoleculeFile::MoleculeFile()
+    : d(new MoleculeFilePrivate)
 {
     d->format = 0;
 }
 
 /// Creates a new, empty file object with \p fileName.
-ChemicalFile::ChemicalFile(const std::string &fileName)
-    : d(new ChemicalFilePrivate)
+MoleculeFile::MoleculeFile(const std::string &fileName)
+    : d(new MoleculeFilePrivate)
 {
     d->format = 0;
     d->fileName = fileName;
@@ -93,7 +92,7 @@ ChemicalFile::ChemicalFile(const std::string &fileName)
 
 /// Destroys the file object. Destroying the file will also destroy
 /// any molecules that it contains.
-ChemicalFile::~ChemicalFile()
+MoleculeFile::~MoleculeFile()
 {
     qDeleteAll(d->molecules);
     delete d->format;
@@ -102,19 +101,19 @@ ChemicalFile::~ChemicalFile()
 
 // --- Properties ---------------------------------------------------------- //
 /// Sets the name of the file to \p fileName.
-void ChemicalFile::setFileName(const std::string &fileName)
+void MoleculeFile::setFileName(const std::string &fileName)
 {
     d->fileName = fileName;
 }
 
 /// Returns the name of the file.
-std::string ChemicalFile::fileName() const
+std::string MoleculeFile::fileName() const
 {
     return d->fileName;
 }
 
 /// Sets the format for the file to \p format.
-void ChemicalFile::setFormat(ChemicalFileFormat *format)
+void MoleculeFile::setFormat(MoleculeFileFormat *format)
 {
     d->format = format;
 }
@@ -122,9 +121,9 @@ void ChemicalFile::setFormat(ChemicalFileFormat *format)
 /// Sets the format of the file to \p name. If name is not a valid
 /// format the current format will remain unchanged and \c false
 /// will be returned.
-bool ChemicalFile::setFormat(const std::string &name)
+bool MoleculeFile::setFormat(const std::string &name)
 {
-    ChemicalFileFormat *format = ChemicalFileFormat::create(name);
+    MoleculeFileFormat *format = MoleculeFileFormat::create(name);
 
     if(!format){
         return false;
@@ -136,13 +135,13 @@ bool ChemicalFile::setFormat(const std::string &name)
 }
 
 /// Returns the format object for the file.
-ChemicalFileFormat* ChemicalFile::format() const
+MoleculeFileFormat* MoleculeFile::format() const
 {
     return d->format;
 }
 
 /// Returns the name of the format for this file.
-std::string ChemicalFile::formatName() const
+std::string MoleculeFile::formatName() const
 {
     if(d->format){
         return d->format->name();
@@ -152,14 +151,14 @@ std::string ChemicalFile::formatName() const
 }
 
 /// Returns the number of molecules in the file.
-int ChemicalFile::size() const
+int MoleculeFile::size() const
 {
     return moleculeCount();
 }
 
 /// Returns \c true if the file contains no molecules (i.e.
 /// size() \c == \c 0).
-bool ChemicalFile::isEmpty() const
+bool MoleculeFile::isEmpty() const
 {
     return size() == 0;
 }
@@ -168,7 +167,7 @@ bool ChemicalFile::isEmpty() const
 /// Adds the molecule to the file.
 ///
 /// The file will take ownership of the molecule until it is removed.
-void ChemicalFile::addMolecule(Molecule *molecule)
+void MoleculeFile::addMolecule(Molecule *molecule)
 {
     d->molecules.push_back(molecule);
 }
@@ -177,7 +176,7 @@ void ChemicalFile::addMolecule(Molecule *molecule)
 /// \p molecule is found and removed successfully.
 ///
 /// The ownership of \p molecule is passed to the caller.
-bool ChemicalFile::removeMolecule(Molecule *molecule)
+bool MoleculeFile::removeMolecule(Molecule *molecule)
 {
     std::vector<Molecule *>::iterator location = std::find(d->molecules.begin(), d->molecules.end(), molecule);
     if(location == d->molecules.end()){
@@ -192,7 +191,7 @@ bool ChemicalFile::removeMolecule(Molecule *molecule)
 
 /// Removes the molecule from the file and deletes it. Returns
 /// \c true if \p molecule is found and deleted successfully.
-bool ChemicalFile::deleteMolecule(Molecule *molecule)
+bool MoleculeFile::deleteMolecule(Molecule *molecule)
 {
     bool found = removeMolecule(molecule);
 
@@ -204,32 +203,32 @@ bool ChemicalFile::deleteMolecule(Molecule *molecule)
 }
 
 /// Returns a list of all the molecules in the file.
-std::vector<Molecule *> ChemicalFile::molecules() const
+std::vector<Molecule *> MoleculeFile::molecules() const
 {
     return d->molecules;
 }
 
 /// Returns the number of molecules in the file.
-int ChemicalFile::moleculeCount() const
+int MoleculeFile::moleculeCount() const
 {
     return d->molecules.size();
 }
 
 /// Returns the molecule at \p index in the file.
-Molecule* ChemicalFile::molecule(int index) const
+Molecule* MoleculeFile::molecule(int index) const
 {
     return d->molecules[index];
 }
 
 /// Returns \c true if the file contains \p molecule.
-bool ChemicalFile::contains(const Molecule *molecule) const
+bool MoleculeFile::contains(const Molecule *molecule) const
 {
     return std::find(d->molecules.begin(), d->molecules.end(), molecule) != d->molecules.end();
 }
 
 /// Removes all of the molecules from the file and deletes all
 /// of the data in the file.
-void ChemicalFile::clear()
+void MoleculeFile::clear()
 {
     qDeleteAll(d->molecules);
     d->molecules.clear();
@@ -239,13 +238,13 @@ void ChemicalFile::clear()
 
 // --- File Data ----------------------------------------------------------- //
 /// Sets data with \p name to \p value for the file.
-void ChemicalFile::setFileData(const std::string &name, const QVariant &value)
+void MoleculeFile::setFileData(const std::string &name, const QVariant &value)
 {
     d->fileData[name] = value;
 }
 
 /// Returns the data for \p name.
-QVariant ChemicalFile::fileData(const std::string &name) const
+QVariant MoleculeFile::fileData(const std::string &name) const
 {
     std::map<std::string, QVariant>::iterator element = d->fileData.find(name);
     if(element != d->fileData.end()){
@@ -256,13 +255,13 @@ QVariant ChemicalFile::fileData(const std::string &name) const
 }
 
 /// Sets data for \p molecule with \p name to \p value in the file.
-void ChemicalFile::setMoleculeData(const Molecule *molecule, const std::string &name, const QVariant &value)
+void MoleculeFile::setMoleculeData(const Molecule *molecule, const std::string &name, const QVariant &value)
 {
     d->moleculeData[molecule][name] = value;
 }
 
 /// Returns data for \p molecule with \p name in the file.
-QVariant ChemicalFile::moleculeData(const Molecule *molecule, const std::string &name) const
+QVariant MoleculeFile::moleculeData(const Molecule *molecule, const std::string &name) const
 {
     const std::map<std::string, QVariant> &moleculeDataMap = d->moleculeData[molecule];
     std::map<std::string, QVariant>::const_iterator element = moleculeDataMap.find(name);
@@ -275,7 +274,7 @@ QVariant ChemicalFile::moleculeData(const Molecule *molecule, const std::string 
 
 // --- Input and Output ---------------------------------------------------- //
 /// Reads the file.
-bool ChemicalFile::read()
+bool MoleculeFile::read()
 {
     if(d->fileName.empty()){
         return false;
@@ -285,7 +284,7 @@ bool ChemicalFile::read()
 }
 
 /// Reads the file from \p fileName.
-bool ChemicalFile::read(const std::string &fileName)
+bool MoleculeFile::read(const std::string &fileName)
 {
     std::string format = QFileInfo(fileName.c_str()).suffix().toStdString();
 
@@ -293,7 +292,7 @@ bool ChemicalFile::read(const std::string &fileName)
 }
 
 /// Reads the file from \p fileName using format.
-bool ChemicalFile::read(const std::string &fileName, const std::string &format)
+bool MoleculeFile::read(const std::string &fileName, const std::string &format)
 {
     QFile file(fileName.c_str());
     if(!file.open(QIODevice::ReadOnly)){
@@ -305,10 +304,10 @@ bool ChemicalFile::read(const std::string &fileName, const std::string &format)
 }
 
 /// Reads the file from \p iodev using \p format.
-bool ChemicalFile::read(QIODevice *iodev, const std::string &format)
+bool MoleculeFile::read(QIODevice *iodev, const std::string &format)
 {
     if(d->format == 0 || d->format->name() != format){
-        d->format = ChemicalFileFormat::create(format);
+        d->format = MoleculeFileFormat::create(format);
         if(!d->format){
             setErrorString(QString("Format '%1' is not supported").arg(format.c_str()).toStdString());
             iodev->close();
@@ -325,13 +324,13 @@ bool ChemicalFile::read(QIODevice *iodev, const std::string &format)
 }
 
 /// Writes the file.
-bool ChemicalFile::write()
+bool MoleculeFile::write()
 {
     return write(fileName());
 }
 
 /// Writes the file to \p fileName.
-bool ChemicalFile::write(const std::string &fileName)
+bool MoleculeFile::write(const std::string &fileName)
 {
     std::string format = QFileInfo(fileName.c_str()).suffix().toStdString();
 
@@ -339,7 +338,7 @@ bool ChemicalFile::write(const std::string &fileName)
 }
 
 /// Writes the file to \p fileName using \p format.
-bool ChemicalFile::write(const std::string &fileName, const std::string &format)
+bool MoleculeFile::write(const std::string &fileName, const std::string &format)
 {
     QFile file(fileName.c_str());
     if(!file.open(QIODevice::WriteOnly)){
@@ -351,7 +350,7 @@ bool ChemicalFile::write(const std::string &fileName, const std::string &format)
 }
 
 /// Writes the file to \p iodev.
-bool ChemicalFile::write(QIODevice *iodev)
+bool MoleculeFile::write(QIODevice *iodev)
 {
     if(!d->format)
         return false;
@@ -365,10 +364,10 @@ bool ChemicalFile::write(QIODevice *iodev)
 }
 
 /// Writes the file to \p iodev using \p format.
-bool ChemicalFile::write(QIODevice *iodev, const std::string &format)
+bool MoleculeFile::write(QIODevice *iodev, const std::string &format)
 {
     if(!d->format || d->format->name() != format){
-        d->format = ChemicalFileFormat::create(format);
+        d->format = MoleculeFileFormat::create(format);
         if(!d->format){
             setErrorString(QString("Format '%1' is not supported").arg(format.c_str()).toStdString());
             iodev->close();
@@ -380,22 +379,22 @@ bool ChemicalFile::write(QIODevice *iodev, const std::string &format)
 }
 
 // --- Error Handling ------------------------------------------------------ //
-void ChemicalFile::setErrorString(const std::string &error)
+void MoleculeFile::setErrorString(const std::string &error)
 {
     d->errorString = error;
 }
 
 /// Returns a string describing the last error that occured.
-std::string ChemicalFile::errorString() const
+std::string MoleculeFile::errorString() const
 {
     return d->errorString;
 }
 
 // --- Static Methods ------------------------------------------------------ //
-/// Returns a list of all supported chemical file formats.
-std::vector<std::string> ChemicalFile::formats()
+/// Returns a list of all supported molecule file formats.
+std::vector<std::string> MoleculeFile::formats()
 {
-    return ChemicalFileFormat::formats();
+    return MoleculeFileFormat::formats();
 }
 
 /// Reads and returns a molecule from the file. Returns \c 0 if there
@@ -403,9 +402,9 @@ std::vector<std::string> ChemicalFile::formats()
 ///
 /// This static convenience method allows for the reading of molecule
 /// from a file without explicitly creating a file object.
-Molecule* ChemicalFile::quickRead(const std::string &fileName)
+Molecule* MoleculeFile::quickRead(const std::string &fileName)
 {
-    ChemicalFile file(fileName);
+    MoleculeFile file(fileName);
 
     if(!file.read() || file.isEmpty()){
         return 0;
@@ -424,9 +423,9 @@ Molecule* ChemicalFile::quickRead(const std::string &fileName)
 ///
 /// This static convenience method allows for the writing of molecule
 /// to a file without explicitly creating a file object.
-void ChemicalFile::quickWrite(const Molecule *molecule, const std::string &fileName)
+void MoleculeFile::quickWrite(const Molecule *molecule, const std::string &fileName)
 {
-    ChemicalFile file;
+    MoleculeFile file;
     file.addMolecule(const_cast<Molecule *>(molecule));
     file.write(fileName);
 

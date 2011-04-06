@@ -23,14 +23,14 @@
 #ifndef MOPCRTFILEFORMAT_H
 #define MOPCRTFILEFORMAT_H
 
-#include <chemkit/chemicalfileformat.h>
+#include <chemkit/moleculefileformat.h>
 
-class MopcrtFileFormat : public chemkit::ChemicalFileFormat
+class MopcrtFileFormat : public chemkit::MoleculeFileFormat
 {
     public:
         MopcrtFileFormat();
 
-        bool read(QIODevice *iodev, chemkit::ChemicalFile *file);
+        bool read(QIODevice *iodev, chemkit::MoleculeFile *file);
 };
 
 #endif // MOPCRTFILEFORMAT_H

@@ -23,7 +23,7 @@
 #include "mol2fileformat.h"
 
 Mol2FileFormat::Mol2FileFormat()
-    : chemkit::ChemicalFileFormat("mol2")
+    : chemkit::MoleculeFileFormat("mol2")
 {
 }
 
@@ -31,7 +31,7 @@ Mol2FileFormat::~Mol2FileFormat()
 {
 }
 
-bool Mol2FileFormat::read(QIODevice *iodev, chemkit::ChemicalFile *file)
+bool Mol2FileFormat::read(QIODevice *iodev, chemkit::MoleculeFile *file)
 {
     iodev->setTextModeEnabled(true);
 
@@ -154,7 +154,7 @@ bool Mol2FileFormat::read(QIODevice *iodev, chemkit::ChemicalFile *file)
     return true;
 }
 
-bool Mol2FileFormat::write(const chemkit::ChemicalFile *file, QIODevice *iodev)
+bool Mol2FileFormat::write(const chemkit::MoleculeFile *file, QIODevice *iodev)
 {
     iodev->setTextModeEnabled(true);
 

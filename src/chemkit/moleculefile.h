@@ -20,8 +20,8 @@
 **
 ******************************************************************************/
 
-#ifndef CHEMKIT_CHEMICALFILE_H
-#define CHEMKIT_CHEMICALFILE_H
+#ifndef CHEMKIT_MOLECULEFILE_H
+#define CHEMKIT_MOLECULEFILE_H
 
 #include "chemkit.h"
 
@@ -33,23 +33,23 @@
 namespace chemkit {
 
 class Molecule;
-class ChemicalFileFormat;
-class ChemicalFilePrivate;
+class MoleculeFileFormat;
+class MoleculeFilePrivate;
 
-class CHEMKIT_EXPORT ChemicalFile
+class CHEMKIT_EXPORT MoleculeFile
 {
     public:
         // construction and destruction
-        ChemicalFile();
-        ChemicalFile(const std::string &fileName);
-        ~ChemicalFile();
+        MoleculeFile();
+        MoleculeFile(const std::string &fileName);
+        ~MoleculeFile();
 
         // properties
         void setFileName(const std::string &fileName);
         std::string fileName() const;
-        void setFormat(ChemicalFileFormat *format);
+        void setFormat(MoleculeFileFormat *format);
         bool setFormat(const std::string &name);
-        ChemicalFileFormat* format() const;
+        MoleculeFileFormat* format() const;
         std::string formatName() const;
         int size() const;
         bool isEmpty() const;
@@ -93,9 +93,9 @@ class CHEMKIT_EXPORT ChemicalFile
         void setErrorString(const std::string &error);
 
     private:
-        ChemicalFilePrivate* const d;
+        MoleculeFilePrivate* const d;
 };
 
 } // end chemkit namespace
 
-#endif // CHEMKIT_CHEMICALFILE_H
+#endif // CHEMKIT_MOLECULEFILE_H

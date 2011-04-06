@@ -20,28 +20,28 @@
 **
 ******************************************************************************/
 
-#ifndef CHEMKIT_CHEMICALFILEFORMAT_H
-#define CHEMKIT_CHEMICALFILEFORMAT_H
+#ifndef CHEMKIT_MOLECULEFILEFORMAT_H
+#define CHEMKIT_MOLECULEFILEFORMAT_H
 
 #include "chemkit.h"
 
 #include <string>
 #include <vector>
 
-#include "chemicalfile.h"
+#include "moleculefile.h"
 
 namespace chemkit {
 
-class ChemicalFileFormatPrivate;
+class MoleculeFileFormatPrivate;
 
-class CHEMKIT_EXPORT ChemicalFileFormat
+class CHEMKIT_EXPORT MoleculeFileFormat
 {
     public:
         // typedefs
-        typedef ChemicalFileFormat* (*CreateFunction)();
+        typedef MoleculeFileFormat* (*CreateFunction)();
 
         // construction and destruction
-        virtual ~ChemicalFileFormat();
+        virtual ~MoleculeFileFormat();
 
         // properties
         std::string name() const;
@@ -51,24 +51,24 @@ class CHEMKIT_EXPORT ChemicalFileFormat
         QVariant option(const std::string &name) const;
 
         // input and output
-        virtual bool read(QIODevice *iodev, ChemicalFile *file);
-        virtual bool write(const ChemicalFile *file, QIODevice *iodev);
+        virtual bool read(QIODevice *iodev, MoleculeFile *file);
+        virtual bool write(const MoleculeFile *file, QIODevice *iodev);
 
         // error handling
         std::string errorString() const;
 
         // static methods
-        static ChemicalFileFormat* create(const std::string &format);
+        static MoleculeFileFormat* create(const std::string &format);
         static std::vector<std::string> formats();
 
     protected:
-        ChemicalFileFormat(const std::string &name);
+        MoleculeFileFormat(const std::string &name);
         void setErrorString(const std::string &error);
 
     private:
-        ChemicalFileFormatPrivate* const d;
+        MoleculeFileFormatPrivate* const d;
 };
 
 } // end chemkit namespace
 
-#endif // CHEMKIT_CHEMICALFILEFORMAT_H
+#endif // CHEMKIT_MOLECULEFILEFORMAT_H

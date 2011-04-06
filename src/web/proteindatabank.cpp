@@ -27,7 +27,7 @@
 #include "downloadthread.h"
 
 #include <chemkit/polymerfile.h>
-#include <chemkit/chemicalfile.h>
+#include <chemkit/moleculefile.h>
 
 namespace chemkit {
 
@@ -117,7 +117,7 @@ Molecule* ProteinDataBank::downloadLigand(const QString &name) const
     buffer.setData(data);
     buffer.open(QBuffer::ReadOnly);
 
-    ChemicalFile file;
+    MoleculeFile file;
     bool ok = file.read(&buffer, "sdf");
 
     if(!ok || file.isEmpty()){

@@ -25,7 +25,7 @@
 #include <chemkit/element.h>
 
 TxyzFileFormat::TxyzFileFormat()
-    : chemkit::ChemicalFileFormat("txyz")
+    : chemkit::MoleculeFileFormat("txyz")
 {
 }
 
@@ -33,7 +33,7 @@ TxyzFileFormat::~TxyzFileFormat()
 {
 }
 
-bool TxyzFileFormat::read(QIODevice *iodev, chemkit::ChemicalFile *file)
+bool TxyzFileFormat::read(QIODevice *iodev, chemkit::MoleculeFile *file)
 {
     iodev->setTextModeEnabled(true);
 
@@ -103,7 +103,7 @@ bool TxyzFileFormat::read(QIODevice *iodev, chemkit::ChemicalFile *file)
     return true;
 }
 
-bool TxyzFileFormat::write(const chemkit::ChemicalFile *file, QIODevice *iodev)
+bool TxyzFileFormat::write(const chemkit::MoleculeFile *file, QIODevice *iodev)
 {
     iodev->setTextModeEnabled(true);
 

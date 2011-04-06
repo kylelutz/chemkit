@@ -20,14 +20,14 @@
 **
 ******************************************************************************/
 
-#include "chemicalfiletest.h"
+#include "moleculefiletest.h"
 
 #include <chemkit/molecule.h>
-#include <chemkit/chemicalfile.h>
+#include <chemkit/moleculefile.h>
 
-void ChemicalFileTest::fileName()
+void MoleculeFileTest::fileName()
 {
-    chemkit::ChemicalFile file;
+    chemkit::MoleculeFile file;
     QCOMPARE(file.fileName(), std::string());
 
     file.setFileName("foo");
@@ -39,19 +39,19 @@ void ChemicalFileTest::fileName()
     file.setFileName(std::string());
     QCOMPARE(file.fileName(), std::string());
 
-    chemkit::ChemicalFile fileWithName("foobar");
+    chemkit::MoleculeFile fileWithName("foobar");
     QCOMPARE(fileWithName.fileName(), std::string("foobar"));
 }
 
-void ChemicalFileTest::format()
+void MoleculeFileTest::format()
 {
-    chemkit::ChemicalFile file;
+    chemkit::MoleculeFile file;
     QVERIFY(file.format() == 0);
 }
 
-void ChemicalFileTest::contains()
+void MoleculeFileTest::contains()
 {
-    chemkit::ChemicalFile file;
+    chemkit::MoleculeFile file;
     QCOMPARE(file.contains(0), false);
 
     chemkit::Molecule *molecule = new chemkit::Molecule;
@@ -70,9 +70,9 @@ void ChemicalFileTest::contains()
     file.addMolecule(molecule);
 }
 
-void ChemicalFileTest::fileData()
+void MoleculeFileTest::fileData()
 {
-    chemkit::ChemicalFile file;
+    chemkit::MoleculeFile file;
 
     file.setFileData("foo", "bar");
     QCOMPARE(file.fileData("foo").toString(), QString("bar"));
@@ -81,9 +81,9 @@ void ChemicalFileTest::fileData()
     QCOMPARE(file.fileData("number").toInt(), 4);
 }
 
-void ChemicalFileTest::moleculeData()
+void MoleculeFileTest::moleculeData()
 {
-    chemkit::ChemicalFile file;
+    chemkit::MoleculeFile file;
     chemkit::Molecule *molecule = new chemkit::Molecule;
     file.addMolecule(molecule);
 
@@ -97,4 +97,4 @@ void ChemicalFileTest::moleculeData()
     QCOMPARE(file.moleculeData(molecule, "boilingPoint").toInt(), 38);
 }
 
-QTEST_APPLESS_MAIN(ChemicalFileTest)
+QTEST_APPLESS_MAIN(MoleculeFileTest)

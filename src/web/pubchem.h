@@ -33,7 +33,7 @@
 namespace chemkit {
 
 class Molecule;
-class ChemicalFile;
+class MoleculeFile;
 class PubChemPrivate;
 
 class CHEMKIT_WEB_EXPORT PubChem
@@ -49,8 +49,8 @@ class CHEMKIT_WEB_EXPORT PubChem
 
         // downloads
         Molecule* downloadMolecule(const QString &id) const;
-        ChemicalFile* downloadFile(const QString &id) const;
-        ChemicalFile* downloadFile(const QStringList &ids) const;
+        MoleculeFile* downloadFile(const QString &id) const;
+        MoleculeFile* downloadFile(const QStringList &ids) const;
         QByteArray downloadFileData(const QString &id, const QString &format) const;
         QByteArray downloadFileData(const QStringList &ids, const QString &format) const;
 

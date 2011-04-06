@@ -29,19 +29,19 @@ namespace {
 class CmlHandler : public QXmlDefaultHandler
 {
     public:
-        CmlHandler(chemkit::ChemicalFile *file);
+        CmlHandler(chemkit::MoleculeFile *file);
         ~CmlHandler();
 
         bool startElement(const QString &namespaceURI, const QString &localName, const QString &qName, const QXmlAttributes &atts);
         bool endElement(const QString &namespaceURI, const QString &localName, const QString &qName);
 
     private:
-        chemkit::ChemicalFile *m_file;
+        chemkit::MoleculeFile *m_file;
         chemkit::Molecule *m_molecule;
         QHash<QString, chemkit::Atom *> m_atomIds;
 };
 
-CmlHandler::CmlHandler(chemkit::ChemicalFile *file)
+CmlHandler::CmlHandler(chemkit::MoleculeFile *file)
     : QXmlDefaultHandler(),
       m_file(file),
       m_molecule(0)
@@ -145,7 +145,7 @@ bool CmlHandler::endElement(const QString &namespaceURI, const QString &localNam
 } // end anonymous namespace
 
 CmlFileFormat::CmlFileFormat()
-    : chemkit::ChemicalFileFormat("cml")
+    : chemkit::MoleculeFileFormat("cml")
 {
 }
 
@@ -153,7 +153,7 @@ CmlFileFormat::~CmlFileFormat()
 {
 }
 
-bool CmlFileFormat::read(QIODevice *iodev, chemkit::ChemicalFile *file)
+bool CmlFileFormat::read(QIODevice *iodev, chemkit::MoleculeFile *file)
 {
     QXmlSimpleReader xml;
     QXmlInputSource source(iodev);
@@ -168,7 +168,7 @@ bool CmlFileFormat::read(QIODevice *iodev, chemkit::ChemicalFile *file)
     return ok;
 }
 
-bool CmlFileFormat::write(const chemkit::ChemicalFile *file, QIODevice *iodev)
+bool CmlFileFormat::write(const chemkit::MoleculeFile *file, QIODevice *iodev)
 {
     QXmlStreamWriter stream(iodev);
     stream.setAutoFormatting(true);

@@ -26,7 +26,7 @@
 #include <QtCore>
 
 #include <chemkit/plugin.h>
-#include <chemkit/chemicalfileformat.h>
+#include <chemkit/moleculefileformat.h>
 
 class MdlPlugin : public chemkit::Plugin
 {
@@ -36,10 +36,10 @@ class MdlPlugin : public chemkit::Plugin
         MdlPlugin();
         ~MdlPlugin();
 
-        static chemkit::ChemicalFileFormat* createMdlFormat();
-        static chemkit::ChemicalFileFormat* createMolFormat();
-        static chemkit::ChemicalFileFormat* createSdfFormat();
-        static chemkit::ChemicalFileFormat* createSdFormat();
+        static chemkit::MoleculeFileFormat* createMdlFormat();
+        static chemkit::MoleculeFileFormat* createMolFormat();
+        static chemkit::MoleculeFileFormat* createSdfFormat();
+        static chemkit::MoleculeFileFormat* createSdFormat();
 };
 
 #endif // MDLPLUGIN_H

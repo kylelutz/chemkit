@@ -31,7 +31,7 @@
 #include <chemkit/molecule.h>
 #include <chemkit/atomtyper.h>
 #include <chemkit/forcefield.h>
-#include <chemkit/chemicalfile.h>
+#include <chemkit/moleculefile.h>
 
 const std::string dataPath = "../../../data/";
 
@@ -62,7 +62,7 @@ void OplsTest::energy()
     QFETCH(QString, formula);
     QFETCH(double, energy);
 
-    chemkit::Molecule *molecule = chemkit::ChemicalFile::quickRead(dataPath + fileName.toStdString());
+    chemkit::Molecule *molecule = chemkit::MoleculeFile::quickRead(dataPath + fileName.toStdString());
     QVERIFY(molecule != 0);
     QCOMPARE(molecule->formula(), formula.toStdString());
 

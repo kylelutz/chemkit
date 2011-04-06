@@ -26,7 +26,7 @@
 #include <QtCore>
 
 #include <chemkit/plugin.h>
-#include <chemkit/chemicalfileformat.h>
+#include <chemkit/moleculefileformat.h>
 
 class TxyzPlugin : public chemkit::Plugin
 {
@@ -36,7 +36,7 @@ class TxyzPlugin : public chemkit::Plugin
         TxyzPlugin();
         ~TxyzPlugin();
 
-        static chemkit::ChemicalFileFormat* createTxyzFormat();
+        static chemkit::MoleculeFileFormat* createTxyzFormat();
 };
 
 #endif // TXYZPLUGIN_H

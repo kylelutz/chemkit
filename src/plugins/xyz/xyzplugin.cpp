@@ -27,15 +27,15 @@
 XyzPlugin::XyzPlugin()
     : chemkit::Plugin("xyz")
 {
-    registerPluginClass<chemkit::ChemicalFileFormat>("xyz", createXyzFormat);
+    registerPluginClass<chemkit::MoleculeFileFormat>("xyz", createXyzFormat);
 }
 
 XyzPlugin::~XyzPlugin()
 {
-    unregisterPluginClass<chemkit::ChemicalFileFormat>("xyz");
+    unregisterPluginClass<chemkit::MoleculeFileFormat>("xyz");
 }
 
-chemkit::ChemicalFileFormat* XyzPlugin::createXyzFormat()
+chemkit::MoleculeFileFormat* XyzPlugin::createXyzFormat()
 {
     return new XyzFileFormat;
 }

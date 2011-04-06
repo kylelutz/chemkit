@@ -26,7 +26,7 @@
 
 // --- Construction and Destruction ---------------------------------------- //
 InchiFileFormat::InchiFileFormat()
-    : chemkit::ChemicalFileFormat("inchi")
+    : chemkit::MoleculeFileFormat("inchi")
 {
 }
 
@@ -35,7 +35,7 @@ InchiFileFormat::~InchiFileFormat()
 }
 
 // --- Input/Output -------------------------------------------------------- //
-bool InchiFileFormat::read(QIODevice *iodev, chemkit::ChemicalFile *file)
+bool InchiFileFormat::read(QIODevice *iodev, chemkit::MoleculeFile *file)
 {
     iodev->setTextModeEnabled(true);
 
@@ -71,7 +71,7 @@ bool InchiFileFormat::read(QIODevice *iodev, chemkit::ChemicalFile *file)
     return true;
 }
 
-bool InchiFileFormat::write(const chemkit::ChemicalFile *file, QIODevice *iodev)
+bool InchiFileFormat::write(const chemkit::MoleculeFile *file, QIODevice *iodev)
 {
     iodev->setTextModeEnabled(true);
 

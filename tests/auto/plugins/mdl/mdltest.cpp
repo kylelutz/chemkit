@@ -25,14 +25,14 @@
 #include <algorithm>
 
 #include <chemkit/molecule.h>
-#include <chemkit/chemicalfile.h>
-#include <chemkit/chemicalfileformat.h>
+#include <chemkit/moleculefile.h>
+#include <chemkit/moleculefileformat.h>
 
 const std::string dataPath = "../../../data/";
 
 void MdlTest::initTestCase()
 {
-    std::vector<std::string> formats = chemkit::ChemicalFileFormat::formats();
+    std::vector<std::string> formats = chemkit::MoleculeFileFormat::formats();
     QVERIFY(std::find(formats.begin(), formats.end(), "mol") != formats.end());
     QVERIFY(std::find(formats.begin(), formats.end(), "mdl") != formats.end());
     QVERIFY(std::find(formats.begin(), formats.end(), "sdf") != formats.end());
@@ -41,7 +41,7 @@ void MdlTest::initTestCase()
 
 void MdlTest::read_methanol()
 {
-    chemkit::ChemicalFile file(dataPath + "methanol.sdf");
+    chemkit::MoleculeFile file(dataPath + "methanol.sdf");
 
     bool ok = file.read();
     if(!ok)
@@ -61,7 +61,7 @@ void MdlTest::read_methanol()
 
 void MdlTest::read_guanine()
 {
-    chemkit::ChemicalFile file(dataPath + "guanine.mol");
+    chemkit::MoleculeFile file(dataPath + "guanine.mol");
 
     bool ok = file.read();
     if(!ok)
@@ -83,7 +83,7 @@ void MdlTest::read_guanine()
 
 void MdlTest::read_benzenes()
 {
-    chemkit::ChemicalFile file(dataPath + "pubchem_416_benzenes.sdf");
+    chemkit::MoleculeFile file(dataPath + "pubchem_416_benzenes.sdf");
 
     bool ok = file.read();
     if(!ok)

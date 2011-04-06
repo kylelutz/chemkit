@@ -26,16 +26,16 @@
 #include <QtCore>
 
 #include <chemkit/molecule.h>
-#include <chemkit/chemicalfileformat.h>
+#include <chemkit/moleculefileformat.h>
 
-class CmlFileFormat : public chemkit::ChemicalFileFormat
+class CmlFileFormat : public chemkit::MoleculeFileFormat
 {
     public:
         CmlFileFormat();
         ~CmlFileFormat();
 
-        bool read(QIODevice *iodev, chemkit::ChemicalFile *file);
-        bool write(const chemkit::ChemicalFile *file, QIODevice *iodev);
+        bool read(QIODevice *iodev, chemkit::MoleculeFile *file);
+        bool write(const chemkit::MoleculeFile *file, QIODevice *iodev);
 };
 
 #endif // CMLFILEFORMAT_H

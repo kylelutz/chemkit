@@ -23,15 +23,15 @@
 #ifndef FHZFILEFORMAT_H
 #define FHZFILEFORMAT_H
 
-#include <chemkit/chemicalfileformat.h>
+#include <chemkit/moleculefileformat.h>
 
-class FhzFileFormat : public chemkit::ChemicalFileFormat
+class FhzFileFormat : public chemkit::MoleculeFileFormat
 {
     public:
         FhzFileFormat();
         ~FhzFileFormat();
 
-        bool read(QIODevice *iodev, chemkit::ChemicalFile *file);
+        bool read(QIODevice *iodev, chemkit::MoleculeFile *file);
 };
 
 #endif // FHZFILEFORMAT_H

@@ -24,7 +24,7 @@
 
 #include <chemkit/molecule.h>
 #include <chemkit/forcefield.h>
-#include <chemkit/chemicalfile.h>
+#include <chemkit/moleculefile.h>
 
 int main(int argc, char *argv[])
 {
@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
 
     std::string fileName = argv[1];
 
-    chemkit::ChemicalFile file(fileName);
+    chemkit::MoleculeFile file(fileName);
     bool ok = file.read();
     if(!ok){
         err << "Failed to read file: " << fileName.c_str() << "\n";

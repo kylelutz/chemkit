@@ -28,11 +28,11 @@
 #include "mdlfileformat.h"
 
 #include <chemkit/molecule.h>
-#include <chemkit/chemicalfile.h>
+#include <chemkit/moleculefile.h>
 
 // --- Construction and Destruction ---------------------------------------- //
 MdlFileFormat::MdlFileFormat(const std::string &name)
-    : chemkit::ChemicalFileFormat(name)
+    : chemkit::MoleculeFileFormat(name)
 {
 }
 
@@ -41,7 +41,7 @@ MdlFileFormat::~MdlFileFormat()
 }
 
 // --- Input and Output ---------------------------------------------------- //
-bool MdlFileFormat::read(QIODevice *iodev, chemkit::ChemicalFile *file)
+bool MdlFileFormat::read(QIODevice *iodev, chemkit::MoleculeFile *file)
 {
     iodev->setTextModeEnabled(true);
 
@@ -56,7 +56,7 @@ bool MdlFileFormat::read(QIODevice *iodev, chemkit::ChemicalFile *file)
     }
 }
 
-bool MdlFileFormat::write(const chemkit::ChemicalFile *file, QIODevice *iodev)
+bool MdlFileFormat::write(const chemkit::MoleculeFile *file, QIODevice *iodev)
 {
     if(file->isEmpty()){
         return false;
@@ -78,7 +78,7 @@ bool MdlFileFormat::write(const chemkit::ChemicalFile *file, QIODevice *iodev)
 }
 
 // --- Internal Methods ---------------------------------------------------- //
-bool MdlFileFormat::readMolFile(QIODevice *iodev, chemkit::ChemicalFile *file)
+bool MdlFileFormat::readMolFile(QIODevice *iodev, chemkit::MoleculeFile *file)
 {
     QString title = iodev->readLine().trimmed(); // title line
     iodev->readLine(); // creator line
@@ -121,7 +121,7 @@ bool MdlFileFormat::readMolFile(QIODevice *iodev, chemkit::ChemicalFile *file)
     return true;
 }
 
-bool MdlFileFormat::readSdfFile(QIODevice *iodev, chemkit::ChemicalFile *file)
+bool MdlFileFormat::readSdfFile(QIODevice *iodev, chemkit::MoleculeFile *file)
 {
     while(!iodev->atEnd()){
         // read molecule
@@ -219,7 +219,7 @@ bool MdlFileFormat::readPropertyBlock(QIODevice *iodev, chemkit::Molecule *molec
     return false;
 }
 
-bool MdlFileFormat::readDataBlock(QIODevice *iodev, const chemkit::Molecule *molecule, chemkit::ChemicalFile *file)
+bool MdlFileFormat::readDataBlock(QIODevice *iodev, const chemkit::Molecule *molecule, chemkit::MoleculeFile *file)
 {
     QString dataName;
     QString dataValue;
@@ -276,7 +276,7 @@ void MdlFileFormat::writeMolFile(const chemkit::Molecule *molecule, QIODevice *i
     iodev->write("M  END\n");
 }
 
-void MdlFileFormat::writeSdfFile(const chemkit::ChemicalFile *file, QIODevice *iodev)
+void MdlFileFormat::writeSdfFile(const chemkit::MoleculeFile *file, QIODevice *iodev)
 {
     foreach(const chemkit::Molecule *molecule, file->molecules()){
         writeMolFile(molecule, iodev);

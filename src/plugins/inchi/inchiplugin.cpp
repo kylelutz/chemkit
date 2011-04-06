@@ -31,14 +31,14 @@ InchiPlugin::InchiPlugin()
 {
     registerPluginClass<chemkit::LineFormat>("inchi", createInchiFormat);
     registerPluginClass<chemkit::LineFormat>("inchikey", createInchiKeyFormat);
-    registerPluginClass<chemkit::ChemicalFileFormat>("inchi", createInchiFileFormat);
+    registerPluginClass<chemkit::MoleculeFileFormat>("inchi", createInchiFileFormat);
 }
 
 InchiPlugin::~InchiPlugin()
 {
     unregisterPluginClass<chemkit::LineFormat>("inchi");
     unregisterPluginClass<chemkit::LineFormat>("inchikey");
-    unregisterPluginClass<chemkit::ChemicalFileFormat>("inchi");
+    unregisterPluginClass<chemkit::MoleculeFileFormat>("inchi");
 }
 
 chemkit::LineFormat* InchiPlugin::createInchiFormat()
@@ -51,7 +51,7 @@ chemkit::LineFormat* InchiPlugin::createInchiKeyFormat()
     return new InchiKeyLineFormat;
 }
 
-chemkit::ChemicalFileFormat* InchiPlugin::createInchiFileFormat()
+chemkit::MoleculeFileFormat* InchiPlugin::createInchiFileFormat()
 {
     return new InchiFileFormat;
 }
