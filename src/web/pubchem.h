@@ -25,6 +25,8 @@
 
 #include "web.h"
 
+#include <string>
+
 #include <QtCore>
 #include <QtNetwork>
 
@@ -56,9 +58,9 @@ class CHEMKIT_WEB_EXPORT PubChem
         QStringList search(const QString &query) const;
 
         // standardization
-        QString standardizeFormula(const QString &formula, const QString &format) const;
-        QString standardizeFormula(const QString &formula, const QString &inputFormat, const QString &outputFormat) const;
-        QString standardizeFormula(const Molecule *molecule, const QString &format) const;
+        std::string standardizeFormula(const std::string &formula, const std::string &format) const;
+        std::string standardizeFormula(const std::string &formula, const std::string &inputFormat, const std::string &outputFormat) const;
+        std::string standardizeFormula(const Molecule *molecule, const std::string &format) const;
 
         // error handling
         QString errorString() const;

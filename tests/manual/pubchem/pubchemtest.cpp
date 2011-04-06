@@ -76,8 +76,8 @@ void PubChemTest::standardizeFormula()
 {
     chemkit::PubChem pubchem;
 
-    QString formula = pubchem.standardizeFormula("c3cccOc3", "smiles");
-    QCOMPARE(formula, QString("C1C=CC=CO1"));
+    std::string formula = pubchem.standardizeFormula("c3cccOc3", "smiles");
+    QCOMPARE(formula, std::string("C1C=CC=CO1"));
 }
 
 QTEST_MAIN(PubChemTest)

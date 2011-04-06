@@ -23,6 +23,8 @@
 #ifndef CHEMKIT_PUBCHEMQUERY_H
 #define CHEMKIT_PUBCHEMQUERY_H
 
+#include <string>
+
 #include <QtCore>
 
 namespace chemkit {
@@ -40,7 +42,7 @@ class PubChemQuery
 
         // static methods
         static PubChemQuery downloadQuery(const QStringList &cids, const QString &format);
-        static PubChemQuery standardizationQuery(const QString &formula, const QString &inputFormat, const QString &outputFormat);
+        static PubChemQuery standardizationQuery(const std::string &formula, const std::string &inputFormat, const std::string &outputFormat);
 
     private:
         QByteArray m_data;

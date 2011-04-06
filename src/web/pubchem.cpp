@@ -217,9 +217,9 @@ QStringList PubChem::search(const QString &query) const
 ///
 /// For example, to standardize a SMILES formula:
 /// \code
-/// QString formula = pubchem.standardizeFormula("c3cccc3", "smiles");
+/// std::string formula = pubchem.standardizeFormula("c3cccc3", "smiles");
 /// \endcode
-QString PubChem::standardizeFormula(const QString &formula, const QString &format) const
+std::string PubChem::standardizeFormula(const std::string &formula, const std::string &format) const
 {
     return standardizeFormula(formula, format, format);
 }
@@ -230,12 +230,12 @@ QString PubChem::standardizeFormula(const QString &formula, const QString &forma
 ///
 /// For example, to convert an InChI string to standardized SMILES:
 /// \code
-/// QString formula = pubchem.standardizeFormula("InChI=1/C6H6/c1-2-4-6-5-3-1/h1-6H", "inchi", "smiles");
+/// std::string formula = pubchem.standardizeFormula("InChI=1/C6H6/c1-2-4-6-5-3-1/h1-6H", "inchi", "smiles");
 /// \endcode
-QString PubChem::standardizeFormula(const QString &formula, const QString &inputFormat, const QString &outputFormat) const
+std::string PubChem::standardizeFormula(const std::string &formula, const std::string &inputFormat, const std::string &outputFormat) const
 {
-    if(formula.isEmpty()){
-        return QString();
+    if(formula.empty()){
+        return std::string();
     }
 
     PubChemQuery query = PubChemQuery::standardizationQuery(formula, inputFormat, outputFormat);
@@ -251,12 +251,12 @@ QString PubChem::standardizeFormula(const QString &formula, const QString &input
 
     QDomNodeList nodes = document.elementsByTagName("PCT-Structure_structure_string");
     if(nodes.isEmpty()){
-        return QString();
+        return std::string();
     }
 
     QDomNode node = nodes.at(0);
     QDomElement element = node.toElement();
-    QString standardizedFormula = element.text();
+    std::string standardizedFormula = element.text().toStdString();
 
     return standardizedFormula;
 }
@@ -268,11 +268,11 @@ QString PubChem::standardizeFormula(const QString &formula, const QString &input
 /// For example, to get the standardized InChI formula for a
 /// molecule:
 /// \code
-/// QString formula = pubchem.standardizeFormula(molecule, "inchi");
+/// std::string formula = pubchem.standardizeFormula(molecule, "inchi");
 /// \endcode
-QString PubChem::standardizeFormula(const Molecule *molecule, const QString &format) const
+std::string PubChem::standardizeFormula(const Molecule *molecule, const std::string &format) const
 {
-    return standardizeFormula(molecule->formula("smiles").c_str(), "smiles", format);
+    return standardizeFormula(molecule->formula("smiles"), "smiles", format);
 }
 
 // --- Error Handling ------------------------------------------------------ //

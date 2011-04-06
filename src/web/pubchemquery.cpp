@@ -94,7 +94,7 @@ PubChemQuery PubChemQuery::downloadQuery(const QStringList &cids, const QString 
     return query;
 }
 
-PubChemQuery PubChemQuery::standardizationQuery(const QString &formula, const QString &inputFormat, const QString &outputFormat)
+PubChemQuery PubChemQuery::standardizationQuery(const std::string &formula, const std::string &inputFormat, const std::string &outputFormat)
 {
     PubChemQuery query;
 
@@ -123,7 +123,7 @@ PubChemQuery PubChemQuery::standardizationQuery(const QString &formula, const QS
                     "</PCT-Data_input>"
                   "</PCT-Data>";
 
-    query.setData(xml.arg(formula).arg(inputFormat).arg(outputFormat).toAscii());
+    query.setData(xml.arg(formula.c_str()).arg(inputFormat.c_str()).arg(outputFormat.c_str()).toAscii());
 
     return query;
 }
