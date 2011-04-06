@@ -23,6 +23,7 @@
 #include "ring.h"
 
 #include <set>
+#include <cassert>
 #include <algorithm>
 
 #include "atom.h"
@@ -46,7 +47,7 @@ namespace chemkit {
 Ring::Ring(std::vector<Atom *> path)
     : m_atoms(path)
 {
-    Q_ASSERT(isValid());
+    assert(isValid());
 }
 
 /// Destroys the ring object.

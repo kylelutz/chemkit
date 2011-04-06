@@ -22,6 +22,8 @@
 
 #include "fragment.h"
 
+#include <cassert>
+
 #include "foreach.h"
 #include "molecule.h"
 
@@ -41,7 +43,7 @@ namespace chemkit {
 /// \p root.
 Fragment::Fragment(Atom *root)
 {
-    Q_ASSERT(root->m_fragment == 0);
+    assert(root->m_fragment == 0);
 
     std::vector<Atom *> row;
     row.push_back(root);

@@ -22,6 +22,8 @@
 
 #include "internalcoordinates.h"
 
+#include <cassert>
+
 #include "vector3.h"
 #include "constants.h"
 #include "coordinates.h"
@@ -99,7 +101,7 @@ int InternalCoordinates::size() const
 /// \p theta and \p phi respectively. The angles are in degrees.
 void InternalCoordinates::setCoordinates(int row, Float r, Float theta, Float phi)
 {
-    Q_ASSERT(row < d->size);
+    assert(row < d->size);
 
     d->coordinates[row * 3 + 0] = r;
     d->coordinates[row * 3 + 1] = theta;
@@ -110,7 +112,7 @@ void InternalCoordinates::setCoordinates(int row, Float r, Float theta, Float ph
 /// \p theta and \p phi respectively. The angles are in radians.
 void InternalCoordinates::setCoordinatesRadians(int row, Float r, Float theta, Float phi)
 {
-    Q_ASSERT(row < d->size);
+    assert(row < d->size);
 
     d->coordinates[row * 3 + 0] = r * chemkit::constants::RadiansToDegrees;
     d->coordinates[row * 3 + 1] = theta * chemkit::constants::RadiansToDegrees;
@@ -121,7 +123,7 @@ void InternalCoordinates::setCoordinatesRadians(int row, Float r, Float theta, F
 /// The returned angles are in degrees.
 std::vector<Float> InternalCoordinates::coordinates(int row) const
 {
-    Q_ASSERT(row < d->size);
+    assert(row < d->size);
 
     std::vector<Float> coordinates(3);
 
@@ -136,7 +138,7 @@ std::vector<Float> InternalCoordinates::coordinates(int row) const
 /// The returned angles are in radians.
 std::vector<Float> InternalCoordinates::coordinatesRadians(int row) const
 {
-    Q_ASSERT(row < d->size);
+    assert(row < d->size);
 
     std::vector<Float> coordinates = this->coordinates(row);
 
@@ -151,7 +153,7 @@ std::vector<Float> InternalCoordinates::coordinatesRadians(int row) const
 /// and \p c.
 void InternalCoordinates::setConnections(int row, int a, int b, int c)
 {
-    Q_ASSERT(row < d->size);
+    assert(row < d->size);
 
     d->connections[row * 3 + 0] = a;
     d->connections[row * 3 + 1] = b;
@@ -161,7 +163,7 @@ void InternalCoordinates::setConnections(int row, int a, int b, int c)
 /// Returns the connections for the coordinates at \p row.
 std::vector<int> InternalCoordinates::connections(int row) const
 {
-    Q_ASSERT(row < d->size);
+    assert(row < d->size);
 
     std::vector<int> connections(3);
 

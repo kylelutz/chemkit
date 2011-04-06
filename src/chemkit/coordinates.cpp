@@ -22,6 +22,8 @@
 
 #include "coordinates.h"
 
+#include <cassert>
+
 #include "vector3.h"
 #include "molecule.h"
 
@@ -300,7 +302,7 @@ Point3 Coordinates::center() const
 /// position with \p weights.
 Point3 Coordinates::weightedCenter(const std::vector<Float> &weights) const
 {
-    Q_ASSERT(static_cast<unsigned long>(size()) == weights.size());
+    assert(static_cast<unsigned long>(size()) == weights.size());
 
     if(isEmpty()){
         return Point3();
