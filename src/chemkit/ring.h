@@ -51,9 +51,9 @@ class CHEMKIT_EXPORT Ring
         int atomCount() const;
         int atomCount(const Element &element) const;
         Bond* bond(int index) const;
-        QList<Bond *> bonds() const;
+        std::vector<Bond *> bonds() const;
         int bondCount() const;
-        QList<Bond *> exocyclicBonds() const;
+        std::vector<Bond *> exocyclicBonds() const;
         int exocyclicBondCount() const;
         bool contains(const Atom *atom) const;
         bool contains(const Bond *bond) const;

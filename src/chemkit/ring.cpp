@@ -22,6 +22,7 @@
 
 #include "ring.h"
 
+#include <set>
 #include <algorithm>
 
 #include "atom.h"
@@ -71,19 +72,19 @@ int Ring::atomCount(const Element &element) const
 /// Returns the bond at \p index in the ring.
 Bond* Ring::bond(int index) const
 {
-    return bonds().value(index);
+    return bonds()[index];
 }
 
 /// Returns the bonds in the ring.
-QList<Bond *> Ring::bonds() const
+std::vector<Bond *> Ring::bonds() const
 {
-    QList<Bond *> bonds;
+    std::vector<Bond *> bonds;
 
     for(int i = 0; i < size()-1; i++){
-        bonds.append(m_atoms[i]->bondTo(m_atoms[i+1]));
+        bonds.push_back(m_atoms[i]->bondTo(m_atoms[i+1]));
     }
 
-    bonds.append(m_atoms.front()->bondTo(m_atoms.back()));
+    bonds.push_back(m_atoms.front()->bondTo(m_atoms.back()));
 
     return bonds;
 }
@@ -97,19 +98,24 @@ int Ring::bondCount() const
 
 /// Returns a list of all bonds from atoms inside the ring
 /// to atoms outside the ring.
-QList<Bond *> Ring::exocyclicBonds() const
+std::vector<Bond *> Ring::exocyclicBonds() const
 {
-    QSet<Bond *> bonds;
+    std::set<Bond *> bondSet;
 
     foreach(Atom *atom, m_atoms){
-        Q_FOREACH(Bond *bond, atom->bonds()){
+        foreach(Bond *bond, atom->bonds()){
             if(!contains(bond)){
-                bonds.insert(bond);
+                bondSet.insert(bond);
             }
         }
     }
 
-    return bonds.toList();
+    std::vector<Bond *> bonds;
+    foreach(Bond *bond, bondSet){
+        bonds.push_back(bond);
+    }
+
+    return bonds;
 }
 
 /// Returns the number of exocyclic bonds.
