@@ -58,7 +58,7 @@ class CHEMKIT_EXPORT ChemicalFile
         void addMolecule(Molecule *molecule);
         bool removeMolecule(Molecule *molecule);
         bool deleteMolecule(Molecule *molecule);
-        QList<Molecule *> molecules() const;
+        std::vector<Molecule *> molecules() const;
         int moleculeCount() const;
         Molecule* molecule(int index = 0) const;
         bool contains(const Molecule *molecule) const;

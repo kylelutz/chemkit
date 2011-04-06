@@ -34,7 +34,7 @@ class ChemicalFilePrivate
         std::string fileName;
         std::string errorString;
         ChemicalFileFormat *format;
-        QList<Molecule *> molecules;
+        std::vector<Molecule *> molecules;
         std::map<std::string, QVariant> fileData;
         std::map<const Molecule *, std::map<std::string, QVariant> > moleculeData;
 };
@@ -170,7 +170,7 @@ bool ChemicalFile::isEmpty() const
 /// The file will take ownership of the molecule until it is removed.
 void ChemicalFile::addMolecule(Molecule *molecule)
 {
-    d->molecules.append(molecule);
+    d->molecules.push_back(molecule);
 }
 
 /// Removes the molecule from the file. Returns \c true if
@@ -179,8 +179,15 @@ void ChemicalFile::addMolecule(Molecule *molecule)
 /// The ownership of \p molecule is passed to the caller.
 bool ChemicalFile::removeMolecule(Molecule *molecule)
 {
+    std::vector<Molecule *>::iterator location = std::find(d->molecules.begin(), d->molecules.end(), molecule);
+    if(location == d->molecules.end()){
+        return false;
+    }
+
+    d->molecules.erase(location);
     d->moleculeData.erase(molecule);
-    return d->molecules.removeOne(molecule);
+
+    return true;
 }
 
 /// Removes the molecule from the file and deletes it. Returns
@@ -197,7 +204,7 @@ bool ChemicalFile::deleteMolecule(Molecule *molecule)
 }
 
 /// Returns a list of all the molecules in the file.
-QList<Molecule *> ChemicalFile::molecules() const
+std::vector<Molecule *> ChemicalFile::molecules() const
 {
     return d->molecules;
 }
@@ -211,13 +218,13 @@ int ChemicalFile::moleculeCount() const
 /// Returns the molecule at \p index in the file.
 Molecule* ChemicalFile::molecule(int index) const
 {
-    return d->molecules.value(index, 0);
+    return d->molecules[index];
 }
 
 /// Returns \c true if the file contains \p molecule.
 bool ChemicalFile::contains(const Molecule *molecule) const
 {
-    return d->molecules.contains(const_cast<Molecule *>(molecule));
+    return std::find(d->molecules.begin(), d->molecules.end(), molecule) != d->molecules.end();
 }
 
 /// Removes all of the molecules from the file and deletes all

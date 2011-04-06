@@ -128,7 +128,7 @@ bool MdlFileFormat::readSdfFile(QIODevice *iodev, chemkit::ChemicalFile *file)
         readMolFile(iodev, file);
 
         // read data block
-        chemkit::Molecule *molecule = file->molecules().last();
+        chemkit::Molecule *molecule = file->molecules().back();
         readDataBlock(iodev, molecule, file);
     }
 
