@@ -141,8 +141,12 @@ chemkit::Molecule* MoleculeListDock::currentMolecule() const
 {
     if(m_builder->file()){
         int row = ui->tableWidget->currentRow();
-        if(row < m_builder->file()->moleculeCount()){
-            return m_builder->file()->molecule(ui->tableWidget->currentRow());
+
+        if(row == -1){
+            return 0;
+        }
+        else if(row < m_builder->file()->moleculeCount()){
+            return m_builder->file()->molecule(row);
         }
     }
 
