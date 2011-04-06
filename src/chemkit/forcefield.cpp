@@ -53,7 +53,7 @@ class ForceFieldPrivate
         std::string name;
         ForceField::Flags flags;
         std::vector<ForceFieldAtom *> atoms;
-        QList<ForceFieldCalculation *> calculations;
+        std::vector<ForceFieldCalculation *> calculations;
         std::vector<const Molecule *> molecules;
         std::string parameterSet;
         std::string parameterFile;
@@ -101,7 +101,7 @@ ForceField::ForceField(const std::string &name)
 ForceField::~ForceField()
 {
     // delete all calculations
-    Q_FOREACH(ForceFieldCalculation *calculation, d->calculations){
+    foreach(ForceFieldCalculation *calculation, d->calculations){
         delete calculation;
     }
 
@@ -210,9 +210,10 @@ void ForceField::clear()
         removeMolecule(d->molecules.front());
     }
 
-    Q_FOREACH(ForceFieldCalculation *calculation, d->calculations){
-        removeCalculation(calculation);
+    foreach(ForceFieldCalculation *calculation, d->calculations){
+        delete calculation;
     }
+    d->calculations.clear();
 }
 
 /// Sets up the force field. Returns false if the setup failed.
@@ -285,17 +286,17 @@ std::string ForceField::parameterFile() const
 // --- Calculations -------------------------------------------------------- //
 void ForceField::addCalculation(ForceFieldCalculation *calculation)
 {
-    d->calculations.append(calculation);
+    d->calculations.push_back(calculation);
 }
 
 void ForceField::removeCalculation(ForceFieldCalculation *calculation)
 {
-    d->calculations.removeOne(calculation);
+    d->calculations.erase(std::remove(d->calculations.begin(), d->calculations.end(), calculation));
     delete calculation;
 }
 
 /// Returns a list of all the calculations in the force field.
-QList<ForceFieldCalculation *> ForceField::calculations() const
+std::vector<ForceFieldCalculation *> ForceField::calculations() const
 {
     return d->calculations;
 }
@@ -322,7 +323,7 @@ Float ForceField::energy() const
 
     if(d->calculations.size() < parallelThreshold){
         // calculate energy sequentially
-        Q_FOREACH(const ForceFieldCalculation *calculation, d->calculations){
+        foreach(const ForceFieldCalculation *calculation, d->calculations){
             energy += calculation->energy();
         }
     }
@@ -358,7 +359,7 @@ std::vector<Vector3> ForceField::gradient() const
     if(d->flags.testFlag(AnalyticalGradient)){
         std::vector<Vector3> gradient(atomCount());
 
-        Q_FOREACH(const ForceFieldCalculation *calculation, d->calculations){
+        foreach(const ForceFieldCalculation *calculation, d->calculations){
             std::vector<Vector3> atomGradients = calculation->gradient();
 
             for(unsigned int i = 0; i < atomGradients.size(); i++){

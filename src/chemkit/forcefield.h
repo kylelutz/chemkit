@@ -82,7 +82,7 @@ class CHEMKIT_EXPORT ForceField
         std::string parameterFile() const;
 
         // calculations
-        QList<ForceFieldCalculation *> calculations() const;
+        std::vector<ForceFieldCalculation *> calculations() const;
         int calculationCount() const;
         virtual Float energy() const;
         std::vector<Vector3> gradient() const;
