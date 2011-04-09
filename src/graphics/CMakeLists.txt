@@ -86,7 +86,7 @@ add_definitions(
 include_directories(../../include)
 
 add_library(chemkit-graphics SHARED ${SOURCES} ${MOC_SOURCES} ${RCC_SOURCES})
-target_link_libraries(chemkit-graphics ${QT_LIBRARIES} ${OPENGL_LIBRARIES})
+target_link_libraries(chemkit-graphics chemkit blas lapack ${QT_LIBRARIES} ${OPENGL_LIBRARIES})
 install(TARGETS chemkit-graphics DESTINATION lib)
 
 # install header files
