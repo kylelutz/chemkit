@@ -15,4 +15,4 @@ set(MOC_HEADERS
 qt4_wrap_cpp(MOC_SOURCES ${MOC_HEADERS})
 
 add_chemkit_plugin(cml ${SOURCES} ${MOC_SOURCES})
-target_link_libraries(cml ${QT_LIBRARIES})
+target_link_libraries(cml chemkit ${QT_LIBRARIES})

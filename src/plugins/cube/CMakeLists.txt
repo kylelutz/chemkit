@@ -14,4 +14,4 @@ set(MOC_HEADERS
 qt4_wrap_cpp(MOC_SOURCES ${MOC_HEADERS})
 
 add_chemkit_plugin(cube ${SOURCES} ${MOC_SOURCES})
-target_link_libraries(cube ${QT_LIBRARIES})
+target_link_libraries(cube chemkit ${QT_LIBRARIES})
