@@ -26,7 +26,6 @@
 #include "ring.h"
 
 #include <algorithm>
-#include <boost/foreach.hpp>
 
 #include "atom.h"
 #include "bond.h"
@@ -86,8 +85,8 @@ inline bool Ring::contains(const Bond *bond) const
 /// Returns \c true if the ring contains an atom with atomicNumber.
 inline bool Ring::contains(const Element &element) const
 {
-    BOOST_FOREACH(Atom *atom, m_atoms){
-        if(atom->is(element)){
+    for(std::vector<Atom *>::const_iterator iter = m_atoms.begin(); iter != m_atoms.end(); ++iter){
+        if((*iter)->is(element)){
             return true;
         }
     }
