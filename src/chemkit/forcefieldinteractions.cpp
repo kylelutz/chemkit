@@ -94,8 +94,8 @@ std::vector<std::vector<const ForceFieldAtom *> > ForceFieldInteractions::angleG
     Q_FOREACH(const Atom *atom, d->molecule->atoms()){
         if(!atom->isTerminal()){
             const std::vector<Atom *> &neighbors = atom->neighbors();
-            for(int i = 0; i < neighbors.size(); i++){
-                for(int j = i + 1; j < neighbors.size(); j++){
+            for(unsigned int i = 0; i < neighbors.size(); i++){
+                for(unsigned int j = i + 1; j < neighbors.size(); j++){
                     std::vector<const ForceFieldAtom *> angleGroup(3);
                     angleGroup[0] = forceField()->atom(neighbors[i]);
                     angleGroup[1] = forceField()->atom(atom);
@@ -158,8 +158,8 @@ std::vector<std::pair<const ForceFieldAtom *, const ForceFieldAtom *> > ForceFie
     std::vector<std::pair<const ForceFieldAtom *, const ForceFieldAtom *> > nonbondedPairs;
 
     const std::vector<Atom *> &atoms = d->molecule->atoms();
-    for(int i = 0; i < atoms.size(); i++){
-        for(int j = i + 1; j < atoms.size(); j++){
+    for(unsigned int i = 0; i < atoms.size(); i++){
+        for(unsigned int j = i + 1; j < atoms.size(); j++){
             if(!atomsWithinTwoBonds(atoms[i], atoms[j])){
                 const ForceFieldAtom *a = forceField()->atom(atoms[i]);
                 const ForceFieldAtom *b = forceField()->atom(atoms[j]);
