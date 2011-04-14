@@ -100,7 +100,7 @@ void GraphicsRingItem::paint(GraphicsPainter *painter)
     Point3f center = ringCenter(d->ring);
     const std::vector<Atom *> &atoms = d->ring->atoms();
 
-    for(int i = 0; i < atoms.size(); i++){
+    for(unsigned int i = 0; i < atoms.size(); i++){
         const Atom *a = atoms[i];
         const Atom *b = atoms[(i + 1) % d->ring->size()];
 
