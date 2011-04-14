@@ -309,7 +309,7 @@ SmilesGraph::SmilesGraph(const chemkit::Molecule *molecule)
     QSet<const chemkit::Bond *> ringBonds;
 
     while(visitedAtoms.size() != molecule->size()){
-        const chemkit::Atom *rootAtom;
+        const chemkit::Atom *rootAtom = 0;
         foreach(const chemkit::Atom *atom, molecule->atoms()){
             if(visitedAtoms.contains(atom)){
                 continue;
