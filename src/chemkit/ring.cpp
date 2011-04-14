@@ -192,13 +192,12 @@ int Ring::position(const Atom *atom, const Atom *root) const
         root = this->root();
     }
 
+    int size = m_atoms.size();
     int index = std::distance(m_atoms.begin(), std::find(m_atoms.begin(), m_atoms.end(), atom));
 
-    if(index == m_atoms.size() || atom == root){
+    if(index == size || atom == root){
         return 0;
     }
-
-    int size = m_atoms.size();
 
     for(int i = 1; i <= (size / 2); i++){
         int a1 = (index + i) % size;
