@@ -166,7 +166,7 @@ int PolymerChain::residueCount() const
 /// Returns the index of \p residue in the chain.
 int PolymerChain::indexOf(const Residue *residue) const
 {
-    int index = std::distance(d->residues.begin(), std::find(d->residues.begin(), d->residues.end(), residue));
+    unsigned int index = std::distance(d->residues.begin(), std::find(d->residues.begin(), d->residues.end(), residue));
     if(index == d->residues.size()){
         return -1;
     }
