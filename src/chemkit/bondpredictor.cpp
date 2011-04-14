@@ -115,8 +115,8 @@ std::vector<std::pair<Atom *, Atom *> > BondPredictor::predictedBonds()
 
     const std::vector<Atom *> &atoms = d->molecule->atoms();
 
-    for(int i = 0; i < atoms.size(); i++){
-        for(int j = i+1; j < atoms.size(); j++){
+    for(unsigned int i = 0; i < atoms.size(); i++){
+        for(unsigned int j = i+1; j < atoms.size(); j++){
             if(couldBeBonded(atoms[i], atoms[j])){
                 bonds.push_back(std::make_pair(atoms[i], atoms[j]));
             }
