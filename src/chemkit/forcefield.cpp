@@ -18,7 +18,7 @@
 ** You should have received a copy of the GNU Lesser General Public License
 ** along with chemkit. If not, see <http://www.gnu.org/licenses/>.
 **
-******************************************************************************/
+*****************************************************************************/
 
 #include "forcefield.h"
 
@@ -317,7 +317,7 @@ void ForceField::setCalculationSetup(ForceFieldCalculation *calculation, bool se
 /// return \c 0.
 Float ForceField::energy() const
 {
-    const int parallelThreshold = 5000;
+    const unsigned int parallelThreshold = 5000;
 
     Float energy = 0;
 
