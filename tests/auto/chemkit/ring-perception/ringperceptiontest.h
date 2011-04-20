@@ -45,6 +45,7 @@ class RingPerceptionTest : public QObject
         void bicyclooctane();
         void biotin();
         void biphenylene();
+        void cubane();
         void cyclobutane();
         void cyclodecane();
         void cycloheptane();

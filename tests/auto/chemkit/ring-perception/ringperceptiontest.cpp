@@ -1034,6 +1034,98 @@ void RingPerceptionTest::biphenylene()
     QCOMPARE(C11_C12->isAromatic(), true);
 }
 
+/* cubane (C8H8)
+ *
+ *  C8  ------ C5
+ *  | \       / |
+ *  |  C1 - C4  |
+ *  |  |     |  |
+ *  |  C2 - C3  |
+ *  | /       \ |
+ *  C7 ------- C6
+ */
+void RingPerceptionTest::cubane()
+{
+    chemkit::Molecule molecule;
+    chemkit::Atom *C1 = molecule.addAtom("C");
+    chemkit::Atom *C2 = molecule.addAtom("C");
+    chemkit::Atom *C3 = molecule.addAtom("C");
+    chemkit::Atom *C4 = molecule.addAtom("C");
+    chemkit::Atom *C5 = molecule.addAtom("C");
+    chemkit::Atom *C6 = molecule.addAtom("C");
+    chemkit::Atom *C7 = molecule.addAtom("C");
+    chemkit::Atom *C8 = molecule.addAtom("C");
+    chemkit::Bond *C1_C2 = molecule.addBond(C1, C2);
+    chemkit::Bond *C1_C4 = molecule.addBond(C1, C4);
+    chemkit::Bond *C1_C8 = molecule.addBond(C1, C8);
+    chemkit::Bond *C2_C3 = molecule.addBond(C2, C3);
+    chemkit::Bond *C2_C7 = molecule.addBond(C2, C7);
+    chemkit::Bond *C3_C4 = molecule.addBond(C3, C4);
+    chemkit::Bond *C3_C6 = molecule.addBond(C3, C6);
+    chemkit::Bond *C4_C5 = molecule.addBond(C4, C5);
+    chemkit::Bond *C5_C6 = molecule.addBond(C5, C6);
+    chemkit::Bond *C5_C8 = molecule.addBond(C5, C8);
+    chemkit::Bond *C6_C7 = molecule.addBond(C6, C7);
+    chemkit::Bond *C7_C8 = molecule.addBond(C7, C8);
+    addHydrogens(&molecule);
+    QCOMPARE(molecule.formula(), std::string("C8H8"));
+
+    QCOMPARE(molecule.ringCount(), 5);
+
+    QCOMPARE(C1->isInRing(), true);
+    QCOMPARE(C2->isInRing(), true);
+    QCOMPARE(C3->isInRing(), true);
+    QCOMPARE(C4->isInRing(), true);
+    QCOMPARE(C5->isInRing(), true);
+    QCOMPARE(C6->isInRing(), true);
+    QCOMPARE(C7->isInRing(), true);
+    QCOMPARE(C8->isInRing(), true);
+
+    QCOMPARE(C1->isAromatic(), false);
+    QCOMPARE(C2->isAromatic(), false);
+    QCOMPARE(C3->isAromatic(), false);
+    QCOMPARE(C4->isAromatic(), false);
+    QCOMPARE(C5->isAromatic(), false);
+    QCOMPARE(C6->isAromatic(), false);
+    QCOMPARE(C7->isAromatic(), false);
+    QCOMPARE(C8->isAromatic(), false);
+
+    QCOMPARE(C1->ringCount(), 3);
+    QCOMPARE(C2->ringCount(), 3);
+    QCOMPARE(C3->ringCount(), 3);
+    QCOMPARE(C4->ringCount(), 3);
+    QCOMPARE(C5->ringCount(), 2);
+    QCOMPARE(C6->ringCount(), 2);
+    QCOMPARE(C7->ringCount(), 2);
+    QCOMPARE(C8->ringCount(), 2);
+
+    QCOMPARE(C1_C2->isInRing(), true);
+    QCOMPARE(C1_C4->isInRing(), true);
+    QCOMPARE(C1_C8->isInRing(), true);
+    QCOMPARE(C2_C3->isInRing(), true);
+    QCOMPARE(C2_C7->isInRing(), true);
+    QCOMPARE(C3_C4->isInRing(), true);
+    QCOMPARE(C3_C6->isInRing(), true);
+    QCOMPARE(C4_C5->isInRing(), true);
+    QCOMPARE(C5_C6->isInRing(), true);
+    QCOMPARE(C5_C8->isInRing(), true);
+    QCOMPARE(C6_C7->isInRing(), true);
+    QCOMPARE(C7_C8->isInRing(), true);
+
+    QCOMPARE(C1_C2->isAromatic(), false);
+    QCOMPARE(C1_C4->isAromatic(), false);
+    QCOMPARE(C1_C8->isAromatic(), false);
+    QCOMPARE(C2_C3->isAromatic(), false);
+    QCOMPARE(C2_C7->isAromatic(), false);
+    QCOMPARE(C3_C4->isAromatic(), false);
+    QCOMPARE(C3_C6->isAromatic(), false);
+    QCOMPARE(C4_C5->isAromatic(), false);
+    QCOMPARE(C5_C6->isAromatic(), false);
+    QCOMPARE(C5_C8->isAromatic(), false);
+    QCOMPARE(C6_C7->isAromatic(), false);
+    QCOMPARE(C7_C8->isAromatic(), false);
+}
+
 /* cyclobutane (C4H8)
  *
  *  C1 - C2
