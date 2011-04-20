@@ -308,6 +308,21 @@ SmilesGraph::SmilesGraph(const chemkit::Molecule *molecule)
     QHash<const chemkit::Atom *, int> ringClosingAtoms;
     QSet<const chemkit::Bond *> ringBonds;
 
+    // neighbor count for each atom without implicit hydrogens
+    std::vector<int> neighborCounts(molecule->size());
+    for(int i = 0; i < molecule->size(); i++){
+        const chemkit::Atom *atom = molecule->atom(i);
+
+        int neighborCount = 0;
+        foreach(const chemkit::Atom *neighbor, atom->neighbors()){
+            if(!isImplicitHydrogen(neighbor)){
+                neighborCount++;
+            }
+        }
+
+        neighborCounts[i] = neighborCount;
+    }
+
     while(visitedAtoms.size() != molecule->size()){
         const chemkit::Atom *rootAtom = 0;
         foreach(const chemkit::Atom *atom, molecule->atoms()){
@@ -325,6 +340,8 @@ SmilesGraph::SmilesGraph(const chemkit::Molecule *molecule)
         m_rootNodes.append(rootNode);
         visitedAtoms.insert(rootAtom);
 
+        int ringNumber = 1;
+
         QQueue<SmilesGraphNode *> queue;
         queue.enqueue(rootNode);
 
@@ -338,22 +355,27 @@ SmilesGraph::SmilesGraph(const chemkit::Molecule *molecule)
                 if(visitedRings.contains(ring)){
                     continue;
                 }
+                if(neighborCounts[atom->index()] <= 1){
+                    break;
+                }
 
                 const chemkit::Atom *ringClosingAtom = 0;
                 foreach(const chemkit::Atom *neighbor, atom->neighbors()){
                     if(!ring->contains(neighbor)){
                         continue;
                     }
+                    else if(ringBonds.contains(atom->bondTo(neighbor))){
+                        continue;
+                    }
+                    else if(neighborCounts[neighbor->index()] <= 1){
+                        continue;
+                    }
 
                     ringClosingAtom = neighbor;
                 }
 
-                int ringNumber;
-                for(int i = 1;; i++){
-                    if(!ringClosingAtoms.values().contains(i)){
-                        ringNumber = i;
-                        break;
-                    }
+                if(!ringClosingAtom){
+                    continue;
                 }
 
                 const chemkit::Bond *bond = atom->bondTo(ringClosingAtom);
@@ -361,7 +383,10 @@ SmilesGraph::SmilesGraph(const chemkit::Molecule *molecule)
                 ringBonds.insert(bond);
                 parentNode->addRing(ringNumber, bond->order());
 
+                neighborCounts[bond->atom1()->index()]--;
+                neighborCounts[bond->atom2()->index()]--;
                 visitedRings.insert(ring);
+                ringNumber++;
             }
 
             foreach(const chemkit::Atom *neighbor, atom->neighbors()){
