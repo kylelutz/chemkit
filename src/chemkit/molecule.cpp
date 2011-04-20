@@ -365,7 +365,7 @@ int Molecule::atomCount(const Element &element) const
 {
     int count = 0;
 
-    foreach(Atom *atom, m_atoms){
+    foreach(const Atom *atom, m_atoms){
         if(atom->is(element)){
             count++;
         }
