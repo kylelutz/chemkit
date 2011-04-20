@@ -217,13 +217,65 @@ bool RingCandidate::compareSize(const RingCandidate &a, const RingCandidate &b)
     return a.size() < b.size();
 }
 
-// --- Functions ----------------------------------------------------------- //
-bool isValid(const std::vector<int> &path)
+// === Sssr ================================================================ //
+class Sssr
+{
+    public:
+        // construction and destruction
+        Sssr();
+        ~Sssr();
+
+        // properties
+        unsigned int size() const;
+        bool isEmpty() const;
+
+        // rings
+        const std::vector<std::vector<int> >& rings() const;
+        void append(const std::vector<int> &ring);
+        bool isValid(const std::vector<int> &ring) const;
+        bool isUnique(const std::vector<int> &ring) const;
+
+    private:
+        std::vector<std::vector<int> > m_rings;
+};
+
+// --- Construction and Destruction ---------------------------------------- //
+Sssr::Sssr()
+{
+}
+
+Sssr::~Sssr()
+{
+}
+
+// --- Properties ---------------------------------------------------------- //
+unsigned int Sssr::size() const
+{
+    return m_rings.size();
+}
+
+bool Sssr::isEmpty() const
+{
+    return m_rings.empty();
+}
+
+// --- Rings --------------------------------------------------------------- //
+const std::vector<std::vector<int> >& Sssr::rings() const
+{
+    return m_rings;
+}
+
+void Sssr::append(const std::vector<int> &ring)
+{
+    m_rings.push_back(ring);
+}
+
+bool Sssr::isValid(const std::vector<int> &ring) const
 {
     // check for any duplicate atoms
-    for(unsigned int i = 0; i < path.size(); i++){
-        for(unsigned int j = i + 1; j < path.size(); j++){
-            if(path[i] == path[j]){
+    for(unsigned int i = 0; i < ring.size(); i++){
+        for(unsigned int j = i + 1; j < ring.size(); j++){
+            if(ring[i] == ring[j]){
                 return false;
             }
         }
@@ -232,63 +284,85 @@ bool isValid(const std::vector<int> &path)
     return true;
 }
 
-bool isUnique(const std::vector<int> &path, const std::vector<std::vector<int> > &sssr)
+bool Sssr::isUnique(const std::vector<int> &path) const
 {
-    // check if a ring with the same atoms is already in the sssr
-    std::vector<int> sortedPath(path.begin(), path.end());
-    std::sort(sortedPath.begin(), sortedPath.end());
+    // must be unique if sssr is empty
+    if(isEmpty()){
+        return true;
+    }
 
-    foreach(const std::vector<int> &ring, sssr){
-        if(path.size() != ring.size()){
-            continue;
-        }
+    // check if a ring with the same atoms is already in the sssr
+    std::set<int> pathSet;
+    pathSet.insert(path.begin(), path.end());
+
+    foreach(const std::vector<int> &ring, m_rings){
+        std::set<int> ringSet;
+        ringSet.insert(ring.begin(), ring.end());
 
         std::vector<int> sortedRing(ring.begin(), ring.end());
         std::sort(sortedRing.begin(), sortedRing.end());
 
-        bool different = false;
-        for(unsigned int i = 0; i < path.size(); i++){
-            if(sortedPath[i] != sortedRing[i]){
-                different = true;
-                break;
-            }
-        }
+        std::set<int> intersection;
+        std::set_intersection(pathSet.begin(), pathSet.end(),
+                              ringSet.begin(), ringSet.end(),
+                              std::inserter(intersection, intersection.begin()));
 
-        if(!different){
+        if(intersection.size() == ring.size()){
             return false;
         }
     }
 
-    // count number of unique bonds
-    std::set<std::pair<int, int> > ringBonds;
-    foreach(const std::vector<int> &ring, sssr){
+    // build set of bonds in the path
+    std::set<std::pair<int, int> > pathBonds;
+    for(unsigned int i = 0; i < path.size()-1; i++){
+        pathBonds.insert(std::make_pair(std::min(path[i], path[i+1]),
+                                         std::max(path[i], path[i+1])));
+    }
+
+    pathBonds.insert(std::make_pair(std::min(path.front(), path.back()),
+                                    std::max(path.front(), path.back())));
+
+    // remove bonds from path bonds that are already in a smaller ring
+    foreach(const std::vector<int> &ring, m_rings){
+        if(ring.size() >= path.size()){
+            continue;
+        }
+
+        for(unsigned int i = 0; i < ring.size(); i++){
+            pathBonds.erase(std::make_pair(std::min(ring[i], ring[i+1]),
+                                           std::max(ring[i], ring[i+1])));
+        }
+
+        pathBonds.erase(std::make_pair(std::min(ring.front(), ring.back()),
+                                       std::max(ring.front(), ring.back())));
+    }
+
+    // check if any other ring contains the same bonds
+    foreach(const std::vector<int> &ring, m_rings){
+        std::set<std::pair<int, int> > ringBonds;
 
         // add ring bonds
         for(unsigned int i = 0; i < ring.size()-1; i++){
-            ringBonds.insert(std::make_pair(qMin(ring[i], ring[i+1]),
-                                            qMax(ring[i], ring[i+1])));
+            ringBonds.insert(std::make_pair(std::min(ring[i], ring[i+1]),
+                                            std::max(ring[i], ring[i+1])));
         }
 
         // add closure bond
-        ringBonds.insert(std::make_pair(qMin(ring.front(), ring.back()),
-                                        qMax(ring.front(), ring.back())));
-    }
+        ringBonds.insert(std::make_pair(std::min(ring.front(), ring.back()),
+                                        std::max(ring.front(), ring.back())));
 
-    int uniqueBondCount = 0;
-    for(unsigned int i = 0; i < path.size()-1; i++){
-        if(ringBonds.find(std::make_pair(qMin(path[i], path[i+1]),
-                                         qMax(path[i], path[i+1]))) == ringBonds.end()){
-            uniqueBondCount++;
+        // check intersection
+        std::set<std::pair<int, int> > intersection;
+        std::set_intersection(pathBonds.begin(), pathBonds.end(),
+                              ringBonds.begin(), ringBonds.end(),
+                              std::inserter(intersection, intersection.begin()));
+
+        if(intersection.size() == pathBonds.size()){
+            return false;
         }
     }
 
-    // count closure bond
-    if(ringBonds.find(std::make_pair(qMin(path.front(), path.back()),
-                                     qMax(path.front(), path.back()))) == ringBonds.end()){
-        uniqueBondCount++;
-    }
-
-    return uniqueBondCount > 0;
+    return true;
 }
 
 } // end anonymous namespace
@@ -381,8 +455,7 @@ std::vector<Ring *> MolecularGraph::sssr_rpPath(const MolecularGraph *graph)
     std::sort(candidates.begin(), candidates.end(), RingCandidate::compareSize);
 
     // algorithm 3 - find sssr from the ring candidate set
-    std::vector<std::vector<int> > sssr;
-    sssr.reserve(ringCount);
+    Sssr sssr;
 
     foreach(const RingCandidate &candidate, candidates){
 
@@ -400,8 +473,8 @@ std::vector<Ring *> MolecularGraph::sssr_rpPath(const MolecularGraph *graph)
                 }
 
                 // check if ring is valid and unique
-                if(isValid(ring) && isUnique(ring, sssr)){
-                    sssr.push_back(ring);
+                if(sssr.isValid(ring) && sssr.isUnique(ring)){
+                    sssr.append(ring);
                     break;
                 }
             }
@@ -419,8 +492,8 @@ std::vector<Ring *> MolecularGraph::sssr_rpPath(const MolecularGraph *graph)
                 ring.insert(ring.end(), path.begin(), path.end());
 
                 // check if ring is valid and unique
-                if(isValid(ring) && isUnique(ring, sssr)){
-                    sssr.push_back(ring);
+                if(sssr.isValid(ring) && sssr.isUnique(ring)){
+                    sssr.append(ring);
                     break;
                 }
             }
@@ -433,7 +506,7 @@ std::vector<Ring *> MolecularGraph::sssr_rpPath(const MolecularGraph *graph)
 
     // build list of rings
     std::vector<Ring *> rings;
-    foreach(const std::vector<int> &ring, sssr){
+    foreach(const std::vector<int> &ring, sssr.rings()){
         std::vector<Atom *> atoms;
 
         foreach(int atomIndex, ring){
