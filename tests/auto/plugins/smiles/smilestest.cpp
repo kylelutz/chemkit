@@ -415,6 +415,7 @@ void SmilesTest::cubane()
     chemkit::Molecule molecule("C12C3C4C1C5C2C3C45", "smiles");
     QCOMPARE(molecule.formula(), std::string("C8H8"));
     QCOMPARE(molecule.bondCount(), 20);
+    QCOMPARE(molecule.ringCount(), 5);
 
     COMPARE_SMILES(&molecule, molecule.formula("smiles"));
 }
