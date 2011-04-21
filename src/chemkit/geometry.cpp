@@ -302,6 +302,13 @@ Float tetrahedronVolume(const Point3 &a, const Point3 &b, const Point3 &c, const
     return (1.0/6.0) * planeOrientation(a, b, c, d);
 }
 
+/// Returns the normal vector to the plane made by the points \p a,
+/// \p b, \p c.
+Vector3 planeNormal(const Point3 &a, const Point3 &b, const Point3 &c)
+{
+    return ((b - a).cross(c - b)).normalized();
+}
+
 // --- Predicates ---------------------------------------------------------- //
 /// Returns a positive value if the point \p p is above the plane
 /// defined by the points \p a, \p b, and \p c. Returns \c 0 if the

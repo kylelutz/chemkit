@@ -26,6 +26,7 @@
 #include "chemkit.h"
 
 #include "point3.h"
+#include "vector3.h"
 
 namespace chemkit {
 
@@ -46,6 +47,7 @@ Float orthoradius(const Point3 &a, const Point3 &b, const Point3 &c, Float wa, F
 Float orthoradius(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d, Float wa, Float wb, Float wc, Float wd);
 Float triangleArea(const Point3 &a, const Point3 &b, const Point3 &c);
 Float tetrahedronVolume(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d);
+Vector3 planeNormal(const Point3 &a, const Point3 &b, const Point3 &c);
 
 // predicates
 Float planeOrientation(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &p);
