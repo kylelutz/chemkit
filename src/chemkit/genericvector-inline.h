@@ -93,14 +93,6 @@ inline GenericVector<T> GenericVector<T>::Z()
     return GenericVector<T>(0, 0, 1);
 }
 
-/// Returns the normal vector to the plane made by the points \p a,
-/// \p b, \p c.
-template<typename T>
-inline GenericVector<T> GenericVector<T>::planeNormal(const StaticVector<T, 3> &a, const StaticVector<T, 3> &b, const StaticVector<T, 3> &c)
-{
-    return ((b - a).cross(c - b)).normalized();
-}
-
 /// Returns a unit vector that contains a random direction.
 template<typename T>
 inline GenericVector<T> GenericVector<T>::randomUnitVector()

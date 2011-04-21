@@ -41,7 +41,6 @@ class GenericVector : public StaticVector<T, 3>
         static GenericVector<T> X();
         static GenericVector<T> Y();
         static GenericVector<T> Z();
-        static GenericVector<T> planeNormal(const StaticVector<T, 3> &a, const StaticVector<T, 3> &b, const StaticVector<T, 3> &c);
         static GenericVector<T> randomUnitVector();
 };
 
