@@ -25,6 +25,7 @@
 #include <boost/algorithm/string.hpp>
 
 #include "atom.h"
+#include "geometry.h"
 
 namespace chemkit {
 
@@ -352,9 +353,9 @@ Vector3 AminoAcid::peptidePlaneNormal() const
     if(!d->alphaCarbon || !d->carbonylCarbon || !d->carbonylOxygen)
         return Vector3::Y();
 
-    return Vector3::planeNormal(d->alphaCarbon->position(),
-                               d->carbonylCarbon->position(),
-                               d->carbonylOxygen->position());
+    return chemkit::geometry::planeNormal(d->alphaCarbon->position(),
+                                          d->carbonylCarbon->position(),
+                                          d->carbonylOxygen->position());
 }
 
 } // end chemkit namespace
