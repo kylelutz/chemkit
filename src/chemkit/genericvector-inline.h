@@ -71,28 +71,6 @@ inline GenericVector<T>::GenericVector(const StaticVector<double, 3> &vector)
 {
 }
 
-// --- Properties ---------------------------------------------------------- //
-/// Returns the x component of the vector.
-template<typename T>
-inline T GenericVector<T>::x() const
-{
-    return (*this)[0];
-}
-
-/// Returns the y component of the vector.
-template<typename T>
-inline T GenericVector<T>::y() const
-{
-    return (*this)[1];
-}
-
-/// Returns the z component of the vector.
-template<typename T>
-inline T GenericVector<T>::z() const
-{
-    return (*this)[2];
-}
-
 // --- Static Methods ------------------------------------------------------ //
 /// Returns a unit vector along the x-axis. (\c 1, \c 0, \c 0).
 template<typename T>

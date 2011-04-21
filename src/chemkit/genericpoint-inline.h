@@ -69,27 +69,6 @@ inline GenericPoint<T>::GenericPoint(const StaticVector<double, 3> &vector)
 }
 
 // --- Properties ---------------------------------------------------------- //
-/// Returns the x component of the point.
-template<typename T>
-inline T GenericPoint<T>::x() const
-{
-    return (*this)[0];
-}
-
-/// Returns the y component of the point.
-template<typename T>
-inline T GenericPoint<T>::y() const
-{
-    return (*this)[1];
-}
-
-/// Returns the z component of the point.
-template<typename T>
-inline T GenericPoint<T>::z() const
-{
-    return (*this)[2];
-}
-
 /// Moves the point by (\p dx, \p dy, \p dz).
 template<typename T>
 inline void GenericPoint<T>::moveBy(T dx, T dy, T dz)

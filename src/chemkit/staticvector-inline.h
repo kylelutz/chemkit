@@ -102,6 +102,34 @@ inline T& StaticVector<T, N>::value(int index)
     return m_data[index];
 }
 
+/// Returns the x component of the vector.
+template<typename T, int N>
+inline T StaticVector<T, N>::x() const
+{
+    return N > 0 ? value(0) : 0;
+}
+
+/// Returns the y component of the vector.
+template<typename T, int N>
+inline T StaticVector<T, N>::y() const
+{
+    return N > 1 ? value(1) : 0;
+}
+
+/// Returns the z component of the vector.
+template<typename T, int N>
+inline T StaticVector<T, N>::z() const
+{
+    return N > 2 ? value(2) : 0;
+}
+
+/// Returns the w component of the vector.
+template<typename T, int N>
+inline T StaticVector<T, N>::w() const
+{
+    return N > 3 ? value(3) : 0;
+}
+
 /// Returns the size of the vector.
 template<typename T, int N>
 inline int StaticVector<T, N>::size() const

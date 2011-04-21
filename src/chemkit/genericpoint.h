@@ -38,9 +38,6 @@ class GenericPoint : public StaticVector<T, 3>
         GenericPoint(const StaticVector<double, 3> &vector);
 
         // properties
-        T x() const;
-        T y() const;
-        T z() const;
         void moveBy(T dx, T dy, T dz);
         void moveBy(const StaticVector<T, 3> &vector);
         void moveBy(T distance, const StaticVector<T, 3> &vector);

@@ -66,27 +66,6 @@ inline GenericQuaternion<T>::GenericQuaternion(const StaticVector<T, 4> &quatern
 }
 
 // --- Properties ---------------------------------------------------------- //
-/// Returns the \c x component.
-template<typename T>
-inline T GenericQuaternion<T>::x() const
-{
-    return (*this)[0];
-}
-
-/// Returns the \c y component.
-template<typename T>
-inline T GenericQuaternion<T>::y() const
-{
-    return (*this)[1];
-}
-
-/// Returns the \c z component.
-template<typename T>
-inline T GenericQuaternion<T>::z() const
-{
-    return (*this)[2];
-}
-
 /// Returns the \c r (real) component.
 template<typename T>
 inline T GenericQuaternion<T>::r() const
@@ -98,14 +77,18 @@ inline T GenericQuaternion<T>::r() const
 template<typename T>
 inline GenericPoint<T> GenericQuaternion<T>::toPoint3() const
 {
-    return GenericPoint<T>(x(), y(), z());
+    return GenericPoint<T>(StaticVector<T, 4>::x(),
+                           StaticVector<T, 4>::y(),
+                           StaticVector<T, 4>::z());
 }
 
 /// Returns the imaginary part of the quaternion as a vector.
 template<typename T>
 inline GenericVector<T> GenericQuaternion<T>::toVector3() const
 {
-    return GenericVector<T>(x(), y(), z());
+    return GenericVector<T>(StaticVector<T, 4>::x(),
+                            StaticVector<T, 4>::y(),
+                            StaticVector<T, 4>::z());
 }
 
 // --- Math ---------------------------------------------------------------- //
@@ -125,7 +108,10 @@ inline GenericQuaternion<T> GenericQuaternion<T>::multiply(const GenericQuaterni
 template<typename T>
 inline GenericQuaternion<T> GenericQuaternion<T>::conjugate() const
 {
-    return GenericQuaternion<T>(-x(), -y(), -z(), r());
+    return GenericQuaternion<T>(-StaticVector<T, 4>::x(),
+                                -StaticVector<T, 4>::y(),
+                                -StaticVector<T, 4>::z(),
+                                r());
 }
 
 // --- Operators ----------------------------------------------------------- //

@@ -46,6 +46,10 @@ class StaticVector
         void setValue(int index, T value);
         T value(int index) const;
         T& value(int index);
+        T x() const;
+        T y() const;
+        T z() const;
+        T w() const;
         int size() const;
         bool isNull() const;
         T* data();

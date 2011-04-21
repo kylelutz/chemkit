@@ -37,11 +37,6 @@ class GenericVector : public StaticVector<T, 3>
         GenericVector(const StaticVector<float, 3> &vector);
         GenericVector(const StaticVector<double, 3> &vector);
 
-        // properties
-        T x() const;
-        T y() const;
-        T z() const;
-
         // static methods
         static GenericVector<T> X();
         static GenericVector<T> Y();

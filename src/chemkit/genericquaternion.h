@@ -41,9 +41,6 @@ class GenericQuaternion : public StaticVector<T, 4>
         GenericQuaternion(const StaticVector<T, 4> &quaternion);
 
         // properties
-        T x() const;
-        T y() const;
-        T z() const;
         T r() const;
         GenericPoint<T> toPoint3() const;
         GenericVector<T> toVector3() const;
