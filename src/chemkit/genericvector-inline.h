@@ -93,17 +93,6 @@ inline GenericVector<T> GenericVector<T>::Z()
     return GenericVector<T>(0, 0, 1);
 }
 
-/// Returns a unit vector that contains a random direction.
-template<typename T>
-inline GenericVector<T> GenericVector<T>::randomUnitVector()
-{
-    T x = qrand() - (RAND_MAX/2);
-    T y = qrand() - (RAND_MAX/2);
-    T z = qrand() - (RAND_MAX/2);
-
-    return GenericVector<T>(x, y, z).normalized();
-}
-
 } // end chemkit namespace
 
 #endif // CHEMKIT_GENERICVECTOR_INLINE_H
