@@ -25,8 +25,6 @@
 
 #include "chemkit.h"
 
-#include "blas.h"
-#include "lapack.h"
 #include "constants.h"
 #include "commainitializer.h"
 
