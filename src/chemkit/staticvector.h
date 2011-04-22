@@ -88,6 +88,9 @@ class StaticVector
         bool operator==(const StaticVector<T, N> &vector) const;
         CommaInitializer<T> operator<<(const T value);
 
+        // static methods
+        static StaticVector<T, N> randomUnitVector();
+
     private:
         T m_data[N];
 };

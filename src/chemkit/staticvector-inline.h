@@ -485,6 +485,20 @@ inline CommaInitializer<T> StaticVector<T, N>::operator<<(const T value)
     return CommaInitializer<T>(m_data, 1, N);
 }
 
+// --- Static Methods ------------------------------------------------------ //
+/// Returns a unit vector with a random direction.
+template<typename T, int N>
+inline StaticVector<T, N> StaticVector<T, N>::randomUnitVector()
+{
+    StaticVector<T, N> vector;
+
+    for(int i = 0; i < N; i++){
+        vector[i] = qrand() - (RAND_MAX / 2);
+    }
+
+    return vector.normalized();
+}
+
 // --- Related Functions --------------------------------------------------- //
 /// Returns the product of \p scalar and \p vector.
 ///
