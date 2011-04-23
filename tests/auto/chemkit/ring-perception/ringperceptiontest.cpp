@@ -1090,15 +1090,6 @@ void RingPerceptionTest::cubane()
     QCOMPARE(C7->isAromatic(), false);
     QCOMPARE(C8->isAromatic(), false);
 
-    QCOMPARE(C1->ringCount(), 3);
-    QCOMPARE(C2->ringCount(), 3);
-    QCOMPARE(C3->ringCount(), 3);
-    QCOMPARE(C4->ringCount(), 3);
-    QCOMPARE(C5->ringCount(), 2);
-    QCOMPARE(C6->ringCount(), 2);
-    QCOMPARE(C7->ringCount(), 2);
-    QCOMPARE(C8->ringCount(), 2);
-
     QCOMPARE(C1_C2->isInRing(), true);
     QCOMPARE(C1_C4->isInRing(), true);
     QCOMPARE(C1_C8->isInRing(), true);
