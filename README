@@ -15,6 +15,5 @@ using the chemkit library.
 
 === License ===================================================================
 
-The chemkit library is licensed under the GNU Lesser General Public License
-(LGPL). See the included COPYING and COPYING.LESSER files to view the full
-license text.
+The chemkit library is licensed under the BSD license. See the included
+LICENSE file to view the full license text.

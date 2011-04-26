@@ -20,7 +20,7 @@ Root: HKLM; Subkey: SOFTWARE\chemkit; ValueType: string; ValueName: Version; Val
 [Setup]
 AppName=chemkit
 AppVerName=chemkit 0.1
-LicenseFile=..\COPYING.LESSER
+LicenseFile=..\LICENSE
 DefaultDirName={pf}\chemkit
 DisableProgramGroupPage=true
 DefaultGroupName=chemkit
