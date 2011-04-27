@@ -33,6 +33,9 @@
 **
 ******************************************************************************/
 
+#ifndef GASTEIGERPARTIALCHARGEPREDICTOR_H
+#define GASTEIGERPARTIALCHARGEPREDICTOR_H
+
 #include <QtCore>
 
 #include <chemkit/partialchargepredictor.h>
@@ -64,3 +67,5 @@ class GasteigerPartialChargePredictor : public chemkit::PartialChargePredictor
         QVector<chemkit::Float> m_electronegativies;
         QVector<const GasteigerParameters *> m_parameters;
 };
+
+#endif // GASTEIGERPARTIALCHARGEPREDICTOR_H
