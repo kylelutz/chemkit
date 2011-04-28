@@ -76,6 +76,11 @@ set(HEADERS
   staticmatrix-inline.h
   staticvector.h
   staticvector-inline.h
+  trajectory.h
+  trajectoryfile.h
+  trajectoryfileformat.h
+  trajectoryframe.h
+  unitcell.h
   vector3.h
 )
 
@@ -123,6 +128,11 @@ set(SOURCES
   residue.cpp
   ring.cpp
   scalarfield.cpp
+  trajectory.cpp
+  trajectoryfile.cpp
+  trajectoryfileformat.cpp
+  trajectoryframe.cpp
+  unitcell.cpp
 )
 
 set(MOC_HEADERS
