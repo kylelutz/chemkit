@@ -94,6 +94,13 @@ void MoleculeTest::mass()
     QCOMPARE(molecule.mass(), chemkit::Float(0.0));
 }
 
+void MoleculeTest::data()
+{
+    chemkit::Molecule molecule;
+    molecule.setData("boilingPoint", 38);
+    QCOMPARE(molecule.data("boilingPoint").toInt(), 38);
+}
+
 void MoleculeTest::addAtom()
 {
     chemkit::Molecule molecule;

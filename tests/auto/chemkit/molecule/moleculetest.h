@@ -46,6 +46,7 @@ class MoleculeTest : public QObject
         void name();
         void formula();
         void mass();
+        void data();
         void addAtom();
         void addAtomCopy();
         void addBond();
