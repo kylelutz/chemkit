@@ -197,20 +197,6 @@ void MoleculeWatcher::notifyObservers(const Bond *bond, Molecule::ChangeType cha
     }
 }
 
-void MoleculeWatcher::notifyObservers(const Residue *residue, Molecule::ChangeType changeType)
-{
-    switch(changeType){
-        case Molecule::ResidueAdded:
-            Q_EMIT residueAdded(residue);
-            break;
-        case Molecule::ResidueRemoved:
-            Q_EMIT residueRemoved(residue);
-            break;
-        default:
-            break;
-    }
-}
-
 void MoleculeWatcher::notifyObservers(const Conformer *conformer, Molecule::ChangeType changeType)
 {
     switch(changeType){

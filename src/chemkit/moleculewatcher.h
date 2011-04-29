@@ -44,7 +44,6 @@ namespace chemkit {
 
 class Atom;
 class Bond;
-class Residue;
 class Molecule;
 class Conformer;
 class MoleculeWatcherPrivate;
@@ -70,8 +69,6 @@ class CHEMKIT_EXPORT MoleculeWatcher : public QObject
         void bondAdded(const chemkit::Bond *bond);
         void bondRemoved(const chemkit::Bond *bond);
         void bondOrderChanged(const chemkit::Bond *bond);
-        void residueAdded(const chemkit::Residue *residue);
-        void residueRemoved(const chemkit::Residue *residue);
         void conformerAdded(const chemkit::Conformer *conformer);
         void conformerRemoved(const chemkit::Conformer *conformer);
         void nameChanged(const chemkit::Molecule *molecule);
@@ -80,7 +77,6 @@ class CHEMKIT_EXPORT MoleculeWatcher : public QObject
         void notifyObservers(const Molecule *molecule, Molecule::ChangeType changeType);
         void notifyObservers(const Atom *atom, Molecule::ChangeType changeType);
         void notifyObservers(const Bond *bond, Molecule::ChangeType changeType);
-        void notifyObservers(const Residue *residue, Molecule::ChangeType changeType);
         void notifyObservers(const Conformer *conformer, Molecule::ChangeType changeType);
 
         friend class Molecule;

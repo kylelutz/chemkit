@@ -48,7 +48,6 @@
 #include "ring.h"
 #include "moiety.h"
 #include "point3.h"
-#include "residue.h"
 #include "vector3.h"
 #include "fragment.h"
 #include "conformer.h"
@@ -77,8 +76,6 @@ class CHEMKIT_EXPORT Molecule
             BondAdded,
             BondRemoved,
             BondOrderChanged,
-            ResidueAdded,
-            ResidueRemoved,
             ConformerAdded,
             ConformerRemoved,
             ConformerChanged,
@@ -131,10 +128,6 @@ class CHEMKIT_EXPORT Molecule
         std::vector<Bond *> bonds() const;
         int bondCount() const;
         bool contains(const Bond *bond) const;
-        void addResidue(Residue *residue);
-        void removeResidue(Residue *residue);
-        std::vector<Residue *> residues() const;
-        int residueCount() const;
         void clear();
 
         // comparison
@@ -201,7 +194,6 @@ class CHEMKIT_EXPORT Molecule
         void notifyObservers(ChangeType type);
         void notifyObservers(const Atom *atom, ChangeType type);
         void notifyObservers(const Bond *bond, ChangeType type);
-        void notifyObservers(const Residue *residue, ChangeType type);
         void notifyObservers(const Conformer *conformer, ChangeType type);
         void addWatcher(MoleculeWatcher *watcher) const;
         void removeWatcher(MoleculeWatcher *watcher) const;
@@ -209,7 +201,6 @@ class CHEMKIT_EXPORT Molecule
 
         friend class Atom;
         friend class Bond;
-        friend class Residue;
         friend class MoleculeWatcher;
 
     private:

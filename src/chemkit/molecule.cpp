@@ -64,7 +64,6 @@ class MoleculePrivate
 
         std::string name;
         std::vector<Bond *> bonds;
-        std::vector<Residue *> residues;
         std::vector<Conformer *> conformers;
         Conformer *conformer;
         bool ringsPerceived;
@@ -114,10 +113,9 @@ MoleculePrivate::MoleculePrivate()
 /// Molecules can also be read from existing files using the
 /// MoleculeFile class.
 ///
-/// Molecule objects take ownership of all the Atom, Bond, Residue,
-/// Ring, Fragment, and Conformer objects that they contain. Deleting
-/// the molecule will also delete all of the objects that it
-/// contains.
+/// Molecule objects take ownership of all the Atom, Bond, Ring,
+/// Fragment, and Conformer objects that they contain. Deleting the
+/// molecule will also delete all of the objects that it contains.
 
 /// \enum Molecule::CompareFlag
 /// Option flags for molecule comparisons.
@@ -173,8 +171,8 @@ Molecule::Molecule(const Molecule &molecule)
     }
 }
 
-/// Destroys a molecule. This also destroys all of the atoms, bonds,
-/// and residues that the molecule contains.
+/// Destroys a molecule. This also destroys all of the atoms and
+/// bonds that the molecule contains.
 Molecule::~Molecule()
 {
     foreach(Atom *atom, m_atoms)
@@ -540,47 +538,7 @@ bool Molecule::contains(const Bond *bond) const
     return contains(bond->atom1());
 }
 
-/// Adds \p residue to the molecule.
-void Molecule::addResidue(Residue *residue)
-{
-    if(residue->molecule() != this){
-        return;
-    }
-
-    d->residues.push_back(residue);
-
-    foreach(Atom *atom, residue->atoms()){
-        atom->setResidue(residue);
-    }
-}
-
-/// Removes \p residue from the molecule.
-void Molecule::removeResidue(Residue *residue)
-{
-    if(residue->molecule() != this){
-        return;
-    }
-
-    d->residues.erase(std::remove(d->residues.begin(), d->residues.end(), residue), d->residues.end());
-
-    foreach(Atom *atom, residue->atoms()){
-        atom->setResidue(0);
-    }
-}
-
-/// Returns a list of all residues in the molecule.
-std::vector<Residue *> Molecule::residues() const
-{
-    return d->residues;
-}
-
-/// Returns the number of residues in the molecule.
-int Molecule::residueCount() const
-{
-    return residues().size();
-}
-
-/// Removes all atoms, bonds, and residues from the molecule.
+/// Removes all atoms and bonds from the molecule.
 void Molecule::clear()
 {
     Q_FOREACH(Bond *bond, d->bonds){
@@ -588,9 +546,6 @@ void Molecule::clear()
     }
     Q_FOREACH(Atom *atom, m_atoms){
         removeAtom(atom);
-    }
-    Q_FOREACH(Residue *residue, d->residues){
-        removeResidue(residue);
     }
 }
 
