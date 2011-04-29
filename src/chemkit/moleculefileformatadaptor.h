@@ -41,6 +41,7 @@
 namespace chemkit {
 
 class LineFormat;
+class PolymerFileFormat;
 
 template<typename T>
 class MoleculeFileFormatAdaptor : public MoleculeFileFormat
@@ -59,6 +60,19 @@ class MoleculeFileFormatAdaptor<LineFormat> : public MoleculeFileFormat
 
     private:
         LineFormat *m_format;
+};
+
+template<>
+class MoleculeFileFormatAdaptor<PolymerFileFormat> : public MoleculeFileFormat
+{
+    public:
+        MoleculeFileFormatAdaptor(PolymerFileFormat *format);
+        ~MoleculeFileFormatAdaptor();
+
+        virtual bool read(QIODevice *iodev, MoleculeFile *file);
+
+    private:
+        PolymerFileFormat *m_format;
 };
 
 } // end chemkit namespace

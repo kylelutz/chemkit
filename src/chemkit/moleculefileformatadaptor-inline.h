@@ -40,11 +40,14 @@
 
 #include <boost/foreach.hpp>
 
+#include "polymer.h"
 #include "lineformat.h"
+#include "polymerfile.h"
+#include "polymerfileformat.h"
 
 namespace chemkit {
 
-// === MoleculeFileFormatAdapator<LineFormat> ============================== //
+// === MoleculeFileFormatAdaptor<LineFormat> =============================== //
 inline MoleculeFileFormatAdaptor<LineFormat>::MoleculeFileFormatAdaptor(LineFormat *format)
     : MoleculeFileFormat(format->name())
 {
@@ -102,6 +105,38 @@ inline bool MoleculeFileFormatAdaptor<LineFormat>::write(const MoleculeFile *fil
         }
 
         iodev->write("\n");
+    }
+
+    return true;
+}
+
+// === MoleculeFileFormatAdaptor<PolymerFileFormat> ======================= //
+inline MoleculeFileFormatAdaptor<PolymerFileFormat>::MoleculeFileFormatAdaptor(PolymerFileFormat *format)
+    : MoleculeFileFormat(format->name())
+{
+    m_format = format;
+}
+
+inline MoleculeFileFormatAdaptor<PolymerFileFormat>::~MoleculeFileFormatAdaptor()
+{
+    delete m_format;
+}
+
+inline bool MoleculeFileFormatAdaptor<PolymerFileFormat>::read(QIODevice *iodev, MoleculeFile *file)
+{
+    PolymerFile polymerFile;
+    bool ok = polymerFile.read(iodev, m_format->name());
+    if(!ok){
+        setErrorString(polymerFile.errorString());
+        return false;
+    }
+
+    Q_FOREACH(Polymer *polymer, polymerFile.polymers()){
+        // remove polymer from the polymer file
+        polymerFile.removePolymer(polymer);
+
+        // add polymer to the molecule file
+        file->addMolecule(polymer);
     }
 
     return true;
