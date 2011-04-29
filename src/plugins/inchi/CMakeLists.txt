@@ -3,7 +3,6 @@ set(QT_DONT_USE_QTGUI TRUE)
 include(${QT_USE_FILE})
 
 set(SOURCES
-  inchifileformat.cpp
   inchikeylineformat.cpp
   inchilineformat.cpp
   inchiplugin.cpp
