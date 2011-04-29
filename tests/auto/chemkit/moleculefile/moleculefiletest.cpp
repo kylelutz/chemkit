@@ -83,15 +83,15 @@ void MoleculeFileTest::contains()
     file.addMolecule(molecule);
 }
 
-void MoleculeFileTest::fileData()
+void MoleculeFileTest::data()
 {
     chemkit::MoleculeFile file;
 
-    file.setFileData("foo", "bar");
-    QCOMPARE(file.fileData("foo").toString(), QString("bar"));
+    file.setData("foo", "bar");
+    QCOMPARE(file.data("foo").toString(), QString("bar"));
 
-    file.setFileData("number", 4);
-    QCOMPARE(file.fileData("number").toInt(), 4);
+    file.setData("number", 4);
+    QCOMPARE(file.data("number").toInt(), 4);
 }
 
 QTEST_APPLESS_MAIN(MoleculeFileTest)

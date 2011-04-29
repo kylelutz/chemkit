@@ -78,8 +78,8 @@ class CHEMKIT_EXPORT MoleculeFile
         void clear();
 
         // file data
-        void setFileData(const std::string &name, const QVariant &value);
-        QVariant fileData(const std::string &name) const;
+        void setData(const std::string &name, const QVariant &value);
+        QVariant data(const std::string &name) const;
 
         // input and output
         bool read();

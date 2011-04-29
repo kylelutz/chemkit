@@ -251,13 +251,13 @@ void MoleculeFile::clear()
 
 // --- File Data ----------------------------------------------------------- //
 /// Sets data with \p name to \p value for the file.
-void MoleculeFile::setFileData(const std::string &name, const QVariant &value)
+void MoleculeFile::setData(const std::string &name, const QVariant &value)
 {
     d->fileData[name] = value;
 }
 
 /// Returns the data for \p name.
-QVariant MoleculeFile::fileData(const std::string &name) const
+QVariant MoleculeFile::data(const std::string &name) const
 {
     std::map<std::string, QVariant>::iterator element = d->fileData.find(name);
     if(element != d->fileData.end()){
