@@ -35,22 +35,31 @@
 
 #include "pdbplugin.h"
 
+#include <chemkit/moleculefileformatadaptor.h>
+
 #include "pdbfileformat.h"
 
 PdbPlugin::PdbPlugin()
     : chemkit::Plugin("pdb")
 {
     registerPluginClass<chemkit::PolymerFileFormat>("pdb", createPdbFormat);
+    registerPluginClass<chemkit::MoleculeFileFormat>("pdb", createPdbMoleculeFormat);
 }
 
 PdbPlugin::~PdbPlugin()
 {
     unregisterPluginClass<chemkit::PolymerFileFormat>("pdb");
+    unregisterPluginClass<chemkit::MoleculeFileFormat>("pdb");
 }
 
 chemkit::PolymerFileFormat* PdbPlugin::createPdbFormat()
 {
     return new PdbFileFormat;
+}
+
+chemkit::MoleculeFileFormat* PdbPlugin::createPdbMoleculeFormat()
+{
+    return new chemkit::MoleculeFileFormatAdaptor<chemkit::PolymerFileFormat>(new PdbFileFormat);
 }
 
 Q_EXPORT_PLUGIN2(pdb, PdbPlugin);
