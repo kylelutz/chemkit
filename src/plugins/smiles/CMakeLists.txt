@@ -6,7 +6,6 @@ include_directories(../../3rdparty/lemon)
 
 set(SOURCES
   kekulizer.cpp
-  smifileformat.cpp
   smilesgraph.cpp
   smileslineformat.cpp
   smilesplugin.cpp

@@ -35,8 +35,9 @@
 
 #include "smilesplugin.h"
 
+#include <chemkit/moleculefileformatadaptor.h>
+
 #include "smileslineformat.h"
-#include "smifileformat.h"
 
 SmilesPlugin::SmilesPlugin()
     : chemkit::Plugin("smiles")
@@ -58,7 +59,7 @@ chemkit::LineFormat* SmilesPlugin::createSmilesFormat()
 
 chemkit::MoleculeFileFormat* SmilesPlugin::createSmiFormat()
 {
-    return new SmiFileFormat;
+    return new chemkit::MoleculeFileFormatAdaptor<chemkit::LineFormat>(new SmilesLineFormat);
 }
 
 Q_EXPORT_PLUGIN2(smiles, SmilesPlugin);
