@@ -55,6 +55,8 @@ set(HEADERS
   moleculealigner.h
   moleculefile.h
   moleculefileformat.h
+  moleculefileformatadaptor.h
+  moleculefileformatadaptor-inline.h
   moleculewatcher.h
   nucleotide.h
   partialchargepredictor.h
