@@ -232,7 +232,7 @@ bool MdlFileFormat::readPropertyBlock(QIODevice *iodev, chemkit::Molecule *molec
     return false;
 }
 
-bool MdlFileFormat::readDataBlock(QIODevice *iodev, const chemkit::Molecule *molecule, chemkit::MoleculeFile *file)
+bool MdlFileFormat::readDataBlock(QIODevice *iodev, chemkit::Molecule *molecule, chemkit::MoleculeFile *file)
 {
     QString dataName;
     QString dataValue;
@@ -250,7 +250,7 @@ bool MdlFileFormat::readDataBlock(QIODevice *iodev, const chemkit::Molecule *mol
             readingValue = true;
         }
         else if(readingValue && line.isEmpty()){
-            file->setMoleculeData(molecule, dataName.toStdString(), dataValue);
+            molecule->setData(dataName.toStdString(), dataValue);
             dataValue.clear();
         }
         else if(readingValue){

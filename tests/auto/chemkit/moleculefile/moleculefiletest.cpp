@@ -94,20 +94,4 @@ void MoleculeFileTest::fileData()
     QCOMPARE(file.fileData("number").toInt(), 4);
 }
 
-void MoleculeFileTest::moleculeData()
-{
-    chemkit::MoleculeFile file;
-    chemkit::Molecule *molecule = new chemkit::Molecule;
-    file.addMolecule(molecule);
-
-    file.setMoleculeData(molecule, "boilingPoint", 38);
-    QCOMPARE(file.moleculeData(molecule, "boilingPoint").toInt(), 38);
-
-    chemkit::Molecule *otherMolecule = new chemkit::Molecule;
-    file.addMolecule(otherMolecule);
-    file.setMoleculeData(otherMolecule, "boilingPoint", 87);
-    QCOMPARE(file.moleculeData(otherMolecule, "boilingPoint").toInt(), 87);
-    QCOMPARE(file.moleculeData(molecule, "boilingPoint").toInt(), 38);
-}
-
 QTEST_APPLESS_MAIN(MoleculeFileTest)

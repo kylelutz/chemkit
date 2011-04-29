@@ -58,7 +58,7 @@ class MdlFileFormat : public chemkit::MoleculeFileFormat
         bool readAtomBlock(QIODevice *iodev, chemkit::Molecule *molecule, int atomCount);
         bool readBondBlock(QIODevice *iodev, chemkit::Molecule *molecule, int bondCount);
         bool readPropertyBlock(QIODevice *iodev, chemkit::Molecule *molecule);
-        bool readDataBlock(QIODevice *iodev, const chemkit::Molecule *molecule, chemkit::MoleculeFile *file);
+        bool readDataBlock(QIODevice *iodev, chemkit::Molecule *molecule, chemkit::MoleculeFile *file);
         void writeMolFile(const chemkit::Molecule *molecule, QIODevice *iodev);
         void writeSdfFile(const chemkit::MoleculeFile *file, QIODevice *iodev);
         void writeAtomBlock(const chemkit::Molecule *molecule, QIODevice *iodev);

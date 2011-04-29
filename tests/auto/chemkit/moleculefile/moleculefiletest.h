@@ -47,7 +47,6 @@ class MoleculeFileTest : public QObject
         void format();
         void contains();
         void fileData();
-        void moleculeData();
 };
 
 #endif // MOLECULEFILETEST_H

@@ -267,24 +267,6 @@ QVariant MoleculeFile::fileData(const std::string &name) const
     return QVariant();
 }
 
-/// Sets data for \p molecule with \p name to \p value in the file.
-void MoleculeFile::setMoleculeData(const Molecule *molecule, const std::string &name, const QVariant &value)
-{
-    d->moleculeData[molecule][name] = value;
-}
-
-/// Returns data for \p molecule with \p name in the file.
-QVariant MoleculeFile::moleculeData(const Molecule *molecule, const std::string &name) const
-{
-    const std::map<std::string, QVariant> &moleculeDataMap = d->moleculeData[molecule];
-    std::map<std::string, QVariant>::const_iterator element = moleculeDataMap.find(name);
-    if(element != moleculeDataMap.end()){
-        return element->second;
-    }
-
-    return QVariant();
-}
-
 // --- Input and Output ---------------------------------------------------- //
 /// Reads the file.
 bool MoleculeFile::read()
