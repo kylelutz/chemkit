@@ -74,7 +74,7 @@ void DelaunayTriangulationTest::joe89()
     expectedTetrahedra.append(QVector<int>() << 4 << 5 << 6 << 7);
 
     std::vector<std::vector<int> > tetrahedra = triangulation.tetrahedra();
-    QCOMPARE(tetrahedra.size(), static_cast<unsigned long>(expectedTetrahedra.size()));
+    QCOMPARE(tetrahedra.size(), size_t(expectedTetrahedra.size()));
 
     for(unsigned int i = 0; i < tetrahedra.size(); i++){
         std::vector<int> tetrahedron = tetrahedra[i];
