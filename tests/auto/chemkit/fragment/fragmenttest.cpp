@@ -74,14 +74,14 @@ void FragmentTest::atoms()
 
     const std::vector<chemkit::Atom *> C1_atoms = C1->fragment()->atoms();
     QCOMPARE(C1->fragment()->atomCount(), 2);
-    QCOMPARE(C1_atoms.size(), 2UL);
+    QCOMPARE(C1_atoms.size(), size_t(2));
     QVERIFY(std::find(C1_atoms.begin(), C1_atoms.end(), C1) != C1_atoms.end());
     QVERIFY(std::find(C1_atoms.begin(), C1_atoms.end(), C2) != C1_atoms.end());
     QVERIFY(std::find(C1_atoms.begin(), C1_atoms.end(), C3) == C1_atoms.end());
 
     const std::vector<chemkit::Atom *> C3_atoms = C3->fragment()->atoms();
     QCOMPARE(C3->fragment()->atomCount(), 1);
-    QCOMPARE(C3_atoms.size(), 1UL);
+    QCOMPARE(C3_atoms.size(), size_t(1));
     QVERIFY(std::find(C3_atoms.begin(), C3_atoms.end(), C1) == C3_atoms.end());
     QVERIFY(std::find(C3_atoms.begin(), C3_atoms.end(), C2) == C3_atoms.end());
     QVERIFY(std::find(C3_atoms.begin(), C3_atoms.end(), C3) != C3_atoms.end());
