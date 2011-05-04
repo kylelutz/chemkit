@@ -44,5 +44,10 @@ add_subdirectory(sybyl)
 add_subdirectory(txyz)
 add_subdirectory(uff)
 add_subdirectory(wienerindex)
-add_subdirectory(xtc)
+
+# only compile xtc plugin on *nix where we have XDR
+if(${UNIX})
+    add_subdirectory(xtc)
+endif()
+
 add_subdirectory(xyz)
