@@ -79,7 +79,7 @@ void RingTest::molecule()
 
 void RingTest::atoms()
 {
-    QCOMPARE(benzeneRing->atoms().size(), 6UL);
+    QCOMPARE(benzeneRing->atoms().size(), size_t(6));
     foreach(chemkit::Atom *atom, benzeneRing->atoms()){
         QVERIFY(atom->molecule() == benzene);
         QVERIFY(benzene->contains(atom));
@@ -113,7 +113,7 @@ void RingTest::size()
 
 void RingTest::bonds()
 {
-    QCOMPARE(benzeneRing->bonds().size(), 6UL);
+    QCOMPARE(benzeneRing->bonds().size(), size_t(6));
     foreach(chemkit::Bond *bond, benzeneRing->bonds()){
         QVERIFY(bond->molecule() == benzene);
         QVERIFY(benzene->contains(bond));
