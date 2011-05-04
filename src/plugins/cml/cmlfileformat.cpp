@@ -37,6 +37,8 @@
 
 #include <QtXml>
 
+#include <chemkit/moleculefile.h>
+
 namespace {
 
 class CmlHandler : public QXmlDefaultHandler

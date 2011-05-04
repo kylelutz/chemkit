@@ -36,6 +36,7 @@
 #include "mopcrtfileformat.h"
 
 #include <chemkit/molecule.h>
+#include <chemkit/moleculefile.h>
 
 MopcrtFileFormat::MopcrtFileFormat()
     : chemkit::MoleculeFileFormat("mopcrt")

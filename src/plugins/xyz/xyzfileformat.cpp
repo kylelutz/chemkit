@@ -36,6 +36,7 @@
 #include "xyzfileformat.h"
 
 #include <chemkit/element.h>
+#include <chemkit/moleculefile.h>
 
 XyzFileFormat::XyzFileFormat()
     : chemkit::MoleculeFileFormat("xyz")

@@ -38,6 +38,7 @@
 #include <algorithm>
 
 #include <chemkit/molecule.h>
+#include <chemkit/moleculefile.h>
 #include <chemkit/moleculefileformat.h>
 
 const std::string dataPath = "../../../data/";

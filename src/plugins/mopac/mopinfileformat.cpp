@@ -36,6 +36,7 @@
 #include "mopinfileformat.h"
 
 #include <chemkit/molecule.h>
+#include <chemkit/moleculefile.h>
 #include <chemkit/internalcoordinates.h>
 
 MopinFileFormat::MopinFileFormat()

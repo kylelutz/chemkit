@@ -43,6 +43,7 @@
 #include "polymer.h"
 #include "lineformat.h"
 #include "polymerfile.h"
+#include "moleculefile.h"
 #include "polymerfileformat.h"
 
 namespace chemkit {

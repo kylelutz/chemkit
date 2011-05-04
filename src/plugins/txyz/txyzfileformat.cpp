@@ -36,6 +36,7 @@
 #include "txyzfileformat.h"
 
 #include <chemkit/element.h>
+#include <chemkit/moleculefile.h>
 
 TxyzFileFormat::TxyzFileFormat()
     : chemkit::MoleculeFileFormat("txyz")

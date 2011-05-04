@@ -36,6 +36,7 @@
 #include "fhzfileformat.h"
 
 #include <chemkit/molecule.h>
+#include <chemkit/moleculefile.h>
 #include <chemkit/internalcoordinates.h>
 
 FhzFileFormat::FhzFileFormat()

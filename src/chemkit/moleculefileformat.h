@@ -41,10 +41,11 @@
 #include <string>
 #include <vector>
 
-#include "moleculefile.h"
+#include <QVariant>
 
 namespace chemkit {
 
+class MoleculeFile;
 class MoleculeFileFormatPrivate;
 
 class CHEMKIT_EXPORT MoleculeFileFormat
