@@ -52,14 +52,14 @@ class CHEMKIT_EXPORT Fragment
 {
     public:
         // properties
-        int size() const;
-        Molecule* molecule() const;
+        inline int size() const;
+        inline Molecule* molecule() const;
 
         // structure
-        Atom* atom(int index) const;
-        std::vector<Atom *> atoms() const;
-        int atomCount() const;
-        bool contains(const Atom *atom) const;
+        inline Atom* atom(int index) const;
+        inline std::vector<Atom *> atoms() const;
+        inline int atomCount() const;
+        inline bool contains(const Atom *atom) const;
         std::vector<Bond *> bonds() const;
         int bondCount() const;
         bool contains(const Bond *bond) const;

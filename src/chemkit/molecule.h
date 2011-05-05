@@ -101,8 +101,8 @@ class CHEMKIT_EXPORT Molecule
         std::string formula() const;
         std::string formula(const std::string &format) const;
         QVariant descriptor(const std::string &name) const;
-        int size() const;
-        bool isEmpty() const;
+        inline int size() const;
+        inline bool isEmpty() const;
         Float mass() const;
         void setData(const std::string &name, const QVariant &value);
         QVariant data(const std::string &name) const;
@@ -112,8 +112,8 @@ class CHEMKIT_EXPORT Molecule
         Atom* addAtomCopy(const Atom *atom);
         void removeAtom(Atom *atom);
         Atom* atom(int index) const;
-        std::vector<Atom *> atoms() const;
-        int atomCount() const;
+        inline std::vector<Atom *> atoms() const;
+        inline int atomCount() const;
         int atomCount(const Element &element) const;
         bool contains(const Atom *atom) const;
         bool contains(const Element &element) const;

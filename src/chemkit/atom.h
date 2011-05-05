@@ -68,7 +68,7 @@ class CHEMKIT_EXPORT Atom
 
         // properties
         void setElement(const Element &element);
-        Element element() const;
+        inline Element element() const;
         void setAtomicNumber(int atomicNumber);
         int atomicNumber() const;
         void setMassNumber(int massNumber);
@@ -83,9 +83,9 @@ class CHEMKIT_EXPORT Atom
         Float electronegativity() const;
         Float covalentRadius() const;
         Float vanDerWaalsRadius() const;
-        bool is(const Element &element) const;
+        inline bool is(const Element &element) const;
         bool isHeteroatom() const;
-        Molecule* molecule() const;
+        inline Molecule* molecule() const;
         Fragment* fragment() const;
         Residue* residue() const;
         int index() const;

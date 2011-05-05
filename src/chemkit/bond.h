@@ -66,15 +66,15 @@ class CHEMKIT_EXPORT Bond
 
         // properties
         Atom* atom(int index) const;
-        Atom* atom1() const;
-        Atom* atom2() const;
+        inline Atom* atom1() const;
+        inline Atom* atom2() const;
         std::vector<Atom *> atoms() const;
         Atom* otherAtom(const Atom *atom) const;
         void setOrder(int order);
-        int order() const;
+        inline int order() const;
         Float polarity() const;
         Vector3 dipoleMoment() const;
-        Molecule* molecule() const;
+        inline Molecule* molecule() const;
         Fragment* fragment() const;
         Residue* residue() const;
         int index() const;

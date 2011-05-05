@@ -53,7 +53,7 @@ class CHEMKIT_EXPORT Element
 
         // properties
         void setAtomicNumber(int atomicNumber);
-        int atomicNumber() const;
+        inline int atomicNumber() const;
         std::string symbol() const;
         std::string name() const;
         int period() const;
@@ -62,12 +62,12 @@ class CHEMKIT_EXPORT Element
         Float covalentRadius() const;
         Float vanDerWaalsRadius() const;
         int expectedValence() const;
-        bool isValid() const;
+        inline bool isValid() const;
         bool isMetal() const;
         bool isNonmetal() const;
 
         // operators
-        bool operator==(const Element &element) const;
+        inline bool operator==(const Element &element) const;
 
         // static methods
         static int atomicNumber(const std::string &symbol);

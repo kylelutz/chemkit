@@ -54,23 +54,23 @@ class CHEMKIT_EXPORT Ring
 {
     public:
         // properties
-        int size() const;
-        Molecule* molecule() const;
-        Fragment* fragment() const;
+        inline int size() const;
+        inline Molecule* molecule() const;
+        inline Fragment* fragment() const;
 
         // structure
-        Atom* atom(int index) const;
-        std::vector<Atom *> atoms() const;
-        int atomCount() const;
+        inline Atom* atom(int index) const;
+        inline std::vector<Atom *> atoms() const;
+        inline int atomCount() const;
         int atomCount(const Element &element) const;
         Bond* bond(int index) const;
         std::vector<Bond *> bonds() const;
         int bondCount() const;
         std::vector<Bond *> exocyclicBonds() const;
         int exocyclicBondCount() const;
-        bool contains(const Atom *atom) const;
-        bool contains(const Bond *bond) const;
-        bool contains(const Element &element) const;
+        inline bool contains(const Atom *atom) const;
+        inline bool contains(const Bond *bond) const;
+        inline bool contains(const Element &element) const;
         int heteroatomCount() const;
         bool isHeterocycle() const;
         Atom* root() const;
