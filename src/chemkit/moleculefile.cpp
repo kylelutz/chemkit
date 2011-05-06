@@ -49,7 +49,6 @@ class MoleculeFilePrivate
         MoleculeFileFormat *format;
         std::vector<Molecule *> molecules;
         std::map<std::string, QVariant> fileData;
-        std::map<const Molecule *, std::map<std::string, QVariant> > moleculeData;
 };
 
 // === MoleculeFile ======================================================== //
@@ -197,7 +196,6 @@ bool MoleculeFile::removeMolecule(Molecule *molecule)
     }
 
     d->molecules.erase(location);
-    d->moleculeData.erase(molecule);
 
     return true;
 }
@@ -246,7 +244,6 @@ void MoleculeFile::clear()
     qDeleteAll(d->molecules);
     d->molecules.clear();
     d->fileData.clear();
-    d->moleculeData.clear();
 }
 
 // --- File Data ----------------------------------------------------------- //
