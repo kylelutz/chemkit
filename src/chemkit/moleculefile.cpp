@@ -48,7 +48,7 @@ class MoleculeFilePrivate
         std::string errorString;
         MoleculeFileFormat *format;
         std::vector<Molecule *> molecules;
-        std::map<std::string, QVariant> fileData;
+        std::map<std::string, Variant> fileData;
 };
 
 // === MoleculeFile ======================================================== //
@@ -248,20 +248,20 @@ void MoleculeFile::clear()
 
 // --- File Data ----------------------------------------------------------- //
 /// Sets data with \p name to \p value for the file.
-void MoleculeFile::setData(const std::string &name, const QVariant &value)
+void MoleculeFile::setData(const std::string &name, const Variant &value)
 {
     d->fileData[name] = value;
 }
 
 /// Returns the data for \p name.
-QVariant MoleculeFile::data(const std::string &name) const
+Variant MoleculeFile::data(const std::string &name) const
 {
-    std::map<std::string, QVariant>::iterator element = d->fileData.find(name);
+    std::map<std::string, Variant>::iterator element = d->fileData.find(name);
     if(element != d->fileData.end()){
         return element->second;
     }
 
-    return QVariant();
+    return Variant();
 }
 
 // --- Input and Output ---------------------------------------------------- //

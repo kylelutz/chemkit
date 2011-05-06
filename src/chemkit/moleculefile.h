@@ -43,6 +43,8 @@
 
 #include <QtCore>
 
+#include "variant.h"
+
 namespace chemkit {
 
 class Molecule;
@@ -78,8 +80,8 @@ class CHEMKIT_EXPORT MoleculeFile
         void clear();
 
         // file data
-        void setData(const std::string &name, const QVariant &value);
-        QVariant data(const std::string &name) const;
+        void setData(const std::string &name, const Variant &value);
+        Variant data(const std::string &name) const;
 
         // input and output
         bool read();

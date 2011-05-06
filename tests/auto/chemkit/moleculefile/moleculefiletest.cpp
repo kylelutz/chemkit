@@ -88,7 +88,7 @@ void MoleculeFileTest::data()
     chemkit::MoleculeFile file;
 
     file.setData("foo", "bar");
-    QCOMPARE(file.data("foo").toString(), QString("bar"));
+    QCOMPARE(file.data("foo").toString(), std::string("bar"));
 
     file.setData("number", 4);
     QCOMPARE(file.data("number").toInt(), 4);
