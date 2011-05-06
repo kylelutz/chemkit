@@ -38,10 +38,10 @@
 
 #include "chemkit.h"
 
-#include <QtCore>
-
 #include <string>
 #include <vector>
+
+#include <QFuture>
 
 #include "point3.h"
 #include "vector3.h"

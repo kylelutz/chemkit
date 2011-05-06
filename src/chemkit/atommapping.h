@@ -38,8 +38,6 @@
 
 #include "chemkit.h"
 
-#include <QtCore>
-
 namespace chemkit {
 
 class Atom;

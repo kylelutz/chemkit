@@ -40,8 +40,6 @@
 
 #include <vector>
 
-#include <QtCore>
-
 #include "point3.h"
 #include "vector3.h"
 

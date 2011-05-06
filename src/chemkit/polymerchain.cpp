@@ -70,7 +70,10 @@ PolymerChain::PolymerChain(Polymer *polymer)
 
 PolymerChain::~PolymerChain()
 {
-    qDeleteAll(d->residues);
+    foreach(Residue *residue, d->residues){
+        delete residue;
+    }
+
     delete d;
 }
 

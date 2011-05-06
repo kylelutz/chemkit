@@ -40,8 +40,6 @@
 
 #include <vector>
 
-#include <QtCore>
-
 namespace chemkit {
 
 class Atom;

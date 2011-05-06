@@ -38,7 +38,10 @@
 
 #include "chemkit.h"
 
-#include <QtCore>
+#include <string>
+#include <vector>
+
+#include <QIODevice>
 
 namespace chemkit {
 

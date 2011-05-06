@@ -41,7 +41,7 @@
 #include <string>
 #include <vector>
 
-#include <QtCore>
+#include <QIODevice>
 
 #include "variant.h"
 

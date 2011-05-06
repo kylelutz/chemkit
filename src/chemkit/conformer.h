@@ -38,8 +38,6 @@
 
 #include "chemkit.h"
 
-#include <QtCore>
-
 #include "point3.h"
 
 namespace chemkit {
