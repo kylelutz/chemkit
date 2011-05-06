@@ -54,7 +54,7 @@ class UffAtomTyper : public chemkit::AtomTyper
         void assignTypes(const chemkit::Molecule *molecule);
 
     private:
-        QVector<std::string> m_types;
+        std::vector<std::string> m_types;
 };
 
 #endif // UFFATOMTYPER_H

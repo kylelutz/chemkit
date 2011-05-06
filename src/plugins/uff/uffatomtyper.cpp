@@ -52,7 +52,7 @@ UffAtomTyper::~UffAtomTyper()
 // --- Types --------------------------------------------------------------- //
 std::string UffAtomTyper::typeString(int index) const
 {
-    return m_types.value(index, std::string());
+    return m_types[index];
 }
 
 std::string UffAtomTyper::typeString(const chemkit::Atom *atom) const
@@ -238,7 +238,7 @@ void UffAtomTyper::assignTypes(const chemkit::Molecule *molecule)
         return;
     }
 
-    m_types = QVector<std::string>(molecule->atomCount());
+    m_types = std::vector<std::string>(molecule->atomCount());
 
     for(int index = 0; index < molecule->size(); index++){
         const chemkit::Atom *atom = molecule->atom(index);
