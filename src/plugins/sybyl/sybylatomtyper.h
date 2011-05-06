@@ -33,6 +33,9 @@
 **
 ******************************************************************************/
 
+#ifndef SYBYLATOMTYPER_H
+#define SYBYLATOMTYPER_H
+
 #include <chemkit/atomtyper.h>
 
 class SybylAtomTyper : public chemkit::AtomTyper
@@ -53,3 +56,5 @@ class SybylAtomTyper : public chemkit::AtomTyper
     private:
         QVector<std::string> m_types;
 };
+
+#endif // SYBYLATOMTYPER_H
