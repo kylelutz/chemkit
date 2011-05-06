@@ -39,12 +39,6 @@
 
 namespace chemkit {
 
-namespace {
-
-QHash<QString, LineFormat::CreateFunction> pluginFormats;
-
-} // end anonymous namespace
-
 // === LineFormatPrivate =================================================== //
 class LineFormatPrivate
 {
