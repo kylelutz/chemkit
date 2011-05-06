@@ -36,8 +36,6 @@
 #ifndef INCHILINEFORMAT_H
 #define INCHILINEFORMAT_H
 
-#include <QtCore>
-
 #include <chemkit/molecule.h>
 #include <chemkit/lineformat.h>
 
@@ -49,7 +47,7 @@ class InchiLineFormat : public chemkit::LineFormat
         bool read(const std::string &formula, chemkit::Molecule *molecule);
         std::string write(const chemkit::Molecule *molecule);
 
-        virtual QVariant defaultOption(const std::string &name) const;
+        virtual chemkit::Variant defaultOption(const std::string &name) const;
 };
 
 #endif // INCHILINEFORMAT_H

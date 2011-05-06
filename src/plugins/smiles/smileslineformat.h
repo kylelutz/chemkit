@@ -45,7 +45,7 @@ class SmilesLineFormat : public chemkit::LineFormat
         SmilesLineFormat();
 
         // options
-        virtual QVariant defaultOption(const std::string &name) const;
+        virtual chemkit::Variant defaultOption(const std::string &name) const;
 
         // input and output
         bool read(const std::string &formula, chemkit::Molecule *molecule);

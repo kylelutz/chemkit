@@ -45,7 +45,7 @@ class LineFormatPrivate
     public:
         std::string name;
         std::string errorString;
-        QHash<QString, QVariant> options;
+        QHash<QString, Variant> options;
 };
 
 // === LineFormat ========================================================== //
@@ -83,22 +83,22 @@ std::string LineFormat::name() const
 
 // --- Options ------------------------------------------------------------- //
 /// Sets an option for the line format.
-void LineFormat::setOption(const std::string &name, const QVariant &value)
+void LineFormat::setOption(const std::string &name, const Variant &value)
 {
     d->options[name.c_str()] = value;
 }
 
 /// Returns the value of an option for the line format.
-QVariant LineFormat::option(const std::string &name) const
+Variant LineFormat::option(const std::string &name) const
 {
     return d->options.value(name.c_str(), defaultOption(name));
 }
 
-QVariant LineFormat::defaultOption(const std::string &name) const
+Variant LineFormat::defaultOption(const std::string &name) const
 {
     Q_UNUSED(name);
 
-    return QVariant();
+    return Variant();
 }
 
 // --- Input and Output ---------------------------------------------------- //

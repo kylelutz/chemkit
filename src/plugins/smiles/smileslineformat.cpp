@@ -178,16 +178,16 @@ SmilesLineFormat::SmilesLineFormat()
 }
 
 // --- Options ------------------------------------------------------------- //
-QVariant SmilesLineFormat::defaultOption(const std::string &name) const
+chemkit::Variant SmilesLineFormat::defaultOption(const std::string &name) const
 {
     if(name == "stereochemistry")
-        return QVariant(true);
+        return true;
     else if(name == "add-hydrogens")
-        return QVariant(true);
+        return true;
     else if(name == "kekulize")
-        return QVariant(false);
+        return false;
     else
-        return QVariant();
+        return chemkit::Variant();
 }
 
 // --- Input and Output ---------------------------------------------------- //

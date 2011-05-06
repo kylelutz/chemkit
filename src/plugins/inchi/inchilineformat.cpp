@@ -251,12 +251,12 @@ std::string InchiLineFormat::write(const chemkit::Molecule *molecule)
     return inchiString;
 }
 
-QVariant InchiLineFormat::defaultOption(const std::string &name) const
+chemkit::Variant InchiLineFormat::defaultOption(const std::string &name) const
 {
     if(name == "stereochemistry")
-        return QVariant(true);
+        return true;
     else if(name == "add-hydrogens")
-        return QVariant(true);
+        return true;
     else
-        return QVariant();
+        return chemkit::Variant();
 }

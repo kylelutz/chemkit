@@ -41,6 +41,7 @@
 #include <string>
 #include <vector>
 
+#include "variant.h"
 #include "molecule.h"
 
 namespace chemkit {
@@ -60,8 +61,8 @@ class CHEMKIT_EXPORT LineFormat
         std::string name() const;
 
         // options
-        void setOption(const std::string &name, const QVariant &value);
-        QVariant option(const std::string &name) const;
+        void setOption(const std::string &name, const Variant &value);
+        Variant option(const std::string &name) const;
 
         // input and output
         virtual bool read(const std::string &formula, Molecule *molecule);
@@ -78,7 +79,7 @@ class CHEMKIT_EXPORT LineFormat
     protected:
         LineFormat(const std::string &name);
         void setErrorString(const std::string &error);
-        virtual QVariant defaultOption(const std::string &name) const;
+        virtual Variant defaultOption(const std::string &name) const;
 
     private:
         LineFormatPrivate* const d;
