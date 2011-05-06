@@ -41,7 +41,9 @@
 #include <string>
 #include <vector>
 
-#include <QVariant>
+#include <QIODevice>
+
+#include "variant.h"
 
 namespace chemkit {
 
@@ -61,8 +63,8 @@ class CHEMKIT_EXPORT MoleculeFileFormat
         std::string name() const;
 
         // options
-        void setOption(const std::string &name, const QVariant &value);
-        QVariant option(const std::string &name) const;
+        void setOption(const std::string &name, const Variant &value);
+        Variant option(const std::string &name) const;
 
         // input and output
         virtual bool read(QIODevice *iodev, MoleculeFile *file);

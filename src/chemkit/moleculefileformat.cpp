@@ -48,7 +48,7 @@ class MoleculeFileFormatPrivate
     public:
         std::string name;
         std::string errorString;
-        std::map<std::string, QVariant> options;
+        std::map<std::string, Variant> options;
 };
 
 // === MoleculeFileFormat ================================================== //
@@ -87,20 +87,20 @@ std::string MoleculeFileFormat::name() const
 
 // --- Options ------------------------------------------------------------- //
 /// Sets an option for the format.
-void MoleculeFileFormat::setOption(const std::string &name, const QVariant &value)
+void MoleculeFileFormat::setOption(const std::string &name, const Variant &value)
 {
     d->options[name] = value;
 }
 
 /// Returns the option for the format.
-QVariant MoleculeFileFormat::option(const std::string &name) const
+Variant MoleculeFileFormat::option(const std::string &name) const
 {
-    std::map<std::string, QVariant>::iterator element = d->options.find(name);
+    std::map<std::string, Variant>::iterator element = d->options.find(name);
     if(element != d->options.end()){
         return element->second;
     }
 
-    return QVariant();
+    return Variant();
 }
 
 // --- Input and Output ---------------------------------------------------- //
