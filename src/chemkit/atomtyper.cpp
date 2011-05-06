@@ -94,15 +94,15 @@ const Molecule* AtomTyper::molecule() const
 
 // --- Types --------------------------------------------------------------- //
 /// Returns the symbolic type for the atom at \p index.
-QVariant AtomTyper::type(int index) const
+Variant AtomTyper::type(int index) const
 {
     Q_UNUSED(index);
 
-    return QVariant();
+    return Variant();
 }
 
 /// Returns the symbolic type for \p atom.
-QVariant AtomTyper::type(const Atom *atom) const
+Variant AtomTyper::type(const Atom *atom) const
 {
     return type(atom->index());
 }
@@ -122,13 +122,13 @@ int AtomTyper::typeNumber(const Atom *atom) const
 /// Returns the symbolic type for the atom at \p index as a string.
 std::string AtomTyper::typeString(int index) const
 {
-    return type(index).toString().toStdString();
+    return type(index).toString();
 }
 
 /// Returns the symbolic type for \p atom as a string.
 std::string AtomTyper::typeString(const Atom *atom) const
 {
-    return type(atom).toString().toStdString();
+    return type(atom).toString();
 }
 
 // --- Static Methods ------------------------------------------------------ //

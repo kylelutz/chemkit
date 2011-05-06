@@ -39,8 +39,9 @@
 #include "chemkit.h"
 
 #include <string>
+#include <vector>
 
-#include <QtCore>
+#include "variant.h"
 
 namespace chemkit {
 
@@ -63,8 +64,8 @@ class CHEMKIT_EXPORT AtomTyper
         const Molecule* molecule() const;
 
         // types
-        virtual QVariant type(int index) const;
-        virtual QVariant type(const Atom *atom) const;
+        virtual Variant type(int index) const;
+        virtual Variant type(const Atom *atom) const;
         virtual int typeNumber(int index) const;
         virtual int typeNumber(const Atom *atom) const;
         virtual std::string typeString(int index) const;
