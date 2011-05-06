@@ -68,7 +68,7 @@ void MdlTest::read_methanol()
 
     // check data
     QCOMPARE(molecule->name(), std::string("887"));
-    QCOMPARE(molecule->data("PUBCHEM_COMPOUND_CID").toString(), QString("887"));
+    QCOMPARE(molecule->data("PUBCHEM_COMPOUND_CID").toString(), std::string("887"));
     QCOMPARE(molecule->data("PUBCHEM_HEAVY_ATOM_COUNT").toInt(), 2);
 }
 
@@ -112,7 +112,7 @@ void MdlTest::read_benzenes()
 
     // check molecule data
     foreach(const chemkit::Molecule *molecule, file.molecules()){
-        QCOMPARE(molecule->name(), molecule->data("PUBCHEM_COMPOUND_CID").toString().toStdString());
+        QCOMPARE(molecule->name(), molecule->data("PUBCHEM_COMPOUND_CID").toString());
     }
 }
 

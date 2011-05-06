@@ -41,8 +41,6 @@
 #include <string>
 #include <vector>
 
-#include <QVariant>
-
 #include "atom.h"
 #include "bond.h"
 #include "ring.h"
@@ -105,8 +103,8 @@ class CHEMKIT_EXPORT Molecule
         inline int size() const;
         inline bool isEmpty() const;
         Float mass() const;
-        void setData(const std::string &name, const QVariant &value);
-        QVariant data(const std::string &name) const;
+        void setData(const std::string &name, const Variant &value);
+        Variant data(const std::string &name) const;
 
         // structure
         Atom* addAtom(const Element &element);

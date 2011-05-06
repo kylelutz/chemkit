@@ -71,7 +71,7 @@ class MoleculePrivate
         bool fragmentsPerceived;
         std::vector<Fragment *> fragments;
         QList<MoleculeWatcher *> watchers;
-        std::map<std::string, QVariant> data;
+        std::map<std::string, Variant> data;
 };
 
 MoleculePrivate::MoleculePrivate()
@@ -299,20 +299,20 @@ Float Molecule::mass() const
 }
 
 /// Sets the data for the molecule with \p name to \p value.
-void Molecule::setData(const std::string &name, const QVariant &value)
+void Molecule::setData(const std::string &name, const Variant &value)
 {
     d->data[name] = value;
 }
 
 /// Returns the data for the molecule with \p name.
-QVariant Molecule::data(const std::string &name) const
+Variant Molecule::data(const std::string &name) const
 {
-    std::map<std::string, QVariant>::const_iterator iter = d->data.find(name);
+    std::map<std::string, Variant>::const_iterator iter = d->data.find(name);
     if(iter != d->data.end()){
         return iter->second;
     }
 
-    return QVariant();
+    return Variant();
 }
 
 // --- Structure ----------------------------------------------------------- //
