@@ -51,7 +51,7 @@ SybylAtomTyper::~SybylAtomTyper()
 // --- Types --------------------------------------------------------------- //
 std::string SybylAtomTyper::typeString(int index) const
 {
-    return m_types.value(index);
+    return m_types[index];
 }
 
 std::string SybylAtomTyper::typeString(const chemkit::Atom *atom) const
@@ -213,7 +213,7 @@ void SybylAtomTyper::assignTypes(const chemkit::Molecule *molecule)
         return;
     }
 
-    m_types = QVector<std::string>(molecule->atomCount());
+    m_types = std::vector<std::string>(molecule->atomCount());
 
     for(int i = 0; i < molecule->atomCount(); i++){
         m_types[i] = atomType(molecule->atom(i));
