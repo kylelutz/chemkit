@@ -83,6 +83,7 @@ set(HEADERS
   trajectoryfileformat.h
   trajectoryframe.h
   unitcell.h
+  variant.h
   vector3.h
 )
 
