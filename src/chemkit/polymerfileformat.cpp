@@ -78,8 +78,8 @@ std::string PolymerFileFormat::name() const
 /// Reads a file from \p iodev.
 bool PolymerFileFormat::read(QIODevice *iodev, PolymerFile *file)
 {
-    Q_UNUSED(iodev);
-    Q_UNUSED(file);
+    CHEMKIT_UNUSED(iodev);
+    CHEMKIT_UNUSED(file);
 
     setErrorString(QString("'%1' reading not supported.").arg(name().c_str()).toStdString());
     return false;
@@ -88,8 +88,8 @@ bool PolymerFileFormat::read(QIODevice *iodev, PolymerFile *file)
 /// Writes a file to \p iodev.
 bool PolymerFileFormat::write(const PolymerFile *file, QIODevice *iodev)
 {
-    Q_UNUSED(file);
-    Q_UNUSED(iodev);
+    CHEMKIT_UNUSED(file);
+    CHEMKIT_UNUSED(iodev);
 
     setErrorString(QString("'%1' writing not supported.").arg(name().c_str()).toStdString());
     return false;

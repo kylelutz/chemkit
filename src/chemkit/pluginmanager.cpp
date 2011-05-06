@@ -185,7 +185,7 @@ bool PluginManager::unloadPlugin(Plugin *plugin)
 /// Unloads the plugin with \p name.
 bool PluginManager::unloadPlugin(const std::string &name)
 {
-    Q_UNUSED(name);
+    CHEMKIT_UNUSED(name);
 
     return false;
 }

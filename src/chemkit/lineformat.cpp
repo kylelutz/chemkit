@@ -96,7 +96,7 @@ Variant LineFormat::option(const std::string &name) const
 
 Variant LineFormat::defaultOption(const std::string &name) const
 {
-    Q_UNUSED(name);
+    CHEMKIT_UNUSED(name);
 
     return Variant();
 }
@@ -106,8 +106,8 @@ Variant LineFormat::defaultOption(const std::string &name) const
 /// \c false if \p formula could not be read.
 bool LineFormat::read(const std::string &formula, Molecule *molecule)
 {
-    Q_UNUSED(formula);
-    Q_UNUSED(molecule);
+    CHEMKIT_UNUSED(formula);
+    CHEMKIT_UNUSED(molecule);
 
     setErrorString(QString("'%1' read not supported.").arg(name().c_str()).toStdString());
     return false;
@@ -132,7 +132,7 @@ Molecule* LineFormat::read(const std::string &formula)
 /// Write and return the formula of a molecule.
 std::string LineFormat::write(const Molecule *molecule)
 {
-    Q_UNUSED(molecule);
+    CHEMKIT_UNUSED(molecule);
 
     setErrorString(QString("'%1' write not supported.").arg(name().c_str()).toStdString());
     return std::string();

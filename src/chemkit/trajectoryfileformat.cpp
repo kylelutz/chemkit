@@ -77,8 +77,8 @@ std::string TrajectoryFileFormat::name() const
 /// Reads a trajectory file from \p iodev into \p file.
 bool TrajectoryFileFormat::read(QIODevice *iodev, TrajectoryFile *file)
 {
-    Q_UNUSED(iodev);
-    Q_UNUSED(file);
+    CHEMKIT_UNUSED(iodev);
+    CHEMKIT_UNUSED(file);
 
     setErrorString(QString("'%1' reading not supported.").arg(name().c_str()).toStdString());
     return false;
@@ -87,8 +87,8 @@ bool TrajectoryFileFormat::read(QIODevice *iodev, TrajectoryFile *file)
 /// Writes a trajectory file from \p file to \p iodev.
 bool TrajectoryFileFormat::write(const TrajectoryFile *file, QIODevice *iodev)
 {
-    Q_UNUSED(file);
-    Q_UNUSED(iodev);
+    CHEMKIT_UNUSED(file);
+    CHEMKIT_UNUSED(iodev);
 
     setErrorString(QString("'%1' writing not supported.").arg(name().c_str()).toStdString());
     return false;

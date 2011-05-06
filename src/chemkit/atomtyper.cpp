@@ -96,7 +96,7 @@ const Molecule* AtomTyper::molecule() const
 /// Returns the symbolic type for the atom at \p index.
 Variant AtomTyper::type(int index) const
 {
-    Q_UNUSED(index);
+    CHEMKIT_UNUSED(index);
 
     return Variant();
 }
@@ -148,7 +148,7 @@ std::vector<std::string> AtomTyper::typers()
 // --- Internal Methods ---------------------------------------------------- //
 void AtomTyper::assignTypes(const Molecule *molecule)
 {
-    Q_UNUSED(molecule);
+    CHEMKIT_UNUSED(molecule);
 }
 
 } // end chemkit namespace

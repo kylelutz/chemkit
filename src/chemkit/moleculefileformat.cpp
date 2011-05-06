@@ -107,8 +107,8 @@ Variant MoleculeFileFormat::option(const std::string &name) const
 /// Read from iodev into file.
 bool MoleculeFileFormat::read(QIODevice *iodev, MoleculeFile *file)
 {
-    Q_UNUSED(iodev);
-    Q_UNUSED(file);
+    CHEMKIT_UNUSED(iodev);
+    CHEMKIT_UNUSED(file);
 
     setErrorString(QString("'%1' reading not supported.").arg(name().c_str()).toStdString());
     return false;
@@ -117,8 +117,8 @@ bool MoleculeFileFormat::read(QIODevice *iodev, MoleculeFile *file)
 /// Write the contents of the file to iodev.
 bool MoleculeFileFormat::write(const MoleculeFile *file, QIODevice *iodev)
 {
-    Q_UNUSED(file);
-    Q_UNUSED(iodev);
+    CHEMKIT_UNUSED(file);
+    CHEMKIT_UNUSED(iodev);
 
     setErrorString(QString("'%1' writing not supported.").arg(name().c_str()).toStdString());
     return false;

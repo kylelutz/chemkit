@@ -1245,7 +1245,7 @@ void Molecule::removeWatcher(MoleculeWatcher *watcher) const
 
 bool Molecule::isSubsetOf(const Molecule *molecule, CompareFlags flags) const
 {
-    Q_UNUSED(flags);
+    CHEMKIT_UNUSED(flags);
 
     std::vector<Atom *> otherAtoms = molecule->atoms();
 

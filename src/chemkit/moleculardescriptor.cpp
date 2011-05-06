@@ -107,7 +107,7 @@ std::string MolecularDescriptor::name() const
 /// Calculates the value of the descriptor for \p molecule.
 Variant MolecularDescriptor::value(const Molecule *molecule) const
 {
-    Q_UNUSED(molecule);
+    CHEMKIT_UNUSED(molecule);
 
     return Variant();
 }

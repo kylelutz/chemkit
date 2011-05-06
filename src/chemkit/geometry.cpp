@@ -70,54 +70,54 @@ namespace geometry {
 // --- Constructions ------------------------------------------------------- //
 Point3 circumcenter(const Point3 &a, const Point3 &b)
 {
-    Q_UNUSED(a);
-    Q_UNUSED(b);
+    CHEMKIT_UNUSED(a);
+    CHEMKIT_UNUSED(b);
 
     return Point3();
 }
 
 Point3 circumcenter(const Point3 &a, const Point3 &b, const Point3 &c)
 {
-    Q_UNUSED(a);
-    Q_UNUSED(b);
-    Q_UNUSED(c);
+    CHEMKIT_UNUSED(a);
+    CHEMKIT_UNUSED(b);
+    CHEMKIT_UNUSED(c);
 
     return Point3();
 }
 
 Point3 circumcenter(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d)
 {
-    Q_UNUSED(a);
-    Q_UNUSED(b);
-    Q_UNUSED(c);
-    Q_UNUSED(d);
+    CHEMKIT_UNUSED(a);
+    CHEMKIT_UNUSED(b);
+    CHEMKIT_UNUSED(c);
+    CHEMKIT_UNUSED(d);
 
     return Point3();
 }
 
 Float circumradius(const Point3 &a, const Point3 &b)
 {
-    Q_UNUSED(a);
-    Q_UNUSED(b);
+    CHEMKIT_UNUSED(a);
+    CHEMKIT_UNUSED(b);
 
     return 0;
 }
 
 Float circumradius(const Point3 &a, const Point3 &b, const Point3 &c)
 {
-    Q_UNUSED(a);
-    Q_UNUSED(b);
-    Q_UNUSED(c);
+    CHEMKIT_UNUSED(a);
+    CHEMKIT_UNUSED(b);
+    CHEMKIT_UNUSED(c);
 
     return 0;
 }
 
 Float circumradius(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d)
 {
-    Q_UNUSED(a);
-    Q_UNUSED(b);
-    Q_UNUSED(c);
-    Q_UNUSED(d);
+    CHEMKIT_UNUSED(a);
+    CHEMKIT_UNUSED(b);
+    CHEMKIT_UNUSED(c);
+    CHEMKIT_UNUSED(d);
 
     return 0;
 }

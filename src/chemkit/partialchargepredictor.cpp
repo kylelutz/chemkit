@@ -94,7 +94,7 @@ const Molecule* PartialChargePredictor::molecule() const
 /// Returns the partial charge for the atom at \p index.
 Float PartialChargePredictor::partialCharge(int index) const
 {
-    Q_UNUSED(index);
+    CHEMKIT_UNUSED(index);
 
     return 0;
 }
@@ -107,7 +107,7 @@ Float PartialChargePredictor::partialCharge(const Atom *atom) const
 
 void PartialChargePredictor::assignPartialCharges(const Molecule *molecule)
 {
-    Q_UNUSED(molecule);
+    CHEMKIT_UNUSED(molecule);
 }
 
 // --- Static Methods ------------------------------------------------------ //

@@ -44,6 +44,8 @@
     #define CHEMKIT_EXPORT Q_DECL_IMPORT
 #endif
 
+#define CHEMKIT_UNUSED(variable) (void) variable
+
 namespace chemkit {
 
 /// Typedef for a floating point number.
