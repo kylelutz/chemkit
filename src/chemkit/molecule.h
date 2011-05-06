@@ -48,6 +48,7 @@
 #include "ring.h"
 #include "moiety.h"
 #include "point3.h"
+#include "variant.h"
 #include "vector3.h"
 #include "fragment.h"
 #include "conformer.h"
@@ -100,7 +101,7 @@ class CHEMKIT_EXPORT Molecule
         std::string name() const;
         std::string formula() const;
         std::string formula(const std::string &format) const;
-        QVariant descriptor(const std::string &name) const;
+        Variant descriptor(const std::string &name) const;
         inline int size() const;
         inline bool isEmpty() const;
         Float mass() const;

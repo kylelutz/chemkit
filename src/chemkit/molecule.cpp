@@ -269,7 +269,7 @@ std::string Molecule::formula(const std::string &format) const
 
 /// Calculates and returns the molecular descriptor \p name. If the
 /// descriptor is not available or the calculation fails a null
-/// QVariant is returned.
+/// Variant is returned.
 ///
 /// For example, to calculate the Randic index of the molecule use:
 /// \code
@@ -277,11 +277,11 @@ std::string Molecule::formula(const std::string &format) const
 /// \endcode
 ///
 /// \see MolecularDescriptor
-QVariant Molecule::descriptor(const std::string &name) const
+Variant Molecule::descriptor(const std::string &name) const
 {
     QScopedPointer<MolecularDescriptor> descriptor(MolecularDescriptor::create(name));
     if(!descriptor){
-        return QVariant();
+        return Variant();
     }
 
     return descriptor->value(this);

@@ -48,7 +48,7 @@ RotatableBondsDescriptor::~RotatableBondsDescriptor()
 {
 }
 
-QVariant RotatableBondsDescriptor::value(const chemkit::Molecule *molecule) const
+chemkit::Variant RotatableBondsDescriptor::value(const chemkit::Molecule *molecule) const
 {
     int count = 0;
 

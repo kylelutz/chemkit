@@ -41,7 +41,7 @@
 #include <string>
 #include <vector>
 
-#include <QVariant>
+#include "variant.h"
 
 namespace chemkit {
 
@@ -61,7 +61,7 @@ class CHEMKIT_EXPORT MolecularDescriptor
         std::string name() const;
 
         // descriptor
-        virtual QVariant value(const Molecule *molecule) const;
+        virtual Variant value(const Molecule *molecule) const;
 
         // static methods
         static MolecularDescriptor* create(const std::string &name);

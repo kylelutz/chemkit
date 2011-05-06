@@ -105,11 +105,11 @@ std::string MolecularDescriptor::name() const
 
 // --- Descriptor ---------------------------------------------------------- //
 /// Calculates the value of the descriptor for \p molecule.
-QVariant MolecularDescriptor::value(const Molecule *molecule) const
+Variant MolecularDescriptor::value(const Molecule *molecule) const
 {
     Q_UNUSED(molecule);
 
-    return QVariant();
+    return Variant();
 }
 
 // --- Static Methods ------------------------------------------------------ //

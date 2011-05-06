@@ -45,7 +45,7 @@ class RandicIndexDescriptor : public chemkit::MolecularDescriptor
         RandicIndexDescriptor();
         ~RandicIndexDescriptor();
 
-        QVariant value(const chemkit::Molecule *molecule) const;
+        chemkit::Variant value(const chemkit::Molecule *molecule) const;
 
     private:
         int heavyNeighborCount(const chemkit::Atom *atom) const;

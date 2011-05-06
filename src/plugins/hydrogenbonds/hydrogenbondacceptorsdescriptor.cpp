@@ -47,7 +47,7 @@ HydrogenBondAcceptorsDescriptor::~HydrogenBondAcceptorsDescriptor()
 {
 }
 
-QVariant HydrogenBondAcceptorsDescriptor::value(const chemkit::Molecule *molecule) const
+chemkit::Variant HydrogenBondAcceptorsDescriptor::value(const chemkit::Molecule *molecule) const
 {
     int count = 0;
 

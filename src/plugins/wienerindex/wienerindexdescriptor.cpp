@@ -48,7 +48,7 @@ WienerIndexDescriptor::~WienerIndexDescriptor()
 }
 
 // Returns the wiener index for the molecule.
-QVariant WienerIndexDescriptor::value(const chemkit::Molecule *molecule) const
+chemkit::Variant WienerIndexDescriptor::value(const chemkit::Molecule *molecule) const
 {
     int index = 0;
 

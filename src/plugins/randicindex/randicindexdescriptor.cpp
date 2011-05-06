@@ -49,7 +49,7 @@ RandicIndexDescriptor::~RandicIndexDescriptor()
 }
 
 // Returns the randic index for the molecule. See [Randic 1975].
-QVariant RandicIndexDescriptor::value(const chemkit::Molecule *molecule) const
+chemkit::Variant RandicIndexDescriptor::value(const chemkit::Molecule *molecule) const
 {
     chemkit::Float value = 0;
 
