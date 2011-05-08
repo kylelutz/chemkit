@@ -132,8 +132,8 @@ void VariantTest::toFloat()
 
 void VariantTest::toDouble()
 {
-    chemkit::Variant variant(3.14d);
-    QCOMPARE(variant.toDouble(), 3.14d);
+    chemkit::Variant variant(3.14);
+    QCOMPARE(variant.toDouble(), 3.14);
 }
 
 void VariantTest::toPointer()
