@@ -1,6 +1,9 @@
 find_package(Qt4 4.6 COMPONENTS QtCore QtGui REQUIRED)
 include(${QT_USE_FILE})
 
+find_package(Boost REQUIRED)
+include_directories(${Boost_INCLUDE_DIRS})
+
 set(HEADERS
   moleculeeditor.h
   periodictabledialog.h
