@@ -76,7 +76,7 @@ MoleculeAligner::MoleculeAligner(const Molecule *source, const Molecule *target)
     d->mapping = AtomMapping(source, target);
     d->sourceConformer = 0;
     d->targetConformer = 0;
-    d->size = qMin(source->size(), target->size());
+    d->size = std::min(source->size(), target->size());
 
     for(int i = 0; i < d->size; i++){
         d->mapping.add(source->atom(i), target->atom(i));
@@ -229,7 +229,7 @@ void MoleculeAligner::align(Molecule *molecule)
 /// in \p a and \p b.
 Float MoleculeAligner::rmsd(const Coordinates *a, const Coordinates *b)
 {
-    int size = qMin(a->size(), b->size());
+    int size = std::min(a->size(), b->size());
 
     Float sum = 0;
 

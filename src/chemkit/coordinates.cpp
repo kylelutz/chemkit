@@ -383,7 +383,7 @@ Matrix Coordinates::distanceMatrix() const
 /// the coordinates with \p coordinates.
 Coordinates Coordinates::add(const Coordinates &coordinates) const
 {
-    int size = qMin(this->size(), coordinates.size());
+    int size = std::min(this->size(), coordinates.size());
 
     Coordinates result(size);
 
@@ -401,7 +401,7 @@ Coordinates Coordinates::add(const Coordinates &coordinates) const
 /// subtracting the coordinates with \p coordinates.
 Coordinates Coordinates::subtract(const Coordinates &coordinates) const
 {
-    int size = qMin(this->size(), coordinates.size());
+    int size = std::min(this->size(), coordinates.size());
 
     Coordinates result(size);
 

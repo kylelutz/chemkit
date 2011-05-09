@@ -41,6 +41,7 @@
 #include <cmath>
 #include <limits>
 #include <cstdlib>
+#include <algorithm>
 
 #include "blas.h"
 #include "lapack.h"
@@ -163,8 +164,8 @@ inline void GenericMatrix<T>::resize(int rowCount, int columnCount)
     T *data = new T[rowCount * columnCount];
 
     // copy old data
-    for(int i = 0; i < qMin(rowCount, m_rowCount); i++){
-        for(int j = 0; j < qMin(columnCount, m_columnCount); j++){
+    for(int i = 0; i < std::min(rowCount, m_rowCount); i++){
+        for(int j = 0; j < std::min(columnCount, m_columnCount); j++){
             data[j*rowCount+i] = value(i, j);
         }
     }
@@ -219,7 +220,7 @@ inline void GenericMatrix<T>::fill(const T value)
 template<typename T>
 inline T GenericMatrix<T>::trace() const
 {
-    int size = qMin(m_rowCount, m_columnCount);
+    int size = std::min(m_rowCount, m_columnCount);
 
     T trace = 0;
 
@@ -486,7 +487,7 @@ inline GenericMatrix<T> GenericMatrix<T>::identity(int rowCount, int columnCount
 {
     GenericMatrix<T> matrix(rowCount, columnCount);
 
-    int size = qMin(rowCount, columnCount);
+    int size = std::min(rowCount, columnCount);
     for(int i = 0; i < size; i++){
         matrix(i, i) = 1;
     }
