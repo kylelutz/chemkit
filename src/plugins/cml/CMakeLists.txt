@@ -3,6 +3,9 @@ set(QT_DONT_USE_QTGUI TRUE)
 set(QT_USE_QTXML TRUE)
 include(${QT_USE_FILE})
 
+find_package(Boost REQUIRED)
+include_directories(${Boost_INCLUDE_DIRS})
+
 set(SOURCES
   cmlfileformat.cpp
   cmlplugin.cpp
