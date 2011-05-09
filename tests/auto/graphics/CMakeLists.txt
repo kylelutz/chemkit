@@ -3,6 +3,9 @@ set(QT_USE_QTOPENGL TRUE)
 set(QT_USE_QTTEST TRUE)
 include(${QT_USE_FILE})
 
+find_package(Boost REQUIRED)
+include_directories(${Boost_INCLUDE_DIRS})
+
 include_directories(../../../include)
 
 add_subdirectory(graphicscamera)
