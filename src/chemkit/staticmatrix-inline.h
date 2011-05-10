@@ -527,21 +527,23 @@ inline double StaticMatrix<double, 4, 4>::determinant() const
 template<typename T, int N>
 inline void StaticMatrix<T, N, N>::invert()
 {
-    // compute LU factorization
-    int info = 0;
-    int ipiv[N];
-    chemkit::lapack::getrf(m_data, N, N, ipiv, &info);
-
-    // if info is > 0 the matrix is singular and
-    // cannot be inverted
-    if(info > 0){
-        return;
+    // copy matrix
+    Eigen::Matrix<T, N, N> matrix;
+    for(int i = 0; i < N; i++){
+        for(int j = 0; j < N; j++){
+            matrix(i, j) = value(i, j);
+        }
     }
 
-    // compute inverse
-    T work[N*N];
-    int lwork = N*N;
-    chemkit::lapack::getri(m_data, N, ipiv, work, lwork, &info);
+    // calculate inverse
+    Eigen::Matrix<T, N, N> inverse = matrix.inverse();
+
+    // copy inverse values to the matrix
+    for(int i = 0; i < N; i++){
+        for(int j = 0; j < N; j++){
+            setValue(i, j, inverse(i, j));
+        }
+    }
 }
 
 template<typename T, int N>
