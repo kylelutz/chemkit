@@ -244,9 +244,28 @@ inline StaticMatrix<T, R, C> StaticMatrix<T, R, C>::multiply(T scalar) const
 template<typename T, int R, int C>
 inline StaticMatrix<T, R, R> StaticMatrix<T, R, C>::multiply(const StaticMatrix<T, C, R> &matrix) const
 {
-    StaticMatrix<T, R, R> product;
+    Eigen::Matrix<T, R, C> a;
+    for(int i = 0; i < R; i++){
+        for(int j = 0; j < C; j++){
+            a(i, j) = value(i, j);
+        }
+    }
 
-    chemkit::blas::gemm(R, R, C, m_data, false, matrix.data(), false, product.data());
+    Eigen::Matrix<T, C, R> b;
+    for(int i = 0; i < C; i++){
+        for(int j = 0; j < R; j++){
+            b(i, j) = matrix(i, j);
+        }
+    }
+
+    Eigen::Matrix<T, R, R> c = a * b;
+
+    StaticMatrix<T, R, R> product;
+    for(int i = 0; i < R; i++){
+        for(int j = 0; j < R; j++){
+            product(i, j) = c(i, j);
+        }
+    }
 
     return product;
 }
@@ -618,8 +637,29 @@ inline StaticMatrix<T, N, N> StaticMatrix<T, N, N>::multiply(T scalar) const
 template<typename T, int N>
 inline StaticMatrix<T, N, N> StaticMatrix<T, N, N>::multiply(const StaticMatrix<T, N, N> &matrix) const
 {
+    Eigen::Matrix<T, N, N> a;
+    for(int i = 0; i < N; i++){
+        for(int j = 0; j < N; j++){
+            a(i, j) = value(i, j);
+        }
+    }
+
+    Eigen::Matrix<T, N, N> b;
+    for(int i = 0; i < N; i++){
+        for(int j = 0; j < N; j++){
+            b(i, j) = matrix(i, j);
+        }
+    }
+
+    Eigen::Matrix<T, N, N> c = a * b;
+
     StaticMatrix<T, N, N> product;
-    chemkit::blas::gemm(N, N, N, m_data, false, matrix.data(), false, product.data());
+    for(int i = 0; i < N; i++){
+        for(int j = 0; j < N; j++){
+            product(i, j) = c(i, j);
+        }
+    }
+
     return product;
 }
 
