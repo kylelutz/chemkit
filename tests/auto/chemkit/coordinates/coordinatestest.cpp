@@ -178,11 +178,11 @@ void CoordinatesTest::distanceMatrix()
     coordinates.setPosition(3, chemkit::Point3(10, 5, 2));
 
     chemkit::Matrix distances = coordinates.distanceMatrix();
-    QCOMPARE(distances.rowCount(), 4);
-    QCOMPARE(distances.columnCount(), 4);
-    QCOMPARE(distances(0, 0), chemkit::Float(0));
-    QCOMPARE(distances(0, 1), chemkit::Float(1));
-    QCOMPARE(distances(1, 0), chemkit::Float(1));
+    QVERIFY(distances.rows() == 4);
+    QVERIFY(distances.cols() == 4);
+    QCOMPARE(qRound(distances(0, 0)), 0);
+    QCOMPARE(qRound(distances(0, 1)), 1);
+    QCOMPARE(qRound(distances(1, 0)), 1);
 }
 
 QTEST_APPLESS_MAIN(CoordinatesTest)

@@ -83,7 +83,6 @@ namespace chemkit {
 ///     - Vector
 ///     - StaticVector
 ///     - StaticMatrix
-///     - GenericMatrix
 namespace blas {
 
 /// Multiply the matrix M by vector V and place the result in P.

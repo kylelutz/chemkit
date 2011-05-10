@@ -38,12 +38,12 @@
 
 #include "chemkit.h"
 
-#include "genericmatrix.h"
+#include <Eigen/Eigen>
 
 namespace chemkit {
 
 /// Typedef for a matrix containing floating point numbers.
-typedef GenericMatrix<Float> Matrix;
+typedef Eigen::Matrix<Float, Eigen::Dynamic, Eigen::Dynamic> Matrix;
 
 } // end chemkit namespace
 

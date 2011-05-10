@@ -70,9 +70,9 @@ Coordinates::Coordinates(const Molecule *molecule)
 
     for(int i = 0; i < size; i++){
         Point3 position = molecule->atom(i)->position();
-        m_matrix.setValue(i, 0, position.x());
-        m_matrix.setValue(i, 1, position.y());
-        m_matrix.setValue(i, 2, position.z());
+        m_matrix(i, 0) = position.x();
+        m_matrix(i, 1) = position.y();
+        m_matrix(i, 2) = position.z();
     }
 }
 
@@ -85,9 +85,9 @@ Coordinates::Coordinates(const Conformer *conformer)
 
     for(int i = 0; i < size; i++){
         Point3 position = conformer->position(conformer->molecule()->atom(i));
-        m_matrix.setValue(i, 0, position.x());
-        m_matrix.setValue(i, 1, position.y());
-        m_matrix.setValue(i, 2, position.z());
+        m_matrix(i, 0) = position.x();
+        m_matrix(i, 1) = position.y();
+        m_matrix(i, 2) = position.z();
     }
 }
 
@@ -100,9 +100,9 @@ Coordinates::Coordinates(const std::vector<Atom *> &atoms)
 
     for(unsigned int i = 0; i < size; i++){
         Point3 position = atoms[i]->position();
-        m_matrix.setValue(i, 0, position.x());
-        m_matrix.setValue(i, 1, position.y());
-        m_matrix.setValue(i, 2, position.z());
+        m_matrix(i, 0) = position.x();
+        m_matrix(i, 1) = position.y();
+        m_matrix(i, 2) = position.z();
     }
 }
 
@@ -112,9 +112,9 @@ Coordinates::Coordinates(const std::vector<Point3> &points)
 {
     for(unsigned int i = 0; i < points.size(); i++){
         Point3 position = points[i];
-        m_matrix.setValue(i, 0, position.x());
-        m_matrix.setValue(i, 1, position.y());
-        m_matrix.setValue(i, 2, position.z());
+        m_matrix(i, 0) = position.x();
+        m_matrix(i, 1) = position.y();
+        m_matrix(i, 2) = position.z();
     }
 }
 
@@ -133,13 +133,13 @@ Coordinates::~Coordinates()
 /// Sets the size of the matrix to \p size.
 void Coordinates::setSize(int size)
 {
-    m_matrix.setRowCount(size);
+    m_matrix.conservativeResize(size, Eigen::NoChange);
 }
 
 /// Returns the number of coordinates in the matrix.
 int Coordinates::size() const
 {
-    return m_matrix.rowCount();
+    return m_matrix.rows();
 }
 
 /// Returns \c true if the matrix is empty.
@@ -158,9 +158,9 @@ Matrix Coordinates::toMatrix() const
 /// Sets the position at \p index to \p position.
 void Coordinates::setPosition(int index, const Point3 &position)
 {
-    m_matrix.setValue(index, 0, position.x());
-    m_matrix.setValue(index, 1, position.y());
-    m_matrix.setValue(index, 2, position.z());
+    m_matrix(index, 0) = position.x();
+    m_matrix(index, 1) = position.y();
+    m_matrix(index, 2) = position.z();
 }
 
 /// Sets the position at \p index to (\p x, \p y, \p z).
@@ -180,13 +180,13 @@ Point3 Coordinates::position(int index) const
 /// Sets the value at \p row and \p column to \p value.
 void Coordinates::setValue(int row, int column, Float value)
 {
-    m_matrix.setValue(row, column, value);
+    m_matrix(row, column) = value;
 }
 
 /// Returns the value at \p row and \p column;
 Float Coordinates::value(int row, int column) const
 {
-    return m_matrix.value(row, column);
+    return m_matrix(row, column);
 }
 
 /// Appends \p position to the coordinates.
@@ -301,9 +301,9 @@ Point3 Coordinates::center() const
     Float sz = 0;
 
     for(int i = 0; i < size(); i++){
-        sx += m_matrix.value(i, 0);
-        sy += m_matrix.value(i, 1);
-        sz += m_matrix.value(i, 2);
+        sx += m_matrix(i, 0);
+        sy += m_matrix(i, 1);
+        sz += m_matrix(i, 2);
     }
 
     int n = size();
@@ -332,9 +332,9 @@ Point3 Coordinates::weightedCenter(const std::vector<Float> &weights) const
     for(int i = 0; i < size(); i++){
         Float weight = weights[i];
 
-        sx += weight * m_matrix.value(i, 0);
-        sy += weight * m_matrix.value(i, 1);
-        sz += weight * m_matrix.value(i, 2);
+        sx += weight * m_matrix(i, 0);
+        sy += weight * m_matrix(i, 1);
+        sz += weight * m_matrix(i, 2);
 
         sw += weight;
     }
@@ -348,9 +348,9 @@ Point3 Coordinates::weightedCenter(const std::vector<Float> &weights) const
 void Coordinates::moveBy(const Vector3 &vector)
 {
     for(int i = 0; i < size(); i++){
-        m_matrix.value(i, 0) += vector.x();
-        m_matrix.value(i, 1) += vector.y();
-        m_matrix.value(i, 2) += vector.z();
+        m_matrix(i, 0) += vector.x();
+        m_matrix(i, 1) += vector.y();
+        m_matrix(i, 2) += vector.z();
     }
 }
 

@@ -82,7 +82,6 @@ namespace chemkit {
 /// primitives used for linear algebra. The following classes make
 /// use of these primitives and provide an easier to use interface:
 ///     - StaticMatrix
-///     - GenericMatrix
 namespace lapack {
 
 /// Compute the LU decomposition of a general matrix.

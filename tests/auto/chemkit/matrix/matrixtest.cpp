@@ -40,29 +40,29 @@
 void MatrixTest::multiply()
 {
     chemkit::Matrix a(2, 4);
-    a = 2, 4, 8, 9,
-        -10, 2, 6, 15;
+    a << 2, 4, 8, 9,
+         -10, 2, 6, 15;
 
     chemkit::Matrix b(4, 2);
-    b = 8, 9,
-        7, 4.5,
-        9, 10,
-        -2, 4;
+    b << 8, 9,
+         7, 4.5,
+         9, 10,
+         -2, 4;
 
-    chemkit::Matrix c = a.multiply(b);
-    QCOMPARE(c.rowCount(), 2);
-    QCOMPARE(c.columnCount(), 2);
+    chemkit::Matrix c = a * b;
+    QVERIFY(c.rows() == 2);
+    QVERIFY(c.cols() == 2);
 
     chemkit::Matrix d(2, 2);
-    d = 98, 152,
-        -42, 39;
+    d << 98, 152,
+         -42, 39;
 
     QVERIFY(c == d);
 }
 
 void MatrixTest::identity()
 {
-    chemkit::Matrix identity = chemkit::Matrix::identity(4, 4);
+    chemkit::Matrix identity = chemkit::Matrix::Identity(4, 4);
     QCOMPARE(qRound(identity(0, 0)), 1);
     QCOMPARE(qRound(identity(0, 1)), 0);
     QCOMPARE(qRound(identity(2, 2)), 1);

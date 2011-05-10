@@ -33,8 +33,6 @@ set(HEADERS
   foreach.h
   fragment.h
   fragment-inline.h
-  genericmatrix.h
-  genericmatrix-inline.h
   genericpoint.h
   genericpoint-inline.h
   genericquaternion.h
