@@ -419,16 +419,15 @@ Coordinates Coordinates::subtract(const Coordinates &coordinates) const
 /// and \p coordinates.
 StaticMatrix<Float, 3, 3> Coordinates::multiply(const Coordinates *coordinates) const
 {
+    Eigen::Matrix<Float, 3, 3> p = m_matrix.transpose() * coordinates->m_matrix;
+
     StaticMatrix<Float, 3, 3> product;
 
-    chemkit::blas::gemm(3,
-                        3,
-                        size(),
-                        m_matrix.data(),
-                        true,
-                        coordinates->m_matrix.data(),
-                        false,
-                        product.data());
+    for(int i = 0; i < 3; i++){
+        for(int j = 0; j < 3; j++){
+            product(i, j) = p(i, j);
+        }
+    }
 
     return product;
 }
