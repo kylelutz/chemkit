@@ -42,6 +42,7 @@
 #include <limits>
 #include <cstdlib>
 
+#include <Eigen/LU>
 #include <Eigen/SVD>
 #include <Eigen/Eigen>
 
@@ -446,30 +447,14 @@ inline T StaticMatrix<T, N, N>::trace() const
 template<typename T, int N>
 inline T StaticMatrix<T, N, N>::determinant() const
 {
-    // temporary copy of matrix
-    StaticMatrix<T, N, N> matrix = *this;
-
-    // lu decomposition
-    int info = 0;
-    int ipiv[N];
-    chemkit::lapack::getrf(matrix.data(), N, N, ipiv, &info);
-
-    // if info is > 0, the matrix is singular
-    // and the determinant is 0
-    if(info > 0){
-        return 0;
-    }
-
-    // product of diagonal values
-    T determinant = 1;
+    Eigen::Matrix<T, N, N> matrix;
     for(int i = 0; i < N; i++){
-        determinant *= matrix(i, i);
-
-        if(ipiv[i] != i+1)
-            determinant = -determinant;
+        for(int j = 0; j < N; j++){
+            matrix(i, j) = value(i, j);
+        }
     }
 
-    return determinant;
+    return matrix.determinant();
 }
 
 template<>
