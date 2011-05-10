@@ -367,6 +367,9 @@ Matrix Coordinates::distanceMatrix() const
     Matrix matrix(size(), size());
 
     for(int i = 0; i < size(); i++){
+        // set diagonal entries to zero
+        matrix(i, i) = 0;
+
         for(int j = i + 1; j < size(); j++){
             Float d = distance(i, j);
 
