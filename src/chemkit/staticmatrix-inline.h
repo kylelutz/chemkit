@@ -42,6 +42,9 @@
 #include <limits>
 #include <cstdlib>
 
+#include <Eigen/SVD>
+#include <Eigen/Eigen>
+
 namespace chemkit {
 
 // === StaticMatrix ======================================================== //
@@ -622,21 +625,30 @@ template<typename T, int N>
 inline void StaticMatrix<T, N, N>::svd(StaticMatrix<T, N, N> *u, StaticVector<T, N> *s, StaticMatrix<T, N, N> *v) const
 {
     // copy of matrix
-    StaticMatrix<T, N, N> matrix = *this;
+    Eigen::Matrix<T, N, N> matrix;
+    for(int i = 0; i < N; i++){
+        for(int j = 0; j < N; j++){
+            matrix(i, j) = value(i, j);
+        }
+    }
 
-    int lwork = 32;
-    T work[32];
-    int info;
+    Eigen::JacobiSVD<Eigen::Matrix<T, N, N> > svd(matrix, Eigen::ComputeFullU | Eigen::ComputeFullV);
 
-    chemkit::lapack::gesvd(matrix.data(),
-                           3,
-                           3,
-                           u->data(),
-                           v->data(),
-                           s->data(),
-                           work,
-                           lwork,
-                           &info);
+    for(int i = 0; i < N; i++){
+        for(int j = 0; j < N; j++){
+            (*u)(i, j) = svd.matrixU()(i, j);
+        }
+    }
+
+    for(int i = 0; i < N; i++){
+        (*s)[i] = svd.singularValues()[i];
+    }
+
+    for(int i = 0; i < N; i++){
+        for(int j = 0; j < N; j++){
+            (*v)(i, j) = svd.matrixV().transpose()(i, j);
+        }
+    }
 }
 
 // --- Operators ----------------------------------------------------------- //

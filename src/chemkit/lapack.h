@@ -52,18 +52,6 @@ void sgetri_(int *n, float *A, int *lda, int *ipiv, float *work, int *lwork,
 void dgetri_(int *n, double *A, int *lda, int *ipiv, double *work, int *lwork,
              int *info);
 
-// SGESVD(JOBU, JOBVT, M, N, A, LDA, S, U, LDU, VT, LDVT, WORK, LWORK, INFO)
-void sgesvd_(char *jobu, char *jobvt, int *M, int *N,
-             float *A, int *lda, float *S, float *U, int *ldu,
-             float *VT, int *ldvt, float *work, int *lwork,
-             int *info);
-
-// DGESVD(JOBU, JOBVT, M, N, A, LDA, S, U, LDU, VT, LDVT, WORK, LWORK, INFO)
-void dgesvd_(char *jobu, char *jobvt, int *M, int *N,
-             double *A, int *lda, double *S, double *U, int *ldu,
-             double *VT, int *ldvt, double *work, int *lwork,
-             int *info);
-
 } // end extern "C"
 
 namespace chemkit {
@@ -110,52 +98,6 @@ inline void getri(double *A, int size, int *ipiv, double *work, int lwork,
                   int *info)
 {
     dgetri_(&size, A, &size, ipiv, work, &lwork, info);
-}
-
-/// Compute the singular value decomposition of a general matrix.
-inline void gesvd(float *A, int rowCount, int columnCount, float *U,
-                  float *Vt, float *S, float *work, int lwork, int *info)
-{
-    char jobu = 'A';
-    char jobvt = 'A';
-
-    sgesvd_(&jobu,
-            &jobvt,
-            &rowCount,
-            &columnCount,
-            A,
-            &rowCount,
-            S,
-            U,
-            &rowCount,
-            Vt,
-            &columnCount,
-            work,
-            &lwork,
-            info);
-}
-
-/// \overload
-inline void gesvd(double *A, int rowCount, int columnCount, double *U,
-                  double *Vt, double *S, double *work, int lwork, int *info)
-{
-    char jobu = 'A';
-    char jobvt = 'A';
-
-    dgesvd_(&jobu,
-            &jobvt,
-            &rowCount,
-            &columnCount,
-            A,
-            &rowCount,
-            S,
-            U,
-            &rowCount,
-            Vt,
-            &columnCount,
-            work,
-            &lwork,
-            info);
 }
 
 } // end lapack namespace
