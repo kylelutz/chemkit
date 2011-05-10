@@ -39,9 +39,8 @@ add_definitions(
 include_directories(../../include)
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
-add_library(chemkit-widgets SHARED ${SOURCES} ${UI_SOURCES} ${MOC_SOURCES})
+add_chemkit_library(chemkit-widgets ${SOURCES} ${UI_SOURCES} ${MOC_SOURCES})
 target_link_libraries(chemkit-widgets chemkit ${QT_LIBRARIES})
-install(TARGETS chemkit-widgets DESTINATION lib)
 
 # install header files
 install(FILES ${HEADERS} DESTINATION include/chemkit/)

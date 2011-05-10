@@ -147,9 +147,8 @@ add_definitions(
   -DQT_NO_KEYWORDS
 )
 
-add_library(chemkit SHARED ${SOURCES} ${MOC_SOURCES})
+add_chemkit_library(chemkit ${SOURCES} ${MOC_SOURCES})
 target_link_libraries(chemkit ${QT_LIBRARIES})
-install(TARGETS chemkit DESTINATION lib)
 
 # install header files
 install(FILES ${HEADERS} DESTINATION include/chemkit/)
