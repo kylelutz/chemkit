@@ -581,8 +581,25 @@ inline StaticMatrix<T, N, N> StaticMatrix<T, N, N>::subtract(const StaticMatrix<
 template<typename T, int N>
 inline StaticVector<T, N> StaticMatrix<T, N, N>::multiply(const StaticVector<T, N> &vector) const
 {
+    Eigen::Matrix<T, N, N> m;
+    for(int i = 0; i < N; i++){
+        for(int j = 0; j < N; j++){
+            m(i, j) = value(i, j);
+        }
+    }
+
+    Eigen::Matrix<T, N, 1> v;
+    for(int i = 0; i < N; i++){
+        v[i] = vector[i];
+    }
+
+    Eigen::Matrix<T, N, 1> p = m * v;
+
     StaticVector<T, N> product;
-    chemkit::blas::gemv(m_data, N, N, vector.data(), product.data());
+    for(int i = 0; i < N; i++){
+        product[i] = p[i];
+    }
+
     return product;
 }
 
