@@ -38,7 +38,6 @@
 
 #include "staticvector.h"
 
-#include "blas.h"
 #include "commainitializer.h"
 
 namespace chemkit {

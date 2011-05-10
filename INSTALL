@@ -3,7 +3,6 @@
   - CMake - http://www.cmake.org
   - Boost - http://www.boost.org
   - Qt Framework (version 4.7 or later) - http://qt.nokia.com
-  - BLAS & LAPACK libraries
   - Eigen (version 3.0 or later) - http://eigen.tuxfamily.org/
 
 === Compiling =================================================================

@@ -12,7 +12,6 @@ set(HEADERS
   atom-inline.h
   atommapping.h
   atomtyper.h
-  blas.h
   bond.h
   bond-inline.h
   bondpredictor.h
@@ -41,7 +40,6 @@ set(HEADERS
   genericvector-inline.h
   geometry.h
   internalcoordinates.h
-  lapack.h
   lineformat.h
   matrix.h
   moiety.h
@@ -150,7 +148,7 @@ add_definitions(
 )
 
 add_library(chemkit SHARED ${SOURCES} ${MOC_SOURCES})
-target_link_libraries(chemkit blas lapack ${QT_LIBRARIES})
+target_link_libraries(chemkit ${QT_LIBRARIES})
 install(TARGETS chemkit DESTINATION lib)
 
 # install header files
