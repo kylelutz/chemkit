@@ -48,6 +48,8 @@ namespace geometry {
 // constructions
 Float distance(const Point3 &a, const Point3 &b);
 Float distanceSquared(const Point3 &a, const Point3 &b);
+Float angle(const Point3 &a, const Point3 &b, const Point3 &c);
+Float angleRadians(const Point3 &a, const Point3 &b, const Point3 &c);
 Point3 circumcenter(const Point3 &a, const Point3 &b);
 Point3 circumcenter(const Point3 &a, const Point3 &b, const Point3 &c);
 Point3 circumcenter(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d);

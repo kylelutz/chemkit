@@ -39,6 +39,7 @@
 #include "forcefieldcalculation.h"
 
 #include "point3.h"
+#include "geometry.h"
 #include "forcefieldatom.h"
 
 namespace chemkit {
@@ -71,14 +72,14 @@ inline std::vector<Vector3> ForceFieldCalculation::distanceGradient(const Point3
 /// angle is in degrees.
 inline Float ForceFieldCalculation::bondAngle(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c) const
 {
-    return Point3::angle(a->position(), b->position(), c->position());
+    return chemkit::geometry::angle(a->position(), b->position(), c->position());
 }
 
 /// Returns the bond angle between atoms \p a, \p b and \p c. The
 /// angle is in radians.
 inline Float ForceFieldCalculation::bondAngleRadians(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c) const
 {
-    return Point3::angleRadians(a->position(), b->position(), c->position());
+    return chemkit::geometry::angleRadians(a->position(), b->position(), c->position());
 }
 
 /// Returns the gradient of the bond angle between atoms \p a, \p b
@@ -107,7 +108,7 @@ inline std::vector<Vector3> ForceFieldCalculation::bondAngleGradientRadians(cons
 {
     std::vector<Vector3> gradient(3);
 
-    Float theta = Point3::angleRadians(a, b, c);
+    Float theta = chemkit::geometry::angleRadians(a, b, c);
 
     Float rab = a.distance(b);
     Float rbc = b.distance(c);

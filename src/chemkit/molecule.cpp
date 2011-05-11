@@ -858,9 +858,7 @@ Float Molecule::distance(const Atom *a, const Atom *b) const
 /// returned angle is in degrees.
 Float Molecule::bondAngle(const Atom *a, const Atom *b, const Atom *c) const
 {
-    return Point3::angle(a->position(),
-                         b->position(),
-                         c->position());
+    return chemkit::geometry::angle(a->position(), b->position(), c->position());
 }
 
 /// Returns the torsion angle (also known as the dihedral angle)

@@ -250,14 +250,14 @@ Float Coordinates::distance(int i, int j) const
 /// \p k. The returned angle is in degrees.
 Float Coordinates::angle(int i, int j, int k) const
 {
-    return Point3::angle(position(i), position(j), position(k));
+    return chemkit::geometry::angle(position(i), position(j), position(k));
 }
 
 /// Returns the bond angle between the points at \p i, \p j, and
 /// \p k. The returned angle is in radians.
 Float Coordinates::angleRadians(int i, int j, int k) const
 {
-    return Point3::angleRadians(position(i), position(j), position(k));
+    return chemkit::geometry::angleRadians(position(i), position(j), position(k));
 }
 
 /// Returns the torsion angle between the points at \p i, \p j, \p k,

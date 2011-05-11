@@ -598,7 +598,7 @@ Float ForceField::bondAngle(const ForceFieldAtom *a, const ForceFieldAtom *b, co
 
 Float ForceField::bondAngleRadians(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c) const
 {
-    return Point3::angleRadians(a->position(), b->position(), c->position());
+    return chemkit::geometry::angleRadians(a->position(), b->position(), c->position());
 }
 
 Float ForceField::torsionAngle(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c, const ForceFieldAtom *d) const

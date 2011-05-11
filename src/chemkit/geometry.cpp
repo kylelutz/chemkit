@@ -81,6 +81,23 @@ Float distanceSquared(const Point3 &a, const Point3 &b)
     return (a - b).normSquared();
 }
 
+/// Returns the angle between the vectors (\p a, \p b) and (\p b,
+/// \p c). Angle is in Degrees.
+Float angle(const Point3 &a, const Point3 &b, const Point3 &c)
+{
+    return angleRadians(a, b, c) * chemkit::constants::RadiansToDegrees;
+}
+
+/// Returns the angle between the vectors (\p a, \p b) and (\p b,
+/// \p c). Angle is Radians.
+Float angleRadians(const Point3 &a, const Point3 &b, const Point3 &c)
+{
+    Point3 ab = b - a;
+    Point3 cb = b - c;
+
+    return acos(ab.dot(cb) / (ab.norm() * cb.norm()));
+}
+
 Point3 circumcenter(const Point3 &a, const Point3 &b)
 {
     CHEMKIT_UNUSED(a);

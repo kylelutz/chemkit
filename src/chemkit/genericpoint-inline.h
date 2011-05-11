@@ -148,25 +148,6 @@ inline GenericPoint<T> GenericPoint<T>::midpoint(const GenericPoint<T> &point) c
 }
 
 // --- Static Methods ------------------------------------------------------ //
-/// Returns the angle between the vectors (\p a, \p b) and (\p b,
-/// \p c). Angle is in Degrees.
-template<typename T>
-inline T GenericPoint<T>::angle(const GenericPoint<T> &a, const GenericPoint<T> &b, const GenericPoint<T> &c)
-{
-    return angleRadians(a, b, c) * chemkit::constants::RadiansToDegrees;
-}
-
-/// Returns the angle between the vectors (\p a, \p b) and (\p b,
-/// \p c). Angle is Radians.
-template<typename T>
-inline T GenericPoint<T>::angleRadians(const GenericPoint<T> &a, const GenericPoint<T> &b, const GenericPoint<T> &c)
-{
-    StaticVector<T, 3> ba = b - a;
-    StaticVector<T, 3> bc = b - c;
-
-    return acos(ba.dot(bc) / (ba.length() * bc.length()));
-}
-
 /// Returns the torsion angle between points \p a, \p b, \p c, and
 /// \p d. Angle is in Degrees.
 template<typename T>
