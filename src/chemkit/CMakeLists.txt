@@ -2,7 +2,7 @@ find_package(Qt4 4.6 COMPONENTS QtCore REQUIRED)
 set(QT_DONT_USE_QTGUI TRUE)
 include(${QT_USE_FILE})
 
-find_package(Boost REQUIRED)
+find_package(Boost COMPONENTS system filesystem REQUIRED)
 include_directories(${Boost_INCLUDE_DIRS})
 
 set(HEADERS
@@ -32,6 +32,8 @@ set(HEADERS
   foreach.h
   fragment.h
   fragment-inline.h
+  genericfile.h
+  genericfile-inline.h
   genericpoint.h
   genericpoint-inline.h
   genericquaternion.h
@@ -148,7 +150,7 @@ add_definitions(
 )
 
 add_chemkit_library(chemkit ${SOURCES} ${MOC_SOURCES})
-target_link_libraries(chemkit ${QT_LIBRARIES})
+target_link_libraries(chemkit ${Boost_LIBRARIES} ${QT_LIBRARIES})
 
 # install header files
 install(FILES ${HEADERS} DESTINATION include/chemkit/)
