@@ -61,9 +61,6 @@ class GenericPoint : public StaticVector<T, 3>
         // math
         T distance(const GenericPoint<T> &point) const;
         GenericPoint<T> midpoint(const GenericPoint<T> &point) const;
-
-        // static methods
-        static GenericPoint<T> midpoint(const GenericPoint<T> &a, const GenericPoint<T> &b);
 };
 
 } // end chemkit namespace

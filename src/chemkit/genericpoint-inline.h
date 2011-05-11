@@ -144,15 +144,7 @@ inline T GenericPoint<T>::distance(const GenericPoint<T> &point) const
 template<typename T>
 inline GenericPoint<T> GenericPoint<T>::midpoint(const GenericPoint<T> &point) const
 {
-    return midpoint(*this, point);
-}
-
-// --- Static Methods ------------------------------------------------------ //
-/// Returns the midpoint between \p a and \p b.
-template<typename T>
-inline GenericPoint<T> GenericPoint<T>::midpoint(const GenericPoint<T> &a, const GenericPoint<T> &b)
-{
-    return (a + b).scaled(0.5);
+    return (*this + point).scaled(0.5);
 }
 
 } // end chemkit namespace

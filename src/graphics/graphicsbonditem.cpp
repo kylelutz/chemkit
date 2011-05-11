@@ -231,7 +231,7 @@ void GraphicsBondItem::paint(GraphicsPainter *painter)
                     painter->drawCylinder(a, b, radius);
                 }
                 else{
-                    Point3f midpoint = Point3f::midpoint(a, b);
+                    Point3f midpoint = a.midpoint(b);
                     painter->setColor(d->atomColors.first);
                     painter->drawCylinder(a, midpoint, radius);
                     painter->setColor(d->atomColors.second);

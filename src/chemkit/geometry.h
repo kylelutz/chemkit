@@ -54,6 +54,7 @@ Float torsionAngle(const Point3 &a, const Point3 &b, const Point3 &c, const Poin
 Float torsionAngleRadians(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d);
 Float wilsonAngle(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d);
 Float wilsonAngleRadians(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d);
+Point3 midpoint(const Point3 &a, const Point3 &b);
 Point3 circumcenter(const Point3 &a, const Point3 &b);
 Point3 circumcenter(const Point3 &a, const Point3 &b, const Point3 &c);
 Point3 circumcenter(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d);

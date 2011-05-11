@@ -137,6 +137,12 @@ Float wilsonAngleRadians(const Point3 &a, const Point3 &b, const Point3 &c, cons
     return (chemkit::constants::Pi * 0.5) - angle;
 }
 
+/// Returns the midpoint between \p a and \p b.
+Point3 midpoint(const Point3 &a, const Point3 &b)
+{
+    return (a + b) * (1 / 2);
+}
+
 Point3 circumcenter(const Point3 &a, const Point3 &b)
 {
     CHEMKIT_UNUSED(a);
