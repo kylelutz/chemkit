@@ -148,26 +148,6 @@ inline GenericPoint<T> GenericPoint<T>::midpoint(const GenericPoint<T> &point) c
 }
 
 // --- Static Methods ------------------------------------------------------ //
-/// Returns the torsion angle between points \p a, \p b, \p c, and
-/// \p d. Angle is in Degrees.
-template<typename T>
-inline T GenericPoint<T>::torsionAngle(const GenericPoint<T> &a, const GenericPoint<T> &b, const GenericPoint<T> &c, const GenericPoint<T> &d)
-{
-    return torsionAngleRadians(a, b, c, d) * chemkit::constants::RadiansToDegrees;
-}
-
-/// Returns the torsion angle between points \p a, \p b, \p c, and
-/// \p d. Angle is in Degrees.
-template<typename T>
-inline T GenericPoint<T>::torsionAngleRadians(const GenericPoint<T> &a, const GenericPoint<T> &b, const GenericPoint<T> &c, const GenericPoint<T> &d)
-{
-    StaticVector<T, 3> ab = b - a;
-    StaticVector<T, 3> bc = c - b;
-    StaticVector<T, 3> cd = d - c;
-
-    return atan2(bc.length() * ab.dot(bc.cross(cd)), ab.cross(bc).dot(bc.cross(cd)));
-}
-
 /// Returns the wilson angle between points \p a, \p b, \p c, and
 /// \p d. Angle is in Degrees.
 template<typename T>

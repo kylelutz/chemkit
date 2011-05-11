@@ -125,7 +125,7 @@ inline std::vector<Vector3> ForceFieldCalculation::bondAngleGradientRadians(cons
 /// degrees.
 inline Float ForceFieldCalculation::torsionAngle(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c, const ForceFieldAtom *d) const
 {
-    return Point3::torsionAngle(a->position(), b->position(), c->position(), d->position());
+    return chemkit::geometry::torsionAngle(a->position(), b->position(), c->position(), d->position());
 }
 
 /// Returns the torsion angle (also known as the dihedral angle)
@@ -133,7 +133,7 @@ inline Float ForceFieldCalculation::torsionAngle(const ForceFieldAtom *a, const 
 /// radians.
 inline Float ForceFieldCalculation::torsionAngleRadians(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c, const ForceFieldAtom *d) const
 {
-    return Point3::torsionAngleRadians(a->position(), b->position(), c->position(), d->position());
+    return chemkit::geometry::torsionAngleRadians(a->position(), b->position(), c->position(), d->position());
 }
 
 /// Returns the gradient of the torsion angle between the atoms \p a,
@@ -162,7 +162,7 @@ inline std::vector<Vector3> ForceFieldCalculation::torsionAngleGradientRadians(c
 {
     std::vector<Vector3> gradient(4);
 
-    Float phi = Point3::torsionAngleRadians(a, b, c, d);
+    Float phi = chemkit::geometry::torsionAngleRadians(a, b, c, d);
 
     Vector3 ab = b - a;
     Vector3 ac = c - a;

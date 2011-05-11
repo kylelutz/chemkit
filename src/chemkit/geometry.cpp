@@ -98,6 +98,24 @@ Float angleRadians(const Point3 &a, const Point3 &b, const Point3 &c)
     return acos(ab.dot(cb) / (ab.norm() * cb.norm()));
 }
 
+/// Returns the torsion angle between points \p a, \p b, \p c, and
+/// \p d. Angle is in Degrees.
+Float torsionAngle(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d)
+{
+    return torsionAngleRadians(a, b, c, d) * chemkit::constants::RadiansToDegrees;
+}
+
+/// Returns the torsion angle between points \p a, \p b, \p c, and
+/// \p d. Angle is in Degrees.
+Float torsionAngleRadians(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d)
+{
+    Point3 ab = b - a;
+    Point3 bc = c - b;
+    Point3 cd = d - c;
+
+    return atan2(bc.norm() * ab.dot(bc.cross(cd)), ab.cross(bc).dot(bc.cross(cd)));
+}
+
 Point3 circumcenter(const Point3 &a, const Point3 &b)
 {
     CHEMKIT_UNUSED(a);

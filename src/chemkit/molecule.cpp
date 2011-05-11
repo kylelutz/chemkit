@@ -866,10 +866,7 @@ Float Molecule::bondAngle(const Atom *a, const Atom *b, const Atom *c) const
 /// in degrees.
 Float Molecule::torsionAngle(const Atom *a, const Atom *b, const Atom *c, const Atom *d) const
 {
-    return Point3::torsionAngle(a->position(),
-                                b->position(),
-                                c->position(),
-                                d->position());
+    return chemkit::geometry::torsionAngle(a->position(), b->position(), c->position(), d->position());
 }
 
 /// Returns the wilson angle between the plane made by atoms \p a,

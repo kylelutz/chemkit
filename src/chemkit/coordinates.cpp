@@ -264,14 +264,14 @@ Float Coordinates::angleRadians(int i, int j, int k) const
 /// and \p l. The returned angle is in degrees.
 Float Coordinates::torsionAngle(int i, int j, int k, int l) const
 {
-    return Point3::torsionAngle(position(i), position(j), position(k), position(l));
+    return chemkit::geometry::torsionAngle(position(i), position(j), position(k), position(l));
 }
 
 /// Returns the torsion angle between the points at \p i, \p j, \p k,
 /// and \p l. The returned angle is in radians.
 Float Coordinates::torsionAngleRadians(int i, int j, int k, int l) const
 {
-    return Point3::torsionAngleRadians(position(i), position(j), position(k), position(l));
+    return chemkit::geometry::torsionAngleRadians(position(i), position(j), position(k), position(l));
 }
 
 /// Returns the wilson angle between the points at \p i, \p j, \p k

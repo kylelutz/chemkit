@@ -63,8 +63,6 @@ class GenericPoint : public StaticVector<T, 3>
         GenericPoint<T> midpoint(const GenericPoint<T> &point) const;
 
         // static methods
-        static T torsionAngle(const GenericPoint<T> &a, const GenericPoint<T> &b, const GenericPoint<T> &c, const GenericPoint<T> &d);
-        static T torsionAngleRadians(const GenericPoint<T> &a, const GenericPoint<T> &b, const GenericPoint<T> &c, const GenericPoint<T> &d);
         static T wilsonAngle(const GenericPoint<T> &a, const GenericPoint<T> &b, const GenericPoint<T> &c, const GenericPoint<T> &d);
         static T wilsonAngleRadians(const GenericPoint<T> &a, const GenericPoint<T> &b, const GenericPoint<T> &c, const GenericPoint<T> &d);
         static GenericPoint<T> midpoint(const GenericPoint<T> &a, const GenericPoint<T> &b);
