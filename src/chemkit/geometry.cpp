@@ -74,6 +74,13 @@ Float distance(const Point3 &a, const Point3 &b)
     return (a - b).norm();
 }
 
+/// Returns the square of the distance between the points \p a and
+/// \p b.
+Float distanceSquared(const Point3 &a, const Point3 &b)
+{
+    return (a - b).normSquared();
+}
+
 Point3 circumcenter(const Point3 &a, const Point3 &b)
 {
     CHEMKIT_UNUSED(a);

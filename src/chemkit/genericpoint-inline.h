@@ -148,13 +148,6 @@ inline GenericPoint<T> GenericPoint<T>::midpoint(const GenericPoint<T> &point) c
 }
 
 // --- Static Methods ------------------------------------------------------ //
-/// Returns the sqaure distance between points \p a and \p b.
-template<typename T>
-inline T GenericPoint<T>::distanceSquared(const GenericPoint<T> &a, const GenericPoint<T> &b)
-{
-    return (b - a).lengthSquared();
-}
-
 /// Returns the angle between the vectors (\p a, \p b) and (\p b,
 /// \p c). Angle is in Degrees.
 template<typename T>
