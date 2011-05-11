@@ -68,6 +68,12 @@ namespace chemkit {
 namespace geometry {
 
 // --- Constructions ------------------------------------------------------- //
+/// Returns the distance between the points \p a and \p b.
+Float distance(const Point3 &a, const Point3 &b)
+{
+    return (a - b).norm();
+}
+
 Point3 circumcenter(const Point3 &a, const Point3 &b)
 {
     CHEMKIT_UNUSED(a);

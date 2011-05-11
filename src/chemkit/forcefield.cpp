@@ -37,6 +37,7 @@
 
 #include "atom.h"
 #include "foreach.h"
+#include "geometry.h"
 #include "molecule.h"
 #include "constants.h"
 #include "pluginmanager.h"
@@ -587,7 +588,7 @@ QFuture<bool> ForceField::minimizationStepAsync(Float converganceValue)
 // --- Geometry ------------------------------------------------------------ //
 Float ForceField::distance(const ForceFieldAtom *a, const ForceFieldAtom *b) const
 {
-    return Point3::distance(a->position(), b->position());
+    return chemkit::geometry::distance(a->position(), b->position());
 }
 
 Float ForceField::bondAngle(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c) const

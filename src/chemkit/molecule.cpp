@@ -46,6 +46,7 @@
 #include "foreach.h"
 #include "vector3.h"
 #include "constants.h"
+#include "geometry.h"
 #include "lineformat.h"
 #include "quaternion.h"
 #include "coordinates.h"
@@ -850,7 +851,7 @@ void Molecule::setCoordinates(const InternalCoordinates *coordinates)
 /// distance is in Angstroms.
 Float Molecule::distance(const Atom *a, const Atom *b) const
 {
-    return Point3::distance(a->position(), b->position());
+    return chemkit::geometry::distance(a->position(), b->position());
 }
 
 /// Returns the angle between atoms \p a, \p b, and \p c. The

@@ -63,7 +63,6 @@ class GenericPoint : public StaticVector<T, 3>
         GenericPoint<T> midpoint(const GenericPoint<T> &point) const;
 
         // static methods
-        static T distance(const GenericPoint<T> &a, const GenericPoint<T> &b);
         static T distanceSquared(const GenericPoint<T> &a, const GenericPoint<T> &b);
         static T angle(const GenericPoint<T> &a, const GenericPoint<T> &b, const GenericPoint<T> &c);
         static T angleRadians(const GenericPoint<T> &a, const GenericPoint<T> &b, const GenericPoint<T> &c);

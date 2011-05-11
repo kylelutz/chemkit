@@ -38,6 +38,7 @@
 #include <cassert>
 
 #include "vector3.h"
+#include "geometry.h"
 #include "molecule.h"
 
 namespace chemkit {
@@ -242,7 +243,7 @@ void Coordinates::remove(int index)
 /// returned distance is in Angstroms.
 Float Coordinates::distance(int i, int j) const
 {
-    return Point3::distance(position(i), position(j));
+    return chemkit::geometry::distance(position(i), position(j));
 }
 
 /// Returns the bond angle between the points at \p i, \p j, and

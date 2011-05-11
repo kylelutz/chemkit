@@ -137,7 +137,7 @@ inline GenericPoint<T> GenericPoint<T>::movedBy(T distance, const StaticVector<T
 template<typename T>
 inline T GenericPoint<T>::distance(const GenericPoint<T> &point) const
 {
-    return distance(*this, point);
+    return (*this - point).length();
 }
 
 /// Returns a point midway between the point and \p point.
@@ -148,13 +148,6 @@ inline GenericPoint<T> GenericPoint<T>::midpoint(const GenericPoint<T> &point) c
 }
 
 // --- Static Methods ------------------------------------------------------ //
-/// Returns the distance between points \p a and \p b.
-template<typename T>
-inline T GenericPoint<T>::distance(const GenericPoint<T> &a, const GenericPoint<T> &b)
-{
-    return (b - a).length();
-}
-
 /// Returns the sqaure distance between points \p a and \p b.
 template<typename T>
 inline T GenericPoint<T>::distanceSquared(const GenericPoint<T> &a, const GenericPoint<T> &b)
