@@ -278,14 +278,14 @@ Float Coordinates::torsionAngleRadians(int i, int j, int k, int l) const
 /// and \p l. The returned angle is in degrees.
 Float Coordinates::wilsonAngle(int i, int j, int k, int l) const
 {
-    return Point3::wilsonAngle(position(i), position(j), position(k), position(l));
+    return chemkit::geometry::wilsonAngle(position(i), position(j), position(k), position(l));
 }
 
 /// Returns the wilson angle between the points at \p i, \p j, \p k
 /// and \p l. The returned angle is in radians.
 Float Coordinates::wilsonAngleRadians(int i, int j, int k, int l) const
 {
-    return Point3::wilsonAngleRadians(position(i), position(j), position(k), position(l));
+    return chemkit::geometry::wilsonAngleRadians(position(i), position(j), position(k), position(l));
 }
 
 /// Returns the center of the positions in the coordinates. This is

@@ -874,10 +874,7 @@ Float Molecule::torsionAngle(const Atom *a, const Atom *b, const Atom *c, const 
 /// is in degrees.
 Float Molecule::wilsonAngle(const Atom *a, const Atom *b, const Atom *c, const Atom *d) const
 {
-    return Point3::wilsonAngle(a->position(),
-                               b->position(),
-                               c->position(),
-                               d->position());
+    return chemkit::geometry::wilsonAngle(a->position(), b->position(), c->position(), d->position());
 }
 
 /// Moves all of the atoms in the molecule so that the center point

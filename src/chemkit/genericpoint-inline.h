@@ -148,29 +148,6 @@ inline GenericPoint<T> GenericPoint<T>::midpoint(const GenericPoint<T> &point) c
 }
 
 // --- Static Methods ------------------------------------------------------ //
-/// Returns the wilson angle between points \p a, \p b, \p c, and
-/// \p d. Angle is in Degrees.
-template<typename T>
-inline T GenericPoint<T>::wilsonAngle(const GenericPoint<T> &a, const GenericPoint<T> &b, const GenericPoint<T> &c, const GenericPoint<T> &d)
-{
-    return wilsonAngleRadians(a, b, c, d) * chemkit::constants::RadiansToDegrees;
-}
-
-/// Returns the wilson angle between points \p a, \p b, \p c, and
-/// \p d. Angle is in Radians.
-template<typename T>
-inline T GenericPoint<T>::wilsonAngleRadians(const GenericPoint<T> &a, const GenericPoint<T> &b, const GenericPoint<T> &c, const GenericPoint<T> &d)
-{
-    StaticVector<T, 3> normal = ((b - a).cross(c - b)).normalized();
-
-    StaticVector<T, 3> bd = d - b;
-    bd.normalize();
-
-    Float angle = acos(bd.dot(normal));
-
-    return (chemkit::constants::Pi * 0.5) - angle;
-}
-
 /// Returns the midpoint between \p a and \p b.
 template<typename T>
 inline GenericPoint<T> GenericPoint<T>::midpoint(const GenericPoint<T> &a, const GenericPoint<T> &b)

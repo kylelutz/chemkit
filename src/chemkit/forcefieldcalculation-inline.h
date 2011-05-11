@@ -188,14 +188,14 @@ inline std::vector<Vector3> ForceFieldCalculation::torsionAngleGradientRadians(c
 /// \p d. The angle is in degrees.
 inline Float ForceFieldCalculation::wilsonAngle(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c, const ForceFieldAtom *d) const
 {
-    return Point3::wilsonAngle(a->position(), b->position(), c->position(), d->position());
+    return chemkit::geometry::wilsonAngle(a->position(), b->position(), c->position(), d->position());
 }
 
 /// Returns the wilson angle between the atoms \p a, \p b, \p c, and
 /// \p d. The angle is in radians.
 inline Float ForceFieldCalculation::wilsonAngleRadians(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c, const ForceFieldAtom *d) const
 {
-    return Point3::wilsonAngleRadians(a->position(), b->position(), c->position(), d->position());
+    return chemkit::geometry::wilsonAngleRadians(a->position(), b->position(), c->position(), d->position());
 }
 
 /// Returns the gradient of the wilson angle between the atoms
@@ -236,7 +236,7 @@ inline std::vector<Vector3> ForceFieldCalculation::wilsonAngleGradientRadians(co
 
     Float theta = acos(ba.dot(bc));
 
-    Float w = Point3::wilsonAngleRadians(a, b, c, d);
+    Float w = chemkit::geometry::wilsonAngleRadians(a, b, c, d);
 
     std::vector<Vector3> gradient(4);
 

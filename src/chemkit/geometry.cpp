@@ -88,7 +88,7 @@ Float angle(const Point3 &a, const Point3 &b, const Point3 &c)
     return angleRadians(a, b, c) * chemkit::constants::RadiansToDegrees;
 }
 
-/// Returns the angle between the vectors (\p a, \p b) and (\p b,
+/// Returns the ang le between the vectors (\p a, \p b) and (\p b,
 /// \p c). Angle is Radians.
 Float angleRadians(const Point3 &a, const Point3 &b, const Point3 &c)
 {
@@ -114,6 +114,27 @@ Float torsionAngleRadians(const Point3 &a, const Point3 &b, const Point3 &c, con
     Point3 cd = d - c;
 
     return atan2(bc.norm() * ab.dot(bc.cross(cd)), ab.cross(bc).dot(bc.cross(cd)));
+}
+
+/// Returns the wilson angle between points \p a, \p b, \p c, and
+/// \p d. Angle is in Degrees.
+Float wilsonAngle(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d)
+{
+    return wilsonAngleRadians(a, b, c, d) * chemkit::constants::RadiansToDegrees;
+}
+
+/// Returns the wilson angle between points \p a, \p b, \p c, and
+/// \p d. Angle is in Radians.
+Float wilsonAngleRadians(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d)
+{
+    Vector3 normal = ((b - a).cross(c - b)).normalized();
+
+    Point3 bd = d - b;
+    bd.normalize();
+
+    Float angle = acos(bd.dot(normal));
+
+    return (chemkit::constants::Pi * 0.5) - angle;
 }
 
 Point3 circumcenter(const Point3 &a, const Point3 &b)

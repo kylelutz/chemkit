@@ -618,7 +618,7 @@ Float ForceField::wilsonAngle(const ForceFieldAtom *a, const ForceFieldAtom *b, 
 
 Float ForceField::wilsonAngleRadians(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c, const ForceFieldAtom *d) const
 {
-    return Point3::wilsonAngleRadians(a->position(), b->position(), c->position(), d->position());
+    return chemkit::geometry::wilsonAngleRadians(a->position(), b->position(), c->position(), d->position());
 }
 
 // --- Error Handling ------------------------------------------------------ //
