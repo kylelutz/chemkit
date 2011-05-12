@@ -41,15 +41,15 @@
 #include <string>
 #include <vector>
 
-#include <QIODevice>
+#include "genericfile.h"
+#include "polymerfileformat.h"
 
 namespace chemkit {
 
 class Polymer;
-class PolymerFileFormat;
 class PolymerFilePrivate;
 
-class CHEMKIT_EXPORT PolymerFile
+class CHEMKIT_EXPORT PolymerFile : public GenericFile<PolymerFile, PolymerFileFormat>
 {
     public:
         // construction and destruction
@@ -58,12 +58,6 @@ class CHEMKIT_EXPORT PolymerFile
         ~PolymerFile();
 
         // properties
-        void setFileName(const std::string &fileName);
-        std::string fileName() const;
-        void setFormat(PolymerFileFormat *format);
-        bool setFormat(const std::string &name);
-        PolymerFileFormat* format() const;
-        std::string formatName() const;
         int size() const;
         bool isEmpty() const;
 
@@ -76,26 +70,6 @@ class CHEMKIT_EXPORT PolymerFile
         int polymerCount() const;
         bool contains(const Polymer *polymer) const;
         void clear();
-
-        // input and output
-        bool read();
-        bool read(const std::string &fileName);
-        bool read(const std::string &fileName, const std::string &format);
-        bool read(QIODevice *iodev, const std::string &format);
-        bool write();
-        bool write(const std::string &fileName);
-        bool write(const std::string &fileName, const std::string &format);
-        bool write(QIODevice *iodev);
-        bool write(QIODevice *iodev, const std::string &format);
-
-        // error handling
-        std::string errorString() const;
-
-        // static methods
-        static std::vector<std::string> formats();
-
-    private:
-        void setErrorString(const std::string &errorString);
 
     private:
         PolymerFilePrivate* const d;
