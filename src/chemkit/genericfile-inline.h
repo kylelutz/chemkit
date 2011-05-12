@@ -38,10 +38,9 @@
 
 #include "genericfile.h"
 
+#include <fstream>
 #include <boost/format.hpp>
 #include <boost/filesystem.hpp>
-
-#include <QFile>
 
 namespace chemkit {
 
@@ -160,14 +159,13 @@ inline bool GenericFile<File, Format>::read()
     }
 
     // open file
-    QFile file(m_fileName.c_str());
-    bool ok = file.open(QFile::ReadOnly);
-    if(!ok){
+    std::ifstream file(m_fileName.c_str());
+    if(!file.is_open()){
         setErrorString("Failed to open file for reading.");
         return false;
     }
 
-    return read(&file);
+    return read(file);
 }
 
 /// Reads the file from \p fileName. Returns \c false if reading
@@ -250,6 +248,47 @@ inline bool GenericFile<File, Format>::read(QIODevice *iodev)
     return ok;
 }
 
+/// Reads the file from \p input using \p formatName. Returns
+/// \c false if \p formatName is not supported or if reading the file
+/// fails.
+///
+/// Equivalent to:
+/// \code
+/// file.setFormat(formatName);
+/// file.read(input);
+/// \endcode
+template<typename File, typename Format>
+inline bool GenericFile<File, Format>::read(std::istream &input, const std::string &formatName)
+{
+    // set the format for the file
+    bool ok = setFormat(formatName);
+    if(!ok){
+        return false;
+    }
+
+    return read(input);
+}
+
+/// Reads the file from \p input. Returns \c false if reading the
+/// file fails.
+template<typename File, typename Format>
+inline bool GenericFile<File, Format>::read(std::istream &input)
+{
+    // check for valid format
+    if(!m_format){
+        setErrorString("No file format set for reading.");
+        return false;
+    }
+
+    // read the file
+    bool ok = m_format->read(input, static_cast<File *>(this));
+    if(!ok){
+        setErrorString(m_format->errorString());
+    }
+
+    return ok;
+}
+
 /// Writes to the file using the set file name. Returns \c false if
 /// writing the file fails.
 template<typename File, typename Format>
@@ -277,13 +316,13 @@ inline bool GenericFile<File, Format>::write(const std::string &fileName)
 template<typename File, typename Format>
 inline bool GenericFile<File, Format>::write(const std::string &fileName, const std::string &formatName)
 {
-    QFile file(fileName.c_str());
-    if(!file.open(QIODevice::WriteOnly)){
-        setErrorString((boost::format("Failed to open '%s' for writing: %s.") % fileName % file.errorString().toStdString()).str());
+    std::ofstream file(fileName.c_str());
+    if(!file.is_open()){
+        setErrorString((boost::format("Failed to open '%s' for writing") % fileName).str());
         return false;
     }
 
-    return write(&file, formatName);
+    return write(file, formatName);
 }
 
 /// Writes the file to \p iodev using \p formatName. Returns \c false
@@ -319,6 +358,41 @@ inline bool GenericFile<File, Format>::write(QIODevice *iodev, Format *format)
     }
 
     return format->write(static_cast<const File *>(this), iodev);
+}
+
+/// Writes the file to \p output using \p formatName. Returns \c false
+/// if \p formatName is not supported or if writing the file fails.
+template<typename File, typename Format>
+inline bool GenericFile<File, Format>::write(std::ostream &output, const std::string &formatName)
+{
+    Format *format = Format::create(formatName);
+    if(!format){
+        setErrorString((boost::format("File format '%s' is not supported.") % formatName).str());
+        return false;
+    }
+
+    return write(output, format);
+}
+
+/// Writes the file to \p output using the set format. Returns
+/// \c false if writing the file fails.
+template<typename File, typename Format>
+inline bool GenericFile<File, Format>::write(std::ostream &output)
+{
+    return write(output, m_format);
+}
+
+/// Writes the file to \p output using \p format. Returns \c false if
+/// writing the file fails.
+template<typename File, typename Format>
+inline bool GenericFile<File, Format>::write(std::ostream &output, Format *format)
+{
+    if(!format){
+        setErrorString("No format set for writing.");
+        return false;
+    }
+
+    return format->write(static_cast<const File *>(this), output);
 }
 
 // --- File Data ----------------------------------------------------------- //
