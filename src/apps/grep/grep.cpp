@@ -36,6 +36,7 @@
 #include <QtCore>
 
 #include <getopt.h>
+#include <iostream>
 
 #include <chemkit/chemkit.h>
 #include <chemkit/molecule.h>
@@ -187,11 +188,7 @@ int main(int argc, char *argv[])
         }
     }
     else{
-        QFile stdoutFile;
-        stdoutFile.open(stdout, QFile::WriteOnly);
-        bool ok = outputFile.write(&stdoutFile, inputFile.formatName());
-        stdoutFile.close();
-
+        bool ok = outputFile.write(std::cout, inputFile.formatName());
         if(!ok){
             err << "Error: failed to write output file: " << outputFile.errorString().c_str() << "\n";
             return -1;
