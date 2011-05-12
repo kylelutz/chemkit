@@ -117,12 +117,10 @@ MoleculeFile* PubChem::downloadFile(const QString &id) const
         return 0;
     }
 
-    QBuffer buffer;
-    buffer.setData(data);
-    buffer.open(QBuffer::ReadOnly);
+    std::stringstream buffer(std::string(data.constData(), data.size()));
 
     MoleculeFile *file = new MoleculeFile;
-    file->read(&buffer, "sdf");
+    file->read(buffer, "sdf");
 
     return file;
 }
@@ -146,12 +144,10 @@ MoleculeFile* PubChem::downloadFile(const QStringList &ids) const
         return 0;
     }
 
-    QBuffer buffer;
-    buffer.setData(data);
-    buffer.open(QBuffer::ReadOnly);
+    std::stringstream buffer(std::string(data.constData(), data.size()));
 
     MoleculeFile *file = new MoleculeFile;
-    file->read(&buffer, "sdf");
+    file->read(buffer, "sdf");
 
     return file;
 }
