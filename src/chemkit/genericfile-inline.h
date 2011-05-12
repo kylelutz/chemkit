@@ -207,47 +207,6 @@ inline bool GenericFile<File, Format>::read(const std::string &fileName, const s
     return read();
 }
 
-/// Reads the file from \p iodev using \p formatName. Returns
-/// \c false if \p formatName is not supported or if reading the file
-/// fails.
-///
-/// Equivalent to:
-/// \code
-/// file.setFormat(formatName);
-/// file.read(iodev);
-/// \endcode
-template<typename File, typename Format>
-inline bool GenericFile<File, Format>::read(QIODevice *iodev, const std::string &formatName)
-{
-    // set the format for the file
-    bool ok = setFormat(formatName);
-    if(!ok){
-        return false;
-    }
-
-    return read(iodev);
-}
-
-/// Reads the file from \p iodev. Returns \c false if reading the
-/// file fails.
-template<typename File, typename Format>
-inline bool GenericFile<File, Format>::read(QIODevice *iodev)
-{
-    // check for valid format
-    if(!m_format){
-        setErrorString("No file format set for reading.");
-        return false;
-    }
-
-    // read the file
-    bool ok = m_format->read(iodev, static_cast<File *>(this));
-    if(!ok){
-        setErrorString(m_format->errorString());
-    }
-
-    return ok;
-}
-
 /// Reads the file from \p input using \p formatName. Returns
 /// \c false if \p formatName is not supported or if reading the file
 /// fails.
@@ -323,41 +282,6 @@ inline bool GenericFile<File, Format>::write(const std::string &fileName, const 
     }
 
     return write(file, formatName);
-}
-
-/// Writes the file to \p iodev using \p formatName. Returns \c false
-/// if \p formatName is not supported or if writing the file fails.
-template<typename File, typename Format>
-inline bool GenericFile<File, Format>::write(QIODevice *iodev, const std::string &formatName)
-{
-    Format *format = Format::create(formatName);
-    if(!format){
-        setErrorString((boost::format("File format '%s' is not supported.") % formatName).str());
-        return false;
-    }
-
-    return write(iodev, format);
-}
-
-/// Writes the file to \p iodev using the set format. Returns
-/// \c false if writing the file fails.
-template<typename File, typename Format>
-inline bool GenericFile<File, Format>::write(QIODevice *iodev)
-{
-    return write(iodev, m_format);
-}
-
-/// Writes the file to \p iodev using \p format. Returns \c false if
-/// writing the file fails.
-template<typename File, typename Format>
-inline bool GenericFile<File, Format>::write(QIODevice *iodev, Format *format)
-{
-    if(!format){
-        setErrorString("No format set for writing.");
-        return false;
-    }
-
-    return format->write(static_cast<const File *>(this), iodev);
 }
 
 /// Writes the file to \p output using \p formatName. Returns \c false

@@ -44,8 +44,6 @@
 #include <istream>
 #include <ostream>
 
-#include <QIODevice>
-
 #include "variant.h"
 
 namespace chemkit {
@@ -71,16 +69,11 @@ class GenericFile
         bool read();
         bool read(const std::string &fileName);
         bool read(const std::string &fileName, const std::string &formatName);
-        bool read(QIODevice *iodev, const std::string &formatName);
-        bool read(QIODevice *iodev);
         bool read(std::istream &input, const std::string &formatName);
         bool read(std::istream &input);
         bool write();
         bool write(const std::string &fileName);
         bool write(const std::string &fileName, const std::string &formatName);
-        bool write(QIODevice *iodev, const std::string &formatName);
-        bool write(QIODevice *iodev);
-        bool write(QIODevice *iodev, Format *format);
         bool write(std::ostream &output, const std::string &formatName);
         bool write(std::ostream &output);
         bool write(std::ostream &output, Format *format);
