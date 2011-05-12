@@ -39,16 +39,16 @@
 #include "chemkit.h"
 
 #include <string>
-#include <vector>
 
-#include <QtCore>
+#include "genericfile.h"
+#include "trajectoryfileformat.h"
 
 namespace chemkit {
 
 class Trajectory;
 class TrajectoryFilePrivate;
 
-class CHEMKIT_EXPORT TrajectoryFile
+class CHEMKIT_EXPORT TrajectoryFile : public GenericFile<TrajectoryFile, TrajectoryFileFormat>
 {
     public:
         // construction and destruction
@@ -57,8 +57,6 @@ class CHEMKIT_EXPORT TrajectoryFile
         ~TrajectoryFile();
 
         // properties
-        void setFileName(const std::string &fileName);
-        std::string fileName() const;
         bool isEmpty() const;
 
         // file contents
@@ -66,26 +64,6 @@ class CHEMKIT_EXPORT TrajectoryFile
         Trajectory* trajectory() const;
         bool removeTrajectory();
         bool deleteTrajectory();
-
-        // input and output
-        bool read();
-        bool read(const std::string &fileName);
-        bool read(const std::string &fileName, const std::string &format);
-        bool read(QIODevice *iodev, const std::string &format);
-        bool write();
-        bool write(const std::string &fileName);
-        bool write(const std::string &fileName, const std::string &format);
-        bool write(QIODevice *iodev);
-        bool write(QIODevice *iodev, const std::string &format);
-
-        // error handling
-        std::string errorString() const;
-
-        // static methods
-        static std::vector<std::string> formats();
-
-    private:
-        void setErrorString(const std::string &errorString);
 
     private:
         TrajectoryFilePrivate* const d;

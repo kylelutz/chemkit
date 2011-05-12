@@ -36,7 +36,6 @@
 #include "trajectoryfile.h"
 
 #include "trajectory.h"
-#include "trajectoryfileformat.h"
 
 namespace chemkit {
 
@@ -44,10 +43,7 @@ namespace chemkit {
 class TrajectoryFilePrivate
 {
     public:
-        std::string fileName;
-        std::string errorString;
         Trajectory *trajectory;
-        TrajectoryFileFormat *format;
 };
 
 // === TrajectoryFile ====================================================== //
@@ -66,16 +62,14 @@ TrajectoryFile::TrajectoryFile()
     : d(new TrajectoryFilePrivate)
 {
     d->trajectory = 0;
-    d->format = 0;
 }
 
 /// Creates a new trajectory file with \p fileName.
 TrajectoryFile::TrajectoryFile(const std::string &fileName)
-    : d(new TrajectoryFilePrivate)
+    : GenericFile<TrajectoryFile, TrajectoryFileFormat>(fileName),
+      d(new TrajectoryFilePrivate)
 {
-    d->fileName = fileName;
     d->trajectory = 0;
-    d->format = 0;
 }
 
 /// Destroys the trajectory file object.
@@ -86,18 +80,6 @@ TrajectoryFile::~TrajectoryFile()
 }
 
 // --- Properties ---------------------------------------------------------- //
-/// Sets the file name for the trajectory file to \p fileName.
-void TrajectoryFile::setFileName(const std::string &fileName)
-{
-    d->fileName = fileName;
-}
-
-/// Returns the file name for the trajectory file.
-std::string TrajectoryFile::fileName() const
-{
-    return d->fileName;
-}
-
 /// Returns \c true if the trajectory file is empty.
 bool TrajectoryFile::isEmpty() const
 {
@@ -141,134 +123,6 @@ bool TrajectoryFile::deleteTrajectory()
     delete d->trajectory;
     d->trajectory = 0;
     return true;
-}
-
-// --- Input and Output ---------------------------------------------------- //
-/// Reads the file.
-bool TrajectoryFile::read()
-{
-    if(d->fileName.empty()){
-        return false;
-    }
-
-    return read(fileName());
-}
-
-/// Reads the file from \p fileName.
-bool TrajectoryFile::read(const std::string &fileName)
-{
-    std::string format = QFileInfo(fileName.c_str()).suffix().toStdString();
-
-    return read(fileName, format);
-}
-
-/// Reads the file from \p fileName using format.
-bool TrajectoryFile::read(const std::string &fileName, const std::string &format)
-{
-    QFile file(fileName.c_str());
-    if(!file.open(QIODevice::ReadOnly)){
-        setErrorString(QString("Failed to open '%1' for reading: %2").arg(fileName.c_str()).arg(file.errorString()).toStdString());
-        return false;
-    }
-
-    return read(&file, format);
-}
-
-/// Reads the file from \p iodev using \p format.
-bool TrajectoryFile::read(QIODevice *iodev, const std::string &format)
-{
-    if(d->format == 0 || d->format->name() != format){
-        d->format = TrajectoryFileFormat::create(format);
-        if(!d->format){
-            setErrorString(QString("Format '%1' is not supported").arg(format.c_str()).toStdString());
-            iodev->close();
-            return false;
-        }
-    }
-
-    bool ok = d->format->read(iodev, this);
-    if(!ok){
-        setErrorString(d->format->errorString());
-    }
-
-    iodev->close();
-    return ok;
-}
-
-/// Writes the file.
-bool TrajectoryFile::write()
-{
-    return write(fileName());
-}
-
-/// Writes the file to \p fileName.
-bool TrajectoryFile::write(const std::string &fileName)
-{
-    std::string format = QFileInfo(fileName.c_str()).suffix().toStdString();
-
-    return write(fileName, format);
-}
-
-/// Writes the file to \p fileName using \p format.
-bool TrajectoryFile::write(const std::string &fileName, const std::string &format)
-{
-    QFile file(fileName.c_str());
-    if(!file.open(QIODevice::WriteOnly)){
-        setErrorString(QString("Failed to open '%1' for writing: %2").arg(fileName.c_str()).arg(file.errorString()).toStdString());
-        return false;
-    }
-
-    return write(&file, format);
-}
-
-/// Writes the file to \p iodev.
-bool TrajectoryFile::write(QIODevice *iodev)
-{
-    if(!d->format)
-        return false;
-
-    bool ok = d->format->write(this, iodev);
-    if(!ok){
-        setErrorString(d->format->errorString());
-    }
-
-    iodev->close();
-    return ok;
-}
-
-/// Writes the file to \p iodev using \p format.
-bool TrajectoryFile::write(QIODevice *iodev, const std::string &format)
-{
-    if(!d->format || d->format->name() != format){
-        d->format = TrajectoryFileFormat::create(format);
-        if(!d->format){
-            setErrorString(QString("Format '%1' is not supported").arg(format.c_str()).toStdString());
-            iodev->close();
-            return false;
-        }
-    }
-
-    return write(iodev);
-}
-
-// --- Error Handling ------------------------------------------------------ //
-/// Sets a string describing the last error that occurred.
-void TrajectoryFile::setErrorString(const std::string &errorString)
-{
-    d->errorString = errorString;
-}
-
-/// Returns a string describing the last error that occurred.
-std::string TrajectoryFile::errorString() const
-{
-    return d->errorString;
-}
-
-// --- Static Methods ------------------------------------------------------ //
-/// Returns a list of supported trajectory file formats.
-std::vector<std::string> TrajectoryFile::formats()
-{
-    return TrajectoryFileFormat::formats();
 }
 
 } // end chemkit namespace

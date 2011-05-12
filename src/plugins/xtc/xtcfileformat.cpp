@@ -35,6 +35,8 @@
 
 #include "xtcfileformat.h"
 
+#include <QTemporaryFile>
+
 #include <rpc/xdr.h>
 #include <chemkit/vector3.h>
 #include <chemkit/unitcell.h>
