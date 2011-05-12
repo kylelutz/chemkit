@@ -104,6 +104,21 @@ Variant MoleculeFileFormat::option(const std::string &name) const
 }
 
 // --- Input and Output ---------------------------------------------------- //
+/// Read the data from \p input into \p file.
+bool MoleculeFileFormat::read(std::istream &input, MoleculeFile *file)
+{
+    QByteArray data;
+    while(!input.eof()){
+        data += input.get();
+    }
+    data.chop(1);
+
+    QBuffer buffer;
+    buffer.setData(data);
+    buffer.open(QBuffer::ReadOnly);
+    return read(&buffer, file);
+}
+
 /// Read from iodev into file.
 bool MoleculeFileFormat::read(QIODevice *iodev, MoleculeFile *file)
 {
@@ -112,6 +127,20 @@ bool MoleculeFileFormat::read(QIODevice *iodev, MoleculeFile *file)
 
     setErrorString(QString("'%1' reading not supported.").arg(name().c_str()).toStdString());
     return false;
+}
+
+/// Write the contents of \p file to \p output.
+bool MoleculeFileFormat::write(const MoleculeFile *file, std::ostream &output)
+{
+    QBuffer buffer;
+    buffer.open(QBuffer::WriteOnly);
+    bool ok = write(file, &buffer);
+    if(!ok){
+        return false;
+    }
+
+    output.write(buffer.data().constData(), buffer.size());
+    return true;
 }
 
 /// Write the contents of the file to iodev.

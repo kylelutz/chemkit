@@ -40,6 +40,8 @@
 
 #include <string>
 #include <vector>
+#include <istream>
+#include <ostream>
 
 #include <QIODevice>
 
@@ -61,7 +63,9 @@ class CHEMKIT_EXPORT PolymerFileFormat
         std::string name() const;
 
         // input and output
+        virtual bool read(std::istream &input, PolymerFile *file);
         virtual bool read(QIODevice *iodev, PolymerFile *file);
+        virtual bool write(const PolymerFile *file, std::ostream &output);
         virtual bool write(const PolymerFile *file, QIODevice *iodev);
 
         // error handling

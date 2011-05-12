@@ -40,6 +40,8 @@
 
 #include <string>
 #include <vector>
+#include <istream>
+#include <ostream>
 
 #include <QIODevice>
 
@@ -67,7 +69,9 @@ class CHEMKIT_EXPORT MoleculeFileFormat
         Variant option(const std::string &name) const;
 
         // input and output
+        virtual bool read(std::istream &input, MoleculeFile *file);
         virtual bool read(QIODevice *iodev, MoleculeFile *file);
+        virtual bool write(const MoleculeFile *file, std::ostream &output);
         virtual bool write(const MoleculeFile *file, QIODevice *iodev);
 
         // error handling

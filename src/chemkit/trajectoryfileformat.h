@@ -40,6 +40,8 @@
 
 #include <string>
 #include <vector>
+#include <istream>
+#include <ostream>
 
 #include <QIODevice>
 
@@ -61,7 +63,9 @@ class CHEMKIT_EXPORT TrajectoryFileFormat
         std::string name() const;
 
         // input and output
+        virtual bool read(std::istream &input, TrajectoryFile *file);
         virtual bool read(QIODevice *iodev, TrajectoryFile *file);
+        virtual bool write(const TrajectoryFile *file, std::ostream &output);
         virtual bool write(const TrajectoryFile *file, QIODevice *iodev);
 
         // error handling

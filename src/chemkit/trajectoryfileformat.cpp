@@ -74,6 +74,21 @@ std::string TrajectoryFileFormat::name() const
 }
 
 // --- Input and Output ---------------------------------------------------- //
+/// Read the data from \p input into \p file.
+bool TrajectoryFileFormat::read(std::istream &input, TrajectoryFile *file)
+{
+    QByteArray data;
+    while(!input.eof()){
+        data += input.get();
+    }
+    data.chop(1);
+
+    QBuffer buffer;
+    buffer.setData(data);
+    buffer.open(QBuffer::ReadOnly);
+    return read(&buffer, file);
+}
+
 /// Reads a trajectory file from \p iodev into \p file.
 bool TrajectoryFileFormat::read(QIODevice *iodev, TrajectoryFile *file)
 {
@@ -82,6 +97,20 @@ bool TrajectoryFileFormat::read(QIODevice *iodev, TrajectoryFile *file)
 
     setErrorString(QString("'%1' reading not supported.").arg(name().c_str()).toStdString());
     return false;
+}
+
+/// Write the contents of \p file to \p output.
+bool TrajectoryFileFormat::write(const TrajectoryFile *file, std::ostream &output)
+{
+    QBuffer buffer;
+    buffer.open(QBuffer::WriteOnly);
+    bool ok = write(file, &buffer);
+    if(!ok){
+        return false;
+    }
+
+    output.write(buffer.data().constData(), buffer.size());
+    return true;
 }
 
 /// Writes a trajectory file from \p file to \p iodev.
