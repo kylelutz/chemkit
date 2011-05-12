@@ -39,6 +39,7 @@
 #include "moleculefileformatadaptor.h"
 
 #include <boost/foreach.hpp>
+#include <boost/algorithm/string.hpp>
 
 #include "polymer.h"
 #include "lineformat.h"
@@ -60,27 +61,29 @@ inline MoleculeFileFormatAdaptor<LineFormat>::~MoleculeFileFormatAdaptor()
     delete m_format;
 }
 
-inline bool MoleculeFileFormatAdaptor<LineFormat>::read(QIODevice *iodev, MoleculeFile *file)
+inline bool MoleculeFileFormatAdaptor<LineFormat>::read(std::istream &input, MoleculeFile *file)
 {
-    iodev->setTextModeEnabled(true);
-
-    while(!iodev->atEnd()){
-        QString line = iodev->readLine().simplified();
-
-        QStringList lineItems = line.split(' ', QString::SkipEmptyParts);
-        if(lineItems.isEmpty()){
+    while(!input.eof()){
+        std::string line;
+        std::getline(input, line);
+        if(line.empty()){
             continue;
         }
 
-        std::string formula = lineItems[0].toStdString();
+        std::vector<std::string> lineItems;
+        boost::split(lineItems, line, boost::is_any_of("\t "));
+        if(lineItems.empty()){
+            continue;
+        }
+
+        std::string formula = lineItems[0];
         Molecule *molecule = m_format->read(formula);
         if(!molecule){
             continue;
         }
 
         if(lineItems.size() >= 2){
-            std::string name = line.mid(formula.length()).trimmed().toStdString();
-            molecule->setName(name);
+            molecule->setName(lineItems[1]);
         }
 
         file->addMolecule(molecule);
@@ -89,23 +92,17 @@ inline bool MoleculeFileFormatAdaptor<LineFormat>::read(QIODevice *iodev, Molecu
     return true;
 }
 
-inline bool MoleculeFileFormatAdaptor<LineFormat>::write(const MoleculeFile *file, QIODevice *iodev)
+inline bool MoleculeFileFormatAdaptor<LineFormat>::write(const MoleculeFile *file, std::ostream &output)
 {
-    iodev->setTextModeEnabled(true);
-
     BOOST_FOREACH(const Molecule *molecule, file->molecules()){
         std::string formula = m_format->write(molecule);
-        bool ok = iodev->write(formula.c_str());
-        if(!ok){
-            continue;
-        }
+        output << formula;
 
         if(!molecule->name().empty()){
-            iodev->write(" ");
-            iodev->write(molecule->name().c_str());
+            output << " " << molecule->name();
         }
 
-        iodev->write("\n");
+        output << "\n";
     }
 
     return true;
@@ -123,10 +120,10 @@ inline MoleculeFileFormatAdaptor<PolymerFileFormat>::~MoleculeFileFormatAdaptor(
     delete m_format;
 }
 
-inline bool MoleculeFileFormatAdaptor<PolymerFileFormat>::read(QIODevice *iodev, MoleculeFile *file)
+inline bool MoleculeFileFormatAdaptor<PolymerFileFormat>::read(std::istream &input, MoleculeFile *file)
 {
     PolymerFile polymerFile;
-    bool ok = polymerFile.read(iodev, m_format->name());
+    bool ok = polymerFile.read(input, m_format->name());
     if(!ok){
         setErrorString(polymerFile.errorString());
         return false;

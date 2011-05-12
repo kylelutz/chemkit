@@ -55,8 +55,8 @@ class MoleculeFileFormatAdaptor<LineFormat> : public MoleculeFileFormat
         MoleculeFileFormatAdaptor(LineFormat *format);
         ~MoleculeFileFormatAdaptor();
 
-        virtual bool read(QIODevice *iodev, MoleculeFile *file);
-        virtual bool write(const MoleculeFile *file, QIODevice *iodev);
+        virtual bool read(std::istream &input, MoleculeFile *file);
+        virtual bool write(const MoleculeFile *file, std::ostream &output);
 
     private:
         LineFormat *m_format;
@@ -69,7 +69,7 @@ class MoleculeFileFormatAdaptor<PolymerFileFormat> : public MoleculeFileFormat
         MoleculeFileFormatAdaptor(PolymerFileFormat *format);
         ~MoleculeFileFormatAdaptor();
 
-        virtual bool read(QIODevice *iodev, MoleculeFile *file);
+        virtual bool read(std::istream &input, MoleculeFile *file);
 
     private:
         PolymerFileFormat *m_format;
