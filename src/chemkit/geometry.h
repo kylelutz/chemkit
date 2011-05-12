@@ -46,35 +46,35 @@ namespace chemkit {
 namespace geometry {
 
 // constructions
-Float distance(const Point3 &a, const Point3 &b);
-Float distanceSquared(const Point3 &a, const Point3 &b);
-Float angle(const Point3 &a, const Point3 &b, const Point3 &c);
-Float angleRadians(const Point3 &a, const Point3 &b, const Point3 &c);
-Float torsionAngle(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d);
-Float torsionAngleRadians(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d);
-Float wilsonAngle(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d);
-Float wilsonAngleRadians(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d);
-Point3 midpoint(const Point3 &a, const Point3 &b);
-Point3 circumcenter(const Point3 &a, const Point3 &b);
-Point3 circumcenter(const Point3 &a, const Point3 &b, const Point3 &c);
-Point3 circumcenter(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d);
-Float circumradius(const Point3 &a, const Point3 &b);
-Float circumradius(const Point3 &a, const Point3 &b, const Point3 &c);
-Float circumradius(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d);
-Point3 orthocenter(const Point3 &a, const Point3 &b, Float wa, Float wb);
-Point3 orthocenter(const Point3 &a, const Point3 &b, const Point3 &c, Float wa, Float wb, Float wc);
-Point3 orthocenter(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d, Float wa, Float wb, Float wc, Float wd);
-Float orthoradius(const Point3 &a, const Point3 &b, Float wa, Float wb);
-Float orthoradius(const Point3 &a, const Point3 &b, const Point3 &c, Float wa, Float wb, Float wc);
-Float orthoradius(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d, Float wa, Float wb, Float wc, Float wd);
-Float triangleArea(const Point3 &a, const Point3 &b, const Point3 &c);
-Float tetrahedronVolume(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d);
-Vector3 planeNormal(const Point3 &a, const Point3 &b, const Point3 &c);
+CHEMKIT_EXPORT Float distance(const Point3 &a, const Point3 &b);
+CHEMKIT_EXPORT Float distanceSquared(const Point3 &a, const Point3 &b);
+CHEMKIT_EXPORT Float angle(const Point3 &a, const Point3 &b, const Point3 &c);
+CHEMKIT_EXPORT Float angleRadians(const Point3 &a, const Point3 &b, const Point3 &c);
+CHEMKIT_EXPORT Float torsionAngle(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d);
+CHEMKIT_EXPORT Float torsionAngleRadians(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d);
+CHEMKIT_EXPORT Float wilsonAngle(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d);
+CHEMKIT_EXPORT Float wilsonAngleRadians(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d);
+CHEMKIT_EXPORT Point3 midpoint(const Point3 &a, const Point3 &b);
+CHEMKIT_EXPORT Point3 circumcenter(const Point3 &a, const Point3 &b);
+CHEMKIT_EXPORT Point3 circumcenter(const Point3 &a, const Point3 &b, const Point3 &c);
+CHEMKIT_EXPORT Point3 circumcenter(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d);
+CHEMKIT_EXPORT Float circumradius(const Point3 &a, const Point3 &b);
+CHEMKIT_EXPORT Float circumradius(const Point3 &a, const Point3 &b, const Point3 &c);
+CHEMKIT_EXPORT Float circumradius(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d);
+CHEMKIT_EXPORT Point3 orthocenter(const Point3 &a, const Point3 &b, Float wa, Float wb);
+CHEMKIT_EXPORT Point3 orthocenter(const Point3 &a, const Point3 &b, const Point3 &c, Float wa, Float wb, Float wc);
+CHEMKIT_EXPORT Point3 orthocenter(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d, Float wa, Float wb, Float wc, Float wd);
+CHEMKIT_EXPORT Float orthoradius(const Point3 &a, const Point3 &b, Float wa, Float wb);
+CHEMKIT_EXPORT Float orthoradius(const Point3 &a, const Point3 &b, const Point3 &c, Float wa, Float wb, Float wc);
+CHEMKIT_EXPORT Float orthoradius(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d, Float wa, Float wb, Float wc, Float wd);
+CHEMKIT_EXPORT Float triangleArea(const Point3 &a, const Point3 &b, const Point3 &c);
+CHEMKIT_EXPORT Float tetrahedronVolume(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d);
+CHEMKIT_EXPORT Vector3 planeNormal(const Point3 &a, const Point3 &b, const Point3 &c);
 
 // predicates
-Float planeOrientation(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &p);
-Float sphereOrientation(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d, const Point3 &p);
-Float sphereOrientation(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d, const Point3 &p, Float wa, Float wb, Float wc, Float wd, Float wp);
+CHEMKIT_EXPORT Float planeOrientation(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &p);
+CHEMKIT_EXPORT Float sphereOrientation(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d, const Point3 &p);
+CHEMKIT_EXPORT Float sphereOrientation(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d, const Point3 &p, Float wa, Float wb, Float wc, Float wd, Float wp);
 
 } // end geometry namespace
 
