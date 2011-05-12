@@ -41,17 +41,15 @@
 #include <string>
 #include <vector>
 
-#include <QIODevice>
-
-#include "variant.h"
+#include "genericfile.h"
+#include "moleculefileformat.h"
 
 namespace chemkit {
 
 class Molecule;
-class MoleculeFileFormat;
 class MoleculeFilePrivate;
 
-class CHEMKIT_EXPORT MoleculeFile
+class CHEMKIT_EXPORT MoleculeFile : public GenericFile<MoleculeFile, MoleculeFileFormat>
 {
     public:
         // construction and destruction
@@ -60,12 +58,6 @@ class CHEMKIT_EXPORT MoleculeFile
         ~MoleculeFile();
 
         // properties
-        void setFileName(const std::string &fileName);
-        std::string fileName() const;
-        void setFormat(MoleculeFileFormat *format);
-        bool setFormat(const std::string &name);
-        MoleculeFileFormat* format() const;
-        std::string formatName() const;
         int size() const;
         bool isEmpty() const;
 
@@ -79,31 +71,9 @@ class CHEMKIT_EXPORT MoleculeFile
         bool contains(const Molecule *molecule) const;
         void clear();
 
-        // file data
-        void setData(const std::string &name, const Variant &value);
-        Variant data(const std::string &name) const;
-
-        // input and output
-        bool read();
-        bool read(const std::string &fileName);
-        bool read(const std::string &fileName, const std::string &format);
-        bool read(QIODevice *iodev, const std::string &format);
-        bool write();
-        bool write(const std::string &fileName);
-        bool write(const std::string &fileName, const std::string &format);
-        bool write(QIODevice *iodev);
-        bool write(QIODevice *iodev, const std::string &format);
-
-        // error handling
-        std::string errorString() const;
-
         // static methods
-        static std::vector<std::string> formats();
         static Molecule* quickRead(const std::string &fileName);
         static void quickWrite(const Molecule *molecule, const std::string &fileName);
-
-    private:
-        void setErrorString(const std::string &error);
 
     private:
         MoleculeFilePrivate* const d;

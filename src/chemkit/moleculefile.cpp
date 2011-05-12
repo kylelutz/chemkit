@@ -36,7 +36,6 @@
 #include "moleculefile.h"
 
 #include "molecule.h"
-#include "moleculefileformat.h"
 
 namespace chemkit {
 
@@ -44,9 +43,6 @@ namespace chemkit {
 class MoleculeFilePrivate
 {
     public:
-        std::string fileName;
-        std::string errorString;
-        MoleculeFileFormat *format;
         std::vector<Molecule *> molecules;
         std::map<std::string, Variant> fileData;
 };
@@ -91,15 +87,13 @@ class MoleculeFilePrivate
 MoleculeFile::MoleculeFile()
     : d(new MoleculeFilePrivate)
 {
-    d->format = 0;
 }
 
 /// Creates a new, empty file object with \p fileName.
 MoleculeFile::MoleculeFile(const std::string &fileName)
-    : d(new MoleculeFilePrivate)
+    : GenericFile<MoleculeFile, MoleculeFileFormat>(fileName),
+      d(new MoleculeFilePrivate)
 {
-    d->format = 0;
-    d->fileName = fileName;
 }
 
 /// Destroys the file object. Destroying the file will also destroy
@@ -107,61 +101,10 @@ MoleculeFile::MoleculeFile(const std::string &fileName)
 MoleculeFile::~MoleculeFile()
 {
     qDeleteAll(d->molecules);
-    delete d->format;
     delete d;
 }
 
 // --- Properties ---------------------------------------------------------- //
-/// Sets the name of the file to \p fileName.
-void MoleculeFile::setFileName(const std::string &fileName)
-{
-    d->fileName = fileName;
-}
-
-/// Returns the name of the file.
-std::string MoleculeFile::fileName() const
-{
-    return d->fileName;
-}
-
-/// Sets the format for the file to \p format.
-void MoleculeFile::setFormat(MoleculeFileFormat *format)
-{
-    d->format = format;
-}
-
-/// Sets the format of the file to \p name. If name is not a valid
-/// format the current format will remain unchanged and \c false
-/// will be returned.
-bool MoleculeFile::setFormat(const std::string &name)
-{
-    MoleculeFileFormat *format = MoleculeFileFormat::create(name);
-
-    if(!format){
-        return false;
-    }
-    else{
-        setFormat(format);
-        return true;
-    }
-}
-
-/// Returns the format object for the file.
-MoleculeFileFormat* MoleculeFile::format() const
-{
-    return d->format;
-}
-
-/// Returns the name of the format for this file.
-std::string MoleculeFile::formatName() const
-{
-    if(d->format){
-        return d->format->name();
-    }
-
-    return std::string();
-}
-
 /// Returns the number of molecules in the file.
 int MoleculeFile::size() const
 {
@@ -246,149 +189,7 @@ void MoleculeFile::clear()
     d->fileData.clear();
 }
 
-// --- File Data ----------------------------------------------------------- //
-/// Sets data with \p name to \p value for the file.
-void MoleculeFile::setData(const std::string &name, const Variant &value)
-{
-    d->fileData[name] = value;
-}
-
-/// Returns the data for \p name.
-Variant MoleculeFile::data(const std::string &name) const
-{
-    std::map<std::string, Variant>::iterator element = d->fileData.find(name);
-    if(element != d->fileData.end()){
-        return element->second;
-    }
-
-    return Variant();
-}
-
-// --- Input and Output ---------------------------------------------------- //
-/// Reads the file.
-bool MoleculeFile::read()
-{
-    if(d->fileName.empty()){
-        return false;
-    }
-
-    return read(fileName());
-}
-
-/// Reads the file from \p fileName.
-bool MoleculeFile::read(const std::string &fileName)
-{
-    std::string format = QFileInfo(fileName.c_str()).suffix().toStdString();
-
-    return read(fileName, format);
-}
-
-/// Reads the file from \p fileName using format.
-bool MoleculeFile::read(const std::string &fileName, const std::string &format)
-{
-    QFile file(fileName.c_str());
-    if(!file.open(QIODevice::ReadOnly)){
-        setErrorString(QString("Failed to open '%1' for reading: %2").arg(fileName.c_str()).arg(file.errorString()).toStdString());
-        return false;
-    }
-
-    return read(&file, format);
-}
-
-/// Reads the file from \p iodev using \p format.
-bool MoleculeFile::read(QIODevice *iodev, const std::string &format)
-{
-    if(d->format == 0 || d->format->name() != format){
-        d->format = MoleculeFileFormat::create(format);
-        if(!d->format){
-            setErrorString(QString("Format '%1' is not supported").arg(format.c_str()).toStdString());
-            iodev->close();
-            return false;
-        }
-    }
-
-    bool ok = d->format->read(iodev, this);
-    if(!ok)
-        setErrorString(d->format->errorString());
-
-    iodev->close();
-    return ok;
-}
-
-/// Writes the file.
-bool MoleculeFile::write()
-{
-    return write(fileName());
-}
-
-/// Writes the file to \p fileName.
-bool MoleculeFile::write(const std::string &fileName)
-{
-    std::string format = QFileInfo(fileName.c_str()).suffix().toStdString();
-
-    return write(fileName, format);
-}
-
-/// Writes the file to \p fileName using \p format.
-bool MoleculeFile::write(const std::string &fileName, const std::string &format)
-{
-    QFile file(fileName.c_str());
-    if(!file.open(QIODevice::WriteOnly)){
-        setErrorString(QString("Failed to open '%1' for writing: %2").arg(fileName.c_str()).arg(file.errorString()).toStdString());
-        return false;
-    }
-
-    return write(&file, format);
-}
-
-/// Writes the file to \p iodev.
-bool MoleculeFile::write(QIODevice *iodev)
-{
-    if(!d->format)
-        return false;
-
-    bool ok = d->format->write(this, iodev);
-    if(!ok)
-        setErrorString(d->format->errorString());
-
-    iodev->close();
-    return ok;
-}
-
-/// Writes the file to \p iodev using \p format.
-bool MoleculeFile::write(QIODevice *iodev, const std::string &format)
-{
-    if(!d->format || d->format->name() != format){
-        d->format = MoleculeFileFormat::create(format);
-        if(!d->format){
-            setErrorString(QString("Format '%1' is not supported").arg(format.c_str()).toStdString());
-            iodev->close();
-            return false;
-        }
-    }
-
-    return write(iodev);
-}
-
-// --- Error Handling ------------------------------------------------------ //
-void MoleculeFile::setErrorString(const std::string &error)
-{
-    d->errorString = error;
-}
-
-/// Returns a string describing the last error that occured.
-std::string MoleculeFile::errorString() const
-{
-    return d->errorString;
-}
-
 // --- Static Methods ------------------------------------------------------ //
-/// Returns a list of all supported molecule file formats.
-std::vector<std::string> MoleculeFile::formats()
-{
-    return MoleculeFileFormat::formats();
-}
-
 /// Reads and returns a molecule from the file. Returns \c 0 if there
 /// was an error reading the file or the file is empty.
 ///
