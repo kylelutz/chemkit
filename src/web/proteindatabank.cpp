@@ -126,12 +126,10 @@ Molecule* ProteinDataBank::downloadLigand(const QString &name) const
         return 0;
     }
 
-    QBuffer buffer;
-    buffer.setData(data);
-    buffer.open(QBuffer::ReadOnly);
+    std::stringstream buffer(std::string(data.constData(), data.size()));
 
     MoleculeFile file;
-    bool ok = file.read(&buffer, "sdf");
+    bool ok = file.read(buffer, "sdf");
 
     if(!ok || file.isEmpty()){
         return 0;
@@ -159,12 +157,10 @@ PolymerFile* ProteinDataBank::downloadFile(const QString &id) const
         return 0;
     }
 
-    QBuffer buffer;
-    buffer.setData(data);
-    buffer.open(QBuffer::ReadOnly);
+    std::stringstream buffer(std::string(data.constData(), data.size()));
 
     PolymerFile *file = new PolymerFile;
-    file->read(&buffer, "pdb");
+    file->read(buffer, "pdb");
 
     return file;
 }
