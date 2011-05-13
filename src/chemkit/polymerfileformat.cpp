@@ -90,7 +90,6 @@ bool PolymerFileFormat::read(std::istream &input, PolymerFile *file)
     return read(&buffer, file);
 }
 
-/// Reads a file from \p iodev.
 bool PolymerFileFormat::read(QIODevice *iodev, PolymerFile *file)
 {
     CHEMKIT_UNUSED(iodev);
@@ -114,7 +113,6 @@ bool PolymerFileFormat::write(const PolymerFile *file, std::ostream &output)
     return true;
 }
 
-/// Writes a file to \p iodev.
 bool PolymerFileFormat::write(const PolymerFile *file, QIODevice *iodev)
 {
     CHEMKIT_UNUSED(file);

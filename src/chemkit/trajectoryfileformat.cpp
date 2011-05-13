@@ -89,7 +89,6 @@ bool TrajectoryFileFormat::read(std::istream &input, TrajectoryFile *file)
     return read(&buffer, file);
 }
 
-/// Reads a trajectory file from \p iodev into \p file.
 bool TrajectoryFileFormat::read(QIODevice *iodev, TrajectoryFile *file)
 {
     CHEMKIT_UNUSED(iodev);
@@ -113,7 +112,6 @@ bool TrajectoryFileFormat::write(const TrajectoryFile *file, std::ostream &outpu
     return true;
 }
 
-/// Writes a trajectory file from \p file to \p iodev.
 bool TrajectoryFileFormat::write(const TrajectoryFile *file, QIODevice *iodev)
 {
     CHEMKIT_UNUSED(file);

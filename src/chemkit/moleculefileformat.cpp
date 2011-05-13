@@ -119,7 +119,6 @@ bool MoleculeFileFormat::read(std::istream &input, MoleculeFile *file)
     return read(&buffer, file);
 }
 
-/// Read from iodev into file.
 bool MoleculeFileFormat::read(QIODevice *iodev, MoleculeFile *file)
 {
     CHEMKIT_UNUSED(iodev);
@@ -143,7 +142,6 @@ bool MoleculeFileFormat::write(const MoleculeFile *file, std::ostream &output)
     return true;
 }
 
-/// Write the contents of the file to iodev.
 bool MoleculeFileFormat::write(const MoleculeFile *file, QIODevice *iodev)
 {
     CHEMKIT_UNUSED(file);
