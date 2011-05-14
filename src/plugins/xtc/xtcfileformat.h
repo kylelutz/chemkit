@@ -43,7 +43,7 @@ class XtcFileFormat : public chemkit::TrajectoryFileFormat
     public:
         XtcFileFormat();
 
-        bool read(QIODevice *iodev, chemkit::TrajectoryFile *file);
+        bool read(std::istream &input, chemkit::TrajectoryFile *file);
 };
 
 #endif // XTCFILEFORMAT_H

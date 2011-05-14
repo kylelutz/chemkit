@@ -52,14 +52,23 @@ XtcFileFormat::XtcFileFormat()
 {
 }
 
-bool XtcFileFormat::read(QIODevice *iodev, chemkit::TrajectoryFile *file)
+bool XtcFileFormat::read(std::istream &input, chemkit::TrajectoryFile *file)
 {
-    QByteArray data = iodev->readAll();
-    unsigned int dataSize = data.size();
-
+    // read data into temporary file
     QTemporaryFile dataFile;
     dataFile.open();
-    dataFile.write(data);
+
+    unsigned int dataSize = 0;
+    for(;;){
+        char c = input.get();
+        if(input.eof()){
+            break;
+        }
+
+        dataFile.write(&c, 1);
+        dataSize++;
+    }
+
     dataFile.close();
 
     XDR xdrs;
@@ -104,6 +113,7 @@ bool XtcFileFormat::read(QIODevice *iodev, chemkit::TrajectoryFile *file)
 
         frame->setUnitCell(new chemkit::UnitCell(x * 10, y * 10, z * 10));
 
+        // read coordinates
         float coordinateData[3 * atomCount];
         float precision = 1000.0f;
         xdr3dfcoord(&xdrs, coordinateData, &atomCount, &precision);
