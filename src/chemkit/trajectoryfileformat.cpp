@@ -35,6 +35,8 @@
 
 #include "trajectoryfileformat.h"
 
+#include <boost/format.hpp>
+
 #include "pluginmanager.h"
 
 namespace chemkit {
@@ -77,47 +79,20 @@ std::string TrajectoryFileFormat::name() const
 /// Read the data from \p input into \p file.
 bool TrajectoryFileFormat::read(std::istream &input, TrajectoryFile *file)
 {
-    QByteArray data;
-    while(!input.eof()){
-        data += input.get();
-    }
-    data.chop(1);
-
-    QBuffer buffer;
-    buffer.setData(data);
-    buffer.open(QBuffer::ReadOnly);
-    return read(&buffer, file);
-}
-
-bool TrajectoryFileFormat::read(QIODevice *iodev, TrajectoryFile *file)
-{
-    CHEMKIT_UNUSED(iodev);
+    CHEMKIT_UNUSED(input);
     CHEMKIT_UNUSED(file);
 
-    setErrorString(QString("'%1' reading not supported.").arg(name().c_str()).toStdString());
+    setErrorString((boost::format("'%1' reading not supported.") % name()).str());
     return false;
 }
 
 /// Write the contents of \p file to \p output.
 bool TrajectoryFileFormat::write(const TrajectoryFile *file, std::ostream &output)
 {
-    QBuffer buffer;
-    buffer.open(QBuffer::WriteOnly);
-    bool ok = write(file, &buffer);
-    if(!ok){
-        return false;
-    }
-
-    output.write(buffer.data().constData(), buffer.size());
-    return true;
-}
-
-bool TrajectoryFileFormat::write(const TrajectoryFile *file, QIODevice *iodev)
-{
     CHEMKIT_UNUSED(file);
-    CHEMKIT_UNUSED(iodev);
+    CHEMKIT_UNUSED(output);
 
-    setErrorString(QString("'%1' writing not supported.").arg(name().c_str()).toStdString());
+    setErrorString((boost::format("'%1' writing not supported.") % name()).str());
     return false;
 }
 
