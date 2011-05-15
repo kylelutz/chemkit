@@ -40,6 +40,7 @@
 #include "graphicsmaterial.h"
 #include "graphicsvertexbuffer.h"
 
+#include <chemkit/geometry.h>
 #include <chemkit/constants.h>
 #include <chemkit/quaternion.h>
 
@@ -150,8 +151,8 @@ void GraphicsPainter::drawCircle(const Point3f &center, float radius, const Vect
     glNormal3f(normal.x(), normal.y(), normal.z());
     glVertex3f(center.x(), center.y(), center.z());
 
-    for(int angle = 0; angle <= 360; angle += 10){
-        Point3f point = center.movedBy(radius, Quaternionf::rotate(right, normal, angle));
+    for(float angle = 0; angle <= 360; angle += 10){
+        Point3f point = center.movedBy(radius, chemkit::geometry::rotate(right, normal, angle));
 
         glNormal3f(normal.x(), normal.y(), normal.z());
         glVertex3f(point.x(), point.y(), point.z());
@@ -215,14 +216,14 @@ void GraphicsPainter::drawSpline(const QList<Point3f> &points, float radius, int
         if(i != (points.size() - 1)){
             float angle = axis.angle(points[i+1] - points[i]);
             Vector3f rotationAxis = (points[i] - points[i-1]).cross(points[i+1] - points[i]).normalized();
-            axis = Quaternionf::rotate(axis, rotationAxis, angle / 2.0);
+            axis = chemkit::geometry::rotate(axis, rotationAxis, angle / 2.0f);
         }
 
         axisVectors[i] = axis.normalized();
 
         Vector3f rotationAxis = axisVectors[i-1].cross(axisVectors[i]);
         float angle = axis.angle(axisVectors[i-1]);
-        Vector3f up = Quaternionf::rotate(upVectors[i-1], rotationAxis, angle);
+        Vector3f up = chemkit::geometry::rotate(upVectors[i-1], rotationAxis, angle);
         up.normalize();
 
         upVectors[i] = up;
