@@ -63,8 +63,8 @@ GraphicsCamera::GraphicsCamera()
     : d(new GraphicsCameraPrivate)
 {
     d->position = Point3f(0, 0, 0);
-    d->direction = -Vector3f::Z();
-    d->upVector = Vector3f::Y();
+    d->direction = -Vector3f::UnitZ();
+    d->upVector = Vector3f::UnitY();
     d->focus = Point3f(0, 0, 0);
     d->changed = true;
     d->view = 0;
@@ -75,8 +75,8 @@ GraphicsCamera::GraphicsCamera(const Point3f &position)
     : d(new GraphicsCameraPrivate)
 {
     d->position = position;
-    d->direction = -Vector3f::Z();
-    d->upVector = Vector3f::Y();
+    d->direction = -Vector3f::UnitZ();
+    d->upVector = Vector3f::UnitY();
     d->focus = Point3f(0, 0, 0);
     d->changed = true;
     d->view = 0;
@@ -87,8 +87,8 @@ GraphicsCamera::GraphicsCamera(float x, float y, float z)
     : d(new GraphicsCameraPrivate)
 {
     d->position = Point3f(x, y, z);
-    d->direction = -Vector3f::Z();
-    d->upVector = Vector3f::Y();
+    d->direction = -Vector3f::UnitZ();
+    d->upVector = Vector3f::UnitY();
     d->focus = Point3f(0, 0, 0);
     d->changed = true;
     d->view = 0;

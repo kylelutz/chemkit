@@ -87,21 +87,21 @@ inline GenericVector<T>::GenericVector(const StaticVector<double, 3> &vector)
 // --- Static Methods ------------------------------------------------------ //
 /// Returns a unit vector along the x-axis. (\c 1, \c 0, \c 0).
 template<typename T>
-inline GenericVector<T> GenericVector<T>::X()
+inline GenericVector<T> GenericVector<T>::UnitX()
 {
     return GenericVector<T>(1, 0, 0);
 }
 
 /// Returns a unit vector along to y-axis. (\c 0, \c 1, \c 0).
 template<typename T>
-inline GenericVector<T> GenericVector<T>::Y()
+inline GenericVector<T> GenericVector<T>::UnitY()
 {
     return GenericVector<T>(0, 1, 0);
 }
 
 /// Returns a unit vector along the z-axis. (\c 0, \c 0, \c 1).
 template<typename T>
-inline GenericVector<T> GenericVector<T>::Z()
+inline GenericVector<T> GenericVector<T>::UnitZ()
 {
     return GenericVector<T>(0, 0, 1);
 }

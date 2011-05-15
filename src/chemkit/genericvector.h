@@ -51,9 +51,9 @@ class GenericVector : public StaticVector<T, 3>
         GenericVector(const StaticVector<double, 3> &vector);
 
         // static methods
-        static GenericVector<T> X();
-        static GenericVector<T> Y();
-        static GenericVector<T> Z();
+        static GenericVector<T> UnitX();
+        static GenericVector<T> UnitY();
+        static GenericVector<T> UnitZ();
 };
 
 } // end chemkit namespace

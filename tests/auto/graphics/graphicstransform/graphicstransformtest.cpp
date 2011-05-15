@@ -49,7 +49,7 @@ void GraphicsTransformTest::multiplyPoint()
     point = identity.multiply(point);
     QCOMPARE(point, chemkit::Point3f(1, 2, 3));
 
-    chemkit::GraphicsTransform rotation = chemkit::GraphicsTransform::rotation(chemkit::Vector3f::X(), 180);
+    chemkit::GraphicsTransform rotation = chemkit::GraphicsTransform::rotation(chemkit::Vector3f::UnitX(), 180);
     point = rotation.multiply(point);
     QCOMPARE(point, chemkit::Point3f(1, -2, -3));
 }

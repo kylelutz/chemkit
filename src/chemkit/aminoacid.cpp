@@ -364,7 +364,7 @@ Atom* AminoAcid::aminoNitrogen() const
 Vector3 AminoAcid::peptidePlaneNormal() const
 {
     if(!d->alphaCarbon || !d->carbonylCarbon || !d->carbonylOxygen)
-        return Vector3::Y();
+        return Vector3::UnitY();
 
     return chemkit::geometry::planeNormal(d->alphaCarbon->position(),
                                           d->carbonylCarbon->position(),

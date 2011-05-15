@@ -126,8 +126,8 @@ void GraphicsPainter::drawCylinder(const Point3f &a, const Point3f &b, float rad
     glTranslatef(a.x(), a.y(), a.z());
 
     Vector3f vector = (a - b).normalized();
-    Vector3f axis = vector.cross(-Vector3f::Z()).normalized();
-    float angle = vector.angle(-Vector3f::Z());
+    Vector3f axis = vector.cross(-Vector3f::UnitZ()).normalized();
+    float angle = vector.angle(-Vector3f::UnitZ());
     glRotatef(-angle, axis.x(), axis.y(), axis.z());
 
     float length = a.distance(b);
@@ -208,7 +208,7 @@ void GraphicsPainter::drawSpline(const QList<Point3f> &points, float radius, int
     if(points.size() > 2)
         upVectors[0] = (points[1] - points[0]).cross(points[2] - points[1]).normalized();
     else
-        upVectors[0] = Vector3f::Z();
+        upVectors[0] = Vector3f::UnitZ();
 
     for(int i = 1; i < points.size(); i++){
         Vector3f axis = points[i] - points[i-1];

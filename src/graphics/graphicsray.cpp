@@ -46,7 +46,7 @@ namespace chemkit {
 // --- Construction and Destruction ---------------------------------------- //
 GraphicsRay::GraphicsRay()
     : m_origin(Point3f()),
-      m_direction(-Vector3f::Z())
+      m_direction(-Vector3f::UnitZ())
 {
 }
 

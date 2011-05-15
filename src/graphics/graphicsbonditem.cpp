@@ -78,7 +78,7 @@ GraphicsBondItem::GraphicsBondItem(const Bond *bond, float radius)
     d->bond = bond;
     d->radius = radius;
     d->maximumRadius = 0.5;
-    d->normal = -Vector3f::Z();
+    d->normal = -Vector3f::UnitZ();
     d->bondOrderVisible = true;
     d->atomColored = true;
     d->color = Qt::darkGray;
