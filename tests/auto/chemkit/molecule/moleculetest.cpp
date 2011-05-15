@@ -531,6 +531,23 @@ void MoleculeTest::removeFragment()
     QCOMPARE(molecule.fragmentCount(), 0);
 }
 
+void MoleculeTest::rotate()
+{
+    chemkit::Molecule molecule;
+    chemkit::Atom *C1 = molecule.addAtom("C");
+    chemkit::Atom *C2 = molecule.addAtom("C");
+    chemkit::Atom *C3 = molecule.addAtom("C");
+
+    C1->setPosition(0, -1, 0);
+    C2->setPosition(0, 0, 0);
+    C3->setPosition(1, 0, 0);
+
+    molecule.rotate(chemkit::Vector3::Z(), 90);
+    QVERIFY(C1->position() == chemkit::Vector3(1, 0, 0));
+    QVERIFY(C2->position() == chemkit::Vector3(0, 0, 0));
+    QVERIFY(C3->position() == chemkit::Vector3(0, 1, 0));
+}
+
 void MoleculeTest::addConformer()
 {
     chemkit::Molecule molecule;
