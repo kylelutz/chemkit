@@ -38,6 +38,9 @@
 #include <sstream>
 #include <algorithm>
 
+#include <Eigen/Core>
+#include <Eigen/Geometry>
+
 #include "atom.h"
 #include "bond.h"
 #include "ring.h"
@@ -968,8 +971,20 @@ void Molecule::moveBy(Float dx, Float dy, Float dz)
 /// by \p angle degrees around \p axis.
 void Molecule::rotate(const Vector3 &axis, Float angle)
 {
+    // convert angle to radians
+    angle *= chemkit::constants::DegreesToRadians;
+
+    // build rotation transform
+    Eigen::Matrix<Float, 3, 1> axisVector(axis.x(), axis.y(), axis.z());
+    Eigen::Transform<Float, 3, 3> transform(Eigen::AngleAxis<Float>(angle, axisVector));
+
+    // rotate each atom
     foreach(Atom *atom, m_atoms){
-        atom->setPosition(Quaternion::rotate(atom->position(), axis, angle));
+        Eigen::Matrix<Float, 3, 1> position(atom->x(), atom->y(), atom->z());
+
+        position = transform * position;
+
+        atom->setPosition(position.x(), position.y(), position.z());
     }
 }
 
