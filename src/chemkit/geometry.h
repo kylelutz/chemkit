@@ -76,8 +76,14 @@ CHEMKIT_EXPORT Float planeOrientation(const Point3 &a, const Point3 &b, const Po
 CHEMKIT_EXPORT Float sphereOrientation(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d, const Point3 &p);
 CHEMKIT_EXPORT Float sphereOrientation(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d, const Point3 &p, Float wa, Float wb, Float wc, Float wd, Float wp);
 
+// transforms
+template<typename T> StaticVector<T, 3> rotate(const StaticVector<T, 3> &vector, const StaticVector<T, 3> &axis, T angle);
+template<typename T> StaticVector<T, 3> rotateRadians(const StaticVector<T, 3> &vector, const StaticVector<T, 3> &axis, T angle);
+
 } // end geometry namespace
 
 } // end chemkit namespace
+
+#include "geometry-inline.h"
 
 #endif // CHEMKIT_GEOMETRY_H
