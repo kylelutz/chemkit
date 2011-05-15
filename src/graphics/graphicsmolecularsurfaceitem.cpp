@@ -35,9 +35,9 @@
 
 #include "graphicsmolecularsurfaceitem.h"
 
+#include <chemkit/geometry.h>
 #include <chemkit/molecule.h>
 #include <chemkit/alphashape.h>
-#include <chemkit/quaternion.h>
 
 #include "graphicsscene.h"
 #include "graphicssphere.h"
@@ -131,7 +131,7 @@ GraphicsVertexBuffer* ClippedSphere::tesselate() const
                     Vector3f up = invalidPoint.cross(planeNormal).normalized();
 
                     // set new vertex position
-                    verticies[vertexIndex] = Quaternionf::rotateRadians(invalidPoint, up, -theta);
+                    verticies[vertexIndex] = chemkit::geometry::rotateRadians(invalidPoint, up, -theta);
 
                     // update normal
                     normals[vertexIndex] = verticies[vertexIndex].normalized();
