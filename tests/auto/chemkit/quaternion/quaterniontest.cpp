@@ -39,56 +39,51 @@
 
 void QuaternionTest::basic()
 {
-    chemkit::Quaternion q(1, 2, 3, 4);
+    chemkit::Quaternion q(4, 1, 2, 3);
     QCOMPARE(q.x(), 1.0);
     QCOMPARE(q.y(), 2.0);
     QCOMPARE(q.z(), 3.0);
-    QCOMPARE(q.r(), 4.0);
+    QCOMPARE(q.w(), 4.0);
 
-    q = chemkit::Quaternion(5, 6, 7, 8);
+    q = chemkit::Quaternion(8, 5, 6, 7);
     QCOMPARE(q.x(), 5.0);
     QCOMPARE(q.y(), 6.0);
     QCOMPARE(q.z(), 7.0);
-    QCOMPARE(q.r(), 8.0);
-}
-
-void QuaternionTest::add()
-{
-    chemkit::Quaternion a(2, 3, 4, 5);
-    chemkit::Quaternion b(4, 5, 6, 7);
-    QVERIFY(a.add(b) == chemkit::Quaternion(6, 8, 10, 12));
-    QVERIFY(a + b == chemkit::Quaternion(6, 8, 10, 12));
-    QVERIFY(b.add(a) == chemkit::Quaternion(6, 8, 10, 12));
-    QVERIFY(b + a == chemkit::Quaternion(6, 8, 10, 12));
-}
-
-void QuaternionTest::subtract()
-{
-    chemkit::Quaternion a(2, 3, 4, 5);
-    chemkit::Quaternion b(4, 5, 6, 7);
-    QVERIFY(a.subtract(b) == chemkit::Quaternion(-2, -2, -2, -2));
-    QVERIFY(a - b == chemkit::Quaternion(-2, -2, -2, -2));
-    QVERIFY(b.subtract(a) == chemkit::Quaternion(2, 2, 2, 2));
-    QVERIFY(b - a == chemkit::Quaternion(2, 2, 2, 2));
+    QCOMPARE(q.w(), 8.0);
 }
 
 void QuaternionTest::multiply()
 {
-    chemkit::Quaternion a(2, 3, 4, 5);
-    chemkit::Quaternion b(4, 5, 6, 7);
-    QVERIFY(a.multiply(b) == chemkit::Quaternion(32, 50, 56, -12));
-    QVERIFY(a * b == chemkit::Quaternion(32, 50, 56, -12));
-    QVERIFY(b.multiply(a) == chemkit::Quaternion(36, 42, 60, -12));
-    QVERIFY(b * a == chemkit::Quaternion(36, 42, 60, -12));
+    chemkit::Quaternion a(5, 2, 3, 4);
+    chemkit::Quaternion b(7, 4, 5, 6);
+    chemkit::Quaternion c = a * b;
+    QCOMPARE(qRound(c.x()), 32);
+    QCOMPARE(qRound(c.y()), 50);
+    QCOMPARE(qRound(c.z()), 56);
+    QCOMPARE(qRound(c.w()), -12);
+
+    c = b * a;
+    QCOMPARE(qRound(c.x()), 36);
+    QCOMPARE(qRound(c.y()), 42);
+    QCOMPARE(qRound(c.z()), 60);
+    QCOMPARE(qRound(c.w()), -12);
 }
 
 void QuaternionTest::conjugate()
 {
-    chemkit::Quaternion q(1, 2, 3, 4);
-    QVERIFY(q.conjugate() == chemkit::Quaternion(-1, -2, -3, 4));
+    chemkit::Quaternion q(4, 1, 2, 3);
+    chemkit::Quaternion p = q.conjugate();
+    QCOMPARE(qRound(p.x()), -1);
+    QCOMPARE(qRound(p.y()), -2);
+    QCOMPARE(qRound(p.z()), -3);
+    QCOMPARE(qRound(p.w()), 4);
 
-    q = chemkit::Quaternion(-2, -4, -6, -8);
-    QVERIFY(q.conjugate() == chemkit::Quaternion(2, 4, 6, -8));
+    q = chemkit::Quaternion(-8, -2, -4, -6);
+    p = q.conjugate();
+    QCOMPARE(qRound(p.x()), 2);
+    QCOMPARE(qRound(p.y()), 4);
+    QCOMPARE(qRound(p.z()), 6);
+    QCOMPARE(qRound(p.w()), -8);
 }
 
 QTEST_APPLESS_MAIN(QuaternionTest)

@@ -38,18 +38,18 @@
 
 #include "chemkit.h"
 
-#include "genericquaternion.h"
+#include <Eigen/Geometry>
 
 namespace chemkit {
 
 /// A quaternion with Float values.
-typedef GenericQuaternion<Float> Quaternion;
+typedef Eigen::Quaternion<Float> Quaternion;
 
 /// A quaternion with \c float values.
-typedef GenericQuaternion<float> Quaternionf;
+typedef Eigen::Quaternion<float> Quaternionf;
 
 /// A quaternion with \c double values.
-typedef GenericQuaternion<double> Quaterniond;
+typedef Eigen::Quaternion<double> Quaterniond;
 
 } // end chemkit namespace
 

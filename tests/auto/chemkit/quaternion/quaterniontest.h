@@ -44,8 +44,6 @@ class QuaternionTest : public QObject
 
     private slots:
         void basic();
-        void add();
-        void subtract();
         void multiply();
         void conjugate();
 };

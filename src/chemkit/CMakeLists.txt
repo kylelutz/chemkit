@@ -36,8 +36,6 @@ set(HEADERS
   genericfile-inline.h
   genericpoint.h
   genericpoint-inline.h
-  genericquaternion.h
-  genericquaternion-inline.h
   genericvector.h
   genericvector-inline.h
   geometry.h
