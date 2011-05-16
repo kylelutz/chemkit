@@ -35,6 +35,8 @@
 
 #include "cubefileformat.h"
 
+#include <QtCore>
+
 #include <chemkit/molecule.h>
 #include <chemkit/moleculefile.h>
 

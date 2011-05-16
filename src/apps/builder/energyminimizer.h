@@ -38,6 +38,7 @@
 
 #include <QObject>
 #include <QFuture>
+#include <QFutureWatcher>
 
 #include <chemkit/molecule.h>
 #include <chemkit/forcefield.h>

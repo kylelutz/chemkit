@@ -41,6 +41,8 @@
 #include <Eigen/Core>
 #include <Eigen/Geometry>
 
+#include <QBitArray>
+
 #include "atom.h"
 #include "bond.h"
 #include "ring.h"

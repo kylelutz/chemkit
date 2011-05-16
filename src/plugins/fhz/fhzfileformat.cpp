@@ -35,6 +35,8 @@
 
 #include "fhzfileformat.h"
 
+#include <QtCore>
+
 #include <chemkit/molecule.h>
 #include <chemkit/moleculefile.h>
 #include <chemkit/internalcoordinates.h>

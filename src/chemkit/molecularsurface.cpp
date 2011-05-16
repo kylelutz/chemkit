@@ -39,6 +39,8 @@
 
 #include "molecularsurface.h"
 
+#include <QtConcurrentRun>
+
 #include "foreach.h"
 #include "vector3.h"
 #include "geometry.h"

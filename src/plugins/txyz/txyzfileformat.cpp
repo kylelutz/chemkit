@@ -35,6 +35,8 @@
 
 #include "txyzfileformat.h"
 
+#include <QtCore>
+
 #include <chemkit/element.h>
 #include <chemkit/moleculefile.h>
 
