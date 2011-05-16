@@ -33,26 +33,9 @@
 **
 ******************************************************************************/
 
-#ifndef CHEMKIT_CHEMKIT_H
-#define CHEMKIT_CHEMKIT_H
+#ifndef CHEMKIT_CONFIG_H
+#define CHEMKIT_CONFIG_H
 
-#include "config.h"
+#define CHEMKIT_INSTALL_PREFIX "@CMAKE_INSTALL_PREFIX@"
 
-#include <QtGlobal>
-
-#ifdef CHEMKIT_LIBRARY
-    #define CHEMKIT_EXPORT Q_DECL_EXPORT
-#else
-    #define CHEMKIT_EXPORT Q_DECL_IMPORT
-#endif
-
-#define CHEMKIT_UNUSED(variable) (void) variable
-
-namespace chemkit {
-
-/// Typedef for a floating point number.
-typedef double Float;
-
-} // end chemkit namespace
-
-#endif // CHEMKIT_CHEMKIT_H
+#endif // CHEMKIT_CONFIG_H

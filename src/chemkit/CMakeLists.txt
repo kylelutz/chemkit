@@ -1,3 +1,6 @@
+# setup config.h
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config.h.in ${CMAKE_CURRENT_SOURCE_DIR}/config.h)
+
 find_package(Qt4 4.6 COMPONENTS QtCore REQUIRED)
 set(QT_DONT_USE_QTGUI TRUE)
 include(${QT_USE_FILE})
@@ -18,6 +21,7 @@ set(HEADERS
   chemkit.h
   commainitializer.h
   commainitializer-inline.h
+  config.h
   conformer.h
   constants.h
   coordinates.h

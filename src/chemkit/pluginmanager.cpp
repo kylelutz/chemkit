@@ -153,7 +153,7 @@ void PluginManager::loadDefaultPlugins()
 
     // add default plugin directory
 #if defined(Q_OS_LINUX)
-    directories.append("/usr/share/chemkit/plugins/");
+    directories.append(CHEMKIT_INSTALL_PREFIX "/share/chemkit/plugins/");
 #elif defined(Q_OS_WIN32)
     QSettings registry("HKEY_LOCAL_MACHINE\\Software\\chemkit", QSettings::NativeFormat);
     directories.append(registry.value("PluginPath").toString());
