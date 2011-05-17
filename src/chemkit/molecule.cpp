@@ -41,8 +41,6 @@
 #include <Eigen/Core>
 #include <Eigen/Geometry>
 
-#include <QBitArray>
-
 #include "atom.h"
 #include "bond.h"
 #include "ring.h"
@@ -1140,13 +1138,13 @@ QList<Atom *> Molecule::atomPathBetween(const Atom *a, const Atom *b) const
         return path;
     }
 
-    QBitArray visited(atomCount());
-    visited.setBit(a->index());
+    std::vector<bool> visited(atomCount());
+    visited[a->index()] = true;
 
     QList<QList<Atom *> > paths;
 
     Q_FOREACH(Atom *neighbor, a->neighbors()){
-        visited.setBit(neighbor->index());
+        visited[neighbor->index()] = true;
         QList<Atom *> path;
         path.append(neighbor);
         paths.append(path);
@@ -1164,7 +1162,7 @@ QList<Atom *> Molecule::atomPathBetween(const Atom *a, const Atom *b) const
                 if(visited[neighbor->index()])
                     continue;
 
-                visited.setBit(neighbor->index());
+                visited[neighbor->index()] = true;
                 QList<Atom *> nextPath(path);
                 nextPath.append(neighbor);
                 paths.append(nextPath);
