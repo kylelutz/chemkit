@@ -52,6 +52,7 @@
 #include "geometry.h"
 #include "lineformat.h"
 #include "quaternion.h"
+#include "atommapping.h"
 #include "coordinates.h"
 #include "moleculargraph.h"
 #include "moleculewatcher.h"
@@ -591,7 +592,7 @@ bool Molecule::contains(const Molecule *molecule, CompareFlags flags) const
         return molecule->isSubsetOf(this, flags);
     }
 
-    return !molecule->mapping(this, flags).isEmpty();
+    return !molecule->mapping(this, flags).empty();
 }
 
 /// Returns \c true if the molecule is a substructure of \p molecule.
@@ -602,7 +603,7 @@ bool Molecule::isSubstructureOf(const Molecule *molecule, CompareFlags flags) co
 
 /// Returns a mapping (also known as an isomorphism) between the atoms
 /// in the molecule and the atoms in \p molecule.
-AtomMapping Molecule::mapping(const Molecule *molecule, CompareFlags flags) const
+std::map<Atom *, Atom *> Molecule::mapping(const Molecule *molecule, CompareFlags flags) const
 {
     MolecularGraph *source;
     MolecularGraph *target;
@@ -642,7 +643,15 @@ AtomMapping Molecule::mapping(const Molecule *molecule, CompareFlags flags) cons
     delete source;
     delete target;
 
-    return mapping;
+    std::map<Atom *, Atom *> map;
+    foreach(Atom *atom, m_atoms){
+        const Atom *partner = mapping.map(atom);
+        if(partner){
+            map[atom] = const_cast<Atom *>(partner);
+        }
+    }
+
+    return map;
 }
 
 /// Searches the molecule for an occurrence of \p moiety and returns
@@ -661,16 +670,16 @@ AtomMapping Molecule::mapping(const Molecule *molecule, CompareFlags flags) cons
 /// \endcode
 Moiety Molecule::find(const Molecule *moiety, CompareFlags flags) const
 {
-    AtomMapping mapping = moiety->mapping(this, flags);
+    std::map<Atom *, Atom *> mapping = moiety->mapping(this, flags);
 
     // no mapping found, return empty moiety
-    if(mapping.isEmpty()){
+    if(mapping.empty()){
         return Moiety();
     }
 
     std::vector<Atom *> moietyAtoms;
     foreach(Atom *atom, moiety->atoms()){
-        moietyAtoms.push_back(const_cast<Atom *>(mapping.map(atom)));
+        moietyAtoms.push_back(const_cast<Atom *>(mapping[atom]));
     }
 
     return Moiety(moietyAtoms);

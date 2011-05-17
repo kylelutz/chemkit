@@ -38,6 +38,7 @@
 
 #include "chemkit.h"
 
+#include <map>
 #include <string>
 #include <vector>
 
@@ -50,7 +51,6 @@
 #include "vector3.h"
 #include "fragment.h"
 #include "conformer.h"
-#include "atommapping.h"
 
 namespace chemkit {
 
@@ -133,7 +133,7 @@ class CHEMKIT_EXPORT Molecule
         bool equals(const Molecule *molecule, CompareFlags flags = CompareFlags()) const;
         bool contains(const Molecule *molecule, CompareFlags flags = CompareFlags()) const;
         bool isSubstructureOf(const Molecule *molecule, CompareFlags flags = CompareFlags()) const;
-        AtomMapping mapping(const Molecule *molecule, CompareFlags flags = CompareFlags()) const;
+        std::map<Atom *, Atom *> mapping(const Molecule *molecule, CompareFlags flags = CompareFlags()) const;
         Moiety find(const Molecule *moiety, CompareFlags flags = CompareFlags()) const;
 
         // ring perception

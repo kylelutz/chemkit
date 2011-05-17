@@ -320,20 +320,16 @@ void MoleculeTest::mapping()
     ethanol.addBond(ethanol_C2, ethanol_O3);
     ethanol.addBond(ethanol_O3, ethanol_H4);
 
-    chemkit::AtomMapping mapping = methanol.mapping(&ethanol);
-    QCOMPARE(mapping.size(), 2);
-    QVERIFY(mapping.source() == &methanol);
-    QVERIFY(mapping.target() == &ethanol);
-    QVERIFY(mapping.map(ethanol_C2) == methanol_C1);
-    QVERIFY(mapping.map(ethanol_O3) == methanol_O2);
+    std::map<chemkit::Atom *, chemkit::Atom *> mapping = methanol.mapping(&ethanol);
+    QVERIFY(mapping.size() == 2);
+    QVERIFY(mapping[methanol_C1] == ethanol_C2);
+    QVERIFY(mapping[methanol_O2] == ethanol_O3);
 
     mapping = methanol.mapping(&ethanol, chemkit::Molecule::CompareHydrogens);
-    QCOMPARE(mapping.size(), 3);
-    QVERIFY(mapping.source() == &methanol);
-    QVERIFY(mapping.target() == &ethanol);
-    QVERIFY(mapping.map(ethanol_C2) == methanol_C1);
-    QVERIFY(mapping.map(ethanol_O3) == methanol_O2);
-    QVERIFY(mapping.map(ethanol_H4) == methanol_H3);
+    QVERIFY(mapping.size() == 3);
+    QVERIFY(mapping[methanol_C1] == ethanol_C2);
+    QVERIFY(mapping[methanol_O2] == ethanol_O3);
+    QVERIFY(mapping[methanol_H3] == ethanol_H4);
 }
 
 void MoleculeTest::find()
