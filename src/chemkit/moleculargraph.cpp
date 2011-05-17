@@ -40,7 +40,6 @@
 #include "ring.h"
 #include "foreach.h"
 #include "molecule.h"
-#include "atommapping.h"
 
 #include <algorithm>
 
@@ -258,12 +257,13 @@ MolecularGraph* MolecularGraph::hydrogenDepletedGraph(const Molecule *molecule)
     return graph;
 }
 
-AtomMapping MolecularGraph::isomorphism(const MolecularGraph *a, const MolecularGraph *b)
+std::map<Atom *, Atom *> MolecularGraph::isomorphism(const MolecularGraph *a, const MolecularGraph *b)
 {
     // if graph 'a' is larger than graph 'b' there cannot
     // be an isomorphism so just return an empty mapping
-    if(a->size() > b->size())
-        return AtomMapping(a->molecule(), b->molecule());
+    if(a->size() > b->size()){
+        return std::map<Atom *, Atom *>();
+    }
 
     return isomorphism_vf2(a, b);
 }

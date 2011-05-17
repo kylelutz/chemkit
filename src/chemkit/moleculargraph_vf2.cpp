@@ -39,7 +39,6 @@
 #include "moleculargraph.h"
 
 #include "foreach.h"
-#include "atommapping.h"
 
 namespace chemkit {
 
@@ -81,7 +80,7 @@ class State
         const MolecularGraph* target() const { return m_target; }
         const Atom* sourceAtom(int index) { return m_source->atom(index); }
         const Atom* targetAtom(int index) { return m_target->atom(index); }
-        AtomMapping mapping() const;
+        std::map<Atom *, Atom *> mapping() const;
         bool succeeded() const;
         void addPair(const std::pair<int, int> &candidate);
         std::pair<int, int> nextCandidate(const std::pair<int, int> &lastCandidate);
@@ -135,13 +134,13 @@ bool State::succeeded() const
     return m_size == m_source->size();
 }
 
-// Returns the current isomorphism for the state in an AtomMapping object.
-AtomMapping State::mapping() const
+// Returns the current isomorphism for the state as a std::map.
+std::map<Atom *, Atom *> State::mapping() const
 {
-    AtomMapping mapping(m_source->molecule(), m_target->molecule());
+    std::map<Atom *, Atom *> mapping;
 
     for(unsigned int i = 0; i < m_size; i++){
-        mapping.add(m_source->atom(i), m_target->atom(m_sharedState->sourceMapping[i]));
+        mapping[m_source->atom(i)] = m_target->atom(m_sharedState->sourceMapping[i]);
     }
 
     return mapping;
@@ -336,7 +335,7 @@ bool State::isFeasible(const std::pair<int, int> &candidate)
            (sourceNewNeighborCount <= targetNewNeighborCount);
 }
 
-bool match(State *state, AtomMapping &mapping)
+bool match(State *state, std::map<Atom *, Atom *> &mapping)
 {
     if(state->succeeded()){
         mapping = state->mapping();
@@ -372,10 +371,10 @@ bool match(State *state, AtomMapping &mapping)
 // graph-graph isomorphisms and graph-subgraph isomorphisms. In the latter case
 // graph 'a' is the subgraph, implying a->size() < b->size(). In the case that
 // no isomorphism is found an empty mapping is returned.
-AtomMapping MolecularGraph::isomorphism_vf2(const MolecularGraph *a, const MolecularGraph *b)
+std::map<Atom *, Atom *> MolecularGraph::isomorphism_vf2(const MolecularGraph *a, const MolecularGraph *b)
 {
     State state(a, b);
-    AtomMapping mapping(a->molecule(), b->molecule());
+    std::map<Atom *, Atom *> mapping;
     match(&state, mapping);
     return mapping;
 }

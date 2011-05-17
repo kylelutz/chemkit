@@ -36,7 +36,6 @@
 #include "moleculargraphtest.h"
 
 #include <chemkit/molecule.h>
-#include <chemkit/atommapping.h>
 #include <chemkit/moleculargraph.h>
 
 void MolecularGraphTest::initTestCase()
@@ -179,10 +178,8 @@ void MolecularGraphTest::isomorphism()
     chemkit::MolecularGraph *benzene = chemkit::MolecularGraph::hydrogenDepletedGraph(m_benzene);
     chemkit::MolecularGraph *tyrosine = chemkit::MolecularGraph::hydrogenDepletedGraph(m_tyrosine);
 
-    chemkit::AtomMapping mapping = chemkit::MolecularGraph::isomorphism(benzene, tyrosine);
-    QVERIFY(mapping.source() == m_benzene);
-    QVERIFY(mapping.target() == m_tyrosine);
-    QCOMPARE(mapping.size(), 6);
+    std::map<chemkit::Atom *, chemkit::Atom *> mapping = chemkit::MolecularGraph::isomorphism(benzene, tyrosine);
+    QVERIFY(mapping.size() == 6);
 
     delete benzene;
     delete tyrosine;

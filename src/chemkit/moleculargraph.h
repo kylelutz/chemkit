@@ -38,6 +38,7 @@
 
 #include "chemkit.h"
 
+#include <map>
 #include <vector>
 
 namespace chemkit {
@@ -47,7 +48,6 @@ class Bond;
 class Ring;
 class Molecule;
 class Fragment;
-class AtomMapping;
 
 class CHEMKIT_EXPORT MolecularGraph
 {
@@ -84,7 +84,7 @@ class CHEMKIT_EXPORT MolecularGraph
         static MolecularGraph* cyclicGraph(const Fragment *fragment);
         static MolecularGraph* cyclicGraph(const std::vector<Atom *> &atoms);
         static MolecularGraph* hydrogenDepletedGraph(const Molecule *molecule);
-        static AtomMapping isomorphism(const MolecularGraph *a, const MolecularGraph *b);
+        static std::map<Atom *, Atom *> isomorphism(const MolecularGraph *a, const MolecularGraph *b);
 
     private:
         MolecularGraph();
@@ -95,7 +95,7 @@ class CHEMKIT_EXPORT MolecularGraph
         static std::vector<Ring *> sssr(const Molecule *molecule);
         static std::vector<Ring *> sssr(const Fragment *fragment);
         static std::vector<Ring *> sssr_rpPath(const MolecularGraph *graph);
-        static AtomMapping isomorphism_vf2(const MolecularGraph *a, const MolecularGraph *b);
+        static std::map<Atom *, Atom *> isomorphism_vf2(const MolecularGraph *a, const MolecularGraph *b);
 
         friend class Molecule;
 

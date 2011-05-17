@@ -52,7 +52,6 @@
 #include "geometry.h"
 #include "lineformat.h"
 #include "quaternion.h"
-#include "atommapping.h"
 #include "coordinates.h"
 #include "moleculargraph.h"
 #include "moleculewatcher.h"
@@ -638,20 +637,12 @@ std::map<Atom *, Atom *> Molecule::mapping(const Molecule *molecule, CompareFlag
         }
     }
 
-    AtomMapping mapping = MolecularGraph::isomorphism(source, target);
+    std::map<Atom *, Atom *> mapping = MolecularGraph::isomorphism(source, target);
 
     delete source;
     delete target;
 
-    std::map<Atom *, Atom *> map;
-    foreach(Atom *atom, m_atoms){
-        const Atom *partner = mapping.map(atom);
-        if(partner){
-            map[atom] = const_cast<Atom *>(partner);
-        }
-    }
-
-    return map;
+    return mapping;
 }
 
 /// Searches the molecule for an occurrence of \p moiety and returns
