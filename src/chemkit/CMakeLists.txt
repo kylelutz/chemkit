@@ -13,7 +13,6 @@ set(HEADERS
   aminoacid.h
   atom.h
   atom-inline.h
-  atommapping.h
   atomtyper.h
   bond.h
   bond-inline.h
@@ -91,7 +90,6 @@ set(SOURCES
   alphashape.cpp
   aminoacid.cpp
   atom.cpp
-  atommapping.cpp
   atomtyper.cpp
   bond.cpp
   bondpredictor.cpp

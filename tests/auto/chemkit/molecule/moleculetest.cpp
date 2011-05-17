@@ -38,7 +38,6 @@
 #include <chemkit/chemkit.h>
 #include <chemkit/molecule.h>
 #include <chemkit/lineformat.h>
-#include <chemkit/atommapping.h>
 
 void MoleculeTest::name()
 {
