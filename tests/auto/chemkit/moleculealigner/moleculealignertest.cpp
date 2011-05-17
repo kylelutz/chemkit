@@ -64,7 +64,7 @@ void MoleculeAlignerTest::water()
     H6->setPosition(0, 1, 0);
 
     chemkit::MoleculeAligner aligner(&water1, &water2);
-    QCOMPARE(aligner.mapping().size(), 3);
+    QVERIFY(aligner.mapping().size() == 3);
     COMPARE_DOUBLES(aligner.deviation(), 1.1547);
 
     aligner.align(&water1);
@@ -100,7 +100,7 @@ void MoleculeAlignerTest::ubiquitin()
     QCOMPARE(molecule->conformerCount(), 10);
 
     chemkit::MoleculeAligner aligner(molecule, molecule);
-    QCOMPARE(aligner.mapping().size(), 1231);
+    QVERIFY(aligner.mapping().size() == 1231);
 
     // verify rmsd values for each conformer
     aligner.setTargetConformer(molecule->conformers()[1]);

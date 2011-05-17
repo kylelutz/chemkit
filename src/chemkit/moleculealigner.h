@@ -38,12 +38,14 @@
 
 #include "chemkit.h"
 
+#include <map>
+
 #include "vector3.h"
-#include "atommapping.h"
 #include "staticmatrix.h"
 
 namespace chemkit {
 
+class Atom;
 class Molecule;
 class Conformer;
 class Coordinates;
@@ -53,15 +55,15 @@ class CHEMKIT_EXPORT MoleculeAligner
 {
     public:
         // construction and destruction
-        MoleculeAligner(const AtomMapping &mapping);
+        MoleculeAligner(const std::map<Atom *, Atom *> &mapping);
         MoleculeAligner(const Molecule *source, const Molecule *target);
         ~MoleculeAligner();
 
         // properties
         const Molecule* sourceMolecule() const;
         const Molecule* targetMolecule() const;
-        void setMapping(const AtomMapping &mapping);
-        const AtomMapping& mapping() const;
+        void setMapping(const std::map<Atom *, Atom *> &mapping);
+        std::map<Atom *, Atom *> mapping() const;
         void setSourceConformer(const Conformer *conformer);
         const Conformer* sourceConformer() const;
         void setTargetConformer(const Conformer *conformer);

@@ -46,8 +46,9 @@ namespace chemkit {
 class MoleculeAlignerPrivate
 {
     public:
-        int size;
-        AtomMapping mapping;
+        std::map<Atom *, Atom *> mapping;
+        const Molecule *sourceMolecule;
+        const Molecule *targetMolecule;
         const Conformer *sourceConformer;
         const Conformer *targetConformer;
 };
@@ -60,13 +61,13 @@ class MoleculeAlignerPrivate
 
 // --- Construction and Destruction ---------------------------------------- //
 /// Create a new molecule aligner object using \p mapping.
-MoleculeAligner::MoleculeAligner(const AtomMapping &mapping)
+MoleculeAligner::MoleculeAligner(const std::map<Atom *, Atom *> &mapping)
     : d(new MoleculeAlignerPrivate)
 {
-    d->mapping = mapping;
+    setMapping(mapping);
+
     d->sourceConformer = 0;
     d->targetConformer = 0;
-    d->size = mapping.size();
 }
 
 /// Create a new molecule aligner object using a mapping between the
@@ -74,13 +75,15 @@ MoleculeAligner::MoleculeAligner(const AtomMapping &mapping)
 MoleculeAligner::MoleculeAligner(const Molecule *source, const Molecule *target)
     : d(new MoleculeAlignerPrivate)
 {
-    d->mapping = AtomMapping(source, target);
+    d->sourceMolecule = source;
+    d->targetMolecule = target;
     d->sourceConformer = 0;
     d->targetConformer = 0;
-    d->size = std::min(source->size(), target->size());
 
-    for(int i = 0; i < d->size; i++){
-        d->mapping.add(source->atom(i), target->atom(i));
+    int size = std::min(source->size(), target->size());
+
+    for(int i = 0; i < size; i++){
+        d->mapping[source->atom(i)] = target->atom(i);
     }
 }
 
@@ -94,23 +97,31 @@ MoleculeAligner::~MoleculeAligner()
 /// Returns the source molecule.
 const Molecule* MoleculeAligner::sourceMolecule() const
 {
-    return d->mapping.source();
+    return d->sourceMolecule;
 }
 
 /// Returns the target molecule.
 const Molecule* MoleculeAligner::targetMolecule() const
 {
-    return d->mapping.target();
+    return d->targetMolecule;
 }
 
 /// Sets the atom mapping to \p mapping.
-void MoleculeAligner::setMapping(const AtomMapping &mapping)
+void MoleculeAligner::setMapping(const std::map<Atom *, Atom *> &mapping)
 {
     d->mapping = mapping;
+
+    if(!mapping.empty()){
+        Atom *a = mapping.begin()->first;
+        Atom *b = mapping.begin()->second;
+
+        d->sourceMolecule = a->molecule();
+        d->targetMolecule = b->molecule();
+    }
 }
 
 /// Returns the atom mapping.
-const AtomMapping& MoleculeAligner::mapping() const
+std::map<Atom *, Atom *> MoleculeAligner::mapping() const
 {
     return d->mapping;
 }
