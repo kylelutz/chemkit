@@ -43,8 +43,6 @@
 #include <istream>
 #include <ostream>
 
-#include <QIODevice>
-
 namespace chemkit {
 
 class PolymerFile;
@@ -64,9 +62,7 @@ class CHEMKIT_EXPORT PolymerFileFormat
 
         // input and output
         virtual bool read(std::istream &input, PolymerFile *file);
-        virtual bool read(QIODevice *iodev, PolymerFile *file);
         virtual bool write(const PolymerFile *file, std::ostream &output);
-        virtual bool write(const PolymerFile *file, QIODevice *iodev);
 
         // error handling
         std::string errorString() const;
