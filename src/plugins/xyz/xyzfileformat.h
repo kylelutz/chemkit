@@ -45,8 +45,8 @@ class XyzFileFormat : public chemkit::MoleculeFileFormat
         XyzFileFormat();
         ~XyzFileFormat();
 
-        bool read(QIODevice *iodev, chemkit::MoleculeFile *file);
-        bool write(const chemkit::MoleculeFile *file, QIODevice *iodev);
+        bool read(std::istream &input, chemkit::MoleculeFile *file);
+        bool write(const chemkit::MoleculeFile *file, std::ostream &output);
 };
 
 #endif // XYZFILEFORMAT_H

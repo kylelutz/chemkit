@@ -35,7 +35,8 @@
 
 #include "xyzfileformat.h"
 
-#include <QtCore>
+#include <iomanip>
+#include <iostream>
 
 #include <chemkit/element.h>
 #include <chemkit/moleculefile.h>
@@ -49,71 +50,80 @@ XyzFileFormat::~XyzFileFormat()
 {
 }
 
-bool XyzFileFormat::read(QIODevice *iodev, chemkit::MoleculeFile *file)
+bool XyzFileFormat::read(std::istream &input, chemkit::MoleculeFile *file)
 {
-    iodev->setTextModeEnabled(true);
+    // atom count line
+    int atomCount = 0;
+    input >> atomCount;
+    input.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
-    bool ok;
-    int atoms_count = iodev->readLine().trimmed().toInt(&ok);
-    if(!ok){
-        setErrorString("First line of XYZ file should contain number of atoms.");
-        return false;
-    }
+    // comment line (unused)
+    std::string commentLine;
+    std::getline(input, commentLine);
+    CHEMKIT_UNUSED(commentLine);
 
-    QString comment_line = iodev->readLine();
-    Q_UNUSED(comment_line);
+    // create molecule
+    chemkit::Molecule *molecule = new chemkit::Molecule;
 
-    chemkit::Molecule *molecule = new chemkit::Molecule();
+    // read atoms and coordinates
+    for(int i = 0; i < atomCount; i++){
+        std::string symbol;
+        double x = 0;
+        double y = 0;
+        double z = 0;
 
-    for(int i = 0; i < atoms_count; i++){
-        QStringList line = QString(iodev->readLine()).simplified().split(' ', QString::SkipEmptyParts);
-        if(line.size() < 4){
-            // line too short
+        input >> symbol >> x >> y >> z;
+        if(input.fail()){
+            input.clear();
+        }
+
+        // add atom from symbol or atomic number
+        chemkit::Atom *atom = 0;
+        if(symbol.empty()){
             continue;
         }
-
-        int atomicNumber;
-
-        // if first character of line is a number then it is the atomic number
-        if(line[0][0].isNumber()){
-            atomicNumber = line[0].toInt();
+        else if(std::isdigit(symbol.at(0))){
+            int atomicNumber = boost::lexical_cast<int>(symbol);
+            atom = molecule->addAtom(atomicNumber);
         }
-        // else we interpret it as an atomic symbol
         else{
-            atomicNumber = chemkit::Element(line[0].toStdString()).atomicNumber();
+            atom = molecule->addAtom(symbol);
         }
 
-        // add the atom if we have a valid atomic number
-        if(chemkit::Element::isValidAtomicNumber(atomicNumber)){
-            chemkit::Atom *atom = molecule->addAtom(atomicNumber);
-            atom->setPosition(line[1].toDouble(), line[2].toDouble(), line[3].toDouble());
+        // set atom position
+        if(atom){
+            atom->setPosition(x, y, z);
         }
     }
 
+    // add molecule to file
     file->addMolecule(molecule);
 
     return true;
 }
 
-bool XyzFileFormat::write(const chemkit::MoleculeFile *file, QIODevice *iodev)
+bool XyzFileFormat::write(const chemkit::MoleculeFile *file, std::ostream &output)
 {
-    iodev->setTextModeEnabled(true);
-
     chemkit::Molecule *molecule = file->molecule();
     if(!molecule){
         setErrorString("No molecule in file.");
         return false;
     }
 
-    iodev->write(QString::number(molecule->atomCount()).toAscii() + "\n"); // atom count line
-    iodev->write("\n");                                                    // comment line
+    // atom count line
+    output << molecule->atomCount() << "\n";
 
+    // comment line
+    output << "\n";
+
+    // atoms and coordinates
     foreach(chemkit::Atom *atom, molecule->atoms()){
-        QString line = QString("%1 %2 %3 %4\n").arg(atom->symbol().c_str())
-                                               .arg(QString::number(atom->x()))
-                                               .arg(QString::number(atom->y()))
-                                               .arg(QString::number(atom->z()));
-        iodev->write(line.toAscii());
+        output << std::showpoint
+               << std::setw(3) << atom->symbol()
+               << std::setw(15) << std::setprecision(5) << atom->x()
+               << std::setw(15) << std::setprecision(5) << atom->y()
+               << std::setw(15) << std::setprecision(5) << atom->z()
+               << "\n";
     }
 
     return true;
