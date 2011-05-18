@@ -36,6 +36,7 @@
 #include "pdbmlfileformat.h"
 
 #include <QtXml>
+#include <QtCore>
 
 #include <chemkit/polymer.h>
 #include <chemkit/aminoacid.h>
@@ -51,10 +52,20 @@ PdbmlFileFormat::~PdbmlFileFormat()
 {
 }
 
-bool PdbmlFileFormat::read(QIODevice *iodev, chemkit::PolymerFile *file)
+bool PdbmlFileFormat::read(std::istream &input, chemkit::PolymerFile *file)
 {
+    QByteArray data;
+    while(!input.eof()){
+        data += input.get();
+    }
+    data.chop(1);
+
+    QBuffer buffer;
+    buffer.setData(data);
+    buffer.open(QBuffer::ReadOnly);
+
     QDomDocument doc;
-    bool ok = doc.setContent(iodev, true);
+    bool ok = doc.setContent(&buffer, true);
     if(!ok){
         setErrorString("PDBML parsing failed.");
         return false;
