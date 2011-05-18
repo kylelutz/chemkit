@@ -35,6 +35,8 @@
 
 #include "pdbfileformat.h"
 
+#include <boost/algorithm/string.hpp>
+
 #include <chemkit/polymer.h>
 #include <chemkit/residue.h>
 #include <chemkit/molecule.h>
@@ -247,7 +249,7 @@ PdbConformation::PdbConformation(const char *data)
 class PdbConformer
 {
     public:
-        PdbConformer(QIODevice *iodev);
+        PdbConformer(std::istream &input);
 
         chemkit::Point3 position(int atom) const;
 
@@ -255,21 +257,26 @@ class PdbConformer
         QHash<int, chemkit::Point3> m_positions;
 };
 
-PdbConformer::PdbConformer(QIODevice *iodev)
+PdbConformer::PdbConformer(std::istream &input)
 {
-    while(!iodev->atEnd()){
-        QString line = iodev->readLine();
+    for(;;){
+        std::string line;
+        std::getline(input, line);
 
-        if(line.startsWith("ATOM")){
-            int id = line.mid(7, 4).toInt();
-
-            chemkit::Point3 position(line.mid(30, 8).toDouble(),
-                                    line.mid(38, 8).toDouble(),
-                                    line.mid(46, 8).toDouble());
-
-            m_positions[id] = position;
+        if(line.empty() || input.eof()){
+            break;
         }
-        else if(line.startsWith("ENDMDL")){
+
+        if(boost::starts_with(line, "ATOM")){
+            int id = boost::lexical_cast<int>(boost::trim_left_copy(line.substr(7, 4)));
+
+            chemkit::Float x = boost::lexical_cast<chemkit::Float>(boost::trim_left_copy(line.substr(30, 8)));
+            chemkit::Float y = boost::lexical_cast<chemkit::Float>(boost::trim_left_copy(line.substr(38, 8)));
+            chemkit::Float z = boost::lexical_cast<chemkit::Float>(boost::trim_left_copy(line.substr(46, 8)));
+
+            m_positions[id] = chemkit::Point3(x, y, z);
+        }
+        else if(boost::starts_with(line, "ENDMDL")){
             break;
         }
     }
@@ -287,7 +294,7 @@ class PdbFile
         PdbFile();
         ~PdbFile();
 
-        bool read(QIODevice *iodev);
+        bool read(std::istream &input);
 
         void addChain(PdbChain *chain);
         void writePolymerFile(chemkit::PolymerFile *file);
@@ -310,22 +317,19 @@ PdbFile::~PdbFile()
     qDeleteAll(m_conformations);
 }
 
-bool PdbFile::read(QIODevice *iodev)
+bool PdbFile::read(std::istream &input)
 {
-    iodev->setTextModeEnabled(true);
-
-    char line[80];
-    int length = 0;
-
     PdbChain *currentChain = 0;
     PdbResidue *currentResidue = 0;
 
-    while(!iodev->atEnd()){
-        length = iodev->readLine(line, 80);
-
-        if(length < 1){
+    for(;;){
+        char line[80];
+        input.read(line, 79);
+        if(input.eof()){
             break;
         }
+
+        input.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
         if(strncmp("ATOM", line, 4) == 0){
             PdbAtom *atom = new PdbAtom(line);
@@ -356,7 +360,7 @@ bool PdbFile::read(QIODevice *iodev)
             m_conformations.append(new PdbConformation(line));
         }
         else if(strncmp("MODEL", line, 5) == 0 && !m_chains.isEmpty()){
-            PdbConformer *conformer = new PdbConformer(iodev);
+            PdbConformer *conformer = new PdbConformer(input);
             m_conformers.append(conformer);
         }
     }
@@ -494,10 +498,10 @@ PdbFileFormat::PdbFileFormat()
 {
 }
 
-bool PdbFileFormat::read(QIODevice *iodev, chemkit::PolymerFile *file)
+bool PdbFileFormat::read(std::istream &input, chemkit::PolymerFile *file)
 {
     PdbFile pdb;
-    bool ok = pdb.read(iodev);
+    bool ok = pdb.read(input);
     if(!ok){
         return false;
     }

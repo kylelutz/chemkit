@@ -36,8 +36,6 @@
 #ifndef PDBFILEFORMAT_H
 #define PDBFILEFORMAT_H
 
-#include <QtCore>
-
 #include <chemkit/polymerfileformat.h>
 
 class PdbFileFormat : public chemkit::PolymerFileFormat
@@ -45,7 +43,7 @@ class PdbFileFormat : public chemkit::PolymerFileFormat
     public:
         PdbFileFormat();
 
-        bool read(QIODevice *iodev, chemkit::PolymerFile *file);
+        bool read(std::istream &input, chemkit::PolymerFile *file);
 };
 
 #endif // PDBFILEFORMAT_H
