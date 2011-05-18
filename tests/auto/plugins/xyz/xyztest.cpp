@@ -75,4 +75,54 @@ void XyzTest::read()
     QCOMPARE(molecule->formula(), formula.toStdString());
 }
 
+void XyzTest::readWriteReadLoop_data()
+{
+    QTest::addColumn<QString>("fileName");
+    QTest::addColumn<QString>("formula");
+
+    QTest::newRow("methane") << "methane.xyz" << "CH4";
+    QTest::newRow("benzene") << "benzene.xyz" << "C6H6";
+}
+
+void XyzTest::readWriteReadLoop()
+{
+    QFETCH(QString, fileName);
+    QFETCH(QString, formula);
+
+    // read file
+    chemkit::MoleculeFile file(dataPath + fileName.toStdString());
+    bool ok = file.read();
+    if(!ok)
+        qDebug() << "Failed to read file: " << file.errorString().c_str();
+    QVERIFY(ok);
+
+    // check molecule
+    QCOMPARE(file.moleculeCount(), 1);
+    chemkit::Molecule *molecule = file.molecule();
+    QVERIFY(molecule != 0);
+    QCOMPARE(molecule->formula(), formula.toStdString());
+
+    // write file
+    std::stringstream string;
+    ok = file.write(string);
+    if(!ok)
+        qDebug() << "Failed to write file: " << file.errorString().c_str();
+    QVERIFY(ok);
+
+    // close file
+    file.clear();
+
+    // re-read file
+    ok = file.read(string, "xyz");
+    if(!ok)
+        qDebug() << "Failed to re-read file: " << file.errorString().c_str();
+    QVERIFY(ok);
+
+    // check molecule
+    QCOMPARE(file.moleculeCount(), 1);
+    molecule = file.molecule();
+    QVERIFY(molecule != 0);
+    QCOMPARE(molecule->formula(), formula.toStdString());
+}
+
 QTEST_APPLESS_MAIN(XyzTest)
