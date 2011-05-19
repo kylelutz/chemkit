@@ -37,6 +37,7 @@
 
 #include <QtXml>
 
+#include <chemkit/molecule.h>
 #include <chemkit/moleculefile.h>
 
 namespace {
@@ -168,10 +169,20 @@ CmlFileFormat::~CmlFileFormat()
 {
 }
 
-bool CmlFileFormat::read(QIODevice *iodev, chemkit::MoleculeFile *file)
+bool CmlFileFormat::read(std::istream &input, chemkit::MoleculeFile *file)
 {
+    QByteArray data;
+    while(!input.eof()){
+        data += input.get();
+    }
+    data.chop(1);
+
+    QBuffer buffer;
+    buffer.setData(data);
+    buffer.open(QBuffer::ReadOnly);
+
     QXmlSimpleReader xml;
-    QXmlInputSource source(iodev);
+    QXmlInputSource source(&buffer);
     CmlHandler handler(file);
     xml.setContentHandler(&handler);
     xml.setErrorHandler(&handler);
@@ -183,9 +194,12 @@ bool CmlFileFormat::read(QIODevice *iodev, chemkit::MoleculeFile *file)
     return ok;
 }
 
-bool CmlFileFormat::write(const chemkit::MoleculeFile *file, QIODevice *iodev)
+bool CmlFileFormat::write(const chemkit::MoleculeFile *file, std::ostream &output)
 {
-    QXmlStreamWriter stream(iodev);
+    QBuffer buffer;
+    buffer.open(QBuffer::WriteOnly);
+
+    QXmlStreamWriter stream(&buffer);
     stream.setAutoFormatting(true);
 
     stream.writeStartDocument();
@@ -220,6 +234,9 @@ bool CmlFileFormat::write(const chemkit::MoleculeFile *file, QIODevice *iodev)
     }
 
     stream.writeEndDocument();
+
+    QByteArray data = buffer.data();
+    output.write(data.constData(), data.size());
 
     return true;
 }

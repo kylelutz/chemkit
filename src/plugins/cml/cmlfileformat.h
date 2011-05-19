@@ -36,9 +36,6 @@
 #ifndef CMLFILEFORMAT_H
 #define CMLFILEFORMAT_H
 
-#include <QtCore>
-
-#include <chemkit/molecule.h>
 #include <chemkit/moleculefileformat.h>
 
 class CmlFileFormat : public chemkit::MoleculeFileFormat
@@ -47,8 +44,8 @@ class CmlFileFormat : public chemkit::MoleculeFileFormat
         CmlFileFormat();
         ~CmlFileFormat();
 
-        bool read(QIODevice *iodev, chemkit::MoleculeFile *file);
-        bool write(const chemkit::MoleculeFile *file, QIODevice *iodev);
+        bool read(std::istream &input, chemkit::MoleculeFile *file);
+        bool write(const chemkit::MoleculeFile *file, std::ostream &output);
 };
 
 #endif // CMLFILEFORMAT_H
