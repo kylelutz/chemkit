@@ -83,6 +83,7 @@ set(HEADERS
   trajectoryframe.h
   unitcell.h
   variant.h
+  variant-inline.h
   vector3.h
 )
 
