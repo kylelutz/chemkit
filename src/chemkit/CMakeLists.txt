@@ -42,6 +42,7 @@ set(HEADERS
   genericvector.h
   genericvector-inline.h
   geometry.h
+  geometry-inline.h
   internalcoordinates.h
   lineformat.h
   matrix.h
