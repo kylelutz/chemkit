@@ -129,7 +129,7 @@ GraphicsVertexBuffer* GraphicsCylinder::tesselate(int slices, int stacks) const
         for(int j = 0; j < slices; j++){
             Point3f lowerPoint = verticies[(i-1)*slices + j];
 
-            verticies.append(lowerPoint.movedBy(0, 0, stackHeight));
+            verticies.append(lowerPoint + Vector3f(0, 0, stackHeight));
         }
     }
 

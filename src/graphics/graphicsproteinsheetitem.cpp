@@ -116,7 +116,7 @@ void GraphicsProteinSheetItem::paint(GraphicsPainter *painter)
         else
             axis = trace[i] - trace[i-1];
 
-        Vector3f right = axis.cross(normal);
+        Vector3f right = axis.cross(normal).normalized();
 
         float halfHeight = height / 2.0;
         float halfWidth = width / 2.0;
@@ -126,26 +126,26 @@ void GraphicsProteinSheetItem::paint(GraphicsPainter *painter)
 
         // top left
         Point3f topLeft = point;
-        topLeft.moveBy(halfHeight, normal);
-        topLeft.moveBy(-halfWidth, right);
+        topLeft += normal * halfHeight;
+        topLeft += right * -halfWidth;
         controlPoints[i*5+0] = topLeft;
 
         // bottom left
         Point3f bottomLeft = point;
-        bottomLeft.moveBy(-halfHeight, normal);
-        bottomLeft.moveBy(-halfWidth, right);
+        bottomLeft += normal * -halfHeight;
+        bottomLeft += right * -halfWidth;
         controlPoints[i*5+1] = bottomLeft;
 
         // bottom right
         Point3f bottomRight = point;
-        bottomRight.moveBy(-halfHeight, normal);
-        bottomRight.moveBy(halfWidth, right);
+        bottomRight += normal * -halfHeight;
+        bottomRight += right * halfWidth;
         controlPoints[i*5+2] = bottomRight;
 
         // top right
         Point3f topRight = point;
-        topRight.moveBy(halfHeight, normal);
-        topRight.moveBy(halfWidth, right);
+        topRight += normal * halfHeight;
+        topRight += right * halfWidth;
         controlPoints[i*5+3] = topRight;
 
         // top left (again)

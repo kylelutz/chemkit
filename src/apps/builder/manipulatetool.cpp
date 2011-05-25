@@ -106,7 +106,7 @@ void ManipulateTool::mouseMoveEvent(QMouseEvent *event)
             int dy = event->y() - m_lastPosition.y();
 
             chemkit::Point3f position = atom->position();
-            position.moveBy(dy * 0.1, -view()->camera()->direction());
+            position += -view()->camera()->direction().normalized() * (dy * 0.1);
             editor()->setAtomPosition(atom, position);
         }
     }

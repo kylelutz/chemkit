@@ -217,9 +217,9 @@ Vector3 ScalarField::gradient(const Point3 &position) const
 {
     Float h = 1.0e-4;
 
-    return Vector3((value(position.movedBy(-h, 0, 0)) - value(position.movedBy(h, 0, 0))) / (2.0 * h),
-                   (value(position.movedBy(0, -h, 0)) - value(position.movedBy(0, h, 0))) / (2.0 * h),
-                   (value(position.movedBy(0, 0, -h)) - value(position.movedBy(0, 0, h))) / (2.0 * h));
+    return Vector3((value(position + Vector3(-h, 0, 0)) - value(position + Vector3(h, 0, 0))) / (2.0 * h),
+                   (value(position + Vector3(0, -h, 0)) - value(position + Vector3(0, h, 0))) / (2.0 * h),
+                   (value(position + Vector3(0, 0, -h)) - value(position + Vector3(0, 0, h))) / (2.0 * h));
 }
 
 } // end chemkit namespace

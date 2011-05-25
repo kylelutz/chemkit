@@ -50,14 +50,6 @@ class GenericPoint : public StaticVector<T, 3>
         GenericPoint(const StaticVector<float, 3> &vector);
         GenericPoint(const StaticVector<double, 3> &vector);
 
-        // properties
-        void moveBy(T dx, T dy, T dz);
-        void moveBy(const StaticVector<T, 3> &vector);
-        void moveBy(T distance, const StaticVector<T, 3> &vector);
-        GenericPoint<T> movedBy(T dx, T dy, T dz) const;
-        GenericPoint<T> movedBy(const StaticVector<T, 3> &vector) const;
-        GenericPoint<T> movedBy(T distance, const StaticVector<T, 3> &direction) const;
-
         // math
         T distance(const GenericPoint<T> &point) const;
         GenericPoint<T> midpoint(const GenericPoint<T> &point) const;

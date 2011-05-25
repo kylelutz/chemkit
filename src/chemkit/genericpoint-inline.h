@@ -81,57 +81,6 @@ inline GenericPoint<T>::GenericPoint(const StaticVector<double, 3> &vector)
 {
 }
 
-// --- Properties ---------------------------------------------------------- //
-/// Moves the point by (\p dx, \p dy, \p dz).
-template<typename T>
-inline void GenericPoint<T>::moveBy(T dx, T dy, T dz)
-{
-    (*this)[0] += dx;
-    (*this)[1] += dy;
-    (*this)[2] += dz;
-}
-
-/// Moves to point by \p vector.
-template<typename T>
-inline void GenericPoint<T>::moveBy(const StaticVector<T, 3> &vector)
-{
-    *this += vector;
-}
-
-/// Removes the point by \p distance along \p direction.
-template<typename T>
-inline void GenericPoint<T>::moveBy(T distance, const StaticVector<T, 3> &direction)
-{
-    *this += direction.normalized().scaled(distance);
-}
-
-/// Returns a new point moved by (\p dx, \p dy, \p dz).
-template<typename T>
-inline GenericPoint<T> GenericPoint<T>::movedBy(T dx, T dy, T dz) const
-{
-    GenericPoint<T> point = *this;
-    point.moveBy(dx, dy, dz);
-    return point;
-}
-
-/// Returns a new point moved by \p vector.
-template<typename T>
-inline GenericPoint<T> GenericPoint<T>::movedBy(const StaticVector<T, 3> &vector) const
-{
-    GenericPoint<T> point = *this;
-    point.moveBy(vector);
-    return point;
-}
-
-/// Returns a new point moved by \p distance along \p direction.
-template<typename T>
-inline GenericPoint<T> GenericPoint<T>::movedBy(T distance, const StaticVector<T, 3> &direction) const
-{
-    GenericPoint<T> point = *this;
-    point.moveBy(distance, direction);
-    return point;
-}
-
 // --- Math ---------------------------------------------------------------- //
 /// Returns the distance between the point and \p point.
 template<typename T>

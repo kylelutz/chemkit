@@ -160,7 +160,7 @@ void GraphicsCamera::moveTo(float x, float y, float z)
 /// Moves the camera by \p vector.
 void GraphicsCamera::moveBy(const Vector3f &vector)
 {
-    setPosition(position().movedBy(vector));
+    setPosition(position() + vector);
 }
 
 /// Moves the camera by (\p dx, \p dy, \p dz).
@@ -172,7 +172,7 @@ void GraphicsCamera::moveBy(float dx, float dy, float dz)
 /// Moves the camera by \p distance in \p direction.
 void GraphicsCamera::moveBy(float distance, const Vector3f &direction)
 {
-    setPosition(position().movedBy(distance, direction));
+    setPosition(position() + (direction.normalized() * distance));
 }
 
 /// Moves the camera fowards by \p distance.

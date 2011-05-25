@@ -197,13 +197,13 @@ Point3 ForceFieldAtom::position() const
 /// Moves the atom's position by \p vector.
 void ForceFieldAtom::moveBy(const Vector3 &vector)
 {
-    d->position.moveBy(vector);
+    d->position += vector;
 }
 
 /// Moves the atom's position by (dx, dy, dz).
 void ForceFieldAtom::moveBy(Float dx, Float dy, Float dz)
 {
-    d->position.moveBy(dx, dy, dz);
+    d->position += Vector3(dx, dy, dz);
 }
 
 } // end chemkit namespace

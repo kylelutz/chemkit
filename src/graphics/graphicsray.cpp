@@ -99,7 +99,7 @@ Vector3f GraphicsRay::direction() const
 /// Returns the point at \p distance from the origin along the ray.
 Point3f GraphicsRay::pointAt(float distance) const
 {
-    return m_origin.movedBy(distance, direction());
+    return m_origin + (direction() * distance);
 }
 
 bool GraphicsRay::intersectsSphere(const Point3f &center, float radius, float *distance) const

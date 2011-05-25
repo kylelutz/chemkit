@@ -152,7 +152,7 @@ void GraphicsPainter::drawCircle(const Point3f &center, float radius, const Vect
     glVertex3f(center.x(), center.y(), center.z());
 
     for(float angle = 0; angle <= 360; angle += 10){
-        Point3f point = center.movedBy(radius, chemkit::geometry::rotate(right, normal, angle));
+        Point3f point = center + (chemkit::geometry::rotate(right, normal, angle).normalized() * radius);
 
         glNormal3f(normal.x(), normal.y(), normal.z());
         glVertex3f(point.x(), point.y(), point.z());
@@ -236,40 +236,40 @@ void GraphicsPainter::drawSpline(const QList<Point3f> &points, float radius, int
         const Point3f &point = points.at(i);
 
         Vector3f upVector = upVectors[i];
-        Vector3f rightVector = upVector.cross(axisVectors[i]);
+        Vector3f rightVector = upVector.cross(axisVectors[i]).normalized();
 
         // 8 points around a square surrounding point
 
         // right
-        Point3f right = point.movedBy(radius, rightVector);
+        Point3f right = point + (rightVector * radius);
         controlPoints[i*9+0] = right;
 
         // bottom right
-        Point3f bottomRight = right.movedBy(-radius, upVector);
+        Point3f bottomRight = right + (upVector * -radius);
         controlPoints[i*9+1] = bottomRight;
 
         // bottom
-        Point3f bottom = point.movedBy(-radius, upVector);
+        Point3f bottom = point + (upVector * -radius);
         controlPoints[i*9+2] = bottom;
 
         // bottom left
-        Point3f bottomLeft = bottom.movedBy(-radius, rightVector);
+        Point3f bottomLeft = bottom + (rightVector * -radius);
         controlPoints[i*9+3] = bottomLeft;
 
         // left
-        Point3f left = point.movedBy(-radius, rightVector);
+        Point3f left = point + (rightVector * -radius);
         controlPoints[i*9+4] = left;
 
         // top left
-        Point3f topLeft = left.movedBy(radius, upVector);
+        Point3f topLeft = left + (upVector * radius);
         controlPoints[i*9+5] = topLeft;
 
         // top
-        Point3f top = point.movedBy(radius, upVector);
+        Point3f top = point + (upVector * radius);
         controlPoints[i*9+6] = top;
 
         // top right
-        Point3f topRight = top.movedBy(radius, rightVector);
+        Point3f topRight = top + (rightVector * radius);
         controlPoints[i*9+7] = topRight;
 
         // right (again)

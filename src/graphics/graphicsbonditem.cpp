@@ -220,8 +220,8 @@ void GraphicsBondItem::paint(GraphicsPainter *painter)
         Vector3f right = Vector3f(Point3f(atom2->position()) - Point3f(atom1->position())).cross(d->normal);
 
         // positions for the first cylinder
-        Point3f a = Point3f(atom1->position()).movedBy(-initialOffset, right);
-        Point3f b = Point3f(atom2->position()).movedBy(-initialOffset, right);
+        Point3f a = Point3f(atom1->position()) + (right.normalized() * -initialOffset);
+        Point3f b = Point3f(atom2->position()) + (right.normalized() * -initialOffset);
 
         // draw each cylinder
         for(int i = 0; i < bondOrder; i++){
@@ -244,8 +244,8 @@ void GraphicsBondItem::paint(GraphicsPainter *painter)
             }
 
             // move the positions for the next cylinder
-            a.moveBy(offset, right);
-            b.moveBy(offset, right);
+            a += right.normalized() * offset;
+            b += right.normalized() * offset;
         }
     }
 
