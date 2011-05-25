@@ -36,5 +36,58 @@
 #include "moietytest.h"
 
 #include <chemkit/moiety.h>
+#include <chemkit/molecule.h>
+#include <vector>
+
+void MoietyTest::size()
+{
+    chemkit::Molecule* molecule = new chemkit::Molecule;
+    chemkit::Atom* atomH = molecule->addAtom("H");
+    chemkit::Atom* atomC = molecule->addAtom("C");
+    std::vector<chemkit::Atom*> moietyAtoms;
+    moietyAtoms.push_back(atomH);
+    moietyAtoms.push_back(atomC);
+    chemkit::Moiety moiety(moietyAtoms);
+    int size = moiety.size();
+    QCOMPARE(size, 2);
+
+    QCOMPARE(chemkit::Moiety().size(),0);
+
+    delete molecule;
+}
+
+void MoietyTest::isEmpty()
+{
+    chemkit::Molecule* molecule = new chemkit::Molecule;
+    chemkit::Atom* atomH = molecule->addAtom("H");
+    chemkit::Atom* atomC = molecule->addAtom("C");
+    std::vector<chemkit::Atom*> moietyAtoms;
+    moietyAtoms.push_back(atomH);
+    moietyAtoms.push_back(atomC);
+    chemkit::Moiety moiety(moietyAtoms);
+    QCOMPARE(moiety.isEmpty(), false);
+
+    QCOMPARE(chemkit::Moiety().isEmpty(),true);
+
+    delete molecule;
+}
+
+void MoietyTest::atomCount()
+{
+    chemkit::Molecule* molecule = new chemkit::Molecule;
+    chemkit::Atom* atomH = molecule->addAtom("H");
+    chemkit::Atom* atomC = molecule->addAtom("C");
+    std::vector<chemkit::Atom*> moietyAtoms;
+    moietyAtoms.push_back(atomH);
+    moietyAtoms.push_back(atomC);
+    chemkit::Moiety moiety(moietyAtoms);
+    QCOMPARE(moiety.atomCount(), 2);
+
+    QCOMPARE(chemkit::Moiety().atomCount(),0);
+
+    delete molecule;
+}
+
+
 
 QTEST_APPLESS_MAIN(MoietyTest)
