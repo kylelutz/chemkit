@@ -81,7 +81,7 @@ template<typename T, int N>
 inline StaticVector<T, N>::StaticVector(const StaticVector<float, N> &vector)
 {
     for(int i = 0; i < N; i++){
-        m_data[i] = vector.value(i);
+        m_data[i] = vector[i];
     }
 }
 
@@ -89,58 +89,37 @@ template<typename T, int N>
 inline StaticVector<T, N>::StaticVector(const StaticVector<double, N> &vector)
 {
     for(int i = 0; i < N; i++){
-        m_data[i] = vector.value(i);
+        m_data[i] = vector[i];
     }
 }
 
 // --- Properties ---------------------------------------------------------- //
-/// Sets the value of the component at \p index to \p value.
-template<typename T, int N>
-inline void StaticVector<T, N>::setValue(int index, T value)
-{
-    m_data[index] = value;
-}
-
-/// Returns the value of the component at \p index.
-template<typename T, int N>
-inline T StaticVector<T, N>::value(int index) const
-{
-    return m_data[index];
-}
-
-/// \overload
-template<typename T, int N>
-inline T& StaticVector<T, N>::value(int index)
-{
-    return m_data[index];
-}
-
 /// Returns the x component of the vector.
 template<typename T, int N>
 inline T StaticVector<T, N>::x() const
 {
-    return N > 0 ? value(0) : 0;
+    return N > 0 ? (*this)[0] : 0;
 }
 
 /// Returns the y component of the vector.
 template<typename T, int N>
 inline T StaticVector<T, N>::y() const
 {
-    return N > 1 ? value(1) : 0;
+    return N > 1 ? (*this)[1] : 0;
 }
 
 /// Returns the z component of the vector.
 template<typename T, int N>
 inline T StaticVector<T, N>::z() const
 {
-    return N > 2 ? value(2) : 0;
+    return N > 2 ? (*this)[2] : 0;
 }
 
 /// Returns the w component of the vector.
 template<typename T, int N>
 inline T StaticVector<T, N>::w() const
 {
-    return N > 3 ? value(3) : 0;
+    return N > 3 ? (*this)[3] : 0;
 }
 
 /// Returns the size of the vector.
@@ -155,7 +134,7 @@ template<typename T, int N>
 inline bool StaticVector<T, N>::isZero() const
 {
     for(int i = 0; i < N; i++){
-        if(value(i) != 0.0){
+        if(m_data[i] != 0.0){
             return false;
         }
     }
@@ -188,7 +167,7 @@ inline StaticVector<T, N> StaticVector<T, N>::add(const StaticVector<T, N> &vect
     StaticVector<T, N> product;
 
     for(int i = 0; i < N; i++){
-        product[i] = value(i) + vector[i];
+        product[i] = m_data[i] + vector[i];
     }
 
     return product;
@@ -204,7 +183,7 @@ inline StaticVector<T, N> StaticVector<T, N>::subtract(const StaticVector<T, N> 
     StaticVector<T, N> product;
 
     for(int i = 0; i < N; i++){
-        product[i] = value(i) - vector[i];
+        product[i] = m_data[i] - vector[i];
     }
 
     return product;
@@ -220,7 +199,7 @@ inline T StaticVector<T, N>::dot(const StaticVector<T, N> &vector) const
     T product = 0;
 
     for(int i = 0; i < N; i++){
-        product += value(i) * vector[i];
+        product += m_data[i] * vector[i];
     }
 
     return product;
@@ -277,7 +256,7 @@ inline T StaticVector<T, N>::norm() const
     T product = 0;
 
     for(int i = 0; i < N; i++){
-        product += value(i) * value(i);
+        product += m_data[i] * m_data[i];
     }
 
     return sqrt(product);
@@ -293,7 +272,7 @@ inline T StaticVector<T, N>::squaredNorm() const
     T product = 0;
 
     for(int i = 0; i < N; i++){
-        product += value(i) * value(i);
+        product += m_data[i] * m_data[i];
     }
 
     return product;
@@ -320,7 +299,7 @@ template<typename T, int N>
 inline void StaticVector<T, N>::scale(T scalar)
 {
     for(int i = 0; i < N; i++){
-        value(i) *= scalar;
+        m_data[i] *= scalar;
     }
 }
 
@@ -360,7 +339,7 @@ inline T StaticVector<T, N>::angleRadians(const StaticVector<T, N> &vector) cons
 template<typename T, int N>
 inline T StaticVector<T, N>::operator[](int index) const
 {
-    return value(index);
+    return m_data[index];
 }
 
 /// Returns the value of the component at \p index.
@@ -369,7 +348,7 @@ inline T StaticVector<T, N>::operator[](int index) const
 template<typename T, int N>
 inline T& StaticVector<T, N>::operator[](int index)
 {
-    return value(index);
+    return m_data[index];
 }
 
 /// Returns the sum of the vector and \p vector.
@@ -468,7 +447,7 @@ template<typename T, int N>
 inline bool StaticVector<T, N>::operator==(const StaticVector<T, N> &vector) const
 {
     for(int i = 0; i < N; i++){
-        if(std::abs(value(i) - vector[i]) > std::numeric_limits<T>::epsilon()){
+        if(std::abs(m_data[i] - vector[i]) > std::numeric_limits<T>::epsilon()){
             return false;
         }
     }

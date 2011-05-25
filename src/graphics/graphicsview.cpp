@@ -411,7 +411,7 @@ Point3f GraphicsView::unproject(qreal x, qreal y, qreal z) const
     // map to object-space coordinates
     GraphicsTransform transform = projectionTransform() * modelViewTransform();
     point = transform.inverseMultiply(point);
-    point.scale(1.0 / point.value(3));
+    point.scale(1.0 / point[3]);
 
     return Point3f(point[0], point[1], point[2]);
 }

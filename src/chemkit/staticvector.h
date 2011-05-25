@@ -54,9 +54,6 @@ class StaticVector
         StaticVector(const StaticVector<double, N> &vector);
 
         // properties
-        void setValue(int index, T value);
-        T value(int index) const;
-        T& value(int index);
         T x() const;
         T y() const;
         T z() const;

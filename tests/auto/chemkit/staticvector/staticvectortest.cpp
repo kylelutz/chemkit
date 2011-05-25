@@ -40,12 +40,12 @@
 void StaticVectorTest::value()
 {
     chemkit::StaticVector<float, 3> vector;
-    vector.setValue(0, 3.0f);
-    vector.setValue(1, 6.0f);
-    vector.setValue(2, 9.0f);
-    QCOMPARE(vector.value(0), 3.0f);
-    QCOMPARE(vector.value(1), 6.0f);
-    QCOMPARE(vector.value(2), 9.0f);
+    vector[0] = 3.0f;
+    vector[1] = 6.0f;
+    vector[2] = 9.0f;
+    QCOMPARE(vector[0], 3.0f);
+    QCOMPARE(vector[1], 6.0f);
+    QCOMPARE(vector[2], 9.0f);
 }
 
 void StaticVectorTest::isZero()
@@ -53,10 +53,10 @@ void StaticVectorTest::isZero()
     chemkit::StaticVector<float, 3> vector;
     QCOMPARE(vector.isZero(), true);
 
-    vector.setValue(1, 1.0f);
+    vector[1] = 1.0f;
     QCOMPARE(vector.isZero(), false);
 
-    vector.setValue(1, 0.0f);
+    vector[1] = 0.0f;
     QCOMPARE(vector.isZero(), true);
 }
 
