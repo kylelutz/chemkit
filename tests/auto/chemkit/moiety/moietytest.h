@@ -43,6 +43,9 @@ class MoietyTest : public QObject
     Q_OBJECT
 
     private slots:
+        void size();
+        void isEmpty();
+        void atomCount();
 };
 
 #endif // MOIETYTEST_H
