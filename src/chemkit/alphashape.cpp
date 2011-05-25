@@ -286,7 +286,7 @@ bool AlphaShape::vertexAttached(int i, int j) const
     Float wa = weight(i);
     Float wb = weight(j);
 
-    return (a - b).normSquared() + wa - wb < 0;
+    return (a - b).squaredNorm() + wa - wb < 0;
 }
 
 /// Returns \c true if the edge (i, j) is attached to vertex k.
@@ -303,7 +303,7 @@ bool AlphaShape::edgeAttached(int i, int j, int k) const
     Point3 center = chemkit::geometry::orthocenter(a, b, wa, wb);
     Float radius = chemkit::geometry::orthoradius(a, b, wa, wb);
 
-    return (center - c).normSquared() - radius - wc < 0;
+    return (center - c).squaredNorm() - radius - wc < 0;
 }
 
 /// Returns \c true if the triangle (\p i, \p j, \p k) is attached
@@ -323,7 +323,7 @@ bool AlphaShape::triangleAttached(int i, int j, int k, int l) const
     Point3 center = chemkit::geometry::orthocenter(a, b, c, wa, wb, wc);
     Float radius = chemkit::geometry::orthoradius(a, b, c, wa, wb, wc);
 
-    return (center - d).normSquared() - radius - wd < 0;
+    return (center - d).squaredNorm() - radius - wd < 0;
 }
 
 /// Returns \c true if the triangle (\p i, \p j, \p k) is attached
@@ -345,11 +345,11 @@ bool AlphaShape::triangleAttached(int i, int j, int k, int l, int m) const
     Point3 center = chemkit::geometry::orthocenter(a, b, c, wa, wb, wc);
     Float radius = chemkit::geometry::orthoradius(a, b, c, wa, wb, wc);
 
-    if((center - d).normSquared() - radius - wd < 0){
+    if((center - d).squaredNorm() - radius - wd < 0){
         return true;
     }
 
-    if((center - e).normSquared() - radius - we < 0){
+    if((center - e).squaredNorm() - radius - we < 0){
         return true;
     }
 

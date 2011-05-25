@@ -74,7 +74,7 @@ class StaticVector
         T scalarTriple(const StaticVector<T, N> &a, const StaticVector<T, N> &b) const;
         StaticVector<T, N> vectorTriple(const StaticVector<T, N> &a, const StaticVector<T, N> &b) const;
         T norm() const;
-        T normSquared() const;
+        T squaredNorm() const;
         void normalize();
         StaticVector<T, N> normalized() const;
         void scale(T scalar);

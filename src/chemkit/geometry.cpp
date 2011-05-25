@@ -78,7 +78,7 @@ Float distance(const Point3 &a, const Point3 &b)
 /// \p b.
 Float distanceSquared(const Point3 &a, const Point3 &b)
 {
-    return (a - b).normSquared();
+    return (a - b).squaredNorm();
 }
 
 /// Returns the angle between the vectors (\p a, \p b) and (\p b,
@@ -201,7 +201,7 @@ Float circumradius(const Point3 &a, const Point3 &b, const Point3 &c, const Poin
 /// points (a, b).
 Point3 orthocenter(const Point3 &a, const Point3 &b, Float wa, Float wb)
 {
-    double l = (1.0/2.0) - ((wa - wb) / (2.0 * (a - b).normSquared()));
+    double l = (1.0/2.0) - ((wa - wb) / (2.0 * (a - b).squaredNorm()));
 
     return a.scaled(l) + b.scaled(1.0 - l);
 }
@@ -327,7 +327,7 @@ Float orthoradius(const Point3 &a, const Point3 &b, Float wa, Float wb)
 {
     Vector3d ap = a - orthocenter(a, b, wa, wb);
 
-    return ap.normSquared() - wa;
+    return ap.squaredNorm() - wa;
 }
 
 /// Returns the radius of a point orthogonal to the triangle
@@ -337,8 +337,8 @@ Float orthoradius(const Point3 &a, const Point3 &b, const Point3 &c, Float wa, F
     Vector3d r = a - c;
     Vector3d s = b - c;
 
-    double r2 = r.normSquared() + (wc - wa);
-    double s2 = s.normSquared() + (wc - wb);
+    double r2 = r.squaredNorm() + (wc - wa);
+    double s2 = s.squaredNorm() + (wc - wb);
 
     // m1 = | (|r|^2 + (wc - wa)) r.y |
     //      | (|s|^2 + (wc - wb)) s.y |
@@ -365,15 +365,15 @@ Float orthoradius(const Point3 &a, const Point3 &b, const Point3 &c, const Point
     Vector3d u = b - d;
     Vector3d v = c - d;
 
-    Vector3d i = u.cross(v).scaled(t.normSquared() + (wd - wa));
-    Vector3d j = v.cross(t).scaled(u.normSquared() + (wd - wb));
-    Vector3d k = t.cross(u).scaled(v.normSquared() + (wd - wc));
+    Vector3d i = u.cross(v).scaled(t.squaredNorm() + (wd - wa));
+    Vector3d j = v.cross(t).scaled(u.squaredNorm() + (wd - wb));
+    Vector3d k = t.cross(u).scaled(v.squaredNorm() + (wd - wc));
 
     Vector3d l = i + j + k;
 
     double V = tetrahedronVolume(a, b, c, d);
 
-    return l.normSquared() / (144.0 * V*V) - wd;
+    return l.squaredNorm() / (144.0 * V*V) - wd;
 }
 
 /// Returns the area of the triangle with verticies (\p a, \p b,

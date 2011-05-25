@@ -461,7 +461,7 @@ Float ForceField::rootMeanSquareGradient() const
     std::vector<Vector3> gradient = this->gradient();
 
     for(unsigned int i = 0; i < gradient.size(); i++){
-        sum += gradient[i].normSquared();
+        sum += gradient[i].squaredNorm();
     }
 
     return sqrt(sum / (3.0 * size()));

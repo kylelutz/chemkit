@@ -285,10 +285,10 @@ inline T StaticVector<T, N>::norm() const
 
 /// Returns the squared norm of the vector.
 ///
-/// The expression \c a.normSquared() will return the result of
+/// The expression \c a.squaredNorm() will return the result of
 /// \f$ \left|a\right|^{2} \f$.
 template<typename T, int N>
-inline T StaticVector<T, N>::normSquared() const
+inline T StaticVector<T, N>::squaredNorm() const
 {
     T product = 0;
 
