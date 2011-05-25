@@ -46,7 +46,7 @@ class Point3Test : public QObject
         void basic();
         void moveBy();
         void movedBy();
-        void isNull();
+        void isZero();
         void distance();
         void midpoint();
 };

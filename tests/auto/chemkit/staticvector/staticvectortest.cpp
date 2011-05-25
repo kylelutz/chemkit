@@ -48,16 +48,16 @@ void StaticVectorTest::value()
     QCOMPARE(vector.value(2), 9.0f);
 }
 
-void StaticVectorTest::isNull()
+void StaticVectorTest::isZero()
 {
     chemkit::StaticVector<float, 3> vector;
-    QCOMPARE(vector.isNull(), true);
+    QCOMPARE(vector.isZero(), true);
 
     vector.setValue(1, 1.0f);
-    QCOMPARE(vector.isNull(), false);
+    QCOMPARE(vector.isZero(), false);
 
     vector.setValue(1, 0.0f);
-    QCOMPARE(vector.isNull(), true);
+    QCOMPARE(vector.isZero(), true);
 }
 
 void StaticVectorTest::commaInitializer()

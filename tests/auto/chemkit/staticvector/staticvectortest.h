@@ -44,7 +44,7 @@ class StaticVectorTest : public QObject
 
     private slots:
         void value();
-        void isNull();
+        void isZero();
         void commaInitializer();
         void dot();
         void cross();

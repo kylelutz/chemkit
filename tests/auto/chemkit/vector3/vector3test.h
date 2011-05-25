@@ -46,7 +46,7 @@ class Vector3Test : public QObject
         void constructor();
         void value();
         void norm();
-        void isNull();
+        void isZero();
         void normalize();
 };
 

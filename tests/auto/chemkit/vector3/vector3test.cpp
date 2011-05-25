@@ -82,13 +82,13 @@ void Vector3Test::norm()
     QCOMPARE(qRound(vector.norm()), 1);
 }
 
-void Vector3Test::isNull()
+void Vector3Test::isZero()
 {
-    chemkit::Vector3 vector;
-    QCOMPARE(vector.isNull(), true);
+    chemkit::Vector3 vector(0, 0, 0);
+    QCOMPARE(vector.isZero(), true);
 
     vector = chemkit::Vector3(1, 2, 3);
-    QCOMPARE(vector.isNull(), false);
+    QCOMPARE(vector.isZero(), false);
 }
 
 void Vector3Test::normalize()

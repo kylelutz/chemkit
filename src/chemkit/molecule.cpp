@@ -993,7 +993,7 @@ void Molecule::rotate(const Vector3 &axis, Float angle)
 bool Molecule::hasCoordinates() const
 {
     foreach(const Atom *atom, m_atoms){
-        if(!atom->position().isNull()){
+        if(!atom->position().isZero()){
             return true;
         }
     }

@@ -152,7 +152,7 @@ inline int StaticVector<T, N>::size() const
 
 /// Returns \c true if the vector contains all zeros.
 template<typename T, int N>
-inline bool StaticVector<T, N>::isNull() const
+inline bool StaticVector<T, N>::isZero() const
 {
     for(int i = 0; i < N; i++){
         if(value(i) != 0.0){

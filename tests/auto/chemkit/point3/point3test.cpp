@@ -58,16 +58,16 @@ void Point3Test::movedBy()
 {
 }
 
-void Point3Test::isNull()
+void Point3Test::isZero()
 {
-    chemkit::Point3 point;
-    QCOMPARE(point.isNull(), true);
+    chemkit::Point3 point(0, 0, 0);
+    QCOMPARE(point.isZero(), true);
 
     point = chemkit::Point3(1, 2, 3);
-    QCOMPARE(point.isNull(), false);
+    QCOMPARE(point.isZero(), false);
 
     point = chemkit::Point3(0, 0, 0);
-    QCOMPARE(point.isNull(), true);
+    QCOMPARE(point.isZero(), true);
 }
 
 void Point3Test::distance()

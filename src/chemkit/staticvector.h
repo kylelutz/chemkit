@@ -62,7 +62,7 @@ class StaticVector
         T z() const;
         T w() const;
         int size() const;
-        bool isNull() const;
+        bool isZero() const;
         T* data();
         const T* data() const;
 
