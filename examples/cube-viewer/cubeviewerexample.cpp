@@ -269,7 +269,7 @@ chemkit::ScalarField* CubeViewerExample::readVolumeData(const QString &fileName)
 
     std::vector<chemkit::Float> cellLengths(3);
     for(int i = 0; i < 3; i++){
-        cellLengths[i] = axes[i].length();
+        cellLengths[i] = axes[i].norm();
     }
 
     chemkit::ScalarField *scalarField = new chemkit::ScalarField(dimensions, cellLengths, volumeData);

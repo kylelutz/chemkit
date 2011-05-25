@@ -70,16 +70,16 @@ void Vector3Test::value()
     QCOMPARE(qRound(vector.value(0)), 3);
 }
 
-void Vector3Test::length()
+void Vector3Test::norm()
 {
     chemkit::Vector3 vector;
-    QCOMPARE(qRound(vector.length()), 0);
+    QCOMPARE(qRound(vector.norm()), 0);
 
     vector = chemkit::Vector3(1, 0, 0);
     QCOMPARE(qRound(vector.x()), 1);
     QCOMPARE(qRound(vector.y()), 0);
     QCOMPARE(qRound(vector.z()), 0);
-    QCOMPARE(qRound(vector.length()), 1);
+    QCOMPARE(qRound(vector.norm()), 1);
 }
 
 void Vector3Test::isNull()
@@ -94,16 +94,16 @@ void Vector3Test::isNull()
 void Vector3Test::normalize()
 {
     chemkit::Vector3 vector(2, 0, 0);
-    QCOMPARE(qRound(vector.length()), 2);
+    QCOMPARE(qRound(vector.norm()), 2);
 
     vector.normalize();
-    QCOMPARE(qRound(vector.length()), 1);
+    QCOMPARE(qRound(vector.norm()), 1);
     QCOMPARE(qRound(vector.x()), 1);
 
     chemkit::Vector3 nullVector;
-    QCOMPARE(qRound(nullVector.length()), 0);
+    QCOMPARE(qRound(nullVector.norm()), 0);
     nullVector.normalize();
-    QCOMPARE(qRound(nullVector.length()), 0);
+    QCOMPARE(qRound(nullVector.norm()), 0);
 }
 
 QTEST_APPLESS_MAIN(Vector3Test)

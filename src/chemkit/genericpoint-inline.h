@@ -137,7 +137,7 @@ inline GenericPoint<T> GenericPoint<T>::movedBy(T distance, const StaticVector<T
 template<typename T>
 inline T GenericPoint<T>::distance(const GenericPoint<T> &point) const
 {
-    return (*this - point).length();
+    return (*this - point).norm();
 }
 
 /// Returns a point midway between the point and \p point.

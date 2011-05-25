@@ -173,8 +173,8 @@ inline std::vector<Vector3> ForceFieldCalculation::torsionAngleGradientRadians(c
     Vector3 m = ab.cross(cb);
     Vector3 n = cb.cross(cd);
 
-    Vector3 p = ((n / (m.length() * n.length())) - ((m / m.lengthSquared()) * cos(phi)));
-    Vector3 q = ((m / (m.length() * n.length())) - ((n / n.lengthSquared()) * cos(phi)));
+    Vector3 p = ((n / (m.norm() * n.norm())) - ((m / m.normSquared()) * cos(phi)));
+    Vector3 q = ((m / (m.norm() * n.norm())) - ((n / n.normSquared()) * cos(phi)));
 
     gradient[0] = cb.cross(p) * (1.0 / sin(phi));
     gradient[1] = (ac.cross(p) - cd.cross(q)) * (1.0 / sin(phi));
@@ -226,9 +226,9 @@ inline std::vector<Vector3> ForceFieldCalculation::wilsonAngleGradientRadians(co
     Vector3 bc = c - b;
     Vector3 bd = d - b;
 
-    Float rba = ba.length();
-    Float rbc = bc.length();
-    Float rbd = bd.length();
+    Float rba = ba.norm();
+    Float rbc = bc.norm();
+    Float rbd = bd.norm();
 
     ba.normalize();
     bc.normalize();

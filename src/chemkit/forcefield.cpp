@@ -440,7 +440,7 @@ Float ForceField::largestGradient() const
     std::vector<Vector3> gradient = this->gradient();
 
     for(unsigned int i = 0; i < gradient.size(); i++){
-        Float length = gradient[i].length();
+        Float length = gradient[i].norm();
 
         if(length > largest)
             largest = length;
@@ -461,7 +461,7 @@ Float ForceField::rootMeanSquareGradient() const
     std::vector<Vector3> gradient = this->gradient();
 
     for(unsigned int i = 0; i < gradient.size(); i++){
-        sum += gradient[i].lengthSquared();
+        sum += gradient[i].normSquared();
     }
 
     return sqrt(sum / (3.0 * size()));

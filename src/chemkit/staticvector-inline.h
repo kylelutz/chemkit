@@ -299,20 +299,6 @@ inline T StaticVector<T, N>::normSquared() const
     return product;
 }
 
-/// Returns the length of the vector.
-template<typename T, int N>
-inline T StaticVector<T, N>::length() const
-{
-    return norm();
-}
-
-/// Returns the length squared of the vector.
-template<typename T, int N>
-inline T StaticVector<T, N>::lengthSquared() const
-{
-    return normSquared();
-}
-
 /// Normalizes the vector.
 template<typename T, int N>
 inline void StaticVector<T, N>::normalize()

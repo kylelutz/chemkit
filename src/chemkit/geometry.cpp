@@ -201,7 +201,7 @@ Float circumradius(const Point3 &a, const Point3 &b, const Point3 &c, const Poin
 /// points (a, b).
 Point3 orthocenter(const Point3 &a, const Point3 &b, Float wa, Float wb)
 {
-    double l = (1.0/2.0) - ((wa - wb) / (2.0 * (a - b).lengthSquared()));
+    double l = (1.0/2.0) - ((wa - wb) / (2.0 * (a - b).normSquared()));
 
     return a.scaled(l) + b.scaled(1.0 - l);
 }
@@ -327,7 +327,7 @@ Float orthoradius(const Point3 &a, const Point3 &b, Float wa, Float wb)
 {
     Vector3d ap = a - orthocenter(a, b, wa, wb);
 
-    return ap.lengthSquared() - wa;
+    return ap.normSquared() - wa;
 }
 
 /// Returns the radius of a point orthogonal to the triangle
@@ -337,8 +337,8 @@ Float orthoradius(const Point3 &a, const Point3 &b, const Point3 &c, Float wa, F
     Vector3d r = a - c;
     Vector3d s = b - c;
 
-    double r2 = r.lengthSquared() + (wc - wa);
-    double s2 = s.lengthSquared() + (wc - wb);
+    double r2 = r.normSquared() + (wc - wa);
+    double s2 = s.normSquared() + (wc - wb);
 
     // m1 = | (|r|^2 + (wc - wa)) r.y |
     //      | (|s|^2 + (wc - wb)) s.y |
@@ -352,7 +352,7 @@ Float orthoradius(const Point3 &a, const Point3 &b, const Point3 &c, Float wa, F
     //      | (|s|^2 + (wc - wb)) s.z |
     double m3 = r2 * s.z() - s2 * r.z();
 
-    double A = r.cross(s).length() / 2.0;
+    double A = r.cross(s).norm() / 2.0;
 
     return (m1*m1 + m2*m2 + m3*m3) / (16.0 * A*A) - wc;
 }
@@ -365,22 +365,22 @@ Float orthoradius(const Point3 &a, const Point3 &b, const Point3 &c, const Point
     Vector3d u = b - d;
     Vector3d v = c - d;
 
-    Vector3d i = u.cross(v).scaled(t.lengthSquared() + (wd - wa));
-    Vector3d j = v.cross(t).scaled(u.lengthSquared() + (wd - wb));
-    Vector3d k = t.cross(u).scaled(v.lengthSquared() + (wd - wc));
+    Vector3d i = u.cross(v).scaled(t.normSquared() + (wd - wa));
+    Vector3d j = v.cross(t).scaled(u.normSquared() + (wd - wb));
+    Vector3d k = t.cross(u).scaled(v.normSquared() + (wd - wc));
 
     Vector3d l = i + j + k;
 
     double V = tetrahedronVolume(a, b, c, d);
 
-    return l.lengthSquared() / (144.0 * V*V) - wd;
+    return l.normSquared() / (144.0 * V*V) - wd;
 }
 
 /// Returns the area of the triangle with verticies (\p a, \p b,
 /// \p c).
 Float triangleArea(const Point3 &a, const Point3 &b, const Point3 &c)
 {
-    return (1.0/2.0) * (b - a).cross(c - a).length();
+    return (1.0/2.0) * (b - a).cross(c - a).norm();
 }
 
 /// Returns the volume of the tetrahedron with verticies (\p a, \p b,

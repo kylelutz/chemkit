@@ -45,7 +45,7 @@ class Vector3Test : public QObject
     private slots:
         void constructor();
         void value();
-        void length();
+        void norm();
         void isNull();
         void normalize();
 };
