@@ -67,16 +67,6 @@ inline StaticVector<T, N>::StaticVector()
     }
 }
 
-/// Creates a new vector from \p data. The \p data pointer must
-/// contain \p size number of items.
-template<typename T, int N>
-inline StaticVector<T, N>::StaticVector(const T *data, int size)
-{
-    for(int i = 0; i < size; i++){
-        m_data[i] = data[i];
-    }
-}
-
 template<typename T, int N>
 inline StaticVector<T, N>::StaticVector(const StaticVector<float, N> &vector)
 {

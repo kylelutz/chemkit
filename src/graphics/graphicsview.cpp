@@ -375,7 +375,10 @@ GraphicsCamera* GraphicsView::camera() const
 /// Projects a point from the scene to the window.
 QPointF GraphicsView::project(const Point3f &point) const
 {
-    StaticVector<float, 4> vector(point.data(), 3);
+    StaticVector<float, 4> vector;
+    vector[0] = point.x();
+    vector[1] = point.y();
+    vector[2] = point.z();
     vector[3] = 0;
 
     GraphicsTransform transform = projectionTransform() * modelViewTransform();
@@ -426,7 +429,10 @@ Point3f GraphicsView::unproject(qreal x, qreal y, const Point3f &reference) cons
 /// Returns the depth of point in the scene.
 float GraphicsView::depth(const Point3f &point) const
 {
-    StaticVector<float, 4> viewPoint(point.data(), 3);
+    StaticVector<float, 4> viewPoint;
+    viewPoint[0] = point.x();
+    viewPoint[1] = point.y();
+    viewPoint[2] = point.z();
     viewPoint[3] = 1;
 
     GraphicsTransform transform = projectionTransform() * modelViewTransform();

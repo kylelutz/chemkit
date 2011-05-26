@@ -62,7 +62,12 @@ inline StaticVector<T, 3> rotateRadians(const StaticVector<T, 3> &vector, const 
 
     v = transform * v;
 
-    return StaticVector<T, 3>(&v[0], 3);
+    StaticVector<T, 3> result;
+    result[0] = v[0];
+    result[1] = v[1];
+    result[2] = v[2];
+
+    return result;
 }
 
 } // end geometry namespace

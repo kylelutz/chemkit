@@ -49,7 +49,6 @@ class StaticVector
     public:
         // construction and destruction
         StaticVector();
-        StaticVector(const T *data, int size = N);
         StaticVector(const StaticVector<float, N> &vector);
         StaticVector(const StaticVector<double, N> &vector);
 
