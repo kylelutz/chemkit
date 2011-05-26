@@ -223,7 +223,7 @@ chemkit::ScalarField* CubeViewerExample::readVolumeData(const QString &fileName)
 
     // voxel count and axes
     std::vector<int> dimensions(3);
-    std::vector<chemkit::Vector3f> axes(3);
+    std::vector<chemkit::Vector3> axes(3);
     for(int i = 0; i < 3; i++){
         line = file.readLine();
         lineItems = line.split(" ", QString::SkipEmptyParts);
