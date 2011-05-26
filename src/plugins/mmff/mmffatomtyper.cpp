@@ -405,7 +405,7 @@ MmffAtomTyper::~MmffAtomTyper()
 // --- Types --------------------------------------------------------------- //
 int MmffAtomTyper::typeNumber(int index) const
 {
-    return m_types.value(index);
+    return m_types[index];
 }
 
 int MmffAtomTyper::typeNumber(const chemkit::Atom *atom) const
@@ -416,7 +416,7 @@ int MmffAtomTyper::typeNumber(const chemkit::Atom *atom) const
 // --- Charges ------------------------------------------------------------- //
 chemkit::Float MmffAtomTyper::formalCharge(int index) const
 {
-    return m_formalCharges.value(index, 0);
+    return m_formalCharges[index];
 }
 
 chemkit::Float MmffAtomTyper::formalCharge(const chemkit::Atom *atom) const

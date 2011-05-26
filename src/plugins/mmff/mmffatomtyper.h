@@ -36,6 +36,8 @@
 #ifndef MMFFATOMTYPER_H
 #define MMFFATOMTYPER_H
 
+#include <vector>
+
 #include <chemkit/ring.h>
 #include <chemkit/atomtyper.h>
 
@@ -68,9 +70,9 @@ class MmffAtomTyper : public chemkit::AtomTyper
         void setAromaticType(int index, const chemkit::Atom *atom, const chemkit::Ring *ring, int position);
 
     private:
-        QVector<int> m_types;
-        QVector<chemkit::Float> m_formalCharges;
-        QVector<chemkit::Float> m_partialCharges;
+        std::vector<int> m_types;
+        std::vector<chemkit::Float> m_formalCharges;
+        std::vector<chemkit::Float> m_partialCharges;
 };
 
 #endif // MMFFATOMTYPER_H
