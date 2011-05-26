@@ -59,7 +59,7 @@ int OplsAtomTyper::typeNumber(const chemkit::Atom *atom) const
 
 std::string OplsAtomTyper::typeString(const chemkit::Atom *atom) const
 {
-    return QString::number(typeNumber(atom)).toStdString();
+    return boost::lexical_cast<std::string>(typeNumber(atom));
 }
 
 void OplsAtomTyper::assignTypes(const chemkit::Molecule *molecule)
@@ -69,7 +69,7 @@ void OplsAtomTyper::assignTypes(const chemkit::Molecule *molecule)
         return;
     }
 
-    m_typeNumbers = QVector<int>(molecule->atomCount());
+    m_typeNumbers = std::vector<int>(molecule->atomCount());
 
     for(int index = 0; index < molecule->atomCount(); index++){
         const chemkit::Atom *atom = molecule->atom(index);

@@ -36,6 +36,8 @@
 #ifndef OPLSATOMTYPER_H
 #define OPLSATOMTYPER_H
 
+#include <vector>
+
 #include <chemkit/atom.h>
 #include <chemkit/molecule.h>
 #include <chemkit/atomtyper.h>
@@ -59,7 +61,7 @@ class OplsAtomTyper : public chemkit::AtomTyper
 
     private:
         const chemkit::Molecule *m_molecule;
-        QVector<int> m_typeNumbers;
+        std::vector<int> m_typeNumbers;
 };
 
 #endif // OPLSATOMTYPER_H
