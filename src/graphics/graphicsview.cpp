@@ -380,7 +380,7 @@ QPointF GraphicsView::project(const Point3f &point) const
 
     GraphicsTransform transform = projectionTransform() * modelViewTransform();
     vector = transform.multiply(vector);
-    vector.scale(1.0 / vector[3]);
+    vector *= 1.0 / vector[3];
 
     float winX = width() * (vector[0] + 1) / 2;
     float winY = height() * (vector[1] + 1) / 2;
@@ -411,7 +411,7 @@ Point3f GraphicsView::unproject(qreal x, qreal y, qreal z) const
     // map to object-space coordinates
     GraphicsTransform transform = projectionTransform() * modelViewTransform();
     point = transform.inverseMultiply(point);
-    point.scale(1.0 / point[3]);
+    point *= 1.0 / point[3];
 
     return Point3f(point[0], point[1], point[2]);
 }
@@ -431,7 +431,7 @@ float GraphicsView::depth(const Point3f &point) const
 
     GraphicsTransform transform = projectionTransform() * modelViewTransform();
     viewPoint = transform.multiply(viewPoint);
-    viewPoint.scale(1.0 / viewPoint[3]);
+    viewPoint *= 1.0 / viewPoint[3];
 
     float winZ = (viewPoint[2] + 1) / 2;
 

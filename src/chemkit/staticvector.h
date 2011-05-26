@@ -74,8 +74,6 @@ class StaticVector
         T squaredNorm() const;
         void normalize();
         StaticVector<T, N> normalized() const;
-        void scale(T scalar);
-        StaticVector<T, N> scaled(T scalar) const;
         T angle(const StaticVector<T, N> &vector) const;
         T angleRadians(const StaticVector<T, N> &vector) const;
 

@@ -89,7 +89,7 @@ inline std::vector<Vector3> ForceFieldCalculation::bondAngleGradient(const Force
     std::vector<Vector3> gradient = bondAngleGradientRadians(a, b, c);
 
     for(unsigned int i = 0; i < gradient.size(); i++){
-        gradient[i].scale(chemkit::constants::RadiansToDegrees);
+        gradient[i] *= chemkit::constants::RadiansToDegrees;
     }
 
     return gradient;
@@ -143,7 +143,7 @@ inline std::vector<Vector3> ForceFieldCalculation::torsionAngleGradient(const Fo
     std::vector<Vector3> gradient = torsionAngleGradientRadians(a, b, c, d);
 
     for(unsigned int i = 0; i < gradient.size(); i++){
-        gradient[i].scale(chemkit::constants::RadiansToDegrees);
+        gradient[i] *= chemkit::constants::RadiansToDegrees;
     }
 
     return gradient;
@@ -205,7 +205,7 @@ inline std::vector<Vector3> ForceFieldCalculation::wilsonAngleGradient(const For
     std::vector<Vector3> gradient = wilsonAngleGradientRadians(a, b, c, d);
 
     for(unsigned int i = 0; i < gradient.size(); i++){
-        gradient[i].scale(chemkit::constants::RadiansToDegrees);
+        gradient[i] *= chemkit::constants::RadiansToDegrees;
     }
 
     return gradient;

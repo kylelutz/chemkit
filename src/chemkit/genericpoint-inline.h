@@ -93,7 +93,7 @@ inline T GenericPoint<T>::distance(const GenericPoint<T> &point) const
 template<typename T>
 inline GenericPoint<T> GenericPoint<T>::midpoint(const GenericPoint<T> &point) const
 {
-    return (*this + point).scaled(0.5);
+    return (*this + point) * 0.5;
 }
 
 } // end chemkit namespace

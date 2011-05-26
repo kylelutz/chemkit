@@ -511,7 +511,7 @@ Point3 MolecularSurface::triangleDual(int i, int j, int k) const
 
     Float xi = (-s1 + sqrt(s1*s1 - s3 * s2 + r*r * s2)) / s2;
 
-    return y + (n.scaled(xi));
+    return y + (n * xi);
 }
 
 Float MolecularSurface::segmentArea(int i, int j, int k) const

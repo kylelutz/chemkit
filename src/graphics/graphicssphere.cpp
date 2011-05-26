@@ -131,7 +131,7 @@ GraphicsVertexBuffer* GraphicsSphere::tesselate(int subdivisions) const
     for(int i = 0; i < IcosahedronVertexCount; i++){
         const float *v = &IcosahedronVerticies[i*3];
         Point3f point(v[0], v[1], v[2]);
-        point.scale(radius() / point.norm());
+        point *= radius() / point.norm();
         verticies[i] = point;
     }
 
@@ -163,9 +163,9 @@ GraphicsVertexBuffer* GraphicsSphere::tesselate(int subdivisions) const
             Point3f v20 = v2.midpoint(v0);
 
             // scale points to lie on the sphere
-            v01.scale(radius() / v01.norm());
-            v12.scale(radius() / v12.norm());
-            v20.scale(radius() / v20.norm());
+            v01 *= radius() / v01.norm();
+            v12 *= radius() / v12.norm();
+            v20 *= radius() / v20.norm();
 
             // add verticies and record their indicies
             int i01 = verticies.size();

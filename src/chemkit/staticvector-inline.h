@@ -282,7 +282,7 @@ inline T StaticVector<T, N>::squaredNorm() const
 template<typename T, int N>
 inline void StaticVector<T, N>::normalize()
 {
-    scale(1 / norm());
+    *this *= 1 / norm();
 }
 
 /// Returns a normalized version of the vector.
@@ -291,24 +291,6 @@ inline StaticVector<T, N> StaticVector<T, N>::normalized() const
 {
     StaticVector<T, N> vector = *this;
     vector.normalize();
-    return vector;
-}
-
-/// Scales the vector by the scalar \p value.
-template<typename T, int N>
-inline void StaticVector<T, N>::scale(T scalar)
-{
-    for(int i = 0; i < N; i++){
-        m_data[i] *= scalar;
-    }
-}
-
-/// Returns the vector scaled by \p value.
-template<typename T, int N>
-inline StaticVector<T, N> StaticVector<T, N>::scaled(T scalar) const
-{
-    StaticVector<T, N> vector = *this;
-    vector.scale(scalar);
     return vector;
 }
 
@@ -364,7 +346,7 @@ inline StaticVector<T, N> StaticVector<T, N>::operator+(const StaticVector<T, N>
 template<typename T, int N>
 inline StaticVector<T, N> StaticVector<T, N>::operator-() const
 {
-    return scaled(-1);
+    return *this * -1;
 }
 
 /// Returns the difference between the vector and \p vector.
@@ -391,14 +373,20 @@ inline T StaticVector<T, N>::operator*(const StaticVector<T, N> &vector) const
 template<typename T, int N>
 inline StaticVector<T, N> StaticVector<T, N>::operator*(T scalar) const
 {
-    return scaled(scalar);
+    StaticVector<T, N> product;
+
+    for(int i = 0; i < N; i++){
+        product[i] = m_data[i] * scalar;
+    }
+
+    return product;
 }
 
 /// Returns the vector divided by \p scalar.
 template<typename T, int N>
 inline StaticVector<T, N> StaticVector<T, N>::operator/(T scalar) const
 {
-    return scaled(1 / scalar);
+    return *this * (1 / scalar);
 }
 
 /// Returns the cross product of the vector and \p vector.

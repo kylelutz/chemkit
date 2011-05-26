@@ -140,7 +140,7 @@ Float wilsonAngleRadians(const Point3 &a, const Point3 &b, const Point3 &c, cons
 /// Returns the midpoint between \p a and \p b.
 Point3 midpoint(const Point3 &a, const Point3 &b)
 {
-    return (a + b) * (1 / 2);
+    return (a + b) * 0.5;
 }
 
 Point3 circumcenter(const Point3 &a, const Point3 &b)
@@ -203,7 +203,7 @@ Point3 orthocenter(const Point3 &a, const Point3 &b, Float wa, Float wb)
 {
     double l = (1.0/2.0) - ((wa - wb) / (2.0 * (a - b).squaredNorm()));
 
-    return a.scaled(l) + b.scaled(1.0 - l);
+    return (a * l) + (b * (1 - l));
 }
 
 /// Returns the position of a point orthogonal to the weighted
@@ -365,9 +365,9 @@ Float orthoradius(const Point3 &a, const Point3 &b, const Point3 &c, const Point
     Vector3d u = b - d;
     Vector3d v = c - d;
 
-    Vector3d i = u.cross(v).scaled(t.squaredNorm() + (wd - wa));
-    Vector3d j = v.cross(t).scaled(u.squaredNorm() + (wd - wb));
-    Vector3d k = t.cross(u).scaled(v.squaredNorm() + (wd - wc));
+    Vector3d i = u.cross(v) * (t.squaredNorm() + (wd - wa));
+    Vector3d j = v.cross(t) * (u.squaredNorm() + (wd - wb));
+    Vector3d k = t.cross(u) * (v.squaredNorm() + (wd - wc));
 
     Vector3d l = i + j + k;
 

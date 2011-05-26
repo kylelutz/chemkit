@@ -104,7 +104,7 @@ bool CubeFileFormat::read(QIODevice *iodev, chemkit::MoleculeFile *file)
                                 lineItems[4].toDouble());
 
         // scale from bohr units to angstroms
-        position.scale(BohrToAnstroms);
+        position *= BohrToAnstroms;
 
         // set position
         atom->setPosition(position);
