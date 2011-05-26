@@ -49,7 +49,6 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsRay
         // construction and destruction
         GraphicsRay();
         GraphicsRay(const Point3f &origin, const Vector3f &direction);
-        GraphicsRay(const Point3f &origin, const Point3f &point);
         ~GraphicsRay();
 
         // properties

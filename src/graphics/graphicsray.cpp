@@ -57,13 +57,6 @@ GraphicsRay::GraphicsRay(const Point3f &origin, const Vector3f &direction)
 {
 }
 
-/// Creates a new ray with \p origin that points towards \p point.
-GraphicsRay::GraphicsRay(const Point3f &origin, const Point3f &point)
-    : m_origin(origin),
-      m_direction((point - origin).normalized())
-{
-}
-
 /// Destroys the graphics ray object.
 GraphicsRay::~GraphicsRay()
 {
