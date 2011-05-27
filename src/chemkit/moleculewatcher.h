@@ -38,6 +38,8 @@
 
 #include "chemkit.h"
 
+#include <QObject>
+
 #include "molecule.h"
 
 namespace chemkit {
