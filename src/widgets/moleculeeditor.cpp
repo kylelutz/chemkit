@@ -35,6 +35,8 @@
 
 #include "moleculeeditor.h"
 
+#include <QHash>
+#include <QVector>
 #include <QUndoCommand>
 
 namespace chemkit {
