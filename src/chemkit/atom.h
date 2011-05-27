@@ -40,6 +40,8 @@
 
 #include <vector>
 
+#include <QList>
+
 #include "point3.h"
 #include "element.h"
 #include "vector3.h"
