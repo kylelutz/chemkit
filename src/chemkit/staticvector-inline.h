@@ -225,17 +225,6 @@ inline T StaticVector<T, N>::scalarTriple(const StaticVector<T, N> &a, const Sta
     return dot(a.cross(b));
 }
 
-/// Returns the vector triple product of the vector with \p a
-/// and \p b.
-///
-/// The expression \c a.vectorTriple(b, c) will return the result of
-/// \f$ a \times (b \times c) \f$.
-template<typename T, int N>
-inline StaticVector<T, N> StaticVector<T, N>::vectorTriple(const StaticVector<T, N> &a, const StaticVector<T, N> &b) const
-{
-    return cross(a.cross(b));
-}
-
 /// Returns the norm of the vector.
 ///
 /// The expression \c a.norm() will return the result of
