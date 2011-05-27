@@ -35,6 +35,9 @@
 
 #include "pdbfileformat.h"
 
+#include <QHash>
+#include <QString>
+
 #include <boost/algorithm/string.hpp>
 
 #include <chemkit/polymer.h>
