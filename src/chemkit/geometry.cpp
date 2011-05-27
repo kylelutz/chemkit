@@ -425,7 +425,7 @@ Float planeOrientation(const Point3 &a, const Point3 &b, const Point3 &c, const 
     Vector3d u = b - p;
     Vector3d v = c - p;
 
-    return t.scalarTriple(u, v);
+    return t.dot(u.cross(v));
 }
 
 /// Returns a positive value if the point \p p is inside the sphere

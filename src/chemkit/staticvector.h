@@ -67,7 +67,6 @@ class StaticVector
         StaticVector<T, N> subtract(const StaticVector<T, N> &vector) const;
         T dot(const StaticVector<T, N> &vector) const;
         StaticVector<T, N> cross(const StaticVector<T, N> &vector) const;
-        T scalarTriple(const StaticVector<T, N> &a, const StaticVector<T, N> &b) const;
         T norm() const;
         T squaredNorm() const;
         void normalize();
