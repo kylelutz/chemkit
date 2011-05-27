@@ -35,6 +35,9 @@
 
 #include "inchilineformat.h"
 
+#include <QString>
+#include <QVector>
+
 #include "../../3rdparty/inchi/inchi_api.h"
 
 InchiLineFormat::InchiLineFormat()
