@@ -43,6 +43,10 @@ class InternalCoordinatesTest : public QObject
     Q_OBJECT
 
     private slots:
+        void size();
+        void coordinates();
+        void coordinatesRadians();
+        void connections();
 };
 
 #endif // INTERNALCOORDINATESTEST_H
