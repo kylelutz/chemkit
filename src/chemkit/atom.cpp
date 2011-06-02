@@ -40,6 +40,7 @@
 #include "ring.h"
 #include "foreach.h"
 #include "vector3.h"
+#include "geometry.h"
 #include "molecule.h"
 
 namespace chemkit {
@@ -93,6 +94,7 @@ Atom::Atom(Molecule *molecule, const Element &element)
         d->massNumber = element.atomicNumber() * 2;
     }
 
+    d->position = Point3(0, 0, 0);
     d->partialCharge = 0.0;
     d->chirality = NoChirality;
 }
@@ -573,7 +575,7 @@ void Atom::moveBy(Float dx, Float dy, Float dz)
 /// Distance is in Angstroms.
 Float Atom::distance(const Atom *atom) const
 {
-    return position().distance(atom->position());
+    return chemkit::geometry::distance(position(), atom->position());
 }
 
 // --- Chirality ----------------------------------------------------------- //

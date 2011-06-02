@@ -38,7 +38,6 @@
 #include "foreach.h"
 #include "vector3.h"
 #include "geometry.h"
-#include "staticmatrix.h"
 #include "delaunaytriangulation.h"
 
 namespace chemkit {

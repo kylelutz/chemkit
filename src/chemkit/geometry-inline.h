@@ -41,33 +41,23 @@
 #include <Eigen/Core>
 #include <Eigen/Geometry>
 
+#include "constants.h"
+
 namespace chemkit {
 
 namespace geometry {
 
 // --- Transforms ---------------------------------------------------------- //
 template<typename T>
-inline StaticVector<T, 3> rotate(const StaticVector<T, 3> &vector, const StaticVector<T, 3> &axis, T angle)
+inline Eigen::Matrix<T, 3, 1> rotate(const Eigen::Matrix<T, 3, 1> &vector, const Eigen::Matrix<T, 3, 1> &axis, T angle)
 {
     return rotateRadians<T>(vector, axis, angle * chemkit::constants::DegreesToRadians);
 }
 
 template<typename T>
-inline StaticVector<T, 3> rotateRadians(const StaticVector<T, 3> &vector, const StaticVector<T, 3> &axis, T angle)
+inline Eigen::Matrix<T, 3, 1> rotateRadians(const Eigen::Matrix<T, 3, 1> &vector, const Eigen::Matrix<T, 3, 1> &axis, T angle)
 {
-    Eigen::Matrix<T, 3, 1> axisVector(axis.x(), axis.y(), axis.z());
-    Eigen::Transform<T, 3, 3> transform(Eigen::AngleAxis<T>(angle, axisVector));
-
-    Eigen::Matrix<T, 3, 1> v(vector.x(), vector.y(), vector.z());
-
-    v = transform * v;
-
-    StaticVector<T, 3> result;
-    result[0] = v[0];
-    result[1] = v[1];
-    result[2] = v[2];
-
-    return result;
+    return Eigen::Transform<T, 3, 3>(Eigen::AngleAxis<T>(angle, axis)) * vector;
 }
 
 } // end geometry namespace

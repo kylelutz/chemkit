@@ -441,7 +441,7 @@ void BuilderWindow::minimizerStateChanged(int state)
 void BuilderWindow::centerCamera()
 {
     if(m_molecule){
-        view()->camera()->lookAt(m_molecule->center());
+        view()->camera()->lookAt(m_molecule->center().cast<float>());
         view()->update();
     }
 }
@@ -506,7 +506,7 @@ void BuilderWindow::adjustHydrogens()
         while(atom->valence() < atom->expectedValence()){
             chemkit::Atom *hydrogen = editor()->addAtom(chemkit::Atom::Hydrogen);
             editor()->addBond(atom, hydrogen);
-            editor()->setAtomPosition(hydrogen, atom->position() + chemkit::Vector3::randomUnitVector());
+            editor()->setAtomPosition(hydrogen, atom->position() + chemkit::Vector3::Random().normalized());
         }
 
         // remove hydrogens

@@ -539,7 +539,7 @@ bool ForceField::minimizationStep(Float converganceValue)
         if(qIsNaN(finalEnergy)){
             for(int atomIndex = 0; atomIndex < atomCount(); atomIndex++){
                 d->atoms[atomIndex]->setPosition(initialPositions[atomIndex]);
-                d->atoms[atomIndex]->moveBy(Vector3::randomUnitVector());
+                d->atoms[atomIndex]->moveBy(Vector3::Random().normalized());
             }
 
             // recalculate gradient

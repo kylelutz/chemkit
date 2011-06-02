@@ -198,7 +198,7 @@ void AtomTest::position()
     QCOMPARE(H1->y(), chemkit::Float(5.0));
     QCOMPARE(H1->z(), chemkit::Float(6.0));
 
-    H1->setPosition(chemkit::Point3());
+    H1->setPosition(chemkit::Point3(0, 0, 0));
     QCOMPARE(H1->x(), chemkit::Float(0.0));
     QCOMPARE(H1->y(), chemkit::Float(0.0));
     QCOMPARE(H1->z(), chemkit::Float(0.0));

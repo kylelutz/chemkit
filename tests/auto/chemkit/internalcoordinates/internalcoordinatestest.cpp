@@ -36,6 +36,7 @@
 #include "internalcoordinatestest.h"
 
 #include <chemkit/chemkit.h>
+#include <chemkit/constants.h>
 #include <chemkit/internalcoordinates.h>
 #include <vector>
 

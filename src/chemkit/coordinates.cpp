@@ -60,6 +60,7 @@ Coordinates::Coordinates()
 Coordinates::Coordinates(int size)
     : m_matrix(size, 3)
 {
+    m_matrix.setZero();
 }
 
 /// Creates a new coordinate matrix with the coordinates from
@@ -293,7 +294,7 @@ Float Coordinates::wilsonAngleRadians(int i, int j, int k, int l) const
 Point3 Coordinates::center() const
 {
     if(isEmpty()){
-        return Point3();
+        return Point3(0, 0, 0);
     }
 
     // sums for each component
@@ -421,19 +422,9 @@ Coordinates Coordinates::subtract(const Coordinates &coordinates) const
 
 /// Returns the 3x3 matrix product of the transpose of the matrix
 /// and \p coordinates.
-StaticMatrix<Float, 3, 3> Coordinates::multiply(const Coordinates *coordinates) const
+Eigen::Matrix<Float, 3, 3> Coordinates::multiply(const Coordinates *coordinates) const
 {
-    Eigen::Matrix<Float, 3, 3> p = m_matrix.transpose() * coordinates->m_matrix;
-
-    StaticMatrix<Float, 3, 3> product;
-
-    for(int i = 0; i < 3; i++){
-        for(int j = 0; j < 3; j++){
-            product(i, j) = p(i, j);
-        }
-    }
-
-    return product;
+    return m_matrix.transpose() * coordinates->m_matrix;
 }
 
 // --- Operators ----------------------------------------------------------- //

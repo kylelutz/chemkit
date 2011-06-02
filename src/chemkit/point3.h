@@ -38,18 +38,19 @@
 
 #include "chemkit.h"
 
-#include "genericpoint.h"
+#include <Eigen/Core>
+#include <Eigen/Geometry>
 
 namespace chemkit {
 
 /// A three-dimensional point.
-typedef GenericPoint<Float> Point3;
+typedef Eigen::Matrix<Float, 3, 1> Point3;
 
 /// A three-dimensional point containing \c float values.
-typedef GenericPoint<float> Point3f;
+typedef Eigen::Matrix<float, 3, 1> Point3f;
 
 /// A three-dimensional point containing \c double values.
-typedef GenericPoint<double> Point3d;
+typedef Eigen::Matrix<double, 3, 1> Point3d;
 
 } // end chemkit namespace
 

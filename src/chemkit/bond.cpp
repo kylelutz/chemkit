@@ -37,6 +37,7 @@
 
 #include "atom.h"
 #include "foreach.h"
+#include "geometry.h"
 #include "molecule.h"
 
 namespace chemkit {
@@ -273,7 +274,8 @@ bool Bond::isAromatic() const
 /// midpoint between the two atoms in the bond.
 Point3 Bond::center() const
 {
-    return m_atom1->position().midpoint(m_atom2->position());
+    return chemkit::geometry::midpoint(m_atom1->position(),
+                                       m_atom2->position());
 }
 
 /// Returns the length of the bond. Length is in Angstroms.

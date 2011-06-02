@@ -35,6 +35,8 @@
 
 #include "conformer.h"
 
+#include <QHash>
+
 #include "molecule.h"
 
 namespace chemkit {

@@ -110,7 +110,7 @@ void GraphicsProteinCoilItem::paint(GraphicsPainter *painter)
     foreach(const AminoAcid *residue, d->residues){
         const Atom *alphaCarbon = residue->alphaCarbon();
         if(alphaCarbon){
-            trace.append(alphaCarbon->position());
+            trace.append(alphaCarbon->position().cast<float>());
         }
     }
 

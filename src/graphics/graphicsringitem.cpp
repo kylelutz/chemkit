@@ -117,8 +117,8 @@ void GraphicsRingItem::paint(GraphicsPainter *painter)
         const Atom *a = atoms[i];
         const Atom *b = atoms[(i + 1) % d->ring->size()];
 
-        painter->drawTriangle(a->position(), b->position(), center);
-        painter->drawTriangle(b->position(), a->position(), center);
+        painter->drawTriangle(a->position().cast<float>(), b->position().cast<float>(), center);
+        painter->drawTriangle(b->position().cast<float>(), a->position().cast<float>(), center);
     }
 }
 

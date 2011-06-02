@@ -40,10 +40,11 @@
 
 #include <vector>
 
+#include <Eigen/Core>
+
 #include "matrix.h"
 #include "point3.h"
 #include "vector3.h"
-#include "staticmatrix.h"
 
 namespace chemkit {
 
@@ -99,7 +100,7 @@ class CHEMKIT_EXPORT Coordinates
         // math
         Coordinates add(const Coordinates &coordinates) const;
         Coordinates subtract(const Coordinates &coordinates) const;
-        StaticMatrix<Float, 3, 3> multiply(const Coordinates *coordinates) const;
+        Eigen::Matrix<Float, 3, 3> multiply(const Coordinates *coordinates) const;
 
         // operators
         Coordinates operator+(const Coordinates &coordinates) const;

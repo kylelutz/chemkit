@@ -35,6 +35,10 @@
 
 #include "graphicstransform.h"
 
+#include <Eigen/LU>
+
+#include <chemkit/constants.h>
+
 namespace chemkit {
 
 // === GraphicsTransform =================================================== //
@@ -62,19 +66,19 @@ namespace chemkit {
 **/
 GraphicsTransform::GraphicsTransform()
 {
-    m_matrix = new StaticMatrix<float, 4, 4>();
+    m_matrix = new Eigen::Matrix<float, 4, 4>();
 }
 
 /// Creates a new transform as a copy of \p transform.
 GraphicsTransform::GraphicsTransform(const GraphicsTransform &transform)
 {
-    m_matrix = new StaticMatrix<float, 4, 4>(*transform.m_matrix);
+    m_matrix = new Eigen::Matrix<float, 4, 4>(*transform.m_matrix);
 }
 
 /// Creates a new transform that contains \p matrix.
-GraphicsTransform::GraphicsTransform(const StaticMatrix<float, 4, 4> &matrix)
+GraphicsTransform::GraphicsTransform(const Eigen::Matrix<float, 4, 4> &matrix)
 {
-    m_matrix = new StaticMatrix<float, 4, 4>(matrix);
+    m_matrix = new Eigen::Matrix<float, 4, 4>(matrix);
 }
 
 /// Destroys the graphics transform.
@@ -100,7 +104,7 @@ const float* GraphicsTransform::data() const
 /// Inverts the transform.
 void GraphicsTransform::invert()
 {
-    m_matrix->invert();
+    *m_matrix = m_matrix->inverse();
 }
 
 /// Returns the inverted version of the transform.
@@ -114,36 +118,36 @@ GraphicsTransform GraphicsTransform::inverted() const
 /// Multiplies \p ray by the transform.
 GraphicsRay GraphicsTransform::multiply(const GraphicsRay &ray) const
 {
-    Point3f origin = multiply(ray.origin());
-    Point3f direction = multiply(ray.direction());
+    Point3f origin = multiplyPoint(ray.origin());
+    Point3f direction = multiplyVector(ray.direction());
 
     return GraphicsRay(origin, direction);
 }
 
 /// Multiplies \p point by the transform.
-Point3f GraphicsTransform::multiply(const Point3f &point) const
+Point3f GraphicsTransform::multiplyPoint(const Point3f &point) const
 {
-    StaticVector<float, 4> vector4;
+    Eigen::Matrix<float, 4, 1> vector4;
     vector4[0] = point.x();
     vector4[1] = point.y();
     vector4[2] = point.z();
     vector4[3] = 1;
 
-    vector4 = m_matrix->multiply(vector4);
+    vector4 = *m_matrix * vector4;
 
     return Point3f(vector4[0], vector4[1], vector4[2]);
 }
 
 /// Multiplies \p vector by the transform.
-Vector3f GraphicsTransform::multiply(const Vector3f &vector) const
+Vector3f GraphicsTransform::multiplyVector(const Vector3f &vector) const
 {
-    StaticVector<float, 4> vector4;
+    Eigen::Matrix<float, 4, 1> vector4;
     vector4[0] = vector.x();
     vector4[1] = vector.y();
     vector4[2] = vector.z();
     vector4[3] = 0;
 
-    vector4 = m_matrix->multiply(vector4);
+    vector4 = *m_matrix * vector4;
 
     return Vector3f(vector4[0], vector4[1], vector4[2]);
 }
@@ -151,45 +155,45 @@ Vector3f GraphicsTransform::multiply(const Vector3f &vector) const
 /// Multiplies \p transform by the transform.
 GraphicsTransform GraphicsTransform::multiply(const GraphicsTransform &transform) const
 {
-    return m_matrix->multiply(*transform.m_matrix);
+    return GraphicsTransform(*m_matrix * *transform.m_matrix);
 }
 
-StaticVector<float, 4> GraphicsTransform::multiply(const StaticVector<float, 4> &vector)
+Eigen::Matrix<float, 4, 1> GraphicsTransform::multiply(const Eigen::Matrix<float, 4, 1> &vector) const
 {
-    return m_matrix->multiply(vector);
+    return *m_matrix * vector;
 }
 
 /// Multiplies \p point by the inverse of the transform.
-Point3f GraphicsTransform::inverseMultiply(const Point3f &point) const
+Point3f GraphicsTransform::inverseMultiplyPoint(const Point3f &point) const
 {
-    StaticVector<float, 4> vector4;
+    Eigen::Matrix<float, 4, 1> vector4;
     vector4[0] = point.x();
     vector4[1] = point.y();
     vector4[2] = point.z();
     vector4[3] = 1;
 
-    vector4 = m_matrix->inverted().multiply(vector4);
+    vector4 = m_matrix->inverse() * vector4;
 
     return Point3f(vector4[0], vector4[1], vector4[2]);
 }
 
 /// Multiplies \p vector by the inverse of the transform.
-Vector3f GraphicsTransform::inverseMultiply(const Vector3f &vector) const
+Vector3f GraphicsTransform::inverseMultiplyVector(const Vector3f &vector) const
 {
-    StaticVector<float, 4> vector4;
+    Eigen::Matrix<float, 4, 1> vector4;
     vector4[0] = vector.x();
     vector4[1] = vector.y();
     vector4[2] = vector.z();
     vector4[3] = 0;
 
-    vector4 = m_matrix->inverted().multiply(vector4);
+    vector4 = m_matrix->inverse() * vector4;
 
     return Vector3f(vector4[0], vector4[1], vector4[2]);
 }
 
-StaticVector<float, 4> GraphicsTransform::inverseMultiply(const StaticVector<float, 4> &vector)
+Eigen::Matrix<float, 4, 1> GraphicsTransform::inverseMultiply(const Eigen::Matrix<float, 4, 1> &vector) const
 {
-    return m_matrix->inverted().multiply(vector);
+    return m_matrix->inverse() * vector;
 }
 
 // --- Operators ----------------------------------------------------------- //
@@ -210,12 +214,7 @@ GraphicsRay GraphicsTransform::operator*(const GraphicsRay &ray) const
 
 Point3f GraphicsTransform::operator*(const Point3f &point) const
 {
-    return multiply(point);
-}
-
-Vector3f GraphicsTransform::operator*(const Vector3f &vector) const
-{
-    return multiply(vector);
+    return multiplyPoint(point);
 }
 
 GraphicsTransform GraphicsTransform::operator*(const GraphicsTransform &transform) const
@@ -233,13 +232,6 @@ GraphicsTransform& GraphicsTransform::operator=(const GraphicsTransform &transfo
 {
     *m_matrix = *transform.m_matrix;
     return *this;
-}
-
-CommaInitializer<float> GraphicsTransform::operator<<(const float value)
-{
-    m_matrix->data()[0] = value;
-
-    return CommaInitializer<float>(m_matrix->data(), 4, 4);
 }
 
 // --- Static Methods ------------------------------------------------------ //
@@ -261,7 +253,9 @@ CommaInitializer<float> GraphicsTransform::operator<<(const float value)
 **/
 GraphicsTransform GraphicsTransform::identity()
 {
-    return StaticMatrix<float, 4, 4>::identity();
+    GraphicsTransform transform;
+    transform.m_matrix->setIdentity();
+    return transform;
 }
 
 /// Returns a transformation matrix that represents the translation by

@@ -48,7 +48,7 @@ namespace chemkit {
 /// Angstroms.
 inline Float ForceFieldCalculation::distance(const ForceFieldAtom *a, const ForceFieldAtom *b) const
 {
-    return a->position().distance(b->position());
+    return chemkit::geometry::distance(a->position(), b->position());
 }
 
 /// Returns the gradient of the distance between atoms \p a and \p b.
@@ -62,7 +62,9 @@ inline std::vector<Vector3> ForceFieldCalculation::distanceGradient(const Point3
 {
     std::vector<Vector3> gradient(2);
 
-    gradient[0] = (a - b) / a.distance(b);
+    Float distance = chemkit::geometry::distance(a, b);
+
+    gradient[0] = (a - b) / distance;
     gradient[1] = -gradient[0];
 
     return gradient;
@@ -110,8 +112,8 @@ inline std::vector<Vector3> ForceFieldCalculation::bondAngleGradientRadians(cons
 
     Float theta = chemkit::geometry::angleRadians(a, b, c);
 
-    Float rab = a.distance(b);
-    Float rbc = b.distance(c);
+    Float rab = chemkit::geometry::distance(a, b);
+    Float rbc = chemkit::geometry::distance(b, c);
 
     gradient[0] = ((((c - b) * rab) - (a - b) * ((b - a).dot(b - c) / rab)) / (pow(rab, 2) * rbc)) / -sin(theta);
     gradient[1] = ((((b - c) + (b - a)) * (rab * rbc) - (((b - a) * (rbc/rab) + (b - c) * (rab/rbc)) * (b - a).dot(b - c))) / pow(rab * rbc, 2)) / -sin(theta);

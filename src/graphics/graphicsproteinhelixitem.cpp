@@ -106,8 +106,8 @@ void GraphicsProteinHelixItem::paint(GraphicsPainter *painter)
         painter->setColor(Qt::red);
 
         float radius = 1.5;
-        Point3f a = d->residues.first()->alphaCarbon()->position();
-        Point3f b = d->residues.last()->alphaCarbon()->position();
+        Point3f a = d->residues.first()->alphaCarbon()->position().cast<float>();
+        Point3f b = d->residues.last()->alphaCarbon()->position().cast<float>();
         painter->drawCylinder(a, b, radius);
 
         painter->drawCircle(a, radius, (a - b).normalized());

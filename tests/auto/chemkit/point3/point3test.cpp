@@ -39,7 +39,7 @@
 
 void Point3Test::basic()
 {
-    chemkit::Point3 point;
+    chemkit::Point3 point(0, 0, 0);
     QCOMPARE(point.x(), chemkit::Float(0.0));
     QCOMPARE(point.y(), chemkit::Float(0.0));
     QCOMPARE(point.z(), chemkit::Float(0.0));
@@ -48,14 +48,6 @@ void Point3Test::basic()
     QCOMPARE(point.x(), chemkit::Float(1.0));
     QCOMPARE(point.y(), chemkit::Float(2.0));
     QCOMPARE(point.z(), chemkit::Float(3.0));
-}
-
-void Point3Test::moveBy()
-{
-}
-
-void Point3Test::movedBy()
-{
 }
 
 void Point3Test::isZero()
@@ -68,25 +60,6 @@ void Point3Test::isZero()
 
     point = chemkit::Point3(0, 0, 0);
     QCOMPARE(point.isZero(), true);
-}
-
-void Point3Test::distance()
-{
-    chemkit::Point3 a, b;
-    QCOMPARE(a.distance(b), chemkit::Float(0.0));
-
-    a = chemkit::Point3(1, 0, 0);
-    b = chemkit::Point3(3, 0, 0);
-    QCOMPARE(a.distance(b), chemkit::Float(2.0));
-}
-
-void Point3Test::midpoint()
-{
-    chemkit::Point3 a(1, 0, 0);
-    chemkit::Point3 b(3, 0, 0);
-
-    chemkit::Point3 midpoint = a.midpoint(b);
-    QCOMPARE(midpoint, chemkit::Point3(2, 0, 0));
 }
 
 QTEST_APPLESS_MAIN(Point3Test)

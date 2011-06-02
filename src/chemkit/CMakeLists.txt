@@ -37,10 +37,6 @@ set(HEADERS
   fragment-inline.h
   genericfile.h
   genericfile-inline.h
-  genericpoint.h
-  genericpoint-inline.h
-  genericvector.h
-  genericvector-inline.h
   geometry.h
   geometry-inline.h
   internalcoordinates.h
@@ -74,10 +70,6 @@ set(HEADERS
   ring.h
   ring-inline.h
   scalarfield.h
-  staticmatrix.h
-  staticmatrix-inline.h
-  staticvector.h
-  staticvector-inline.h
   trajectory.h
   trajectoryfile.h
   trajectoryfileformat.h

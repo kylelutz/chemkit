@@ -454,7 +454,7 @@ GraphicsVertexBuffer* marchCubes(const ScalarField *scalarField, float isovalue)
 
                         indicies.append(indicies.size());
                         verticies.append(vertex);
-                        normals.append(scalarField->gradient(vertex));
+                        normals.append(scalarField->gradient(vertex.cast<Float>()).cast<float>());
                     }
                 }
             }

@@ -85,9 +85,9 @@ void GraphicsProteinSheetItem::paint(GraphicsPainter *painter)
 
     for(int i = 0; i < d->residues.size(); i++){
         const AminoAcid *residue = d->residues[i];
-        trace[i] = residue->alphaCarbon()->position();
+        trace[i] = residue->alphaCarbon()->position().cast<float>();
 
-        Vector3f normal = Vector3f(residue->peptidePlaneNormal());
+        Vector3f normal = residue->peptidePlaneNormal().cast<float>();
 
         // flip every other normal
         if(i & 1){

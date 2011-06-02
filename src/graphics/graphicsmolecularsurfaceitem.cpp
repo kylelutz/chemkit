@@ -225,7 +225,7 @@ void ContactPatchItem::paint(GraphicsPainter *painter)
             const Point3f &b = item->center();
             float rb = item->radius();
 
-            const float d = a.distance(b);
+            const float d = chemkit::geometry::distance(a.cast<Float>(), b.cast<Float>());
             const float x = (d*d - rb*rb + ra*ra) / (2 * d);
 
             Vector3f planeNormal = (b - a).normalized();
@@ -480,7 +480,7 @@ void GraphicsMolecularSurfaceItem::recalculate()
             radius += probeRadius();
         }
 
-        ContactPatchItem *item = new ContactPatchItem(this, atom->position(), radius);
+        ContactPatchItem *item = new ContactPatchItem(this, atom->position().cast<float>(), radius);
         d->contactPatches.append(item);
 
         if(d->colorMode == AtomColor){

@@ -127,10 +127,10 @@ void GraphicsPainter::drawCylinder(const Point3f &a, const Point3f &b, float rad
 
     Vector3f vector = (a - b).normalized();
     Vector3f axis = vector.cross(-Vector3f::UnitZ()).normalized();
-    float angle = vector.angle(-Vector3f::UnitZ());
+    float angle = chemkit::geometry::angle(vector.cast<Float>(), -Vector3f::UnitZ().cast<Float>());
     glRotatef(-angle, axis.x(), axis.y(), axis.z());
 
-    float length = a.distance(b);
+    float length = chemkit::geometry::distance(a.cast<Float>(), b.cast<Float>());
 
     drawCylinder(radius, length);
 
@@ -214,7 +214,7 @@ void GraphicsPainter::drawSpline(const QList<Point3f> &points, float radius, int
         Vector3f axis = points[i] - points[i-1];
 
         if(i != (points.size() - 1)){
-            float angle = axis.angle(points[i+1] - points[i]);
+            float angle = chemkit::geometry::angle(axis.cast<Float>(), (points[i+1] - points[i]).cast<Float>());
             Vector3f rotationAxis = (points[i] - points[i-1]).cross(points[i+1] - points[i]).normalized();
             axis = chemkit::geometry::rotate(axis, rotationAxis, angle / 2.0f);
         }
@@ -222,7 +222,7 @@ void GraphicsPainter::drawSpline(const QList<Point3f> &points, float radius, int
         axisVectors[i] = axis.normalized();
 
         Vector3f rotationAxis = axisVectors[i-1].cross(axisVectors[i]);
-        float angle = axis.angle(axisVectors[i-1]);
+        float angle = chemkit::geometry::angle(axis.cast<Float>(), axisVectors[i-1].cast<Float>());
         Vector3f up = chemkit::geometry::rotate(upVectors[i-1], rotationAxis, angle);
         up.normalize();
 
@@ -270,6 +270,7 @@ void GraphicsPainter::drawSpline(const QList<Point3f> &points, float radius, int
 
         // top right
         Point3f topRight = top + (rightVector * radius);
+
         controlPoints[i*9+7] = topRight;
 
         // right (again)

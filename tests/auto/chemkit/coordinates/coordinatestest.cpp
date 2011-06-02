@@ -157,7 +157,7 @@ void CoordinatesTest::multiply()
     b.setPosition(5, chemkit::Point3(0, 8, 9));
     b.setPosition(6, chemkit::Point3(-2.5, 1.5, 0));
 
-    chemkit::StaticMatrix<chemkit::Float, 3, 3> product = a.multiply(&b);
+    Eigen::Matrix<chemkit::Float, 3, 3> product = a.multiply(&b);
     QCOMPARE(product(0, 0), chemkit::Float(99.4));
     QCOMPARE(product(0, 1), chemkit::Float(38.0));
     QCOMPARE(product(0, 2), chemkit::Float(-13.8));

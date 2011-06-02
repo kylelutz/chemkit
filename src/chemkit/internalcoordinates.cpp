@@ -40,7 +40,6 @@
 #include "vector3.h"
 #include "constants.h"
 #include "coordinates.h"
-#include "staticmatrix.h"
 
 namespace chemkit {
 
@@ -248,12 +247,12 @@ Coordinates* InternalCoordinates::toCartesianCoordinates() const
         Vector3 n = ab.cross(bc).normalized();
         Vector3 ncbc = n.cross(bc);
 
-        StaticMatrix<Float, 3, 3> M;
+        Eigen::Matrix<Float, 3, 3> M;
         M << bc.x(), ncbc.x(), n.x(),
              bc.y(), ncbc.y(), n.y(),
              bc.z(), ncbc.z(), n.z();
 
-        Point3 d = M.multiply(Point3(-x, y, z)) + c;
+        Point3 d = (M * Point3(-x, y, z)) + c;
         cartesianCoordinates->setPosition(i, d);
     }
 

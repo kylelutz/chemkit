@@ -46,7 +46,6 @@
 #include "geometry.h"
 #include "molecule.h"
 #include "alphashape.h"
-#include "staticmatrix.h"
 #include "delaunaytriangulation.h"
 
 namespace chemkit {
@@ -385,10 +384,10 @@ Float MolecularSurface::capHeight(int i, int j) const
 
     // check if vertex i is attached to vertex j
     if(d->alphaShape->vertexAttached(i, j)){
-        return radius(i) + s.distance(y);
+        return radius(i) + chemkit::geometry::distance(s, y);
     }
     else{
-        return radius(i) - s.distance(y);
+        return radius(i) - chemkit::geometry::distance(s, y);
     }
 }
 
@@ -522,7 +521,7 @@ Float MolecularSurface::segmentArea(int i, int j, int k) const
     Point3 pkj = triangleDual(i, k, j);
 
     Float h = diskRadius(i, j) - segmentHeight(i, j, k);
-    Float t = (1.0/2.0) * h * pjk.distance(pkj);
+    Float t = (1.0/2.0) * h * chemkit::geometry::distance(pjk, pkj);
 
     return s - t;
 }
@@ -550,10 +549,10 @@ Float MolecularSurface::segmentHeight(int i, int j, int k) const
 
     // check if vertex k is attached to the edge (i, j)
     if(d->alphaShape->edgeAttached(i, j, k)){
-        return diskRadius(i, j) + y2.distance(y3);
+        return diskRadius(i, j) + chemkit::geometry::distance(y2, y3);
     }
     else{
-        return diskRadius(i, j) - y2.distance(y3);
+        return diskRadius(i, j) - chemkit::geometry::distance(y2, y3);
     }
 }
 
@@ -575,8 +574,8 @@ Float MolecularSurface::segment2Area(int i, int j, int k, int l) const
     Float rij = diskRadius(i, j);
 
     Float s = (1.0/2.0) * rij * segment2Length(i, j, k, l);
-    Float tk = (1.0/2.0) * (rij - hk) * pkj.distance(y);
-    Float tl = (1.0/2.0) * (rij - hl) * pjl.distance(y);
+    Float tk = (1.0/2.0) * (rij - hk) * chemkit::geometry::distance(pkj, y);
+    Float tl = (1.0/2.0) * (rij - hl) * chemkit::geometry::distance(pjl, y);
 
     return s - tk - tl;
 }

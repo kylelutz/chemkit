@@ -40,7 +40,6 @@
 
 #include <chemkit/point3.h>
 #include <chemkit/vector3.h>
-#include <chemkit/staticmatrix.h>
 
 #include "graphicsray.h"
 
@@ -52,7 +51,7 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsTransform
         // construction and destruction
         GraphicsTransform();
         GraphicsTransform(const GraphicsTransform &transform);
-        GraphicsTransform(const StaticMatrix<float, 4, 4> &matrix);
+        GraphicsTransform(const Eigen::Matrix<float, 4, 4> &matrix);
         ~GraphicsTransform();
 
         // properties
@@ -62,24 +61,22 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsTransform
         void invert();
         GraphicsTransform inverted() const;
         GraphicsRay multiply(const GraphicsRay &ray) const;
-        Point3f multiply(const Point3f &point) const;
-        Vector3f multiply(const Vector3f &vector) const;
-        StaticVector<float, 4> multiply(const StaticVector<float, 4> &vector);
+        Point3f multiplyPoint(const Point3f &point) const;
+        Vector3f multiplyVector(const Vector3f &vector) const;
+        Eigen::Matrix<float, 4, 1> multiply(const Eigen::Matrix<float, 4, 1> &vector) const;
         GraphicsTransform multiply(const GraphicsTransform &transform) const;
-        Point3f inverseMultiply(const Point3f &point) const;
-        Vector3f inverseMultiply(const Vector3f &vector) const;
-        StaticVector<float, 4> inverseMultiply(const StaticVector<float, 4> &vector);
+        Point3f inverseMultiplyPoint(const Point3f &point) const;
+        Vector3f inverseMultiplyVector(const Vector3f &vector) const;
+        Eigen::Matrix<float, 4, 1> inverseMultiply(const Eigen::Matrix<float, 4, 1> &vector) const;
 
         // operators
         float operator()(int row, int column) const;
         float& operator()(int row, int column);
         GraphicsRay operator*(const GraphicsRay &ray) const;
         Point3f operator*(const Point3f &point) const;
-        Vector3f operator*(const Vector3f &vector) const;
         GraphicsTransform operator*(const GraphicsTransform &transform) const;
         GraphicsTransform& operator*=(const GraphicsTransform &transform);
         GraphicsTransform& operator=(const GraphicsTransform &transform);
-        CommaInitializer<float> operator<<(const float value);
 
         // static methods
         static GraphicsTransform identity();
@@ -90,7 +87,7 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsTransform
         static GraphicsTransform orthographic(float left, float right, float top, float bottom, float near, float far);
 
     private:
-        StaticMatrix<float, 4, 4> *m_matrix;
+        Eigen::Matrix<float, 4, 4> *m_matrix;
 };
 
 } // end chemkit namespace

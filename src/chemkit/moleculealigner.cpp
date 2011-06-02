@@ -175,7 +175,7 @@ Float MoleculeAligner::deviation() const
 /// Returns a 3x3 rotation matrix that represents the optimal
 /// rotation of the source molecule to minimize the root mean square
 /// deviation.
-StaticMatrix<Float, 3, 3> MoleculeAligner::rotationMatrix() const
+Eigen::Matrix<Float, 3, 3> MoleculeAligner::rotationMatrix() const
 {
     Coordinates *sourceMatrix = sourceCoordinates();
     Coordinates *targetMatrix = targetCoordinates();
@@ -183,24 +183,20 @@ StaticMatrix<Float, 3, 3> MoleculeAligner::rotationMatrix() const
     sourceMatrix->moveBy(-sourceMatrix->center());
     targetMatrix->moveBy(-targetMatrix->center());
 
-    StaticMatrix<Float, 3, 3> covarianceMatrix = targetMatrix->multiply(sourceMatrix);
+    Eigen::Matrix<Float, 3, 3> covarianceMatrix = targetMatrix->multiply(sourceMatrix);
 
     delete sourceMatrix;
     delete targetMatrix;
 
-    StaticMatrix<Float, 3, 3> rotationMatrix = StaticMatrix<Float, 3, 3>::identity();
+    Eigen::Matrix<Float, 3, 3> rotationMatrix = Eigen::Matrix<Float, 3, 3>::Identity();
 
     int d = covarianceMatrix.determinant() >= 0 ? 1 : -1;
     rotationMatrix(2, 2) = d;
 
     // compute singular value decomposition of the covariance matrix
-    StaticMatrix<Float, 3, 3> U;
-    StaticMatrix<Float, 3, 3> Vt;
-    StaticVector<Float, 3> S;
+    Eigen::JacobiSVD<Eigen::Matrix<Float, 3, 3> > svd(covarianceMatrix, Eigen::ComputeFullU | Eigen::ComputeFullV);
 
-    covarianceMatrix.svd(&U, &S, &Vt);
-
-    rotationMatrix = U * rotationMatrix * Vt;
+    rotationMatrix = svd.matrixU() * rotationMatrix * svd.matrixV().transpose();
 
     return rotationMatrix;
 }
@@ -225,9 +221,9 @@ Vector3 MoleculeAligner::displacementVector() const
 /// from displacementVector().
 void MoleculeAligner::align(Molecule *molecule)
 {
-    StaticMatrix<Float, 3, 3> matrix = rotationMatrix();
+    Eigen::Matrix<Float, 3, 3> matrix = rotationMatrix();
     Q_FOREACH(Atom *atom, molecule->atoms()){
-        atom->setPosition(matrix.multiply(atom->position()));
+        atom->setPosition(matrix * atom->position());
     }
 
     Vector3 displacement = displacementVector();

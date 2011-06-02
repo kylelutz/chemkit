@@ -120,14 +120,18 @@ void GraphicsNucleicAcidItem::paint(GraphicsPainter *painter)
             // add phosphorus position to trace
             const Atom *phosphorus = residue->atom("P");
             if(phosphorus){
-                trace.append(phosphorus->position());
+                trace.append(phosphorus->position().cast<float>());
 
                 // draw ladder
                 float ladderRadius = 0.4f;
                 const Atom *centerAtom = residue->atom("C2");
                 if(centerAtom){
-                    painter->drawCylinder(phosphorus->position(), centerAtom->position(), ladderRadius);
-                    painter->drawSphere(centerAtom->position(), ladderRadius);
+                    painter->drawCylinder(phosphorus->position().cast<float>(),
+                                          centerAtom->position().cast<float>(),
+                                          ladderRadius);
+
+                    painter->drawSphere(centerAtom->position().cast<float>(),
+                                        ladderRadius);
                 }
             }
         }

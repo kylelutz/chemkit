@@ -74,7 +74,7 @@ GraphicsAtomItem::GraphicsAtomItem(const Atom *atom, float radius)
     d->sphere = GraphicsSphere(radius);
 
     if(atom){
-        translate(Point3f(atom->position()));
+        translate(atom->position().cast<float>());
     }
 }
 
@@ -92,7 +92,7 @@ void GraphicsAtomItem::setAtom(const Atom *atom)
     d->atom = atom;
 
     if(atom){
-        setTransform(GraphicsTransform::translation(Point3f(atom->position())));
+        setTransform(GraphicsTransform::translation(atom->position().cast<float>()));
     }
 }
 
@@ -133,7 +133,7 @@ QColor GraphicsAtomItem::color() const
 /// Returns \c true if the item intersects \p ray.
 bool GraphicsAtomItem::intersects(const GraphicsRay &ray, float *distance) const
 {
-    return ray.intersectsSphere(d->atom->position(), radius(), distance);
+    return ray.intersectsSphere(d->atom->position().cast<float>(), radius(), distance);
 }
 
 // --- Drawing ------------------------------------------------------------- //

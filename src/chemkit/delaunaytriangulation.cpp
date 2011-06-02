@@ -39,12 +39,13 @@
 #include <deque>
 #include <algorithm>
 
+#include <QList>
+
 #include "point3.h"
 #include "foreach.h"
 #include "vector3.h"
 #include "geometry.h"
 #include "alphashape.h"
-#include "staticmatrix.h"
 
 namespace chemkit {
 

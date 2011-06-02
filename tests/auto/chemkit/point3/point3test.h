@@ -44,11 +44,7 @@ class Point3Test : public QObject
 
     private slots:
         void basic();
-        void moveBy();
-        void movedBy();
         void isZero();
-        void distance();
-        void midpoint();
 };
 
 #endif // POINT3TEST_H

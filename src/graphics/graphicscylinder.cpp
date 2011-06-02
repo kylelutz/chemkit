@@ -35,6 +35,8 @@
 
 #include "graphicscylinder.h"
 
+#include <chemkit/constants.h>
+
 #include "graphicsray.h"
 #include "graphicsvertexbuffer.h"
 

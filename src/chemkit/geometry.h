@@ -48,6 +48,8 @@ namespace geometry {
 // constructions
 CHEMKIT_EXPORT Float distance(const Point3 &a, const Point3 &b);
 CHEMKIT_EXPORT Float distanceSquared(const Point3 &a, const Point3 &b);
+CHEMKIT_EXPORT Float angle(const Vector3 &a, const Vector3 &b);
+CHEMKIT_EXPORT Float angleRadians(const Vector3 &a, const Vector3 &b);
 CHEMKIT_EXPORT Float angle(const Point3 &a, const Point3 &b, const Point3 &c);
 CHEMKIT_EXPORT Float angleRadians(const Point3 &a, const Point3 &b, const Point3 &c);
 CHEMKIT_EXPORT Float torsionAngle(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d);
@@ -77,8 +79,8 @@ CHEMKIT_EXPORT Float sphereOrientation(const Point3 &a, const Point3 &b, const P
 CHEMKIT_EXPORT Float sphereOrientation(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d, const Point3 &p, Float wa, Float wb, Float wc, Float wd, Float wp);
 
 // transforms
-template<typename T> StaticVector<T, 3> rotate(const StaticVector<T, 3> &vector, const StaticVector<T, 3> &axis, T angle);
-template<typename T> StaticVector<T, 3> rotateRadians(const StaticVector<T, 3> &vector, const StaticVector<T, 3> &axis, T angle);
+template<typename T> Eigen::Matrix<T, 3, 1> rotate(const Eigen::Matrix<T, 3, 1> &vector, const Eigen::Matrix<T, 3, 1> &axis, T angle);
+template<typename T> Eigen::Matrix<T, 3, 1> rotateRadians(const Eigen::Matrix<T, 3, 1> &vector, const Eigen::Matrix<T, 3, 1> &axis, T angle);
 
 } // end geometry namespace
 

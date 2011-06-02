@@ -38,18 +38,18 @@
 
 #include "chemkit.h"
 
-#include "genericvector.h"
+#include <Eigen/Core>
 
 namespace chemkit {
 
 /// A three-dimensional vector.
-typedef GenericVector<Float> Vector3;
+typedef Eigen::Matrix<Float, 3, 1> Vector3;
 
 /// A three-dimensional vector containing \c float values.
-typedef GenericVector<float> Vector3f;
+typedef Eigen::Matrix<float, 3, 1> Vector3f;
 
 /// A three-dimensional vector containing \c double values.
-typedef GenericVector<double> Vector3d;
+typedef Eigen::Matrix<double, 3, 1> Vector3d;
 
 } // end chemkit namespace
 

@@ -94,7 +94,7 @@ void PdbViewerWindow::setFile(chemkit::PolymerFile *file)
         if(polymer){
             m_proteinItem->setPolymer(polymer);
             m_nucleicAcidItem->setPolymer(polymer);
-            m_view->camera()->lookAt(polymer->center());
+            m_view->camera()->lookAt(polymer->center().cast<float>());
         }
     }
 

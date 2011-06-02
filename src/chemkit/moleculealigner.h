@@ -40,8 +40,9 @@
 
 #include <map>
 
+#include <Eigen/Core>
+
 #include "vector3.h"
-#include "staticmatrix.h"
 
 namespace chemkit {
 
@@ -71,7 +72,7 @@ class CHEMKIT_EXPORT MoleculeAligner
 
         // geometry
         Float deviation() const;
-        StaticMatrix<Float, 3, 3> rotationMatrix() const;
+        Eigen::Matrix<Float, 3, 3> rotationMatrix() const;
         Vector3 displacementVector() const;
         void align(Molecule *molecule);
 

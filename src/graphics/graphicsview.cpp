@@ -375,7 +375,7 @@ GraphicsCamera* GraphicsView::camera() const
 /// Projects a point from the scene to the window.
 QPointF GraphicsView::project(const Point3f &point) const
 {
-    StaticVector<float, 4> vector;
+    Eigen::Matrix<float, 4, 1> vector;
     vector[0] = point.x();
     vector[1] = point.y();
     vector[2] = point.z();
@@ -405,7 +405,7 @@ Point3f GraphicsView::unproject(qreal x, qreal y, qreal z) const
     y = height() - y;
 
     // adjust point to normalized window coordinates
-    StaticVector<float, 4> point;
+    Eigen::Matrix<float, 4, 1> point;
     point[0] = 2 * x / width() - 1;
     point[1] = 2 * y / height() - 1;
     point[2] = 2 * z - 1;
@@ -429,7 +429,7 @@ Point3f GraphicsView::unproject(qreal x, qreal y, const Point3f &reference) cons
 /// Returns the depth of point in the scene.
 float GraphicsView::depth(const Point3f &point) const
 {
-    StaticVector<float, 4> viewPoint;
+    Eigen::Matrix<float, 4, 1> viewPoint;
     viewPoint[0] = point.x();
     viewPoint[1] = point.y();
     viewPoint[2] = point.z();
@@ -623,10 +623,12 @@ void GraphicsView::paintGL()
         Vector3f s = f.cross(camera()->upVector());
         Vector3f u = s.cross(f);
 
-        d->modelViewTransform << s.x(),  s.y(),  s.z(), 0,
-                                 u.x(),  u.y(),  u.z(), 0,
-                                -f.x(), -f.y(), -f.z(), 0,
-                                     0,      0,      0, 1;
+        Eigen::Matrix<float, 4, 4> transform;
+        transform <<  s.x(),  s.y(),  s.z(), 0.0f,
+                      u.x(),  u.y(),  u.z(), 0.0f,
+                     -f.x(), -f.y(), -f.z(), 0.0f,
+                       0.0f,   0.0f,   0.0f, 1.0f;
+        d->modelViewTransform = GraphicsTransform(transform);
 
         d->modelViewTransform *= GraphicsTransform::translation(-camera()->position());
         glLoadMatrixf(d->modelViewTransform.data());

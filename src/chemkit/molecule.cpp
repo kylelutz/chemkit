@@ -38,6 +38,8 @@
 #include <sstream>
 #include <algorithm>
 
+#include <QHash>
+
 #include <Eigen/Core>
 #include <Eigen/Geometry>
 
@@ -902,7 +904,7 @@ void Molecule::setCenter(Float x, Float y, Float z)
 Point3 Molecule::center() const
 {
     if(isEmpty()){
-        return Point3();
+        return Point3(0, 0, 0);
     }
 
     // sums for each component

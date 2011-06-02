@@ -39,6 +39,7 @@
 #include <chemkit/bond.h>
 #include <chemkit/point3.h>
 #include <chemkit/vector3.h>
+#include <chemkit/geometry.h>
 
 #include "graphicsray.h"
 #include "graphicspainter.h"
@@ -187,8 +188,8 @@ bool GraphicsBondItem::intersects(const GraphicsRay &ray, float *distance) const
 {
     float intersectionRadius = qMin(d->radius, d->maximumRadius);
 
-    return ray.intersectsCylinder(d->bond->atom1()->position(),
-                                  d->bond->atom2()->position(),
+    return ray.intersectsCylinder(d->bond->atom1()->position().cast<float>(),
+                                  d->bond->atom2()->position().cast<float>(),
                                   intersectionRadius,
                                   distance);
 }
@@ -217,11 +218,11 @@ void GraphicsBondItem::paint(GraphicsPainter *painter)
         float initialOffset = 1.5 * (bondOrder - 1) * radius;
 
         // a vector pointing to the right (with normal pointing up)
-        Vector3f right = Vector3f(Point3f(atom2->position()) - Point3f(atom1->position())).cross(d->normal);
+        Vector3f right = (atom2->position().cast<float>() - atom1->position().cast<float>()).cross(d->normal);
 
         // positions for the first cylinder
-        Point3f a = Point3f(atom1->position()) + (right.normalized() * -initialOffset);
-        Point3f b = Point3f(atom2->position()) + (right.normalized() * -initialOffset);
+        Point3f a = atom1->position().cast<float>() + (right.normalized() * -initialOffset);
+        Point3f b = atom2->position().cast<float>() + (right.normalized() * -initialOffset);
 
         // draw each cylinder
         for(int i = 0; i < bondOrder; i++){
@@ -231,7 +232,7 @@ void GraphicsBondItem::paint(GraphicsPainter *painter)
                     painter->drawCylinder(a, b, radius);
                 }
                 else{
-                    Point3f midpoint = a.midpoint(b);
+                    Point3f midpoint = chemkit::geometry::midpoint(a.cast<Float>(), b.cast<Float>()).cast<float>();
                     painter->setColor(d->atomColors.first);
                     painter->drawCylinder(a, midpoint, radius);
                     painter->setColor(d->atomColors.second);
@@ -256,19 +257,19 @@ void GraphicsBondItem::paint(GraphicsPainter *painter)
         if(d->atomColored){
             if(d->atomColors.first == d->atomColors.second){
                 painter->setColor(d->atomColors.first);
-                painter->drawCylinder(atom1->position(), atom2->position(), radius);
+                painter->drawCylinder(atom1->position().cast<float>(), atom2->position().cast<float>(), radius);
             }
             else{
-                Point3f midpoint = atom1->position().midpoint(atom2->position());
+                Point3f midpoint = chemkit::geometry::midpoint(atom1->position(), atom2->position()).cast<float>();
                 painter->setColor(d->atomColors.first);
-                painter->drawCylinder(atom1->position(), midpoint, radius);
+                painter->drawCylinder(atom1->position().cast<float>(), midpoint, radius);
                 painter->setColor(d->atomColors.second);
-                painter->drawCylinder(midpoint, atom2->position(), radius);
+                painter->drawCylinder(midpoint, atom2->position().cast<float>(), radius);
             }
         }
         else{
             painter->setColor(d->color);
-            painter->drawCylinder(atom1->position(), atom2->position(), radius);
+            painter->drawCylinder(atom1->position().cast<float>(), atom2->position().cast<float>(), radius);
         }
     }
 }

@@ -130,7 +130,7 @@ void CubeViewerExample::openFile(const QString &fileName)
     m_positiveScalarField = readVolumeData(fileName);
     if(m_positiveScalarField){
         m_positiveSurfaceItem->setScalarField(m_positiveScalarField);
-        m_positiveSurfaceItem->setPosition(m_positiveScalarField->origin());
+        m_positiveSurfaceItem->setPosition(m_positiveScalarField->origin().cast<float>());
 
         std::vector<chemkit::Float> values = m_positiveScalarField->data();
         for(unsigned int i = 0; i < values.size(); i++){
@@ -140,7 +140,7 @@ void CubeViewerExample::openFile(const QString &fileName)
                                                          m_positiveScalarField->cellDimensions(),
                                                          values);
         m_negativeSurfaceItem->setScalarField(m_negativeScalarField);
-        m_negativeSurfaceItem->setPosition(m_positiveScalarField->origin());
+        m_negativeSurfaceItem->setPosition(m_positiveScalarField->origin().cast<float>());
     }
 
     // update the view

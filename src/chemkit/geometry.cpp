@@ -42,8 +42,6 @@
 
 #include "point3.h"
 #include "vector3.h"
-#include "staticmatrix.h"
-#include "staticvector.h"
 
 namespace chemkit {
 
@@ -79,6 +77,20 @@ Float distance(const Point3 &a, const Point3 &b)
 Float distanceSquared(const Point3 &a, const Point3 &b)
 {
     return (a - b).squaredNorm();
+}
+
+/// Returns the angle between the vectors \p a and \p b. Angle is
+/// in Degrees.
+Float angle(const Vector3 &a, const Vector3 &b)
+{
+    return angleRadians(a, b) * chemkit::constants::RadiansToDegrees;
+}
+
+/// Returns the angle between the vectors \p a and \p b. Angle is
+/// in Radians.
+Float angleRadians(const Vector3 &a, const Vector3 &b)
+{
+    return acos(a.dot(b) / (a.norm() * b.norm()));
 }
 
 /// Returns the angle between the vectors (\p a, \p b) and (\p b,
@@ -238,7 +250,7 @@ Point3 orthocenter(const Point3 &a, const Point3 &b, const Point3 &c, Float wa, 
     double j0 = (1.0/2.0) * (b.dot(b) - wb);
     double k0 = (1.0/2.0) * (c.dot(c) - wc);
 
-    StaticMatrix<double, 4, 4> matrix;
+    Eigen::Matrix<double, 4, 4> matrix;
 
     // d0 = | a.x a.y a.z 1 |
     //      | b.x b.y b.z 1 |
@@ -292,7 +304,7 @@ Point3 orthocenter(const Point3 &a, const Point3 &b, const Point3 &c, const Poin
     double k0 = (1.0/2.0) * (c.dot(c) - wc);
     double l0 = (1.0/2.0) * (d.dot(d) - wd);
 
-    StaticMatrix<double, 4, 4> matrix;
+    Eigen::Matrix<double, 4, 4> matrix;
 
     matrix << a.x(), a.y(), a.z(), 1,
               b.x(), b.y(), b.z(), 1,
@@ -457,7 +469,7 @@ Float sphereOrientation(const Point3 &a, const Point3 &b, const Point3 &c, const
     Vector3d v = c - p;
     Vector3d w = d - p;
 
-    StaticMatrix<double, 4, 4> matrix;
+    Eigen::Matrix<double, 4, 4> matrix;
 
     matrix << t.x(), t.y(), t.z(), t.dot(t),
               u.x(), u.y(), u.z(), u.dot(u),
@@ -496,7 +508,7 @@ Float sphereOrientation(const Point3 &a, const Point3 &b, const Point3 &c, const
     Vector3d v = c - p;
     Vector3d w = d - p;
 
-    StaticMatrix<double, 4, 4> matrix;
+    Eigen::Matrix<double, 4, 4> matrix;
 
     matrix << t.x(), t.y(), t.z(), t.dot(t) - (wa - wp),
               u.x(), u.y(), u.z(), u.dot(u) - (wb - wp),

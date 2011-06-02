@@ -225,7 +225,7 @@ void GraphicsProteinItem::paint(GraphicsPainter *painter)
                 const AminoAcid *aminoAcid = static_cast<const AminoAcid *>(residue);
 
                 if(aminoAcid->alphaCarbon() != 0){
-                    trace.append(aminoAcid->alphaCarbon()->position());
+                    trace.append(aminoAcid->alphaCarbon()->position().cast<float>());
                 }
             }
 
