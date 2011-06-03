@@ -121,8 +121,6 @@ bool PluginManager::loadPlugin(const std::string &fileName)
 
     d->plugins.push_back(instance);
 
-    Q_EMIT pluginLoaded(instance);
-
     return true;
 }
 
@@ -177,8 +175,6 @@ void PluginManager::loadDefaultPlugins()
 /// Unloads the plugin.
 bool PluginManager::unloadPlugin(Plugin *plugin)
 {
-    Q_EMIT pluginUnloaded(plugin);
-
     return false;
 }
 
@@ -210,15 +206,6 @@ PluginManager* PluginManager::instance()
 
     return &singleton;
 }
-
-// --- Signals ------------------------------------------------------------- //
-/// \fn void PluginManager::pluginLoaded(const chemkit::Plugin *plugin)
-///
-/// This signal is emitted when a new plugin is loaded.
-
-/// \fn void PluginManager::pluginUnloaded(const chemkit::Plugin *plugin)
-///
-/// This signal is emitted when a plugin is unloaded.
 
 // --- Internal Methods ---------------------------------------------------- //
 /// Registers a new plugin function for \p className and

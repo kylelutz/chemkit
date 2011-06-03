@@ -78,10 +78,6 @@ class CHEMKIT_EXPORT PluginManager : public QObject
         // static methods
         static PluginManager* instance();
 
-    Q_SIGNALS:
-        void pluginLoaded(const chemkit::Plugin *plugin);
-        void pluginUnloaded(const chemkit::Plugin *plugin);
-
     private:
         PluginManager();
         ~PluginManager();
