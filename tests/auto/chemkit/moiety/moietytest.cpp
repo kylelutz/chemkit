@@ -88,6 +88,12 @@ void MoietyTest::atomCount()
     delete molecule;
 }
 
+void MoietyTest::molecule()
+{
+    chemkit::Moiety* moiety = new chemkit::Moiety();
+    QVERIFY(moiety->molecule() == 0);
+}
+
 
 
 QTEST_APPLESS_MAIN(MoietyTest)

@@ -34,7 +34,6 @@
 ******************************************************************************/
 
 #include "moiety.h"
-
 #include "atom.h"
 
 namespace chemkit {
@@ -85,10 +84,15 @@ bool Moiety::isEmpty() const
     return size() == 0;
 }
 
-/// Returns the molecule that the moiety is a part of.
+/// Returns the molecule that the moiety is a part of. Returns
+/// \c 0 if the moiety is empty.
 Molecule* Moiety::molecule() const
 {
-    return d->atoms[0]->molecule();
+    if(!isEmpty())
+        return d->atoms[0]->molecule();
+    else
+        return 0;
+
 }
 
 // --- Structure ----------------------------------------------------------- //
