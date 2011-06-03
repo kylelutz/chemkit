@@ -38,6 +38,8 @@
 #include <map>
 #include <boost/algorithm/string/case_conv.hpp>
 
+#include <QBuffer>
+
 #include "pluginmanager.h"
 
 namespace chemkit {

@@ -40,7 +40,7 @@
 
 #include <string>
 
-#include <QObject>
+#include <QtPlugin>
 
 namespace chemkit {
 

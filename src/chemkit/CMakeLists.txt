@@ -133,7 +133,6 @@ set(SOURCES
 set(MOC_HEADERS
   moleculewatcher.h
   plugin.h
-  pluginmanager.h
 )
 
 qt4_wrap_cpp(MOC_SOURCES ${MOC_HEADERS})

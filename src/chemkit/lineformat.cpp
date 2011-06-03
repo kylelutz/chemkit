@@ -35,6 +35,8 @@
 
 #include "lineformat.h"
 
+#include <QHash>
+
 #include "pluginmanager.h"
 
 namespace chemkit {

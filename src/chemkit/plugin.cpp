@@ -35,6 +35,8 @@
 
 #include "plugin.h"
 
+#include <QFileInfo>
+
 namespace chemkit {
 
 // === PluginPrivate ======================================================= //

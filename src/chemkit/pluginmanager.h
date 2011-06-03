@@ -41,17 +41,13 @@
 #include <string>
 #include <vector>
 
-#include <QtCore>
-
 namespace chemkit {
 
 class Plugin;
 class PluginManagerPrivate;
 
-class CHEMKIT_EXPORT PluginManager : public QObject
+class CHEMKIT_EXPORT PluginManager
 {
-    Q_OBJECT
-
     public:
         // enumerations
         typedef void (*Function)();

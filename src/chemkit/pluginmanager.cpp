@@ -38,6 +38,8 @@
 #include <map>
 #include <boost/algorithm/string/case_conv.hpp>
 
+#include <QtCore>
+
 #include "plugin.h"
 #include "foreach.h"
 
@@ -63,8 +65,7 @@ class PluginManagerPrivate
 
 // --- Construction and Destruction ---------------------------------------- //
 PluginManager::PluginManager()
-    : QObject(),
-      d(new PluginManagerPrivate)
+    : d(new PluginManagerPrivate)
 {
     d->defaultPluginsLoaded = false;
 }

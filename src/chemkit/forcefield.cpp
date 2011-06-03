@@ -35,6 +35,10 @@
 
 #include "forcefield.h"
 
+#include <QtCore>
+#include <QtConcurrentMap>
+#include <QtConcurrentRun>
+
 #include "atom.h"
 #include "foreach.h"
 #include "geometry.h"
