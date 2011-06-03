@@ -35,10 +35,9 @@
 
 #include "molecule.h"
 
+#include <map>
 #include <sstream>
 #include <algorithm>
-
-#include <QHash>
 
 #include <Eigen/Core>
 #include <Eigen/Geometry>
@@ -164,7 +163,7 @@ Molecule::Molecule(const Molecule &molecule)
 {
     d->name = molecule.name();
 
-    QHash<const Atom *, Atom *> oldToNew;
+    std::map<const Atom *, Atom *> oldToNew;
 
     foreach(const Atom *atom, molecule.atoms()){
         Atom *newAtom = addAtomCopy(atom);
@@ -1107,7 +1106,7 @@ Molecule& Molecule::operator=(const Molecule &molecule)
         // set new name
         setName(molecule.name());
 
-        QHash<const Atom *, Atom *> oldToNew;
+        std::map<const Atom *, Atom *> oldToNew;
 
         // add new atoms
         foreach(const Atom *atom, molecule.atoms()){
