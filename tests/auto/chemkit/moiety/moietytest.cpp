@@ -90,10 +90,17 @@ void MoietyTest::atomCount()
 
 void MoietyTest::molecule()
 {
-    chemkit::Moiety* moiety = new chemkit::Moiety();
-    QVERIFY(moiety->molecule() == 0);
+    chemkit::Molecule* molecule = new chemkit::Molecule;
+    chemkit::Atom* atomH = molecule->addAtom("H");
+    std::vector<chemkit::Atom*> moietyAtoms;
+    moietyAtoms.push_back(atomH);
+    chemkit::Moiety moiety(moietyAtoms);
+    QVERIFY(moiety.molecule() == molecule);
+
+    chemkit::Moiety emptyMoiety;
+    QVERIFY(emptyMoiety.molecule() == 0);
+
+    delete molecule;
 }
-
-
 
 QTEST_APPLESS_MAIN(MoietyTest)
