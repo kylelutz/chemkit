@@ -36,7 +36,9 @@
 #include "moleculefileformat.h"
 
 #include <map>
-#include <boost/algorithm/string/case_conv.hpp>
+
+#include <boost/format.hpp>
+#include <boost/algorithm/string.hpp>
 
 #include <QBuffer>
 
@@ -126,7 +128,7 @@ bool MoleculeFileFormat::read(QIODevice *iodev, MoleculeFile *file)
     CHEMKIT_UNUSED(iodev);
     CHEMKIT_UNUSED(file);
 
-    setErrorString(QString("'%1' reading not supported.").arg(name().c_str()).toStdString());
+    setErrorString((boost::format("'%s' reading not supported.") % name()).str());
     return false;
 }
 
@@ -149,7 +151,7 @@ bool MoleculeFileFormat::write(const MoleculeFile *file, QIODevice *iodev)
     CHEMKIT_UNUSED(file);
     CHEMKIT_UNUSED(iodev);
 
-    setErrorString(QString("'%1' writing not supported.").arg(name().c_str()).toStdString());
+    setErrorString((boost::format("'%s' writing not supported.") % name()).str());
     return false;
 }
 
