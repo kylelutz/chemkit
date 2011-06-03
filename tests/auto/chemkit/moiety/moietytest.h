@@ -46,6 +46,7 @@ class MoietyTest : public QObject
         void size();
         void isEmpty();
         void atomCount();
+        void molecule();
 };
 
 #endif // MOIETYTEST_H
