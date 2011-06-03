@@ -35,7 +35,9 @@
 
 #include "lineformat.h"
 
-#include <QHash>
+#include <map>
+
+#include <QString>
 
 #include "pluginmanager.h"
 
@@ -47,7 +49,7 @@ class LineFormatPrivate
     public:
         std::string name;
         std::string errorString;
-        QHash<QString, Variant> options;
+        std::map<std::string, Variant> options;
 };
 
 // === LineFormat ========================================================== //
@@ -87,13 +89,19 @@ std::string LineFormat::name() const
 /// Sets an option for the line format.
 void LineFormat::setOption(const std::string &name, const Variant &value)
 {
-    d->options[name.c_str()] = value;
+    d->options[name] = value;
 }
 
 /// Returns the value of an option for the line format.
 Variant LineFormat::option(const std::string &name) const
 {
-    return d->options.value(name.c_str(), defaultOption(name));
+    std::map<std::string, Variant>::const_iterator location = d->options.find(name);
+    if(location != d->options.end()){
+        return location->second;
+    }
+    else{
+        return defaultOption(name);
+    }
 }
 
 Variant LineFormat::defaultOption(const std::string &name) const
