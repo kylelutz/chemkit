@@ -37,7 +37,8 @@
 
 #include <map>
 
-#include <QString>
+#include <boost/format.hpp>
+#include <boost/algorithm/string.hpp>
 
 #include "pluginmanager.h"
 
@@ -69,7 +70,7 @@ class LineFormatPrivate
 LineFormat::LineFormat(const std::string &name)
     : d(new LineFormatPrivate)
 {
-    d->name = QString(name.c_str()).toLower().toStdString();
+    d->name = boost::algorithm::to_lower_copy(name);
 }
 
 /// Destroys the line format object.
@@ -119,7 +120,7 @@ bool LineFormat::read(const std::string &formula, Molecule *molecule)
     CHEMKIT_UNUSED(formula);
     CHEMKIT_UNUSED(molecule);
 
-    setErrorString(QString("'%1' read not supported.").arg(name().c_str()).toStdString());
+    setErrorString((boost::format("'%s' read not supported.") % name()).str());
     return false;
 }
 
@@ -144,7 +145,7 @@ std::string LineFormat::write(const Molecule *molecule)
 {
     CHEMKIT_UNUSED(molecule);
 
-    setErrorString(QString("'%1' write not supported.").arg(name().c_str()).toStdString());
+    setErrorString((boost::format("'%s' write not supported.") % name()).str());
     return std::string();
 }
 
