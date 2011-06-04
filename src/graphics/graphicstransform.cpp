@@ -67,6 +67,9 @@ namespace chemkit {
 GraphicsTransform::GraphicsTransform()
 {
     m_matrix = new Eigen::Matrix<float, 4, 4>();
+
+    // set transformation matrix to all zeros
+    m_matrix->setZero();
 }
 
 /// Creates a new transform as a copy of \p transform.
