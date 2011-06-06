@@ -18,8 +18,6 @@ set(HEADERS
   bond-inline.h
   bondpredictor.h
   chemkit.h
-  commainitializer.h
-  commainitializer-inline.h
   config.h
   conformer.h
   constants.h
