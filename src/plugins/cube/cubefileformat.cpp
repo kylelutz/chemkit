@@ -35,7 +35,7 @@
 
 #include "cubefileformat.h"
 
-#include <QtCore>
+#include <boost/algorithm/string.hpp>
 
 #include <chemkit/molecule.h>
 #include <chemkit/moleculefile.h>
@@ -52,62 +52,66 @@ CubeFileFormat::~CubeFileFormat()
 {
 }
 
-bool CubeFileFormat::read(QIODevice *iodev, chemkit::MoleculeFile *file)
+bool CubeFileFormat::read(std::istream &input, chemkit::MoleculeFile *file)
 {
-    iodev->setTextModeEnabled(true);
-
     chemkit::Molecule *molecule = new chemkit::Molecule;
 
     // title line
-    QString line = iodev->readLine();
-    QStringList lineItems = line.split(" ", QString::SkipEmptyParts);
-    if(lineItems.size() > 0){
-        molecule->setName(lineItems[0].toStdString());
+    std::string titleLine;
+    std::getline(input, titleLine);
+    std::vector<std::string> titleLineItems;
+    boost::split(titleLineItems, titleLine, boost::is_any_of("\t "));
+    if(titleLineItems.size() > 0){
+        molecule->setName(titleLineItems[0]);
     }
 
     // comment line
-    iodev->readLine();
+    std::string commentLine;
+    std::getline(input, commentLine);
 
     // atom count line
-    line = iodev->readLine();
-    lineItems = line.split(" ", QString::SkipEmptyParts);
-    if(lineItems.size() < 1){
-        setErrorString("Atom count line too short.");
-        delete molecule;
-        return false;
-    }
-
-    int atomCount = qAbs(lineItems[0].toInt());
+    int atomCount = 0;
+    input >> atomCount;
+    input.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    atomCount = std::abs(atomCount);
 
     // voxel count and axii lines
-    iodev->readLine();
-    iodev->readLine();
-    iodev->readLine();
+    std::string line;
+    std::getline(input, line);
+    std::getline(input, line);
+    std::getline(input, line);
 
     // atom lines
     for(int i = 0; i < atomCount; i++){
-        line = iodev->readLine();
-        lineItems = line.split(" ", QString::SkipEmptyParts);
-        if(lineItems.size() < 5){
-            continue;
-        }
+        // read atomic number
+        int atomicNumber = 0;
+        input >> atomicNumber;
 
-        int atomicNumber = lineItems[0].toInt();
+        // add atom
         chemkit::Atom *atom = molecule->addAtom(atomicNumber);
         if(!atom){
             continue;
         }
 
+        // read unused float value
+        float value;
+        input >> value;
+
         // read position
-        chemkit::Point3 position(lineItems[2].toDouble(),
-                                lineItems[3].toDouble(),
-                                lineItems[4].toDouble());
+        chemkit::Float x = 0;
+        chemkit::Float y = 0;
+        chemkit::Float z = 0;
+        input >> x >> y >> z;
+
+        chemkit::Point3 position(x, y, z);
 
         // scale from bohr units to angstroms
         position *= BohrToAnstroms;
 
         // set position
         atom->setPosition(position);
+
+        input.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     }
 
     file->addMolecule(molecule);

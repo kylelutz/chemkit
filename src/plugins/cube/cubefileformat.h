@@ -36,7 +36,6 @@
 #ifndef CUBEFILEFORMAT_H
 #define CUBEFILEFORMAT_H
 
-#include <chemkit/molecule.h>
 #include <chemkit/moleculefileformat.h>
 
 class CubeFileFormat : public chemkit::MoleculeFileFormat
@@ -45,7 +44,7 @@ class CubeFileFormat : public chemkit::MoleculeFileFormat
         CubeFileFormat();
         ~CubeFileFormat();
 
-        bool read(QIODevice *iodev, chemkit::MoleculeFile *file);
+        bool read(std::istream &input, chemkit::MoleculeFile *file);
 };
 
 #endif // CUBEFILEFORMAT_H
