@@ -35,7 +35,7 @@
 
 #include "conformer.h"
 
-#include <QHash>
+#include <map>
 
 #include "molecule.h"
 
@@ -46,7 +46,7 @@ class ConformerPrivate
 {
     public:
         const Molecule *molecule;
-        QHash<const Atom *, Point3> coordinates;
+        std::map<const Atom *, Point3> coordinates;
 };
 
 // === Conformer =========================================================== //
@@ -91,7 +91,13 @@ void Conformer::setPosition(const Atom *atom, const Point3 &position)
 /// Returns the position of the atom in the conformer.
 Point3 Conformer::position(const Atom *atom) const
 {
-    return d->coordinates.value(atom, atom->position());
+    std::map<const Atom *, Point3>::const_iterator location = d->coordinates.find(atom);
+    if(location != d->coordinates.end()){
+        return location->second;
+    }
+    else{
+        return atom->position();
+    }
 }
 
 } // end chemkit namespace
