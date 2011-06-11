@@ -7,7 +7,7 @@ set(chemkit_VERSION_MINOR 0)
 
 set(CMAKE_MODULE_PATH ${chemkit_SOURCE_DIR}/cmake)
 
-set(CMAKE_BUILD_TYPE Release)
+set(CMAKE_BUILD_TYPE Debug)
 
 # uninstall target
 configure_file(

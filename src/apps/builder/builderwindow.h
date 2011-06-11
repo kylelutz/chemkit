@@ -109,6 +109,7 @@ class BuilderWindow : public QMainWindow
         void predictBonds();
         void adjustHydrogens();
         void moleculeProperties();
+        bool fileHasValidMoleculeFileExtension(const QString& moleculeFileName);
 
     signals:
         void fileChanged(chemkit::MoleculeFile *file);
