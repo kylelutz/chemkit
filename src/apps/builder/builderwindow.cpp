@@ -335,23 +335,41 @@ void BuilderWindow::saveFile()
 
     if(!ok){
         QMessageBox::critical(this, "Error", QString("Error saving file: %1").arg(m_file->errorString().c_str()));
+        delete m_file;
+        m_file = 0;
     }
 }
 
 void BuilderWindow::saveFileAs(const QString &fileName)
 {
     if(!m_file){
-        m_file = new chemkit::MoleculeFile(fileName.toStdString());
-        m_file->addMolecule(m_molecule);
+        //check for the file extension
+        if(fileHasValidMoleculeFileExtension(fileName))
+        {
+            m_file = new chemkit::MoleculeFile(fileName.toStdString());
+            m_file->addMolecule(m_molecule);
+            m_file->setFileName(fileName.toStdString());
+            saveFile();
+        }
+        else {
+            QMessageBox::critical(this, "Error", QString("Specify *.mol file extension to save file: %1").arg(fileName));
+        }
     }
-
-    m_file->setFileName(fileName.toStdString());
-    saveFile();
+    else {
+        if(fileHasValidMoleculeFileExtension(fileName))
+        {
+            m_file->setFileName(fileName.toStdString());
+            saveFile();
+        }
+        else {
+            QMessageBox::critical(this, "Error", QString("Specify *.mol file extension to save file: %1").arg(fileName));
+        }
+    }
 }
 
 void BuilderWindow::saveFileAs()
 {
-    QString fileName = QFileDialog::getSaveFileName(this, tr("Save File As"));
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Save File As"),QDir::currentPath(),tr("Mol (*.mol)"));
 
     if(!fileName.isEmpty())
         saveFileAs(fileName);
@@ -551,4 +569,20 @@ void BuilderWindow::moleculeProperties()
 {
     MoleculePropertiesDialog dialog(m_molecule, this);
     dialog.exec();
+}
+
+bool BuilderWindow::fileHasValidMoleculeFileExtension(const QString& moleculeFileName)
+{
+    QStringList acceptedChemkitFileTypeList;
+    acceptedChemkitFileTypeList << "MOL";
+    QStringList splittedStrList = moleculeFileName.split(".");
+    if( ((splittedStrList.size())-1) >= 0) {
+        QString fileExtensionToCheck = splittedStrList[((splittedStrList.size())-1)];
+        if( acceptedChemkitFileTypeList.contains(fileExtensionToCheck.toUpper()) )
+            return true;
+        else
+            return false;
+    }
+    else
+        return false;
 }
