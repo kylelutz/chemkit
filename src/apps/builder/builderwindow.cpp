@@ -353,8 +353,15 @@ void BuilderWindow::saveFileAs()
 {
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save File As"));
 
-    if(!fileName.isEmpty())
+    if(!fileName.isEmpty()){
+        // check for a file format extension and if none is
+        // found use the mol file format
+        if(fileName.split(".").size() < 2){
+            fileName += ".mol";
+        }
+
         saveFileAs(fileName);
+    }
 }
 
 void BuilderWindow::closeFile()
