@@ -354,6 +354,12 @@ inline std::string Variant::value() const
     else if(m_type == Int){
         return boost::lexical_cast<std::string>(m_value._int);
     }
+    else if(m_type == Float){
+        return boost::lexical_cast<std::string>(m_value._float);
+    }
+    else if(m_type == Double){
+        return boost::lexical_cast<std::string>(m_value._double);
+    }
 
     return std::string();
 }
