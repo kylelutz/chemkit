@@ -259,7 +259,7 @@ class CHEMKIT_EXPORT Atom
         void removeBond(Bond *bond);
         void setResidue(Residue *residue);
 
-        Q_DISABLE_COPY(Atom)
+        CHEMKIT_DISABLE_COPY(Atom)
 
         friend class Residue;
         friend class Fragment;

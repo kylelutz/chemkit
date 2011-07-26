@@ -66,7 +66,7 @@ class CHEMKIT_EXPORT Fragment
         Fragment(Atom *root);
         ~Fragment();
 
-        Q_DISABLE_COPY(Fragment)
+        CHEMKIT_DISABLE_COPY(Fragment)
 
         friend class Molecule;
 

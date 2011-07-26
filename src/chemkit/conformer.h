@@ -60,7 +60,7 @@ class CHEMKIT_EXPORT Conformer
         Conformer(const Molecule *molecule);
         ~Conformer();
 
-        Q_DISABLE_COPY(Conformer)
+        CHEMKIT_DISABLE_COPY(Conformer)
 
         friend class Molecule;
 

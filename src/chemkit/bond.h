@@ -100,7 +100,7 @@ class CHEMKIT_EXPORT Bond
         Bond(Atom *a, Atom *b, int order = Single);
         ~Bond();
 
-        Q_DISABLE_COPY(Bond)
+        CHEMKIT_DISABLE_COPY(Bond)
 
         friend class Molecule;
 

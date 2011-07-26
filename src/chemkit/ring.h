@@ -91,7 +91,7 @@ class CHEMKIT_EXPORT Ring
         bool isPlanar() const;
         int piElectronCount() const;
 
-        Q_DISABLE_COPY(Ring)
+        CHEMKIT_DISABLE_COPY(Ring)
 
         friend class Molecule;
         friend class MolecularGraph;

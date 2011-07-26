@@ -48,6 +48,12 @@
 
 #define CHEMKIT_UNUSED(variable) (void) variable
 
+/// This macro marks a class as not copyable. It should be used in
+/// the private section of a class's declaration.
+#define CHEMKIT_DISABLE_COPY(Class) \
+    Class(const Class &); \
+    Class &operator=(const Class &);
+
 namespace chemkit {
 
 /// Typedef for a floating point number.

@@ -76,7 +76,7 @@ class CHEMKIT_EXPORT PolymerChain
         PolymerChain(Polymer *polymer);
         ~PolymerChain();
 
-        Q_DISABLE_COPY(PolymerChain)
+        CHEMKIT_DISABLE_COPY(PolymerChain)
 
         friend class Polymer;
 

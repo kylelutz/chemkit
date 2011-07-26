@@ -84,7 +84,7 @@ class CHEMKIT_EXPORT Residue
         Atom* atom(const std::string &type) const;
 
     private:
-        Q_DISABLE_COPY(Residue)
+        CHEMKIT_DISABLE_COPY(Residue)
 
         friend class Molecule;
 

@@ -84,7 +84,7 @@ class CHEMKIT_EXPORT PluginManager
         std::vector<std::string> pluginClassNames(const std::string &className) const;
         Function pluginClassFunction(const std::string &className, const std::string &pluginName) const;
 
-        Q_DISABLE_COPY(PluginManager);
+        CHEMKIT_DISABLE_COPY(PluginManager)
 
         friend class Plugin;
 
