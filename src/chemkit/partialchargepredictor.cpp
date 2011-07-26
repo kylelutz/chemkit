@@ -36,6 +36,7 @@
 #include "partialchargepredictor.h"
 
 #include "atom.h"
+#include "foreach.h"
 #include "molecule.h"
 #include "pluginmanager.h"
 
@@ -133,7 +134,7 @@ bool PartialChargePredictor::predictPartialCharges(Molecule *molecule, const std
 
     predictor->setMolecule(molecule);
 
-    Q_FOREACH(chemkit::Atom *atom, molecule->atoms()){
+    foreach(chemkit::Atom *atom, molecule->atoms()){
         atom->setPartialCharge(predictor->partialCharge(atom));
     }
 

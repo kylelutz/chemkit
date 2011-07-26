@@ -121,7 +121,7 @@ MolecularSurface::MolecularSurface(const Molecule *molecule, SurfaceType type)
     d->probeRadius = 1.4;
 
     if(molecule){
-        Q_FOREACH(const Atom *atom, molecule->atoms()){
+        foreach(const Atom *atom, molecule->atoms()){
             d->points.push_back(atom->position());
             d->radii.push_back(atom->vanDerWaalsRadius());
         }

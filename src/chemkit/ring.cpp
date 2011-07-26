@@ -234,7 +234,7 @@ bool Ring::isFusedTo(const Ring *ring) const
     if(ring == this)
         return false;
 
-    Q_FOREACH(const Bond *bond, ring->bonds()){
+    foreach(const Bond *bond, ring->bonds()){
         if(contains(bond)){
             return true;
         }
@@ -283,7 +283,7 @@ bool Ring::isAromatic() const
     }
 
     // add pi electrons from exocyclic double bonds
-    Q_FOREACH(const Bond *bond, exocyclicBonds()){
+    foreach(const Bond *bond, exocyclicBonds()){
         if(bond->order() == Bond::Double){
             piCount += 1;
         }
@@ -391,7 +391,7 @@ int Ring::piElectronCount() const
 
         else{
             // exocyclic double bonds
-            Q_FOREACH(const Bond *bond, atom->bonds()){
+            foreach(const Bond *bond, atom->bonds()){
                 if(bond == nextBond || bond == previousBond){
                     // skip ring bonds
                     continue;

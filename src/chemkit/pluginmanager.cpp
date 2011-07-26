@@ -72,7 +72,7 @@ PluginManager::PluginManager()
 
 PluginManager::~PluginManager()
 {
-    Q_FOREACH(Plugin *plugin, d->plugins){
+    foreach(Plugin *plugin, d->plugins){
         delete plugin;
     }
 
@@ -134,7 +134,7 @@ void PluginManager::loadPlugins(const std::string &directory)
         return;
     }
 
-    Q_FOREACH(const QString &fileName, dir.entryList(QDir::Files)){
+    foreach(const QString &fileName, dir.entryList(QDir::Files)){
         if(QLibrary::isLibrary(fileName)){
             loadPlugin(dir.filePath(fileName).toStdString());
         }
@@ -166,7 +166,7 @@ void PluginManager::loadDefaultPlugins()
     }
 
     // load plugins from each directory
-    Q_FOREACH(const QString &directory, directories){
+    foreach(const QString &directory, directories){
         loadPlugins(directory.toStdString());
     }
 

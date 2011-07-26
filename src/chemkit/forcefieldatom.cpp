@@ -38,6 +38,7 @@
 #include <algorithm>
 
 #include "atom.h"
+#include "foreach.h"
 #include "forcefield.h"
 #include "forcefieldatom.h"
 #include "forcefieldcalculation.h"
@@ -142,7 +143,7 @@ Float ForceFieldAtom::energy() const
 {
     Float energy = 0;
 
-    Q_FOREACH(const ForceFieldCalculation *calculation, forceField()->calculations()){
+    foreach(const ForceFieldCalculation *calculation, forceField()->calculations()){
         if(calculation->contains(this)){
             energy += calculation->energy();
         }
@@ -165,11 +166,11 @@ bool ForceFieldAtom::isOneFour(const ForceFieldAtom *atom) const
     const Atom *thisAtom = this->atom();
     const Atom *otherAtom = atom->atom();
 
-    Q_FOREACH(const Atom *neighbor, thisAtom->neighbors()){
+    foreach(const Atom *neighbor, thisAtom->neighbors()){
         if(neighbor == otherAtom)
             return false;
 
-        Q_FOREACH(const Atom *secondNeighbor, neighbor->neighbors()){
+        foreach(const Atom *secondNeighbor, neighbor->neighbors()){
             if(secondNeighbor == otherAtom)
                 return false;
 

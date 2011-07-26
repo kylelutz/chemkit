@@ -129,7 +129,9 @@ inline bool MoleculeFileFormatAdaptor<PolymerFileFormat>::read(std::istream &inp
         return false;
     }
 
-    Q_FOREACH(Polymer *polymer, polymerFile.polymers()){
+    std::vector<Polymer *> polymers = polymerFile.polymers();
+    
+    BOOST_FOREACH(Polymer *polymer, polymers){
         // remove polymer from the polymer file
         polymerFile.removePolymer(polymer);
 

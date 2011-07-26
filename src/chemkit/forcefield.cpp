@@ -243,7 +243,7 @@ bool ForceField::setup()
 /// Returns \c true if the force field is setup.
 bool ForceField::isSetup() const
 {
-    Q_FOREACH(const ForceFieldCalculation *calculation, d->calculations){
+    foreach(const ForceFieldCalculation *calculation, d->calculations){
         if(!calculation->isSetup()){
             return false;
         }

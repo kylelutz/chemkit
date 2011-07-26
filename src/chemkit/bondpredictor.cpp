@@ -36,6 +36,7 @@
 #include "bondpredictor.h"
 
 #include "atom.h"
+#include "foreach.h"
 #include "molecule.h"
 
 namespace chemkit {
@@ -159,7 +160,7 @@ void BondPredictor::predictBonds(Molecule *molecule)
     BondPredictor predictor(molecule);
 
     std::pair<Atom *, Atom *> bond;
-    Q_FOREACH(bond, predictor.predictedBonds()){
+    foreach(bond, predictor.predictedBonds()){
         molecule->addBond(bond.first, bond.second);
     }
 }

@@ -367,7 +367,7 @@ int Atom::atomCountTo(const Atom *atom, int maxCount) const
 /// Returns the other neighboring atom for a divalent atom.
 Atom* Atom::otherNeighbor(const Atom *neighbor) const
 {
-    Q_FOREACH(Atom *atom, neighbors()){
+    foreach(Atom *atom, neighbors()){
         if(atom != neighbor){
             return atom;
         }
@@ -386,7 +386,7 @@ bool Atom::isBondedTo(const Atom *atom) const
 /// \p element.
 bool Atom::isBondedTo(const Element &element) const
 {
-    Q_FOREACH(const Bond *bond, bonds()){
+    foreach(const Bond *bond, bonds()){
         if(bond->otherAtom(this)->is(element)){
             return true;
         }
@@ -399,7 +399,7 @@ bool Atom::isBondedTo(const Element &element) const
 /// \p element via a bond with \p bondOrder.
 bool Atom::isBondedTo(const Element &element, int bondOrder) const
 {
-    Q_FOREACH(const Bond *bond, bonds()){
+    foreach(const Bond *bond, bonds()){
         if(bond->otherAtom(this)->is(element) && bond->order() == bondOrder){
             return true;
         }

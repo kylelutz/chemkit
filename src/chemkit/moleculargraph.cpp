@@ -353,7 +353,7 @@ std::vector<Ring *> MolecularGraph::sssr(const Molecule *molecule)
 {
     std::vector<Ring *> rings;
 
-    Q_FOREACH(const Fragment *fragment, molecule->fragments()){
+    foreach(const Fragment *fragment, molecule->fragments()){
         std::vector<Ring *> fragmentRings = sssr(fragment);
         rings.insert(rings.end(), fragmentRings.begin(), fragmentRings.end());
     }

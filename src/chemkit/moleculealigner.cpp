@@ -35,6 +35,7 @@
 
 #include "moleculealigner.h"
 
+#include "foreach.h"
 #include "vector3.h"
 #include "geometry.h"
 #include "molecule.h"
@@ -222,12 +223,12 @@ Vector3 MoleculeAligner::displacementVector() const
 void MoleculeAligner::align(Molecule *molecule)
 {
     Eigen::Matrix<Float, 3, 3> matrix = rotationMatrix();
-    Q_FOREACH(Atom *atom, molecule->atoms()){
+    foreach(Atom *atom, molecule->atoms()){
         atom->setPosition(matrix * atom->position());
     }
 
     Vector3 displacement = displacementVector();
-    Q_FOREACH(Atom *atom, molecule->atoms()){
+    foreach(Atom *atom, molecule->atoms()){
         atom->moveBy(displacement);
     }
 }

@@ -170,7 +170,7 @@ Molecule::Molecule(const Molecule &molecule)
         oldToNew[atom] = newAtom;
     }
 
-    Q_FOREACH(const Bond *bond, molecule.bonds()){
+    foreach(const Bond *bond, molecule.bonds()){
         Bond *newBond = addBond(oldToNew[bond->atom1()], oldToNew[bond->atom2()]);
         newBond->setOrder(bond->order());
     }
@@ -182,13 +182,13 @@ Molecule::~Molecule()
 {
     foreach(Atom *atom, m_atoms)
         delete atom;
-    Q_FOREACH(Bond *bond, d->bonds)
+    foreach(Bond *bond, d->bonds)
         delete bond;
-    Q_FOREACH(Ring *ring, d->rings)
+    foreach(Ring *ring, d->rings)
         delete ring;
     foreach(Fragment *fragment, d->fragments)
         delete fragment;
-    Q_FOREACH(Conformer *conformer, d->conformers)
+    foreach(Conformer *conformer, d->conformers)
         delete conformer;
 
     delete d;
@@ -381,7 +381,8 @@ void Molecule::removeAtom(Atom *atom)
     }
 
     // remove all bonds to/from the atom first
-    Q_FOREACH(Bond *bond, atom->bonds()){
+    std::vector<Bond *> bonds = atom->bonds();
+    foreach(Bond *bond, bonds){
         removeBond(bond);
     }
 
@@ -546,10 +547,13 @@ bool Molecule::contains(const Bond *bond) const
 /// Removes all atoms and bonds from the molecule.
 void Molecule::clear()
 {
-    Q_FOREACH(Bond *bond, d->bonds){
+    std::vector<Bond *> bonds = d->bonds;
+    foreach(Bond *bond, bonds){
         removeBond(bond);
     }
-    Q_FOREACH(Atom *atom, m_atoms){
+
+    std::vector<Atom *> atoms = m_atoms;
+    foreach(Atom *atom, atoms){
         removeAtom(atom);
     }
 }
@@ -1115,7 +1119,7 @@ Molecule& Molecule::operator=(const Molecule &molecule)
         }
 
         // add new bonds
-        Q_FOREACH(const Bond *bond, molecule.bonds()){
+        foreach(const Bond *bond, molecule.bonds()){
             Bond *newBond = addBond(oldToNew[bond->atom1()], oldToNew[bond->atom2()]);
             newBond->setOrder(bond->order());
         }
@@ -1144,7 +1148,7 @@ QList<Atom *> Molecule::atomPathBetween(const Atom *a, const Atom *b) const
 
     QList<QList<Atom *> > paths;
 
-    Q_FOREACH(Atom *neighbor, a->neighbors()){
+    foreach(Atom *neighbor, a->neighbors()){
         visited[neighbor->index()] = true;
         QList<Atom *> path;
         path.append(neighbor);
@@ -1159,7 +1163,7 @@ QList<Atom *> Molecule::atomPathBetween(const Atom *a, const Atom *b) const
             return path;
         }
         else{
-            Q_FOREACH(Atom *neighbor, lastAtom->neighbors()){
+            foreach(Atom *neighbor, lastAtom->neighbors()){
                 if(visited[neighbor->index()])
                     continue;
 
@@ -1223,21 +1227,21 @@ int Molecule::bondCountBetween(const Atom *a, const Atom *b, int maxCount) const
 
 void Molecule::notifyObservers(ChangeType type)
 {
-    Q_FOREACH(MoleculeWatcher *watcher, d->watchers){
+    foreach(MoleculeWatcher *watcher, d->watchers){
         watcher->notifyObservers(this, type);
     }
 }
 
 void Molecule::notifyObservers(const Atom *atom, ChangeType type)
 {
-    Q_FOREACH(MoleculeWatcher *watcher, d->watchers){
+    foreach(MoleculeWatcher *watcher, d->watchers){
         watcher->notifyObservers(atom, type);
     }
 }
 
 void Molecule::notifyObservers(const Bond *bond, ChangeType type)
 {
-    Q_FOREACH(MoleculeWatcher *watcher, d->watchers){
+    foreach(MoleculeWatcher *watcher, d->watchers){
         watcher->notifyObservers(bond, type);
     }
 }
@@ -1261,7 +1265,7 @@ bool Molecule::isSubsetOf(const Molecule *molecule, CompareFlags flags) const
     foreach(const Atom *atom, m_atoms){
         bool found = false;
 
-        Q_FOREACH(Atom *otherAtom, otherAtoms){
+        foreach(Atom *otherAtom, otherAtoms){
             if(atom->atomicNumber() == otherAtom->atomicNumber()){
                 otherAtoms.erase(std::remove(otherAtoms.begin(), otherAtoms.end(), otherAtom), otherAtoms.end());
                 found = true;
