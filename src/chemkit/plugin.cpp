@@ -35,7 +35,7 @@
 
 #include "plugin.h"
 
-#include <QFileInfo>
+#include <boost/filesystem.hpp>
 
 namespace chemkit {
 
@@ -77,7 +77,9 @@ std::string Plugin::name() const
 
 std::string Plugin::dataPath() const
 {
-    return QFileInfo(d->fileName.c_str()).path().toStdString() + "/data/" + d->name.c_str() + "/";
+    boost::filesystem::path path(d->fileName);
+
+    return (path.parent_path() / "data" / d->name / "/").string();
 }
 
 // --- Internal Methods ---------------------------------------------------- //
