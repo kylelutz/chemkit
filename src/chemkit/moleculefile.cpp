@@ -35,6 +35,7 @@
 
 #include "moleculefile.h"
 
+#include "foreach.h"
 #include "molecule.h"
 
 namespace chemkit {
@@ -100,7 +101,9 @@ MoleculeFile::MoleculeFile(const std::string &fileName)
 /// any molecules that it contains.
 MoleculeFile::~MoleculeFile()
 {
-    qDeleteAll(d->molecules);
+    foreach(Molecule *molecule, d->molecules)
+        delete molecule;
+
     delete d;
 }
 
@@ -184,7 +187,9 @@ bool MoleculeFile::contains(const Molecule *molecule) const
 /// of the data in the file.
 void MoleculeFile::clear()
 {
-    qDeleteAll(d->molecules);
+    foreach(Molecule *molecule, d->molecules)
+        delete molecule;
+
     d->molecules.clear();
     d->fileData.clear();
 }

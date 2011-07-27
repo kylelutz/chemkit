@@ -35,8 +35,7 @@
 
 #include "polymerfile.h"
 
-#include <QtAlgorithms>
-
+#include "foreach.h"
 #include "polymer.h"
 
 namespace chemkit {
@@ -72,7 +71,9 @@ PolymerFile::PolymerFile(const std::string &fileName)
 /// Destroys the polymer file object.
 PolymerFile::~PolymerFile()
 {
-    qDeleteAll(d->polymers);
+    foreach(Polymer *polymer, d->polymers)
+        delete polymer;
+
     delete d;
 }
 
@@ -152,7 +153,9 @@ bool PolymerFile::contains(const Polymer *polymer) const
 /// Removes all the polymers from the file.
 void PolymerFile::clear()
 {
-    qDeleteAll(d->polymers);
+    foreach(Polymer *polymer, d->polymers)
+        delete polymer;
+
     d->polymers.clear();
 }
 
