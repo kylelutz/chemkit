@@ -76,7 +76,7 @@ class MoleculePrivate
         std::vector<Ring *> rings;
         bool fragmentsPerceived;
         std::vector<Fragment *> fragments;
-        QList<MoleculeWatcher *> watchers;
+        std::vector<MoleculeWatcher *> watchers;
         std::map<std::string, Variant> data;
 };
 
@@ -1251,12 +1251,12 @@ void Molecule::notifyObservers(const Bond *bond, ChangeType type)
 
 void Molecule::addWatcher(MoleculeWatcher *watcher) const
 {
-    d->watchers.append(watcher);
+    d->watchers.push_back(watcher);
 }
 
 void Molecule::removeWatcher(MoleculeWatcher *watcher) const
 {
-    d->watchers.removeOne(watcher);
+    d->watchers.erase(std::remove(d->watchers.begin(), d->watchers.end(), watcher));
 }
 
 bool Molecule::isSubsetOf(const Molecule *molecule, CompareFlags flags) const
