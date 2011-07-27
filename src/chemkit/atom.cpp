@@ -345,7 +345,7 @@ int Atom::neighborCount(const Element &element) const
 }
 
 /// Returns the path of atoms between the atom and the other atom.
-QList<Atom *> Atom::atomPathTo(const Atom *atom) const
+std::vector<Atom *> Atom::atomPathTo(const Atom *atom) const
 {
     return m_molecule->atomPathBetween(this, atom);
 }

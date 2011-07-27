@@ -226,7 +226,7 @@ void AtomTest::distance()
 
 void AtomTest::pathTo()
 {
-    QList<chemkit::Atom *> atomPath;
+    std::vector<chemkit::Atom *> atomPath;
     QList<chemkit::Bond *> bondPath;
 
     // propane
@@ -245,11 +245,11 @@ void AtomTest::pathTo()
     QCOMPARE(C1->bondCountTo(C1), 0);
 
     atomPath = C1->atomPathTo(C2);
-    QCOMPARE(atomPath.size(), 1);
+    QCOMPARE(atomPath.size(), size_t(1));
     QVERIFY(atomPath[0] == C2);
 
     atomPath = C1->atomPathTo(C3);
-    QCOMPARE(atomPath.size(), 2);
+    QCOMPARE(atomPath.size(), size_t(2));
     QVERIFY(atomPath[0] == C2);
     QVERIFY(atomPath[1] == C3);
 
@@ -385,7 +385,7 @@ void AtomTest::pathTo()
     QCOMPARE(O31->bondCountTo(N18), 15);
 
     atomPath = O1->atomPathTo(O23);
-    QCOMPARE(atomPath.size(), 5);
+    QCOMPARE(atomPath.size(), size_t(5));
     QVERIFY(atomPath[0] == C5);
     QVERIFY(atomPath[1] == C6);
     QVERIFY(atomPath[2] == O19);
@@ -393,7 +393,7 @@ void AtomTest::pathTo()
     QVERIFY(atomPath[4] == O23);
 
     atomPath = N9->atomPathTo(N18);
-    QCOMPARE(atomPath.size(), 4);
+    QCOMPARE(atomPath.size(), size_t(4));
     QVERIFY(atomPath[0] == C17);
     QVERIFY(atomPath[1] == C12);
     QVERIFY(atomPath[2] == C13);

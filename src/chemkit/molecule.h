@@ -179,7 +179,7 @@ class CHEMKIT_EXPORT Molecule
 
     private:
         // internal methods
-        QList<Atom *> atomPathBetween(const Atom *a, const Atom *b) const;
+        std::vector<Atom *> atomPathBetween(const Atom *a, const Atom *b) const;
         int atomCountBetween(const Atom *a, const Atom *b) const;
         int atomCountBetween(const Atom *a, const Atom *b, int maxCount) const;
         QList<Bond *> bondPathBetween(const Atom *a, const Atom *b) const;

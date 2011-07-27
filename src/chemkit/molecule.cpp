@@ -36,6 +36,7 @@
 #include "molecule.h"
 
 #include <map>
+#include <queue>
 #include <sstream>
 #include <algorithm>
 
@@ -1129,53 +1130,55 @@ Molecule& Molecule::operator=(const Molecule &molecule)
 }
 
 // --- Internal Methods ---------------------------------------------------- //
-QList<Atom *> Molecule::atomPathBetween(const Atom *a, const Atom *b) const
+std::vector<Atom *> Molecule::atomPathBetween(const Atom *a, const Atom *b) const
 {
     if(a == b){
-        return QList<Atom *>();
+        return std::vector<Atom *>();
     }
     else if(!a->isConnectedTo(b)){
-        return QList<Atom *>();
+        return std::vector<Atom *>();
     }
     else if(a->isBondedTo(b)){
-        QList<Atom *> path;
-        path.append(const_cast<Atom *>(b));
+        std::vector<Atom *> path;
+        path.push_back(const_cast<Atom *>(b));
         return path;
     }
 
     std::vector<bool> visited(atomCount());
     visited[a->index()] = true;
 
-    QList<QList<Atom *> > paths;
+    std::queue<std::vector<Atom *> > paths;
 
     foreach(Atom *neighbor, a->neighbors()){
         visited[neighbor->index()] = true;
-        QList<Atom *> path;
-        path.append(neighbor);
-        paths.append(path);
+        std::vector<Atom *> path;
+        path.push_back(neighbor);
+        paths.push(path);
     }
 
-    while(paths.size()){
-        QList<Atom *> path = paths.takeFirst();
+    while(!paths.empty()){
+        std::vector<Atom *> path = paths.front();
+        paths.pop();
 
-        const Atom *lastAtom = path.last();
+        const Atom *lastAtom = path.back();
         if(lastAtom == b){
             return path;
         }
         else{
             foreach(Atom *neighbor, lastAtom->neighbors()){
-                if(visited[neighbor->index()])
+                if(visited[neighbor->index()]){
                     continue;
+                }
 
                 visited[neighbor->index()] = true;
-                QList<Atom *> nextPath(path);
-                nextPath.append(neighbor);
-                paths.append(nextPath);
+                std::vector<Atom *> nextPath(path);
+                nextPath.push_back(neighbor);
+                paths.push(nextPath);
             }
         }
     }
 
-    return QList<Atom *>();
+    return std::vector<Atom *>();
 }
 
 int Molecule::atomCountBetween(const Atom *a, const Atom *b) const
@@ -1195,14 +1198,14 @@ int Molecule::atomCountBetween(const Atom *a, const Atom *b, int maxCount) const
 
 QList<Bond *> Molecule::bondPathBetween(const Atom *a, const Atom *b) const
 {
-    QList<Atom *> atomPath = atomPathBetween(a, b);
-    if(atomPath.isEmpty()){
+    std::vector<Atom *> atomPath = atomPathBetween(a, b);
+    if(atomPath.empty()){
         return QList<Bond *>();
     }
 
     QList<Bond *> bondPath;
     bondPath.append(a->bondTo(atomPath[0]));
-    for(int i = 0; i < atomPath.size()-1; i++){
+    for(unsigned int i = 0; i < atomPath.size()-1; i++){
         bondPath.append(atomPath[i]->bondTo(atomPath[i+1]));
     }
 
