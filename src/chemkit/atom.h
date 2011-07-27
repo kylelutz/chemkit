@@ -40,8 +40,6 @@
 
 #include <vector>
 
-#include <QList>
-
 #include "point3.h"
 #include "element.h"
 #include "vector3.h"
@@ -93,7 +91,7 @@ class CHEMKIT_EXPORT Atom
         // structure
         std::vector<Bond *> bonds() const;
         int bondCount() const;
-        QList<Bond *> bondPathTo(const Atom *atom) const;
+        std::vector<Bond *> bondPathTo(const Atom *atom) const;
         int bondCountTo(const Atom *atom) const;
         int bondCountTo(const Atom *atom, int maxCount) const;
         int valence() const;

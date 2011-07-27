@@ -35,6 +35,8 @@
 
 #include "polymerfile.h"
 
+#include <QtAlgorithms>
+
 #include "polymer.h"
 
 namespace chemkit {

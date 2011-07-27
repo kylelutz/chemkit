@@ -182,7 +182,7 @@ class CHEMKIT_EXPORT Molecule
         std::vector<Atom *> atomPathBetween(const Atom *a, const Atom *b) const;
         int atomCountBetween(const Atom *a, const Atom *b) const;
         int atomCountBetween(const Atom *a, const Atom *b, int maxCount) const;
-        QList<Bond *> bondPathBetween(const Atom *a, const Atom *b) const;
+        std::vector<Bond *> bondPathBetween(const Atom *a, const Atom *b) const;
         int bondCountBetween(const Atom *a, const Atom *b) const;
         int bondCountBetween(const Atom *a, const Atom *b, int maxCount) const;
         void setRingsPerceived(bool perceived) const;

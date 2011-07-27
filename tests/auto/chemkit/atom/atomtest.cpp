@@ -227,7 +227,7 @@ void AtomTest::distance()
 void AtomTest::pathTo()
 {
     std::vector<chemkit::Atom *> atomPath;
-    QList<chemkit::Bond *> bondPath;
+    std::vector<chemkit::Bond *> bondPath;
 
     // propane
     chemkit::Molecule propane;
@@ -254,15 +254,15 @@ void AtomTest::pathTo()
     QVERIFY(atomPath[1] == C3);
 
     bondPath = C1->bondPathTo(C2);
-    QCOMPARE(bondPath.size(), 1);
+    QCOMPARE(bondPath.size(), size_t(1));
     QVERIFY(bondPath[0] == C1_C2);
 
     bondPath = C3->bondPathTo(C2);
-    QCOMPARE(bondPath.size(), 1);
+    QCOMPARE(bondPath.size(), size_t(1));
     QVERIFY(bondPath[0] == C2_C3);
 
     bondPath = C1->bondPathTo(C3);
-    QCOMPARE(bondPath.size(), 2);
+    QCOMPARE(bondPath.size(), size_t(2));
     QVERIFY(bondPath[0] == C1_C2);
     QVERIFY(bondPath[1] == C2_C3);
 
@@ -302,17 +302,17 @@ void AtomTest::pathTo()
     QCOMPARE(O4->atomCountTo(H6), 1);
 
     bondPath = H2->bondPathTo(H3);
-    QCOMPARE(bondPath.size(), 2);
+    QCOMPARE(bondPath.size(), size_t(2));
     QVERIFY(bondPath[0] == O1_H2);
     QVERIFY(bondPath[1] == O1_H3);
 
     bondPath = H6->bondPathTo(H5);
-    QCOMPARE(bondPath.size(), 2);
+    QCOMPARE(bondPath.size(), size_t(2));
     QVERIFY(bondPath[0] == O4_H6);
     QVERIFY(bondPath[1] == O4_H5);
 
     bondPath = H6->bondPathTo(H2);
-    QCOMPARE(bondPath.size(), 0);
+    QCOMPARE(bondPath.size(), size_t(0));
 
     // adenosine triphosphate
     chemkit::Molecule atp;
@@ -400,7 +400,7 @@ void AtomTest::pathTo()
     QVERIFY(atomPath[3] == N18);
 
     bondPath = O7->bondPathTo(C15);
-    QCOMPARE(bondPath.size(), 7);
+    QCOMPARE(bondPath.size(), size_t(7));
     QVERIFY(bondPath[0] == C4_O7);
     QVERIFY(bondPath[1] == C3_C4);
     QVERIFY(bondPath[2] == C2_C3);
@@ -410,7 +410,7 @@ void AtomTest::pathTo()
     QVERIFY(bondPath[6] == C15_N16);
 
     bondPath = O21->bondPathTo(C13);
-    QCOMPARE(bondPath.size(), 10);
+    QCOMPARE(bondPath.size(), size_t(10));
     QVERIFY(bondPath[0] == P20_O21);
     QVERIFY(bondPath[1] == O19_P20);
     QVERIFY(bondPath[2] == C6_O19);

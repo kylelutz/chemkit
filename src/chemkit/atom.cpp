@@ -262,7 +262,7 @@ int Atom::bondCount() const
 }
 
 /// Returns a list of bonds between the atom and the other atom.
-QList<Bond *> Atom::bondPathTo(const Atom *atom) const
+std::vector<Bond *> Atom::bondPathTo(const Atom *atom) const
 {
     return m_molecule->bondPathBetween(this, atom);
 }

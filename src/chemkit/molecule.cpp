@@ -1196,17 +1196,17 @@ int Molecule::atomCountBetween(const Atom *a, const Atom *b, int maxCount) const
     return count;
 }
 
-QList<Bond *> Molecule::bondPathBetween(const Atom *a, const Atom *b) const
+std::vector<Bond *> Molecule::bondPathBetween(const Atom *a, const Atom *b) const
 {
     std::vector<Atom *> atomPath = atomPathBetween(a, b);
     if(atomPath.empty()){
-        return QList<Bond *>();
+        return std::vector<Bond *>();
     }
 
-    QList<Bond *> bondPath;
-    bondPath.append(a->bondTo(atomPath[0]));
+    std::vector<Bond *> bondPath;
+    bondPath.push_back(a->bondTo(atomPath[0]));
     for(unsigned int i = 0; i < atomPath.size()-1; i++){
-        bondPath.append(atomPath[i]->bondTo(atomPath[i+1]));
+        bondPath.push_back(atomPath[i]->bondTo(atomPath[i+1]));
     }
 
     return bondPath;
