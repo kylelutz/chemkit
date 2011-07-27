@@ -37,9 +37,8 @@
 
 #include <set>
 #include <deque>
+#include <vector>
 #include <algorithm>
-
-#include <QList>
 
 #include "point3.h"
 #include "foreach.h"
@@ -513,16 +512,21 @@ const std::vector<std::vector<int> >& DelaunayTriangulation::alphaShapeTriangles
                     triangles.push_back(triangle);
                 }
                 else{
-                    QList<int> tetrahedronVerticies;
-                    QList<int> neighborVerticies;
+                    std::vector<int> tetrahedronVerticies;
+                    std::vector<int> neighborVerticies;
                     for(int i = 0; i < 4; i++){
-                        tetrahedronVerticies.append(tetrahedron.verticies[i]);
-                        neighborVerticies.append(neighbor.verticies[i]);
+                        tetrahedronVerticies.push_back(tetrahedron.verticies[i]);
+                        neighborVerticies.push_back(neighbor.verticies[i]);
                     }
 
                     for(int i = 0; i < 3; i++){
-                        tetrahedronVerticies.removeOne(triangle[i]);
-                        neighborVerticies.removeOne(triangle[i]);
+                        tetrahedronVerticies.erase(std::remove(tetrahedronVerticies.begin(),
+                                                               tetrahedronVerticies.end(),
+                                                               triangle[i]));
+
+                        neighborVerticies.erase(std::remove(neighborVerticies.begin(),
+                                                            neighborVerticies.end(),
+                                                            triangle[i]));
                     }
 
                     int va = triangle[0];
