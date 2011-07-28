@@ -148,7 +148,7 @@ void EnergyMinimizer::start()
         m_moleculeChanged = false;
     }
 
-    QFuture<bool> future = m_forceField->minimizationStepAsync();
+    QFuture<bool> future = QtConcurrent::run(m_forceField, &chemkit::ForceField::minimizationStep, 0.1);
     m_minimizationWatcher.setFuture(future);
 
     setState(Running);

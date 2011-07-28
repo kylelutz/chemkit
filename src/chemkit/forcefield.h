@@ -41,8 +41,6 @@
 #include <string>
 #include <vector>
 
-#include <QFuture>
-
 #include "point3.h"
 #include "vector3.h"
 #include "forcefieldatom.h"
@@ -110,7 +108,6 @@ class CHEMKIT_EXPORT ForceField
 
         // energy minimization
         bool minimizationStep(Float converganceValue = 0.1);
-        QFuture<bool> minimizationStepAsync(Float converganceValue = 0.1);
 
         // geometry
         Float distance(const ForceFieldAtom *a, const ForceFieldAtom *b) const;

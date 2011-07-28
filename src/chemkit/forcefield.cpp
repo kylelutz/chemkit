@@ -585,11 +585,6 @@ bool ForceField::minimizationStep(Float converganceValue)
     return rootMeanSquareGradient() < converganceValue;
 }
 
-QFuture<bool> ForceField::minimizationStepAsync(Float converganceValue)
-{
-    return QtConcurrent::run(this, &ForceField::minimizationStep, converganceValue);
-}
-
 // --- Geometry ------------------------------------------------------------ //
 Float ForceField::distance(const ForceFieldAtom *a, const ForceFieldAtom *b) const
 {

@@ -46,6 +46,7 @@
 #include "uffcalculation.h"
 
 #include <chemkit/atom.h>
+#include <chemkit/foreach.h>
 #include <chemkit/molecule.h>
 #include <chemkit/forcefieldinteractions.h>
 
@@ -73,7 +74,7 @@ const UffParameters* UffForceField::parameters() const
 bool UffForceField::setup()
 {
     foreach(const chemkit::Molecule *molecule, molecules()){
-        QHash<const chemkit::Atom *, chemkit::ForceFieldAtom *> atoms;
+        std::map<const chemkit::Atom *, chemkit::ForceFieldAtom *> atoms;
 
         UffAtomTyper typer(molecule);
 
