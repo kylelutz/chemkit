@@ -36,6 +36,7 @@
 #include "hydrogenbonddonorsdescriptor.h"
 
 #include <chemkit/atom.h>
+#include <chemkit/foreach.h>
 #include <chemkit/molecule.h>
 
 HydrogenBondDonorsDescriptor::HydrogenBondDonorsDescriptor()

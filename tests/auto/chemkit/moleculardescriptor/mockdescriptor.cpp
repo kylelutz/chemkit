@@ -46,7 +46,7 @@ MockDescriptor::~MockDescriptor()
 
 chemkit::Variant MockDescriptor::value(const chemkit::Molecule *molecule) const
 {
-    Q_UNUSED(molecule);
+    CHEMKIT_UNUSED(molecule);
 
     return chemkit::Variant();
 }

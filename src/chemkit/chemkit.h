@@ -38,8 +38,6 @@
 
 #include "config.h"
 
-#include <QtGlobal>
-
 #if defined(CHEMKIT_OS_UNIX)
     #define CHEMKIT_DECL_IMPORT
     #define CHEMKIT_DECL_EXPORT
