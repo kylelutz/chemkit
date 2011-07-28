@@ -61,7 +61,6 @@ set(HEADERS
   moleculefileformatadaptor.h
   moleculefileformatadaptor-inline.h
   moleculeobserver.h
-  moleculewatcher.h
   nucleotide.h
   partialchargepredictor.h
   plugin.h
@@ -120,7 +119,6 @@ set(SOURCES
   moleculefile.cpp
   moleculefileformat.cpp
   moleculeobserver.cpp
-  moleculewatcher.cpp
   nucleotide.cpp
   partialchargepredictor.cpp
   plugin.cpp
@@ -140,7 +138,6 @@ set(SOURCES
 )
 
 set(MOC_HEADERS
-  moleculewatcher.h
   plugin.h
 )
 

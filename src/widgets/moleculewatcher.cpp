@@ -35,13 +35,13 @@
 
 #include "moleculewatcher.h"
 
-#include "molecule.h"
+#include <chemkit/molecule.h>
 
 namespace chemkit {
 
 // === MoleculeWatcher ===================================================== //
 /// \class MoleculeWatcher moleculewatcher.h chemkit/moleculewatcher.h
-/// \ingroup chemkit
+/// \ingroup chemkit-widgets
 /// \brief The MoleculeWatcher class monitors a molecule and emits
 ///        signals when changes occur.
 

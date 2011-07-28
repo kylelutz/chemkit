@@ -6,6 +6,7 @@ include_directories(${Boost_INCLUDE_DIRS})
 
 set(HEADERS
   moleculeeditor.h
+  moleculewatcher.h
   periodictabledialog.h
   periodictablewidget.h
   widgets.h
@@ -13,6 +14,7 @@ set(HEADERS
 
 set(SOURCES
   moleculeeditor.cpp
+  moleculewatcher.cpp
   periodictabledialog.cpp
   periodictablewidget.cpp
   widgets.cpp
@@ -20,6 +22,7 @@ set(SOURCES
 
 set(MOC_HEADERS
   moleculeeditor.h
+  moleculewatcher.h
   periodictabledialog.h
   periodictablewidget.h
 )

@@ -36,15 +36,15 @@
 #ifndef CHEMKIT_MOLECULEWATCHER_H
 #define CHEMKIT_MOLECULEWATCHER_H
 
-#include "chemkit.h"
+#include "widgets.h"
 
 #include <QObject>
 
-#include "moleculeobserver.h"
+#include <chemkit/moleculeobserver.h>
 
 namespace chemkit {
 
-class CHEMKIT_EXPORT MoleculeWatcher : public QObject, public MoleculeObserver
+class CHEMKIT_WIDGETS_EXPORT MoleculeWatcher : public QObject, public MoleculeObserver
 {
     Q_OBJECT
 
