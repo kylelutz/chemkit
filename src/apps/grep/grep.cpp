@@ -160,7 +160,7 @@ int main(int argc, char *argv[])
 
     chemkit::MoleculeFile outputFile;
 
-    chemkit::Molecule::CompareFlags flags;
+    int flags = 0;
 
     if(COMPOSITION_FLAG){
         flags |= chemkit::Molecule::CompareAtomsOnly;

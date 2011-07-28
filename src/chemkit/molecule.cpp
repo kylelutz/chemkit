@@ -563,7 +563,7 @@ void Molecule::clear()
 
 // --- Comparison ---------------------------------------------------------- //
 /// Returns \c true if the molecule equals \p molecule.
-bool Molecule::equals(const Molecule *molecule, CompareFlags flags) const
+bool Molecule::equals(const Molecule *molecule, int flags) const
 {
     return contains(molecule, flags) && molecule->contains(this, flags);
 }
@@ -586,7 +586,7 @@ bool Molecule::equals(const Molecule *molecule, CompareFlags flags) const
 ///      return molecule->contains(&carboxyl);
 /// }
 /// \endcode
-bool Molecule::contains(const Molecule *molecule, CompareFlags flags) const
+bool Molecule::contains(const Molecule *molecule, int flags) const
 {
     if(molecule == this){
         return true;
@@ -603,14 +603,14 @@ bool Molecule::contains(const Molecule *molecule, CompareFlags flags) const
 }
 
 /// Returns \c true if the molecule is a substructure of \p molecule.
-bool Molecule::isSubstructureOf(const Molecule *molecule, CompareFlags flags) const
+bool Molecule::isSubstructureOf(const Molecule *molecule, int flags) const
 {
     return molecule->contains(this, flags);
 }
 
 /// Returns a mapping (also known as an isomorphism) between the atoms
 /// in the molecule and the atoms in \p molecule.
-std::map<Atom *, Atom *> Molecule::mapping(const Molecule *molecule, CompareFlags flags) const
+std::map<Atom *, Atom *> Molecule::mapping(const Molecule *molecule, int flags) const
 {
     MolecularGraph *source;
     MolecularGraph *target;
@@ -667,7 +667,7 @@ std::map<Atom *, Atom *> Molecule::mapping(const Molecule *molecule, CompareFlag
 ///
 /// Moiety amideGroup = molecule.find(&amide);
 /// \endcode
-Moiety Molecule::find(const Molecule *moiety, CompareFlags flags) const
+Moiety Molecule::find(const Molecule *moiety, int flags) const
 {
     std::map<Atom *, Atom *> mapping = moiety->mapping(this, flags);
 
@@ -1261,7 +1261,7 @@ void Molecule::removeObserver(MoleculeObserver *observer) const
     d->observers.erase(std::remove(d->observers.begin(), d->observers.end(), observer));
 }
 
-bool Molecule::isSubsetOf(const Molecule *molecule, CompareFlags flags) const
+bool Molecule::isSubsetOf(const Molecule *molecule, int flags) const
 {
     CHEMKIT_UNUSED(flags);
 

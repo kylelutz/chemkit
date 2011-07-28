@@ -86,7 +86,6 @@ class CHEMKIT_EXPORT Molecule
             CompareHydrogens = 0x01,
             CompareAromaticity = 0x02
         };
-        Q_DECLARE_FLAGS(CompareFlags, CompareFlag)
 
         // construction and destruction
         Molecule();
@@ -130,11 +129,11 @@ class CHEMKIT_EXPORT Molecule
         void clear();
 
         // comparison
-        bool equals(const Molecule *molecule, CompareFlags flags = CompareFlags()) const;
-        bool contains(const Molecule *molecule, CompareFlags flags = CompareFlags()) const;
-        bool isSubstructureOf(const Molecule *molecule, CompareFlags flags = CompareFlags()) const;
-        std::map<Atom *, Atom *> mapping(const Molecule *molecule, CompareFlags flags = CompareFlags()) const;
-        Moiety find(const Molecule *moiety, CompareFlags flags = CompareFlags()) const;
+        bool equals(const Molecule *molecule, int flags = 0) const;
+        bool contains(const Molecule *molecule, int flags = 0) const;
+        bool isSubstructureOf(const Molecule *molecule, int flags = 0) const;
+        std::map<Atom *, Atom *> mapping(const Molecule *molecule, int flags = 0) const;
+        Moiety find(const Molecule *moiety, int flags = 0) const;
 
         // ring perception
         Ring* ring(int index) const;
@@ -196,7 +195,7 @@ class CHEMKIT_EXPORT Molecule
         void notifyObservers(const Conformer *conformer, ChangeType type);
         void addObserver(MoleculeObserver *observer) const;
         void removeObserver(MoleculeObserver *observer) const;
-        bool isSubsetOf(const Molecule *molecule, CompareFlags flags = CompareFlags()) const;
+        bool isSubsetOf(const Molecule *molecule, int flags) const;
 
         friend class Atom;
         friend class Bond;
@@ -206,8 +205,6 @@ class CHEMKIT_EXPORT Molecule
         MoleculePrivate* const d;
         std::vector<Atom *> m_atoms;
 };
-
-Q_DECLARE_OPERATORS_FOR_FLAGS(Molecule::CompareFlags)
 
 } // end chemkit namespace
 
