@@ -39,9 +39,9 @@
 #include <chemkit/chemkit.h>
 
 #ifdef CHEMKIT_WEB_LIBRARY
-    #define CHEMKIT_WEB_EXPORT Q_DECL_EXPORT
+    #define CHEMKIT_WEB_EXPORT CHEMKIT_DECL_EXPORT
 #else
-    #define CHEMKIT_WEB_EXPORT Q_DECL_IMPORT
+    #define CHEMKIT_WEB_EXPORT CHEMKIT_DECL_IMPORT
 #endif
 
 #endif // CHEMKIT_WEB_H

@@ -40,10 +40,18 @@
 
 #include <QtGlobal>
 
+#if defined(CHEMKIT_OS_UNIX)
+    #define CHEMKIT_DECL_IMPORT
+    #define CHEMKIT_DECL_EXPORT
+#elif defined(CHEMKIT_OS_WIN32)
+    #define CHEMKIT_DECL_IMPORT __declspec(dllimport)
+    #define CHEMKIT_DECL_EXPORT __declspec(dllexport)
+#endif
+
 #ifdef CHEMKIT_LIBRARY
-    #define CHEMKIT_EXPORT Q_DECL_EXPORT
+    #define CHEMKIT_EXPORT CHEMKIT_DECL_EXPORT
 #else
-    #define CHEMKIT_EXPORT Q_DECL_IMPORT
+    #define CHEMKIT_EXPORT CHEMKIT_DECL_IMPORT
 #endif
 
 #define CHEMKIT_UNUSED(variable) (void) variable

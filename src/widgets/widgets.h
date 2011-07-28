@@ -39,9 +39,9 @@
 #include <chemkit/chemkit.h>
 
 #ifdef CHEMKIT_WIDGETS_LIBRARY
-    #define CHEMKIT_WIDGETS_EXPORT Q_DECL_EXPORT
+    #define CHEMKIT_WIDGETS_EXPORT CHEMKIT_DECL_EXPORT
 #else
-    #define CHEMKIT_WIDGETS_EXPORT Q_DECL_IMPORT
+    #define CHEMKIT_WIDGETS_EXPORT CHEMKIT_DECL_IMPORT
 #endif
 
 namespace chemkit {
