@@ -38,8 +38,6 @@
 
 #include "chemkit.h"
 
-#include <QFuture>
-
 #include "point3.h"
 
 namespace chemkit {
@@ -75,9 +73,7 @@ class CHEMKIT_EXPORT MolecularSurface
         Point3 position(int index) const;
         Float radius(int index) const;
         Float volume() const;
-        QFuture<Float> volumeAsync() const;
         Float surfaceArea() const;
-        QFuture<Float> surfaceAreaAsync() const;
 
     private:
         // internal methods

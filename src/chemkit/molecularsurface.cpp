@@ -39,8 +39,6 @@
 
 #include "molecularsurface.h"
 
-#include <QtConcurrentRun>
-
 #include "foreach.h"
 #include "vector3.h"
 #include "geometry.h"
@@ -266,13 +264,6 @@ Float MolecularSurface::volume() const
     return d->volume;
 }
 
-QFuture<Float> MolecularSurface::volumeAsync() const
-{
-    QFuture<Float> future = QtConcurrent::run(this, &MolecularSurface::volume);
-
-    return future;
-}
-
 /// Returns the total surface area of the surface. The returned
 /// area is in Angstroms squared (\f$ \AA^{2} \f$).
 Float MolecularSurface::surfaceArea() const
@@ -308,13 +299,6 @@ Float MolecularSurface::surfaceArea() const
     }
 
     return d->surfaceArea;
-}
-
-QFuture<Float> MolecularSurface::surfaceAreaAsync() const
-{
-    QFuture<Float> future = QtConcurrent::run(this, &MolecularSurface::surfaceArea);
-
-    return future;
 }
 
 // --- Internal Methods ---------------------------------------------------- //
