@@ -69,7 +69,7 @@ class ForceFieldPrivate
 {
     public:
         std::string name;
-        ForceField::Flags flags;
+        int flags;
         std::vector<ForceFieldAtom *> atoms;
         std::vector<ForceFieldCalculation *> calculations;
         std::vector<const Molecule *> molecules;
@@ -113,6 +113,7 @@ ForceField::ForceField(const std::string &name)
     : d(new ForceFieldPrivate)
 {
     d->name = name;
+    d->flags = 0;
 }
 
 /// Destroys a force field.
@@ -139,13 +140,13 @@ std::string ForceField::name() const
 }
 
 /// Sets the flags for the force field to \p flags.
-void ForceField::setFlags(Flags flags)
+void ForceField::setFlags(int flags)
 {
     d->flags = flags;
 }
 
 /// Returns the flags for the force field.
-ForceField::Flags ForceField::flags() const
+int ForceField::flags() const
 {
     return d->flags;
 }
@@ -374,7 +375,7 @@ Float ForceField::energy() const
 **/
 std::vector<Vector3> ForceField::gradient() const
 {
-    if(d->flags.testFlag(AnalyticalGradient)){
+    if(d->flags & AnalyticalGradient){
         std::vector<Vector3> gradient(atomCount());
 
         foreach(const ForceFieldCalculation *calculation, d->calculations){

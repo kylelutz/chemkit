@@ -61,7 +61,6 @@ class CHEMKIT_EXPORT ForceField
         enum Flag {
             AnalyticalGradient = 0x01
         };
-        Q_DECLARE_FLAGS(Flags, Flag)
 
         // typedefs
         typedef ForceField* (*CreateFunction)();
@@ -71,7 +70,7 @@ class CHEMKIT_EXPORT ForceField
 
         // properties
         std::string name() const;
-        ForceField::Flags flags() const;
+        int flags() const;
         int size() const;
         std::vector<ForceFieldAtom *> atoms() const;
         int atomCount() const;
@@ -131,7 +130,7 @@ class CHEMKIT_EXPORT ForceField
 
     protected:
         ForceField(const std::string &name);
-        void setFlags(Flags flags);
+        void setFlags(int flags);
         void addAtom(ForceFieldAtom *atom);
         void removeAtom(ForceFieldAtom *atom);
         void addCalculation(ForceFieldCalculation *calculation);
@@ -144,8 +143,6 @@ class CHEMKIT_EXPORT ForceField
     private:
         ForceFieldPrivate* const d;
 };
-
-Q_DECLARE_OPERATORS_FOR_FLAGS(ForceField::Flags)
 
 } // end chemkit namespace
 
