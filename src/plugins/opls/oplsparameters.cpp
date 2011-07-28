@@ -81,7 +81,7 @@ const OplsBondStrechParameters* OplsParameters::bondStrechParameters(int a, int 
     b = atomClass(b);
 
     if(a > b){
-        qSwap(a, b);
+        std::swap(a, b);
     }
 
     foreach(const OplsBondStrechParameters &p, m_bondStrechParameters){
@@ -100,7 +100,7 @@ const OplsAngleBendParameters* OplsParameters::angleBendParameters(int a, int b,
     c = atomClass(c);
 
     if(a > c){
-        qSwap(a, c);
+        std::swap(a, c);
     }
 
     foreach(const OplsAngleBendParameters &p, m_angleBendParameters){
@@ -120,11 +120,11 @@ const OplsTorsionParameters* OplsParameters::torsionParameters(int a, int b, int
     d = atomClass(d);
 
     if(b > c){
-        qSwap(b, c);
+        std::swap(b, c);
     }
 
     if(a > d){
-        qSwap(a, d);
+        std::swap(a, d);
     }
 
     foreach(const OplsTorsionParameters &p, m_torsionParameters){

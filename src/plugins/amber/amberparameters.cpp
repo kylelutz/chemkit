@@ -672,7 +672,7 @@ const AmberTorsionParameters* AmberParameters::torsionParameters(const chemkit::
     std::string typeD = d->type();
 
     if(typeB > typeC){
-        qSwap(typeB, typeC);
+        std::swap(typeB, typeC);
     }
 
     for(int i = 0; i < TorsionParametersCount; i++){

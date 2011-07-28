@@ -620,7 +620,7 @@ const MmffPartialChargeParameters* MmffParameters::partialChargeParameters(const
 const MmffBondStrechParameters* MmffParameters::bondStrechParameters(int bondType, int typeA, int typeB) const
 {
     if(typeA > typeB)
-        qSwap(typeA, typeB);
+        std::swap(typeA, typeB);
 
     int index = calculateBondStrechIndex(bondType, typeA, typeB);
 
@@ -638,7 +638,7 @@ const MmffBondStrechParameters* MmffParameters::empiricalBondStrechParameters(in
 const MmffAngleBendParameters* MmffParameters::angleBendParameters(int angleType, int typeA, int typeB, int typeC) const
 {
     if(typeA > typeC)
-        qSwap(typeA, typeC);
+        std::swap(typeA, typeC);
 
     int index = calculateAngleBendIndex(angleType, typeA, typeB, typeC);
 
@@ -668,10 +668,10 @@ const MmffStrechBendParameters* MmffParameters::defaultStrechBendParameters(int 
 const MmffOutOfPlaneBendingParameters* MmffParameters::outOfPlaneBendingParameters(int typeA, int typeB, int typeC, int typeD) const
 {
     if(typeA > typeC)
-        qSwap(typeA, typeD);
+        std::swap(typeA, typeD);
 
     if(typeC > typeD)
-        qSwap(typeC, typeD);
+        std::swap(typeC, typeD);
 
     int index = calculateOutOfPlaneBendingIndex(typeA, typeB, typeC, typeD);
 
@@ -681,11 +681,11 @@ const MmffOutOfPlaneBendingParameters* MmffParameters::outOfPlaneBendingParamete
 const MmffTorsionParameters* MmffParameters::torsionParameters(int torsionType, int typeA, int typeB, int typeC, int typeD) const
 {
     if(typeB > typeC){
-        qSwap(typeB, typeC);
-        qSwap(typeA, typeD);
+        std::swap(typeB, typeC);
+        std::swap(typeA, typeD);
     }
     else if(typeB == typeC && typeA > typeD){
-        qSwap(typeA, typeD);
+        std::swap(typeA, typeD);
     }
 
     int index = calculateTorsionIndex(torsionType, typeA, typeB, typeC, typeD);

@@ -437,7 +437,7 @@ Float MolecularSurface::cap2Volume(int i, int j, int k) const
 Float MolecularSurface::cap3Area(int i, int j, int k, int l) const
 {
     if(!ccw(i, j, k, l)){
-        qSwap(k, l);
+        std::swap(k, l);
     }
 
     const Point3 &s = position(i);
@@ -559,7 +559,7 @@ Float MolecularSurface::segmentHeight(int i, int j, int k) const
 Float MolecularSurface::segment2Area(int i, int j, int k, int l) const
 {
     if(!ccw(i, j, k, l))
-        qSwap(k, l);
+        std::swap(k, l);
 
     Point3 pjk = triangleDual(i, j, k);
     Point3 pkj = triangleDual(i, k, j);
