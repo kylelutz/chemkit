@@ -39,13 +39,6 @@
 
 namespace chemkit {
 
-// === MoleculeWatcherPrivate ============================================== //
-class MoleculeWatcherPrivate
-{
-    public:
-        const Molecule *molecule;
-};
-
 // === MoleculeWatcher ===================================================== //
 /// \class MoleculeWatcher moleculewatcher.h chemkit/moleculewatcher.h
 /// \ingroup chemkit
@@ -56,48 +49,13 @@ class MoleculeWatcherPrivate
 /// Creates a new molecule watcher that monitors molecule.
 MoleculeWatcher::MoleculeWatcher(const Molecule *molecule)
     : QObject(),
-      d(new MoleculeWatcherPrivate)
+      MoleculeObserver(molecule)
 {
-    d->molecule = molecule;
-
-    if(molecule){
-        molecule->addWatcher(this);
-    }
 }
 
 /// Destroys the molecule watcher object.
 MoleculeWatcher::~MoleculeWatcher()
 {
-    if(d->molecule){
-        d->molecule->removeWatcher(this);
-    }
-
-    delete d;
-}
-
-// --- Properties ---------------------------------------------------------- //
-/// Sets the molecule to be watched.
-void MoleculeWatcher::setMolecule(const Molecule *molecule)
-{
-    if(molecule == d->molecule){
-        return;
-    }
-
-    if(d->molecule){
-        d->molecule->removeWatcher(this);
-    }
-
-    d->molecule = molecule;
-
-    if(d->molecule){
-        d->molecule->addWatcher(this);
-    }
-}
-
-/// Returns the molecule that is being watched.
-const Molecule* MoleculeWatcher::molecule() const
-{
-    return d->molecule;
 }
 
 // --- Signals ------------------------------------------------------------- //
@@ -149,8 +107,8 @@ const Molecule* MoleculeWatcher::molecule() const
 ///
 /// This signal is emitted when the molecule's name changes.
 
-// --- Internal Methods ---------------------------------------------------- //
-void MoleculeWatcher::notifyObservers(const Molecule *molecule, Molecule::ChangeType changeType)
+// --- Events ---------------------------------------------------- //
+void MoleculeWatcher::moleculeChanged(const Molecule *molecule, Molecule::ChangeType changeType)
 {
     switch(changeType){
         case Molecule::NameChanged:
@@ -161,7 +119,7 @@ void MoleculeWatcher::notifyObservers(const Molecule *molecule, Molecule::Change
     }
 }
 
-void MoleculeWatcher::notifyObservers(const Atom *atom, Molecule::ChangeType changeType)
+void MoleculeWatcher::atomChanged(const Atom *atom, Molecule::ChangeType changeType)
 {
     switch(changeType){
         case Molecule::AtomAdded:
@@ -181,7 +139,7 @@ void MoleculeWatcher::notifyObservers(const Atom *atom, Molecule::ChangeType cha
     }
 }
 
-void MoleculeWatcher::notifyObservers(const Bond *bond, Molecule::ChangeType changeType)
+void MoleculeWatcher::bondChanged(const Bond *bond, Molecule::ChangeType changeType)
 {
     switch(changeType){
         case Molecule::BondAdded:
@@ -197,7 +155,7 @@ void MoleculeWatcher::notifyObservers(const Bond *bond, Molecule::ChangeType cha
     }
 }
 
-void MoleculeWatcher::notifyObservers(const Conformer *conformer, Molecule::ChangeType changeType)
+void MoleculeWatcher::conformerChanged(const Conformer *conformer, Molecule::ChangeType changeType)
 {
     switch(changeType){
         case Molecule::ConformerAdded:

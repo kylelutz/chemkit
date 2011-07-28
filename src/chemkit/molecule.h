@@ -56,7 +56,6 @@ namespace chemkit {
 
 class Coordinates;
 class MoleculePrivate;
-class MoleculeWatcher;
 class MoleculeObserver;
 class InternalCoordinates;
 
@@ -195,15 +194,12 @@ class CHEMKIT_EXPORT Molecule
         void notifyObservers(const Atom *atom, ChangeType type);
         void notifyObservers(const Bond *bond, ChangeType type);
         void notifyObservers(const Conformer *conformer, ChangeType type);
-        void addWatcher(MoleculeWatcher *watcher) const;
-        void removeWatcher(MoleculeWatcher *watcher) const;
         void addObserver(MoleculeObserver *observer) const;
         void removeObserver(MoleculeObserver *observer) const;
         bool isSubsetOf(const Molecule *molecule, CompareFlags flags = CompareFlags()) const;
 
         friend class Atom;
         friend class Bond;
-        friend class MoleculeWatcher;
         friend class MoleculeObserver;
 
     private:

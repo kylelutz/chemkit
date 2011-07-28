@@ -40,6 +40,8 @@
 #include <sstream>
 #include <algorithm>
 
+#include <QScopedPointer>
+
 #include <Eigen/Core>
 #include <Eigen/Geometry>
 
@@ -56,7 +58,6 @@
 #include "quaternion.h"
 #include "coordinates.h"
 #include "moleculargraph.h"
-#include "moleculewatcher.h"
 #include "moleculeobserver.h"
 #include "internalcoordinates.h"
 #include "moleculardescriptor.h"
@@ -77,7 +78,6 @@ class MoleculePrivate
         std::vector<Ring *> rings;
         bool fragmentsPerceived;
         std::vector<Fragment *> fragments;
-        std::vector<MoleculeWatcher *> watchers;
         std::vector<MoleculeObserver *> observers;
         std::map<std::string, Variant> data;
 };
@@ -1235,20 +1235,12 @@ void Molecule::notifyObservers(ChangeType type)
     foreach(MoleculeObserver *observer, d->observers){
         observer->moleculeChanged(this, type);
     }
-
-    foreach(MoleculeWatcher *watcher, d->watchers){
-        watcher->notifyObservers(this, type);
-    }
 }
 
 void Molecule::notifyObservers(const Atom *atom, ChangeType type)
 {
     foreach(MoleculeObserver *observer, d->observers){
         observer->atomChanged(atom, type);
-    }
-
-    foreach(MoleculeWatcher *watcher, d->watchers){
-        watcher->notifyObservers(atom, type);
     }
 }
 
@@ -1257,20 +1249,6 @@ void Molecule::notifyObservers(const Bond *bond, ChangeType type)
     foreach(MoleculeObserver *observer, d->observers){
         observer->bondChanged(bond, type);
     }
-
-    foreach(MoleculeWatcher *watcher, d->watchers){
-        watcher->notifyObservers(bond, type);
-    }
-}
-
-void Molecule::addWatcher(MoleculeWatcher *watcher) const
-{
-    d->watchers.push_back(watcher);
-}
-
-void Molecule::removeWatcher(MoleculeWatcher *watcher) const
-{
-    d->watchers.erase(std::remove(d->watchers.begin(), d->watchers.end(), watcher));
 }
 
 void Molecule::addObserver(MoleculeObserver *observer) const

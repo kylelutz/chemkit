@@ -40,17 +40,11 @@
 
 #include <QObject>
 
-#include "molecule.h"
+#include "moleculeobserver.h"
 
 namespace chemkit {
 
-class Atom;
-class Bond;
-class Molecule;
-class Conformer;
-class MoleculeWatcherPrivate;
-
-class CHEMKIT_EXPORT MoleculeWatcher : public QObject
+class CHEMKIT_EXPORT MoleculeWatcher : public QObject, public MoleculeObserver
 {
     Q_OBJECT
 
@@ -58,10 +52,6 @@ class CHEMKIT_EXPORT MoleculeWatcher : public QObject
         // construction and destruction
         MoleculeWatcher(const Molecule *molecule = 0);
         ~MoleculeWatcher();
-
-        // properties
-        void setMolecule(const Molecule *molecule);
-        const Molecule* molecule() const;
 
     Q_SIGNALS:
         void atomAdded(const chemkit::Atom *atom);
@@ -75,16 +65,11 @@ class CHEMKIT_EXPORT MoleculeWatcher : public QObject
         void conformerRemoved(const chemkit::Conformer *conformer);
         void nameChanged(const chemkit::Molecule *molecule);
 
-    private:
-        void notifyObservers(const Molecule *molecule, Molecule::ChangeType changeType);
-        void notifyObservers(const Atom *atom, Molecule::ChangeType changeType);
-        void notifyObservers(const Bond *bond, Molecule::ChangeType changeType);
-        void notifyObservers(const Conformer *conformer, Molecule::ChangeType changeType);
-
-        friend class Molecule;
-
-    private:
-        MoleculeWatcherPrivate* const d;
+    protected:
+        virtual void atomChanged(const Atom *atom, Molecule::ChangeType changeType);
+        virtual void bondChanged(const Bond *bond, Molecule::ChangeType changeType);
+        virtual void conformerChanged(const Conformer *conformer, Molecule::ChangeType changeType);
+        virtual void moleculeChanged(const Molecule *molecule, Molecule::ChangeType changeType);
 };
 
 } // end chemkit namespace
