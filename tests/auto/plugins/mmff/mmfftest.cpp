@@ -122,7 +122,7 @@ void MmffTest::validate()
 
             double charge = forceFieldAtom->charge();
             double expectedCharge = expectedAtom.attribute("charge").toDouble();
-            double chargeDifference = qAbs(charge - expectedCharge);
+            double chargeDifference = std::abs(charge - expectedCharge);
             if(chargeDifference > 0.1){
                 failed = true;
             }
@@ -133,7 +133,7 @@ void MmffTest::validate()
         // verify energy
         double energy = forceField->energy();
         double expectedEnergy = expectedMolecule.attribute("energy").toDouble();
-        double energyDifference = qAbs(energy - expectedEnergy);
+        double energyDifference = std::abs(energy - expectedEnergy);
         if(energyDifference > 1.0){
             failed = true;
         }

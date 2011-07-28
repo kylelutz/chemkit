@@ -263,8 +263,8 @@ std::string SmilesGraphNode::toString(bool kekulize) const
             string << "-";
         }
 
-        if(qAbs(charge) > 1){
-            string << qAbs(charge);
+        if(std::abs(charge) > 1){
+            string << std::abs(charge);
         }
 
         string << "]";

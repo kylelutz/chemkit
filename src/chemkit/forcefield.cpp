@@ -554,7 +554,7 @@ bool ForceField::minimizationStep(Float converganceValue)
             continue;
         }
 
-        if(finalEnergy < initialEnergy && qAbs(finalEnergy - initialEnergy) < stepConv){
+        if(finalEnergy < initialEnergy && std::abs(finalEnergy - initialEnergy) < stepConv){
             break;
         }
         else if(finalEnergy < initialEnergy){

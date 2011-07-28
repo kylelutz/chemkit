@@ -113,7 +113,7 @@ Float Bond::polarity() const
         return 0;
     }
 
-    return qAbs(m_atom1->electronegativity() - m_atom2->electronegativity());
+    return std::abs(m_atom1->electronegativity() - m_atom2->electronegativity());
 }
 
 /// Returns the dipole moment for the bond.

@@ -147,7 +147,7 @@ bool BondPredictor::couldBeBonded(Atom *a, Atom *b) const
 
     if(distance > minimumBondLength() &&
        distance < maximumBondLength() &&
-       qAbs((a->covalentRadius() + b->covalentRadius()) - distance) < tolerance())
+       std::abs((a->covalentRadius() + b->covalentRadius()) - distance) < tolerance())
         return true;
     else
         return false;
