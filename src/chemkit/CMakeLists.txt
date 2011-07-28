@@ -60,6 +60,7 @@ set(HEADERS
   moleculefileformat.h
   moleculefileformatadaptor.h
   moleculefileformatadaptor-inline.h
+  moleculeobserver.h
   moleculewatcher.h
   nucleotide.h
   partialchargepredictor.h
@@ -118,6 +119,7 @@ set(SOURCES
   moleculealigner.cpp
   moleculefile.cpp
   moleculefileformat.cpp
+  moleculeobserver.cpp
   moleculewatcher.cpp
   nucleotide.cpp
   partialchargepredictor.cpp

@@ -57,6 +57,7 @@
 #include "coordinates.h"
 #include "moleculargraph.h"
 #include "moleculewatcher.h"
+#include "moleculeobserver.h"
 #include "internalcoordinates.h"
 #include "moleculardescriptor.h"
 
@@ -77,6 +78,7 @@ class MoleculePrivate
         bool fragmentsPerceived;
         std::vector<Fragment *> fragments;
         std::vector<MoleculeWatcher *> watchers;
+        std::vector<MoleculeObserver *> observers;
         std::map<std::string, Variant> data;
 };
 
@@ -1230,6 +1232,10 @@ int Molecule::bondCountBetween(const Atom *a, const Atom *b, int maxCount) const
 
 void Molecule::notifyObservers(ChangeType type)
 {
+    foreach(MoleculeObserver *observer, d->observers){
+        observer->moleculeChanged(this, type);
+    }
+
     foreach(MoleculeWatcher *watcher, d->watchers){
         watcher->notifyObservers(this, type);
     }
@@ -1237,6 +1243,10 @@ void Molecule::notifyObservers(ChangeType type)
 
 void Molecule::notifyObservers(const Atom *atom, ChangeType type)
 {
+    foreach(MoleculeObserver *observer, d->observers){
+        observer->atomChanged(atom, type);
+    }
+
     foreach(MoleculeWatcher *watcher, d->watchers){
         watcher->notifyObservers(atom, type);
     }
@@ -1244,6 +1254,10 @@ void Molecule::notifyObservers(const Atom *atom, ChangeType type)
 
 void Molecule::notifyObservers(const Bond *bond, ChangeType type)
 {
+    foreach(MoleculeObserver *observer, d->observers){
+        observer->bondChanged(bond, type);
+    }
+
     foreach(MoleculeWatcher *watcher, d->watchers){
         watcher->notifyObservers(bond, type);
     }
@@ -1257,6 +1271,16 @@ void Molecule::addWatcher(MoleculeWatcher *watcher) const
 void Molecule::removeWatcher(MoleculeWatcher *watcher) const
 {
     d->watchers.erase(std::remove(d->watchers.begin(), d->watchers.end(), watcher));
+}
+
+void Molecule::addObserver(MoleculeObserver *observer) const
+{
+    d->observers.push_back(observer);
+}
+
+void Molecule::removeObserver(MoleculeObserver *observer) const
+{
+    d->observers.erase(std::remove(d->observers.begin(), d->observers.end(), observer));
 }
 
 bool Molecule::isSubsetOf(const Molecule *molecule, CompareFlags flags) const
