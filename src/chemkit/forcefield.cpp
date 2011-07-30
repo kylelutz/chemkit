@@ -35,10 +35,6 @@
 
 #include "forcefield.h"
 
-#include <QtCore>
-#include <QtConcurrentMap>
-#include <QtConcurrentRun>
-
 #include "atom.h"
 #include "foreach.h"
 #include "geometry.h"
@@ -49,20 +45,6 @@
 #include "forcefieldcalculation.h"
 
 namespace chemkit {
-
-namespace {
-
-Float mapEnergy(const ForceFieldCalculation *calculation)
-{
-    return calculation->energy();
-}
-
-void reduceEnergy(Float &result, const Float &energy)
-{
-    result += energy;
-}
-
-} // end anonymous namespace
 
 // === ForceFieldPrivate =================================================== //
 class ForceFieldPrivate
@@ -336,19 +318,10 @@ void ForceField::setCalculationSetup(ForceFieldCalculation *calculation, bool se
 /// return \c 0.
 Float ForceField::energy() const
 {
-    const unsigned int parallelThreshold = 5000;
-
     Float energy = 0;
 
-    if(d->calculations.size() < parallelThreshold){
-        // calculate energy sequentially
-        foreach(const ForceFieldCalculation *calculation, d->calculations){
-            energy += calculation->energy();
-        }
-    }
-    else{
-        // calculate energy in parallel
-        energy = QtConcurrent::blockingMappedReduced(d->calculations, mapEnergy, reduceEnergy);
+    foreach(const ForceFieldCalculation *calculation, d->calculations){
+        energy += calculation->energy();
     }
 
     return energy;
@@ -541,7 +514,7 @@ bool ForceField::minimizationStep(Float converganceValue)
         // simulation exploded so we reset the initial atom
         // positions and then 'wiggle' each atom by one
         // Angstrom in a random direction
-        if(qIsNaN(finalEnergy)){
+        if(std::isnan(finalEnergy)){
             for(int atomIndex = 0; atomIndex < atomCount(); atomIndex++){
                 d->atoms[atomIndex]->setPosition(initialPositions[atomIndex]);
                 d->atoms[atomIndex]->moveBy(Vector3::Random().normalized());
