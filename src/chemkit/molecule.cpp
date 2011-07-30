@@ -40,8 +40,6 @@
 #include <sstream>
 #include <algorithm>
 
-#include <QScopedPointer>
-
 #include <Eigen/Core>
 #include <Eigen/Geometry>
 
@@ -287,12 +285,16 @@ std::string Molecule::formula(const std::string &format) const
 /// \see MolecularDescriptor
 Variant Molecule::descriptor(const std::string &name) const
 {
-    QScopedPointer<MolecularDescriptor> descriptor(MolecularDescriptor::create(name));
+    MolecularDescriptor *descriptor = MolecularDescriptor::create(name);
     if(!descriptor){
         return Variant();
     }
 
-    return descriptor->value(this);
+    Variant value = descriptor->value(this);
+
+    delete descriptor;
+
+    return value;
 }
 
 /// Returns the total molar mass of the molecule. Mass is in g/mol.
