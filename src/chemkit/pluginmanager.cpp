@@ -36,6 +36,7 @@
 #include "pluginmanager.h"
 
 #include <map>
+#include <boost/filesystem.hpp>
 #include <boost/algorithm/string/case_conv.hpp>
 
 #include <QtCore>
@@ -128,15 +129,15 @@ bool PluginManager::loadPlugin(const std::string &fileName)
 /// Loads all plugins from \p directory.
 void PluginManager::loadPlugins(const std::string &directory)
 {
-    QDir dir(QString::fromStdString(directory));
+    boost::filesystem::path dir(directory);
 
-    if(!dir.exists()){
+    if(!boost::filesystem::exists(dir)){
         return;
     }
 
-    foreach(const QString &fileName, dir.entryList(QDir::Files)){
-        if(QLibrary::isLibrary(fileName)){
-            loadPlugin(dir.filePath(fileName).toStdString());
+    for(boost::filesystem::directory_iterator iter(dir); iter != boost::filesystem::directory_iterator(); ++iter){
+        if(QLibrary::isLibrary(iter->path().filename().c_str())){
+            loadPlugin(iter->path().string());
         }
     }
 }
@@ -148,26 +149,26 @@ void PluginManager::loadDefaultPlugins()
     }
 
     // list of directories to load plugins from
-    QStringList directories;
+    std::vector<std::string> directories;
 
     // add default plugin directory
 #if defined(CHEMKIT_OS_LINUX)
-    directories.append(CHEMKIT_INSTALL_PREFIX "/share/chemkit/plugins/");
+    directories.push_back(CHEMKIT_INSTALL_PREFIX "/share/chemkit/plugins/");
 #elif defined(CHEMKIT_OS_WIN32)
     QSettings registry("HKEY_LOCAL_MACHINE\\Software\\chemkit", QSettings::NativeFormat);
-    directories.append(registry.value("PluginPath").toString());
+    directories.push_back(registry.value("PluginPath").toString().toStdString());
 #endif
 
     // add directory from the CHEMKIT_PLUGIN_PATH environment variable
     QProcessEnvironment environment = QProcessEnvironment::systemEnvironment();
-    QString path = environment.value("CHEMKIT_PLUGIN_PATH");
-    if(!path.isEmpty()){
-        directories.append(path);
+    std::string path = environment.value("CHEMKIT_PLUGIN_PATH").toStdString();
+    if(!path.empty()){
+        directories.push_back(path);
     }
 
     // load plugins from each directory
-    foreach(const QString &directory, directories){
-        loadPlugins(directory.toStdString());
+    foreach(const std::string &directory, directories){
+        loadPlugins(directory);
     }
 
     d->defaultPluginsLoaded = true;
