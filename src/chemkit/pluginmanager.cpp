@@ -36,6 +36,7 @@
 #include "pluginmanager.h"
 
 #include <map>
+#include <cstdlib>
 #include <boost/filesystem.hpp>
 #include <boost/algorithm/string/case_conv.hpp>
 
@@ -160,8 +161,7 @@ void PluginManager::loadDefaultPlugins()
 #endif
 
     // add directory from the CHEMKIT_PLUGIN_PATH environment variable
-    QProcessEnvironment environment = QProcessEnvironment::systemEnvironment();
-    std::string path = environment.value("CHEMKIT_PLUGIN_PATH").toStdString();
+    std::string path = getenv("CHEMKIT_PLUGIN_PATH");
     if(!path.empty()){
         directories.push_back(path);
     }
