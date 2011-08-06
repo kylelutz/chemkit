@@ -43,8 +43,6 @@
 #include <istream>
 #include <ostream>
 
-#include <QIODevice>
-
 #include "variant.h"
 
 namespace chemkit {
@@ -70,9 +68,7 @@ class CHEMKIT_EXPORT MoleculeFileFormat
 
         // input and output
         virtual bool read(std::istream &input, MoleculeFile *file);
-        virtual bool read(QIODevice *iodev, MoleculeFile *file);
         virtual bool write(const MoleculeFile *file, std::ostream &output);
-        virtual bool write(const MoleculeFile *file, QIODevice *iodev);
 
         // error handling
         std::string errorString() const;

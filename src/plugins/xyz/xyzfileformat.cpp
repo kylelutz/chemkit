@@ -39,6 +39,7 @@
 #include <iostream>
 
 #include <chemkit/element.h>
+#include <chemkit/foreach.h>
 #include <chemkit/moleculefile.h>
 
 XyzFileFormat::XyzFileFormat()

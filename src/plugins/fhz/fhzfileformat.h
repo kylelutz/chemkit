@@ -38,12 +38,15 @@
 
 #include <chemkit/moleculefileformat.h>
 
+#include <QIODevice>
+
 class FhzFileFormat : public chemkit::MoleculeFileFormat
 {
     public:
         FhzFileFormat();
         ~FhzFileFormat();
 
+        bool read(std::istream &input, chemkit::MoleculeFile *file);
         bool read(QIODevice *iodev, chemkit::MoleculeFile *file);
 };
 

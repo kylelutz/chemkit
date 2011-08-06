@@ -46,6 +46,20 @@ Mol2FileFormat::~Mol2FileFormat()
 {
 }
 
+bool Mol2FileFormat::read(std::istream &input, chemkit::MoleculeFile *file)
+{
+    QByteArray data;
+    while(!input.eof()){
+        data += input.get();
+    }
+    data.chop(1);
+
+    QBuffer buffer;
+    buffer.setData(data);
+    buffer.open(QBuffer::ReadOnly);
+    return read(&buffer, file);
+}
+
 bool Mol2FileFormat::read(QIODevice *iodev, chemkit::MoleculeFile *file)
 {
     iodev->setTextModeEnabled(true);
@@ -166,6 +180,19 @@ bool Mol2FileFormat::read(QIODevice *iodev, chemkit::MoleculeFile *file)
         file->addMolecule(molecule);
     }
 
+    return true;
+}
+
+bool Mol2FileFormat::write(const chemkit::MoleculeFile *file, std::ostream &output)
+{
+    QBuffer buffer;
+    buffer.open(QBuffer::WriteOnly);
+    bool ok = write(file, &buffer);
+    if(!ok){
+        return false;
+    }
+
+    output.write(buffer.data().constData(), buffer.size());
     return true;
 }
 

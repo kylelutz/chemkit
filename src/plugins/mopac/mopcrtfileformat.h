@@ -38,11 +38,14 @@
 
 #include <chemkit/moleculefileformat.h>
 
+#include <QIODevice>
+
 class MopcrtFileFormat : public chemkit::MoleculeFileFormat
 {
     public:
         MopcrtFileFormat();
 
+        bool read(std::istream &input, chemkit::MoleculeFile *file);
         bool read(QIODevice *iodev, chemkit::MoleculeFile *file);
 };
 

@@ -49,7 +49,9 @@ class MdlFileFormat : public chemkit::MoleculeFileFormat
         ~MdlFileFormat();
 
         // input and output
+        bool read(std::istream &input, chemkit::MoleculeFile *file);
         bool read(QIODevice *iodev, chemkit::MoleculeFile *file);
+        bool write(const chemkit::MoleculeFile *file, std::ostream &output);
         bool write(const chemkit::MoleculeFile *file, QIODevice *iodev);
 
     private:

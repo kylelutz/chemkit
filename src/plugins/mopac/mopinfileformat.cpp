@@ -46,6 +46,20 @@ MopinFileFormat::MopinFileFormat()
 {
 }
 
+bool MopinFileFormat::read(std::istream &input, chemkit::MoleculeFile *file)
+{
+    QByteArray data;
+    while(!input.eof()){
+        data += input.get();
+    }
+    data.chop(1);
+
+    QBuffer buffer;
+    buffer.setData(data);
+    buffer.open(QBuffer::ReadOnly);
+    return read(&buffer, file);
+}
+
 bool MopinFileFormat::read(QIODevice *iodev, chemkit::MoleculeFile *file)
 {
     iodev->setTextModeEnabled(true);

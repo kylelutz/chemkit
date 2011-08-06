@@ -40,8 +40,6 @@
 #include <boost/format.hpp>
 #include <boost/algorithm/string.hpp>
 
-#include <QBuffer>
-
 #include "pluginmanager.h"
 
 namespace chemkit {
@@ -111,21 +109,7 @@ Variant MoleculeFileFormat::option(const std::string &name) const
 /// Read the data from \p input into \p file.
 bool MoleculeFileFormat::read(std::istream &input, MoleculeFile *file)
 {
-    QByteArray data;
-    while(!input.eof()){
-        data += input.get();
-    }
-    data.chop(1);
-
-    QBuffer buffer;
-    buffer.setData(data);
-    buffer.open(QBuffer::ReadOnly);
-    return read(&buffer, file);
-}
-
-bool MoleculeFileFormat::read(QIODevice *iodev, MoleculeFile *file)
-{
-    CHEMKIT_UNUSED(iodev);
+    CHEMKIT_UNUSED(input);
     CHEMKIT_UNUSED(file);
 
     setErrorString((boost::format("'%s' reading not supported.") % name()).str());
@@ -135,21 +119,8 @@ bool MoleculeFileFormat::read(QIODevice *iodev, MoleculeFile *file)
 /// Write the contents of \p file to \p output.
 bool MoleculeFileFormat::write(const MoleculeFile *file, std::ostream &output)
 {
-    QBuffer buffer;
-    buffer.open(QBuffer::WriteOnly);
-    bool ok = write(file, &buffer);
-    if(!ok){
-        return false;
-    }
-
-    output.write(buffer.data().constData(), buffer.size());
-    return true;
-}
-
-bool MoleculeFileFormat::write(const MoleculeFile *file, QIODevice *iodev)
-{
     CHEMKIT_UNUSED(file);
-    CHEMKIT_UNUSED(iodev);
+    CHEMKIT_UNUSED(output);
 
     setErrorString((boost::format("'%s' writing not supported.") % name()).str());
     return false;
