@@ -41,8 +41,6 @@
 
 class WienerIndexPlugin : public chemkit::Plugin
 {
-    Q_OBJECT
-
     public:
         WienerIndexPlugin();
         ~WienerIndexPlugin();

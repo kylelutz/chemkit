@@ -36,15 +36,11 @@
 #ifndef CUBEPLUGIN_H
 #define CUBEPLUGIN_H
 
-#include <QtCore>
-
 #include <chemkit/plugin.h>
 #include <chemkit/moleculefileformat.h>
 
 class CubePlugin : public chemkit::Plugin
 {
-    Q_OBJECT
-
     public:
         CubePlugin();
         ~CubePlugin();

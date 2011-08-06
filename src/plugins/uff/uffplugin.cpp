@@ -61,4 +61,4 @@ chemkit::ForceField* UffPlugin::createUffForceField()
     return new UffForceField;
 }
 
-Q_EXPORT_PLUGIN2(uff, UffPlugin);
+CHEMKIT_EXPORT_PLUGIN(uff, UffPlugin)

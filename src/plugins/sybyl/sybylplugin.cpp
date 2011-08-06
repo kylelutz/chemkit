@@ -61,4 +61,4 @@ chemkit::MoleculeFileFormat* SybylPlugin::createMol2FileFormat()
     return new Mol2FileFormat;
 }
 
-Q_EXPORT_PLUGIN2(sybyl, SybylPlugin)
+CHEMKIT_EXPORT_PLUGIN(sybyl, SybylPlugin)

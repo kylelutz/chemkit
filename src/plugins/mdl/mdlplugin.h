@@ -36,15 +36,11 @@
 #ifndef MDLPLUGIN_H
 #define MDLPLUGIN_H
 
-#include <QtCore>
-
 #include <chemkit/plugin.h>
 #include <chemkit/moleculefileformat.h>
 
 class MdlPlugin : public chemkit::Plugin
 {
-    Q_OBJECT
-
     public:
         MdlPlugin();
         ~MdlPlugin();

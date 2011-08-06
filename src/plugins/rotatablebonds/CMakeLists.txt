@@ -10,11 +10,5 @@ set(SOURCES
   rotatablebondsplugin.cpp
 )
 
-set(MOC_HEADERS
-  rotatablebondsplugin.h
-)
-
-qt4_wrap_cpp(MOC_SOURCES ${MOC_HEADERS})
-
-add_chemkit_plugin(rotatablebonds ${SOURCES} ${MOC_SOURCES})
+add_chemkit_plugin(rotatablebonds ${SOURCES})
 target_link_libraries(rotatablebonds chemkit ${QT_LIBRARIES})

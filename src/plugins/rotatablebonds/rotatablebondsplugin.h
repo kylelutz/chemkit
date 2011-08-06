@@ -41,8 +41,6 @@
 
 class RotatableBondsPlugin : public chemkit::Plugin
 {
-    Q_OBJECT
-
     public:
         RotatableBondsPlugin();
         ~RotatableBondsPlugin();

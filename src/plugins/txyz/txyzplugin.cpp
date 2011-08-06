@@ -53,4 +53,4 @@ chemkit::MoleculeFileFormat* TxyzPlugin::createTxyzFormat()
     return new TxyzFileFormat;
 }
 
-Q_EXPORT_PLUGIN2(txyz, TxyzPlugin);
+CHEMKIT_EXPORT_PLUGIN(txyz, TxyzPlugin)

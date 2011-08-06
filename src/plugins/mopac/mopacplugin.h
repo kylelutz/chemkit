@@ -36,15 +36,11 @@
 #ifndef MOPACPLUGIN_H
 #define MOPACPLUGIN_H
 
-#include <QtCore>
-
 #include <chemkit/plugin.h>
 #include <chemkit/moleculefileformat.h>
 
 class MopacPlugin : public chemkit::Plugin
 {
-    Q_OBJECT
-
     public:
         MopacPlugin();
         ~MopacPlugin();

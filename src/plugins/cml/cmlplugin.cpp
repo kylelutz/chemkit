@@ -53,4 +53,4 @@ chemkit::MoleculeFileFormat* CmlPlugin::createCmlFormat()
     return new CmlFileFormat;
 }
 
-Q_EXPORT_PLUGIN2(cml, CmlPlugin);
+CHEMKIT_EXPORT_PLUGIN(cml, CmlPlugin);

@@ -40,19 +40,17 @@
 
 #include <string>
 
-#include <QtPlugin>
-
 namespace chemkit {
 
 class PluginPrivate;
+class DynamicLibrary;
 
-class CHEMKIT_EXPORT Plugin : public QObject
+class CHEMKIT_EXPORT Plugin
 {
-    Q_OBJECT
-
     public:
         // properties
         std::string name() const;
+        std::string fileName() const;
         std::string dataPath() const;
 
     protected:
@@ -64,7 +62,8 @@ class CHEMKIT_EXPORT Plugin : public QObject
         template<class T> bool unregisterPluginClass(const std::string &name);
 
     private:
-        void setFileName(const std::string &fileName);
+        void setLibrary(DynamicLibrary *library);
+        DynamicLibrary* library() const;
 
         friend class PluginManager;
 
@@ -73,6 +72,13 @@ class CHEMKIT_EXPORT Plugin : public QObject
 };
 
 } // end chemkit namespace
+
+/// Export a plugin.
+#define CHEMKIT_EXPORT_PLUGIN(name, className) \
+    extern "C" chemkit::Plugin* chemkit_plugin_init() \
+    { \
+        return new className; \
+    }
 
 #include "plugin-inline.h"
 

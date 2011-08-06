@@ -36,15 +36,11 @@
 #ifndef GASTEIGERPLUGIN_H
 #define GASTEIGERPLUGIN_H
 
-#include <QtCore>
-
 #include <chemkit/plugin.h>
 #include <chemkit/partialchargepredictor.h>
 
 class GasteigerPlugin : public chemkit::Plugin
 {
-    Q_OBJECT
-
     public:
         GasteigerPlugin();
         ~GasteigerPlugin();

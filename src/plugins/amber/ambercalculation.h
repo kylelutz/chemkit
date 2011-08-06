@@ -36,8 +36,6 @@
 #ifndef AMBERCALCULATION_H
 #define AMBERCALCULATION_H
 
-#include <QtCore>
-
 #include <chemkit/forcefieldcalculation.h>
 
 class AmberParameters;

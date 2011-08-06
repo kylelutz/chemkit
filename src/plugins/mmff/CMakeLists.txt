@@ -16,11 +16,5 @@ set(SOURCES
   mmffplugin.cpp
 )
 
-set(MOC_HEADERS
-  mmffplugin.h
-)
-
-qt4_wrap_cpp(MOC_SOURCES ${MOC_HEADERS})
-
-add_chemkit_plugin(mmff ${SOURCES} ${MOC_SOURCES})
+add_chemkit_plugin(mmff ${SOURCES})
 target_link_libraries(mmff chemkit ${QT_LIBRARIES})

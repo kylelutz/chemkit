@@ -11,11 +11,5 @@ set(SOURCES
   hydrogenbondsplugin.cpp
 )
 
-set(MOC_HEADERS
-  hydrogenbondsplugin.h
-)
-
-qt4_wrap_cpp(MOC_SOURCES ${MOC_HEADERS})
-
-add_chemkit_plugin(hydrogenbonds ${SOURCES} ${MOC_SOURCES})
+add_chemkit_plugin(hydrogenbonds ${SOURCES})
 target_link_libraries(hydrogenbonds chemkit ${QT_LIBRARIES})

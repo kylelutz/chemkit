@@ -53,4 +53,4 @@ chemkit::PolymerFileFormat* PdbmlPlugin::createPdbmlFormat()
     return new PdbmlFileFormat;
 }
 
-Q_EXPORT_PLUGIN2(pdbml, PdbmlPlugin);
+CHEMKIT_EXPORT_PLUGIN(pdbml, PdbmlPlugin)

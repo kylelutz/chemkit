@@ -53,4 +53,4 @@ chemkit::MolecularDescriptor* RotatableBondsPlugin::createRotableBondsDescriptor
     return new RotatableBondsDescriptor;
 }
 
-Q_EXPORT_PLUGIN2(rotatablebonds, RotatableBondsPlugin);
+CHEMKIT_EXPORT_PLUGIN(rotatablebonds, RotatableBondsPlugin)

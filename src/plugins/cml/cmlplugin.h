@@ -36,15 +36,11 @@
 #ifndef CMLPLUGIN_H
 #define CMLPLUGIN_H
 
-#include <QtCore>
-
 #include <chemkit/plugin.h>
 #include <chemkit/moleculefileformat.h>
 
 class CmlPlugin : public chemkit::Plugin
 {
-    Q_OBJECT
-
     public:
         CmlPlugin();
         ~CmlPlugin();

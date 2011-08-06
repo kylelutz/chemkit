@@ -10,11 +10,5 @@ set(SOURCES
   mdlplugin.cpp
 )
 
-set(MOC_HEADERS
-  mdlplugin.h
-)
-
-qt4_wrap_cpp(MOC_SOURCES ${MOC_HEADERS})
-
-add_chemkit_plugin(mdl SHARED ${SOURCES} ${MOC_SOURCES})
+add_chemkit_plugin(mdl SHARED ${SOURCES})
 target_link_libraries(mdl chemkit ${QT_LIBRARIES})

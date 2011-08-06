@@ -36,16 +36,12 @@
 #ifndef SYBYLPLUGIN_H
 #define SYBYLPLUGIN_H
 
-#include <QtCore>
-
 #include <chemkit/plugin.h>
 #include <chemkit/atomtyper.h>
 #include <chemkit/moleculefileformat.h>
 
 class SybylPlugin : public chemkit::Plugin
 {
-    Q_OBJECT
-
     public:
         SybylPlugin();
         ~SybylPlugin();

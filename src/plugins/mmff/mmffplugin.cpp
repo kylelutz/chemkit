@@ -89,4 +89,4 @@ chemkit::PartialChargePredictor* MmffPlugin::createMmffPartialChargePredictor()
     return new MmffPartialChargePredictor;
 }
 
-Q_EXPORT_PLUGIN2(mmff, MmffPlugin);
+CHEMKIT_EXPORT_PLUGIN(mmff, MmffPlugin)

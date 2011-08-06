@@ -74,4 +74,4 @@ chemkit::MoleculeFileFormat* MdlPlugin::createSdFormat()
     return new MdlFileFormat("sd");
 }
 
-Q_EXPORT_PLUGIN2(mdl, MdlPlugin);
+CHEMKIT_EXPORT_PLUGIN(mdl, MdlPlugin);

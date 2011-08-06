@@ -36,16 +36,12 @@
 #ifndef SMILESPLUGIN_H
 #define SMILESPLUGIN_H
 
-#include <QtCore>
-
 #include <chemkit/plugin.h>
 #include <chemkit/lineformat.h>
 #include <chemkit/moleculefileformat.h>
 
 class SmilesPlugin : public chemkit::Plugin
 {
-    Q_OBJECT
-
     public:
         SmilesPlugin();
         ~SmilesPlugin();

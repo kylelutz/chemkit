@@ -13,11 +13,5 @@ set(SOURCES
   oplsplugin.cpp
 )
 
-set(MOC_HEADERS
-  oplsplugin.h
-)
-
-qt4_wrap_cpp(MOC_SOURCES ${MOC_HEADERS})
-
-add_chemkit_plugin(opls ${SOURCES} ${MOC_SOURCES})
+add_chemkit_plugin(opls ${SOURCES})
 target_link_libraries(opls chemkit ${QT_LIBRARIES})

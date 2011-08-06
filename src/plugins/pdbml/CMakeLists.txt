@@ -11,11 +11,5 @@ set(SOURCES
   pdbmlplugin.cpp
 )
 
-set(MOC_HEADERS
-  pdbmlplugin.h
-)
-
-qt4_wrap_cpp(MOC_SOURCES ${MOC_HEADERS})
-
-add_chemkit_plugin(pdbml ${SOURCES} ${MOC_SOURCES})
+add_chemkit_plugin(pdbml ${SOURCES})
 target_link_libraries(pdbml chemkit ${QT_LIBRARIES})

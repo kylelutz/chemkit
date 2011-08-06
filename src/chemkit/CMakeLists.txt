@@ -139,12 +139,6 @@ set(SOURCES
   unitcell.cpp
 )
 
-set(MOC_HEADERS
-  plugin.h
-)
-
-qt4_wrap_cpp(MOC_SOURCES ${MOC_HEADERS})
-
 add_definitions(
   -DCHEMKIT_LIBRARY
   -DQT_NO_KEYWORDS

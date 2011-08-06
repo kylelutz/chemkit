@@ -36,15 +36,11 @@
 #ifndef FHZPLUGIN_H
 #define FHZPLUGIN_H
 
-#include <QtCore>
-
 #include <chemkit/plugin.h>
 #include <chemkit/moleculefileformat.h>
 
 class FhzPlugin : public chemkit::Plugin
 {
-    Q_OBJECT
-
     public:
         FhzPlugin();
         ~FhzPlugin();

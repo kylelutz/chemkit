@@ -36,16 +36,12 @@
 #ifndef INCHIPLUGIN_H
 #define INCHIPLUGIN_H
 
-#include <QtCore>
-
 #include <chemkit/plugin.h>
 #include <chemkit/lineformat.h>
 #include <chemkit/moleculefileformat.h>
 
 class InchiPlugin : public chemkit::Plugin
 {
-    Q_OBJECT
-
     public:
         InchiPlugin();
         ~InchiPlugin();

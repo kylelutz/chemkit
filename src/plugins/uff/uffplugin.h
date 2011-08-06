@@ -36,16 +36,12 @@
 #ifndef UFFPLUGIN_H
 #define UFFPLUGIN_H
 
-#include <QtCore>
-
 #include <chemkit/plugin.h>
 #include <chemkit/atomtyper.h>
 #include <chemkit/forcefield.h>
 
 class UffPlugin : public chemkit::Plugin
 {
-    Q_OBJECT
-
     public:
         UffPlugin();
         ~UffPlugin();

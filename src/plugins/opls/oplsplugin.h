@@ -42,8 +42,6 @@
 
 class OplsPlugin : public chemkit::Plugin
 {
-    Q_OBJECT
-
     public:
         OplsPlugin();
         ~OplsPlugin();

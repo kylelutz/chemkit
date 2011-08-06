@@ -11,13 +11,7 @@ set(SOURCES
   inchiplugin.cpp
 )
 
-set(MOC_HEADERS
-  inchiplugin.h
-)
-
 aux_source_directory(../../3rdparty/inchi/ IUPAC_INCHI_SOURCES)
 
-qt4_wrap_cpp(MOC_SOURCES ${MOC_HEADERS})
-
-add_chemkit_plugin(inchi ${SOURCES} ${MOC_SOURCES} ${IUPAC_INCHI_SOURCES})
+add_chemkit_plugin(inchi ${SOURCES} ${IUPAC_INCHI_SOURCES})
 target_link_libraries(inchi chemkit ${QT_LIBRARIES})

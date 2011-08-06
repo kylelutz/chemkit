@@ -10,11 +10,5 @@ set(SOURCES
   txyzplugin.cpp
 )
 
-set(MOC_HEADERS
-  txyzplugin.h
-)
-
-qt4_wrap_cpp(MOC_SOURCES ${MOC_HEADERS})
-
-add_chemkit_plugin(txyz ${SOURCES} ${MOC_SOURCES})
+add_chemkit_plugin(txyz ${SOURCES})
 target_link_libraries(txyz chemkit ${QT_LIBRARIES})

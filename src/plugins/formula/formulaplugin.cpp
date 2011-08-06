@@ -53,4 +53,4 @@ chemkit::LineFormat* FormulaPlugin::createFormulaFormat()
     return new FormulaLineFormat;
 }
 
-Q_EXPORT_PLUGIN2(formula, FormulaPlugin);
+CHEMKIT_EXPORT_PLUGIN(formula, FormulaPlugin)

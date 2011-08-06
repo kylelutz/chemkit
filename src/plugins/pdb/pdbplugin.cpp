@@ -62,4 +62,4 @@ chemkit::MoleculeFileFormat* PdbPlugin::createPdbMoleculeFormat()
     return new chemkit::MoleculeFileFormatAdaptor<chemkit::PolymerFileFormat>(new PdbFileFormat);
 }
 
-Q_EXPORT_PLUGIN2(pdb, PdbPlugin);
+CHEMKIT_EXPORT_PLUGIN(pdb, PdbPlugin)

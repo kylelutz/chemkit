@@ -11,11 +11,5 @@ set(SOURCES
   sybylplugin.cpp
 )
 
-set(MOC_HEADERS
-  sybylplugin.h
-)
-
-qt4_wrap_cpp(MOC_SOURCES ${MOC_HEADERS})
-
-add_chemkit_plugin(sybyl ${SOURCES} ${MOC_SOURCES})
+add_chemkit_plugin(sybyl ${SOURCES})
 target_link_libraries(sybyl chemkit ${QT_LIBRARIES})

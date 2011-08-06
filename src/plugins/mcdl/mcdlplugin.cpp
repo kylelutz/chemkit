@@ -53,4 +53,4 @@ chemkit::LineFormat* McdlPlugin::createMcdlFormat()
     return new McdlLineFormat;
 }
 
-Q_EXPORT_PLUGIN2(mcdl, McdlPlugin);
+CHEMKIT_EXPORT_PLUGIN(mcdl, McdlPlugin)

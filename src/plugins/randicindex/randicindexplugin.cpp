@@ -53,4 +53,4 @@ chemkit::MolecularDescriptor* RandicIndexPlugin::createRandicIndexDescriptor()
     return new RandicIndexDescriptor;
 }
 
-Q_EXPORT_PLUGIN2(randicindex, RandicIndexPlugin);
+CHEMKIT_EXPORT_PLUGIN(randicindex, RandicIndexPlugin)

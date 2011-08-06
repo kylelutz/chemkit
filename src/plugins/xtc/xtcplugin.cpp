@@ -53,4 +53,4 @@ chemkit::TrajectoryFileFormat* XtcPlugin::createXtcFormat()
     return new XtcFileFormat;
 }
 
-Q_EXPORT_PLUGIN2(xtc, XtcPlugin);
+CHEMKIT_EXPORT_PLUGIN(xtc, XtcPlugin)

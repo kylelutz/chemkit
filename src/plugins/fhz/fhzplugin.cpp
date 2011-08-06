@@ -55,4 +55,4 @@ chemkit::MoleculeFileFormat* FhzPlugin::createFhzFormat()
     return new FhzFileFormat;
 }
 
-Q_EXPORT_PLUGIN2(fh, FhzPlugin)
+CHEMKIT_EXPORT_PLUGIN(fhz, FhzPlugin)

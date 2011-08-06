@@ -11,11 +11,5 @@ set(SOURCES
   mopinfileformat.cpp
 )
 
-set(MOC_HEADERS
-  mopacplugin.h
-)
-
-qt4_wrap_cpp(MOC_SOURCES ${MOC_HEADERS})
-
-add_chemkit_plugin(mopac ${SOURCES} ${MOC_SOURCES})
+add_chemkit_plugin(mopac ${SOURCES})
 target_link_libraries(mopac chemkit ${QT_LIBRARIES})

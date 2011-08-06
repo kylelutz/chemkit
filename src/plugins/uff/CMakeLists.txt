@@ -13,11 +13,5 @@ set(SOURCES
   uffplugin.cpp
 )
 
-set(MOC_HEADERS
-  uffplugin.h
-)
-
-qt4_wrap_cpp(MOC_SOURCES ${MOC_HEADERS})
-
-add_chemkit_plugin(uff ${SOURCES} ${MOC_SOURCES})
+add_chemkit_plugin(uff ${SOURCES})
 target_link_libraries(uff chemkit ${QT_LIBRARIES})

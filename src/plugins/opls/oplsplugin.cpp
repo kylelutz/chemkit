@@ -61,4 +61,4 @@ chemkit::ForceField* OplsPlugin::createOplsForceField()
     return new OplsForceField;
 }
 
-Q_EXPORT_PLUGIN2(opls, OplsPlugin);
+CHEMKIT_EXPORT_PLUGIN(opls, OplsPlugin)

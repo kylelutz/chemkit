@@ -36,15 +36,11 @@
 #ifndef PDBMLPLUGIN_H
 #define PDBMLPLUGIN_H
 
-#include <QtCore>
-
 #include <chemkit/plugin.h>
 #include <chemkit/polymerfileformat.h>
 
 class PdbmlPlugin : public chemkit::Plugin
 {
-    Q_OBJECT
-
     public:
         PdbmlPlugin();
         ~PdbmlPlugin();

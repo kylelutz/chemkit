@@ -47,8 +47,6 @@ class MmffParametersData;
 
 class MmffPlugin : public chemkit::Plugin
 {
-    Q_OBJECT
-
     public:
         MmffPlugin();
         ~MmffPlugin();

@@ -36,15 +36,11 @@
 #ifndef XTCPLUGIN_H
 #define XTCPLUGIN_H
 
-#include <QtCore>
-
 #include <chemkit/plugin.h>
 #include <chemkit/trajectoryfileformat.h>
 
 class XtcPlugin : public chemkit::Plugin
 {
-    Q_OBJECT
-
     public:
         XtcPlugin();
         ~XtcPlugin();

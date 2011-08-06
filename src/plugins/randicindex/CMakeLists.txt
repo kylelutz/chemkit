@@ -10,11 +10,5 @@ set(SOURCES
   randicindexplugin.cpp
 )
 
-set(MOC_HEADERS
-  randicindexplugin.h
-)
-
-qt4_wrap_cpp(MOC_SOURCES ${MOC_HEADERS})
-
-add_chemkit_plugin(randicindex ${SOURCES} ${MOC_SOURCES})
+add_chemkit_plugin(randicindex ${SOURCES})
 target_link_libraries(randicindex chemkit ${QT_LIBRARIES})

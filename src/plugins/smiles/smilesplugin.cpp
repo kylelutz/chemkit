@@ -62,4 +62,4 @@ chemkit::MoleculeFileFormat* SmilesPlugin::createSmiFormat()
     return new chemkit::MoleculeFileFormatAdaptor<chemkit::LineFormat>(new SmilesLineFormat);
 }
 
-Q_EXPORT_PLUGIN2(smiles, SmilesPlugin);
+CHEMKIT_EXPORT_PLUGIN(smiles, SmilesPlugin)

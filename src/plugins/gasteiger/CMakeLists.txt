@@ -10,11 +10,5 @@ set(SOURCES
   gasteigerplugin.cpp
 )
 
-set(MOC_HEADERS
-  gasteigerplugin.h
-)
-
-qt4_wrap_cpp(MOC_SOURCES ${MOC_HEADERS})
-
-add_chemkit_plugin(gasteiger ${SOURCES} ${MOC_SOURCES})
+add_chemkit_plugin(gasteiger ${SOURCES})
 target_link_libraries(gasteiger chemkit ${QT_LIBRARIES})

@@ -10,11 +10,5 @@ set(SOURCES
   formulaplugin.cpp
 )
 
-set(MOC_HEADERS
-  formulaplugin.h
-)
-
-qt4_wrap_cpp(MOC_SOURCES ${MOC_HEADERS})
-
-add_chemkit_plugin(formula ${SOURCES} ${MOC_SOURCES})
+add_chemkit_plugin(formula ${SOURCES})
 target_link_libraries(formula chemkit ${QT_LIBRARIES})

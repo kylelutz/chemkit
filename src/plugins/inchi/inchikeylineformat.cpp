@@ -35,6 +35,8 @@
 
 #include "inchikeylineformat.h"
 
+#include <QtCore>
+
 #include "../../3rdparty/inchi/inchi_api.h"
 
 InchiKeyLineFormat::InchiKeyLineFormat()

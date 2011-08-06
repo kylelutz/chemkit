@@ -36,8 +36,6 @@
 #ifndef INCHIKEYLINEFORMAT_H
 #define INCHIKEYLINEFORMAT_H
 
-#include <QtCore>
-
 #include <chemkit/molecule.h>
 #include <chemkit/lineformat.h>
 

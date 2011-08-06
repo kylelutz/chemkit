@@ -36,15 +36,11 @@
 #ifndef MCDLPLUGIN_H
 #define MCDLPLUGIN_H
 
-#include <QtCore>
-
 #include <chemkit/plugin.h>
 #include <chemkit/lineformat.h>
 
 class McdlPlugin : public chemkit::Plugin
 {
-    Q_OBJECT
-
     public:
         McdlPlugin();
         ~McdlPlugin();

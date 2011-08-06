@@ -53,4 +53,4 @@ chemkit::PartialChargePredictor* GasteigerPlugin::createGasteigerPredictor()
     return new GasteigerPartialChargePredictor;
 }
 
-Q_EXPORT_PLUGIN2(gasteiger, GasteigerPlugin)
+CHEMKIT_EXPORT_PLUGIN(gasteiger, GasteigerPlugin)

@@ -36,15 +36,11 @@
 #ifndef FORMULAPLUGIN_H
 #define FORMULAPLUGIN_H
 
-#include <QtCore>
-
 #include <chemkit/plugin.h>
 #include <chemkit/lineformat.h>
 
 class FormulaPlugin : public chemkit::Plugin
 {
-    Q_OBJECT
-
     public:
         FormulaPlugin();
         ~FormulaPlugin();

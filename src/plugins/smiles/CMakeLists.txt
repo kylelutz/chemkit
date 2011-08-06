@@ -14,11 +14,5 @@ set(SOURCES
   smilesplugin.cpp
 )
 
-set(MOC_HEADERS
-  smilesplugin.h
-)
-
-qt4_wrap_cpp(MOC_SOURCES ${MOC_HEADERS})
-
-add_chemkit_plugin(smiles ${SOURCES} ${MOC_SOURCES})
+add_chemkit_plugin(smiles ${SOURCES})
 target_link_libraries(smiles chemkit ${QT_LIBRARIES})

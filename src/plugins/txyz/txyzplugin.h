@@ -36,15 +36,11 @@
 #ifndef TXYZPLUGIN_H
 #define TXYZPLUGIN_H
 
-#include <QtCore>
-
 #include <chemkit/plugin.h>
 #include <chemkit/moleculefileformat.h>
 
 class TxyzPlugin : public chemkit::Plugin
 {
-    Q_OBJECT
-
     public:
         TxyzPlugin();
         ~TxyzPlugin();

@@ -70,4 +70,4 @@ chemkit::MoleculeFileFormat* InchiPlugin::createInchiFileFormat()
     return new chemkit::MoleculeFileFormatAdaptor<chemkit::LineFormat>(new InchiLineFormat);
 }
 
-Q_EXPORT_PLUGIN2(inchi, InchiPlugin);
+CHEMKIT_EXPORT_PLUGIN(inchi, InchiPlugin)

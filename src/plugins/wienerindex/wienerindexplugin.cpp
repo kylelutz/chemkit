@@ -53,4 +53,4 @@ chemkit::MolecularDescriptor* WienerIndexPlugin::createWienerIndexDescriptor()
     return new WienerIndexDescriptor;
 }
 
-Q_EXPORT_PLUGIN2(wienerindex, WienerIndexPlugin);
+CHEMKIT_EXPORT_PLUGIN(wienerindex, WienerIndexPlugin)

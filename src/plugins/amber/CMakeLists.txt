@@ -12,11 +12,5 @@ set(SOURCES
   amberplugin.cpp
 )
 
-set(MOC_HEADERS
-  amberplugin.h
-)
-
-qt4_wrap_cpp(MOC_SOURCES ${MOC_HEADERS})
-
-add_chemkit_plugin(amber ${SOURCES} ${MOC_SOURCES})
+add_chemkit_plugin(amber ${SOURCES})
 target_link_libraries(amber chemkit ${QT_LIBRARIES})

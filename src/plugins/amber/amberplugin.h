@@ -36,15 +36,11 @@
 #ifndef AMBERPLUGIN_H
 #define AMBERPLUGIN_H
 
-#include <QtCore>
-
 #include <chemkit/plugin.h>
 #include <chemkit/forcefield.h>
 
 class AmberPlugin : public chemkit::Plugin
 {
-    Q_OBJECT
-
     public:
         AmberPlugin();
         ~AmberPlugin();

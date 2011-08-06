@@ -10,11 +10,5 @@ set(SOURCES
   fhzplugin.cpp
 )
 
-set(MOC_HEADERS
-  fhzplugin.h
-)
-
-qt4_wrap_cpp(MOC_SOURCES ${MOC_HEADERS})
-
-add_chemkit_plugin(fhz ${SOURCES} ${MOC_SOURCES})
+add_chemkit_plugin(fhz ${SOURCES})
 target_link_libraries(fhz chemkit ${QT_LIBRARIES})

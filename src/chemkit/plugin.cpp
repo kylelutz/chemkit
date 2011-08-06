@@ -37,6 +37,8 @@
 
 #include <boost/filesystem.hpp>
 
+#include "dynamiclibrary.h"
+
 namespace chemkit {
 
 // === PluginPrivate ======================================================= //
@@ -44,7 +46,7 @@ class PluginPrivate
 {
     public:
         std::string name;
-        std::string fileName;
+        DynamicLibrary *library;
 };
 
 // === Plugin ============================================================== //
@@ -57,10 +59,10 @@ class PluginPrivate
 
 // --- Construction and Destruction ---------------------------------------- //
 Plugin::Plugin(const std::string &name)
-    : QObject(),
-      d(new PluginPrivate)
+    : d(new PluginPrivate)
 {
     d->name = name;
+    d->library = 0;
 }
 
 Plugin::~Plugin()
@@ -75,17 +77,35 @@ std::string Plugin::name() const
     return d->name;
 }
 
+std::string Plugin::fileName() const
+{
+    if(!d->library){
+        return std::string();
+    }
+
+    return d->library->fileName();
+}
+
 std::string Plugin::dataPath() const
 {
-    boost::filesystem::path path(d->fileName);
+    if(!d->library){
+        return std::string();
+    }
+
+    boost::filesystem::path path(d->library->fileName());
 
     return (path.parent_path() / "data" / d->name / "/").string();
 }
 
 // --- Internal Methods ---------------------------------------------------- //
-void Plugin::setFileName(const std::string &fileName)
+void Plugin::setLibrary(DynamicLibrary *library)
 {
-    d->fileName = fileName;
+    d->library = library;
+}
+
+DynamicLibrary* Plugin::library() const
+{
+    return d->library;
 }
 
 } // end chemkit namespace

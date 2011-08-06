@@ -11,11 +11,5 @@ set(SOURCES
   mcdlreader.cpp
 )
 
-set(MOC_HEADERS
-  mcdlplugin.h
-)
-
-qt4_wrap_cpp(MOC_SOURCES ${MOC_HEADERS})
-
-add_chemkit_plugin(mcdl ${SOURCES} ${MOC_SOURCES})
+add_chemkit_plugin(mcdl ${SOURCES})
 target_link_libraries(mcdl chemkit ${QT_LIBRARIES})

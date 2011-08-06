@@ -10,11 +10,5 @@ set(SOURCES
   wienerindexplugin.cpp
 )
 
-set(MOC_HEADERS
-  wienerindexplugin.h
-)
-
-qt4_wrap_cpp(MOC_SOURCES ${MOC_HEADERS})
-
-add_chemkit_plugin(wienerindex ${SOURCES} ${MOC_SOURCES})
+add_chemkit_plugin(wienerindex ${SOURCES})
 target_link_libraries(wienerindex chemkit ${QT_LIBRARIES})

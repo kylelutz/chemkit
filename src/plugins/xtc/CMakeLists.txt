@@ -7,13 +7,7 @@ set(SOURCES
   xtcplugin.cpp
 )
 
-set(MOC_HEADERS
-  xtcplugin.h
-)
-
 aux_source_directory(../../3rdparty/xdrf/ XDRF_SOURCES)
 
-qt4_wrap_cpp(MOC_SOURCES ${MOC_HEADERS})
-
-add_chemkit_plugin(xtc ${SOURCES} ${MOC_SOURCES} ${XDRF_SOURCES})
+add_chemkit_plugin(xtc ${SOURCES} ${XDRF_SOURCES})
 target_link_libraries(xtc chemkit ${QT_LIBRARIES})

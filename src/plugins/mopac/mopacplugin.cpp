@@ -61,4 +61,4 @@ chemkit::MoleculeFileFormat* MopacPlugin::createMopcrtFormat()
     return new MopcrtFileFormat;
 }
 
-Q_EXPORT_PLUGIN2(mopac, MopacPlugin);
+CHEMKIT_EXPORT_PLUGIN(mopac, MopacPlugin)

@@ -37,13 +37,13 @@
 
 #include <map>
 #include <cstdlib>
+#include <iostream>
 #include <boost/filesystem.hpp>
 #include <boost/algorithm/string/case_conv.hpp>
 
-#include <QtCore>
-
 #include "plugin.h"
 #include "foreach.h"
+#include "dynamiclibrary.h"
 
 namespace chemkit {
 
@@ -112,17 +112,36 @@ int PluginManager::pluginCount() const
 /// occurs.
 bool PluginManager::loadPlugin(const std::string &fileName)
 {
-    QPluginLoader plugin(QString::fromStdString(fileName));
+    DynamicLibrary *library = new DynamicLibrary;
+    library->setFileName(fileName);
+    bool ok = library->open();
+    if(!ok){
+        std::cerr << "PluginManager: Error: Failed to load plugin: (" << fileName << "):"
+                  << library->errorString() << std::endl;
 
-    Plugin *instance = qobject_cast<Plugin *>(plugin.instance());
-    if(!instance){
-        qDebug() << "Failed to load plugin (" << fileName.c_str() << "): " << plugin.errorString();
         return false;
     }
 
-    instance->setFileName(fileName);
+    typedef Plugin* (*InitFunction)();
+    InitFunction initFunction = reinterpret_cast<InitFunction>(library->resolve("chemkit_plugin_init"));
+    if(!initFunction){
+        std::cerr << "PluginManager: Error: Failed to load plugin: (" << fileName << "):"
+                  << "Plugin contains no init() function." << std::endl;
 
-    d->plugins.push_back(instance);
+        return false;
+    }
+
+    Plugin *plugin = initFunction();
+    if(!plugin){
+        std::cerr << "PluginManager: Error: Failed to load plugin: (" << fileName << "):"
+                  << "Calling the plugin's init() function failed." << std::endl;
+
+        return false;
+    }
+
+    plugin->setLibrary(library);
+
+    d->plugins.push_back(plugin);
 
     return true;
 }
@@ -137,7 +156,9 @@ void PluginManager::loadPlugins(const std::string &directory)
     }
 
     for(boost::filesystem::directory_iterator iter(dir); iter != boost::filesystem::directory_iterator(); ++iter){
-        if(QLibrary::isLibrary(iter->path().filename().c_str())){
+        std::string fileName = boost::filesystem::path(iter->path().filename()).string();
+
+        if(DynamicLibrary::isLibrary(fileName)){
             loadPlugin(iter->path().string());
         }
     }
@@ -158,8 +179,8 @@ void PluginManager::loadDefaultPlugins()
 #endif
 
     // add directory from the CHEMKIT_PLUGIN_PATH environment variable
-    std::string path = getenv("CHEMKIT_PLUGIN_PATH");
-    if(!path.empty()){
+    const char *path = getenv("CHEMKIT_PLUGIN_PATH");
+    if(path){
         directories.push_back(path);
     }
 
@@ -174,15 +195,21 @@ void PluginManager::loadDefaultPlugins()
 /// Unloads the plugin.
 bool PluginManager::unloadPlugin(Plugin *plugin)
 {
-    return false;
+    if(!plugin){
+        return false;
+    }
+
+    d->plugins.erase(std::remove(d->plugins.begin(), d->plugins.end(), plugin));
+    delete plugin->library();
+    delete plugin;
+
+    return true;
 }
 
 /// Unloads the plugin with \p name.
 bool PluginManager::unloadPlugin(const std::string &name)
 {
-    CHEMKIT_UNUSED(name);
-
-    return false;
+    return unloadPlugin(plugin((name)));
 }
 
 // --- Error Handling ------------------------------------------------------ //

@@ -53,4 +53,4 @@ chemkit::MoleculeFileFormat* CubePlugin::createCubeFormat()
     return new CubeFileFormat;
 }
 
-Q_EXPORT_PLUGIN2(cube, CubePlugin);
+CHEMKIT_EXPORT_PLUGIN(cube, CubePlugin)
