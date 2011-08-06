@@ -10,10 +10,6 @@ endif()
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config.h.in ${CMAKE_CURRENT_SOURCE_DIR}/config.h)
 
-find_package(Qt4 4.6 COMPONENTS QtCore REQUIRED)
-set(QT_DONT_USE_QTGUI TRUE)
-include(${QT_USE_FILE})
-
 find_package(Boost COMPONENTS system filesystem REQUIRED)
 include_directories(${Boost_INCLUDE_DIRS})
 
@@ -141,11 +137,10 @@ set(SOURCES
 
 add_definitions(
   -DCHEMKIT_LIBRARY
-  -DQT_NO_KEYWORDS
 )
 
-add_chemkit_library(chemkit ${SOURCES} ${MOC_SOURCES})
-target_link_libraries(chemkit ${Boost_LIBRARIES} ${QT_LIBRARIES})
+add_chemkit_library(chemkit ${SOURCES})
+target_link_libraries(chemkit ${Boost_LIBRARIES})
 
 # install header files
 install(FILES ${HEADERS} DESTINATION include/chemkit/)
