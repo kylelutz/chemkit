@@ -32,6 +32,7 @@ set(HEADERS
   constants.h
   coordinates.h
   delaunaytriangulation.h
+  dynamiclibrary.h
   element.h
   element-inline.h
   forcefield.h
@@ -98,6 +99,7 @@ set(SOURCES
   conformer.cpp
   coordinates.cpp
   delaunaytriangulation.cpp
+  dynamiclibrary.cpp
   element.cpp
   forcefield.cpp
   forcefieldatom.cpp
