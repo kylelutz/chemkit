@@ -221,7 +221,7 @@ bool SmilesLineFormat::read(const char *formula, chemkit::Molecule *molecule)
     else                 goto parse_error;
 
 bracket_atom:
-    Q_ASSERT(*p == '[');
+    assert(*p == '[');
     p++; // move past opening bracket
 
     // mass number
@@ -380,7 +380,7 @@ organic_atom:
     else                 goto parse_error;
 
 aromatic_atom:
-    Q_ASSERT(islower(*p));
+    assert(islower(*p));
 
     atom = molecule->addAtom(readAromaticSymbol(&p));
     if(!atom){
@@ -481,7 +481,7 @@ ring:
     else                 goto parse_error;
 
 start_branch:
-    Q_ASSERT(*p == '(');
+    assert(*p == '(');
     p++; // move past opening parenthesis
 
     // save current state
@@ -498,7 +498,7 @@ start_branch:
     else                 goto parse_error;
 
 end_branch:
-    Q_ASSERT(*p == ')');
+    assert(*p == ')');
 
     if(branchRoots.isEmpty())
         goto parse_error;

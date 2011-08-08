@@ -628,7 +628,7 @@ void MmffAtomTyper::setType(int index, const chemkit::Atom *atom)
 
 void MmffAtomTyper::setHydrogenType(int index, const chemkit::Atom *atom)
 {
-    Q_ASSERT(atom->isTerminalHydrogen());
+    assert(atom->isTerminalHydrogen());
 
     const chemkit::Atom *neighbor = atom->neighbor(0);
     int neighborType = typeNumber(neighbor);
