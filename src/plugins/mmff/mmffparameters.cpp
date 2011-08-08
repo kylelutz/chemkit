@@ -629,8 +629,8 @@ const MmffBondStrechParameters* MmffParameters::bondStrechParameters(int bondTyp
 
 const MmffBondStrechParameters* MmffParameters::empiricalBondStrechParameters(int atomicNumberA, int atomicNumberB) const
 {
-    Q_UNUSED(atomicNumberA);
-    Q_UNUSED(atomicNumberB);
+    CHEMKIT_UNUSED(atomicNumberA);
+    CHEMKIT_UNUSED(atomicNumberB);
 
     return 0;
 }

@@ -70,8 +70,8 @@ CmlHandler::~CmlHandler()
 
 bool CmlHandler::startElement(const QString &namespaceURI, const QString &localName, const QString &qName, const QXmlAttributes &atts)
 {
-    Q_UNUSED(namespaceURI);
-    Q_UNUSED(localName);
+    CHEMKIT_UNUSED(namespaceURI);
+    CHEMKIT_UNUSED(localName);
 
     if(qName == "molecule"){
         m_molecule = new chemkit::Molecule();
@@ -146,8 +146,8 @@ bool CmlHandler::startElement(const QString &namespaceURI, const QString &localN
 
 bool CmlHandler::endElement(const QString &namespaceURI, const QString &localName, const QString &qName)
 {
-    Q_UNUSED(namespaceURI);
-    Q_UNUSED(localName);
+    CHEMKIT_UNUSED(namespaceURI);
+    CHEMKIT_UNUSED(localName);
 
     if(qName == "molecule"){
         m_file->addMolecule(m_molecule);

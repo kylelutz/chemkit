@@ -95,7 +95,7 @@ bool PdbmlFileFormat::read(std::istream &input, chemkit::PolymerFile *file)
 
             while(!atomElement.isNull()){
                 QString id = atomElement.attribute("id");
-                Q_UNUSED(id);
+                CHEMKIT_UNUSED(id);
 
                 // read atom data
                 QString symbol;

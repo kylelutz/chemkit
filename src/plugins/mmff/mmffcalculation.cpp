@@ -544,7 +544,7 @@ MmffElectrostaticCalculation::MmffElectrostaticCalculation(const MmffAtom *a,
 
 bool MmffElectrostaticCalculation::setup(const MmffParameters *parameters)
 {
-    Q_UNUSED(parameters);
+    CHEMKIT_UNUSED(parameters);
 
     const MmffAtom *a = atom(0);
     const MmffAtom *b = atom(1);

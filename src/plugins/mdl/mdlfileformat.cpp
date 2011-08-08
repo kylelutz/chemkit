@@ -246,7 +246,7 @@ bool MdlFileFormat::readBondBlock(QIODevice *iodev, chemkit::Molecule *molecule,
 
 bool MdlFileFormat::readPropertyBlock(QIODevice *iodev, chemkit::Molecule *molecule)
 {
-    Q_UNUSED(molecule);
+    CHEMKIT_UNUSED(molecule);
 
     while(!iodev->atEnd()){
         QString line = iodev->readLine();

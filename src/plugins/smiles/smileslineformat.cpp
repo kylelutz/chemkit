@@ -150,7 +150,7 @@ int readNumber(const char **p)
 
 int readCharge(const char **p)
 {
-    Q_UNUSED(p);
+    CHEMKIT_UNUSED(p);
 
     return 0;
 }

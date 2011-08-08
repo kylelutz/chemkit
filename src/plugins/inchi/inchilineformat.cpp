@@ -69,7 +69,7 @@ bool InchiLineFormat::read(const std::string &formula, chemkit::Molecule *molecu
     // get inchi output
     inchi_OutputStruct output;
     int ret = GetStructFromStdINCHI(&input, &output);
-    Q_UNUSED(ret);
+    CHEMKIT_UNUSED(ret);
 
     // build molecule from inchi output
     QVector<chemkit::Atom *> atoms(output.num_atoms);
