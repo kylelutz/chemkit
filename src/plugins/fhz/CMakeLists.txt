@@ -11,4 +11,4 @@ set(SOURCES
 )
 
 add_chemkit_plugin(fhz ${SOURCES})
-target_link_libraries(fhz chemkit ${QT_LIBRARIES})
+target_link_libraries(fhz chemkit chemkit-io ${QT_LIBRARIES})

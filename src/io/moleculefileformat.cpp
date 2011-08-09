@@ -33,95 +33,123 @@
 **
 ******************************************************************************/
 
-#include "trajectoryfileformat.h"
+#include "moleculefileformat.h"
+
+#include <map>
 
 #include <boost/format.hpp>
+#include <boost/algorithm/string.hpp>
 
-#include "pluginmanager.h"
+#include <chemkit/pluginmanager.h>
 
 namespace chemkit {
 
-// === TrajectoryFileFormatPrivate ========================================= //
-class TrajectoryFileFormatPrivate
+// === MoleculeFileFormatPrivate =========================================== //
+class MoleculeFileFormatPrivate
 {
     public:
         std::string name;
         std::string errorString;
+        std::map<std::string, Variant> options;
 };
 
-// === TrajectoryFormatFile ================================================ //
-/// \class TrajectoryFileFormat trajectoryfileformat.h chemkit/trajectoryfileformat.h
-/// \ingroup chemkit
-/// \brief The TrajectoryFileFormat class represents a trajectory
-///        file format.
+// === MoleculeFileFormat ================================================== //
+/// \class MoleculeFileFormat moleculefileformat.h chemkit/moleculefileformat.h
+/// \ingroup chemkit-io
+/// \brief The MoleculeFileFormat class represents a molecule file
+///        format.
+///
+/// The MoleculeFileFormat class allows read and write access to a
+/// molecule file's data. This class only deals with interpreting a
+/// file format. To access the molecules contained in a file use the
+/// MoleculeFile class.
+///
+/// \see MoleculeFile, PolymerFileFormat
 
 // --- Construction and Destruction ---------------------------------------- //
-TrajectoryFileFormat::TrajectoryFileFormat(const std::string &name)
-    : d(new TrajectoryFileFormatPrivate)
+/// Construct a molecule file format.
+MoleculeFileFormat::MoleculeFileFormat(const std::string &name)
+    : d(new MoleculeFileFormatPrivate)
 {
-    d->name = name;
+    d->name = boost::algorithm::to_lower_copy(name);
 }
 
-/// Destroys the trajectory file format object.
-TrajectoryFileFormat::~TrajectoryFileFormat()
+/// Destroys a molecule file format.
+MoleculeFileFormat::~MoleculeFileFormat()
 {
     delete d;
 }
 
 // --- Properties ---------------------------------------------------------- //
-/// Returns the name of the trajectory file format.
-std::string TrajectoryFileFormat::name() const
+/// Returns the name of the format.
+std::string MoleculeFileFormat::name() const
 {
     return d->name;
 }
 
+// --- Options ------------------------------------------------------------- //
+/// Sets an option for the format.
+void MoleculeFileFormat::setOption(const std::string &name, const Variant &value)
+{
+    d->options[name] = value;
+}
+
+/// Returns the option for the format.
+Variant MoleculeFileFormat::option(const std::string &name) const
+{
+    std::map<std::string, Variant>::iterator element = d->options.find(name);
+    if(element != d->options.end()){
+        return element->second;
+    }
+
+    return Variant();
+}
+
 // --- Input and Output ---------------------------------------------------- //
 /// Read the data from \p input into \p file.
-bool TrajectoryFileFormat::read(std::istream &input, TrajectoryFile *file)
+bool MoleculeFileFormat::read(std::istream &input, MoleculeFile *file)
 {
     CHEMKIT_UNUSED(input);
     CHEMKIT_UNUSED(file);
 
-    setErrorString((boost::format("'%1' reading not supported.") % name()).str());
+    setErrorString((boost::format("'%s' reading not supported.") % name()).str());
     return false;
 }
 
 /// Write the contents of \p file to \p output.
-bool TrajectoryFileFormat::write(const TrajectoryFile *file, std::ostream &output)
+bool MoleculeFileFormat::write(const MoleculeFile *file, std::ostream &output)
 {
     CHEMKIT_UNUSED(file);
     CHEMKIT_UNUSED(output);
 
-    setErrorString((boost::format("'%1' writing not supported.") % name()).str());
+    setErrorString((boost::format("'%s' writing not supported.") % name()).str());
     return false;
 }
 
 // --- Error Handling ------------------------------------------------------ //
-/// Sets a string describing the last error that occurred.
-void TrajectoryFileFormat::setErrorString(const std::string &errorString)
+/// Sets a string describing the last error that occured.
+void MoleculeFileFormat::setErrorString(const std::string &error)
 {
-    d->errorString = errorString;
+    d->errorString = error;
 }
 
-/// Returns a string describing the last error that occurred.
-std::string TrajectoryFileFormat::errorString() const
+/// Returns a string describing the last error that occured.
+std::string MoleculeFileFormat::errorString() const
 {
     return d->errorString;
 }
 
 // --- Static Methods ------------------------------------------------------ //
-/// Creates a new trajectory file format from \p name. Returns \c 0
-/// if \p name is invalid or not supported.
-TrajectoryFileFormat* TrajectoryFileFormat::create(const std::string &name)
+/// Creates a new molecule file format.
+MoleculeFileFormat* MoleculeFileFormat::create(const std::string &name)
 {
-    return PluginManager::instance()->createPluginClass<TrajectoryFileFormat>(name);
+    return PluginManager::instance()->createPluginClass<MoleculeFileFormat>(name);
 }
 
-/// Returns a list of the names of all supported trajectory file
-/// formats.
-std::vector<std::string> TrajectoryFileFormat::formats()
+/// Returns a list of all supported file formats.
+std::vector<std::string> MoleculeFileFormat::formats()
 {
-    return PluginManager::instance()->pluginClassNames<TrajectoryFileFormat>();
+    return PluginManager::instance()->pluginClassNames<MoleculeFileFormat>();
 }
 
 } // end chemkit namespace

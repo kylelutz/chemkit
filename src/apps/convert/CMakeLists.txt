@@ -8,4 +8,4 @@ include_directories(${Boost_INCLUDE_DIRS})
 include_directories(../../../include)
 
 add_chemkit_executable(convert convert.cpp)
-target_link_libraries(convert chemkit ${QT_LIBRARIES})
+target_link_libraries(convert chemkit chemkit-io ${QT_LIBRARIES})

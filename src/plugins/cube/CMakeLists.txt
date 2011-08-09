@@ -7,4 +7,4 @@ set(SOURCES
 )
 
 add_chemkit_plugin(cube ${SOURCES})
-target_link_libraries(cube chemkit)
+target_link_libraries(cube chemkit chemkit-io)

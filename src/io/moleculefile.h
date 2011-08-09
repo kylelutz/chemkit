@@ -33,58 +33,52 @@
 **
 ******************************************************************************/
 
-#ifndef CHEMKIT_MOLECULEFILEFORMAT_H
-#define CHEMKIT_MOLECULEFILEFORMAT_H
+#ifndef CHEMKIT_MOLECULEFILE_H
+#define CHEMKIT_MOLECULEFILE_H
 
-#include "chemkit.h"
+#include "io.h"
 
 #include <string>
 #include <vector>
-#include <istream>
-#include <ostream>
 
-#include "variant.h"
+#include "genericfile.h"
+#include "moleculefileformat.h"
 
 namespace chemkit {
 
-class MoleculeFile;
-class MoleculeFileFormatPrivate;
+class Molecule;
+class MoleculeFilePrivate;
 
-class CHEMKIT_EXPORT MoleculeFileFormat
+class CHEMKIT_IO_EXPORT MoleculeFile : public GenericFile<MoleculeFile, MoleculeFileFormat>
 {
     public:
-        // typedefs
-        typedef MoleculeFileFormat* (*CreateFunction)();
-
         // construction and destruction
-        virtual ~MoleculeFileFormat();
+        MoleculeFile();
+        MoleculeFile(const std::string &fileName);
+        ~MoleculeFile();
 
         // properties
-        std::string name() const;
+        int size() const;
+        bool isEmpty() const;
 
-        // options
-        void setOption(const std::string &name, const Variant &value);
-        Variant option(const std::string &name) const;
-
-        // input and output
-        virtual bool read(std::istream &input, MoleculeFile *file);
-        virtual bool write(const MoleculeFile *file, std::ostream &output);
-
-        // error handling
-        std::string errorString() const;
+        // file contents
+        void addMolecule(Molecule *molecule);
+        bool removeMolecule(Molecule *molecule);
+        bool deleteMolecule(Molecule *molecule);
+        std::vector<Molecule *> molecules() const;
+        int moleculeCount() const;
+        Molecule* molecule(int index = 0) const;
+        bool contains(const Molecule *molecule) const;
+        void clear();
 
         // static methods
-        static MoleculeFileFormat* create(const std::string &format);
-        static std::vector<std::string> formats();
-
-    protected:
-        MoleculeFileFormat(const std::string &name);
-        void setErrorString(const std::string &error);
+        static Molecule* quickRead(const std::string &fileName);
+        static void quickWrite(const Molecule *molecule, const std::string &fileName);
 
     private:
-        MoleculeFileFormatPrivate* const d;
+        MoleculeFilePrivate* const d;
 };
 
 } // end chemkit namespace
 
-#endif // CHEMKIT_MOLECULEFILEFORMAT_H
+#endif // CHEMKIT_MOLECULEFILE_H

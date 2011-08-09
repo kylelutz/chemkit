@@ -33,52 +33,51 @@
 **
 ******************************************************************************/
 
-#include "polymerfileformat.h"
+#include "trajectoryfileformat.h"
 
 #include <boost/format.hpp>
 
-#include "pluginmanager.h"
+#include <chemkit/pluginmanager.h>
 
 namespace chemkit {
 
-// === PolymerFileFormatPrivate ============================================ //
-class PolymerFileFormatPrivate
+// === TrajectoryFileFormatPrivate ========================================= //
+class TrajectoryFileFormatPrivate
 {
     public:
         std::string name;
         std::string errorString;
 };
 
-// === PolymerFileFormat =================================================== //
-/// \class PolymerFileFormat polymerfileformat.h chemkit/polymerfileformat.h
-/// \ingroup chemkit
-/// \brief The PolymerFileFormat class represents a polymer file
-///        format.
+// === TrajectoryFormatFile ================================================ //
+/// \class TrajectoryFileFormat trajectoryfileformat.h chemkit/trajectoryfileformat.h
+/// \ingroup chemkit-io
+/// \brief The TrajectoryFileFormat class represents a trajectory
+///        file format.
 
 // --- Construction and Destruction ---------------------------------------- //
-/// Creates a new polymer file format with \p name.
-PolymerFileFormat::PolymerFileFormat(const std::string &name)
-    : d(new PolymerFileFormatPrivate)
+TrajectoryFileFormat::TrajectoryFileFormat(const std::string &name)
+    : d(new TrajectoryFileFormatPrivate)
 {
     d->name = name;
 }
 
-/// Destroys the polymer file format object.
-PolymerFileFormat::~PolymerFileFormat()
+/// Destroys the trajectory file format object.
+TrajectoryFileFormat::~TrajectoryFileFormat()
 {
     delete d;
 }
 
 // --- Properties ---------------------------------------------------------- //
-/// Returns the name of the file format.
-std::string PolymerFileFormat::name() const
+/// Returns the name of the trajectory file format.
+std::string TrajectoryFileFormat::name() const
 {
     return d->name;
 }
 
 // --- Input and Output ---------------------------------------------------- //
 /// Read the data from \p input into \p file.
-bool PolymerFileFormat::read(std::istream &input, PolymerFile *file)
+bool TrajectoryFileFormat::read(std::istream &input, TrajectoryFile *file)
 {
     CHEMKIT_UNUSED(input);
     CHEMKIT_UNUSED(file);
@@ -88,7 +87,7 @@ bool PolymerFileFormat::read(std::istream &input, PolymerFile *file)
 }
 
 /// Write the contents of \p file to \p output.
-bool PolymerFileFormat::write(const PolymerFile *file, std::ostream &output)
+bool TrajectoryFileFormat::write(const TrajectoryFile *file, std::ostream &output)
 {
     CHEMKIT_UNUSED(file);
     CHEMKIT_UNUSED(output);
@@ -98,29 +97,31 @@ bool PolymerFileFormat::write(const PolymerFile *file, std::ostream &output)
 }
 
 // --- Error Handling ------------------------------------------------------ //
-void PolymerFileFormat::setErrorString(const std::string &errorString)
+/// Sets a string describing the last error that occurred.
+void TrajectoryFileFormat::setErrorString(const std::string &errorString)
 {
     d->errorString = errorString;
 }
 
-/// Returns a string describing the last error that occured.
-std::string PolymerFileFormat::errorString() const
+/// Returns a string describing the last error that occurred.
+std::string TrajectoryFileFormat::errorString() const
 {
     return d->errorString;
 }
 
 // --- Static Methods ------------------------------------------------------ //
-/// Creates a new polymer file format with \p name. Returns \c 0 if
-/// \p name is invalid.
-PolymerFileFormat* PolymerFileFormat::create(const std::string &name)
+/// Creates a new trajectory file format from \p name. Returns \c 0
+/// if \p name is invalid or not supported.
+TrajectoryFileFormat* TrajectoryFileFormat::create(const std::string &name)
 {
-    return PluginManager::instance()->createPluginClass<PolymerFileFormat>(name);
+    return PluginManager::instance()->createPluginClass<TrajectoryFileFormat>(name);
 }
 
-/// Returns a list of available polymer file formats.
-std::vector<std::string> PolymerFileFormat::formats()
+/// Returns a list of the names of all supported trajectory file
+/// formats.
+std::vector<std::string> TrajectoryFileFormat::formats()
 {
-    return PluginManager::instance()->pluginClassNames<PolymerFileFormat>();
+    return PluginManager::instance()->pluginClassNames<TrajectoryFileFormat>();
 }
 
 } // end chemkit namespace

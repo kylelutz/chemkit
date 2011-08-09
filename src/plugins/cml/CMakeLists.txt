@@ -12,4 +12,4 @@ set(SOURCES
 )
 
 add_chemkit_plugin(cml ${SOURCES})
-target_link_libraries(cml chemkit ${QT_LIBRARIES})
+target_link_libraries(cml chemkit chemkit-io ${QT_LIBRARIES})

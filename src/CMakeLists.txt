@@ -20,6 +20,7 @@ endmacro(add_chemkit_library)
 
 add_subdirectory(chemkit)
 add_subdirectory(graphics)
+add_subdirectory(io)
 add_subdirectory(web)
 add_subdirectory(widgets)
 add_subdirectory(plugins)

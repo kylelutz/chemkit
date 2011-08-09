@@ -11,4 +11,4 @@ include_directories(../../include)
 set(SOURCES uffenergyexample.cpp)
 
 add_executable(uff-energy ${SOURCES})
-target_link_libraries(uff-energy chemkit ${QT_LIBRARIES})
+target_link_libraries(uff-energy chemkit chemkit-io ${QT_LIBRARIES})

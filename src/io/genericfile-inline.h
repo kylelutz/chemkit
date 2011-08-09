@@ -46,7 +46,7 @@ namespace chemkit {
 
 // === GenericFile ========================================================= //
 /// \class GenericFile genericfile.h chemkit/genericfile.h
-/// \ingroup chemkit
+/// \ingroup chemkit-io
 /// \brief The GenericFile class represents a generic file.
 ///
 /// The GenericFile class provides a common interface for interacting

@@ -33,123 +33,94 @@
 **
 ******************************************************************************/
 
-#include "moleculefileformat.h"
-
-#include <map>
+#include "polymerfileformat.h"
 
 #include <boost/format.hpp>
-#include <boost/algorithm/string.hpp>
 
-#include "pluginmanager.h"
+#include <chemkit/pluginmanager.h>
 
 namespace chemkit {
 
-// === MoleculeFileFormatPrivate =========================================== //
-class MoleculeFileFormatPrivate
+// === PolymerFileFormatPrivate ============================================ //
+class PolymerFileFormatPrivate
 {
     public:
         std::string name;
         std::string errorString;
-        std::map<std::string, Variant> options;
 };
 
-// === MoleculeFileFormat ================================================== //
-/// \class MoleculeFileFormat moleculefileformat.h chemkit/moleculefileformat.h
-/// \ingroup chemkit
-/// \brief The MoleculeFileFormat class represents a molecule file
+// === PolymerFileFormat =================================================== //
+/// \class PolymerFileFormat polymerfileformat.h chemkit/polymerfileformat.h
+/// \ingroup chemkit-io
+/// \brief The PolymerFileFormat class represents a polymer file
 ///        format.
-///
-/// The MoleculeFileFormat class allows read and write access to a
-/// molecule file's data. This class only deals with interpreting a
-/// file format. To access the molecules contained in a file use the
-/// MoleculeFile class.
-///
-/// \see MoleculeFile, PolymerFileFormat
 
 // --- Construction and Destruction ---------------------------------------- //
-/// Construct a molecule file format.
-MoleculeFileFormat::MoleculeFileFormat(const std::string &name)
-    : d(new MoleculeFileFormatPrivate)
+/// Creates a new polymer file format with \p name.
+PolymerFileFormat::PolymerFileFormat(const std::string &name)
+    : d(new PolymerFileFormatPrivate)
 {
-    d->name = boost::algorithm::to_lower_copy(name);
+    d->name = name;
 }
 
-/// Destroys a molecule file format.
-MoleculeFileFormat::~MoleculeFileFormat()
+/// Destroys the polymer file format object.
+PolymerFileFormat::~PolymerFileFormat()
 {
     delete d;
 }
 
 // --- Properties ---------------------------------------------------------- //
-/// Returns the name of the format.
-std::string MoleculeFileFormat::name() const
+/// Returns the name of the file format.
+std::string PolymerFileFormat::name() const
 {
     return d->name;
 }
 
-// --- Options ------------------------------------------------------------- //
-/// Sets an option for the format.
-void MoleculeFileFormat::setOption(const std::string &name, const Variant &value)
-{
-    d->options[name] = value;
-}
-
-/// Returns the option for the format.
-Variant MoleculeFileFormat::option(const std::string &name) const
-{
-    std::map<std::string, Variant>::iterator element = d->options.find(name);
-    if(element != d->options.end()){
-        return element->second;
-    }
-
-    return Variant();
-}
-
 // --- Input and Output ---------------------------------------------------- //
 /// Read the data from \p input into \p file.
-bool MoleculeFileFormat::read(std::istream &input, MoleculeFile *file)
+bool PolymerFileFormat::read(std::istream &input, PolymerFile *file)
 {
     CHEMKIT_UNUSED(input);
     CHEMKIT_UNUSED(file);
 
-    setErrorString((boost::format("'%s' reading not supported.") % name()).str());
+    setErrorString((boost::format("'%1' reading not supported.") % name()).str());
     return false;
 }
 
 /// Write the contents of \p file to \p output.
-bool MoleculeFileFormat::write(const MoleculeFile *file, std::ostream &output)
+bool PolymerFileFormat::write(const PolymerFile *file, std::ostream &output)
 {
     CHEMKIT_UNUSED(file);
     CHEMKIT_UNUSED(output);
 
-    setErrorString((boost::format("'%s' writing not supported.") % name()).str());
+    setErrorString((boost::format("'%1' writing not supported.") % name()).str());
     return false;
 }
 
 // --- Error Handling ------------------------------------------------------ //
-/// Sets a string describing the last error that occured.
-void MoleculeFileFormat::setErrorString(const std::string &error)
+void PolymerFileFormat::setErrorString(const std::string &errorString)
 {
-    d->errorString = error;
+    d->errorString = errorString;
 }
 
 /// Returns a string describing the last error that occured.
-std::string MoleculeFileFormat::errorString() const
+std::string PolymerFileFormat::errorString() const
 {
     return d->errorString;
 }
 
 // --- Static Methods ------------------------------------------------------ //
-/// Creates a new molecule file format.
-MoleculeFileFormat* MoleculeFileFormat::create(const std::string &name)
+/// Creates a new polymer file format with \p name. Returns \c 0 if
+/// \p name is invalid.
+PolymerFileFormat* PolymerFileFormat::create(const std::string &name)
 {
-    return PluginManager::instance()->createPluginClass<MoleculeFileFormat>(name);
+    return PluginManager::instance()->createPluginClass<PolymerFileFormat>(name);
 }
 
-/// Returns a list of all supported file formats.
-std::vector<std::string> MoleculeFileFormat::formats()
+/// Returns a list of available polymer file formats.
+std::vector<std::string> PolymerFileFormat::formats()
 {
-    return PluginManager::instance()->pluginClassNames<MoleculeFileFormat>();
+    return PluginManager::instance()->pluginClassNames<PolymerFileFormat>();
 }
 
 } // end chemkit namespace

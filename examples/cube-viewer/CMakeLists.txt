@@ -16,4 +16,4 @@ qt4_wrap_ui(UI_SOURCES ${UI_FORMS})
 qt4_wrap_cpp(MOC_SOURCES ${MOC_HEADERS})
 
 add_executable(cube-viewer ${SOURCES} ${MOC_SOURCES} ${UI_SOURCES})
-target_link_libraries(cube-viewer chemkit chemkit-graphics ${QT_LIBRARIES})
+target_link_libraries(cube-viewer chemkit chemkit-io chemkit-graphics ${QT_LIBRARIES})

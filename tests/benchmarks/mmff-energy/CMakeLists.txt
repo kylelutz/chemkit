@@ -10,4 +10,4 @@ include_directories(../../../include)
 
 qt4_wrap_cpp(MOC_SOURCES mmffenergybenchmark.h)
 add_executable(mmffenergybenchmark mmffenergybenchmark.cpp ${MOC_SOURCES})
-target_link_libraries(mmffenergybenchmark chemkit ${QT_LIBRARIES})
+target_link_libraries(mmffenergybenchmark chemkit chemkit-io ${QT_LIBRARIES})

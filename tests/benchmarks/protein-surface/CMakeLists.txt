@@ -10,4 +10,4 @@ include_directories(../../../include)
 
 qt4_wrap_cpp(MOC_SOURCES proteinsurfacebenchmark.h)
 add_executable(proteinsurfacebenchmark proteinsurfacebenchmark.cpp ${MOC_SOURCES})
-target_link_libraries(proteinsurfacebenchmark chemkit ${QT_LIBRARIES})
+target_link_libraries(proteinsurfacebenchmark chemkit chemkit-io ${QT_LIBRARIES})

@@ -35,8 +35,8 @@
 
 #include "moleculefile.h"
 
-#include "foreach.h"
-#include "molecule.h"
+#include <chemkit/foreach.h>
+#include <chemkit/molecule.h>
 
 namespace chemkit {
 
@@ -50,7 +50,7 @@ class MoleculeFilePrivate
 
 // === MoleculeFile ======================================================== //
 /// \class MoleculeFile moleculefile.h chemkit/moleculefile.h
-/// \ingroup chemkit
+/// \ingroup chemkit-io
 /// \brief The MoleculeFile class represents a molecular data file
 ///        containing one or more molecules.
 ///

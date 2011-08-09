@@ -11,4 +11,4 @@ set(SOURCES
 )
 
 add_chemkit_plugin(txyz ${SOURCES})
-target_link_libraries(txyz chemkit ${QT_LIBRARIES})
+target_link_libraries(txyz chemkit chemkit-io ${QT_LIBRARIES})

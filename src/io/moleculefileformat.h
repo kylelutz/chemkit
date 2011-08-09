@@ -33,76 +33,58 @@
 **
 ******************************************************************************/
 
-#ifndef CHEMKIT_GENERICFILE_H
-#define CHEMKIT_GENERICFILE_H
+#ifndef CHEMKIT_MOLECULEFILEFORMAT_H
+#define CHEMKIT_MOLECULEFILEFORMAT_H
 
-#include "chemkit.h"
+#include "io.h"
 
-#include <map>
 #include <string>
 #include <vector>
 #include <istream>
 #include <ostream>
 
-#include "variant.h"
+#include <chemkit/variant.h>
 
 namespace chemkit {
 
-template<typename File, typename Format>
-class GenericFile
+class MoleculeFile;
+class MoleculeFileFormatPrivate;
+
+class CHEMKIT_IO_EXPORT MoleculeFileFormat
 {
     public:
+        // typedefs
+        typedef MoleculeFileFormat* (*CreateFunction)();
+
         // construction and destruction
-        GenericFile();
-        GenericFile(const std::string &fileName);
-        ~GenericFile();
+        virtual ~MoleculeFileFormat();
 
         // properties
-        void setFileName(const std::string &fileName);
-        std::string fileName() const;
-        void setFormat(Format *format);
-        bool setFormat(const std::string &formatName);
-        Format* format() const;
-        std::string formatName() const;
+        std::string name() const;
+
+        // options
+        void setOption(const std::string &name, const Variant &value);
+        Variant option(const std::string &name) const;
 
         // input and output
-        bool read();
-        bool read(const std::string &fileName);
-        bool read(const std::string &fileName, const std::string &formatName);
-        bool read(std::istream &input, const std::string &formatName);
-        bool read(std::istream &input);
-        bool write();
-        bool write(const std::string &fileName);
-        bool write(const std::string &fileName, const std::string &formatName);
-        bool write(std::ostream &output, const std::string &formatName);
-        bool write(std::ostream &output);
-        bool write(std::ostream &output, Format *format);
-
-        // file data
-        void setData(const std::string &name, const Variant &value);
-        Variant data(const std::string &name) const;
+        virtual bool read(std::istream &input, MoleculeFile *file);
+        virtual bool write(const MoleculeFile *file, std::ostream &output);
 
         // error handling
         std::string errorString() const;
 
         // static methods
+        static MoleculeFileFormat* create(const std::string &format);
         static std::vector<std::string> formats();
 
     protected:
-        void setErrorString(const std::string &errorString);
+        MoleculeFileFormat(const std::string &name);
+        void setErrorString(const std::string &error);
 
     private:
-        std::string suffix(const std::string &fileName);
-
-    private:
-        Format *m_format;
-        std::string m_fileName;
-        std::string m_errorString;
-        std::map<std::string, Variant> m_data;
+        MoleculeFileFormatPrivate* const d;
 };
 
 } // end chemkit namespace
 
-#include "genericfile-inline.h"
-
-#endif // CHEMKIT_GENERICFILE_H
+#endif // CHEMKIT_MOLECULEFILEFORMAT_H

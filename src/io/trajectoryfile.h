@@ -33,48 +33,42 @@
 **
 ******************************************************************************/
 
-#ifndef CHEMKIT_POLYMERFILE_H
-#define CHEMKIT_POLYMERFILE_H
+#ifndef CHEMKIT_TRAJECTORYFILE_H
+#define CHEMKIT_TRAJECTORYFILE_H
 
-#include "chemkit.h"
+#include "io.h"
 
 #include <string>
-#include <vector>
 
 #include "genericfile.h"
-#include "polymerfileformat.h"
+#include "trajectoryfileformat.h"
 
 namespace chemkit {
 
-class Polymer;
-class PolymerFilePrivate;
+class Trajectory;
+class TrajectoryFilePrivate;
 
-class CHEMKIT_EXPORT PolymerFile : public GenericFile<PolymerFile, PolymerFileFormat>
+class CHEMKIT_IO_EXPORT TrajectoryFile : public GenericFile<TrajectoryFile, TrajectoryFileFormat>
 {
     public:
         // construction and destruction
-        PolymerFile();
-        PolymerFile(const std::string &fileName);
-        ~PolymerFile();
+        TrajectoryFile();
+        TrajectoryFile(const std::string &fileName);
+        ~TrajectoryFile();
 
         // properties
-        int size() const;
         bool isEmpty() const;
 
         // file contents
-        void addPolymer(Polymer *polymer);
-        bool removePolymer(Polymer *polymer);
-        bool deletePolymer(Polymer *polymer);
-        Polymer* polymer(int index = 0) const;
-        std::vector<Polymer *> polymers() const;
-        int polymerCount() const;
-        bool contains(const Polymer *polymer) const;
-        void clear();
+        void setTrajectory(Trajectory *trajectory);
+        Trajectory* trajectory() const;
+        bool removeTrajectory();
+        bool deleteTrajectory();
 
     private:
-        PolymerFilePrivate* const d;
+        TrajectoryFilePrivate* const d;
 };
 
 } // end chemkit namespace
 
-#endif // CHEMKIT_POLYMERFILE_H
+#endif // CHEMKIT_TRAJECTORYFILE_H

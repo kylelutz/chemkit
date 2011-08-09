@@ -10,4 +10,4 @@ include_directories(../../../include)
 
 qt4_wrap_cpp(MOC_SOURCES uridineminimizationbenchmark.h)
 add_executable(uridineminimizationbenchmark uridineminimizationbenchmark.cpp ${MOC_SOURCES})
-target_link_libraries(uridineminimizationbenchmark chemkit ${QT_LIBRARIES})
+target_link_libraries(uridineminimizationbenchmark chemkit chemkit-io ${QT_LIBRARIES})

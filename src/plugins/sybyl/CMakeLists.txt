@@ -12,4 +12,4 @@ set(SOURCES
 )
 
 add_chemkit_plugin(sybyl ${SOURCES})
-target_link_libraries(sybyl chemkit ${QT_LIBRARIES})
+target_link_libraries(sybyl chemkit chemkit-io ${QT_LIBRARIES})

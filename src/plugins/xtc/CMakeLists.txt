@@ -10,4 +10,4 @@ set(SOURCES
 aux_source_directory(../../3rdparty/xdrf/ XDRF_SOURCES)
 
 add_chemkit_plugin(xtc ${SOURCES} ${XDRF_SOURCES})
-target_link_libraries(xtc chemkit ${QT_LIBRARIES})
+target_link_libraries(xtc chemkit chemkit-io ${QT_LIBRARIES})

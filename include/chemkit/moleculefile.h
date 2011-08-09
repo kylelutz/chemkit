@@ -1,1 +1,1 @@
-#include "../../src/chemkit/moleculefile.h"
+#include "../../src/io/moleculefile.h"

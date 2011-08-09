@@ -8,4 +8,4 @@ include_directories(${Boost_INCLUDE_DIRS})
 include_directories(../../../include)
 
 add_chemkit_executable(grep grep.cpp)
-target_link_libraries(grep chemkit ${QT_LIBRARIES})
+target_link_libraries(grep chemkit chemkit-io ${QT_LIBRARIES})

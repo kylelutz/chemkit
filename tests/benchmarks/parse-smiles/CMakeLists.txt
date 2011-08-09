@@ -10,6 +10,6 @@ include_directories(../../../include)
 
 qt4_wrap_cpp(MOC_SOURCES parsesmilesbenchmark.h)
 add_executable(parsesmilesbenchmark parsesmilesbenchmark.cpp ${MOC_SOURCES})
-target_link_libraries(parsesmilesbenchmark chemkit ${QT_LIBRARIES})
+target_link_libraries(parsesmilesbenchmark chemkit chemkit-io ${QT_LIBRARIES})
 
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/pubchem-smiles.smi DESTINATION ${CMAKE_CURRENT_BINARY_DIR})

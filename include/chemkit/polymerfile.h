@@ -1,1 +1,1 @@
-#include "../../src/chemkit/polymerfile.h"
+#include "../../src/io/polymerfile.h"

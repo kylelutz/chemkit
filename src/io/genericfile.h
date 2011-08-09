@@ -33,52 +33,76 @@
 **
 ******************************************************************************/
 
-#ifndef CHEMKIT_TRAJECTORYFILEFORMAT_H
-#define CHEMKIT_TRAJECTORYFILEFORMAT_H
+#ifndef CHEMKIT_GENERICFILE_H
+#define CHEMKIT_GENERICFILE_H
 
-#include "chemkit.h"
+#include "io.h"
 
+#include <map>
 #include <string>
 #include <vector>
 #include <istream>
 #include <ostream>
 
+#include <chemkit/variant.h>
+
 namespace chemkit {
 
-class TrajectoryFile;
-class TrajectoryFileFormatPrivate;
-
-class CHEMKIT_EXPORT TrajectoryFileFormat
+template<typename File, typename Format>
+class GenericFile
 {
     public:
-        // typedefs
-        typedef TrajectoryFileFormat* (*CreateFunction)();
-
         // construction and destruction
-        virtual ~TrajectoryFileFormat();
+        GenericFile();
+        GenericFile(const std::string &fileName);
+        ~GenericFile();
 
         // properties
-        std::string name() const;
+        void setFileName(const std::string &fileName);
+        std::string fileName() const;
+        void setFormat(Format *format);
+        bool setFormat(const std::string &formatName);
+        Format* format() const;
+        std::string formatName() const;
 
         // input and output
-        virtual bool read(std::istream &input, TrajectoryFile *file);
-        virtual bool write(const TrajectoryFile *file, std::ostream &output);
+        bool read();
+        bool read(const std::string &fileName);
+        bool read(const std::string &fileName, const std::string &formatName);
+        bool read(std::istream &input, const std::string &formatName);
+        bool read(std::istream &input);
+        bool write();
+        bool write(const std::string &fileName);
+        bool write(const std::string &fileName, const std::string &formatName);
+        bool write(std::ostream &output, const std::string &formatName);
+        bool write(std::ostream &output);
+        bool write(std::ostream &output, Format *format);
+
+        // file data
+        void setData(const std::string &name, const Variant &value);
+        Variant data(const std::string &name) const;
 
         // error handling
         std::string errorString() const;
 
         // static methods
-        static TrajectoryFileFormat* create(const std::string &name);
         static std::vector<std::string> formats();
 
     protected:
-        TrajectoryFileFormat(const std::string &name);
         void setErrorString(const std::string &errorString);
 
     private:
-        TrajectoryFileFormatPrivate* const d;
+        std::string suffix(const std::string &fileName);
+
+    private:
+        Format *m_format;
+        std::string m_fileName;
+        std::string m_errorString;
+        std::map<std::string, Variant> m_data;
 };
 
 } // end chemkit namespace
 
-#endif // CHEMKIT_TRAJECTORYFILEFORMAT_H
+#include "genericfile-inline.h"
+
+#endif // CHEMKIT_GENERICFILE_H

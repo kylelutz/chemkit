@@ -35,8 +35,8 @@
 
 #include "polymerfile.h"
 
-#include "foreach.h"
-#include "polymer.h"
+#include <chemkit/foreach.h>
+#include <chemkit/polymer.h>
 
 namespace chemkit {
 
@@ -49,7 +49,7 @@ class PolymerFilePrivate
 
 // === PolymerFile ========================================================= //
 /// \class PolymerFile polymerfile.h chemkit/polymerfile.h
-/// \ingroup chemkit
+/// \ingroup chemkit-io
 /// \brief The PolymerFile class contains polymers.
 ///
 /// \see Polymer

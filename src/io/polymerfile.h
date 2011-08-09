@@ -33,52 +33,48 @@
 **
 ******************************************************************************/
 
-#ifndef CHEMKIT_POLYMERFILEFORMAT_H
-#define CHEMKIT_POLYMERFILEFORMAT_H
+#ifndef CHEMKIT_POLYMERFILE_H
+#define CHEMKIT_POLYMERFILE_H
 
-#include "chemkit.h"
+#include "io.h"
 
 #include <string>
 #include <vector>
-#include <istream>
-#include <ostream>
+
+#include "genericfile.h"
+#include "polymerfileformat.h"
 
 namespace chemkit {
 
-class PolymerFile;
-class PolymerFileFormatPrivate;
+class Polymer;
+class PolymerFilePrivate;
 
-class CHEMKIT_EXPORT PolymerFileFormat
+class CHEMKIT_IO_EXPORT PolymerFile : public GenericFile<PolymerFile, PolymerFileFormat>
 {
     public:
-        // typedefs
-        typedef PolymerFileFormat* (*CreateFunction)();
-
         // construction and destruction
-        virtual ~PolymerFileFormat();
+        PolymerFile();
+        PolymerFile(const std::string &fileName);
+        ~PolymerFile();
 
         // properties
-        std::string name() const;
+        int size() const;
+        bool isEmpty() const;
 
-        // input and output
-        virtual bool read(std::istream &input, PolymerFile *file);
-        virtual bool write(const PolymerFile *file, std::ostream &output);
-
-        // error handling
-        std::string errorString() const;
-
-        // static methods
-        static PolymerFileFormat* create(const std::string &name);
-        static std::vector<std::string> formats();
-
-    protected:
-        PolymerFileFormat(const std::string &name);
-        void setErrorString(const std::string &errorString);
+        // file contents
+        void addPolymer(Polymer *polymer);
+        bool removePolymer(Polymer *polymer);
+        bool deletePolymer(Polymer *polymer);
+        Polymer* polymer(int index = 0) const;
+        std::vector<Polymer *> polymers() const;
+        int polymerCount() const;
+        bool contains(const Polymer *polymer) const;
+        void clear();
 
     private:
-        PolymerFileFormatPrivate* const d;
+        PolymerFilePrivate* const d;
 };
 
 } // end chemkit namespace
 
-#endif // CHEMKIT_POLYMERFILEFORMAT_H
+#endif // CHEMKIT_POLYMERFILE_H

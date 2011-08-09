@@ -12,4 +12,4 @@ set(SOURCES
 )
 
 add_chemkit_plugin(mopac ${SOURCES})
-target_link_libraries(mopac chemkit ${QT_LIBRARIES})
+target_link_libraries(mopac chemkit chemkit-io ${QT_LIBRARIES})

@@ -12,4 +12,4 @@ set(SOURCES
 )
 
 add_chemkit_plugin(pdbml ${SOURCES})
-target_link_libraries(pdbml chemkit ${QT_LIBRARIES})
+target_link_libraries(pdbml chemkit chemkit-io ${QT_LIBRARIES})

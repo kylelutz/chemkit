@@ -39,8 +39,6 @@ set(HEADERS
   foreach.h
   fragment.h
   fragment-inline.h
-  genericfile.h
-  genericfile-inline.h
   geometry.h
   geometry-inline.h
   internalcoordinates.h
@@ -53,10 +51,6 @@ set(HEADERS
   molecule.h
   molecule-inline.h
   moleculealigner.h
-  moleculefile.h
-  moleculefileformat.h
-  moleculefileformatadaptor.h
-  moleculefileformatadaptor-inline.h
   moleculeobserver.h
   nucleotide.h
   partialchargepredictor.h
@@ -67,16 +61,12 @@ set(HEADERS
   point3.h
   polymer.h
   polymerchain.h
-  polymerfile.h
-  polymerfileformat.h
   quaternion.h
   residue.h
   ring.h
   ring-inline.h
   scalarfield.h
   trajectory.h
-  trajectoryfile.h
-  trajectoryfileformat.h
   trajectoryframe.h
   unitcell.h
   variant.h
@@ -114,8 +104,6 @@ set(SOURCES
   molecularsurface.cpp
   molecule.cpp
   moleculealigner.cpp
-  moleculefile.cpp
-  moleculefileformat.cpp
   moleculeobserver.cpp
   nucleotide.cpp
   partialchargepredictor.cpp
@@ -123,14 +111,10 @@ set(SOURCES
   pluginmanager.cpp
   polymer.cpp
   polymerchain.cpp
-  polymerfile.cpp
-  polymerfileformat.cpp
   residue.cpp
   ring.cpp
   scalarfield.cpp
   trajectory.cpp
-  trajectoryfile.cpp
-  trajectoryfileformat.cpp
   trajectoryframe.cpp
   unitcell.cpp
 )

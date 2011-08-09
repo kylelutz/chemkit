@@ -7,4 +7,4 @@ set(SOURCES
 )
 
 add_chemkit_plugin(xyz ${SOURCES})
-target_link_libraries(xyz chemkit)
+target_link_libraries(xyz chemkit chemkit-io)

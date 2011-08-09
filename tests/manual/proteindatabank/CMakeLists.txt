@@ -10,4 +10,4 @@ include_directories(../../../include)
 
 qt4_wrap_cpp(MOC_SOURCES proteindatabanktest.h)
 add_executable(proteindatabanktest proteindatabanktest.cpp ${MOC_SOURCES})
-target_link_libraries(proteindatabanktest chemkit chemkit-web ${QT_LIBRARIES})
+target_link_libraries(proteindatabanktest chemkit chemkit-io chemkit-web ${QT_LIBRARIES})

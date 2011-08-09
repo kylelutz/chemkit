@@ -33,52 +33,52 @@
 **
 ******************************************************************************/
 
-#ifndef CHEMKIT_MOLECULEFILE_H
-#define CHEMKIT_MOLECULEFILE_H
+#ifndef CHEMKIT_TRAJECTORYFILEFORMAT_H
+#define CHEMKIT_TRAJECTORYFILEFORMAT_H
 
-#include "chemkit.h"
+#include "io.h"
 
 #include <string>
 #include <vector>
-
-#include "genericfile.h"
-#include "moleculefileformat.h"
+#include <istream>
+#include <ostream>
 
 namespace chemkit {
 
-class Molecule;
-class MoleculeFilePrivate;
+class TrajectoryFile;
+class TrajectoryFileFormatPrivate;
 
-class CHEMKIT_EXPORT MoleculeFile : public GenericFile<MoleculeFile, MoleculeFileFormat>
+class CHEMKIT_IO_EXPORT TrajectoryFileFormat
 {
     public:
+        // typedefs
+        typedef TrajectoryFileFormat* (*CreateFunction)();
+
         // construction and destruction
-        MoleculeFile();
-        MoleculeFile(const std::string &fileName);
-        ~MoleculeFile();
+        virtual ~TrajectoryFileFormat();
 
         // properties
-        int size() const;
-        bool isEmpty() const;
+        std::string name() const;
 
-        // file contents
-        void addMolecule(Molecule *molecule);
-        bool removeMolecule(Molecule *molecule);
-        bool deleteMolecule(Molecule *molecule);
-        std::vector<Molecule *> molecules() const;
-        int moleculeCount() const;
-        Molecule* molecule(int index = 0) const;
-        bool contains(const Molecule *molecule) const;
-        void clear();
+        // input and output
+        virtual bool read(std::istream &input, TrajectoryFile *file);
+        virtual bool write(const TrajectoryFile *file, std::ostream &output);
+
+        // error handling
+        std::string errorString() const;
 
         // static methods
-        static Molecule* quickRead(const std::string &fileName);
-        static void quickWrite(const Molecule *molecule, const std::string &fileName);
+        static TrajectoryFileFormat* create(const std::string &name);
+        static std::vector<std::string> formats();
+
+    protected:
+        TrajectoryFileFormat(const std::string &name);
+        void setErrorString(const std::string &errorString);
 
     private:
-        MoleculeFilePrivate* const d;
+        TrajectoryFileFormatPrivate* const d;
 };
 
 } // end chemkit namespace
 
-#endif // CHEMKIT_MOLECULEFILE_H
+#endif // CHEMKIT_TRAJECTORYFILEFORMAT_H

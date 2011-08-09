@@ -36,7 +36,7 @@ add_definitions(
 include_directories(../../include)
 
 add_chemkit_library(chemkit-web ${SOURCES} ${MOC_SOURCES})
-target_link_libraries(chemkit-web chemkit ${QT_LIBRARIES})
+target_link_libraries(chemkit-web chemkit chemkit-io ${QT_LIBRARIES})
 
 # install header files
 install(FILES ${HEADERS} DESTINATION include/chemkit/)

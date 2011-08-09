@@ -33,42 +33,12 @@
 **
 ******************************************************************************/
 
-#ifndef CHEMKIT_TRAJECTORYFILE_H
-#define CHEMKIT_TRAJECTORYFILE_H
+#include "io.h"
 
-#include "chemkit.h"
-
-#include <string>
-
-#include "genericfile.h"
-#include "trajectoryfileformat.h"
+/// \defgroup chemkit-io chemkit-io
+/// \brief The chemkit-io module contains classes used for
+///        reading and writing files.
 
 namespace chemkit {
 
-class Trajectory;
-class TrajectoryFilePrivate;
-
-class CHEMKIT_EXPORT TrajectoryFile : public GenericFile<TrajectoryFile, TrajectoryFileFormat>
-{
-    public:
-        // construction and destruction
-        TrajectoryFile();
-        TrajectoryFile(const std::string &fileName);
-        ~TrajectoryFile();
-
-        // properties
-        bool isEmpty() const;
-
-        // file contents
-        void setTrajectory(Trajectory *trajectory);
-        Trajectory* trajectory() const;
-        bool removeTrajectory();
-        bool deleteTrajectory();
-
-    private:
-        TrajectoryFilePrivate* const d;
-};
-
 } // end chemkit namespace
-
-#endif // CHEMKIT_TRAJECTORYFILE_H

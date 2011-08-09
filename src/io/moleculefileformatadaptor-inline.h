@@ -41,8 +41,9 @@
 #include <boost/foreach.hpp>
 #include <boost/algorithm/string.hpp>
 
-#include "polymer.h"
-#include "lineformat.h"
+#include <chemkit/polymer.h>
+#include <chemkit/lineformat.h>
+
 #include "polymerfile.h"
 #include "moleculefile.h"
 #include "polymerfileformat.h"

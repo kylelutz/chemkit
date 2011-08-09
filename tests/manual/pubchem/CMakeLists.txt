@@ -10,4 +10,4 @@ include_directories(../../../include)
 
 qt4_wrap_cpp(MOC_SOURCES pubchemtest.h)
 add_executable(pubchemtest pubchemtest.cpp ${MOC_SOURCES})
-target_link_libraries(pubchemtest chemkit chemkit-web ${QT_LIBRARIES})
+target_link_libraries(pubchemtest chemkit chemkit-io chemkit-web ${QT_LIBRARIES})

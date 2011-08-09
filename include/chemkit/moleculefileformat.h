@@ -1,1 +1,1 @@
-#include "../../src/chemkit/moleculefileformat.h"
+#include "../../src/io/moleculefileformat.h"

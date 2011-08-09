@@ -11,4 +11,4 @@ set(SOURCES
 )
 
 add_chemkit_plugin(mdl SHARED ${SOURCES})
-target_link_libraries(mdl chemkit ${QT_LIBRARIES})
+target_link_libraries(mdl chemkit chemkit-io ${QT_LIBRARIES})

@@ -10,4 +10,4 @@ include_directories(../../../include)
 
 qt4_wrap_cpp(MOC_SOURCES benzenesubstructurebenchmark.h)
 add_executable(benzenesubstructurebenchmark benzenesubstructurebenchmark.cpp ${MOC_SOURCES})
-target_link_libraries(benzenesubstructurebenchmark chemkit ${QT_LIBRARIES})
+target_link_libraries(benzenesubstructurebenchmark chemkit chemkit-io ${QT_LIBRARIES})

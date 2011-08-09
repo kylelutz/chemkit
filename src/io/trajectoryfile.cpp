@@ -35,7 +35,7 @@
 
 #include "trajectoryfile.h"
 
-#include "trajectory.h"
+#include <chemkit/trajectory.h>
 
 namespace chemkit {
 
@@ -48,7 +48,7 @@ class TrajectoryFilePrivate
 
 // === TrajectoryFile ====================================================== //
 /// \class TrajectoryFile trajectoryfile.h chemkit/trajectoryfile.h
-/// \ingroup chemkit
+/// \ingroup chemkit-io
 /// \brief The TrajectoryFile class contains a trajectory.
 ///
 /// The following trajectory file formats are supported in chemkit:
