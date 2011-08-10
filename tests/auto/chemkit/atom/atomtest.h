@@ -44,6 +44,7 @@ class AtomTest : public QObject
 
     private slots:
         void atomicNumber();
+        void index();
         void formalCharge();
         void partialCharge();
         void symbol();

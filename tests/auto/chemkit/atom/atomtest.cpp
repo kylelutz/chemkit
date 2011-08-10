@@ -57,6 +57,33 @@ void AtomTest::atomicNumber()
     QCOMPARE(atom->atomicNumber(), 6);
 }
 
+void AtomTest::index()
+{
+    chemkit::Molecule molecule;
+    chemkit::Atom *C1 = molecule.addAtom("C");
+    QCOMPARE(C1->index(), 0);
+
+    chemkit::Atom *C2 = molecule.addAtom("C");
+    QCOMPARE(C2->index(), 1);
+
+    chemkit::Atom *C3 = molecule.addAtom("C");
+    QCOMPARE(C3->index(), 2);
+
+    chemkit::Atom *C4 = molecule.addAtom("C");
+
+    molecule.removeAtom(C2);
+    QCOMPARE(C1->index(), 0);
+    QCOMPARE(C3->index(), 1);
+    QCOMPARE(C4->index(), 2);
+
+    molecule.removeAtom(C1);
+    QCOMPARE(C3->index(), 0);
+    QCOMPARE(C4->index(), 1);
+
+    molecule.removeAtom(C3);
+    QCOMPARE(C4->index(), 0);
+}
+
 void AtomTest::formalCharge()
 {
     chemkit::Molecule molecule;
