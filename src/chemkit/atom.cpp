@@ -239,14 +239,6 @@ Residue* Atom::residue() const
     return d->residue;
 }
 
-/// Returns the atom's index.
-int Atom::index() const
-{
-    const std::vector<Atom *> &atoms = m_molecule->atoms();
-
-    return std::distance(atoms.begin(), std::find(atoms.begin(), atoms.end(), this));
-}
-
 // --- Structure ----------------------------------------------------------- //
 /// Returns a list of bonds that this atom is a member of.
 std::vector<Bond *> Atom::bonds() const

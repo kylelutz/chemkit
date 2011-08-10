@@ -53,6 +53,12 @@ inline Molecule* Atom::molecule() const
     return m_molecule;
 }
 
+/// Returns the atom's index.
+inline int Atom::index() const
+{
+    return m_index;
+}
+
 /// Returns \c true if the atom's element is the same as \p element.
 ///
 /// For example, to check if an atom is carbon or hydrogen:

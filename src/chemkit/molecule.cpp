@@ -355,6 +355,7 @@ Atom* Molecule::addAtom(const Element &element)
     }
 
     Atom *atom = new Atom(this, element);
+    atom->m_index = m_atoms.size();
     m_atoms.push_back(atom);
 
     setFragmentsPerceived(false);
@@ -392,6 +393,11 @@ void Molecule::removeAtom(Atom *atom)
     }
 
     m_atoms.erase(std::remove(m_atoms.begin(), m_atoms.end(), atom), m_atoms.end());
+
+    // subtract one from the index of all atoms after this one
+    for(unsigned int i = atom->m_index; i < m_atoms.size(); i++){
+        m_atoms[i]->m_index--;
+    }
 
     atom->m_molecule = 0;
     notifyObservers(atom, AtomRemoved);

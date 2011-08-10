@@ -86,7 +86,7 @@ class CHEMKIT_EXPORT Atom
         inline Molecule* molecule() const;
         Fragment* fragment() const;
         Residue* residue() const;
-        int index() const;
+        inline int index() const;
 
         // structure
         std::vector<Bond *> bonds() const;
@@ -268,6 +268,7 @@ class CHEMKIT_EXPORT Atom
         Element m_element;
         Molecule *m_molecule;
         Fragment *m_fragment;
+        int m_index;
 };
 
 } // end chemkit namespace
