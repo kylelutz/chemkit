@@ -39,6 +39,7 @@
 #include "fragment.h"
 
 #include "atom.h"
+#include "molecule.h"
 
 namespace chemkit {
 
@@ -52,32 +53,50 @@ inline int Fragment::size() const
 /// Returns the molecule the fragment is a part of.
 inline Molecule* Fragment::molecule() const
 {
-    return m_atoms[0]->molecule();
+    return m_molecule;
 }
 
 // --- Structure ----------------------------------------------------------- //
 /// Returns the atom at \p index in the fragment.
 inline Atom* Fragment::atom(int index) const
 {
-    return m_atoms[index];
+    size_t position = m_bitset.find_first();
+
+    while(index--){
+        position = m_bitset.find_next(position);
+
+        if(position == boost::dynamic_bitset<>::npos){
+            return 0;
+        }
+    }
+
+    return m_molecule->atom(position);
 }
 
 /// Returns a list of all the atoms in the fragment.
 inline std::vector<Atom *> Fragment::atoms() const
 {
-    return m_atoms;
+    std::vector<Atom *> atoms;
+
+    for(size_t i = 0; i < m_bitset.size(); i++){
+        if(m_bitset.test(i)){
+            atoms.push_back(m_molecule->atom(i));
+        }
+    }
+
+    return atoms;
 }
 
 /// Returns the number of atoms in the fragment.
 inline int Fragment::atomCount() const
 {
-    return m_atoms.size();
+    return m_bitset.count();
 }
 
 /// Returns \c true if the fragment contains the atom.
 inline bool Fragment::contains(const Atom *atom) const
 {
-    return atom->fragment() == this;
+    return m_bitset.test(atom->index());
 }
 
 } // end chemkit namespace

@@ -40,6 +40,7 @@
 #include "ring.h"
 #include "foreach.h"
 #include "vector3.h"
+#include "fragment.h"
 #include "geometry.h"
 #include "molecule.h"
 
@@ -84,7 +85,6 @@ Atom::Atom(Molecule *molecule, const Element &element)
       m_element(element),
       m_molecule(molecule)
 {
-    m_fragment = 0;
     d->residue = 0;
 
     if(is(Hydrogen)){
@@ -227,10 +227,7 @@ bool Atom::isHeteroatom() const
 /// Returns the fragment the atom is a part of.
 Fragment* Atom::fragment() const
 {
-    if(m_fragment)
-        return m_fragment;
-    else
-        return molecule()->fragment(this);
+    return molecule()->fragment(this);
 }
 
 /// Returns the residue the atom is a part of.
@@ -405,7 +402,7 @@ bool Atom::isBondedTo(const Element &element, int bondOrder) const
 /// fragment).
 bool Atom::isConnectedTo(const Atom *atom) const
 {
-    return atom->fragment() == fragment();
+    return fragment()->contains(atom);
 }
 
 /// Returns \c true if this atom is bonded to exactly one atom. (i.e.

@@ -54,29 +54,10 @@ namespace chemkit {
 // --- Construction and Destruction ---------------------------------------- //
 /// Creates a new fragment that contains all the atoms attached to
 /// \p root.
-Fragment::Fragment(Atom *root)
+Fragment::Fragment(Molecule *molecule, const boost::dynamic_bitset<> &bitset)
+    : m_molecule(molecule),
+      m_bitset(bitset)
 {
-    assert(root->m_fragment == 0);
-
-    std::vector<Atom *> row;
-    row.push_back(root);
-
-    while(!row.empty()){
-        std::vector<Atom *> nextRow;
-
-        foreach(Atom *atom, row){
-            if(!atom->m_fragment){
-                atom->m_fragment = this;
-                m_atoms.push_back(atom);
-
-                foreach(Atom *neighbor, atom->neighbors()){
-                    nextRow.push_back(neighbor);
-                }
-            }
-        }
-
-        row = nextRow;
-    }
 }
 
 /// Destroys the fragment object.
@@ -90,7 +71,7 @@ std::vector<Bond *> Fragment::bonds() const
 {
     std::vector<Bond *> bonds;
 
-    foreach(Atom *atom, m_atoms){
+    foreach(Atom *atom, atoms()){
         foreach(Bond *bond, atom->bonds()){
             if(std::find(bonds.begin(), bonds.end(), bond) == bonds.end()){
                 bonds.push_back(bond);

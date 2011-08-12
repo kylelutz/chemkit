@@ -188,6 +188,7 @@ class CHEMKIT_EXPORT Molecule
         bool ringsPerceived() const;
         void setFragmentsPerceived(bool perceived) const;
         bool fragmentsPerceived() const;
+        void perceiveFragments() const;
         Fragment* fragment(const Atom *atom) const;
         void notifyObservers(ChangeType type);
         void notifyObservers(const Atom *atom, ChangeType type);

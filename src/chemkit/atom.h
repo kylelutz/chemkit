@@ -267,7 +267,6 @@ class CHEMKIT_EXPORT Atom
         AtomPrivate* const d;
         Element m_element;
         Molecule *m_molecule;
-        Fragment *m_fragment;
         int m_index;
 };
 

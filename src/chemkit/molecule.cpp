@@ -776,11 +776,7 @@ Fragment* Molecule::fragment(int index) const
 std::vector<Fragment *> Molecule::fragments() const
 {
     if(!fragmentsPerceived()){
-        foreach(Atom *atom, m_atoms){
-            if(!atom->m_fragment){
-                d->fragments.push_back(new Fragment(atom));
-            }
-        }
+        perceiveFragments();
 
         setFragmentsPerceived(true);
     }
@@ -832,10 +828,6 @@ void Molecule::setFragmentsPerceived(bool perceived) const
         }
 
         d->fragments.clear();
-
-        foreach(Atom *atom, m_atoms){
-            atom->m_fragment = 0;
-        }
     }
 
     d->fragmentsPerceived = perceived;
@@ -844,6 +836,57 @@ void Molecule::setFragmentsPerceived(bool perceived) const
 bool Molecule::fragmentsPerceived() const
 {
     return d->fragmentsPerceived;
+}
+
+void Molecule::perceiveFragments() const
+{
+    if(isEmpty()){
+        // nothing to do
+        return;
+    }
+
+    // position of the next atom to root the depth-first search
+    size_t position = 0;
+
+    // bitset marking each atom not visited yet
+    boost::dynamic_bitset<> unvisited(m_atoms.size());
+    unvisited.set();
+
+    for(;;){
+        // bitset marking the atoms contained in the fragment
+        boost::dynamic_bitset<> bitset(m_atoms.size());
+
+        // perform depth-first search
+        std::vector<const Atom *> row;
+        row.push_back(m_atoms[position]);
+
+        while(!row.empty()){
+            std::vector<const Atom *> nextRow;
+
+            foreach(const Atom *atom, row){
+                bitset.set(atom->index());
+                unvisited.set(atom->index(), false);
+
+                foreach(const Atom *neighbor, atom->neighbors()){
+                    if(unvisited[neighbor->index()]){
+                        nextRow.push_back(neighbor);
+                    }
+                }
+            }
+
+            row = nextRow;
+        }
+
+        // create and add fragment
+        Fragment *fragment = new Fragment(const_cast<Molecule *>(this), bitset);
+        d->fragments.push_back(fragment);
+
+        // find next unvisited atom
+        position = unvisited.find_next(position);
+        if(position == boost::dynamic_bitset<>::npos){
+            break;
+        }
+    }
 }
 
 // --- Geometry ------------------------------------------------------------ //

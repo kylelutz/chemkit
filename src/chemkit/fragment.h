@@ -40,6 +40,8 @@
 
 #include <vector>
 
+#include <boost/dynamic_bitset.hpp>
+
 namespace chemkit {
 
 class Atom;
@@ -63,7 +65,7 @@ class CHEMKIT_EXPORT Fragment
         bool contains(const Bond *bond) const;
 
     private:
-        Fragment(Atom *root);
+        Fragment(Molecule *molecule, const boost::dynamic_bitset<> &bitset);
         ~Fragment();
 
         CHEMKIT_DISABLE_COPY(Fragment)
@@ -71,7 +73,8 @@ class CHEMKIT_EXPORT Fragment
         friend class Molecule;
 
     private:
-        std::vector<Atom *> m_atoms;
+        Molecule* m_molecule;
+        boost::dynamic_bitset<> m_bitset;
 };
 
 } // end chemkit namespace
