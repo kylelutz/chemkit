@@ -49,11 +49,11 @@
 #include "point3.h"
 #include "variant.h"
 #include "vector3.h"
-#include "fragment.h"
 #include "conformer.h"
 
 namespace chemkit {
 
+class Fragment;
 class Coordinates;
 class MoleculePrivate;
 class MoleculeObserver;

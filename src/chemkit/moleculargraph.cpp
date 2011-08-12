@@ -39,6 +39,7 @@
 #include "bond.h"
 #include "ring.h"
 #include "foreach.h"
+#include "fragment.h"
 #include "molecule.h"
 
 #include <algorithm>
