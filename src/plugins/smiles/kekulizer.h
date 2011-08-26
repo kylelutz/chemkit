@@ -36,14 +36,14 @@
 #ifndef KEKULIZER_H
 #define KEKULIZER_H
 
-#include <QtCore>
+#include <vector>
 
 #include <chemkit/bond.h>
 
 class Kekulizer
 {
     public:
-        static void kekulize(const QList<chemkit::Bond *> &bonds);
+        static void kekulize(const std::vector<chemkit::Bond *> &bonds);
 };
 
 #endif // KEKULIZER_H

@@ -35,10 +35,17 @@
 
 #include "smilesgraph.h"
 
+#include <map>
+#include <set>
+#include <queue>
 #include <algorithm>
+
+#include <boost/range.hpp>
+#include <boost/algorithm/string.hpp>
 
 #include <chemkit/atom.h>
 #include <chemkit/bond.h>
+#include <chemkit/foreach.h>
 #include <chemkit/molecule.h>
 
 namespace {
@@ -172,7 +179,7 @@ void SmilesGraphNode::setParent(SmilesGraphNode *parent, int bondOrder)
 {
     m_parent = parent;
     m_bondOrder = bondOrder;
-    parent->m_children.append(this);
+    parent->m_children.push_back(this);
 }
 
 SmilesGraphNode* SmilesGraphNode::parent() const
@@ -185,7 +192,7 @@ int SmilesGraphNode::childCount() const
     return m_children.size();
 }
 
-QList<SmilesGraphNode *> SmilesGraphNode::children() const
+std::vector<SmilesGraphNode *> SmilesGraphNode::children() const
 {
     return m_children;
 }
@@ -202,8 +209,8 @@ int SmilesGraphNode::hydrogenCount() const
 
 void SmilesGraphNode::addRing(int ringNumber, int bondOrder)
 {
-    m_rings.append(ringNumber);
-    m_ringBondOrders.append(bondOrder);
+    m_rings.push_back(ringNumber);
+    m_ringBondOrders.push_back(bondOrder);
 }
 
 std::string SmilesGraphNode::toString(bool kekulize) const
@@ -231,7 +238,7 @@ std::string SmilesGraphNode::toString(bool kekulize) const
             string << "[nH]";
         }
         else{
-            string << QString(m_atom->symbol().c_str()).toLower().toStdString();
+            string << boost::to_lower_copy(m_atom->symbol());
         }
     }
     else if(isOrganicAtom(m_atom)){
@@ -270,7 +277,7 @@ std::string SmilesGraphNode::toString(bool kekulize) const
         string << "]";
     }
 
-    for(int i = 0; i < m_rings.size(); i++){
+    for(size_t i = 0; i < m_rings.size(); i++){
         int ringNumber = m_rings[i];
         int bondOrder = m_ringBondOrders[i];
 
@@ -299,8 +306,9 @@ void SmilesGraphNode::write(std::stringstream &string, bool kekulize) const
         m_children[0]->write(string, kekulize);
     }
     else if(childCount() > 1){
-        QList<SmilesGraphNode *> children = m_children;
-        const SmilesGraphNode *firstChild = children.takeFirst();
+        std::vector<SmilesGraphNode *> children = m_children;
+        const SmilesGraphNode *firstChild = children[0];
+        children.erase(children.begin());
 
         foreach(SmilesGraphNode *child, children){
             string << "(";
@@ -315,11 +323,11 @@ void SmilesGraphNode::write(std::stringstream &string, bool kekulize) const
 // === SmilesGraph ========================================================= //
 SmilesGraph::SmilesGraph(const chemkit::Molecule *molecule)
 {
-    QSet<const chemkit::Atom *> visitedAtoms;
-    QSet<const chemkit::Ring *> visitedRings;
+    std::set<const chemkit::Atom *> visitedAtoms;
+    std::set<const chemkit::Ring *> visitedRings;
 
-    QHash<const chemkit::Atom *, int> ringClosingAtoms;
-    QSet<const chemkit::Bond *> ringBonds;
+    std::multimap<const chemkit::Atom *, int> ringClosingAtoms;
+    std::set<const chemkit::Bond *> ringBonds;
 
     // neighbor count for each atom without implicit hydrogens
     std::vector<int> neighborCounts(molecule->size());
@@ -336,10 +344,10 @@ SmilesGraph::SmilesGraph(const chemkit::Molecule *molecule)
         neighborCounts[i] = neighborCount;
     }
 
-    while(visitedAtoms.size() != molecule->size()){
+    while(visitedAtoms.size() != size_t(molecule->size())){
         const chemkit::Atom *rootAtom = 0;
         foreach(const chemkit::Atom *atom, molecule->atoms()){
-            if(visitedAtoms.contains(atom)){
+            if(visitedAtoms.find(atom) != visitedAtoms.end()){
                 continue;
             }
 
@@ -350,22 +358,23 @@ SmilesGraph::SmilesGraph(const chemkit::Molecule *molecule)
         }
 
         SmilesGraphNode *rootNode = new SmilesGraphNode(rootAtom);
-        m_rootNodes.append(rootNode);
+        m_rootNodes.push_back(rootNode);
         visitedAtoms.insert(rootAtom);
 
         int ringNumber = 1;
 
-        QQueue<SmilesGraphNode *> queue;
-        queue.enqueue(rootNode);
+        std::queue<SmilesGraphNode *> queue;
+        queue.push(rootNode);
 
-        while(!queue.isEmpty()){
-            SmilesGraphNode *parentNode = queue.dequeue();
+        while(!queue.empty()){
+            SmilesGraphNode *parentNode = queue.front();
+            queue.pop();
             const chemkit::Atom *atom = parentNode->atom();
 
             int hydrogenCount = 0;
 
             foreach(const chemkit::Ring *ring, atom->rings()){
-                if(visitedRings.contains(ring)){
+                if(visitedRings.find(ring) != visitedRings.end()){
                     continue;
                 }
                 if(neighborCounts[atom->index()] <= 1){
@@ -377,7 +386,7 @@ SmilesGraph::SmilesGraph(const chemkit::Molecule *molecule)
                     if(!ring->contains(neighbor)){
                         continue;
                     }
-                    else if(ringBonds.contains(atom->bondTo(neighbor))){
+                    else if(ringBonds.find(atom->bondTo(neighbor)) != ringBonds.end()){
                         continue;
                     }
                     else if(neighborCounts[neighbor->index()] <= 1){
@@ -392,7 +401,7 @@ SmilesGraph::SmilesGraph(const chemkit::Molecule *molecule)
                 }
 
                 const chemkit::Bond *bond = atom->bondTo(ringClosingAtom);
-                ringClosingAtoms.insertMulti(ringClosingAtom, ringNumber);
+                ringClosingAtoms.insert(std::make_pair(ringClosingAtom, ringNumber));
                 ringBonds.insert(bond);
                 parentNode->addRing(ringNumber, bond->order());
 
@@ -403,7 +412,7 @@ SmilesGraph::SmilesGraph(const chemkit::Molecule *molecule)
             }
 
             foreach(const chemkit::Atom *neighbor, atom->neighbors()){
-                if(visitedAtoms.contains(neighbor)){
+                if(visitedAtoms.find(neighbor) != visitedAtoms.end()){
                     continue;
                 }
                 else if(isImplicitHydrogen(neighbor)){
@@ -413,7 +422,7 @@ SmilesGraph::SmilesGraph(const chemkit::Molecule *molecule)
                 }
 
                 const chemkit::Bond *bond = atom->bondTo(neighbor);
-                if(ringBonds.contains(bond)){
+                if(ringBonds.find(bond) != ringBonds.end()){
                     continue;
                 }
 
@@ -421,15 +430,20 @@ SmilesGraph::SmilesGraph(const chemkit::Molecule *molecule)
                 visitedAtoms.insert(neighbor);
                 node->setParent(parentNode, bond->order());
 
-                if(ringClosingAtoms.contains(neighbor)){
-                    foreach(int ring, ringClosingAtoms.values(neighbor)){
-                        node->addRing(ring, 0);
+                if(ringClosingAtoms.find(neighbor) != ringClosingAtoms.end()){
+                    std::pair<std::multimap<const chemkit::Atom *, int>::iterator,
+                              std::multimap<const chemkit::Atom *, int>::iterator> range;
+                    range = ringClosingAtoms.equal_range(neighbor);
+
+                    std::multimap<const chemkit::Atom *, int>::iterator iter;
+                    for(iter = range.first; iter != range.second; ++iter){
+                        node->addRing(iter->second, 0);
                     }
 
-                    ringClosingAtoms.remove(neighbor);
+                    ringClosingAtoms.erase(neighbor);
                 }
 
-                queue.enqueue(node);
+                queue.push(node);
             }
 
             parentNode->setHydrogenCount(hydrogenCount);
@@ -439,12 +453,12 @@ SmilesGraph::SmilesGraph(const chemkit::Molecule *molecule)
 
 std::string SmilesGraph::toString(bool kekulize) const
 {
-    if(m_rootNodes.isEmpty()){
+    if(m_rootNodes.empty()){
         return std::string();
     }
     else if(m_rootNodes.size() == 1){
         std::stringstream stream;
-        m_rootNodes.first()->write(stream, kekulize);
+        m_rootNodes.front()->write(stream, kekulize);
         return stream.str();
     }
     else{

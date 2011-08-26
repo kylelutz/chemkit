@@ -35,8 +35,11 @@
 
 #include "kekulizer.h"
 
+#include <map>
+
 #include <chemkit/atom.h>
 #include <chemkit/bond.h>
+#include <chemkit/foreach.h>
 
 #define LEMON_ONLY_TEMPLATES
 #include <lemon/matching.h>
@@ -80,17 +83,19 @@ int costOfDoubleBond(const chemkit::Bond *bond)
 } // end anonymous namespace
 
 // === Kekulizer =========================================================== //
-void Kekulizer::kekulize(const QList<chemkit::Bond *> &bonds)
+void Kekulizer::kekulize(const std::vector<chemkit::Bond *> &bonds)
 {
     lemon::ListGraph graph;
     lemon::ListGraph::EdgeMap<int> costs(graph);
 
-    QHash<chemkit::Atom*, int> atomToNode;
-    QHash<int, chemkit::Bond*> edgeToBond;
+    std::map<chemkit::Atom*, int> atomToNode;
+    std::map<int, chemkit::Bond*> edgeToBond;
     foreach(chemkit::Bond *bond, bonds){
         int node1;
-        if(atomToNode.contains(bond->atom1())){
-            node1 = atomToNode[bond->atom1()];
+
+        std::map<chemkit::Atom*, int>::iterator iter = atomToNode.find(bond->atom1());
+        if(iter != atomToNode.end()){
+            node1 = iter->second;
         }
         else{
             lemon::ListGraph::Node node = graph.addNode();
@@ -99,8 +104,9 @@ void Kekulizer::kekulize(const QList<chemkit::Bond *> &bonds)
         }
 
         int node2;
-        if(atomToNode.contains(bond->atom2())){
-            node2 = atomToNode[bond->atom2()];
+        iter = atomToNode.find(bond->atom2());
+        if(iter != atomToNode.end()){
+            node2 = iter->second;
         }
         else{
             lemon::ListGraph::Node node = graph.addNode();

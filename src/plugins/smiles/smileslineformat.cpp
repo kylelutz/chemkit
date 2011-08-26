@@ -43,6 +43,13 @@
 
 #include "smileslineformat.h"
 
+#include <stack>
+#include <vector>
+
+#include <boost/format.hpp>
+
+#include <chemkit/foreach.h>
+
 #include "kekulizer.h"
 #include "smilesgraph.h"
 
@@ -204,14 +211,14 @@ bool SmilesLineFormat::read(const char *formula, chemkit::Molecule *molecule)
     chemkit::Bond *bond = 0;
     chemkit::Atom *lastAtom = 0;
     int bondOrder = 1;
-    QHash<chemkit::Atom *, int> charges; // atom -> formal charge
-    QList<chemkit::Atom *> organicAtoms;
-    QList<chemkit::Bond *> aromaticBonds;
+    std::map<chemkit::Atom *, int> charges; // atom -> formal charge
+    std::vector<chemkit::Atom *> organicAtoms;
+    std::vector<chemkit::Bond *> aromaticBonds;
     bool aromatic = false;
     BranchState branchState;
-    QStack<BranchState> branchRoots;
+    std::stack<BranchState> branchRoots;
     RingState ringState;
-    QHash<int, RingState> rings;
+    std::map<int, RingState> rings;
 
     // go to initial state
     if(isTerminator(*p)) goto done;
@@ -245,7 +252,7 @@ bracket_atom:
     else if(islower(*p)){
         atom = molecule->addAtom(readAromaticSymbol(&p));
         aromatic = true;
-        organicAtoms.append(atom);
+        organicAtoms.push_back(atom);
     }
     else{
         goto parse_error;
@@ -263,7 +270,7 @@ bracket_atom:
         bondOrder = chemkit::Bond::Single;
 
         if(aromatic){
-            aromaticBonds.append(bond);
+            aromaticBonds.push_back(bond);
         }
     }
 
@@ -355,7 +362,7 @@ organic_atom:
     if(!atom)
         goto invalid_atom_error;
 
-    organicAtoms.append(atom);
+    organicAtoms.push_back(atom);
 
     if(lastAtom){
         if(bondOrder){
@@ -387,14 +394,14 @@ aromatic_atom:
         goto invalid_atom_error;
     }
 
-    organicAtoms.append(atom);
+    organicAtoms.push_back(atom);
 
     if(lastAtom){
         if(bondOrder){
             bond = molecule->addBond(atom, lastAtom, bondOrder);
 
             if(aromatic){
-                aromaticBonds.append(bond);
+                aromaticBonds.push_back(bond);
             }
         }
     }
@@ -452,13 +459,14 @@ ring:
         p++; // move past digit
     }
 
-    if(rings.contains(number)){
+    if(rings.find(number) != rings.end()){
         // ring closure
-        ringState = rings.take(number);
+        ringState = rings[number];
+        rings.erase(number);
         bond = molecule->addBond(ringState.firstAtom, lastAtom, ringState.bondOrder);
 
         if(aromatic && ringState.aromatic){
-            aromaticBonds.append(bond);
+            aromaticBonds.push_back(bond);
         }
     }
     else{
@@ -500,13 +508,14 @@ start_branch:
 end_branch:
     assert(*p == ')');
 
-    if(branchRoots.isEmpty())
+    if(branchRoots.empty())
         goto parse_error;
 
     p++; // move past closing parenthesis
 
     // restore state to what it was before the branch
-    branchState = branchRoots.pop();
+    branchState = branchRoots.top();
+    branchRoots.pop();
     lastAtom = branchState.lastAtom;
     bondOrder = branchState.bondOrder;
     aromatic = branchState.aromatic;
@@ -523,17 +532,13 @@ end_branch:
     else                 goto parse_error;
 
 parse_error:
-    setErrorString(QString("Error parsing smiles at character #%1 ('%2').")
-                       .arg(p - formula)
-                       .arg(*p)
-                       .toStdString());
+    setErrorString((boost::format("Error parsing smiles at character #%d ('%c').") %
+                       (p - formula) % *p).str());
     goto error;
 
 invalid_atom_error:
-    setErrorString(QString("Invalid atom symbol at character #%1 ('%2').")
-                        .arg(p - formula)
-                        .arg(*p)
-                        .toStdString());
+    setErrorString((boost::format("Invalid atom symbol at character #%d ('%c').") %
+                             (p - formula) % *p).str());
     goto error;
 
 error:
@@ -541,7 +546,7 @@ error:
 
 done:
     // kekulize aromatic bonds
-    if(!aromaticBonds.isEmpty()){
+    if(!aromaticBonds.empty()){
         Kekulizer::kekulize(aromaticBonds);
     }
 

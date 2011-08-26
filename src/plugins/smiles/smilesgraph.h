@@ -36,9 +36,8 @@
 #ifndef SMILESGRAPH_H
 #define SMILESGRAPH_H
 
-#include <QtCore>
-
 #include <string>
+#include <vector>
 #include <sstream>
 
 #include <chemkit/atom.h>
@@ -55,7 +54,7 @@ class SmilesGraphNode
         void setParent(SmilesGraphNode *parent, int bondOrder);
         SmilesGraphNode* parent() const;
         int childCount() const;
-        QList<SmilesGraphNode *> children() const;
+        std::vector<SmilesGraphNode *> children() const;
         std::string toString(bool kekulize) const;
         void write(std::stringstream &string, bool kekulize) const;
 
@@ -69,9 +68,9 @@ class SmilesGraphNode
         int m_hydrogenCount;
         SmilesGraphNode *m_parent;
         int m_bondOrder;
-        QList<SmilesGraphNode *> m_children;
-        QList<int> m_rings;
-        QList<int> m_ringBondOrders;
+        std::vector<SmilesGraphNode *> m_children;
+        std::vector<int> m_rings;
+        std::vector<int> m_ringBondOrders;
 };
 
 class SmilesGraph
@@ -82,7 +81,7 @@ class SmilesGraph
         std::string toString(bool kekulize) const;
 
     private:
-        QList<SmilesGraphNode *> m_rootNodes;
+        std::vector<SmilesGraphNode *> m_rootNodes;
 };
 
 #endif // SMILESGRAPH_H
