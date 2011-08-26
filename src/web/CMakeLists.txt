@@ -1,3 +1,7 @@
+if(NOT ${CHEMKIT_WITH_WEB})
+  return()
+endif()
+
 find_package(Qt4 4.6 COMPONENTS QtCore QtNetwork QtXml REQUIRED)
 set(QT_DONT_USE_QTGUI TRUE)
 set(QT_USE_QTNETWORK TRUE)

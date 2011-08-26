@@ -38,7 +38,10 @@
 
 #include <chemkit/plugin.h>
 #include <chemkit/lineformat.h>
+
+#ifdef CHEMKIT_WITH_IO
 #include <chemkit/moleculefileformat.h>
+#endif
 
 class SmilesPlugin : public chemkit::Plugin
 {
@@ -47,7 +50,10 @@ class SmilesPlugin : public chemkit::Plugin
         ~SmilesPlugin();
 
         static chemkit::LineFormat* createSmilesFormat();
+
+#ifdef CHEMKIT_WITH_IO
         static chemkit::MoleculeFileFormat* createSmiFormat();
+#endif
 };
 
 #endif // SMILESPLUGIN_H

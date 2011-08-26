@@ -1,3 +1,9 @@
+if(NOT ${CHEMKIT_WITH_IO} OR
+   NOT ${CHEMKIT_WITH_GRAPHICS} OR
+   NOT ${CHEMKIT_WITH_WIDGETS})
+  return()
+endif()
+
 find_package(Qt4 4.6 COMPONENTS QtCore QtGui QtOpenGL REQUIRED)
 set(QT_USE_QTGUI TRUE)
 include(${QT_USE_FILE})

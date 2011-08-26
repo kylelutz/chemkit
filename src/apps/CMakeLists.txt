@@ -1,3 +1,7 @@
+if(NOT ${CHEMKIT_BUILD_APPS})
+  return()
+endif()
+
 macro(add_chemkit_executable name)
   add_executable(${name} ${ARGN})
   set_target_properties(${name} PROPERTIES OUTPUT_NAME chemkit-${name})

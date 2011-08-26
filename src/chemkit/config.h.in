@@ -40,6 +40,11 @@
 #cmakedefine CHEMKIT_OS_WIN32
 #cmakedefine CHEMKIT_OS_MAC
 
+#cmakedefine CHEMKIT_WITH_GRAPHICS
+#cmakedefine CHEMKIT_WITH_IO
+#cmakedefine CHEMKIT_WITH_WEB
+#cmakedefine CHEMKIT_WITH_WIDGETS
+
 #define CHEMKIT_INSTALL_PREFIX "@CMAKE_INSTALL_PREFIX@"
 
 #endif // CHEMKIT_CONFIG_H

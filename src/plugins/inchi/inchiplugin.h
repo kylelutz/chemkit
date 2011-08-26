@@ -38,7 +38,10 @@
 
 #include <chemkit/plugin.h>
 #include <chemkit/lineformat.h>
+
+#ifdef CHEMKIT_WITH_IO
 #include <chemkit/moleculefileformat.h>
+#endif
 
 class InchiPlugin : public chemkit::Plugin
 {
@@ -48,7 +51,10 @@ class InchiPlugin : public chemkit::Plugin
 
         static chemkit::LineFormat* createInchiFormat();
         static chemkit::LineFormat* createInchiKeyFormat();
+
+#ifdef CHEMKIT_WITH_IO
         static chemkit::MoleculeFileFormat* createInchiFileFormat();
+#endif
 };
 
 #endif // INCHIPLUGIN_H

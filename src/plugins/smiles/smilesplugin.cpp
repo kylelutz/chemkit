@@ -35,7 +35,9 @@
 
 #include "smilesplugin.h"
 
+#ifdef CHEMKIT_WITH_IO
 #include <chemkit/moleculefileformatadaptor.h>
+#endif
 
 #include "smileslineformat.h"
 
@@ -43,13 +45,19 @@ SmilesPlugin::SmilesPlugin()
     : chemkit::Plugin("smiles")
 {
     registerPluginClass<chemkit::LineFormat>("smiles", createSmilesFormat);
+
+#ifdef CHEMKIT_WITH_IO
     registerPluginClass<chemkit::MoleculeFileFormat>("smi", createSmiFormat);
+#endif
 }
 
 SmilesPlugin::~SmilesPlugin()
 {
     unregisterPluginClass<chemkit::LineFormat>("smiles");
+
+#ifdef CHEMKIT_WITH_IO
     unregisterPluginClass<chemkit::MoleculeFileFormat>("smi");
+#endif
 }
 
 chemkit::LineFormat* SmilesPlugin::createSmilesFormat()
@@ -57,9 +65,11 @@ chemkit::LineFormat* SmilesPlugin::createSmilesFormat()
     return new SmilesLineFormat;
 }
 
+#ifdef CHEMKIT_WITH_IO
 chemkit::MoleculeFileFormat* SmilesPlugin::createSmiFormat()
 {
     return new chemkit::MoleculeFileFormatAdaptor<chemkit::LineFormat>(new SmilesLineFormat);
 }
+#endif
 
 CHEMKIT_EXPORT_PLUGIN(smiles, SmilesPlugin)

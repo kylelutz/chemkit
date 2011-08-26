@@ -47,7 +47,10 @@ class SybylPlugin : public chemkit::Plugin
         ~SybylPlugin();
 
         static chemkit::AtomTyper* createSybylAtomTyper();
+
+#ifdef CHEMKIT_WITH_IO
         static chemkit::MoleculeFileFormat* createMol2FileFormat();
+#endif
 };
 
 #endif // SYBYLPLUGIN_H

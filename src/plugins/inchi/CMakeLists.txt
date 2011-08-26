@@ -14,4 +14,8 @@ set(SOURCES
 aux_source_directory(../../3rdparty/inchi/ IUPAC_INCHI_SOURCES)
 
 add_chemkit_plugin(inchi ${SOURCES} ${IUPAC_INCHI_SOURCES})
-target_link_libraries(inchi chemkit chemkit-io ${QT_LIBRARIES})
+target_link_libraries(inchi chemkit ${QT_LIBRARIES})
+
+if(${CHEMKIT_WITH_IO})
+  target_link_libraries(inchi chemkit-io)
+endif()

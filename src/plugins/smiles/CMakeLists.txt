@@ -15,4 +15,8 @@ set(SOURCES
 )
 
 add_chemkit_plugin(smiles ${SOURCES})
-target_link_libraries(smiles chemkit chemkit-io ${QT_LIBRARIES})
+target_link_libraries(smiles chemkit ${QT_LIBRARIES})
+
+if(${CHEMKIT_WITH_IO})
+  target_link_libraries(smiles chemkit-io)
+endif()

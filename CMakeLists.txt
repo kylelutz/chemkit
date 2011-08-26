@@ -18,6 +18,16 @@ configure_file(
 add_custom_target(uninstall 
 	COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake)
 
+# build options
+option(CHEMKIT_WITH_GRAPHICS "Build the chemkit-graphics library." ON)
+option(CHEMKIT_WITH_IO "Build the chemkit-io library." ON)
+option(CHEMKIT_WITH_WEB "Build the chemkit-web library." ON)
+option(CHEMKIT_WITH_WIDGETS "Build the chemkit-widgets library." ON)
+option(CHEMKIT_BUILD_APPS "Build the chemkit applications" ON)
+option(CHEMKIT_BUILD_QT_DESIGNER_PLUGINS "Build the chemkit QtDesigner plugins." OFF)
+option(CHEMKIT_BUILD_EXAMPLES "Build the chemkit examples." OFF)
+option(CHEMKIT_BUILD_TESTS "Build the chemkit tests." OFF)
+
 # find eigen3
 find_package(Eigen3 REQUIRED)
 include_directories(${EIGEN3_INCLUDE_DIR})
