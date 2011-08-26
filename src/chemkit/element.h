@@ -78,7 +78,7 @@ class CHEMKIT_EXPORT Element
         static bool isValidSymbol(const std::string &symbol);
 
     private:
-        int m_atomicNumber;
+        unsigned char m_atomicNumber;
 };
 
 } // end chemkit namespace
