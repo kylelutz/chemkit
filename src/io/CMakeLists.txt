@@ -10,7 +10,7 @@ set(HEADERS
   genericfile-inline.h
   io.h
   moleculefile.h
-  moledulefileformat.h
+  moleculefileformat.h
   moleculefileformatadaptor.h
   moleculefileformatadaptor-inline.h
   polymerfile.h
