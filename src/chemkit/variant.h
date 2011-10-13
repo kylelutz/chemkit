@@ -84,6 +84,7 @@ class CHEMKIT_EXPORT Variant
         inline unsigned long toULong() const;
         inline float toFloat() const;
         inline double toDouble() const;
+        inline Real toReal() const;
         inline void* toPointer() const;
         inline std::string toString() const;
 

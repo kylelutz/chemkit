@@ -442,6 +442,12 @@ inline double Variant::toDouble() const
     return value<double>();
 }
 
+/// Returns the value of the variant as a \c Real.
+inline Real Variant::toReal() const
+{
+    return value<Real>();
+}
+
 /// Returns the value of the variant as a pointer.
 inline void* Variant::toPointer() const
 {
