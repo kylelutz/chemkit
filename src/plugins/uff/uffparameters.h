@@ -40,17 +40,17 @@
 
 struct UffAtomParameters {
     const char *type;
-    chemkit::Float r; // bond length (angstroms)
-    chemkit::Float theta; // angle (degrees)
-    chemkit::Float x; // distance (angstroms)
-    chemkit::Float D; // energy (kcal/mol)
-    chemkit::Float zeta; // scale
-    chemkit::Float Z; // charge
-    chemkit::Float V; // torsional barrier (kcal/mol)
-    chemkit::Float U;
-    chemkit::Float X; // electronegativity (eV)
-    chemkit::Float hard;
-    chemkit::Float radius;
+    chemkit::Real r; // bond length (angstroms)
+    chemkit::Real theta; // angle (degrees)
+    chemkit::Real x; // distance (angstroms)
+    chemkit::Real D; // energy (kcal/mol)
+    chemkit::Real zeta; // scale
+    chemkit::Real Z; // charge
+    chemkit::Real V; // torsional barrier (kcal/mol)
+    chemkit::Real U;
+    chemkit::Real X; // electronegativity (eV)
+    chemkit::Real hard;
+    chemkit::Real radius;
 };
 
 class UffParameters

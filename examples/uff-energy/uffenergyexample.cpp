@@ -79,7 +79,7 @@ int main(int argc, char *argv[])
         return -1;
     }
 
-    chemkit::Float energy = uff->energy();
+    chemkit::Real energy = uff->energy();
 
     out << "Formula: " << molecule->formula().c_str() << "\n";
     out << "Energy: " << energy << " kcal/mol\n";

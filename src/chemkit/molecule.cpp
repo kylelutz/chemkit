@@ -299,9 +299,9 @@ Variant Molecule::descriptor(const std::string &name) const
 }
 
 /// Returns the total molar mass of the molecule. Mass is in g/mol.
-Float Molecule::mass() const
+Real Molecule::mass() const
 {
-    Float mass = 0;
+    Real mass = 0;
 
     foreach(const Atom *atom, m_atoms)
         mass += atom->mass();
@@ -912,14 +912,14 @@ void Molecule::setCoordinates(const InternalCoordinates *coordinates)
 
 /// Returns the distance between atoms \p a and \p b. The returned
 /// distance is in Angstroms.
-Float Molecule::distance(const Atom *a, const Atom *b) const
+Real Molecule::distance(const Atom *a, const Atom *b) const
 {
     return chemkit::geometry::distance(a->position(), b->position());
 }
 
 /// Returns the angle between atoms \p a, \p b, and \p c. The
 /// returned angle is in degrees.
-Float Molecule::bondAngle(const Atom *a, const Atom *b, const Atom *c) const
+Real Molecule::bondAngle(const Atom *a, const Atom *b, const Atom *c) const
 {
     return chemkit::geometry::angle(a->position(), b->position(), c->position());
 }
@@ -927,7 +927,7 @@ Float Molecule::bondAngle(const Atom *a, const Atom *b, const Atom *c) const
 /// Returns the torsion angle (also known as the dihedral angle)
 /// between atoms \p a, \p b, \p c, and \p d. The returned angle is
 /// in degrees.
-Float Molecule::torsionAngle(const Atom *a, const Atom *b, const Atom *c, const Atom *d) const
+Real Molecule::torsionAngle(const Atom *a, const Atom *b, const Atom *c, const Atom *d) const
 {
     return chemkit::geometry::torsionAngle(a->position(), b->position(), c->position(), d->position());
 }
@@ -935,7 +935,7 @@ Float Molecule::torsionAngle(const Atom *a, const Atom *b, const Atom *c, const 
 /// Returns the wilson angle between the plane made by atoms \p a,
 /// \p b, \p c and the vector from \p c to \p d. The returned angle
 /// is in degrees.
-Float Molecule::wilsonAngle(const Atom *a, const Atom *b, const Atom *c, const Atom *d) const
+Real Molecule::wilsonAngle(const Atom *a, const Atom *b, const Atom *c, const Atom *d) const
 {
     return chemkit::geometry::wilsonAngle(a->position(), b->position(), c->position(), d->position());
 }
@@ -950,7 +950,7 @@ void Molecule::setCenter(const Point3 &position)
 /// Moves all of the atoms in the molecule so that the new center
 /// point is at (\p x, \p y, \p z). This convenience function is
 /// equivalent to calling setCenter(Point(\p x, \p y, \p z)).
-void Molecule::setCenter(Float x, Float y, Float z)
+void Molecule::setCenter(Real x, Real y, Real z)
 {
     setCenter(Point3(x, y, z));
 }
@@ -966,9 +966,9 @@ Point3 Molecule::center() const
     }
 
     // sums for each component
-    Float sx = 0;
-    Float sy = 0;
-    Float sz = 0;
+    Real sx = 0;
+    Real sy = 0;
+    Real sz = 0;
 
     foreach(const Atom *atom, m_atoms){
         sx += atom->x();
@@ -989,15 +989,15 @@ Point3 Molecule::centerOfMass() const
     }
 
     // sums for each component
-    Float sx = 0;
-    Float sy = 0;
-    Float sz = 0;
+    Real sx = 0;
+    Real sy = 0;
+    Real sz = 0;
 
     // sum of weights
-    Float sw = 0;
+    Real sw = 0;
 
     foreach(const Atom *atom, m_atoms){
-        Float w = atom->mass();
+        Real w = atom->mass();
 
         sx += w * atom->x();
         sy += w * atom->y();
@@ -1020,7 +1020,7 @@ void Molecule::moveBy(const Vector3 &vector)
 }
 
 /// Moves all of the atoms in the molecule by (\p dx, \p dy, \p dz).
-void Molecule::moveBy(Float dx, Float dy, Float dz)
+void Molecule::moveBy(Real dx, Real dy, Real dz)
 {
     foreach(Atom *atom, m_atoms){
         atom->moveBy(dx, dy, dz);
@@ -1029,18 +1029,18 @@ void Molecule::moveBy(Float dx, Float dy, Float dz)
 
 /// Rotates the positions of all the atoms in the molecule
 /// by \p angle degrees around \p axis.
-void Molecule::rotate(const Vector3 &axis, Float angle)
+void Molecule::rotate(const Vector3 &axis, Real angle)
 {
     // convert angle to radians
     angle *= chemkit::constants::DegreesToRadians;
 
     // build rotation transform
-    Eigen::Matrix<Float, 3, 1> axisVector(axis.x(), axis.y(), axis.z());
-    Eigen::Transform<Float, 3, 3> transform(Eigen::AngleAxis<Float>(angle, axisVector));
+    Eigen::Matrix<Real, 3, 1> axisVector(axis.x(), axis.y(), axis.z());
+    Eigen::Transform<Real, 3, 3> transform(Eigen::AngleAxis<Real>(angle, axisVector));
 
     // rotate each atom
     foreach(Atom *atom, m_atoms){
-        Eigen::Matrix<Float, 3, 1> position(atom->x(), atom->y(), atom->z());
+        Eigen::Matrix<Real, 3, 1> position(atom->x(), atom->y(), atom->z());
 
         position = transform * position;
 

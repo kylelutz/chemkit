@@ -101,9 +101,9 @@ bool FhzFileFormat::read(QIODevice *iodev, chemkit::MoleculeFile *file)
         int a = 0;
         int b = 0;
         int c = 0;
-        chemkit::Float r = 0;
-        chemkit::Float theta = 0;
-        chemkit::Float phi = 0;
+        chemkit::Real r = 0;
+        chemkit::Real theta = 0;
+        chemkit::Real phi = 0;
 
         switch(i){
             default:

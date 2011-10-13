@@ -73,14 +73,14 @@ class CHEMKIT_EXPORT Atom
         int massNumber() const;
         int expectedValence() const;
         int formalCharge() const;
-        void setPartialCharge(Float charge);
-        Float partialCharge() const;
+        void setPartialCharge(Real charge);
+        Real partialCharge() const;
         std::string symbol() const;
         std::string name() const;
-        Float mass() const;
-        Float electronegativity() const;
-        Float covalentRadius() const;
-        Float vanDerWaalsRadius() const;
+        Real mass() const;
+        Real electronegativity() const;
+        Real covalentRadius() const;
+        Real vanDerWaalsRadius() const;
         inline bool is(const Element &element) const;
         bool isHeteroatom() const;
         inline Molecule* molecule() const;
@@ -121,16 +121,16 @@ class CHEMKIT_EXPORT Atom
 
         // geometry
         void setPosition(const Point3 &position);
-        void setPosition(Float x, Float y, Float z);
+        void setPosition(Real x, Real y, Real z);
         Point3 position() const;
-        Float x() const;
-        Float y() const;
-        Float z() const;
+        Real x() const;
+        Real y() const;
+        Real z() const;
         void moveTo(const Point3 &position);
-        void moveTo(Float x, Float y, Float z);
+        void moveTo(Real x, Real y, Real z);
         void moveBy(const Vector3 &vector);
-        void moveBy(Float dx, Float dy, Float dz);
-        Float distance(const Atom *atom) const;
+        void moveBy(Real dx, Real dy, Real dz);
+        Real distance(const Atom *atom) const;
 
         // chirality
         void setChirality(Atom::Chirality chirality);

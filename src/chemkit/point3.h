@@ -44,7 +44,7 @@
 namespace chemkit {
 
 /// A three-dimensional point.
-typedef Eigen::Matrix<Float, 3, 1> Point3;
+typedef Eigen::Matrix<Real, 3, 1> Point3;
 
 /// A three-dimensional point containing \c float values.
 typedef Eigen::Matrix<float, 3, 1> Point3f;

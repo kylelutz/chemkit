@@ -70,7 +70,7 @@ QString OplsParameters::atomName(int type) const
     return m_typeToName.value(type);
 }
 
-chemkit::Float OplsParameters::partialCharge(int type) const
+chemkit::Real OplsParameters::partialCharge(int type) const
 {
     return m_typeToCharge.value(type);
 }

@@ -73,34 +73,34 @@ class CHEMKIT_EXPORT Coordinates
 
         // coordinates
         void setPosition(int index, const Point3 &position);
-        void setPosition(int index, Float x, Float y, Float z);
+        void setPosition(int index, Real x, Real y, Real z);
         Point3 position(int index) const;
-        void setValue(int row, int column, Float value);
-        Float value(int row, int column) const;
+        void setValue(int row, int column, Real value);
+        Real value(int row, int column) const;
         void append(const Point3 &position);
-        void append(Float x, Float y, Float z);
+        void append(Real x, Real y, Real z);
         void insert(int index, const Point3 &position);
-        void insert(int index, Float x, Float y, Float z);
+        void insert(int index, Real x, Real y, Real z);
         void remove(int index);
 
         // geometry
-        Float distance(int i, int j) const;
-        Float angle(int i, int j, int k) const;
-        Float angleRadians(int i, int j, int k) const;
-        Float torsionAngle(int i, int j, int k, int l) const;
-        Float torsionAngleRadians(int i, int j, int k, int l) const;
-        Float wilsonAngle(int i, int j, int k, int l) const;
-        Float wilsonAngleRadians(int i, int j, int k, int l) const;
+        Real distance(int i, int j) const;
+        Real angle(int i, int j, int k) const;
+        Real angleRadians(int i, int j, int k) const;
+        Real torsionAngle(int i, int j, int k, int l) const;
+        Real torsionAngleRadians(int i, int j, int k, int l) const;
+        Real wilsonAngle(int i, int j, int k, int l) const;
+        Real wilsonAngleRadians(int i, int j, int k, int l) const;
         Point3 center() const;
-        Point3 weightedCenter(const std::vector<Float> &weights) const;
+        Point3 weightedCenter(const std::vector<Real> &weights) const;
         void moveBy(const Vector3 &vector);
-        void moveBy(Float x, Float y, Float z);
+        void moveBy(Real x, Real y, Real z);
         Matrix distanceMatrix() const;
 
         // math
         Coordinates add(const Coordinates &coordinates) const;
         Coordinates subtract(const Coordinates &coordinates) const;
-        Eigen::Matrix<Float, 3, 3> multiply(const Coordinates *coordinates) const;
+        Eigen::Matrix<Real, 3, 3> multiply(const Coordinates *coordinates) const;
 
         // operators
         Coordinates operator+(const Coordinates &coordinates) const;

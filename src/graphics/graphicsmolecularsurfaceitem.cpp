@@ -225,7 +225,7 @@ void ContactPatchItem::paint(GraphicsPainter *painter)
             const Point3f &b = item->center();
             float rb = item->radius();
 
-            const float d = chemkit::geometry::distance(a.cast<Float>(), b.cast<Float>());
+            const float d = chemkit::geometry::distance(a.cast<Real>(), b.cast<Real>());
             const float x = (d*d - rb*rb + ra*ra) / (2 * d);
 
             Vector3f planeNormal = (b - a).normalized();

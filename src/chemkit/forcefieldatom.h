@@ -59,13 +59,13 @@ class CHEMKIT_EXPORT ForceFieldAtom
         int index() const;
         virtual bool setType(const std::string &type);
         virtual std::string type() const;
-        void setCharge(Float charge);
-        Float charge() const;
+        void setCharge(Real charge);
+        Real charge() const;
         bool isSetup() const;
         ForceField* forceField() const;
 
         // calculations
-        Float energy() const;
+        Real energy() const;
         Vector3 gradient() const;
 
         // structure
@@ -75,7 +75,7 @@ class CHEMKIT_EXPORT ForceFieldAtom
         void setPosition(const Point3 &position);
         Point3 position() const;
         void moveBy(const Vector3 &vector);
-        void moveBy(Float dx, Float dy, Float dz);
+        void moveBy(Real dx, Real dy, Real dz);
 
     private:
         ForceFieldAtomPrivate* const d;

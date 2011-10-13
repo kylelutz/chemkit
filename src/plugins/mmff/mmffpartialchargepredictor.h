@@ -52,14 +52,14 @@ class MmffPartialChargePredictor : public chemkit::PartialChargePredictor
         void setAtomTyper(const MmffAtomTyper *typer);
 
         // partial charges
-        virtual chemkit::Float partialCharge(int index) const;
-        virtual chemkit::Float partialCharge(const chemkit::Atom *atom) const;
+        virtual chemkit::Real partialCharge(int index) const;
+        virtual chemkit::Real partialCharge(const chemkit::Atom *atom) const;
 
     protected:
         virtual void assignPartialCharges(const chemkit::Molecule *molecule);
 
     private:
-        QVector<chemkit::Float> m_partialCharges;
+        QVector<chemkit::Real> m_partialCharges;
         const MmffAtomTyper *m_typer;
         MmffParameters *m_parameters;
 };

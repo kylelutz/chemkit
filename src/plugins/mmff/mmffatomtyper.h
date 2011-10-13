@@ -53,14 +53,14 @@ class MmffAtomTyper : public chemkit::AtomTyper
         int typeNumber(const chemkit::Atom *atom) const;
 
         // charges
-        chemkit::Float formalCharge(int index) const;
-        chemkit::Float formalCharge(const chemkit::Atom *atom) const;
+        chemkit::Real formalCharge(int index) const;
+        chemkit::Real formalCharge(const chemkit::Atom *atom) const;
 
     protected:
         void assignTypes(const chemkit::Molecule *molecule);
 
     private:
-        void setType(int index, int type, chemkit::Float formalCharge = 0);
+        void setType(int index, int type, chemkit::Real formalCharge = 0);
         void setType(int index, const chemkit::Atom *atom);
         void setHydrogenType(int index, const chemkit::Atom *atom);
         void setCarbonType(int index, const chemkit::Atom *atom);
@@ -71,8 +71,8 @@ class MmffAtomTyper : public chemkit::AtomTyper
 
     private:
         std::vector<int> m_types;
-        std::vector<chemkit::Float> m_formalCharges;
-        std::vector<chemkit::Float> m_partialCharges;
+        std::vector<chemkit::Real> m_formalCharges;
+        std::vector<chemkit::Real> m_partialCharges;
 };
 
 #endif // MMFFATOMTYPER_H

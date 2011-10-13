@@ -81,7 +81,7 @@ void MoleculeTest::formula()
 void MoleculeTest::mass()
 {
     chemkit::Molecule molecule;
-    QCOMPARE(molecule.mass(), chemkit::Float(0.0));
+    QCOMPARE(molecule.mass(), chemkit::Real(0.0));
 
     molecule.addAtom("C");
     QCOMPARE(qRound(molecule.mass()), 12);
@@ -90,7 +90,7 @@ void MoleculeTest::mass()
     QCOMPARE(qRound(molecule.mass()), 13);
 
     molecule.clear();
-    QCOMPARE(molecule.mass(), chemkit::Float(0.0));
+    QCOMPARE(molecule.mass(), chemkit::Real(0.0));
 }
 
 void MoleculeTest::data()
@@ -405,24 +405,24 @@ void MoleculeTest::distance()
     chemkit::Molecule molecule;
     chemkit::Atom *H1 = molecule.addAtom("H");
     chemkit::Atom *H2 = molecule.addAtom("H");
-    QCOMPARE(molecule.distance(H1, H2), chemkit::Float(0.0));
-    QCOMPARE(molecule.distance(H2, H1), chemkit::Float(0.0));
+    QCOMPARE(molecule.distance(H1, H2), chemkit::Real(0.0));
+    QCOMPARE(molecule.distance(H2, H1), chemkit::Real(0.0));
 
     H1->setPosition(1, 0, 0);
-    QCOMPARE(molecule.distance(H1, H2), chemkit::Float(1.0));
-    QCOMPARE(molecule.distance(H2, H1), chemkit::Float(1.0));
+    QCOMPARE(molecule.distance(H1, H2), chemkit::Real(1.0));
+    QCOMPARE(molecule.distance(H2, H1), chemkit::Real(1.0));
 
     H2->setPosition(3, 0, 0);
-    QCOMPARE(molecule.distance(H1, H2), chemkit::Float(2.0));
-    QCOMPARE(molecule.distance(H2, H1), chemkit::Float(2.0));
+    QCOMPARE(molecule.distance(H1, H2), chemkit::Real(2.0));
+    QCOMPARE(molecule.distance(H2, H1), chemkit::Real(2.0));
 
     H1->setPosition(0, 4, 0);
-    QCOMPARE(molecule.distance(H1, H2), chemkit::Float(5.0));
-    QCOMPARE(molecule.distance(H2, H1), chemkit::Float(5.0));
+    QCOMPARE(molecule.distance(H1, H2), chemkit::Real(5.0));
+    QCOMPARE(molecule.distance(H2, H1), chemkit::Real(5.0));
 
     chemkit::Atom *H3 = molecule.addAtom("H");
     H3->setPosition(0, 0, -3);
-    QCOMPARE(molecule.distance(H1, H3), chemkit::Float(5.0));
+    QCOMPARE(molecule.distance(H1, H3), chemkit::Real(5.0));
 }
 
 void MoleculeTest::center()

@@ -98,9 +98,9 @@ bool CubeFileFormat::read(std::istream &input, chemkit::MoleculeFile *file)
         input >> value;
 
         // read position
-        chemkit::Float x = 0;
-        chemkit::Float y = 0;
-        chemkit::Float z = 0;
+        chemkit::Real x = 0;
+        chemkit::Real y = 0;
+        chemkit::Real z = 0;
         input >> x >> y >> z;
 
         chemkit::Point3 position(x, y, z);

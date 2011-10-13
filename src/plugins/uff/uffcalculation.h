@@ -48,8 +48,8 @@ class UffCalculation : public chemkit::ForceFieldCalculation
         virtual bool setup() = 0;
 
     protected:
-        chemkit::Float bondOrder(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b) const;
-        chemkit::Float bondLength(const UffAtomParameters *a, const UffAtomParameters *b, chemkit::Float bondOrder) const;
+        chemkit::Real bondOrder(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b) const;
+        chemkit::Real bondLength(const UffAtomParameters *a, const UffAtomParameters *b, chemkit::Real bondOrder) const;
         const UffAtomParameters* parameters(const chemkit::ForceFieldAtom *atom) const;
 };
 
@@ -59,7 +59,7 @@ class UffBondStrechCalculation : public UffCalculation
         UffBondStrechCalculation(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b);
 
         bool setup();
-        chemkit::Float energy() const;
+        chemkit::Real energy() const;
         std::vector<chemkit::Vector3> gradient() const;
 };
 
@@ -69,7 +69,7 @@ class UffAngleBendCalculation : public UffCalculation
         UffAngleBendCalculation(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b, const chemkit::ForceFieldAtom *c);
 
         bool setup();
-        chemkit::Float energy() const;
+        chemkit::Real energy() const;
         std::vector<chemkit::Vector3> gradient() const;
 };
 
@@ -79,7 +79,7 @@ class UffTorsionCalculation : public UffCalculation
         UffTorsionCalculation(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b, const chemkit::ForceFieldAtom *c, const chemkit::ForceFieldAtom *d);
 
         bool setup();
-        chemkit::Float energy() const;
+        chemkit::Real energy() const;
         std::vector<chemkit::Vector3> gradient() const;
 };
 
@@ -89,7 +89,7 @@ class UffInversionCalculation : public UffCalculation
         UffInversionCalculation(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b, const chemkit::ForceFieldAtom *c, const chemkit::ForceFieldAtom *d);
 
         bool setup();
-        chemkit::Float energy() const;
+        chemkit::Real energy() const;
         std::vector<chemkit::Vector3> gradient() const;
 };
 
@@ -99,7 +99,7 @@ class UffVanDerWaalsCalculation : public UffCalculation
         UffVanDerWaalsCalculation(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b);
 
         bool setup();
-        chemkit::Float energy() const;
+        chemkit::Real energy() const;
         std::vector<chemkit::Vector3> gradient() const;
 };
 
@@ -109,7 +109,7 @@ class UffElectrostaticCalculation : public UffCalculation
         UffElectrostaticCalculation(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b);
 
         bool setup();
-        chemkit::Float energy() const;
+        chemkit::Real energy() const;
 };
 
 #endif // UFFCALCULATION_H

@@ -74,12 +74,12 @@ void MmffPartialChargePredictor::setAtomTyper(const MmffAtomTyper *typer)
 }
 
 // --- Partial Charges ----------------------------------------------------- //
-chemkit::Float MmffPartialChargePredictor::partialCharge(int index) const
+chemkit::Real MmffPartialChargePredictor::partialCharge(int index) const
 {
     return m_partialCharges.value(index, 0);
 }
 
-chemkit::Float MmffPartialChargePredictor::partialCharge(const chemkit::Atom *atom) const
+chemkit::Real MmffPartialChargePredictor::partialCharge(const chemkit::Atom *atom) const
 {
     return partialCharge(atom->index());
 }
@@ -119,15 +119,15 @@ void MmffPartialChargePredictor::assignPartialCharges(const chemkit::Molecule *m
             continue;
         }
 
-        chemkit::Float q0 = typer->formalCharge(atom);
-        chemkit::Float M = atomParameters->crd;
-        chemkit::Float V = m_parameters->partialChargeParameters(atomType)->fcadj;
-        chemkit::Float formalChargeSum = 0;
-        chemkit::Float partialChargeSum = 0;
+        chemkit::Real q0 = typer->formalCharge(atom);
+        chemkit::Real M = atomParameters->crd;
+        chemkit::Real V = m_parameters->partialChargeParameters(atomType)->fcadj;
+        chemkit::Real formalChargeSum = 0;
+        chemkit::Real partialChargeSum = 0;
 
         if(V == 0){
             foreach(const chemkit::Atom *neighbor, atom->neighbors()){
-                chemkit::Float neighborFormalCharge = typer->formalCharge(neighbor);
+                chemkit::Real neighborFormalCharge = typer->formalCharge(neighbor);
 
                 if(neighborFormalCharge < 0){
                     q0 += neighborFormalCharge / (2 * neighbor->neighborCount());
@@ -137,7 +137,7 @@ void MmffPartialChargePredictor::assignPartialCharges(const chemkit::Molecule *m
 
         if(atomType == 62){
             foreach(const chemkit::Atom *neighbor, atom->neighbors()){
-                chemkit::Float neighborFormalCharge = typer->formalCharge(neighbor);
+                chemkit::Real neighborFormalCharge = typer->formalCharge(neighbor);
 
                 if(neighborFormalCharge > 0){
                     q0 -= neighborFormalCharge / 2;

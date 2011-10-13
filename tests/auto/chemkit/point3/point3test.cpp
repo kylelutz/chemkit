@@ -40,14 +40,14 @@
 void Point3Test::basic()
 {
     chemkit::Point3 point(0, 0, 0);
-    QCOMPARE(point.x(), chemkit::Float(0.0));
-    QCOMPARE(point.y(), chemkit::Float(0.0));
-    QCOMPARE(point.z(), chemkit::Float(0.0));
+    QCOMPARE(point.x(), chemkit::Real(0.0));
+    QCOMPARE(point.y(), chemkit::Real(0.0));
+    QCOMPARE(point.z(), chemkit::Real(0.0));
 
     point = chemkit::Point3(1, 2, 3);
-    QCOMPARE(point.x(), chemkit::Float(1.0));
-    QCOMPARE(point.y(), chemkit::Float(2.0));
-    QCOMPARE(point.z(), chemkit::Float(3.0));
+    QCOMPARE(point.x(), chemkit::Real(1.0));
+    QCOMPARE(point.y(), chemkit::Real(2.0));
+    QCOMPARE(point.z(), chemkit::Real(3.0));
 }
 
 void Point3Test::isZero()

@@ -56,15 +56,15 @@ class CHEMKIT_EXPORT AlphaShape
 
         // construction and destruction
         AlphaShape(const std::vector<Point3> &points);
-        AlphaShape(const std::vector<Point3> &points, const std::vector<Float> &weights);
+        AlphaShape(const std::vector<Point3> &points, const std::vector<Real> &weights);
         ~AlphaShape();
 
         // properties
         int size() const;
         Point3 position(int vertex) const;
-        Float weight(int vertex) const;
-        void setAlphaValue(Float alphaValue);
-        Float alphaValue() const;
+        Real weight(int vertex) const;
+        void setAlphaValue(Real alphaValue);
+        Real alphaValue() const;
 
         // simplicies
         std::vector<int> verticies() const;
@@ -77,14 +77,14 @@ class CHEMKIT_EXPORT AlphaShape
         int tetrahedronCount() const;
 
         // geometry
-        Float volume() const;
-        Float surfaceArea() const;
+        Real volume() const;
+        Real surfaceArea() const;
         Point3 orthocenter(int i, int j) const;
         Point3 orthocenter(int i, int j, int k) const;
         Point3 orthocenter(int i, int j, int k, int l) const;
-        Float orthoradius(int i, int j) const;
-        Float orthoradius(int i, int j, int k) const;
-        Float orthoradius(int i, int j, int k, int l) const;
+        Real orthoradius(int i, int j) const;
+        Real orthoradius(int i, int j, int k) const;
+        Real orthoradius(int i, int j, int k, int l) const;
         bool vertexAttached(int i, int j) const;
         bool edgeAttached(int i, int j, int k) const;
         bool triangleAttached(int i, int j, int k, int l) const;

@@ -46,20 +46,20 @@ class MmffParametersData;
 
 struct MmffBondStrechParameters
 {
-    chemkit::Float kb;
-    chemkit::Float r0;
+    chemkit::Real kb;
+    chemkit::Real r0;
 };
 
 struct MmffAngleBendParameters
 {
-    chemkit::Float ka;
-    chemkit::Float theta0;
+    chemkit::Real ka;
+    chemkit::Real theta0;
 };
 
 struct MmffStrechBendParameters
 {
-    chemkit::Float kba_ijk;
-    chemkit::Float kba_kji;
+    chemkit::Real kba_ijk;
+    chemkit::Real kba_kji;
 };
 
 struct MmffDefaultStrechBendParameters
@@ -72,22 +72,22 @@ struct MmffDefaultStrechBendParameters
 
 struct MmffOutOfPlaneBendingParameters
 {
-    chemkit::Float koop;
+    chemkit::Real koop;
 };
 
 struct MmffTorsionParameters
 {
-    chemkit::Float V1;
-    chemkit::Float V2;
-    chemkit::Float V3;
+    chemkit::Real V1;
+    chemkit::Real V2;
+    chemkit::Real V3;
 };
 
 struct MmffVanDerWaalsParameters
 {
-    chemkit::Float alpha;
-    chemkit::Float N;
-    chemkit::Float A;
-    chemkit::Float G;
+    chemkit::Real alpha;
+    chemkit::Real N;
+    chemkit::Real A;
+    chemkit::Real G;
     char DA;
 };
 
@@ -108,13 +108,13 @@ struct MmffChargeParameters
     int bondType;
     int typeA;
     int typeB;
-    chemkit::Float bci;
+    chemkit::Real bci;
 };
 
 struct MmffPartialChargeParameters
 {
-    chemkit::Float pbci;
-    chemkit::Float fcadj;
+    chemkit::Real pbci;
+    chemkit::Real fcadj;
 };
 
 class MmffParameters

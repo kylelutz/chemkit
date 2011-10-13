@@ -166,7 +166,7 @@ void Coordinates::setPosition(int index, const Point3 &position)
 }
 
 /// Sets the position at \p index to (\p x, \p y, \p z).
-void Coordinates::setPosition(int index, Float x, Float y, Float z)
+void Coordinates::setPosition(int index, Real x, Real y, Real z)
 {
     setPosition(index, Point3(x, y, z));
 }
@@ -180,13 +180,13 @@ Point3 Coordinates::position(int index) const
 }
 
 /// Sets the value at \p row and \p column to \p value.
-void Coordinates::setValue(int row, int column, Float value)
+void Coordinates::setValue(int row, int column, Real value)
 {
     m_matrix(row, column) = value;
 }
 
 /// Returns the value at \p row and \p column;
-Float Coordinates::value(int row, int column) const
+Real Coordinates::value(int row, int column) const
 {
     return m_matrix(row, column);
 }
@@ -198,7 +198,7 @@ void Coordinates::append(const Point3 &position)
 }
 
 /// Appends the point (\p x, \p y, \p z) to the coordinates.
-void Coordinates::append(Float x, Float y, Float z)
+void Coordinates::append(Real x, Real y, Real z)
 {
     append(Point3(x, y, z));
 }
@@ -224,7 +224,7 @@ void Coordinates::insert(int index, const Point3 &position)
 }
 
 /// Inserts the point (\p x, \p y, \p z) at \p index.
-void Coordinates::insert(int index, Float x, Float y, Float z)
+void Coordinates::insert(int index, Real x, Real y, Real z)
 {
     insert(index, Point3(x, y, z));
 }
@@ -242,49 +242,49 @@ void Coordinates::remove(int index)
 // --- Geometry ------------------------------------------------------------ //
 /// Returns the distance between the points at \p i and \p j. The
 /// returned distance is in Angstroms.
-Float Coordinates::distance(int i, int j) const
+Real Coordinates::distance(int i, int j) const
 {
     return chemkit::geometry::distance(position(i), position(j));
 }
 
 /// Returns the bond angle between the points at \p i, \p j, and
 /// \p k. The returned angle is in degrees.
-Float Coordinates::angle(int i, int j, int k) const
+Real Coordinates::angle(int i, int j, int k) const
 {
     return chemkit::geometry::angle(position(i), position(j), position(k));
 }
 
 /// Returns the bond angle between the points at \p i, \p j, and
 /// \p k. The returned angle is in radians.
-Float Coordinates::angleRadians(int i, int j, int k) const
+Real Coordinates::angleRadians(int i, int j, int k) const
 {
     return chemkit::geometry::angleRadians(position(i), position(j), position(k));
 }
 
 /// Returns the torsion angle between the points at \p i, \p j, \p k,
 /// and \p l. The returned angle is in degrees.
-Float Coordinates::torsionAngle(int i, int j, int k, int l) const
+Real Coordinates::torsionAngle(int i, int j, int k, int l) const
 {
     return chemkit::geometry::torsionAngle(position(i), position(j), position(k), position(l));
 }
 
 /// Returns the torsion angle between the points at \p i, \p j, \p k,
 /// and \p l. The returned angle is in radians.
-Float Coordinates::torsionAngleRadians(int i, int j, int k, int l) const
+Real Coordinates::torsionAngleRadians(int i, int j, int k, int l) const
 {
     return chemkit::geometry::torsionAngleRadians(position(i), position(j), position(k), position(l));
 }
 
 /// Returns the wilson angle between the points at \p i, \p j, \p k
 /// and \p l. The returned angle is in degrees.
-Float Coordinates::wilsonAngle(int i, int j, int k, int l) const
+Real Coordinates::wilsonAngle(int i, int j, int k, int l) const
 {
     return chemkit::geometry::wilsonAngle(position(i), position(j), position(k), position(l));
 }
 
 /// Returns the wilson angle between the points at \p i, \p j, \p k
 /// and \p l. The returned angle is in radians.
-Float Coordinates::wilsonAngleRadians(int i, int j, int k, int l) const
+Real Coordinates::wilsonAngleRadians(int i, int j, int k, int l) const
 {
     return chemkit::geometry::wilsonAngleRadians(position(i), position(j), position(k), position(l));
 }
@@ -298,9 +298,9 @@ Point3 Coordinates::center() const
     }
 
     // sums for each component
-    Float sx = 0;
-    Float sy = 0;
-    Float sz = 0;
+    Real sx = 0;
+    Real sy = 0;
+    Real sz = 0;
 
     for(int i = 0; i < size(); i++){
         sx += m_matrix(i, 0);
@@ -315,7 +315,7 @@ Point3 Coordinates::center() const
 
 /// Returns the center of the coordinates after weighting each
 /// position with \p weights.
-Point3 Coordinates::weightedCenter(const std::vector<Float> &weights) const
+Point3 Coordinates::weightedCenter(const std::vector<Real> &weights) const
 {
     assert(static_cast<unsigned long>(size()) == weights.size());
 
@@ -324,15 +324,15 @@ Point3 Coordinates::weightedCenter(const std::vector<Float> &weights) const
     }
 
     // sums for each component
-    Float sx = 0;
-    Float sy = 0;
-    Float sz = 0;
+    Real sx = 0;
+    Real sy = 0;
+    Real sz = 0;
 
     // sum of weights
-    Float sw = 0;
+    Real sw = 0;
 
     for(int i = 0; i < size(); i++){
-        Float weight = weights[i];
+        Real weight = weights[i];
 
         sx += weight * m_matrix(i, 0);
         sy += weight * m_matrix(i, 1);
@@ -357,7 +357,7 @@ void Coordinates::moveBy(const Vector3 &vector)
 }
 
 /// Moves all of the coordinates by (\p x, \p y, \p z).
-void Coordinates::moveBy(Float x, Float y, Float z)
+void Coordinates::moveBy(Real x, Real y, Real z)
 {
     moveBy(Vector3(x, y, z));
 }
@@ -373,7 +373,7 @@ Matrix Coordinates::distanceMatrix() const
         matrix(i, i) = 0;
 
         for(int j = i + 1; j < size(); j++){
-            Float d = distance(i, j);
+            Real d = distance(i, j);
 
             matrix(i, j) = d;
             matrix(j, i) = d;
@@ -422,7 +422,7 @@ Coordinates Coordinates::subtract(const Coordinates &coordinates) const
 
 /// Returns the 3x3 matrix product of the transpose of the matrix
 /// and \p coordinates.
-Eigen::Matrix<Float, 3, 3> Coordinates::multiply(const Coordinates *coordinates) const
+Eigen::Matrix<Real, 3, 3> Coordinates::multiply(const Coordinates *coordinates) const
 {
     return m_matrix.transpose() * coordinates->m_matrix;
 }

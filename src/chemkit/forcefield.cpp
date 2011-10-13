@@ -316,9 +316,9 @@ void ForceField::setCalculationSetup(ForceFieldCalculation *calculation, bool se
 /// Calculates and returns the total energy of the system. Energy is
 /// in kcal/mol. If the force field is not setup this method will
 /// return \c 0.
-Float ForceField::energy() const
+Real ForceField::energy() const
 {
-    Float energy = 0;
+    Real energy = 0;
 
     foreach(const ForceFieldCalculation *calculation, d->calculations){
         energy += calculation->energy();
@@ -381,24 +381,24 @@ std::vector<Vector3> ForceField::numericalGradient() const
         ForceFieldAtom *atom = d->atoms[i];
 
         // initial energy
-        Float eI = atom->energy();
-        Float epsilon = 1.0e-10;
+        Real eI = atom->energy();
+        Real epsilon = 1.0e-10;
 
         atom->moveBy(epsilon, 0, 0);
-        Float eF_x = atom->energy();
+        Real eF_x = atom->energy();
 
         atom->moveBy(-epsilon, epsilon, 0);
-        Float eF_y = atom->energy();
+        Real eF_y = atom->energy();
 
         atom->moveBy(0, -epsilon, epsilon);
-        Float eF_z = atom->energy();
+        Real eF_z = atom->energy();
 
         // restore initial position
         atom->moveBy(0, 0, -epsilon);
 
-        Float dx = (eF_x - eI) / epsilon;
-        Float dy = (eF_y - eI) / epsilon;
-        Float dz = (eF_z - eI) / epsilon;
+        Real dx = (eF_x - eI) / epsilon;
+        Real dy = (eF_y - eI) / epsilon;
+        Real dz = (eF_z - eI) / epsilon;
 
         gradient[i] = Vector3(dx, dy, dz);
     }
@@ -407,18 +407,18 @@ std::vector<Vector3> ForceField::numericalGradient() const
 }
 
 /// Returns the magnitude of the largest gradient.
-Float ForceField::largestGradient() const
+Real ForceField::largestGradient() const
 {
     if(!size()){
         return 0;
     }
 
-    Float largest = 0;
+    Real largest = 0;
 
     std::vector<Vector3> gradient = this->gradient();
 
     for(unsigned int i = 0; i < gradient.size(); i++){
-        Float length = gradient[i].norm();
+        Real length = gradient[i].norm();
 
         if(length > largest)
             largest = length;
@@ -428,13 +428,13 @@ Float ForceField::largestGradient() const
 }
 
 /// Returns the root mean square gradient.
-Float ForceField::rootMeanSquareGradient() const
+Real ForceField::rootMeanSquareGradient() const
 {
     if(!size()){
         return 0;
     }
 
-    Float sum = 0;
+    Real sum = 0;
 
     std::vector<Vector3> gradient = this->gradient();
 
@@ -486,7 +486,7 @@ void ForceField::writeCoordinates(Atom *atom) const
 /// Perform one step of energy minimization. Returns \c true if
 /// converged. The minimization is considered converged when the
 /// root mean square gradient is below \p converganceValue.
-bool ForceField::minimizationStep(Float converganceValue)
+bool ForceField::minimizationStep(Real converganceValue)
 {
     // calculate gradient
     std::vector<Vector3> gradient = this->gradient();
@@ -494,11 +494,11 @@ bool ForceField::minimizationStep(Float converganceValue)
     // perform line search
     std::vector<Point3> initialPositions(atomCount());
 
-    Float step = 0.05;
-    Float stepConv = 1e-5;
+    Real step = 0.05;
+    Real stepConv = 1e-5;
     int stepCount = 10;
 
-    Float initialEnergy = energy();
+    Real initialEnergy = energy();
 
     for(int i = 0; i < stepCount; i++){
         for(int atomIndex = 0; atomIndex < atomCount(); atomIndex++){
@@ -508,7 +508,7 @@ bool ForceField::minimizationStep(Float converganceValue)
             atom->moveBy(-gradient[atomIndex] * step);
         }
 
-        Float finalEnergy = energy();
+        Real finalEnergy = energy();
 
         // if the final energy is NaN then most likely the
         // simulation exploded so we reset the initial atom
@@ -559,37 +559,37 @@ bool ForceField::minimizationStep(Float converganceValue)
 }
 
 // --- Geometry ------------------------------------------------------------ //
-Float ForceField::distance(const ForceFieldAtom *a, const ForceFieldAtom *b) const
+Real ForceField::distance(const ForceFieldAtom *a, const ForceFieldAtom *b) const
 {
     return chemkit::geometry::distance(a->position(), b->position());
 }
 
-Float ForceField::bondAngle(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c) const
+Real ForceField::bondAngle(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c) const
 {
     return bondAngleRadians(a, b, c) * chemkit::constants::RadiansToDegrees;
 }
 
-Float ForceField::bondAngleRadians(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c) const
+Real ForceField::bondAngleRadians(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c) const
 {
     return chemkit::geometry::angleRadians(a->position(), b->position(), c->position());
 }
 
-Float ForceField::torsionAngle(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c, const ForceFieldAtom *d) const
+Real ForceField::torsionAngle(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c, const ForceFieldAtom *d) const
 {
     return torsionAngleRadians(a, b, c, d) * chemkit::constants::RadiansToDegrees;
 }
 
-Float ForceField::torsionAngleRadians(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c, const ForceFieldAtom *d) const
+Real ForceField::torsionAngleRadians(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c, const ForceFieldAtom *d) const
 {
     return chemkit::geometry::torsionAngleRadians(a->position(), b->position(), c->position(), d->position());
 }
 
-Float ForceField::wilsonAngle(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c, const ForceFieldAtom *d) const
+Real ForceField::wilsonAngle(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c, const ForceFieldAtom *d) const
 {
     return wilsonAngleRadians(a, b, c, d) * chemkit::constants::RadiansToDegrees;
 }
 
-Float ForceField::wilsonAngleRadians(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c, const ForceFieldAtom *d) const
+Real ForceField::wilsonAngleRadians(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c, const ForceFieldAtom *d) const
 {
     return chemkit::geometry::wilsonAngleRadians(a->position(), b->position(), c->position(), d->position());
 }

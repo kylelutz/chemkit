@@ -62,8 +62,8 @@ class CHEMKIT_EXPORT PartialChargePredictor
         const Molecule* molecule() const;
 
         // partial charges
-        virtual Float partialCharge(int index) const;
-        virtual Float partialCharge(const Atom *atom) const;
+        virtual Real partialCharge(int index) const;
+        virtual Real partialCharge(const Atom *atom) const;
 
         // static methods
         static PartialChargePredictor* create(const std::string &name);

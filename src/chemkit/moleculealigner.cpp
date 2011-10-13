@@ -160,12 +160,12 @@ const Conformer* MoleculeAligner::targetConformer() const
 // --- Geometry ------------------------------------------------------------ //
 /// Returns the root mean square deviation between the coordinates
 /// of the source and target molecules.
-Float MoleculeAligner::deviation() const
+Real MoleculeAligner::deviation() const
 {
     Coordinates *sourceMatrix = sourceCoordinates();
     Coordinates *targetMatrix = targetCoordinates();
 
-    Float rmsd = this->rmsd(sourceMatrix, targetMatrix);
+    Real rmsd = this->rmsd(sourceMatrix, targetMatrix);
 
     delete sourceMatrix;
     delete targetMatrix;
@@ -176,7 +176,7 @@ Float MoleculeAligner::deviation() const
 /// Returns a 3x3 rotation matrix that represents the optimal
 /// rotation of the source molecule to minimize the root mean square
 /// deviation.
-Eigen::Matrix<Float, 3, 3> MoleculeAligner::rotationMatrix() const
+Eigen::Matrix<Real, 3, 3> MoleculeAligner::rotationMatrix() const
 {
     Coordinates *sourceMatrix = sourceCoordinates();
     Coordinates *targetMatrix = targetCoordinates();
@@ -184,18 +184,18 @@ Eigen::Matrix<Float, 3, 3> MoleculeAligner::rotationMatrix() const
     sourceMatrix->moveBy(-sourceMatrix->center());
     targetMatrix->moveBy(-targetMatrix->center());
 
-    Eigen::Matrix<Float, 3, 3> covarianceMatrix = targetMatrix->multiply(sourceMatrix);
+    Eigen::Matrix<Real, 3, 3> covarianceMatrix = targetMatrix->multiply(sourceMatrix);
 
     delete sourceMatrix;
     delete targetMatrix;
 
-    Eigen::Matrix<Float, 3, 3> rotationMatrix = Eigen::Matrix<Float, 3, 3>::Identity();
+    Eigen::Matrix<Real, 3, 3> rotationMatrix = Eigen::Matrix<Real, 3, 3>::Identity();
 
     int d = covarianceMatrix.determinant() >= 0 ? 1 : -1;
     rotationMatrix(2, 2) = d;
 
     // compute singular value decomposition of the covariance matrix
-    Eigen::JacobiSVD<Eigen::Matrix<Float, 3, 3> > svd(covarianceMatrix, Eigen::ComputeFullU | Eigen::ComputeFullV);
+    Eigen::JacobiSVD<Eigen::Matrix<Real, 3, 3> > svd(covarianceMatrix, Eigen::ComputeFullU | Eigen::ComputeFullV);
 
     rotationMatrix = svd.matrixU() * rotationMatrix * svd.matrixV().transpose();
 
@@ -222,7 +222,7 @@ Vector3 MoleculeAligner::displacementVector() const
 /// from displacementVector().
 void MoleculeAligner::align(Molecule *molecule)
 {
-    Eigen::Matrix<Float, 3, 3> matrix = rotationMatrix();
+    Eigen::Matrix<Real, 3, 3> matrix = rotationMatrix();
     foreach(Atom *atom, molecule->atoms()){
         atom->setPosition(matrix * atom->position());
     }
@@ -236,11 +236,11 @@ void MoleculeAligner::align(Molecule *molecule)
 // --- Static Methods ------------------------------------------------------ //
 /// Returns the root mean square deviation between the coordinates
 /// in \p a and \p b.
-Float MoleculeAligner::rmsd(const Coordinates *a, const Coordinates *b)
+Real MoleculeAligner::rmsd(const Coordinates *a, const Coordinates *b)
 {
     int size = std::min(a->size(), b->size());
 
-    Float sum = 0;
+    Real sum = 0;
 
     for(int i = 0; i < size; i++){
         sum += chemkit::geometry::distanceSquared(a->position(i), b->position(i));

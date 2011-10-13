@@ -273,9 +273,9 @@ PdbConformer::PdbConformer(std::istream &input)
         if(boost::starts_with(line, "ATOM")){
             int id = boost::lexical_cast<int>(boost::trim_left_copy(line.substr(7, 4)));
 
-            chemkit::Float x = boost::lexical_cast<chemkit::Float>(boost::trim_left_copy(line.substr(30, 8)));
-            chemkit::Float y = boost::lexical_cast<chemkit::Float>(boost::trim_left_copy(line.substr(38, 8)));
-            chemkit::Float z = boost::lexical_cast<chemkit::Float>(boost::trim_left_copy(line.substr(46, 8)));
+            chemkit::Real x = boost::lexical_cast<chemkit::Real>(boost::trim_left_copy(line.substr(30, 8)));
+            chemkit::Real y = boost::lexical_cast<chemkit::Real>(boost::trim_left_copy(line.substr(38, 8)));
+            chemkit::Real z = boost::lexical_cast<chemkit::Real>(boost::trim_left_copy(line.substr(46, 8)));
 
             m_positions[id] = chemkit::Point3(x, y, z);
         }

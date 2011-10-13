@@ -43,7 +43,7 @@
 namespace chemkit {
 
 /// A quaternion with Float values.
-typedef Eigen::Quaternion<Float> Quaternion;
+typedef Eigen::Quaternion<Real> Quaternion;
 
 /// A quaternion with \c float values.
 typedef Eigen::Quaternion<float> Quaternionf;

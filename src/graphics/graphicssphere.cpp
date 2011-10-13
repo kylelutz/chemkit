@@ -160,9 +160,9 @@ GraphicsVertexBuffer* GraphicsSphere::tesselate(int subdivisions) const
             Point3f v2 = verticies[i2];
 
             // add three new verticies
-            Point3f v01 = chemkit::geometry::midpoint(v0.cast<Float>(), v1.cast<Float>()).cast<float>();
-            Point3f v12 = chemkit::geometry::midpoint(v1.cast<Float>(), v2.cast<Float>()).cast<float>();
-            Point3f v20 = chemkit::geometry::midpoint(v2.cast<Float>(), v0.cast<Float>()).cast<float>();
+            Point3f v01 = chemkit::geometry::midpoint(v0.cast<Real>(), v1.cast<Real>()).cast<float>();
+            Point3f v12 = chemkit::geometry::midpoint(v1.cast<Real>(), v2.cast<Real>()).cast<float>();
+            Point3f v20 = chemkit::geometry::midpoint(v2.cast<Real>(), v0.cast<Real>()).cast<float>();
 
             // scale points to lie on the sphere
             v01 *= radius() / v01.norm();

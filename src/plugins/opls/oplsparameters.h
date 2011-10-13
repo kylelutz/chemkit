@@ -45,8 +45,8 @@ struct OplsBondStrechParameters
 {
     int typeA;
     int typeB;
-    chemkit::Float kb;
-    chemkit::Float r0;
+    chemkit::Real kb;
+    chemkit::Real r0;
 };
 
 struct OplsAngleBendParameters
@@ -54,8 +54,8 @@ struct OplsAngleBendParameters
     int typeA;
     int typeB;
     int typeC;
-    chemkit::Float ka;
-    chemkit::Float theta0;
+    chemkit::Real ka;
+    chemkit::Real theta0;
 };
 
 struct OplsTorsionParameters
@@ -64,15 +64,15 @@ struct OplsTorsionParameters
     int typeB;
     int typeC;
     int typeD;
-    chemkit::Float v1;
-    chemkit::Float v2;
-    chemkit::Float v3;
+    chemkit::Real v1;
+    chemkit::Real v2;
+    chemkit::Real v3;
 };
 
 struct OplsVanDerWaalsParameters
 {
-    chemkit::Float sigma;
-    chemkit::Float epsilon;
+    chemkit::Real sigma;
+    chemkit::Real epsilon;
 };
 
 class OplsParameters
@@ -89,7 +89,7 @@ class OplsParameters
         // parameters
         int atomClass(int type) const;
         QString atomName(int type) const;
-        chemkit::Float partialCharge(int type) const;
+        chemkit::Real partialCharge(int type) const;
         const OplsBondStrechParameters* bondStrechParameters(int a, int b) const;
         const OplsAngleBendParameters* angleBendParameters(int a, int b, int c) const;
         const OplsTorsionParameters* torsionParameters(int a, int b, int c, int d) const;
@@ -106,7 +106,7 @@ class OplsParameters
         QVector<OplsAngleBendParameters> m_angleBendParameters;
         QVector<OplsTorsionParameters> m_torsionParameters;
         QVector<OplsVanDerWaalsParameters> m_vanDerWaalsParameters;
-        QVector<chemkit::Float> m_typeToCharge;
+        QVector<chemkit::Real> m_typeToCharge;
 };
 
 #endif // OPLSPARAMETERS_H

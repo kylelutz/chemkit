@@ -65,13 +65,13 @@ void MolecularSurfaceTest::probeRadius()
     chemkit::MolecularSurface surface(&molecule);
 
     // ensure default probe radius is 1.4
-    QCOMPARE(surface.probeRadius(), chemkit::Float(1.4));
+    QCOMPARE(surface.probeRadius(), chemkit::Real(1.4));
 
     surface.setProbeRadius(2.5);
-    QCOMPARE(surface.probeRadius(), chemkit::Float(2.5));
+    QCOMPARE(surface.probeRadius(), chemkit::Real(2.5));
 
     surface.setProbeRadius(0);
-    QCOMPARE(surface.probeRadius(), chemkit::Float(0.0));
+    QCOMPARE(surface.probeRadius(), chemkit::Real(0.0));
 }
 
 void MolecularSurfaceTest::surfaceType()

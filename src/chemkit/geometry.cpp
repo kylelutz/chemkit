@@ -67,42 +67,42 @@ namespace geometry {
 
 // --- Constructions ------------------------------------------------------- //
 /// Returns the distance between the points \p a and \p b.
-Float distance(const Point3 &a, const Point3 &b)
+Real distance(const Point3 &a, const Point3 &b)
 {
     return (a - b).norm();
 }
 
 /// Returns the square of the distance between the points \p a and
 /// \p b.
-Float distanceSquared(const Point3 &a, const Point3 &b)
+Real distanceSquared(const Point3 &a, const Point3 &b)
 {
     return (a - b).squaredNorm();
 }
 
 /// Returns the angle between the vectors \p a and \p b. Angle is
 /// in Degrees.
-Float angle(const Vector3 &a, const Vector3 &b)
+Real angle(const Vector3 &a, const Vector3 &b)
 {
     return angleRadians(a, b) * chemkit::constants::RadiansToDegrees;
 }
 
 /// Returns the angle between the vectors \p a and \p b. Angle is
 /// in Radians.
-Float angleRadians(const Vector3 &a, const Vector3 &b)
+Real angleRadians(const Vector3 &a, const Vector3 &b)
 {
     return acos(a.dot(b) / (a.norm() * b.norm()));
 }
 
 /// Returns the angle between the vectors (\p a, \p b) and (\p b,
 /// \p c). Angle is in Degrees.
-Float angle(const Point3 &a, const Point3 &b, const Point3 &c)
+Real angle(const Point3 &a, const Point3 &b, const Point3 &c)
 {
     return angleRadians(a, b, c) * chemkit::constants::RadiansToDegrees;
 }
 
 /// Returns the ang le between the vectors (\p a, \p b) and (\p b,
 /// \p c). Angle is Radians.
-Float angleRadians(const Point3 &a, const Point3 &b, const Point3 &c)
+Real angleRadians(const Point3 &a, const Point3 &b, const Point3 &c)
 {
     Point3 ab = b - a;
     Point3 cb = b - c;
@@ -112,14 +112,14 @@ Float angleRadians(const Point3 &a, const Point3 &b, const Point3 &c)
 
 /// Returns the torsion angle between points \p a, \p b, \p c, and
 /// \p d. Angle is in Degrees.
-Float torsionAngle(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d)
+Real torsionAngle(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d)
 {
     return torsionAngleRadians(a, b, c, d) * chemkit::constants::RadiansToDegrees;
 }
 
 /// Returns the torsion angle between points \p a, \p b, \p c, and
 /// \p d. Angle is in Degrees.
-Float torsionAngleRadians(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d)
+Real torsionAngleRadians(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d)
 {
     Point3 ab = b - a;
     Point3 bc = c - b;
@@ -130,21 +130,21 @@ Float torsionAngleRadians(const Point3 &a, const Point3 &b, const Point3 &c, con
 
 /// Returns the wilson angle between points \p a, \p b, \p c, and
 /// \p d. Angle is in Degrees.
-Float wilsonAngle(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d)
+Real wilsonAngle(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d)
 {
     return wilsonAngleRadians(a, b, c, d) * chemkit::constants::RadiansToDegrees;
 }
 
 /// Returns the wilson angle between points \p a, \p b, \p c, and
 /// \p d. Angle is in Radians.
-Float wilsonAngleRadians(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d)
+Real wilsonAngleRadians(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d)
 {
     Vector3 normal = ((b - a).cross(c - b)).normalized();
 
     Point3 bd = d - b;
     bd.normalize();
 
-    Float angle = acos(bd.dot(normal));
+    Real angle = acos(bd.dot(normal));
 
     return (chemkit::constants::Pi * 0.5) - angle;
 }
@@ -182,7 +182,7 @@ Point3 circumcenter(const Point3 &a, const Point3 &b, const Point3 &c, const Poi
     return Point3();
 }
 
-Float circumradius(const Point3 &a, const Point3 &b)
+Real circumradius(const Point3 &a, const Point3 &b)
 {
     CHEMKIT_UNUSED(a);
     CHEMKIT_UNUSED(b);
@@ -190,7 +190,7 @@ Float circumradius(const Point3 &a, const Point3 &b)
     return 0;
 }
 
-Float circumradius(const Point3 &a, const Point3 &b, const Point3 &c)
+Real circumradius(const Point3 &a, const Point3 &b, const Point3 &c)
 {
     CHEMKIT_UNUSED(a);
     CHEMKIT_UNUSED(b);
@@ -199,7 +199,7 @@ Float circumradius(const Point3 &a, const Point3 &b, const Point3 &c)
     return 0;
 }
 
-Float circumradius(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d)
+Real circumradius(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d)
 {
     CHEMKIT_UNUSED(a);
     CHEMKIT_UNUSED(b);
@@ -211,7 +211,7 @@ Float circumradius(const Point3 &a, const Point3 &b, const Point3 &c, const Poin
 
 /// Returns the position of a point orthogonal to the weighted
 /// points (a, b).
-Point3 orthocenter(const Point3 &a, const Point3 &b, Float wa, Float wb)
+Point3 orthocenter(const Point3 &a, const Point3 &b, Real wa, Real wb)
 {
     double l = (1.0/2.0) - ((wa - wb) / (2.0 * (a - b).squaredNorm()));
 
@@ -220,7 +220,7 @@ Point3 orthocenter(const Point3 &a, const Point3 &b, Float wa, Float wb)
 
 /// Returns the position of a point orthogonal to the weighted
 /// points (a, b, c).
-Point3 orthocenter(const Point3 &a, const Point3 &b, const Point3 &c, Float wa, Float wb, Float wc)
+Point3 orthocenter(const Point3 &a, const Point3 &b, const Point3 &c, Real wa, Real wb, Real wc)
 {
     // a1 = | a.y a.z 1 |
     //      | b.y b.z 1 |
@@ -297,7 +297,7 @@ Point3 orthocenter(const Point3 &a, const Point3 &b, const Point3 &c, Float wa, 
 
 /// Returns the position of a point orthogonal to the weighted
 /// points (a, b, c, d).
-Point3 orthocenter(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d, Float wa, Float wb, Float wc, Float wd)
+Point3 orthocenter(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d, Real wa, Real wb, Real wc, Real wd)
 {
     double i0 = (1.0/2.0) * (a.dot(a) - wa);
     double j0 = (1.0/2.0) * (b.dot(b) - wb);
@@ -335,7 +335,7 @@ Point3 orthocenter(const Point3 &a, const Point3 &b, const Point3 &c, const Poin
 
 /// Returns the radius of a point orthogonal to the edge with
 /// weighted verticies (\p a, \p b).
-Float orthoradius(const Point3 &a, const Point3 &b, Float wa, Float wb)
+Real orthoradius(const Point3 &a, const Point3 &b, Real wa, Real wb)
 {
     Vector3d ap = a - orthocenter(a, b, wa, wb);
 
@@ -344,7 +344,7 @@ Float orthoradius(const Point3 &a, const Point3 &b, Float wa, Float wb)
 
 /// Returns the radius of a point orthogonal to the triangle
 /// with weighted verticies (\p a, \p b, \p c).
-Float orthoradius(const Point3 &a, const Point3 &b, const Point3 &c, Float wa, Float wb, Float wc)
+Real orthoradius(const Point3 &a, const Point3 &b, const Point3 &c, Real wa, Real wb, Real wc)
 {
     Vector3d r = a - c;
     Vector3d s = b - c;
@@ -371,7 +371,7 @@ Float orthoradius(const Point3 &a, const Point3 &b, const Point3 &c, Float wa, F
 
 /// Returns the radius of a point orthogonal to the tetrahedron
 /// with weighted verticies (\p a, \p b, \p c, \p d).
-Float orthoradius(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d, Float wa, Float wb, Float wc, Float wd)
+Real orthoradius(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d, Real wa, Real wb, Real wc, Real wd)
 {
     Vector3d t = a - d;
     Vector3d u = b - d;
@@ -390,14 +390,14 @@ Float orthoradius(const Point3 &a, const Point3 &b, const Point3 &c, const Point
 
 /// Returns the area of the triangle with verticies (\p a, \p b,
 /// \p c).
-Float triangleArea(const Point3 &a, const Point3 &b, const Point3 &c)
+Real triangleArea(const Point3 &a, const Point3 &b, const Point3 &c)
 {
     return (1.0/2.0) * (b - a).cross(c - a).norm();
 }
 
 /// Returns the volume of the tetrahedron with verticies (\p a, \p b,
 /// \p c, \p d).
-Float tetrahedronVolume(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d)
+Real tetrahedronVolume(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d)
 {
     return (1.0/6.0) * planeOrientation(a, b, c, d);
 }
@@ -431,7 +431,7 @@ Vector3 planeNormal(const Point3 &a, const Point3 &b, const Point3 &c)
 ///   \right|
 /// \f]
 **/
-Float planeOrientation(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &p)
+Real planeOrientation(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &p)
 {
     Vector3d t = a - p;
     Vector3d u = b - p;
@@ -462,7 +462,7 @@ Float planeOrientation(const Point3 &a, const Point3 &b, const Point3 &c, const 
 ///   \right|
 /// \f]
 **/
-Float sphereOrientation(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d, const Point3 &p)
+Real sphereOrientation(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d, const Point3 &p)
 {
     Vector3d t = a - p;
     Vector3d u = b - p;
@@ -501,7 +501,7 @@ Float sphereOrientation(const Point3 &a, const Point3 &b, const Point3 &c, const
 ///   \right|
 /// \f]
 **/
-Float sphereOrientation(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d, const Point3 &p, Float wa, Float wb, Float wc, Float wd, Float wp)
+Real sphereOrientation(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d, const Point3 &p, Real wa, Real wb, Real wc, Real wd, Real wp)
 {
     Vector3d t = a - p;
     Vector3d u = b - p;

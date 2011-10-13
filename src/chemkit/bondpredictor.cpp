@@ -46,9 +46,9 @@ class BondPredictorPrivate
 {
     public:
         Molecule *molecule;
-        Float tolerance;
-        Float minimumBondLength;
-        Float maximumBondLength;
+        Real tolerance;
+        Real minimumBondLength;
+        Real maximumBondLength;
 };
 
 // === BondPredictor ======================================================= //
@@ -77,37 +77,37 @@ BondPredictor::~BondPredictor()
 
 // --- Properties ---------------------------------------------------------- //
 /// Sets the bond distance tolerance.
-void BondPredictor::setTolerance(Float tolerance)
+void BondPredictor::setTolerance(Real tolerance)
 {
     d->tolerance = tolerance;
 }
 
 /// Returns the bond distance tolerance.
-Float BondPredictor::tolerance() const
+Real BondPredictor::tolerance() const
 {
     return d->tolerance;
 }
 
 /// Sets the minimum bond length.
-void BondPredictor::setMinimumBondLength(Float length)
+void BondPredictor::setMinimumBondLength(Real length)
 {
     d->minimumBondLength = length;
 }
 
 /// Returns the minimum bond length.
-Float BondPredictor::minimumBondLength() const
+Real BondPredictor::minimumBondLength() const
 {
     return d->minimumBondLength;
 }
 
 /// Sets the maximum bond length.
-void BondPredictor::setMaximumBondLength(Float length)
+void BondPredictor::setMaximumBondLength(Real length)
 {
     d->maximumBondLength = length;
 }
 
 /// Returns the maximum bond length.
-Float BondPredictor::maximumBondLength() const
+Real BondPredictor::maximumBondLength() const
 {
     return d->maximumBondLength;
 }
@@ -143,7 +143,7 @@ std::vector<std::pair<Atom *, Atom *> > BondPredictor::predictedBonds()
 /// Returns \c true if the atoms could feasibly be bonded.
 bool BondPredictor::couldBeBonded(Atom *a, Atom *b) const
 {
-    Float distance = a->distance(b);
+    Real distance = a->distance(b);
 
     if(distance > minimumBondLength() &&
        distance < maximumBondLength() &&

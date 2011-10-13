@@ -103,10 +103,10 @@ void AtomTest::partialCharge()
 {
     chemkit::Molecule molecule;
     chemkit::Atom *atom = molecule.addAtom("H");
-    QCOMPARE(atom->partialCharge(), chemkit::Float(0.0));
+    QCOMPARE(atom->partialCharge(), chemkit::Real(0.0));
 
     atom->setPartialCharge(2);
-    QCOMPARE(atom->partialCharge(), chemkit::Float(2.0));
+    QCOMPARE(atom->partialCharge(), chemkit::Real(2.0));
 }
 
 void AtomTest::symbol()
@@ -216,24 +216,24 @@ void AtomTest::position()
 {
     chemkit::Molecule molecule;
     chemkit::Atom *H1 = molecule.addAtom("H");
-    QCOMPARE(H1->x(), chemkit::Float(0.0));
-    QCOMPARE(H1->y(), chemkit::Float(0.0));
-    QCOMPARE(H1->z(), chemkit::Float(0.0));
+    QCOMPARE(H1->x(), chemkit::Real(0.0));
+    QCOMPARE(H1->y(), chemkit::Real(0.0));
+    QCOMPARE(H1->z(), chemkit::Real(0.0));
 
     H1->setPosition(4, 5, 6);
-    QCOMPARE(H1->x(), chemkit::Float(4.0));
-    QCOMPARE(H1->y(), chemkit::Float(5.0));
-    QCOMPARE(H1->z(), chemkit::Float(6.0));
+    QCOMPARE(H1->x(), chemkit::Real(4.0));
+    QCOMPARE(H1->y(), chemkit::Real(5.0));
+    QCOMPARE(H1->z(), chemkit::Real(6.0));
 
     H1->setPosition(chemkit::Point3(0, 0, 0));
-    QCOMPARE(H1->x(), chemkit::Float(0.0));
-    QCOMPARE(H1->y(), chemkit::Float(0.0));
-    QCOMPARE(H1->z(), chemkit::Float(0.0));
+    QCOMPARE(H1->x(), chemkit::Real(0.0));
+    QCOMPARE(H1->y(), chemkit::Real(0.0));
+    QCOMPARE(H1->z(), chemkit::Real(0.0));
 
     H1->setPosition(chemkit::Point3(-1, -2, -3));
-    QCOMPARE(H1->x(), chemkit::Float(-1.0));
-    QCOMPARE(H1->y(), chemkit::Float(-2.0));
-    QCOMPARE(H1->z(), chemkit::Float(-3.0));
+    QCOMPARE(H1->x(), chemkit::Real(-1.0));
+    QCOMPARE(H1->y(), chemkit::Real(-2.0));
+    QCOMPARE(H1->z(), chemkit::Real(-3.0));
 }
 
 void AtomTest::distance()
@@ -241,14 +241,14 @@ void AtomTest::distance()
     chemkit::Molecule molecule;
     chemkit::Atom *He1 = molecule.addAtom("He");
     chemkit::Atom *He2 = molecule.addAtom("He");
-    QCOMPARE(He1->distance(He2), chemkit::Float(0.0));
-    QCOMPARE(He2->distance(He1), chemkit::Float(0.0));
-    QCOMPARE(He1->distance(He1), chemkit::Float(0.0));
-    QCOMPARE(He2->distance(He2), chemkit::Float(0.0));
+    QCOMPARE(He1->distance(He2), chemkit::Real(0.0));
+    QCOMPARE(He2->distance(He1), chemkit::Real(0.0));
+    QCOMPARE(He1->distance(He1), chemkit::Real(0.0));
+    QCOMPARE(He2->distance(He2), chemkit::Real(0.0));
 
     He1->moveTo(0, 0, 5);
-    QCOMPARE(He1->distance(He2), chemkit::Float(5.0));
-    QCOMPARE(He2->distance(He1), chemkit::Float(5.0));
+    QCOMPARE(He1->distance(He2), chemkit::Real(5.0));
+    QCOMPARE(He2->distance(He1), chemkit::Real(5.0));
 }
 
 void AtomTest::pathTo()

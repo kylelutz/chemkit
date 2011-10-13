@@ -46,37 +46,37 @@ namespace chemkit {
 namespace geometry {
 
 // constructions
-CHEMKIT_EXPORT Float distance(const Point3 &a, const Point3 &b);
-CHEMKIT_EXPORT Float distanceSquared(const Point3 &a, const Point3 &b);
-CHEMKIT_EXPORT Float angle(const Vector3 &a, const Vector3 &b);
-CHEMKIT_EXPORT Float angleRadians(const Vector3 &a, const Vector3 &b);
-CHEMKIT_EXPORT Float angle(const Point3 &a, const Point3 &b, const Point3 &c);
-CHEMKIT_EXPORT Float angleRadians(const Point3 &a, const Point3 &b, const Point3 &c);
-CHEMKIT_EXPORT Float torsionAngle(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d);
-CHEMKIT_EXPORT Float torsionAngleRadians(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d);
-CHEMKIT_EXPORT Float wilsonAngle(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d);
-CHEMKIT_EXPORT Float wilsonAngleRadians(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d);
+CHEMKIT_EXPORT Real distance(const Point3 &a, const Point3 &b);
+CHEMKIT_EXPORT Real distanceSquared(const Point3 &a, const Point3 &b);
+CHEMKIT_EXPORT Real angle(const Vector3 &a, const Vector3 &b);
+CHEMKIT_EXPORT Real angleRadians(const Vector3 &a, const Vector3 &b);
+CHEMKIT_EXPORT Real angle(const Point3 &a, const Point3 &b, const Point3 &c);
+CHEMKIT_EXPORT Real angleRadians(const Point3 &a, const Point3 &b, const Point3 &c);
+CHEMKIT_EXPORT Real torsionAngle(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d);
+CHEMKIT_EXPORT Real torsionAngleRadians(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d);
+CHEMKIT_EXPORT Real wilsonAngle(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d);
+CHEMKIT_EXPORT Real wilsonAngleRadians(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d);
 CHEMKIT_EXPORT Point3 midpoint(const Point3 &a, const Point3 &b);
 CHEMKIT_EXPORT Point3 circumcenter(const Point3 &a, const Point3 &b);
 CHEMKIT_EXPORT Point3 circumcenter(const Point3 &a, const Point3 &b, const Point3 &c);
 CHEMKIT_EXPORT Point3 circumcenter(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d);
-CHEMKIT_EXPORT Float circumradius(const Point3 &a, const Point3 &b);
-CHEMKIT_EXPORT Float circumradius(const Point3 &a, const Point3 &b, const Point3 &c);
-CHEMKIT_EXPORT Float circumradius(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d);
-CHEMKIT_EXPORT Point3 orthocenter(const Point3 &a, const Point3 &b, Float wa, Float wb);
-CHEMKIT_EXPORT Point3 orthocenter(const Point3 &a, const Point3 &b, const Point3 &c, Float wa, Float wb, Float wc);
-CHEMKIT_EXPORT Point3 orthocenter(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d, Float wa, Float wb, Float wc, Float wd);
-CHEMKIT_EXPORT Float orthoradius(const Point3 &a, const Point3 &b, Float wa, Float wb);
-CHEMKIT_EXPORT Float orthoradius(const Point3 &a, const Point3 &b, const Point3 &c, Float wa, Float wb, Float wc);
-CHEMKIT_EXPORT Float orthoradius(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d, Float wa, Float wb, Float wc, Float wd);
-CHEMKIT_EXPORT Float triangleArea(const Point3 &a, const Point3 &b, const Point3 &c);
-CHEMKIT_EXPORT Float tetrahedronVolume(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d);
+CHEMKIT_EXPORT Real circumradius(const Point3 &a, const Point3 &b);
+CHEMKIT_EXPORT Real circumradius(const Point3 &a, const Point3 &b, const Point3 &c);
+CHEMKIT_EXPORT Real circumradius(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d);
+CHEMKIT_EXPORT Point3 orthocenter(const Point3 &a, const Point3 &b, Real wa, Real wb);
+CHEMKIT_EXPORT Point3 orthocenter(const Point3 &a, const Point3 &b, const Point3 &c, Real wa, Real wb, Real wc);
+CHEMKIT_EXPORT Point3 orthocenter(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d, Real wa, Real wb, Real wc, Real wd);
+CHEMKIT_EXPORT Real orthoradius(const Point3 &a, const Point3 &b, Real wa, Real wb);
+CHEMKIT_EXPORT Real orthoradius(const Point3 &a, const Point3 &b, const Point3 &c, Real wa, Real wb, Real wc);
+CHEMKIT_EXPORT Real orthoradius(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d, Real wa, Real wb, Real wc, Real wd);
+CHEMKIT_EXPORT Real triangleArea(const Point3 &a, const Point3 &b, const Point3 &c);
+CHEMKIT_EXPORT Real tetrahedronVolume(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d);
 CHEMKIT_EXPORT Vector3 planeNormal(const Point3 &a, const Point3 &b, const Point3 &c);
 
 // predicates
-CHEMKIT_EXPORT Float planeOrientation(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &p);
-CHEMKIT_EXPORT Float sphereOrientation(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d, const Point3 &p);
-CHEMKIT_EXPORT Float sphereOrientation(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d, const Point3 &p, Float wa, Float wb, Float wc, Float wd, Float wp);
+CHEMKIT_EXPORT Real planeOrientation(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &p);
+CHEMKIT_EXPORT Real sphereOrientation(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d, const Point3 &p);
+CHEMKIT_EXPORT Real sphereOrientation(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d, const Point3 &p, Real wa, Real wb, Real wc, Real wd, Real wp);
 
 // transforms
 template<typename T> Eigen::Matrix<T, 3, 1> rotate(const Eigen::Matrix<T, 3, 1> &vector, const Eigen::Matrix<T, 3, 1> &axis, T angle);

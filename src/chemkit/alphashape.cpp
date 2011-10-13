@@ -46,7 +46,7 @@ namespace chemkit {
 class AlphaShapePrivate
 {
     public:
-        Float alphaValue;
+        Real alphaValue;
         DelaunayTriangulation *triangulation;
 };
 
@@ -66,7 +66,7 @@ AlphaShape::AlphaShape(const std::vector<Point3> &points)
 }
 
 /// Creates a new alpha shape with \p points and \p weights.
-AlphaShape::AlphaShape(const std::vector<Point3> &points, const std::vector<Float> &weights)
+AlphaShape::AlphaShape(const std::vector<Point3> &points, const std::vector<Real> &weights)
     : d(new AlphaShapePrivate)
 {
     d->alphaValue = 0;
@@ -94,19 +94,19 @@ Point3 AlphaShape::position(int vertex) const
 }
 
 /// Returns the weight of \p vertex.
-Float AlphaShape::weight(int vertex) const
+Real AlphaShape::weight(int vertex) const
 {
     return d->triangulation->weight(vertex);
 }
 
 /// Sets the alpha value to \p alphaValue.
-void AlphaShape::setAlphaValue(Float alphaValue)
+void AlphaShape::setAlphaValue(Real alphaValue)
 {
     d->alphaValue = alphaValue;
 }
 
 /// Returns the alpha value.
-Float AlphaShape::alphaValue() const
+Real AlphaShape::alphaValue() const
 {
     return d->alphaValue;
 }
@@ -164,9 +164,9 @@ int AlphaShape::tetrahedronCount() const
 
 // --- Geometry ------------------------------------------------------------ //
 /// Returns the total volume of the alpha shape.
-Float AlphaShape::volume() const
+Real AlphaShape::volume() const
 {
-    Float volume = 0;
+    Real volume = 0;
 
     foreach(const std::vector<int> &tetrahedron, tetrahedra()){
         const Point3 &a = position(tetrahedron[0]);
@@ -181,9 +181,9 @@ Float AlphaShape::volume() const
 }
 
 /// Returns the total surface area of the alpha shape.
-Float AlphaShape::surfaceArea() const
+Real AlphaShape::surfaceArea() const
 {
-    Float surfaceArea = 0;
+    Real surfaceArea = 0;
 
 //    foreach(const std::vector<int> triangle, triangles(Regular | Singular)){
 //        const Point &a = position(triangle[0]);
@@ -201,8 +201,8 @@ Point3 AlphaShape::orthocenter(int i, int j) const
     const Point3 &a = position(i);
     const Point3 &b = position(j);
 
-    Float wa = weight(i);
-    Float wb = weight(j);
+    Real wa = weight(i);
+    Real wb = weight(j);
 
     return chemkit::geometry::orthocenter(a, b, wa, wb);
 }
@@ -213,9 +213,9 @@ Point3 AlphaShape::orthocenter(int i, int j, int k) const
     const Point3 &b = position(j);
     const Point3 &c = position(k);
 
-    Float wa = weight(i);
-    Float wb = weight(j);
-    Float wc = weight(k);
+    Real wa = weight(i);
+    Real wb = weight(j);
+    Real wc = weight(k);
 
     return chemkit::geometry::orthocenter(a, b, c, wa, wb, wc);
 }
@@ -227,51 +227,51 @@ Point3 AlphaShape::orthocenter(int i, int j, int k, int l) const
     const Point3 &c = position(k);
     const Point3 &d = position(l);
 
-    Float wa = weight(i);
-    Float wb = weight(j);
-    Float wc = weight(k);
-    Float wd = weight(l);
+    Real wa = weight(i);
+    Real wb = weight(j);
+    Real wc = weight(k);
+    Real wd = weight(l);
 
     return chemkit::geometry::orthocenter(a, b, c, d, wa, wb, wc, wd);
 }
 
 /// Returns the radius of the edge (a, b).
-Float AlphaShape::orthoradius(int a, int b) const
+Real AlphaShape::orthoradius(int a, int b) const
 {
     const Point3 &pa = position(a);
     const Point3 &pb = position(b);
 
-    Float wa = weight(a);
-    Float wb = weight(b);
+    Real wa = weight(a);
+    Real wb = weight(b);
 
     return chemkit::geometry::orthoradius(pa, pb, wa, wb);
 }
 
 /// Returns the radius of the triangle (a, b, c).
-Float AlphaShape::orthoradius(int a, int b, int c) const
+Real AlphaShape::orthoradius(int a, int b, int c) const
 {
     const Point3 &pa = position(a);
     const Point3 &pb = position(b);
     const Point3 &pc = position(c);
 
-    Float wa = weight(a);
-    Float wb = weight(b);
-    Float wc = weight(c);
+    Real wa = weight(a);
+    Real wb = weight(b);
+    Real wc = weight(c);
 
     return chemkit::geometry::orthoradius(pa, pb, pc, wa, wb, wc);
 }
 
-Float AlphaShape::orthoradius(int a, int b, int c, int d) const
+Real AlphaShape::orthoradius(int a, int b, int c, int d) const
 {
     const Point3 &pa = position(a);
     const Point3 &pb = position(b);
     const Point3 &pc = position(c);
     const Point3 &pd = position(d);
 
-    Float wa = weight(a);
-    Float wb = weight(b);
-    Float wc = weight(c);
-    Float wd = weight(d);
+    Real wa = weight(a);
+    Real wb = weight(b);
+    Real wc = weight(c);
+    Real wd = weight(d);
 
     return chemkit::geometry::orthoradius(pa, pb, pc, pd, wa, wb, wc, wd);
 }
@@ -282,8 +282,8 @@ bool AlphaShape::vertexAttached(int i, int j) const
     const Point3 &a = position(i);
     const Point3 &b = position(j);
 
-    Float wa = weight(i);
-    Float wb = weight(j);
+    Real wa = weight(i);
+    Real wb = weight(j);
 
     return (a - b).squaredNorm() + wa - wb < 0;
 }
@@ -295,12 +295,12 @@ bool AlphaShape::edgeAttached(int i, int j, int k) const
     const Point3 &b = position(j);
     const Point3 &c = position(k);
 
-    Float wa = weight(i);
-    Float wb = weight(j);
-    Float wc = weight(k);
+    Real wa = weight(i);
+    Real wb = weight(j);
+    Real wc = weight(k);
 
     Point3 center = chemkit::geometry::orthocenter(a, b, wa, wb);
-    Float radius = chemkit::geometry::orthoradius(a, b, wa, wb);
+    Real radius = chemkit::geometry::orthoradius(a, b, wa, wb);
 
     return (center - c).squaredNorm() - radius - wc < 0;
 }
@@ -314,13 +314,13 @@ bool AlphaShape::triangleAttached(int i, int j, int k, int l) const
     const Point3 &c = position(k);
     const Point3 &d = position(l);
 
-    Float wa = weight(i);
-    Float wb = weight(j);
-    Float wc = weight(k);
-    Float wd = weight(l);
+    Real wa = weight(i);
+    Real wb = weight(j);
+    Real wc = weight(k);
+    Real wd = weight(l);
 
     Point3 center = chemkit::geometry::orthocenter(a, b, c, wa, wb, wc);
-    Float radius = chemkit::geometry::orthoradius(a, b, c, wa, wb, wc);
+    Real radius = chemkit::geometry::orthoradius(a, b, c, wa, wb, wc);
 
     return (center - d).squaredNorm() - radius - wd < 0;
 }
@@ -335,14 +335,14 @@ bool AlphaShape::triangleAttached(int i, int j, int k, int l, int m) const
     const Point3 &d = position(l);
     const Point3 &e = position(m);
 
-    Float wa = weight(i);
-    Float wb = weight(j);
-    Float wc = weight(k);
-    Float wd = weight(l);
-    Float we = weight(m);
+    Real wa = weight(i);
+    Real wb = weight(j);
+    Real wc = weight(k);
+    Real wd = weight(l);
+    Real we = weight(m);
 
     Point3 center = chemkit::geometry::orthocenter(a, b, c, wa, wb, wc);
-    Float radius = chemkit::geometry::orthoradius(a, b, c, wa, wb, wc);
+    Real radius = chemkit::geometry::orthoradius(a, b, c, wa, wb, wc);
 
     if((center - d).squaredNorm() - radius - wd < 0){
         return true;

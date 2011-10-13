@@ -94,11 +94,11 @@ class CHEMKIT_EXPORT ForceField
         // calculations
         std::vector<ForceFieldCalculation *> calculations() const;
         int calculationCount() const;
-        virtual Float energy() const;
+        virtual Real energy() const;
         std::vector<Vector3> gradient() const;
         std::vector<Vector3> numericalGradient() const;
-        Float largestGradient() const;
-        Float rootMeanSquareGradient() const;
+        Real largestGradient() const;
+        Real rootMeanSquareGradient() const;
 
         // coordinates
         void readCoordinates(const Molecule *molecule);
@@ -107,16 +107,16 @@ class CHEMKIT_EXPORT ForceField
         void writeCoordinates(Atom *atom) const;
 
         // energy minimization
-        bool minimizationStep(Float converganceValue = 0.1);
+        bool minimizationStep(Real converganceValue = 0.1);
 
         // geometry
-        Float distance(const ForceFieldAtom *a, const ForceFieldAtom *b) const;
-        Float bondAngle(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c) const;
-        Float bondAngleRadians(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c) const;
-        Float torsionAngle(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c, const ForceFieldAtom *d) const;
-        Float torsionAngleRadians(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c, const ForceFieldAtom *d) const;
-        Float wilsonAngle(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c, const ForceFieldAtom *d) const;
-        Float wilsonAngleRadians(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c, const ForceFieldAtom *d) const;
+        Real distance(const ForceFieldAtom *a, const ForceFieldAtom *b) const;
+        Real bondAngle(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c) const;
+        Real bondAngleRadians(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c) const;
+        Real torsionAngle(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c, const ForceFieldAtom *d) const;
+        Real torsionAngleRadians(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c, const ForceFieldAtom *d) const;
+        Real wilsonAngle(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c, const ForceFieldAtom *d) const;
+        Real wilsonAngleRadians(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c, const ForceFieldAtom *d) const;
 
         // error handling
         std::string errorString() const;

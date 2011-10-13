@@ -101,7 +101,7 @@ class CHEMKIT_EXPORT Molecule
         Variant descriptor(const std::string &name) const;
         inline int size() const;
         inline bool isEmpty() const;
-        Float mass() const;
+        Real mass() const;
         void setData(const std::string &name, const Variant &value);
         Variant data(const std::string &name) const;
 
@@ -150,17 +150,17 @@ class CHEMKIT_EXPORT Molecule
         // geometry
         void setCoordinates(const Coordinates *coordinates);
         void setCoordinates(const InternalCoordinates *coordinates);
-        Float distance(const Atom *a, const Atom *b) const;
-        Float bondAngle(const Atom *a, const Atom *b, const Atom *c) const;
-        Float torsionAngle(const Atom *a, const Atom *b, const Atom *c, const Atom *d) const;
-        Float wilsonAngle(const Atom *a, const Atom *b, const Atom *c, const Atom *d) const;
+        Real distance(const Atom *a, const Atom *b) const;
+        Real bondAngle(const Atom *a, const Atom *b, const Atom *c) const;
+        Real torsionAngle(const Atom *a, const Atom *b, const Atom *c, const Atom *d) const;
+        Real wilsonAngle(const Atom *a, const Atom *b, const Atom *c, const Atom *d) const;
         void setCenter(const Point3 &position);
-        void setCenter(Float x, Float y, Float z);
+        void setCenter(Real x, Real y, Real z);
         Point3 center() const;
         Point3 centerOfMass() const;
         void moveBy(const Vector3 &vector);
-        void moveBy(Float dx, Float dy, Float dz);
-        void rotate(const Vector3 &axis, Float angle);
+        void moveBy(Real dx, Real dy, Real dz);
+        void rotate(const Vector3 &axis, Real angle);
         bool hasCoordinates() const;
         void clearCoordinates();
 

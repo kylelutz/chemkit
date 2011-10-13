@@ -43,7 +43,7 @@
 namespace chemkit {
 
 /// Typedef for a matrix containing floating point numbers.
-typedef Eigen::Matrix<Float, Eigen::Dynamic, Eigen::Dynamic> Matrix;
+typedef Eigen::Matrix<Real, Eigen::Dynamic, Eigen::Dynamic> Matrix;
 
 } // end chemkit namespace
 

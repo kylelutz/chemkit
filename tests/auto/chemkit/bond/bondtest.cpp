@@ -194,13 +194,13 @@ void BondTest::length()
     chemkit::Atom *H1 = molecule.addAtom("H");
     chemkit::Atom *H2 = molecule.addAtom("H");
     chemkit::Bond *bond = molecule.addBond(H1, H2);
-    QCOMPARE(bond->length(), chemkit::Float(0.0));
+    QCOMPARE(bond->length(), chemkit::Real(0.0));
 
     H1->moveTo(0, 1, 0);
-    QCOMPARE(bond->length(), chemkit::Float(1.0));
+    QCOMPARE(bond->length(), chemkit::Real(1.0));
 
     H2->moveTo(0, -3, 0);
-    QCOMPARE(bond->length(), chemkit::Float(4.0));
+    QCOMPARE(bond->length(), chemkit::Real(4.0));
 }
 
 QTEST_APPLESS_MAIN(BondTest)

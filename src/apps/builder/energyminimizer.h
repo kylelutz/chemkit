@@ -73,7 +73,7 @@ class EnergyMinimizer : public QObject
         QString stateString() const;
 
         // optimization
-        chemkit::Float energy() const;
+        chemkit::Real energy() const;
         void reload() const;
 
     public slots:

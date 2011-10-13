@@ -54,12 +54,12 @@ class CHEMKIT_EXPORT BondPredictor
         ~BondPredictor();
 
         // properties
-        void setTolerance(Float tolerance);
-        Float tolerance() const;
-        void setMinimumBondLength(Float length);
-        Float minimumBondLength() const;
-        void setMaximumBondLength(Float length);
-        Float maximumBondLength() const;
+        void setTolerance(Real tolerance);
+        Real tolerance() const;
+        void setMinimumBondLength(Real length);
+        Real minimumBondLength() const;
+        void setMaximumBondLength(Real length);
+        Real maximumBondLength() const;
         Molecule* molecule() const;
 
         // prediction

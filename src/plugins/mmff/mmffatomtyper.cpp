@@ -414,12 +414,12 @@ int MmffAtomTyper::typeNumber(const chemkit::Atom *atom) const
 }
 
 // --- Charges ------------------------------------------------------------- //
-chemkit::Float MmffAtomTyper::formalCharge(int index) const
+chemkit::Real MmffAtomTyper::formalCharge(int index) const
 {
     return m_formalCharges[index];
 }
 
-chemkit::Float MmffAtomTyper::formalCharge(const chemkit::Atom *atom) const
+chemkit::Real MmffAtomTyper::formalCharge(const chemkit::Atom *atom) const
 {
     return formalCharge(atom->index());
 }
@@ -479,7 +479,7 @@ void MmffAtomTyper::assignTypes(const chemkit::Molecule *molecule)
     }
 }
 
-void MmffAtomTyper::setType(int index, int type, chemkit::Float formalCharge)
+void MmffAtomTyper::setType(int index, int type, chemkit::Real formalCharge)
 {
     m_types[index] = type;
     m_formalCharges[index] = formalCharge;

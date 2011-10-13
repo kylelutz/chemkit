@@ -52,13 +52,13 @@ class CHEMKIT_EXPORT DelaunayTriangulation
     public:
         // construction and destruction
         DelaunayTriangulation(const std::vector<Point3> &points);
-        DelaunayTriangulation(const std::vector<Point3> &points, const std::vector<Float> &weights);
+        DelaunayTriangulation(const std::vector<Point3> &points, const std::vector<Real> &weights);
         ~DelaunayTriangulation();
 
         // properties
         int size() const;
         Point3 position(int vertex) const;
-        Float weight(int vertex) const;
+        Real weight(int vertex) const;
         bool isWeighted() const;
 
         // simplicies
@@ -72,8 +72,8 @@ class CHEMKIT_EXPORT DelaunayTriangulation
         int tetrahedronCount() const;
 
         // geometry
-        Float volume() const;
-        Float surfaceArea() const;
+        Real volume() const;
+        Real surfaceArea() const;
 
     private:
         // internal methods

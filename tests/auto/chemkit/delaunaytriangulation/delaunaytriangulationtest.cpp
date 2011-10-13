@@ -125,7 +125,7 @@ void DelaunayTriangulationTest::serine()
     QCOMPARE(triangulation.tetrahedronCount(), 39);
 
     // weights (squared van der waals radii)
-    std::vector<chemkit::Float> weights;
+    std::vector<chemkit::Real> weights;
     weights.push_back(2.4025);
     weights.push_back(2.90);
     weights.push_back(1.44);

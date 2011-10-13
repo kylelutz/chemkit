@@ -49,7 +49,7 @@ class InternalCoordinatesPrivate
     public:
         int size;
         int *connections;
-        Float *coordinates;
+        Real *coordinates;
 };
 
 // === InternalCoordinates ================================================= //
@@ -76,7 +76,7 @@ InternalCoordinates::InternalCoordinates(int size)
 {
     d->size = size;
     d->connections = new int[3 * size];
-    d->coordinates = new Float[3 * size];
+    d->coordinates = new Real[3 * size];
 }
 
 /// Creates a new internal coordinates object as a copy of
@@ -86,7 +86,7 @@ InternalCoordinates::InternalCoordinates(const InternalCoordinates &coordinates)
 {
     d->size = coordinates.d->size;
     d->connections = new int[3 * coordinates.d->size];
-    d->coordinates = new Float[3 * coordinates.d->size];
+    d->coordinates = new Real[3 * coordinates.d->size];
 
     memcpy(d->connections, coordinates.d->connections, 3 * coordinates.d->size * sizeof(int));
     memcpy(d->coordinates, coordinates.d->coordinates, 3 * coordinates.d->size * sizeof(int));
@@ -111,7 +111,7 @@ int InternalCoordinates::size() const
 // --- Coordinates --------------------------------------------------------- //
 /// Sets the distance, angle, and torsion at \p row to \p r,
 /// \p theta and \p phi respectively. The angles are in degrees.
-void InternalCoordinates::setCoordinates(int row, Float r, Float theta, Float phi)
+void InternalCoordinates::setCoordinates(int row, Real r, Real theta, Real phi)
 {
     assert(row < d->size);
 
@@ -122,7 +122,7 @@ void InternalCoordinates::setCoordinates(int row, Float r, Float theta, Float ph
 
 /// Sets the distance, angle, and torsion at \p row to \p r,
 /// \p theta and \p phi respectively. The angles are in radians.
-void InternalCoordinates::setCoordinatesRadians(int row, Float r, Float theta, Float phi)
+void InternalCoordinates::setCoordinatesRadians(int row, Real r, Real theta, Real phi)
 {
     assert(row < d->size);
 
@@ -133,11 +133,11 @@ void InternalCoordinates::setCoordinatesRadians(int row, Float r, Float theta, F
 
 /// Returns the distance, angle, and torsion coordinates at \p row.
 /// The returned angles are in degrees.
-std::vector<Float> InternalCoordinates::coordinates(int row) const
+std::vector<Real> InternalCoordinates::coordinates(int row) const
 {
     assert(row < d->size);
 
-    std::vector<Float> coordinates(3);
+    std::vector<Real> coordinates(3);
 
     coordinates[0] = d->coordinates[row * 3 + 0];
     coordinates[1] = d->coordinates[row * 3 + 1];
@@ -148,11 +148,11 @@ std::vector<Float> InternalCoordinates::coordinates(int row) const
 
 /// Returns the distance, angle, and torsion coordinates at \p row.
 /// The returned angles are in radians.
-std::vector<Float> InternalCoordinates::coordinatesRadians(int row) const
+std::vector<Real> InternalCoordinates::coordinatesRadians(int row) const
 {
     assert(row < d->size);
 
-    std::vector<Float> coordinates = this->coordinates(row);
+    std::vector<Real> coordinates = this->coordinates(row);
 
     for(int i = 0; i < 3; i++){
         coordinates[i] *= chemkit::constants::DegreesToRadians;
@@ -205,15 +205,15 @@ Coordinates* InternalCoordinates::toCartesianCoordinates() const
         cartesianCoordinates->setPosition(0, Point3(0, 0, 0));
 
         if(d->size >= 1){
-            Float r1 = coordinates(1)[0];
+            Real r1 = coordinates(1)[0];
             cartesianCoordinates->setPosition(1, Point3(r1, 0, 0));
 
             if(d->size >= 2){
-                Float r2 = coordinates(2)[0];
-                Float theta = coordinates(2)[1];
+                Real r2 = coordinates(2)[0];
+                Real theta = coordinates(2)[1];
 
-                Float x = r2 * cos((180.0 - theta) * chemkit::constants::DegreesToRadians);
-                Float y = r2 * sin((180.0 - theta) * chemkit::constants::DegreesToRadians);
+                Real x = r2 * cos((180.0 - theta) * chemkit::constants::DegreesToRadians);
+                Real y = r2 * sin((180.0 - theta) * chemkit::constants::DegreesToRadians);
 
                 cartesianCoordinates->setPosition(2, Point3(r1 + x, y, 0));
             }
@@ -222,19 +222,19 @@ Coordinates* InternalCoordinates::toCartesianCoordinates() const
 
     // set positions for the rest of the atoms
     for(int i = 3; i < d->size; i++){
-        std::vector<Float> coordinates = this->coordinates(i);
-        Float r = coordinates[0];
-        Float theta = coordinates[1];
-        Float phi = coordinates[2];
+        std::vector<Real> coordinates = this->coordinates(i);
+        Real r = coordinates[0];
+        Real theta = coordinates[1];
+        Real phi = coordinates[2];
 
-        Float sinTheta = sin(theta * chemkit::constants::DegreesToRadians);
-        Float cosTheta = cos(theta * chemkit::constants::DegreesToRadians);
-        Float sinPhi = sin(phi * chemkit::constants::DegreesToRadians);
-        Float cosPhi = cos(phi * chemkit::constants::DegreesToRadians);
+        Real sinTheta = sin(theta * chemkit::constants::DegreesToRadians);
+        Real cosTheta = cos(theta * chemkit::constants::DegreesToRadians);
+        Real sinPhi = sin(phi * chemkit::constants::DegreesToRadians);
+        Real cosPhi = cos(phi * chemkit::constants::DegreesToRadians);
 
-        Float x = r * cosTheta;
-        Float y = r * cosPhi * sinTheta;
-        Float z = r * sinPhi * sinTheta;
+        Real x = r * cosTheta;
+        Real y = r * cosPhi * sinTheta;
+        Real z = r * sinPhi * sinTheta;
 
         std::vector<int> connections = this->connections(i);
 
@@ -247,7 +247,7 @@ Coordinates* InternalCoordinates::toCartesianCoordinates() const
         Vector3 n = ab.cross(bc).normalized();
         Vector3 ncbc = n.cross(bc);
 
-        Eigen::Matrix<Float, 3, 3> M;
+        Eigen::Matrix<Real, 3, 3> M;
         M << bc.x(), ncbc.x(), n.x(),
              bc.y(), ncbc.y(), n.y(),
              bc.z(), ncbc.z(), n.z();
@@ -271,7 +271,7 @@ InternalCoordinates& InternalCoordinates::operator=(const InternalCoordinates &c
 
     d->size = coordinates.d->size;
     d->connections = new int[3 * coordinates.d->size];
-    d->coordinates = new Float[3 * coordinates.d->size];
+    d->coordinates = new Real[3 * coordinates.d->size];
 
     memcpy(d->connections, coordinates.d->connections, 3 * coordinates.d->size * sizeof(int));
     memcpy(d->coordinates, coordinates.d->coordinates, 3 * coordinates.d->size * sizeof(int));

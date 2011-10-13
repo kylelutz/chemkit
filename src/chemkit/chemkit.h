@@ -62,8 +62,8 @@
 
 namespace chemkit {
 
-/// Typedef for a floating point number.
-typedef double Float;
+/// Typedef for a real number.
+typedef double Real;
 
 } // end chemkit namespace
 

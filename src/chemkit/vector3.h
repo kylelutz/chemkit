@@ -43,7 +43,7 @@
 namespace chemkit {
 
 /// A three-dimensional vector.
-typedef Eigen::Matrix<Float, 3, 1> Vector3;
+typedef Eigen::Matrix<Real, 3, 1> Vector3;
 
 /// A three-dimensional vector containing \c float values.
 typedef Eigen::Matrix<float, 3, 1> Vector3f;

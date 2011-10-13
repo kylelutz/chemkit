@@ -52,7 +52,7 @@ RandicIndexDescriptor::~RandicIndexDescriptor()
 // Returns the randic index for the molecule. See [Randic 1975].
 chemkit::Variant RandicIndexDescriptor::value(const chemkit::Molecule *molecule) const
 {
-    chemkit::Float value = 0;
+    chemkit::Real value = 0;
 
     foreach(const chemkit::Bond *bond, molecule->bonds()){
         if(bond->isTerminal() && bond->contains(chemkit::Atom::Hydrogen)){
@@ -62,7 +62,7 @@ chemkit::Variant RandicIndexDescriptor::value(const chemkit::Molecule *molecule)
         const chemkit::Atom *a = bond->atom1();
         const chemkit::Atom *b = bond->atom2();
 
-        value += 1.0 / sqrt(chemkit::Float(heavyNeighborCount(a) * heavyNeighborCount(b)));
+        value += 1.0 / sqrt(chemkit::Real(heavyNeighborCount(a) * heavyNeighborCount(b)));
     }
 
     return value;

@@ -110,7 +110,7 @@ QString EnergyMinimizer::stateString() const
 }
 
 // --- Optimization -------------------------------------------------------- //
-chemkit::Float EnergyMinimizer::energy() const
+chemkit::Real EnergyMinimizer::energy() const
 {
     if(m_forceField)
         return m_forceField->energy();

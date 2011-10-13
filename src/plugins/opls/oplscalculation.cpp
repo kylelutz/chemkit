@@ -70,15 +70,15 @@ bool OplsBondStrechCalculation::setup(const OplsParameters *parameters)
     return true;
 }
 
-chemkit::Float OplsBondStrechCalculation::energy() const
+chemkit::Real OplsBondStrechCalculation::energy() const
 {
     const chemkit::ForceFieldAtom *a = atom(0);
     const chemkit::ForceFieldAtom *b = atom(1);
 
-    chemkit::Float kb = parameter(0);
-    chemkit::Float r0 = parameter(1);
+    chemkit::Real kb = parameter(0);
+    chemkit::Real r0 = parameter(1);
 
-    chemkit::Float r = distance(a, b);
+    chemkit::Real r = distance(a, b);
 
     return kb * pow(r - r0, 2);
 }
@@ -88,15 +88,15 @@ std::vector<chemkit::Vector3> OplsBondStrechCalculation::gradient() const
     const chemkit::ForceFieldAtom *a = atom(0);
     const chemkit::ForceFieldAtom *b = atom(1);
 
-    chemkit::Float kb = parameter(0);
-    chemkit::Float r0 = parameter(1);
+    chemkit::Real kb = parameter(0);
+    chemkit::Real r0 = parameter(1);
 
-    chemkit::Float r = distance(a, b);
+    chemkit::Real r = distance(a, b);
 
     std::vector<chemkit::Vector3> gradient = distanceGradient(a, b);
 
     // dE/dr
-    chemkit::Float de_dr = 2.0 * kb * (r - r0);
+    chemkit::Real de_dr = 2.0 * kb * (r - r0);
 
     gradient[0] *= de_dr;
     gradient[1] *= de_dr;
@@ -134,16 +134,16 @@ bool OplsAngleBendCalculation::setup(const OplsParameters *parameters)
     return true;
 }
 
-chemkit::Float OplsAngleBendCalculation::energy() const
+chemkit::Real OplsAngleBendCalculation::energy() const
 {
     const chemkit::ForceFieldAtom *a = atom(0);
     const chemkit::ForceFieldAtom *b = atom(1);
     const chemkit::ForceFieldAtom *c = atom(2);
 
-    chemkit::Float ka = parameter(0);
-    chemkit::Float theta0 = parameter(1);
+    chemkit::Real ka = parameter(0);
+    chemkit::Real theta0 = parameter(1);
 
-    chemkit::Float theta = bondAngleRadians(a, b, c);
+    chemkit::Real theta = bondAngleRadians(a, b, c);
 
     return ka * pow(theta - theta0, 2);
 }
@@ -154,15 +154,15 @@ std::vector<chemkit::Vector3> OplsAngleBendCalculation::gradient() const
     const chemkit::ForceFieldAtom *b = atom(1);
     const chemkit::ForceFieldAtom *c = atom(2);
 
-    chemkit::Float ka = parameter(0);
-    chemkit::Float theta0 = parameter(1);
+    chemkit::Real ka = parameter(0);
+    chemkit::Real theta0 = parameter(1);
 
-    chemkit::Float theta = bondAngleRadians(a, b, c);
+    chemkit::Real theta = bondAngleRadians(a, b, c);
 
     std::vector<chemkit::Vector3> gradient = bondAngleGradientRadians(a, b, c);
 
     // dE/dtheta
-    chemkit::Float de_dtheta = (2.0 * ka * (theta - theta0));
+    chemkit::Real de_dtheta = (2.0 * ka * (theta - theta0));
 
     gradient[0] *= de_dtheta;
     gradient[1] *= de_dtheta;
@@ -205,18 +205,18 @@ bool OplsTorsionCalculation::setup(const OplsParameters *parameters)
     return true;
 }
 
-chemkit::Float OplsTorsionCalculation::energy() const
+chemkit::Real OplsTorsionCalculation::energy() const
 {
     const chemkit::ForceFieldAtom *a = atom(0);
     const chemkit::ForceFieldAtom *b = atom(1);
     const chemkit::ForceFieldAtom *c = atom(2);
     const chemkit::ForceFieldAtom *d = atom(3);
 
-    chemkit::Float v1 = parameter(0);
-    chemkit::Float v2 = parameter(1);
-    chemkit::Float v3 = parameter(2);
+    chemkit::Real v1 = parameter(0);
+    chemkit::Real v2 = parameter(1);
+    chemkit::Real v3 = parameter(2);
 
-    chemkit::Float phi = torsionAngleRadians(a, b, c, d);
+    chemkit::Real phi = torsionAngleRadians(a, b, c, d);
 
     return (1.0/2.0) * (v1 * (1.0 + cos(phi)) + v2 * (1.0 - cos(2.0 * phi)) + v3 * (1.0 + cos(3.0 * phi)));
 }
@@ -228,14 +228,14 @@ std::vector<chemkit::Vector3> OplsTorsionCalculation::gradient() const
     const chemkit::ForceFieldAtom *c = atom(2);
     const chemkit::ForceFieldAtom *d = atom(3);
 
-    chemkit::Float v1 = parameter(0);
-    chemkit::Float v2 = parameter(1);
-    chemkit::Float v3 = parameter(2);
+    chemkit::Real v1 = parameter(0);
+    chemkit::Real v2 = parameter(1);
+    chemkit::Real v3 = parameter(2);
 
-    chemkit::Float phi = torsionAngleRadians(a, b, c, d);
+    chemkit::Real phi = torsionAngleRadians(a, b, c, d);
 
     // dE/dphi
-    chemkit::Float de_dphi = (1.0/2.0) * (-v1 * sin(phi) + 2.0 * v2 * sin(2.0 * phi) - 3.0 * v3 * sin(3.0 * phi));
+    chemkit::Real de_dphi = (1.0/2.0) * (-v1 * sin(phi) + 2.0 * v2 * sin(2.0 * phi) - 3.0 * v3 * sin(3.0 * phi));
 
     std::vector<chemkit::Vector3> gradient = torsionAngleGradientRadians(a, b, c, d);
 
@@ -269,10 +269,10 @@ bool OplsNonbondedCalculation::setup(const OplsParameters *parameters)
         return false;
     }
 
-    chemkit::Float qa = parameters->partialCharge(typeA);
-    chemkit::Float qb = parameters->partialCharge(typeB);
-    chemkit::Float sigma = sqrt(pa->sigma * pb->sigma);
-    chemkit::Float epsilon = sqrt(pa->epsilon * pb->epsilon);
+    chemkit::Real qa = parameters->partialCharge(typeA);
+    chemkit::Real qb = parameters->partialCharge(typeB);
+    chemkit::Real sigma = sqrt(pa->sigma * pb->sigma);
+    chemkit::Real epsilon = sqrt(pa->epsilon * pb->epsilon);
 
     setParameter(0, qa);
     setParameter(1, qb);
@@ -290,19 +290,19 @@ bool OplsNonbondedCalculation::setup(const OplsParameters *parameters)
     return true;
 }
 
-chemkit::Float OplsNonbondedCalculation::energy() const
+chemkit::Real OplsNonbondedCalculation::energy() const
 {
     const chemkit::ForceFieldAtom *a = atom(0);
     const chemkit::ForceFieldAtom *b = atom(1);
 
-    chemkit::Float qa = parameter(0);
-    chemkit::Float qb = parameter(1);
-    chemkit::Float e = 332.06; // vacuum permitivity
-    chemkit::Float sigma = parameter(2);
-    chemkit::Float epsilon = parameter(3);
-    chemkit::Float scale = parameter(4);
+    chemkit::Real qa = parameter(0);
+    chemkit::Real qb = parameter(1);
+    chemkit::Real e = 332.06; // vacuum permitivity
+    chemkit::Real sigma = parameter(2);
+    chemkit::Real epsilon = parameter(3);
+    chemkit::Real scale = parameter(4);
 
-    chemkit::Float r = distance(a, b);
+    chemkit::Real r = distance(a, b);
 
     return scale * ((qa * qb * e) / r + 4.0 * epsilon * (pow(sigma / r, 12) - pow(sigma / r, 6)));
 }
@@ -314,18 +314,18 @@ std::vector<chemkit::Vector3> OplsNonbondedCalculation::gradient() const
     const chemkit::ForceFieldAtom *a = atom(0);
     const chemkit::ForceFieldAtom *b = atom(1);
 
-    chemkit::Float qa = parameter(0);
-    chemkit::Float qb = parameter(1);
-    chemkit::Float e = 332.06; // vacuum permitivity
-    chemkit::Float sigma = parameter(2);
-    chemkit::Float epsilon = parameter(3);
-    chemkit::Float scale = parameter(4);
+    chemkit::Real qa = parameter(0);
+    chemkit::Real qb = parameter(1);
+    chemkit::Real e = 332.06; // vacuum permitivity
+    chemkit::Real sigma = parameter(2);
+    chemkit::Real epsilon = parameter(3);
+    chemkit::Real scale = parameter(4);
 
-    chemkit::Float r = distance(a, b);
-    chemkit::Float sr = sigma / r;
+    chemkit::Real r = distance(a, b);
+    chemkit::Real sr = sigma / r;
 
     // dE/dr
-    chemkit::Float de_dr = scale * ((1.0 / pow(r, 3)) * (-qa * qb * e + -4.0 * epsilon * sigma * (12.0 * pow(sr, 11) - 6.0 * pow(sr, 5))));
+    chemkit::Real de_dr = scale * ((1.0 / pow(r, 3)) * (-qa * qb * e + -4.0 * epsilon * sigma * (12.0 * pow(sr, 11) - 6.0 * pow(sr, 5))));
 
     // dE/da
     chemkit::Vector3 de_da = (a->position() - b->position()) * de_dr;

@@ -52,7 +52,7 @@ class AtomPrivate
     public:
         Residue *residue;
         int massNumber;
-        Float partialCharge;
+        Real partialCharge;
         Point3 position;
         std::vector<Bond *> bonds;
         Atom::Chirality chirality;
@@ -168,14 +168,14 @@ int Atom::formalCharge() const
 }
 
 /// Sets the partial charge of the atom.
-void Atom::setPartialCharge(Float charge)
+void Atom::setPartialCharge(Real charge)
 {
     d->partialCharge = charge;
     m_molecule->notifyObservers(this, Molecule::AtomPartialChargeChanged);
 }
 
 /// Returns the partial charge of the atom.
-Float Atom::partialCharge() const
+Real Atom::partialCharge() const
 {
     return d->partialCharge;
 }
@@ -194,26 +194,26 @@ std::string Atom::name() const
 }
 
 /// Returns the molar mass of the atom. Mass is in g/mol.
-Float Atom::mass() const
+Real Atom::mass() const
 {
     return m_element.mass();
 }
 
 /// Returns the electronegativity of the atom using the Pauling
 /// scale.
-Float Atom::electronegativity() const
+Real Atom::electronegativity() const
 {
     return m_element.electronegativity();
 }
 
 /// Returns the covalent radius of the atom.
-Float Atom::covalentRadius() const
+Real Atom::covalentRadius() const
 {
     return m_element.covalentRadius();
 }
 
 /// Returns the Van der Waals radius of the atom.
-Float Atom::vanDerWaalsRadius() const
+Real Atom::vanDerWaalsRadius() const
 {
     return m_element.vanDerWaalsRadius();
 }
@@ -505,7 +505,7 @@ void Atom::setPosition(const Point3 &position)
 
 /// Sets the coordinates of the atom to (x, y, z). Equivalent to
 /// setPosition(Point(x, y, z)).
-void Atom::setPosition(Float x, Float y, Float z)
+void Atom::setPosition(Real x, Real y, Real z)
 {
     setPosition(Point3(x, y, z));
 }
@@ -517,19 +517,19 @@ Point3 Atom::position() const
 }
 
 /// Returns the atom's x coordinate. Equivalent to position().x().
-Float Atom::x() const
+Real Atom::x() const
 {
     return position().x();
 }
 
 /// Returns the atom's y coordinate. Equivalent to position().y().
-Float Atom::y() const
+Real Atom::y() const
 {
     return position().y();
 }
 
 /// Returns the atom's z coordinate. Equivalent to position().z().
-Float Atom::z() const
+Real Atom::z() const
 {
     return position().z();
 }
@@ -542,7 +542,7 @@ void Atom::moveTo(const Point3 &position)
 
 /// Moves the atom to the point (x, y, z). Equivalent to
 /// setPosition(x, y, z).
-void Atom::moveTo(Float x, Float y, Float z)
+void Atom::moveTo(Real x, Real y, Real z)
 {
     setPosition(x, y, z);
 }
@@ -555,14 +555,14 @@ void Atom::moveBy(const Vector3 &vector)
 
 /// Moves the atom by relative amounts dx, dy, dz. Equivalent to
 /// setPosition(x()+dx, y()+dy, z()+dz).
-void Atom::moveBy(Float dx, Float dy, Float dz)
+void Atom::moveBy(Real dx, Real dy, Real dz)
 {
     setPosition(x() + dx, y() + dy, z() + dz);
 }
 
 /// Returns the distance between the atom and the other atom.
 /// Distance is in Angstroms.
-Float Atom::distance(const Atom *atom) const
+Real Atom::distance(const Atom *atom) const
 {
     return chemkit::geometry::distance(position(), atom->position());
 }

@@ -43,10 +43,10 @@ void AlphaShapeTest::alphaValue()
     chemkit::AlphaShape alphaShape(points);
 
     // default alpha value is 0
-    QCOMPARE(alphaShape.alphaValue(), chemkit::Float(0.0));
+    QCOMPARE(alphaShape.alphaValue(), chemkit::Real(0.0));
 
     alphaShape.setAlphaValue(1.8);
-    QCOMPARE(alphaShape.alphaValue(), chemkit::Float(1.8));
+    QCOMPARE(alphaShape.alphaValue(), chemkit::Real(1.8));
 }
 
 QTEST_APPLESS_MAIN(AlphaShapeTest)

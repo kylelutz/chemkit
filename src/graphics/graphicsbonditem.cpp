@@ -232,7 +232,7 @@ void GraphicsBondItem::paint(GraphicsPainter *painter)
                     painter->drawCylinder(a, b, radius);
                 }
                 else{
-                    Point3f midpoint = chemkit::geometry::midpoint(a.cast<Float>(), b.cast<Float>()).cast<float>();
+                    Point3f midpoint = chemkit::geometry::midpoint(a.cast<Real>(), b.cast<Real>()).cast<float>();
                     painter->setColor(d->atomColors.first);
                     painter->drawCylinder(a, midpoint, radius);
                     painter->setColor(d->atomColors.second);

@@ -132,7 +132,7 @@ void CubeViewerExample::openFile(const QString &fileName)
         m_positiveSurfaceItem->setScalarField(m_positiveScalarField);
         m_positiveSurfaceItem->setPosition(m_positiveScalarField->origin().cast<float>());
 
-        std::vector<chemkit::Float> values = m_positiveScalarField->data();
+        std::vector<chemkit::Real> values = m_positiveScalarField->data();
         for(unsigned int i = 0; i < values.size(); i++){
             values[i] = -values[i];
         }
@@ -167,7 +167,7 @@ void CubeViewerExample::quit()
 
 void CubeViewerExample::isovalueChanged(int value)
 {
-    chemkit::Float isovalue = value / 1000.0;
+    chemkit::Real isovalue = value / 1000.0;
 
     m_positiveSurfaceItem->setIsovalue(isovalue);
     m_negativeSurfaceItem->setIsovalue(isovalue);
@@ -177,7 +177,7 @@ void CubeViewerExample::isovalueChanged(int value)
 
 void CubeViewerExample::opacityChanged(int value)
 {
-    chemkit::Float opacity = value / 100.0;
+    chemkit::Real opacity = value / 100.0;
 
     m_positiveSurfaceItem->setOpacity(opacity);
     m_negativeSurfaceItem->setOpacity(opacity);
@@ -257,7 +257,7 @@ chemkit::ScalarField* CubeViewerExample::readVolumeData(const QString &fileName)
     }
 
     // read volume data
-    std::vector<chemkit::Float> volumeData;
+    std::vector<chemkit::Real> volumeData;
     while(!file.atEnd()){
         line = file.readLine();
         lineItems = line.split(" ", QString::SkipEmptyParts);
@@ -267,7 +267,7 @@ chemkit::ScalarField* CubeViewerExample::readVolumeData(const QString &fileName)
         }
     }
 
-    std::vector<chemkit::Float> cellLengths(3);
+    std::vector<chemkit::Real> cellLengths(3);
     for(int i = 0; i < 3; i++){
         cellLengths[i] = axes[i].norm();
     }

@@ -53,10 +53,10 @@ class MmffAtom : public chemkit::ForceFieldAtom
 
         // properties
         const MmffForceField* forceField() const;
-        void setType(int typeNumber, chemkit::Float formalCharge = 0);
+        void setType(int typeNumber, chemkit::Real formalCharge = 0);
         virtual std::string type() const;
         int typeNumber() const;
-        chemkit::Float formalCharge() const;
+        chemkit::Real formalCharge() const;
         int period() const;
 
         // parameters
@@ -64,7 +64,7 @@ class MmffAtom : public chemkit::ForceFieldAtom
 
     private:
         int m_typeNumber;
-        chemkit::Float m_formalCharge;
+        chemkit::Real m_formalCharge;
 };
 
 #endif // MMFFATOM_H

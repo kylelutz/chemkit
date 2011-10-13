@@ -60,7 +60,7 @@ const UffAtomParameters* UffCalculation::parameters(const chemkit::ForceFieldAto
 // Returns the bond order of the bond between atom's a and b. If both
 // atoms have a resonant type the bond order returned is 1.5.
 // Otherwise the integer value of the bond order is returned.
-chemkit::Float UffCalculation::bondOrder(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b) const
+chemkit::Real UffCalculation::bondOrder(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b) const
 {
     const chemkit::Bond *bond = a->atom()->bondTo(b->atom());
 
@@ -73,13 +73,13 @@ chemkit::Float UffCalculation::bondOrder(const chemkit::ForceFieldAtom *a, const
 }
 
 // Returns the length of the bond between two atoms.
-chemkit::Float UffCalculation::bondLength(const UffAtomParameters *a, const UffAtomParameters *b, chemkit::Float bondOrder) const
+chemkit::Real UffCalculation::bondLength(const UffAtomParameters *a, const UffAtomParameters *b, chemkit::Real bondOrder) const
 {
     // r_ij = r_i + r_j + r_bo - r_en
-    chemkit::Float r_bo = -0.1332 * (a->r + b->r) * log(bondOrder);
-    chemkit::Float r_en = ((a->r * b->r) * pow((sqrt(a->X) - sqrt(b->X)), 2)) / (a->X*a->r + b->X*b->r);
+    chemkit::Real r_bo = -0.1332 * (a->r + b->r) * log(bondOrder);
+    chemkit::Real r_en = ((a->r * b->r) * pow((sqrt(a->X) - sqrt(b->X)), 2)) / (a->X*a->r + b->X*b->r);
 
-    chemkit::Float r_ij = a->r + b->r + r_bo - r_en;
+    chemkit::Real r_ij = a->r + b->r + r_bo - r_en;
 
     return r_ij;
 }
@@ -102,14 +102,14 @@ bool UffBondStrechCalculation::setup()
     }
 
     // n = bondorder (1.5 for aromatic, 1.366 for amide)
-    chemkit::Float bondorder = bondOrder(atom(0), atom(1));
+    chemkit::Real bondorder = bondOrder(atom(0), atom(1));
 
-    chemkit::Float r0 = bondLength(pa, pb, bondorder);
+    chemkit::Real r0 = bondLength(pa, pb, bondorder);
 
     // parameter(1) = k_ij = 664.12 * (Z*_i * Z*_j) / r_ij^3
-    chemkit::Float za = pa->Z;
-    chemkit::Float zb = pb->Z;
-    chemkit::Float kb = 664.12 * (za * zb) / pow(r0, 3);
+    chemkit::Real za = pa->Z;
+    chemkit::Real zb = pb->Z;
+    chemkit::Real kb = 664.12 * (za * zb) / pow(r0, 3);
 
     setParameter(0, kb);
     setParameter(1, r0);
@@ -117,14 +117,14 @@ bool UffBondStrechCalculation::setup()
     return true;
 }
 
-chemkit::Float UffBondStrechCalculation::energy() const
+chemkit::Real UffBondStrechCalculation::energy() const
 {
     const chemkit::ForceFieldAtom *a = atom(0);
     const chemkit::ForceFieldAtom *b = atom(1);
 
-    chemkit::Float kb = parameter(0);
-    chemkit::Float r0 = parameter(1);
-    chemkit::Float r = distance(a, b);
+    chemkit::Real kb = parameter(0);
+    chemkit::Real r0 = parameter(1);
+    chemkit::Real r = distance(a, b);
 
     return 0.5 * kb * pow(r - r0, 2);
 }
@@ -134,12 +134,12 @@ std::vector<chemkit::Vector3> UffBondStrechCalculation::gradient() const
     const chemkit::ForceFieldAtom *a = atom(0);
     const chemkit::ForceFieldAtom *b = atom(1);
 
-    chemkit::Float kb = parameter(0);
-    chemkit::Float r0 = parameter(1);
-    chemkit::Float r = distance(a, b);
+    chemkit::Real kb = parameter(0);
+    chemkit::Real r0 = parameter(1);
+    chemkit::Real r = distance(a, b);
 
     // dE/dr
-    chemkit::Float de_dr = kb * (r - r0);
+    chemkit::Real de_dr = kb * (r - r0);
 
     std::vector<chemkit::Vector3> gradient = distanceGradient(a, b);
 
@@ -170,31 +170,31 @@ bool UffAngleBendCalculation::setup()
         return false;
     }
 
-    chemkit::Float theta0 = pb->theta * chemkit::constants::DegreesToRadians;
+    chemkit::Real theta0 = pb->theta * chemkit::constants::DegreesToRadians;
 
     const chemkit::Bond *bond_ab = atom(0)->atom()->bondTo(atom(1)->atom());
     const chemkit::Bond *bond_bc = atom(1)->atom()->bondTo(atom(2)->atom());
 
-    chemkit::Float bo_ij = bond_ab->order();
-    chemkit::Float bo_jk = bond_bc->order();
+    chemkit::Real bo_ij = bond_ab->order();
+    chemkit::Real bo_jk = bond_bc->order();
 
-    chemkit::Float r_ab = bondLength(pa, pb, bo_ij);
-    chemkit::Float r_bc = bondLength(pb, pc, bo_jk);
-    chemkit::Float r_ac = sqrt(pow(r_ab, 2)  + pow(r_bc, 2) - (2.0 * r_ab * r_bc * cos(theta0)));
+    chemkit::Real r_ab = bondLength(pa, pb, bo_ij);
+    chemkit::Real r_bc = bondLength(pb, pc, bo_jk);
+    chemkit::Real r_ac = sqrt(pow(r_ab, 2)  + pow(r_bc, 2) - (2.0 * r_ab * r_bc * cos(theta0)));
 
-    chemkit::Float beta = 664.12 / (r_ab * r_bc);
+    chemkit::Real beta = 664.12 / (r_ab * r_bc);
 
-    chemkit::Float z_a = pa->Z;
-    chemkit::Float z_c = pc->Z;
+    chemkit::Real z_a = pa->Z;
+    chemkit::Real z_c = pc->Z;
 
     // equation 13
-    chemkit::Float ka = beta * ((z_a * z_c) / pow(r_ac, 5)) * r_ab * r_bc * (3.0 * r_ab * r_bc * (1.0 - pow(cos(theta0), 2.0)) - (pow(r_ac, 2.0) * cos(theta0)));
+    chemkit::Real ka = beta * ((z_a * z_c) / pow(r_ac, 5)) * r_ab * r_bc * (3.0 * r_ab * r_bc * (1.0 - pow(cos(theta0), 2.0)) - (pow(r_ac, 2.0) * cos(theta0)));
 
     setParameter(0, ka);
 
-    chemkit::Float c2 = 1 / (4 * pow(sin(theta0), 2));
-    chemkit::Float c1 = -4 * c2 * cos(theta0);
-    chemkit::Float c0 = c2 * (2 * pow(cos(theta0), 2) + 1);
+    chemkit::Real c2 = 1 / (4 * pow(sin(theta0), 2));
+    chemkit::Real c1 = -4 * c2 * cos(theta0);
+    chemkit::Real c0 = c2 * (2 * pow(cos(theta0), 2) + 1);
 
     setParameter(1, c0);
     setParameter(2, c1);
@@ -203,18 +203,18 @@ bool UffAngleBendCalculation::setup()
     return true;
 }
 
-chemkit::Float UffAngleBendCalculation::energy() const
+chemkit::Real UffAngleBendCalculation::energy() const
 {
     const chemkit::ForceFieldAtom *a = atom(0);
     const chemkit::ForceFieldAtom *b = atom(1);
     const chemkit::ForceFieldAtom *c = atom(2);
 
-    chemkit::Float ka = parameter(0);
-    chemkit::Float c0 = parameter(1);
-    chemkit::Float c1 = parameter(2);
-    chemkit::Float c2 = parameter(3);
+    chemkit::Real ka = parameter(0);
+    chemkit::Real c0 = parameter(1);
+    chemkit::Real c1 = parameter(2);
+    chemkit::Real c2 = parameter(3);
 
-    chemkit::Float theta = bondAngleRadians(a, b, c);
+    chemkit::Real theta = bondAngleRadians(a, b, c);
 
     return ka * (c0 + (c1 * cos(theta)) + (c2 * cos(2*theta)));
 }
@@ -225,14 +225,14 @@ std::vector<chemkit::Vector3> UffAngleBendCalculation::gradient() const
     const chemkit::ForceFieldAtom *b = atom(1);
     const chemkit::ForceFieldAtom *c = atom(2);
 
-    chemkit::Float ka = parameter(0);
-    chemkit::Float c1 = parameter(2);
-    chemkit::Float c2 = parameter(3);
+    chemkit::Real ka = parameter(0);
+    chemkit::Real c1 = parameter(2);
+    chemkit::Real c2 = parameter(3);
 
-    chemkit::Float theta = bondAngleRadians(a, b, c);
+    chemkit::Real theta = bondAngleRadians(a, b, c);
 
     // dE/dtheta
-    chemkit::Float de_dtheta = -ka * (c1 * sin(theta) + 2 * c2 * sin(2 * theta));
+    chemkit::Real de_dtheta = -ka * (c1 * sin(theta) + 2 * c2 * sin(2 * theta));
 
     std::vector<chemkit::Vector3> gradient = bondAngleGradientRadians(a, b, c);
 
@@ -270,9 +270,9 @@ bool UffTorsionCalculation::setup()
     const UffAtomParameters *pb = parameters(b);
     const UffAtomParameters *pc = parameters(c);
 
-    chemkit::Float V = 0;
-    chemkit::Float n = 0;
-    chemkit::Float phi0 = 0;
+    chemkit::Real V = 0;
+    chemkit::Real n = 0;
+    chemkit::Real phi0 = 0;
 
     // sp3-sp3
     if(b->type()[2] == '3' && c->type()[2] == '3'){
@@ -304,7 +304,7 @@ bool UffTorsionCalculation::setup()
     }
     // sp2-sp2
     else if((b->type()[2] == '2' || b->type()[2] == 'R') && (c->type()[2] == '2' || c->type()[2] == 'R')){
-        chemkit::Float bondorder = bondOrder(b, c);
+        chemkit::Real bondorder = bondOrder(b, c);
 
         // equation 17
         V = 5 * sqrt(pb->U * pc->U) * (1 + 4.18 * log(bondorder));
@@ -315,7 +315,7 @@ bool UffTorsionCalculation::setup()
     // group 6 sp3 - any sp2 or R
     else if((forceField->isGroupSix(b) && (c->type()[2] == '2' || c->type()[2] == 'R')) ||
             (forceField->isGroupSix(c) && (b->type()[2] == '2' || b->type()[2] == 'R'))){
-        chemkit::Float bondorder = bondOrder(b, c);
+        chemkit::Real bondorder = bondOrder(b, c);
 
         // equation 17
         V = 5 * sqrt(pb->U * pc->U) * (1 + 4.18 * log(bondorder));
@@ -341,18 +341,18 @@ bool UffTorsionCalculation::setup()
     return true;
 }
 
-chemkit::Float UffTorsionCalculation::energy() const
+chemkit::Real UffTorsionCalculation::energy() const
 {
     const chemkit::ForceFieldAtom *a = atom(0);
     const chemkit::ForceFieldAtom *b = atom(1);
     const chemkit::ForceFieldAtom *c = atom(2);
     const chemkit::ForceFieldAtom *d = atom(3);
 
-    chemkit::Float V = parameter(0);
-    chemkit::Float n = parameter(1);
-    chemkit::Float phi0 = parameter(2);
+    chemkit::Real V = parameter(0);
+    chemkit::Real n = parameter(1);
+    chemkit::Real phi0 = parameter(2);
 
-    chemkit::Float phi = torsionAngleRadians(a, b, c, d);
+    chemkit::Real phi = torsionAngleRadians(a, b, c, d);
 
     return 0.5 * V * (1 - cos(n * phi0) * cos(n * phi));
 }
@@ -364,14 +364,14 @@ std::vector<chemkit::Vector3> UffTorsionCalculation::gradient() const
     const chemkit::ForceFieldAtom *c = atom(2);
     const chemkit::ForceFieldAtom *d = atom(3);
 
-    chemkit::Float V = parameter(0);
-    chemkit::Float n = parameter(1);
-    chemkit::Float phi0 = parameter(2);
+    chemkit::Real V = parameter(0);
+    chemkit::Real n = parameter(1);
+    chemkit::Real phi0 = parameter(2);
 
-    chemkit::Float phi = torsionAngleRadians(a, b, c, d);
+    chemkit::Real phi = torsionAngleRadians(a, b, c, d);
 
     // dE/dphi
-    chemkit::Float de_dphi = 0.5 * V * n * cos(n * phi0) * sin(n * phi);
+    chemkit::Real de_dphi = 0.5 * V * n * cos(n * phi0) * sin(n * phi);
 
     std::vector<chemkit::Vector3> gradient = torsionAngleGradientRadians(a, b, c, d);
 
@@ -404,10 +404,10 @@ bool UffInversionCalculation::setup()
     const chemkit::ForceFieldAtom *c = atom(2);
     const chemkit::ForceFieldAtom *d = atom(3);
 
-    chemkit::Float k = 0;
-    chemkit::Float c0 = 0;
-    chemkit::Float c1 = 0;
-    chemkit::Float c2 = 0;
+    chemkit::Real k = 0;
+    chemkit::Real c0 = 0;
+    chemkit::Real c1 = 0;
+    chemkit::Real c2 = 0;
 
     // sp2 carbon
     if(b->type() == "C_2" || b->type() == "C_R"){
@@ -434,20 +434,20 @@ bool UffInversionCalculation::setup()
     return true;
 }
 
-chemkit::Float UffInversionCalculation::energy() const
+chemkit::Real UffInversionCalculation::energy() const
 {
     const chemkit::ForceFieldAtom *a = atom(0);
     const chemkit::ForceFieldAtom *b = atom(1);
     const chemkit::ForceFieldAtom *c = atom(2);
     const chemkit::ForceFieldAtom *d = atom(3);
 
-    chemkit::Float k = parameter(0);
-    chemkit::Float c0 = parameter(1);
-    chemkit::Float c1 = parameter(2);
-    chemkit::Float c2 = parameter(3);
+    chemkit::Real k = parameter(0);
+    chemkit::Real c0 = parameter(1);
+    chemkit::Real c1 = parameter(2);
+    chemkit::Real c2 = parameter(3);
 
-    chemkit::Float w = wilsonAngleRadians(a, b, c, d);
-    chemkit::Float y = w + (chemkit::constants::Pi / 2.0);
+    chemkit::Real w = wilsonAngleRadians(a, b, c, d);
+    chemkit::Real y = w + (chemkit::constants::Pi / 2.0);
 
     return k * (c0 + c1 * sin(y) + c2 * cos(2 * y));
 }
@@ -459,15 +459,15 @@ std::vector<chemkit::Vector3> UffInversionCalculation::gradient() const
     const chemkit::ForceFieldAtom *c = atom(2);
     const chemkit::ForceFieldAtom *d = atom(3);
 
-    chemkit::Float k = parameter(0);
-    chemkit::Float c1 = parameter(2);
-    chemkit::Float c2 = parameter(3);
+    chemkit::Real k = parameter(0);
+    chemkit::Real c1 = parameter(2);
+    chemkit::Real c2 = parameter(3);
 
-    chemkit::Float w = wilsonAngleRadians(a, b, c, d);
-    chemkit::Float y = w + (chemkit::constants::Pi / 2.0);
+    chemkit::Real w = wilsonAngleRadians(a, b, c, d);
+    chemkit::Real y = w + (chemkit::constants::Pi / 2.0);
 
     // dE/dw
-    chemkit::Float de_dw = k * (c1 * cos(y) - 2 * c2 * sin(2 * y));
+    chemkit::Real de_dw = k * (c1 * cos(y) - 2 * c2 * sin(2 * y));
 
     std::vector<chemkit::Vector3> gradient = wilsonAngleGradientRadians(a, b, c, d);
 
@@ -501,10 +501,10 @@ bool UffVanDerWaalsCalculation::setup()
     }
 
     // equation 22
-    chemkit::Float d = sqrt(pa->D * pb->D);
+    chemkit::Real d = sqrt(pa->D * pb->D);
 
     // equation 21b
-    chemkit::Float x = sqrt(pa->x * pb->x);
+    chemkit::Real x = sqrt(pa->x * pb->x);
 
     setParameter(0, d);
     setParameter(1, x);
@@ -512,14 +512,14 @@ bool UffVanDerWaalsCalculation::setup()
     return true;
 }
 
-chemkit::Float UffVanDerWaalsCalculation::energy() const
+chemkit::Real UffVanDerWaalsCalculation::energy() const
 {
     const chemkit::ForceFieldAtom *a = atom(0);
     const chemkit::ForceFieldAtom *b = atom(1);
 
-    chemkit::Float d = parameter(0);
-    chemkit::Float x = parameter(1);
-    chemkit::Float r = distance(a, b);
+    chemkit::Real d = parameter(0);
+    chemkit::Real x = parameter(1);
+    chemkit::Real r = distance(a, b);
 
     return d * (-2 * pow(x/r, 6) + pow(x/r, 12));
 }
@@ -529,12 +529,12 @@ std::vector<chemkit::Vector3> UffVanDerWaalsCalculation::gradient() const
     const chemkit::ForceFieldAtom *a = atom(0);
     const chemkit::ForceFieldAtom *b = atom(1);
 
-    chemkit::Float d = parameter(0);
-    chemkit::Float x = parameter(1);
-    chemkit::Float r = distance(a, b);
+    chemkit::Real d = parameter(0);
+    chemkit::Real x = parameter(1);
+    chemkit::Real r = distance(a, b);
 
     // dE/dr
-    chemkit::Float de_dr = -12 * d * x / pow(r, 2) * (pow(x/r, 11) - pow(x/r, 5));
+    chemkit::Real de_dr = -12 * d * x / pow(r, 2) * (pow(x/r, 11) - pow(x/r, 5));
 
     std::vector<chemkit::Vector3> gradient = distanceGradient(a, b);
 
@@ -558,16 +558,16 @@ bool UffElectrostaticCalculation::setup()
     return false;
 }
 
-chemkit::Float UffElectrostaticCalculation::energy() const
+chemkit::Real UffElectrostaticCalculation::energy() const
 {
     const chemkit::ForceFieldAtom *a = atom(0);
     const chemkit::ForceFieldAtom *b = atom(1);
 
-    chemkit::Float qa = parameter(0);
-    chemkit::Float qb = parameter(1);
+    chemkit::Real qa = parameter(0);
+    chemkit::Real qb = parameter(1);
 
-    chemkit::Float e = 1;
-    chemkit::Float r = distance(a, b);
+    chemkit::Real e = 1;
+    chemkit::Real r = distance(a, b);
 
     return 332.037 * (qa * qb) / (e * r);
 }

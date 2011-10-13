@@ -107,7 +107,7 @@ void Bond::setOrder(int order)
 /// Returns the polarity of the bond. This is calculated as the
 /// absolute value of the difference in electronegativity between the
 /// two atoms in the bond.
-Float Bond::polarity() const
+Real Bond::polarity() const
 {
     if(m_atom1->atomicNumber() == m_atom2->atomicNumber()){
         return 0;
@@ -121,8 +121,8 @@ Vector3 Bond::dipoleMoment() const
 {
     Point3 a = m_atom1->position();
     Point3 b = m_atom2->position();
-    Float qa = m_atom1->partialCharge();
-    Float qb = m_atom2->partialCharge();
+    Real qa = m_atom1->partialCharge();
+    Real qb = m_atom2->partialCharge();
 
     return (a - b) * (qa - qb);
 }
@@ -279,7 +279,7 @@ Point3 Bond::center() const
 }
 
 /// Returns the length of the bond. Length is in Angstroms.
-Float Bond::length() const
+Real Bond::length() const
 {
     return m_atom1->distance(m_atom2);
 }

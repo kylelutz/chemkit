@@ -54,7 +54,7 @@ const MmffForceField* MmffAtom::forceField() const
     return static_cast<const MmffForceField *>(chemkit::ForceFieldAtom::forceField());
 }
 
-void MmffAtom::setType(int typeNumber, chemkit::Float formalCharge)
+void MmffAtom::setType(int typeNumber, chemkit::Real formalCharge)
 {
     m_typeNumber = typeNumber;
     m_formalCharge = formalCharge;
@@ -70,7 +70,7 @@ int MmffAtom::typeNumber() const
     return m_typeNumber;
 }
 
-chemkit::Float MmffAtom::formalCharge() const
+chemkit::Real MmffAtom::formalCharge() const
 {
     return m_formalCharge;
 }

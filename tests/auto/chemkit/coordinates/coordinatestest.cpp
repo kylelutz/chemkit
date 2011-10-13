@@ -157,16 +157,16 @@ void CoordinatesTest::multiply()
     b.setPosition(5, chemkit::Point3(0, 8, 9));
     b.setPosition(6, chemkit::Point3(-2.5, 1.5, 0));
 
-    Eigen::Matrix<chemkit::Float, 3, 3> product = a.multiply(&b);
-    QCOMPARE(product(0, 0), chemkit::Float(99.4));
-    QCOMPARE(product(0, 1), chemkit::Float(38.0));
-    QCOMPARE(product(0, 2), chemkit::Float(-13.8));
-    QCOMPARE(product(1, 0), chemkit::Float(125.5));
-    QCOMPARE(product(1, 1), chemkit::Float(-23.5));
-    QCOMPARE(product(1, 2), chemkit::Float(33.3));
-    QCOMPARE(product(2, 0), chemkit::Float(230.125));
-    QCOMPARE(product(2, 1), chemkit::Float(111.625));
-    QCOMPARE(product(2, 2), chemkit::Float(-6.8));
+    Eigen::Matrix<chemkit::Real, 3, 3> product = a.multiply(&b);
+    QCOMPARE(product(0, 0), chemkit::Real(99.4));
+    QCOMPARE(product(0, 1), chemkit::Real(38.0));
+    QCOMPARE(product(0, 2), chemkit::Real(-13.8));
+    QCOMPARE(product(1, 0), chemkit::Real(125.5));
+    QCOMPARE(product(1, 1), chemkit::Real(-23.5));
+    QCOMPARE(product(1, 2), chemkit::Real(33.3));
+    QCOMPARE(product(2, 0), chemkit::Real(230.125));
+    QCOMPARE(product(2, 1), chemkit::Real(111.625));
+    QCOMPARE(product(2, 2), chemkit::Real(-6.8));
 }
 
 void CoordinatesTest::distanceMatrix()

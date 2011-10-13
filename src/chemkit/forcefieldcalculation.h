@@ -74,13 +74,13 @@ class CHEMKIT_EXPORT ForceFieldCalculation
         bool contains(const ForceFieldAtom *atom) const;
 
         // parameters
-        void setParameter(int index, Float value);
-        Float parameter(int index) const;
-        std::vector<Float> parameters() const;
+        void setParameter(int index, Real value);
+        Real parameter(int index) const;
+        std::vector<Real> parameters() const;
         int parameterCount() const;
 
         // calculations
-        virtual Float energy() const;
+        virtual Real energy() const;
         virtual std::vector<Vector3> gradient() const;
         std::vector<Vector3> numericalGradient() const;
 
@@ -88,18 +88,18 @@ class CHEMKIT_EXPORT ForceFieldCalculation
         ForceFieldCalculation(int type, int atomCount, int parameterCount);
         virtual ~ForceFieldCalculation();
         void setAtom(int index, const ForceFieldAtom *atom);
-        inline Float distance(const ForceFieldAtom *a, const ForceFieldAtom *b) const;
+        inline Real distance(const ForceFieldAtom *a, const ForceFieldAtom *b) const;
         inline std::vector<Vector3> distanceGradient(const ForceFieldAtom *a, const ForceFieldAtom *b) const;
-        inline Float bondAngle(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c) const;
-        inline Float bondAngleRadians(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c) const;
+        inline Real bondAngle(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c) const;
+        inline Real bondAngleRadians(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c) const;
         inline std::vector<Vector3> bondAngleGradient(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c) const;
         inline std::vector<Vector3> bondAngleGradientRadians(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c) const;
-        inline Float torsionAngle(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c, const ForceFieldAtom *d) const;
-        inline Float torsionAngleRadians(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c, const ForceFieldAtom *d) const;
+        inline Real torsionAngle(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c, const ForceFieldAtom *d) const;
+        inline Real torsionAngleRadians(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c, const ForceFieldAtom *d) const;
         inline std::vector<Vector3> torsionAngleGradient(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c, const ForceFieldAtom *d) const;
         inline std::vector<Vector3> torsionAngleGradientRadians(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c, const ForceFieldAtom *d) const;
-        inline Float wilsonAngle(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c, const ForceFieldAtom *d) const;
-        inline Float wilsonAngleRadians(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c, const ForceFieldAtom *d) const;
+        inline Real wilsonAngle(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c, const ForceFieldAtom *d) const;
+        inline Real wilsonAngleRadians(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c, const ForceFieldAtom *d) const;
         inline std::vector<Vector3> wilsonAngleGradient(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c, const ForceFieldAtom *d) const;
         inline std::vector<Vector3> wilsonAngleGradientRadians(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c, const ForceFieldAtom *d) const;
 

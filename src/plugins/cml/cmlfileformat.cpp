@@ -90,9 +90,9 @@ bool CmlHandler::startElement(const QString &namespaceURI, const QString &localN
             if(!id.isEmpty())
                 m_atomIds[id] = atom;
 
-            chemkit::Float x = atts.value("x3").toDouble();
-            chemkit::Float y = atts.value("y3").toDouble();
-            chemkit::Float z = atts.value("z3").toDouble();
+            chemkit::Real x = atts.value("x3").toDouble();
+            chemkit::Real y = atts.value("y3").toDouble();
+            chemkit::Real z = atts.value("z3").toDouble();
             atom->setPosition(x, y, z);
         }
     }

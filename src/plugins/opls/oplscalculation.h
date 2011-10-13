@@ -55,7 +55,7 @@ class OplsBondStrechCalculation : public OplsCalculation
         OplsBondStrechCalculation(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b);
 
         bool setup(const OplsParameters *parameters);
-        chemkit::Float energy() const;
+        chemkit::Real energy() const;
         std::vector<chemkit::Vector3> gradient() const;
 };
 
@@ -65,7 +65,7 @@ class OplsAngleBendCalculation : public OplsCalculation
         OplsAngleBendCalculation(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b, const chemkit::ForceFieldAtom *c);
 
         bool setup(const OplsParameters *parameters);
-        chemkit::Float energy() const;
+        chemkit::Real energy() const;
         std::vector<chemkit::Vector3> gradient() const;
 };
 
@@ -75,7 +75,7 @@ class OplsTorsionCalculation : public OplsCalculation
         OplsTorsionCalculation(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b, const chemkit::ForceFieldAtom *c, const chemkit::ForceFieldAtom *d);
 
         bool setup(const OplsParameters *parameters);
-        chemkit::Float energy() const;
+        chemkit::Real energy() const;
         std::vector<chemkit::Vector3> gradient() const;
 };
 
@@ -85,7 +85,7 @@ class OplsNonbondedCalculation : public OplsCalculation
         OplsNonbondedCalculation(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b);
 
         bool setup(const OplsParameters *parameters);
-        chemkit::Float energy() const;
+        chemkit::Real energy() const;
         std::vector<chemkit::Vector3> gradient() const;
 };
 

@@ -46,7 +46,7 @@ namespace chemkit {
 
 /// Returns the distance between atoms \p a and \p b. Distance is in
 /// Angstroms.
-inline Float ForceFieldCalculation::distance(const ForceFieldAtom *a, const ForceFieldAtom *b) const
+inline Real ForceFieldCalculation::distance(const ForceFieldAtom *a, const ForceFieldAtom *b) const
 {
     return chemkit::geometry::distance(a->position(), b->position());
 }
@@ -62,7 +62,7 @@ inline std::vector<Vector3> ForceFieldCalculation::distanceGradient(const Point3
 {
     std::vector<Vector3> gradient(2);
 
-    Float distance = chemkit::geometry::distance(a, b);
+    Real distance = chemkit::geometry::distance(a, b);
 
     gradient[0] = (a - b) / distance;
     gradient[1] = -gradient[0];
@@ -72,14 +72,14 @@ inline std::vector<Vector3> ForceFieldCalculation::distanceGradient(const Point3
 
 /// Returns the bond angle between atoms \p a, \p b and \p c. The
 /// angle is in degrees.
-inline Float ForceFieldCalculation::bondAngle(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c) const
+inline Real ForceFieldCalculation::bondAngle(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c) const
 {
     return chemkit::geometry::angle(a->position(), b->position(), c->position());
 }
 
 /// Returns the bond angle between atoms \p a, \p b and \p c. The
 /// angle is in radians.
-inline Float ForceFieldCalculation::bondAngleRadians(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c) const
+inline Real ForceFieldCalculation::bondAngleRadians(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c) const
 {
     return chemkit::geometry::angleRadians(a->position(), b->position(), c->position());
 }
@@ -110,10 +110,10 @@ inline std::vector<Vector3> ForceFieldCalculation::bondAngleGradientRadians(cons
 {
     std::vector<Vector3> gradient(3);
 
-    Float theta = chemkit::geometry::angleRadians(a, b, c);
+    Real theta = chemkit::geometry::angleRadians(a, b, c);
 
-    Float rab = chemkit::geometry::distance(a, b);
-    Float rbc = chemkit::geometry::distance(b, c);
+    Real rab = chemkit::geometry::distance(a, b);
+    Real rbc = chemkit::geometry::distance(b, c);
 
     gradient[0] = ((((c - b) * rab) - (a - b) * ((b - a).dot(b - c) / rab)) / (pow(rab, 2) * rbc)) / -sin(theta);
     gradient[1] = ((((b - c) + (b - a)) * (rab * rbc) - (((b - a) * (rbc/rab) + (b - c) * (rab/rbc)) * (b - a).dot(b - c))) / pow(rab * rbc, 2)) / -sin(theta);
@@ -125,7 +125,7 @@ inline std::vector<Vector3> ForceFieldCalculation::bondAngleGradientRadians(cons
 /// Returns the torsion angle (also known as the dihedral angle)
 /// between the atoms \p a, \p b, \p c, and \p d. The angle is in
 /// degrees.
-inline Float ForceFieldCalculation::torsionAngle(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c, const ForceFieldAtom *d) const
+inline Real ForceFieldCalculation::torsionAngle(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c, const ForceFieldAtom *d) const
 {
     return chemkit::geometry::torsionAngle(a->position(), b->position(), c->position(), d->position());
 }
@@ -133,7 +133,7 @@ inline Float ForceFieldCalculation::torsionAngle(const ForceFieldAtom *a, const 
 /// Returns the torsion angle (also known as the dihedral angle)
 /// between the atoms \p a, \p b, \p c, and \p d. The angle is in
 /// radians.
-inline Float ForceFieldCalculation::torsionAngleRadians(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c, const ForceFieldAtom *d) const
+inline Real ForceFieldCalculation::torsionAngleRadians(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c, const ForceFieldAtom *d) const
 {
     return chemkit::geometry::torsionAngleRadians(a->position(), b->position(), c->position(), d->position());
 }
@@ -164,7 +164,7 @@ inline std::vector<Vector3> ForceFieldCalculation::torsionAngleGradientRadians(c
 {
     std::vector<Vector3> gradient(4);
 
-    Float phi = chemkit::geometry::torsionAngleRadians(a, b, c, d);
+    Real phi = chemkit::geometry::torsionAngleRadians(a, b, c, d);
 
     Vector3 ab = b - a;
     Vector3 ac = c - a;
@@ -188,14 +188,14 @@ inline std::vector<Vector3> ForceFieldCalculation::torsionAngleGradientRadians(c
 
 /// Returns the wilson angle between the atoms \p a, \p b, \p c, and
 /// \p d. The angle is in degrees.
-inline Float ForceFieldCalculation::wilsonAngle(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c, const ForceFieldAtom *d) const
+inline Real ForceFieldCalculation::wilsonAngle(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c, const ForceFieldAtom *d) const
 {
     return chemkit::geometry::wilsonAngle(a->position(), b->position(), c->position(), d->position());
 }
 
 /// Returns the wilson angle between the atoms \p a, \p b, \p c, and
 /// \p d. The angle is in radians.
-inline Float ForceFieldCalculation::wilsonAngleRadians(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c, const ForceFieldAtom *d) const
+inline Real ForceFieldCalculation::wilsonAngleRadians(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c, const ForceFieldAtom *d) const
 {
     return chemkit::geometry::wilsonAngleRadians(a->position(), b->position(), c->position(), d->position());
 }
@@ -228,17 +228,17 @@ inline std::vector<Vector3> ForceFieldCalculation::wilsonAngleGradientRadians(co
     Vector3 bc = c - b;
     Vector3 bd = d - b;
 
-    Float rba = ba.norm();
-    Float rbc = bc.norm();
-    Float rbd = bd.norm();
+    Real rba = ba.norm();
+    Real rbc = bc.norm();
+    Real rbd = bd.norm();
 
     ba.normalize();
     bc.normalize();
     bd.normalize();
 
-    Float theta = acos(ba.dot(bc));
+    Real theta = acos(ba.dot(bc));
 
-    Float w = chemkit::geometry::wilsonAngleRadians(a, b, c, d);
+    Real w = chemkit::geometry::wilsonAngleRadians(a, b, c, d);
 
     std::vector<Vector3> gradient(4);
 

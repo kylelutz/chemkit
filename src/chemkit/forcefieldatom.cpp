@@ -51,7 +51,7 @@ class ForceFieldAtomPrivate
     public:
         const Atom *atom;
         std::string type;
-        Float charge;
+        Real charge;
         Point3 position;
         bool setup;
         ForceField *forceField;
@@ -113,13 +113,13 @@ std::string ForceFieldAtom::type() const
 }
 
 /// Sets the charge of the atom.
-void ForceFieldAtom::setCharge(Float charge)
+void ForceFieldAtom::setCharge(Real charge)
 {
     d->charge = charge;
 }
 
 /// Returns the charge of the atom.
-Float ForceFieldAtom::charge() const
+Real ForceFieldAtom::charge() const
 {
     return d->charge;
 }
@@ -139,9 +139,9 @@ ForceField* ForceFieldAtom::forceField() const
 // --- Calculations -------------------------------------------------------- //
 /// Returns the total energy of all the calculations the atom is a
 /// part of.
-Float ForceFieldAtom::energy() const
+Real ForceFieldAtom::energy() const
 {
-    Float energy = 0;
+    Real energy = 0;
 
     foreach(const ForceFieldCalculation *calculation, forceField()->calculations()){
         if(calculation->contains(this)){
@@ -202,7 +202,7 @@ void ForceFieldAtom::moveBy(const Vector3 &vector)
 }
 
 /// Moves the atom's position by (dx, dy, dz).
-void ForceFieldAtom::moveBy(Float dx, Float dy, Float dz)
+void ForceFieldAtom::moveBy(Real dx, Real dy, Real dz)
 {
     d->position += Vector3(dx, dy, dz);
 }

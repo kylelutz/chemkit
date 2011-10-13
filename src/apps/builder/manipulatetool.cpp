@@ -100,14 +100,14 @@ void ManipulateTool::mouseMoveEvent(QMouseEvent *event)
         chemkit::Atom *atom = const_cast<chemkit::Atom *>(atomItem->atom());
 
         if(event->buttons() & Qt::LeftButton){
-            editor()->setAtomPosition(atom, view()->unproject(event->x(), event->y(), atom->position().cast<float>()).cast<chemkit::Float>());
+            editor()->setAtomPosition(atom, view()->unproject(event->x(), event->y(), atom->position().cast<float>()).cast<chemkit::Real>());
         }
         else if(event->buttons() & Qt::RightButton){
             int dy = event->y() - m_lastPosition.y();
 
             chemkit::Point3f position = atom->position().cast<float>();
             position += -view()->camera()->direction().normalized() * (dy * 0.1);
-            editor()->setAtomPosition(atom, position.cast<chemkit::Float>());
+            editor()->setAtomPosition(atom, position.cast<chemkit::Real>());
         }
     }
 
@@ -244,7 +244,7 @@ void ManipulateTool::moveSelectionBy(int x, int y)
     foreach(chemkit::Atom *atom, m_selection){
         chemkit::Vector3f delta = view()->unproject(finalPosition.x(), finalPosition.y(), atom->position().cast<float>()) -
                                   view()->unproject(initialPosition.x(), initialPosition.y(), atom->position().cast<float>());
-        editor()->setAtomPosition(atom, atom->position() + delta.cast<chemkit::Float>());
+        editor()->setAtomPosition(atom, atom->position() + delta.cast<chemkit::Real>());
     }
 
     view()->update();

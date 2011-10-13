@@ -60,10 +60,10 @@ class CHEMKIT_EXPORT InternalCoordinates
         int size() const;
 
         // coordinates
-        void setCoordinates(int row, Float r, Float theta = 0, Float phi = 0);
-        void setCoordinatesRadians(int row, Float r, Float theta = 0, Float phi = 0);
-        std::vector<Float> coordinates(int row) const;
-        std::vector<Float> coordinatesRadians(int row) const;
+        void setCoordinates(int row, Real r, Real theta = 0, Real phi = 0);
+        void setCoordinatesRadians(int row, Real r, Real theta = 0, Real phi = 0);
+        std::vector<Real> coordinates(int row) const;
+        std::vector<Real> coordinatesRadians(int row) const;
         void setConnections(int row, int a, int b = 0, int c = 0);
         std::vector<int> connections(int row) const;
 

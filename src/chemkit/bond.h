@@ -70,7 +70,7 @@ class CHEMKIT_EXPORT Bond
         Atom* otherAtom(const Atom *atom) const;
         void setOrder(int order);
         inline int order() const;
-        Float polarity() const;
+        Real polarity() const;
         Vector3 dipoleMoment() const;
         inline Molecule* molecule() const;
         Fragment* fragment() const;
@@ -94,7 +94,7 @@ class CHEMKIT_EXPORT Bond
 
         // geometry
         Point3 center() const;
-        Float length() const;
+        Real length() const;
 
     private:
         Bond(Atom *a, Atom *b, int order = Single);

@@ -43,8 +43,8 @@ class ScalarFieldPrivate
     public:
         Point3 origin;
         std::vector<int> dimensions;
-        std::vector<Float> lengths;
-        std::vector<Float> data;
+        std::vector<Real> lengths;
+        std::vector<Real> data;
 };
 
 // === ScalarField ========================================================= //
@@ -59,11 +59,11 @@ ScalarField::ScalarField()
     : d(new ScalarFieldPrivate)
 {
     d->dimensions = std::vector<int>(3, 0);
-    d->lengths = std::vector<Float>(3, 0);
+    d->lengths = std::vector<Real>(3, 0);
 }
 
 /// Creates a new scalar field.
-ScalarField::ScalarField(const std::vector<int> &dimensions, const std::vector<Float> &cellLengths, const std::vector<Float> &data)
+ScalarField::ScalarField(const std::vector<int> &dimensions, const std::vector<Real> &cellLengths, const std::vector<Real> &data)
     : d(new ScalarFieldPrivate)
 {
     d->dimensions = dimensions;
@@ -109,25 +109,25 @@ std::vector<int> ScalarField::dimensions() const
 }
 
 /// Returns the width of a single cell in the grid.
-Float ScalarField::cellWidth() const
+Real ScalarField::cellWidth() const
 {
     return d->lengths[0];
 }
 
 /// Returns the height of a single cell in the grid.
-Float ScalarField::cellHeight() const
+Real ScalarField::cellHeight() const
 {
     return d->lengths[1];
 }
 
 /// Returns the depth of a single cell in the grid.
-Float ScalarField::cellDepth() const
+Real ScalarField::cellDepth() const
 {
     return d->lengths[2];
 }
 
 /// Returns the dimensions of a single cell in the grid.
-std::vector<Float> ScalarField::cellDimensions() const
+std::vector<Real> ScalarField::cellDimensions() const
 {
     return d->lengths;
 }
@@ -145,14 +145,14 @@ Point3 ScalarField::origin() const
 }
 
 /// Returns the data values for the scalar field.
-std::vector<Float> ScalarField::data() const
+std::vector<Real> ScalarField::data() const
 {
     return d->data;
 }
 
 // --- Values -------------------------------------------------------------- //
 /// Sets the value at (\p i, \p j, \p k) to \p value.
-void ScalarField::setValue(int i, int j, int k, Float value)
+void ScalarField::setValue(int i, int j, int k, Real value)
 {
     unsigned int index = i * d->dimensions[1] * d->dimensions[2] + j * d->dimensions[2] + k;
 
@@ -162,7 +162,7 @@ void ScalarField::setValue(int i, int j, int k, Float value)
 }
 
 /// Returns the the value at (\p i, \p j, \p k).
-Float ScalarField::value(int i, int j, int k) const
+Real ScalarField::value(int i, int j, int k) const
 {
     unsigned int index = i * d->dimensions[1] * d->dimensions[2] + j * d->dimensions[2] + k;
 
@@ -174,26 +174,26 @@ Float ScalarField::value(int i, int j, int k) const
 }
 
 /// Returns the value at the position relative to the origin.
-Float ScalarField::value(const Point3 &position) const
+Real ScalarField::value(const Point3 &position) const
 {
-    Float x = position.x();
-    Float y = position.y();
-    Float z = position.z();
+    Real x = position.x();
+    Real y = position.y();
+    Real z = position.z();
 
     int i = floor(x / d->lengths[0]);
-    Float xd = x / d->lengths[0] - i;
+    Real xd = x / d->lengths[0] - i;
     int j = floor(y / d->lengths[1]);
-    Float yd = y / d->lengths[1] - j;
+    Real yd = y / d->lengths[1] - j;
     int k = floor(z / d->lengths[2]);
-    Float zd = z / d->lengths[2] - k;
+    Real zd = z / d->lengths[2] - k;
 
-    Float i1 = value(i + 0, j + 0, k + 0) * (1 - zd) + value(i + 0, j + 0, k + 1) * zd;
-    Float i2 = value(i + 0, j + 1, k + 0) * (1 - zd) + value(i + 0, j + 1, k + 1) * zd;
-    Float j1 = value(i + 1, j + 0, k + 0) * (1 - zd) + value(i + 1, j + 0, k + 1) * zd;
-    Float j2 = value(i + 1, j + 1, k + 0) * (1 - zd) + value(i + 1, j + 1, k + 1) * zd;
+    Real i1 = value(i + 0, j + 0, k + 0) * (1 - zd) + value(i + 0, j + 0, k + 1) * zd;
+    Real i2 = value(i + 0, j + 1, k + 0) * (1 - zd) + value(i + 0, j + 1, k + 1) * zd;
+    Real j1 = value(i + 1, j + 0, k + 0) * (1 - zd) + value(i + 1, j + 0, k + 1) * zd;
+    Real j2 = value(i + 1, j + 1, k + 0) * (1 - zd) + value(i + 1, j + 1, k + 1) * zd;
 
-    Float w1 = i1 * (1 - yd) + i2 * yd;
-    Float w2 = j1 * (1 - yd) + j2 * yd;
+    Real w1 = i1 * (1 - yd) + i2 * yd;
+    Real w2 = j1 * (1 - yd) + j2 * yd;
 
     return w1 * (1 - xd) + w2 * xd;
 }
@@ -215,7 +215,7 @@ Vector3 ScalarField::gradient(int i, int j, int k) const
 /// Returns the gradient at the position relative to the origin.
 Vector3 ScalarField::gradient(const Point3 &position) const
 {
-    Float h = 1.0e-4;
+    Real h = 1.0e-4;
 
     return Vector3((value(position + Vector3(-h, 0, 0)) - value(position + Vector3(h, 0, 0))) / (2.0 * h),
                    (value(position + Vector3(0, -h, 0)) - value(position + Vector3(0, h, 0))) / (2.0 * h),

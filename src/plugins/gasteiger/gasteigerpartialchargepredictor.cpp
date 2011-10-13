@@ -71,7 +71,7 @@ GasteigerPartialChargePredictor::~GasteigerPartialChargePredictor()
 }
 
 // --- Partial Charges ----------------------------------------------------- //
-chemkit::Float GasteigerPartialChargePredictor::partialCharge(int index) const
+chemkit::Real GasteigerPartialChargePredictor::partialCharge(int index) const
 {
     return m_charges.value(index, 0);
 }
@@ -108,16 +108,16 @@ void GasteigerPartialChargePredictor::assignPartialCharges(const chemkit::Molecu
         for(int i = 0; i < molecule->atomCount(); i++){
             const chemkit::Atom *atom = molecule->atom(i);
 
-            chemkit::Float qi = 0;
-            chemkit::Float Xi = m_electronegativies[i];
+            chemkit::Real qi = 0;
+            chemkit::Real Xi = m_electronegativies[i];
             const GasteigerParameters *pi = m_parameters[i];
 
             foreach(const chemkit::Atom *neighbor, atom->neighbors()){
                 int j = neighbor->index();
-                chemkit::Float Xj = m_electronegativies[j];
+                chemkit::Real Xj = m_electronegativies[j];
                 const GasteigerParameters *pj = m_parameters[j];
 
-                chemkit::Float scale;
+                chemkit::Real scale;
                 if(Xj > Xi){
                     if(atom->is(chemkit::Atom::Hydrogen)){
                         scale = 1.0 / 20.02;
@@ -144,7 +144,7 @@ void GasteigerPartialChargePredictor::assignPartialCharges(const chemkit::Molecu
         // calculate electronegativities
         for(int i = 0; i < molecule->atomCount(); i++){
             const GasteigerParameters *pi = m_parameters[i];
-            chemkit::Float Qi = m_charges[i];
+            chemkit::Real Qi = m_charges[i];
 
             m_electronegativies[i] = pi->a + pi->b * Qi + pi->c * pow(Qi, 2);
         }

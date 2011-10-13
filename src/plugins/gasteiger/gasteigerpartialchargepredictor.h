@@ -41,9 +41,9 @@
 #include <chemkit/partialchargepredictor.h>
 
 struct GasteigerParameters {
-    chemkit::Float a;
-    chemkit::Float b;
-    chemkit::Float c;
+    chemkit::Real a;
+    chemkit::Real b;
+    chemkit::Real c;
 };
 
 class GasteigerPartialChargePredictor : public chemkit::PartialChargePredictor
@@ -54,7 +54,7 @@ class GasteigerPartialChargePredictor : public chemkit::PartialChargePredictor
         ~GasteigerPartialChargePredictor();
 
         // partial charges
-        chemkit::Float partialCharge(int index) const;
+        chemkit::Real partialCharge(int index) const;
 
     protected:
         void assignPartialCharges(const chemkit::Molecule *molecule);
@@ -63,8 +63,8 @@ class GasteigerPartialChargePredictor : public chemkit::PartialChargePredictor
         const GasteigerParameters* atomParameters(const chemkit::Atom *atom) const;
 
     private:
-        QVector<chemkit::Float> m_charges;
-        QVector<chemkit::Float> m_electronegativies;
+        QVector<chemkit::Real> m_charges;
+        QVector<chemkit::Real> m_electronegativies;
         QVector<const GasteigerParameters *> m_parameters;
 };
 

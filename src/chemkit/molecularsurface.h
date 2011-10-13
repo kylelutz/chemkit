@@ -65,44 +65,44 @@ class CHEMKIT_EXPORT MolecularSurface
         const Molecule* molecule() const;
         void setSurfaceType(SurfaceType type);
         SurfaceType surfaceType() const;
-        void setProbeRadius(Float radius);
-        Float probeRadius() const;
+        void setProbeRadius(Real radius);
+        Real probeRadius() const;
         const AlphaShape* alphaShape() const;
 
         // geometry
         Point3 position(int index) const;
-        Float radius(int index) const;
-        Float volume() const;
-        Float surfaceArea() const;
+        Real radius(int index) const;
+        Real volume() const;
+        Real surfaceArea() const;
 
     private:
         // internal methods
         void setCalculated(bool calculated) const;
-        Float intersectionArea(int i, int j) const;
-        Float intersectionArea(int i, int j, int k) const;
-        Float intersectionArea(int i, int j, int k, int l) const;
-        Float intersectionVolume(int i, int j) const;
-        Float intersectionVolume(int i, int j, int k) const;
-        Float intersectionVolume(int i, int j, int k, int l) const;
-        Float ballArea(int index) const;
-        Float capHeight(int i, int j) const;
-        Float capArea(int i, int j) const;
-        Float capVolume(int i, int j) const;
-        Float cap2Area(int i, int j, int k) const;
-        Float cap2Volume(int i, int j, int k) const;
-        Float cap3Area(int i, int j, int k, int l) const;
-        Float cap3Volume(int i, int j, int k, int l) const;
-        Float diskArea(int i, int j) const;
-        Float diskLength(int i, int j) const;
-        Float diskRadius(int i, int j) const;
+        Real intersectionArea(int i, int j) const;
+        Real intersectionArea(int i, int j, int k) const;
+        Real intersectionArea(int i, int j, int k, int l) const;
+        Real intersectionVolume(int i, int j) const;
+        Real intersectionVolume(int i, int j, int k) const;
+        Real intersectionVolume(int i, int j, int k, int l) const;
+        Real ballArea(int index) const;
+        Real capHeight(int i, int j) const;
+        Real capArea(int i, int j) const;
+        Real capVolume(int i, int j) const;
+        Real cap2Area(int i, int j, int k) const;
+        Real cap2Volume(int i, int j, int k) const;
+        Real cap3Area(int i, int j, int k, int l) const;
+        Real cap3Volume(int i, int j, int k, int l) const;
+        Real diskArea(int i, int j) const;
+        Real diskLength(int i, int j) const;
+        Real diskRadius(int i, int j) const;
         Point3 triangleDual(int i, int j, int k) const;
-        Float segmentArea(int i, int j, int k) const;
-        Float segmentAngle(int i, int j, int k) const;
-        Float segmentLength(int i, int j, int k) const;
-        Float segmentHeight(int i, int j, int k) const;
-        Float segment2Area(int i, int j, int k, int l) const;
-        Float segment2Angle(int i, int j, int k, int l) const;
-        Float segment2Length(int i, int j, int k, int l) const;
+        Real segmentArea(int i, int j, int k) const;
+        Real segmentAngle(int i, int j, int k) const;
+        Real segmentLength(int i, int j, int k) const;
+        Real segmentHeight(int i, int j, int k) const;
+        Real segment2Area(int i, int j, int k, int l) const;
+        Real segment2Angle(int i, int j, int k, int l) const;
+        Real segment2Length(int i, int j, int k, int l) const;
         bool ccw(int i, int j, int k, int l) const;
 
     private:

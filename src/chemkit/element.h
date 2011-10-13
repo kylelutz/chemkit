@@ -57,10 +57,10 @@ class CHEMKIT_EXPORT Element
         std::string symbol() const;
         std::string name() const;
         int period() const;
-        Float mass() const;
-        Float electronegativity() const;
-        Float covalentRadius() const;
-        Float vanDerWaalsRadius() const;
+        Real mass() const;
+        Real electronegativity() const;
+        Real covalentRadius() const;
+        Real vanDerWaalsRadius() const;
         int expectedValence() const;
         inline bool isValid() const;
         bool isMetal() const;

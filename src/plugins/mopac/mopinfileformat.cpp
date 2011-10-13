@@ -79,7 +79,7 @@ bool MopinFileFormat::read(QIODevice *iodev, chemkit::MoleculeFile *file)
     iodev->readLine();
 
     // read atoms
-    QList<chemkit::Float> coordinateValues;
+    QList<chemkit::Real> coordinateValues;
     QList<int> connectionValues;
     for(;;){
         line = iodev->readLine();

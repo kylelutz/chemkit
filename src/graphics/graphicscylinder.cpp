@@ -125,7 +125,7 @@ GraphicsVertexBuffer* GraphicsCylinder::tesselate(int slices, int stacks) const
         verticies.append(Point3f(x, y, 0));
     }
 
-    Float stackHeight = m_length / stacks;
+    Real stackHeight = m_length / stacks;
 
     for(int i = 1; i < stacks + 1; i++){
         for(int j = 0; j < slices; j++){

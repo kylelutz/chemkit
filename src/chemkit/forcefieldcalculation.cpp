@@ -47,7 +47,7 @@ class ForceFieldCalculationPrivate
     public:
         int type;
         bool setup;
-        std::vector<Float> parameters;
+        std::vector<Real> parameters;
         std::vector<const ForceFieldAtom *> atoms;
 };
 
@@ -132,19 +132,19 @@ bool ForceFieldCalculation::contains(const ForceFieldAtom *atom) const
 
 // --- Parameters ---------------------------------------------------------- //
 /// Sets the parameter at index to value.
-void ForceFieldCalculation::setParameter(int index, Float value)
+void ForceFieldCalculation::setParameter(int index, Real value)
 {
     d->parameters[index] = value;
 }
 
 /// Returns the parameter at index.
-Float ForceFieldCalculation::parameter(int index) const
+Real ForceFieldCalculation::parameter(int index) const
 {
     return d->parameters[index];
 }
 
 /// Returns all of the parameters in the calculation.
-std::vector<Float> ForceFieldCalculation::parameters() const
+std::vector<Real> ForceFieldCalculation::parameters() const
 {
     return d->parameters;
 }
@@ -157,7 +157,7 @@ int ForceFieldCalculation::parameterCount() const
 
 // --- Calculations -------------------------------------------------------- //
 /// Returns the energy of the calculation. Energy is in kcal/mol.
-Float ForceFieldCalculation::energy() const
+Real ForceFieldCalculation::energy() const
 {
     return 0;
 }
@@ -201,24 +201,24 @@ std::vector<Vector3> ForceFieldCalculation::numericalGradient() const
         ForceFieldAtom *atom = const_cast<ForceFieldAtom *>(d->atoms[i]);
 
         // initial energy
-        Float eI = energy();
-        Float epsilon = 1.0e-10;
+        Real eI = energy();
+        Real epsilon = 1.0e-10;
 
         atom->moveBy(epsilon, 0, 0);
-        Float eF_x = energy();
+        Real eF_x = energy();
 
         atom->moveBy(-epsilon, epsilon, 0);
-        Float eF_y = energy();
+        Real eF_y = energy();
 
         atom->moveBy(0, -epsilon, epsilon);
-        Float eF_z = energy();
+        Real eF_z = energy();
 
         // restore initial position
         atom->moveBy(0, 0, -epsilon);
 
-        Float dx = (eF_x - eI) / epsilon;
-        Float dy = (eF_y - eI) / epsilon;
-        Float dz = (eF_z - eI) / epsilon;
+        Real dx = (eF_x - eI) / epsilon;
+        Real dy = (eF_y - eI) / epsilon;
+        Real dz = (eF_z - eI) / epsilon;
 
         gradient[i] = Vector3(dx, dy, dz);
     }

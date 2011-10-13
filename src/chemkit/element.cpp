@@ -44,10 +44,10 @@ namespace {
 struct ElementData {
     const char *name;
     const char *symbol;
-    Float mass; // in grams/mol
-    Float electronegativity; // pauling scale
-    Float vanDerWaalsRadius; // in angstroms
-    Float covalentRadius; // in angstroms
+    Real mass; // in grams/mol
+    Real electronegativity; // pauling scale
+    Real vanDerWaalsRadius; // in angstroms
+    Real covalentRadius; // in angstroms
 };
 
 const struct ElementData ElementData[] = {
@@ -261,25 +261,25 @@ int Element::period() const
 }
 
 /// Returns the element's mass. Mass is in \c g/mol.
-Float Element::mass() const
+Real Element::mass() const
 {
     return ElementData[m_atomicNumber].mass;
 }
 
 /// Returns the element's electronegativity using the Pauling scale.
-Float Element::electronegativity() const
+Real Element::electronegativity() const
 {
     return ElementData[m_atomicNumber].electronegativity;
 }
 
 /// Returns the element's covalent radius.
-Float Element::covalentRadius() const
+Real Element::covalentRadius() const
 {
     return ElementData[m_atomicNumber].covalentRadius;
 }
 
 /// Returns the element's Van der Waals radius.
-Float Element::vanDerWaalsRadius() const
+Real Element::vanDerWaalsRadius() const
 {
     return ElementData[m_atomicNumber].vanDerWaalsRadius;
 }

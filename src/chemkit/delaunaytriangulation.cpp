@@ -147,7 +147,7 @@ class DelaunayTriangulationPrivate
 {
     public:
         std::vector<Point3> verticies;
-        std::vector<Float> weights;
+        std::vector<Real> weights;
         std::vector<Tetrahedron> tetrahedra;
 
         bool alphaShapeCalculated;
@@ -188,7 +188,7 @@ DelaunayTriangulation::DelaunayTriangulation(const std::vector<Point3> &points)
 
 /// Creates a new weighted delaunay triangulation for \p points with
 /// \p weights.
-DelaunayTriangulation::DelaunayTriangulation(const std::vector<Point3> &points, const std::vector<Float> &weights)
+DelaunayTriangulation::DelaunayTriangulation(const std::vector<Point3> &points, const std::vector<Real> &weights)
     : d(new DelaunayTriangulationPrivate)
 {
     d->verticies = points;
@@ -219,7 +219,7 @@ Point3 DelaunayTriangulation::position(int vertex) const
 }
 
 /// Returns the weight of \p vertex.
-Float DelaunayTriangulation::weight(int vertex) const
+Real DelaunayTriangulation::weight(int vertex) const
 {
     return d->weights[vertex];
 }
@@ -377,9 +377,9 @@ int DelaunayTriangulation::tetrahedronCount() const
 
 // --- Geometry ------------------------------------------------------------ //
 /// Returns the total volume of the triangulation.
-Float DelaunayTriangulation::volume() const
+Real DelaunayTriangulation::volume() const
 {
-    Float volume = 0;
+    Real volume = 0;
 
     foreach(const std::vector<int> &tetrahedron, tetrahedra()){
         const Point3 &a = position(tetrahedron[0]);
@@ -394,7 +394,7 @@ Float DelaunayTriangulation::volume() const
 }
 
 /// Returns the total surface area of the triangulation.
-Float DelaunayTriangulation::surfaceArea() const
+Real DelaunayTriangulation::surfaceArea() const
 {
     return 0;
 }
@@ -729,11 +729,11 @@ std::vector<int> DelaunayTriangulation::findContainingTetrahedra(int vertex) con
         }
 
         if(isWeighted()){
-            Float wa = weight(va);
-            Float wb = weight(vb);
-            Float wc = weight(vc);
-            Float wd = weight(vd);
-            Float wp = weight(vertex);
+            Real wa = weight(va);
+            Real wb = weight(vb);
+            Real wc = weight(vc);
+            Real wd = weight(vd);
+            Real wp = weight(vertex);
 
             if(chemkit::geometry::sphereOrientation(pa, pb, pc, pd, point, wa, wb, wc, wd, wp) > 0){
                 tetrahedra.push_back(index);

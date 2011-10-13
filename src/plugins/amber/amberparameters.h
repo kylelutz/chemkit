@@ -40,32 +40,32 @@
 
 struct AmberBondParameters
 {
-    chemkit::Float kb;
-    chemkit::Float r0;
+    chemkit::Real kb;
+    chemkit::Real r0;
 };
 
 struct AmberAngleParameters
 {
-    chemkit::Float ka;
-    chemkit::Float theta0;
+    chemkit::Real ka;
+    chemkit::Real theta0;
 };
 
 struct AmberTorsionParameters
 {
-    chemkit::Float V1;
-    chemkit::Float V2;
-    chemkit::Float V3;
-    chemkit::Float V4;
-    chemkit::Float gamma1;
-    chemkit::Float gamma2;
-    chemkit::Float gamma3;
-    chemkit::Float gamma4;
+    chemkit::Real V1;
+    chemkit::Real V2;
+    chemkit::Real V3;
+    chemkit::Real V4;
+    chemkit::Real gamma1;
+    chemkit::Real gamma2;
+    chemkit::Real gamma3;
+    chemkit::Real gamma4;
 };
 
 struct AmberNonbondedParameters
 {
-    chemkit::Float vanDerWaalsRadius;
-    chemkit::Float wellDepth;
+    chemkit::Real vanDerWaalsRadius;
+    chemkit::Real wellDepth;
 };
 
 class AmberParameters

@@ -54,15 +54,15 @@ void InternalCoordinatesTest::coordinates()
     chemkit::InternalCoordinates newCoordinates(1);
     QCOMPARE(newCoordinates.size(),1);
 
-    chemkit::Float r = 0.0;
-    chemkit::Float theta = 1.0;
-    chemkit::Float phi = 2.0;
+    chemkit::Real r = 0.0;
+    chemkit::Real theta = 1.0;
+    chemkit::Real phi = 2.0;
     newCoordinates.setCoordinates(0, r, theta, phi);
-    std::vector<chemkit::Float> coordinates = newCoordinates.coordinates(0);
+    std::vector<chemkit::Real> coordinates = newCoordinates.coordinates(0);
 
-    QCOMPARE(coordinates[0], chemkit::Float(0.0));
-    QCOMPARE(coordinates[1], chemkit::Float(1.0));
-    QCOMPARE(coordinates[2], chemkit::Float(2.0));
+    QCOMPARE(coordinates[0], chemkit::Real(0.0));
+    QCOMPARE(coordinates[1], chemkit::Real(1.0));
+    QCOMPARE(coordinates[2], chemkit::Real(2.0));
 }
 
 void InternalCoordinatesTest::coordinatesRadians()
@@ -70,15 +70,15 @@ void InternalCoordinatesTest::coordinatesRadians()
     chemkit::InternalCoordinates newCoordinates(1);
     QCOMPARE(newCoordinates.size(),1);
 
-    chemkit::Float r = 0.0;
-    chemkit::Float theta = 1.0;
-    chemkit::Float phi = 2.0;
+    chemkit::Real r = 0.0;
+    chemkit::Real theta = 1.0;
+    chemkit::Real phi = 2.0;
     newCoordinates.setCoordinatesRadians(0, r, theta, phi);
 
     r = r * chemkit::constants::RadiansToDegrees;
     theta = theta * chemkit::constants::RadiansToDegrees;
     phi = phi * chemkit::constants::RadiansToDegrees;
-    std::vector<chemkit::Float> coordinates = newCoordinates.coordinates(0);
+    std::vector<chemkit::Real> coordinates = newCoordinates.coordinates(0);
     QCOMPARE(coordinates[0], r);
     QCOMPARE(coordinates[1], theta);
     QCOMPARE(coordinates[2], phi);

@@ -71,13 +71,13 @@ class CHEMKIT_EXPORT MoleculeAligner
         const Conformer* targetConformer() const;
 
         // geometry
-        Float deviation() const;
-        Eigen::Matrix<Float, 3, 3> rotationMatrix() const;
+        Real deviation() const;
+        Eigen::Matrix<Real, 3, 3> rotationMatrix() const;
         Vector3 displacementVector() const;
         void align(Molecule *molecule);
 
         // static methods
-        static Float rmsd(const Coordinates *a, const Coordinates *b);
+        static Real rmsd(const Coordinates *a, const Coordinates *b);
 
     private:
         Coordinates *sourceCoordinates() const;
