@@ -48,6 +48,7 @@ namespace chemkit {
 
 class Bond;
 class Ring;
+class Residue;
 class Fragment;
 class Conformer;
 class MoleculeObserver;
@@ -70,6 +71,7 @@ class MoleculePrivate
         std::vector<int> massNumbers;
         std::vector<Real> partialCharges;
         std::map<const Atom*, Atom::Chirality> chiralities;
+        std::vector<Residue *> atomResidues;
 };
 
 } // end chemkit namespace

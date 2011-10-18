@@ -51,7 +51,6 @@ namespace chemkit {
 class AtomPrivate
 {
     public:
-        Residue *residue;
         Point3 position;
         std::vector<Bond *> bonds;
 };
@@ -83,7 +82,6 @@ Atom::Atom(Molecule *molecule, const Element &element)
       m_element(element),
       m_molecule(molecule)
 {
-    d->residue = 0;
     d->position = Point3(0, 0, 0);
 }
 
@@ -221,7 +219,7 @@ Fragment* Atom::fragment() const
 /// Returns the residue the atom is a part of.
 Residue* Atom::residue() const
 {
-    return d->residue;
+    return m_molecule->d->atomResidues[m_index];
 }
 
 // --- Structure ----------------------------------------------------------- //
@@ -597,11 +595,7 @@ void Atom::removeBond(Bond *bond)
 
 void Atom::setResidue(Residue *residue)
 {
-    if(d->residue == residue){
-        return;
-    }
-
-    d->residue = residue;
+    m_molecule->d->atomResidues[m_index] = residue;
     molecule()->notifyObservers(this, Molecule::AtomResidueChanged);
 }
 
