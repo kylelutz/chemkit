@@ -52,7 +52,6 @@ class AtomPrivate
 {
     public:
         Residue *residue;
-        int massNumber;
         Point3 position;
         std::vector<Bond *> bonds;
         Atom::Chirality chirality;
@@ -86,14 +85,6 @@ Atom::Atom(Molecule *molecule, const Element &element)
       m_molecule(molecule)
 {
     d->residue = 0;
-
-    if(is(Hydrogen)){
-        d->massNumber = 1;
-    }
-    else{
-        d->massNumber = element.atomicNumber() * 2;
-    }
-
     d->position = Point3(0, 0, 0);
     d->chirality = NoChirality;
 }
@@ -139,14 +130,14 @@ int Atom::atomicNumber() const
 /// is.
 void Atom::setMassNumber(int massNumber)
 {
-    d->massNumber = massNumber;
+    m_molecule->d->massNumbers[m_index] = massNumber;
     m_molecule->notifyObservers(this, Molecule::AtomMassNumberChanged);
 }
 
 /// Returns the mass number of the atom.
 int Atom::massNumber() const
 {
-    return d->massNumber;
+    return m_molecule->d->massNumbers[m_index];
 }
 
 /// Returns the atom's expected valence.

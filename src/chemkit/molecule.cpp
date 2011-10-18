@@ -344,6 +344,11 @@ Atom* Molecule::addAtom(const Element &element)
     m_atoms.push_back(atom);
 
     // add atom properties
+    if(atom->is(Atom::Hydrogen))
+        d->massNumbers.push_back(1);
+    else
+        d->massNumbers.push_back(element.atomicNumber() * 2);
+
     d->partialCharges.push_back(0);
 
     setFragmentsPerceived(false);
@@ -383,6 +388,7 @@ void Molecule::removeAtom(Atom *atom)
     m_atoms.erase(std::remove(m_atoms.begin(), m_atoms.end(), atom), m_atoms.end());
 
     // remove atom properties
+    d->massNumbers.erase(d->massNumbers.begin() + atom->index());
     d->partialCharges.erase(d->partialCharges.begin() + atom->index());
 
     // subtract one from the index of all atoms after this one
