@@ -65,6 +65,7 @@ class MoleculePrivate
         std::vector<Fragment *> fragments;
         std::vector<MoleculeObserver *> observers;
         std::map<std::string, Variant> data;
+        std::vector<Real> partialCharges;
 };
 
 } // end chemkit namespace

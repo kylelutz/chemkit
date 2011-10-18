@@ -43,6 +43,7 @@
 #include "fragment.h"
 #include "geometry.h"
 #include "molecule.h"
+#include "moleculeprivate.h"
 
 namespace chemkit {
 
@@ -52,7 +53,6 @@ class AtomPrivate
     public:
         Residue *residue;
         int massNumber;
-        Real partialCharge;
         Point3 position;
         std::vector<Bond *> bonds;
         Atom::Chirality chirality;
@@ -95,7 +95,6 @@ Atom::Atom(Molecule *molecule, const Element &element)
     }
 
     d->position = Point3(0, 0, 0);
-    d->partialCharge = 0.0;
     d->chirality = NoChirality;
 }
 
@@ -170,14 +169,14 @@ int Atom::formalCharge() const
 /// Sets the partial charge of the atom.
 void Atom::setPartialCharge(Real charge)
 {
-    d->partialCharge = charge;
+    m_molecule->d->partialCharges[m_index] = charge;
     m_molecule->notifyObservers(this, Molecule::AtomPartialChargeChanged);
 }
 
 /// Returns the partial charge of the atom.
 Real Atom::partialCharge() const
 {
-    return d->partialCharge;
+    return m_molecule->d->partialCharges[m_index];
 }
 
 /// Returns the elemental symbol for the atom. (e.g. "H" or "Sn").
