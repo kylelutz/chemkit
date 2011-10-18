@@ -54,7 +54,6 @@ class AtomPrivate
         Residue *residue;
         Point3 position;
         std::vector<Bond *> bonds;
-        Atom::Chirality chirality;
 };
 
 // === Atom ================================================================ //
@@ -86,7 +85,6 @@ Atom::Atom(Molecule *molecule, const Element &element)
 {
     d->residue = 0;
     d->position = Point3(0, 0, 0);
-    d->chirality = NoChirality;
 }
 
 /// Destroys the atom object.
@@ -561,17 +559,22 @@ Real Atom::distance(const Atom *atom) const
 /// Sets the chirality of the atom.
 void Atom::setChirality(Atom::Chirality chirality)
 {
-    if(d->chirality == chirality)
-        return;
-
-    d->chirality = chirality;
+    m_molecule->d->chiralities[this] = chirality;
     m_molecule->notifyObservers(this, Molecule::AtomChiralityChanged);
 }
 
 /// Returns the chirality of the atom.
 Atom::Chirality Atom::chirality() const
 {
-    return d->chirality;
+    const std::map<const Atom*, Atom::Chirality> &chiralities = m_molecule->d->chiralities;
+
+    std::map<const Atom*, Atom::Chirality>::const_iterator location = chiralities.find(this);
+    if(location == chiralities.end()){
+        return NoChirality;
+    }
+    else{
+        return location->second;
+    }
 }
 
 /// Returns \c true if the atom is chiral (i.e. chirality() !=
