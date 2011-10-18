@@ -57,6 +57,7 @@
 #include "quaternion.h"
 #include "coordinates.h"
 #include "moleculargraph.h"
+#include "moleculeprivate.h"
 #include "moleculeobserver.h"
 #include "internalcoordinates.h"
 #include "moleculardescriptor.h"
@@ -64,23 +65,6 @@
 namespace chemkit {
 
 // === MoleculePrivate ===================================================== //
-class MoleculePrivate
-{
-    public:
-        MoleculePrivate();
-
-        std::string name;
-        std::vector<Bond *> bonds;
-        std::vector<Conformer *> conformers;
-        Conformer *conformer;
-        bool ringsPerceived;
-        std::vector<Ring *> rings;
-        bool fragmentsPerceived;
-        std::vector<Fragment *> fragments;
-        std::vector<MoleculeObserver *> observers;
-        std::map<std::string, Variant> data;
-};
-
 MoleculePrivate::MoleculePrivate()
 {
     conformer = 0;
