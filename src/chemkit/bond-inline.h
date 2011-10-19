@@ -41,18 +41,6 @@
 namespace chemkit {
 
 // --- Properties ---------------------------------------------------------- //
-/// Returns the first atom in the bond.
-inline Atom* Bond::atom1() const
-{
-    return m_atom1;
-}
-
-/// Returns the second atom in the bond.
-inline Atom* Bond::atom2() const
-{
-    return m_atom2;
-}
-
 /// Returns the molecule the bond is a part of.
 inline Molecule* Bond::molecule() const
 {

@@ -72,6 +72,7 @@ class MoleculePrivate
         std::vector<Real> partialCharges;
         std::map<const Atom*, Atom::Chirality> chiralities;
         std::vector<Residue *> atomResidues;
+        std::vector<std::pair<Atom*, Atom*> > bondAtoms;
         std::vector<unsigned char> bondOrders;
 };
 

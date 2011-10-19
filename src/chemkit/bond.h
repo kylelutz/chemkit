@@ -64,8 +64,8 @@ class CHEMKIT_EXPORT Bond
 
         // properties
         Atom* atom(int index) const;
-        inline Atom* atom1() const;
-        inline Atom* atom2() const;
+        Atom* atom1() const;
+        Atom* atom2() const;
         std::vector<Atom *> atoms() const;
         Atom* otherAtom(const Atom *atom) const;
         void setOrder(int order);
@@ -107,8 +107,6 @@ class CHEMKIT_EXPORT Bond
     private:
         Molecule *m_molecule;
         int m_index;
-        Atom *m_atom1;
-        Atom *m_atom2;
 };
 
 } // end chemkit namespace

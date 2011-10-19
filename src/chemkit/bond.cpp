@@ -65,8 +65,6 @@ Bond::Bond(Molecule *molecule, int index)
     : m_molecule(molecule),
       m_index(index)
 {
-    m_atom1 = 0;
-    m_atom2 = 0;
 }
 
 /// Destroys the bond object.
@@ -79,15 +77,27 @@ Bond::~Bond()
 /// \c 0 or \c 1.
 Atom* Bond::atom(int index) const
 {
-    return index == 0 ? m_atom1 : m_atom2;
+    return index == 0 ? atom1() : atom2();
+}
+
+/// Returns the first atom in the bond.
+Atom* Bond::atom1() const
+{
+    return m_molecule->d->bondAtoms[m_index].first;
+}
+
+/// Returns the second atom in the bond.
+Atom* Bond::atom2() const
+{
+    return m_molecule->d->bondAtoms[m_index].second;
 }
 
 /// Returns a list containing both atoms in the bond.
 std::vector<Atom *> Bond::atoms() const
 {
     std::vector<Atom *> atoms(2);
-    atoms[0] = m_atom1;
-    atoms[1] = m_atom2;
+    atoms[0] = atom1();
+    atoms[1] = atom2();
     return atoms;
 }
 
@@ -95,7 +105,7 @@ std::vector<Atom *> Bond::atoms() const
 /// part of the bond.
 Atom* Bond::otherAtom(const Atom *atom) const
 {
-    return m_atom1 == atom ? m_atom2 : m_atom1;
+    return atom == atom1() ? atom2() : atom1();
 }
 
 /// Sets the bond order for the bond to \p order.
@@ -117,20 +127,20 @@ int Bond::order() const
 /// two atoms in the bond.
 Real Bond::polarity() const
 {
-    if(m_atom1->atomicNumber() == m_atom2->atomicNumber()){
+    if(atom1()->atomicNumber() == atom2()->atomicNumber()){
         return 0;
     }
 
-    return std::abs(m_atom1->electronegativity() - m_atom2->electronegativity());
+    return std::abs(atom1()->electronegativity() - atom2()->electronegativity());
 }
 
 /// Returns the dipole moment for the bond.
 Vector3 Bond::dipoleMoment() const
 {
-    Point3 a = m_atom1->position();
-    Point3 b = m_atom2->position();
-    Real qa = m_atom1->partialCharge();
-    Real qb = m_atom2->partialCharge();
+    Point3 a = atom1()->position();
+    Point3 b = atom2()->position();
+    Real qa = atom1()->partialCharge();
+    Real qb = atom2()->partialCharge();
 
     return (a - b) * (qa - qb);
 }
@@ -138,7 +148,7 @@ Vector3 Bond::dipoleMoment() const
 /// Returns the fragment the bond is a part of.
 Fragment* Bond::fragment() const
 {
-    return m_atom1->fragment();
+    return atom1()->fragment();
 }
 
 /// Returns the residue the bond is a part of. If the bond is not
@@ -146,8 +156,8 @@ Fragment* Bond::fragment() const
 /// residues then \c 0 is returned.
 Residue* Bond::residue() const
 {
-    if(m_atom1->residue() == m_atom2->residue())
-        return m_atom1->residue();
+    if(atom1()->residue() == atom2()->residue())
+        return atom1()->residue();
     else
         return 0;
 }
@@ -156,14 +166,14 @@ Residue* Bond::residue() const
 /// Returns \c true if the bond contains atom.
 bool Bond::contains(const Atom *atom) const
 {
-    return m_atom1 == atom || m_atom2 == atom;
+    return atom1() == atom || atom2() == atom;
 }
 
 /// Returns \c true if the bond contains an atom of the given
 /// \p element.
 bool Bond::contains(const Element &element) const
 {
-    return m_atom1->is(element) || m_atom2->is(element);
+    return atom1()->is(element) || atom2()->is(element);
 }
 
 /// Returns \c true if the bond contains both atom \p a and atom
@@ -184,14 +194,14 @@ bool Bond::containsBoth(const Atom *a, const Atom *b) const
 /// \endcode
 bool Bond::containsBoth(const Element &a, const Element &b) const
 {
-    return (m_atom1->is(a) && m_atom2->is(b)) || (m_atom2->is(a) && m_atom1->is(b));
+    return (atom1()->is(a) && atom2()->is(b)) || (atom2()->is(a) && atom1()->is(b));
 }
 
 /// Returns \c true if either of the two atoms in the bond are
 /// terminal.
 bool Bond::isTerminal() const
 {
-    return (m_atom1->isTerminal() || m_atom2->isTerminal());
+    return (atom1()->isTerminal() || atom2()->isTerminal());
 }
 
 // --- Ring Perception ----------------------------------------------------- //
@@ -274,14 +284,14 @@ bool Bond::isAromatic() const
 /// midpoint between the two atoms in the bond.
 Point3 Bond::center() const
 {
-    return chemkit::geometry::midpoint(m_atom1->position(),
-                                       m_atom2->position());
+    return chemkit::geometry::midpoint(atom1()->position(),
+                                       atom2()->position());
 }
 
 /// Returns the length of the bond. Length is in Angstroms.
 Real Bond::length() const
 {
-    return m_atom1->distance(m_atom2);
+    return atom1()->distance(atom2());
 }
 
 } // end chemkit namespace

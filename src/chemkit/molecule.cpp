@@ -459,15 +459,12 @@ Bond* Molecule::addBond(Atom *a, Atom *b, int order)
     }
 
     Bond *bond = new Bond(this, d->bonds.size());
-
-    bond->m_atom1 = a;
-    bond->m_atom2 = b;
-
-    bond->atom1()->addBond(bond);
-    bond->atom2()->addBond(bond);
+    a->addBond(bond);
+    b->addBond(bond);
     d->bonds.push_back(bond);
 
     // add bond properties
+    d->bondAtoms.push_back(std::make_pair(a, b));
     d->bondOrders.push_back(order);
 
     setRingsPerceived(false);
@@ -495,6 +492,7 @@ void Molecule::removeBond(Bond *bond)
     bond->atom2()->removeBond(bond);
 
     // remove bond properties
+    d->bondAtoms.erase(d->bondAtoms.begin() + bond->index());
     d->bondOrders.erase(d->bondOrders.begin() + bond->index());
 
     // subtract one from the index of all bonds after this one
