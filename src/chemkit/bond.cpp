@@ -39,6 +39,7 @@
 #include "foreach.h"
 #include "geometry.h"
 #include "molecule.h"
+#include "moleculeprivate.h"
 
 namespace chemkit {
 
@@ -59,12 +60,13 @@ namespace chemkit {
 ///     - \c Quadruple = \c 4
 
 // --- Construction and Destruction ---------------------------------------- //
-/// Creates a new bond object between \p a and \p with \p order.
-Bond::Bond(Atom *a, Atom *b, int order)
-    : m_atom1(a),
-      m_atom2(b),
-      m_order(order)
+/// Creates a new bond object for \p molecule at \p index.
+Bond::Bond(Molecule *molecule, int index)
+    : m_molecule(molecule),
+      m_index(index)
 {
+    m_atom1 = 0;
+    m_atom2 = 0;
 }
 
 /// Destroys the bond object.
@@ -99,9 +101,15 @@ Atom* Bond::otherAtom(const Atom *atom) const
 /// Sets the bond order for the bond to \p order.
 void Bond::setOrder(int order)
 {
-    m_order = order;
+    m_molecule->d->bondOrders[m_index] = order;
 
     molecule()->notifyObservers(this, Molecule::BondOrderChanged);
+}
+
+/// Returns the bond order.
+int Bond::order() const
+{
+    return m_molecule->d->bondOrders[m_index];
 }
 
 /// Returns the polarity of the bond. This is calculated as the
@@ -142,14 +150,6 @@ Residue* Bond::residue() const
         return m_atom1->residue();
     else
         return 0;
-}
-
-/// Returns the bond's index in the molecule.
-int Bond::index() const
-{
-    const std::vector<Bond *> &bonds = molecule()->bonds();
-
-    return std::distance(bonds.begin(), std::find(bonds.begin(), bonds.end(), this));
 }
 
 // --- Structure ----------------------------------------------------------- //

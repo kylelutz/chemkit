@@ -458,11 +458,17 @@ Bond* Molecule::addBond(Atom *a, Atom *b, int order)
         return bond(a, b);
     }
 
-    Bond *bond = new Bond(a, b, order);
+    Bond *bond = new Bond(this, d->bonds.size());
+
+    bond->m_atom1 = a;
+    bond->m_atom2 = b;
 
     bond->atom1()->addBond(bond);
     bond->atom2()->addBond(bond);
     d->bonds.push_back(bond);
+
+    // add bond properties
+    d->bondOrders.push_back(order);
 
     setRingsPerceived(false);
     setFragmentsPerceived(false);
@@ -481,15 +487,20 @@ Bond* Molecule::addBond(int a, int b, int order)
 /// Removes \p bond from the molecule.
 void Molecule::removeBond(Bond *bond)
 {
-    std::vector<Bond *>::iterator location = std::find(d->bonds.begin(), d->bonds.end(), bond);
-    if(location == d->bonds.end()){
-        return;
-    }
+    assert(bond->molecule() == this);
 
-    d->bonds.erase(location);
+    d->bonds.erase(d->bonds.begin() + bond->index());
 
     bond->atom1()->removeBond(bond);
     bond->atom2()->removeBond(bond);
+
+    // remove bond properties
+    d->bondOrders.erase(d->bondOrders.begin() + bond->index());
+
+    // subtract one from the index of all bonds after this one
+    for(unsigned int i = bond->index(); i < d->bonds.size(); i++){
+        d->bonds[i]->m_index--;
+    }
 
     setRingsPerceived(false);
     setFragmentsPerceived(false);

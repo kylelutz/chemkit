@@ -38,8 +38,6 @@
 
 #include "bond.h"
 
-#include "atom.h"
-
 namespace chemkit {
 
 // --- Properties ---------------------------------------------------------- //
@@ -55,16 +53,16 @@ inline Atom* Bond::atom2() const
     return m_atom2;
 }
 
-/// Returns the bond order.
-inline int Bond::order() const
-{
-    return m_order;
-}
-
 /// Returns the molecule the bond is a part of.
 inline Molecule* Bond::molecule() const
 {
-    return m_atom1->molecule();
+    return m_molecule;
+}
+
+/// Returns the bond's index in the molecule.
+inline int Bond::index() const
+{
+    return m_index;
 }
 
 } // end chemkit namespace

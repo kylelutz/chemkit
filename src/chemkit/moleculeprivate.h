@@ -72,6 +72,7 @@ class MoleculePrivate
         std::vector<Real> partialCharges;
         std::map<const Atom*, Atom::Chirality> chiralities;
         std::vector<Residue *> atomResidues;
+        std::vector<unsigned char> bondOrders;
 };
 
 } // end chemkit namespace

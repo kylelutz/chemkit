@@ -69,13 +69,13 @@ class CHEMKIT_EXPORT Bond
         std::vector<Atom *> atoms() const;
         Atom* otherAtom(const Atom *atom) const;
         void setOrder(int order);
-        inline int order() const;
+        int order() const;
         Real polarity() const;
         Vector3 dipoleMoment() const;
         inline Molecule* molecule() const;
         Fragment* fragment() const;
         Residue* residue() const;
-        int index() const;
+        inline int index() const;
 
         // structure
         bool contains(const Atom *atom) const;
@@ -97,7 +97,7 @@ class CHEMKIT_EXPORT Bond
         Real length() const;
 
     private:
-        Bond(Atom *a, Atom *b, int order = Single);
+        Bond(Molecule *molecule, int index);
         ~Bond();
 
         CHEMKIT_DISABLE_COPY(Bond)
@@ -105,9 +105,10 @@ class CHEMKIT_EXPORT Bond
         friend class Molecule;
 
     private:
+        Molecule *m_molecule;
+        int m_index;
         Atom *m_atom1;
         Atom *m_atom2;
-        int m_order;
 };
 
 } // end chemkit namespace
