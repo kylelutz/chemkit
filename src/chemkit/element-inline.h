@@ -59,6 +59,11 @@ inline bool Element::operator==(const Element &element) const
     return m_atomicNumber == element.m_atomicNumber;
 }
 
+inline bool Element::operator!=(const Element &element) const
+{
+    return m_atomicNumber != element.m_atomicNumber;
+}
+
 } // end chemkit namespace
 
 #endif // CHEMKIT_ELEMENT_INLINE_H

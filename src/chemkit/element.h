@@ -68,6 +68,7 @@ class CHEMKIT_EXPORT Element
 
         // operators
         inline bool operator==(const Element &element) const;
+        inline bool operator!=(const Element &element) const;
 
         // static methods
         static int atomicNumber(const std::string &symbol);
