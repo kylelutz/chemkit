@@ -125,13 +125,20 @@ void Atom::setIsotope(const Isotope &isotope)
         setElement(isotope.element());
     }
 
-    setMassNumber(isotope.massNumber());
+    m_molecule->d->isotopes[this] = isotope;
+    m_molecule->notifyObservers(this, Molecule::AtomMassNumberChanged);
 }
 
 /// Returns the isotope for the atom.
 Isotope Atom::isotope() const
 {
-    return Isotope(element(), massNumber());
+    std::map<const Atom *, Isotope>::iterator iter = m_molecule->d->isotopes.find(this);
+    if(iter == m_molecule->d->isotopes.end()){
+        return Isotope(element(), is(Hydrogen) ? 1 : atomicNumber() * 2);
+    }
+    else{
+        return iter->second;
+    }
 }
 
 /// Sets the mass number for the atom. This is the number of protons
@@ -139,14 +146,13 @@ Isotope Atom::isotope() const
 /// is.
 void Atom::setMassNumber(int massNumber)
 {
-    m_molecule->d->massNumbers[m_index] = massNumber;
-    m_molecule->notifyObservers(this, Molecule::AtomMassNumberChanged);
+    setIsotope(Isotope(element(), massNumber));
 }
 
 /// Returns the mass number of the atom.
 int Atom::massNumber() const
 {
-    return m_molecule->d->massNumbers[m_index];
+    return isotope().massNumber();
 }
 
 /// Returns the atom's expected valence.
