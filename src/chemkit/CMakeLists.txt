@@ -66,6 +66,7 @@ set(HEADERS
   ring.h
   ring-inline.h
   scalarfield.h
+  stereochemistry.h
   trajectory.h
   trajectoryframe.h
   unitcell.h
@@ -114,6 +115,7 @@ set(SOURCES
   residue.cpp
   ring.cpp
   scalarfield.cpp
+  stereochemistry.cpp
   trajectory.cpp
   trajectoryframe.cpp
   unitcell.cpp

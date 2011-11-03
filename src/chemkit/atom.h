@@ -43,6 +43,7 @@
 #include "point3.h"
 #include "element.h"
 #include "vector3.h"
+#include "stereochemistry.h"
 
 namespace chemkit {
 
@@ -56,14 +57,6 @@ class AtomPrivate;
 class CHEMKIT_EXPORT Atom
 {
     public:
-        // enumerations
-        enum Chirality {
-            R,
-            S,
-            NoChirality,
-            UnspecifiedChirality
-        };
-
         // properties
         void setElement(const Element &element);
         inline Element element() const;
@@ -133,8 +126,8 @@ class CHEMKIT_EXPORT Atom
         Real distance(const Atom *atom) const;
 
         // chirality
-        void setChirality(Atom::Chirality chirality);
-        Atom::Chirality chirality() const;
+        void setChirality(Stereochemistry::Type chirality);
+        Stereochemistry::Type chirality() const;
         bool isChiral() const;
 
         enum AtomName{

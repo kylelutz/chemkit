@@ -33,46 +33,18 @@
 **
 ******************************************************************************/
 
-#ifndef CHEMKIT_MOLECULEPRIVATE_H
-#define CHEMKIT_MOLECULEPRIVATE_H
+#ifndef STEREROCHEMISTRYTEST_H
+#define STEREROCHEMISTRYTEST_H
 
-#include "chemkit.h"
+#include <QtTest>
 
-#include <map>
-#include <string>
-#include <vector>
-
-namespace chemkit {
-
-class Bond;
-class Ring;
-class Residue;
-class Fragment;
-class Conformer;
-class MoleculeObserver;
-
-class MoleculePrivate
+class StereochemistryTest : public QObject
 {
-    public:
-        MoleculePrivate();
+    Q_OBJECT
 
-        std::string name;
-        std::vector<Bond *> bonds;
-        std::vector<Conformer *> conformers;
-        Conformer *conformer;
-        bool ringsPerceived;
-        std::vector<Ring *> rings;
-        bool fragmentsPerceived;
-        std::vector<Fragment *> fragments;
-        std::vector<MoleculeObserver *> observers;
-        std::map<std::string, Variant> data;
-        std::vector<int> massNumbers;
-        std::vector<Real> partialCharges;
-        std::vector<Residue *> atomResidues;
-        std::vector<std::pair<Atom*, Atom*> > bondAtoms;
-        std::vector<unsigned char> bondOrders;
+    private slots:
+        void setAtomStereochemistry();
+        void setBondStereochemistry();
 };
 
-} // end chemkit namespace
-
-#endif // CHEMKIT_MOLECULEPRIVATE_H
+#endif // STEREROCHEMISTRYTEST_H

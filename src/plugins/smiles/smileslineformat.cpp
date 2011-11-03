@@ -286,11 +286,11 @@ bracket_atom:
         p++; // move past chirality symbol
 
         if(*p == '@'){
-            atom->setChirality(chemkit::Atom::S);
+            atom->setChirality(chemkit::Stereochemistry::S);
             p++; // move past second chirality symbol
         }
         else{
-            atom->setChirality(chemkit::Atom::R);
+            atom->setChirality(chemkit::Stereochemistry::R);
         }
     }
 

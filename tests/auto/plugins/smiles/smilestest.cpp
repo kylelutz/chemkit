@@ -103,7 +103,7 @@ void SmilesTest::alanine()
 
     foreach(const chemkit::Atom *atom, molecule.atoms()){
         if(atom->is(chemkit::Atom::Carbon) && atom->isBondedTo(chemkit::Atom::Nitrogen)){
-            QVERIFY(atom->chirality() == chemkit::Atom::R);
+            QVERIFY(atom->chirality() == chemkit::Stereochemistry::R);
         }
     }
 

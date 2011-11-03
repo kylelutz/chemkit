@@ -33,46 +33,52 @@
 **
 ******************************************************************************/
 
-#ifndef CHEMKIT_MOLECULEPRIVATE_H
-#define CHEMKIT_MOLECULEPRIVATE_H
+#ifndef CHEMKIT_STEREOCHEMISTRY_H
+#define CHEMKIT_STEREOCHEMISTRY_H
 
 #include "chemkit.h"
 
 #include <map>
-#include <string>
-#include <vector>
 
 namespace chemkit {
 
+class Atom;
 class Bond;
-class Ring;
-class Residue;
-class Fragment;
-class Conformer;
-class MoleculeObserver;
+class Molecule;
 
-class MoleculePrivate
+class CHEMKIT_EXPORT Stereochemistry
 {
     public:
-        MoleculePrivate();
+        // enumerations
+        enum Type {
+            None,
+            Unspecified,
+            R,
+            S,
+            E,
+            Z,
+            Cis = Z,
+            Trans = E
+        };
 
-        std::string name;
-        std::vector<Bond *> bonds;
-        std::vector<Conformer *> conformers;
-        Conformer *conformer;
-        bool ringsPerceived;
-        std::vector<Ring *> rings;
-        bool fragmentsPerceived;
-        std::vector<Fragment *> fragments;
-        std::vector<MoleculeObserver *> observers;
-        std::map<std::string, Variant> data;
-        std::vector<int> massNumbers;
-        std::vector<Real> partialCharges;
-        std::vector<Residue *> atomResidues;
-        std::vector<std::pair<Atom*, Atom*> > bondAtoms;
-        std::vector<unsigned char> bondOrders;
+        // construction and destruction
+        Stereochemistry(const Molecule *molecule);
+        ~Stereochemistry();
+
+        // properties
+        const Molecule* molecule() const;
+
+        // stereochemistry
+        void setStereochemistry(const Atom *atom, Type type);
+        void setStereochemistry(const Bond *bond, Type type);
+        Type stereochemistry(const Atom *atom) const;
+        Type stereochemistry(const Bond *bond) const;
+
+    private:
+        const Molecule *m_molecule;
+        std::map<const Atom *, Type> m_atomStereochemistry;
+        std::map<const Bond *, Type> m_bondStereochemistry;
 };
 
 } // end chemkit namespace
-
-#endif // CHEMKIT_MOLECULEPRIVATE_H
+#endif // CHEMKIT_STEREOCHEMISTRY_H

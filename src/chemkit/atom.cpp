@@ -72,9 +72,6 @@ class AtomPrivate
 /// versus:
 /// \code atom->is(17); \endcode
 
-/// \enum Atom::Chirality
-/// Provides names for each of the chirality types.
-
 // --- Construction and Destruction ---------------------------------------- //
 /// Create a new atom object.
 Atom::Atom(Molecule *molecule, const Element &element)
@@ -555,31 +552,28 @@ Real Atom::distance(const Atom *atom) const
 
 // --- Chirality ----------------------------------------------------------- //
 /// Sets the chirality of the atom.
-void Atom::setChirality(Atom::Chirality chirality)
+void Atom::setChirality(Stereochemistry::Type chirality)
 {
-    m_molecule->d->chiralities[this] = chirality;
+    m_molecule->stereochemistry()->setStereochemistry(this, chirality);
     m_molecule->notifyObservers(this, Molecule::AtomChiralityChanged);
 }
 
 /// Returns the chirality of the atom.
-Atom::Chirality Atom::chirality() const
+Stereochemistry::Type Atom::chirality() const
 {
-    const std::map<const Atom*, Atom::Chirality> &chiralities = m_molecule->d->chiralities;
-
-    std::map<const Atom*, Atom::Chirality>::const_iterator location = chiralities.find(this);
-    if(location == chiralities.end()){
-        return NoChirality;
+    if(!m_molecule->m_stereochemistry){
+        return Stereochemistry::None;
     }
     else{
-        return location->second;
+        return m_molecule->stereochemistry()->stereochemistry(this);
     }
 }
 
 /// Returns \c true if the atom is chiral (i.e. chirality() !=
-/// NoChirality).
+/// Stereochemistry::None).
 bool Atom::isChiral() const
 {
-    return chirality() != NoChirality;
+    return chirality() != Stereochemistry::None;
 }
 
 // --- Internal Methods ---------------------------------------------------- //

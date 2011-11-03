@@ -56,6 +56,7 @@ namespace chemkit {
 class Fragment;
 class Coordinates;
 class MoleculePrivate;
+class Stereochemistry;
 class MoleculeObserver;
 class InternalCoordinates;
 
@@ -197,6 +198,7 @@ class CHEMKIT_EXPORT Molecule
         void addObserver(MoleculeObserver *observer) const;
         void removeObserver(MoleculeObserver *observer) const;
         bool isSubsetOf(const Molecule *molecule, int flags) const;
+        Stereochemistry* stereochemistry();
 
         friend class Atom;
         friend class Bond;
@@ -205,6 +207,7 @@ class CHEMKIT_EXPORT Molecule
     private:
         MoleculePrivate* const d;
         std::vector<Atom *> m_atoms;
+        Stereochemistry *m_stereochemistry;
 };
 
 } // end chemkit namespace

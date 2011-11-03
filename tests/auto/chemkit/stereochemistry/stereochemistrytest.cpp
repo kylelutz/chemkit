@@ -33,46 +33,35 @@
 **
 ******************************************************************************/
 
-#ifndef CHEMKIT_MOLECULEPRIVATE_H
-#define CHEMKIT_MOLECULEPRIVATE_H
+#include "stereochemistrytest.h"
 
-#include "chemkit.h"
+#include <chemkit/molecule.h>
+#include <chemkit/stereochemistry.h>
 
-#include <map>
-#include <string>
-#include <vector>
-
-namespace chemkit {
-
-class Bond;
-class Ring;
-class Residue;
-class Fragment;
-class Conformer;
-class MoleculeObserver;
-
-class MoleculePrivate
+void StereochemistryTest::setAtomStereochemistry()
 {
-    public:
-        MoleculePrivate();
+    chemkit::Molecule molecule;
+    chemkit::Atom *C1 = molecule.addAtom("C");
+    chemkit::Atom *C2 = molecule.addAtom("C");
 
-        std::string name;
-        std::vector<Bond *> bonds;
-        std::vector<Conformer *> conformers;
-        Conformer *conformer;
-        bool ringsPerceived;
-        std::vector<Ring *> rings;
-        bool fragmentsPerceived;
-        std::vector<Fragment *> fragments;
-        std::vector<MoleculeObserver *> observers;
-        std::map<std::string, Variant> data;
-        std::vector<int> massNumbers;
-        std::vector<Real> partialCharges;
-        std::vector<Residue *> atomResidues;
-        std::vector<std::pair<Atom*, Atom*> > bondAtoms;
-        std::vector<unsigned char> bondOrders;
-};
+    chemkit::Stereochemistry stereo(&molecule);
+    stereo.setStereochemistry(C1, chemkit::Stereochemistry::R);
+    QVERIFY(stereo.stereochemistry(C1) == chemkit::Stereochemistry::R);
 
-} // end chemkit namespace
+    stereo.setStereochemistry(C2, chemkit::Stereochemistry::S);
+    QVERIFY(stereo.stereochemistry(C2) == chemkit::Stereochemistry::S);
+}
 
-#endif // CHEMKIT_MOLECULEPRIVATE_H
+void StereochemistryTest::setBondStereochemistry()
+{
+    chemkit::Molecule molecule;
+    chemkit::Atom *C1 = molecule.addAtom("C");
+    chemkit::Atom *C2 = molecule.addAtom("C");
+    chemkit::Bond *C1_C2 = molecule.addBond(C1, C2, chemkit::Bond::Double);
+
+    chemkit::Stereochemistry stereo(&molecule);
+    stereo.setStereochemistry(C1_C2, chemkit::Stereochemistry::Cis);
+    QVERIFY(stereo.stereochemistry(C1_C2) == chemkit::Stereochemistry::Cis);
+}
+
+QTEST_APPLESS_MAIN(StereochemistryTest)

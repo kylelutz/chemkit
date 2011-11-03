@@ -119,6 +119,7 @@ MoleculePrivate::MoleculePrivate()
 Molecule::Molecule()
     : d(new MoleculePrivate)
 {
+    m_stereochemistry = 0;
 }
 
 /// Creates a new molecule from its formula.
@@ -133,6 +134,8 @@ Molecule::Molecule()
 Molecule::Molecule(const std::string &formula, const std::string &format)
     : d(new MoleculePrivate)
 {
+    m_stereochemistry = 0;
+
     LineFormat *lineFormat = LineFormat::create(format);
     if(!lineFormat){
         return;
@@ -147,6 +150,8 @@ Molecule::Molecule(const std::string &formula, const std::string &format)
 Molecule::Molecule(const Molecule &molecule)
     : d(new MoleculePrivate)
 {
+    m_stereochemistry = 0;
+
     d->name = molecule.name();
 
     std::map<const Atom *, Atom *> oldToNew;
@@ -176,6 +181,8 @@ Molecule::~Molecule()
         delete fragment;
     foreach(Conformer *conformer, d->conformers)
         delete conformer;
+
+    delete m_stereochemistry;
 
     delete d;
 }
@@ -391,7 +398,6 @@ void Molecule::removeAtom(Atom *atom)
     // remove atom properties
     d->massNumbers.erase(d->massNumbers.begin() + atom->index());
     d->partialCharges.erase(d->partialCharges.begin() + atom->index());
-    d->chiralities.erase(atom);
     d->atomResidues.erase(d->atomResidues.begin() + atom->index());
 
     // subtract one from the index of all atoms after this one
@@ -1344,6 +1350,15 @@ bool Molecule::isSubsetOf(const Molecule *molecule, int flags) const
     }
 
     return true;
+}
+
+Stereochemistry* Molecule::stereochemistry()
+{
+    if(!m_stereochemistry){
+        m_stereochemistry = new Stereochemistry(this);
+    }
+
+    return m_stereochemistry;
 }
 
 } // end chemkit namespace
