@@ -118,6 +118,22 @@ int Atom::atomicNumber() const
     return m_element.atomicNumber();
 }
 
+/// Set the isotope for the atom to \p isotope.
+void Atom::setIsotope(const Isotope &isotope)
+{
+    if(isotope.element() != element()){
+        setElement(isotope.element());
+    }
+
+    setMassNumber(isotope.massNumber());
+}
+
+/// Returns the isotope for the atom.
+Isotope Atom::isotope() const
+{
+    return Isotope(element(), massNumber());
+}
+
 /// Sets the mass number for the atom. This is the number of protons
 /// plus the number of neutrons and identifies what isotope the atom
 /// is.

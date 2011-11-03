@@ -42,6 +42,7 @@
 
 #include "point3.h"
 #include "element.h"
+#include "isotope.h"
 #include "vector3.h"
 #include "stereochemistry.h"
 
@@ -62,6 +63,8 @@ class CHEMKIT_EXPORT Atom
         inline Element element() const;
         void setAtomicNumber(int atomicNumber);
         int atomicNumber() const;
+        void setIsotope(const Isotope &isotope);
+        Isotope isotope() const;
         void setMassNumber(int massNumber);
         int massNumber() const;
         int expectedValence() const;
