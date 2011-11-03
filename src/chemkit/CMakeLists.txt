@@ -42,6 +42,7 @@ set(HEADERS
   geometry.h
   geometry-inline.h
   internalcoordinates.h
+  isotope.h
   lineformat.h
   matrix.h
   moiety.h
@@ -95,6 +96,7 @@ set(SOURCES
   fragment.cpp
   geometry.cpp
   internalcoordinates.cpp
+  isotope.cpp
   lineformat.cpp
   matrix.cpp
   moiety.cpp
