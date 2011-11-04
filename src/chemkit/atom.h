@@ -248,7 +248,6 @@ private:
 
     CHEMKIT_DISABLE_COPY(Atom)
 
-    friend class Fragment;
     friend class Molecule;
 
 private:
