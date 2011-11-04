@@ -39,6 +39,7 @@
 
 #include "molecularsurface.h"
 
+#include "atom.h"
 #include "foreach.h"
 #include "vector3.h"
 #include "geometry.h"

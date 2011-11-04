@@ -37,6 +37,7 @@
 
 #include <QtCore>
 
+#include <chemkit/atom.h>
 #include <chemkit/element.h>
 #include <chemkit/moleculefile.h>
 

@@ -74,7 +74,7 @@ private:
     void removeAtom(chemkit::Atom *atom);
     void setAtomAtomicNumber(chemkit::Atom *atom, int atomicNumber);
     void setAtomPosition(chemkit::Atom *atom, const chemkit::Point3 &position);
-    chemkit::Bond* addBond(chemkit::Atom *a, chemkit::Atom *b, int order = chemkit::Bond::Single);
+    chemkit::Bond* addBond(chemkit::Atom *a, chemkit::Atom *b, int order = 1);
     void removeBond(chemkit::Bond *bond);
     void setBondOrder(chemkit::Bond *bond, int order);
     void adjustHydrogens(chemkit::Atom *atom);

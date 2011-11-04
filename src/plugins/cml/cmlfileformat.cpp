@@ -37,6 +37,8 @@
 
 #include <QtXml>
 
+#include <chemkit/atom.h>
+#include <chemkit/bond.h>
 #include <chemkit/molecule.h>
 #include <chemkit/moleculefile.h>
 

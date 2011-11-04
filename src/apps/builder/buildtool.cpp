@@ -35,6 +35,8 @@
 
 #include "buildtool.h"
 
+#include <chemkit/atom.h>
+#include <chemkit/bond.h>
 #include <chemkit/vector3.h>
 #include <chemkit/element.h>
 #include <chemkit/periodictabledialog.h>

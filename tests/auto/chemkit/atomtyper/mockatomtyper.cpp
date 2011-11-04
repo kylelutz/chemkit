@@ -35,6 +35,7 @@
 
 #include "mockatomtyper.h"
 
+#include <chemkit/atom.h>
 #include <chemkit/molecule.h>
 
 // === MockAtomTyper ======================================================= //

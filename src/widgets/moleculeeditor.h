@@ -82,7 +82,7 @@ public:
     void removeAtom(Atom *atom);
     void setAtomAtomicNumber(Atom *atom, int atomicNumber);
     void setAtomPosition(Atom *atom, const Point3 &position);
-    Bond* addBond(Atom *a, Atom *b, int order = Bond::Single);
+    Bond* addBond(Atom *a, Atom *b, int order = 1);
     void removeBond(Bond *bond);
     void setBondOrder(Bond *bond, int order);
 

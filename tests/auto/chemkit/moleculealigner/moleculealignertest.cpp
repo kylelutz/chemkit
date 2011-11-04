@@ -35,6 +35,7 @@
 
 #include "moleculealignertest.h"
 
+#include <chemkit/atom.h>
 #include <chemkit/polymer.h>
 #include <chemkit/molecule.h>
 #include <chemkit/polymerfile.h>

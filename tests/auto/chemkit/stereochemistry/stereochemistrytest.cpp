@@ -35,6 +35,8 @@
 
 #include "stereochemistrytest.h"
 
+#include <chemkit/atom.h>
+#include <chemkit/bond.h>
 #include <chemkit/molecule.h>
 #include <chemkit/stereochemistry.h>
 

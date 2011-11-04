@@ -40,6 +40,9 @@
 
 #include "ringperceptiontest.h"
 
+#include <chemkit/atom.h>
+#include <chemkit/bond.h>
+#include <chemkit/ring.h>
 #include <chemkit/chemkit.h>
 #include <chemkit/molecule.h>
 

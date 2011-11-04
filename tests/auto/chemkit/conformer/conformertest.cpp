@@ -35,6 +35,7 @@
 
 #include "conformertest.h"
 
+#include <chemkit/atom.h>
 #include <chemkit/molecule.h>
 #include <chemkit/conformer.h>
 

@@ -38,6 +38,7 @@
 #include <QtXml>
 #include <QtCore>
 
+#include <chemkit/atom.h>
 #include <chemkit/polymer.h>
 #include <chemkit/aminoacid.h>
 #include <chemkit/polymerfile.h>

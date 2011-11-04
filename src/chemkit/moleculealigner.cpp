@@ -35,10 +35,12 @@
 
 #include "moleculealigner.h"
 
+#include "atom.h"
 #include "foreach.h"
 #include "vector3.h"
 #include "geometry.h"
 #include "molecule.h"
+#include "conformer.h"
 #include "coordinates.h"
 
 namespace chemkit {

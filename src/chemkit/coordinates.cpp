@@ -37,9 +37,11 @@
 
 #include <cassert>
 
+#include "atom.h"
 #include "vector3.h"
 #include "geometry.h"
 #include "molecule.h"
+#include "conformer.h"
 
 namespace chemkit {
 

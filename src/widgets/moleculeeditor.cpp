@@ -39,6 +39,9 @@
 #include <QVector>
 #include <QUndoCommand>
 
+#include <chemkit/atom.h>
+#include <chemkit/bond.h>
+
 namespace chemkit {
 
 namespace {

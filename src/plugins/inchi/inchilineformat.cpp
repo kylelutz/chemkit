@@ -40,6 +40,9 @@
 
 #include "../../3rdparty/inchi/inchi_api.h"
 
+#include <chemkit/atom.h>
+#include <chemkit/bond.h>
+
 InchiLineFormat::InchiLineFormat()
     : chemkit::LineFormat("inchi")
 {

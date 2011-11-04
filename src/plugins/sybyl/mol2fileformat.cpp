@@ -35,6 +35,8 @@
 
 #include "mol2fileformat.h"
 
+#include <chemkit/atom.h>
+#include <chemkit/bond.h>
 #include <chemkit/moleculefile.h>
 
 Mol2FileFormat::Mol2FileFormat()

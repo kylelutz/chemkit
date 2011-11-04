@@ -35,8 +35,11 @@
 
 #include "moleculetest.h"
 
+#include <chemkit/atom.h>
+#include <chemkit/bond.h>
 #include <chemkit/chemkit.h>
 #include <chemkit/molecule.h>
+#include <chemkit/conformer.h>
 #include <chemkit/lineformat.h>
 
 void MoleculeTest::name()

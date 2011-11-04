@@ -35,6 +35,8 @@
 
 #include "bondtest.h"
 
+#include <chemkit/atom.h>
+#include <chemkit/bond.h>
 #include <chemkit/chemkit.h>
 #include <chemkit/molecule.h>
 #include <chemkit/lineformat.h>

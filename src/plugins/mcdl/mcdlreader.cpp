@@ -35,6 +35,8 @@
 
 #include "mcdlreader.h"
 
+#include <chemkit/atom.h>
+
 // === McdlReader ========================================================== //
 // --- Construction and Destruction ---------------------------------------- //
 McdlReader::McdlReader()

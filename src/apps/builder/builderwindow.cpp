@@ -38,6 +38,7 @@
 
 #include <algorithm>
 
+#include <chemkit/atom.h>
 #include <chemkit/bondpredictor.h>
 #include <chemkit/graphicscamera.h>
 

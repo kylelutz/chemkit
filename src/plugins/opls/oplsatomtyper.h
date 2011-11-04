@@ -39,6 +39,7 @@
 #include <vector>
 
 #include <chemkit/atom.h>
+#include <chemkit/bond.h>
 #include <chemkit/molecule.h>
 #include <chemkit/atomtyper.h>
 

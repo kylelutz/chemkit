@@ -37,6 +37,8 @@
 
 #include <algorithm>
 
+#include <chemkit/atom.h>
+#include <chemkit/ring.h>
 #include <chemkit/molecule.h>
 #include <chemkit/lineformat.h>
 #include <chemkit/moleculefile.h>

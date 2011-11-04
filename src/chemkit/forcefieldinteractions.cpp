@@ -35,6 +35,8 @@
 
 #include "forcefieldinteractions.h"
 
+#include "atom.h"
+#include "bond.h"
 #include "foreach.h"
 #include "molecule.h"
 #include "forcefield.h"

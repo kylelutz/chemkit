@@ -35,6 +35,8 @@
 
 #include "moleculeeditortest.h"
 
+#include <chemkit/atom.h>
+#include <chemkit/bond.h>
 #include <chemkit/moleculeeditor.h>
 
 void MoleculeEditorTest::basic()

@@ -42,18 +42,19 @@
 #include <string>
 #include <vector>
 
-#include "atom.h"
-#include "bond.h"
-#include "ring.h"
 #include "moiety.h"
 #include "point3.h"
+#include "element.h"
 #include "variant.h"
 #include "vector3.h"
-#include "conformer.h"
 
 namespace chemkit {
 
+class Atom;
+class Bond;
+class Ring;
 class Fragment;
+class Conformer;
 class Coordinates;
 class MoleculePrivate;
 class Stereochemistry;
@@ -115,8 +116,8 @@ public:
     int atomCount(const Element &element) const;
     bool contains(const Atom *atom) const;
     bool contains(const Element &element) const;
-    Bond* addBond(Atom *a, Atom *b, int order = Bond::Single);
-    Bond* addBond(int a, int b, int order = Bond::Single);
+    Bond* addBond(Atom *a, Atom *b, int order = 1);
+    Bond* addBond(int a, int b, int order = 1);
     void removeBond(Bond *bond);
     void removeBond(Atom *a, Atom *b);
     void removeBond(int a, int b);

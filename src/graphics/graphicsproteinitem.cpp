@@ -38,6 +38,7 @@
 #include "graphicsscene.h"
 #include "graphicspainter.h"
 
+#include <chemkit/atom.h>
 #include <chemkit/polymer.h>
 #include <chemkit/residue.h>
 #include <chemkit/aminoacid.h>

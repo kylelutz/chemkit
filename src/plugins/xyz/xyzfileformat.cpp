@@ -38,6 +38,7 @@
 #include <iomanip>
 #include <iostream>
 
+#include <chemkit/atom.h>
 #include <chemkit/element.h>
 #include <chemkit/foreach.h>
 #include <chemkit/moleculefile.h>

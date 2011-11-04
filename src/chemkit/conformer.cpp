@@ -37,6 +37,7 @@
 
 #include <map>
 
+#include "atom.h"
 #include "foreach.h"
 #include "molecule.h"
 

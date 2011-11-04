@@ -35,6 +35,7 @@
 
 #include "manipulatetool.h"
 
+#include <chemkit/atom.h>
 #include <chemkit/point3.h>
 #include <chemkit/vector3.h>
 #include <chemkit/graphicscamera.h>

@@ -39,6 +39,7 @@
 
 #include "molecularsurfacetest.h"
 
+#include <chemkit/atom.h>
 #include <chemkit/point3.h>
 #include <chemkit/polymer.h>
 #include <chemkit/vector3.h>

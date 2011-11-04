@@ -37,6 +37,7 @@
 
 #include <cassert>
 
+#include "bond.h"
 #include "foreach.h"
 #include "molecule.h"
 

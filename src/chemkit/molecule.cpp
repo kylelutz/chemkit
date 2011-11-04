@@ -52,6 +52,7 @@
 #include "vector3.h"
 #include "fragment.h"
 #include "geometry.h"
+#include "conformer.h"
 #include "constants.h"
 #include "lineformat.h"
 #include "quaternion.h"

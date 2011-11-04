@@ -37,6 +37,8 @@
 
 #include <boost/lexical_cast.hpp>
 
+#include <chemkit/atom.h>
+
 #include "mmffforcefield.h"
 #include "mmffparameters.h"
 

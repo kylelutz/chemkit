@@ -36,6 +36,7 @@
 #include "bond.h"
 
 #include "atom.h"
+#include "ring.h"
 #include "foreach.h"
 #include "geometry.h"
 #include "molecule.h"

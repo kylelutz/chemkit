@@ -35,6 +35,7 @@
 
 #include "coordinatestest.h"
 
+#include <chemkit/atom.h>
 #include <chemkit/molecule.h>
 #include <chemkit/coordinates.h>
 

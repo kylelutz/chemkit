@@ -35,6 +35,7 @@
 
 #include "bondpredictortest.h"
 
+#include <chemkit/atom.h>
 #include <chemkit/molecule.h>
 #include <chemkit/bondpredictor.h>
 

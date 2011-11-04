@@ -40,6 +40,7 @@
 
 #include <boost/algorithm/string.hpp>
 
+#include <chemkit/atom.h>
 #include <chemkit/polymer.h>
 #include <chemkit/residue.h>
 #include <chemkit/molecule.h>

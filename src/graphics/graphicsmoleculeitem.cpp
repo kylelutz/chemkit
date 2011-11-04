@@ -37,6 +37,8 @@
 
 #include "graphicsscene.h"
 
+#include <chemkit/atom.h>
+#include <chemkit/bond.h>
 #include <chemkit/molecule.h>
 
 namespace chemkit {
