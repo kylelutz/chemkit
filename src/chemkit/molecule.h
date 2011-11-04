@@ -206,6 +206,7 @@ private:
 private:
     MoleculePrivate* const d;
     std::vector<Atom *> m_atoms;
+    std::vector<Element> m_elements;
     Stereochemistry *m_stereochemistry;
 };
 

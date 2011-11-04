@@ -346,11 +346,12 @@ Atom* Molecule::addAtom(const Element &element)
         return 0;
     }
 
-    Atom *atom = new Atom(this, element);
+    Atom *atom = new Atom(this);
     atom->m_index = m_atoms.size();
     m_atoms.push_back(atom);
 
     // add atom properties
+    m_elements.push_back(element);
     d->atomBonds.push_back(std::vector<Bond *>());
     d->positions.push_back(Point3(0, 0, 0));
     d->partialCharges.push_back(0);
@@ -392,6 +393,7 @@ void Molecule::removeAtom(Atom *atom)
     m_atoms.erase(std::remove(m_atoms.begin(), m_atoms.end(), atom), m_atoms.end());
 
     // remove atom properties
+    m_elements.erase(m_elements.begin() + atom->index());
     d->isotopes.erase(atom);
     d->positions.erase(d->positions.begin() + atom->index());
     d->atomBonds.erase(d->atomBonds.begin() + atom->index());

@@ -41,12 +41,6 @@
 namespace chemkit {
 
 // --- Properties ---------------------------------------------------------- //
-/// Returns the atom's element.
-inline Element Atom::element() const
-{
-    return m_element;
-}
-
 /// Returns the molecule the atom is a part of.
 inline Molecule* Atom::molecule() const
 {
@@ -70,7 +64,7 @@ inline int Atom::index() const
 /// \endcode
 inline bool Atom::is(const Element &element) const
 {
-    return m_element == element;
+    return element == this->element();
 }
 
 } // end chemkit namespace

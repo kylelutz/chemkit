@@ -58,7 +58,7 @@ class CHEMKIT_EXPORT Atom
 public:
     // properties
     void setElement(const Element &element);
-    inline Element element() const;
+    Element element() const;
     void setAtomicNumber(int atomicNumber);
     int atomicNumber() const;
     void setIsotope(const Isotope &isotope);
@@ -243,7 +243,7 @@ public:
     };
 
 private:
-    Atom(Molecule *molecule, const Element &element);
+    Atom(Molecule *molecule);
     ~Atom();
 
     CHEMKIT_DISABLE_COPY(Atom)
@@ -252,7 +252,6 @@ private:
     friend class Molecule;
 
 private:
-    Element m_element;
     Molecule *m_molecule;
     int m_index;
 };

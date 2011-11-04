@@ -66,9 +66,8 @@ namespace chemkit {
 
 // --- Construction and Destruction ---------------------------------------- //
 /// Create a new atom object.
-Atom::Atom(Molecule *molecule, const Element &element)
-    : m_element(element),
-      m_molecule(molecule)
+Atom::Atom(Molecule *molecule)
+    : m_molecule(molecule)
 {
 }
 
@@ -84,12 +83,18 @@ void Atom::setElement(const Element &element)
     setAtomicNumber(element.atomicNumber());
 }
 
+/// Returns the atom's element.
+Element Atom::element() const
+{
+    return m_molecule->m_elements[m_index];
+}
+
 /// Sets the atomic number for the atom. This is the number of
 /// protons the atom has and identifies what element the atom is
 // (e.g. Hydrogen, Carbon, or Oxygen).
 void Atom::setAtomicNumber(int atomicNumber)
 {
-    if(atomicNumber == m_element.atomicNumber()){
+    if(atomicNumber == element().atomicNumber()){
         return;
     }
 
@@ -97,14 +102,14 @@ void Atom::setAtomicNumber(int atomicNumber)
         return;
     }
 
-    m_element.setAtomicNumber(atomicNumber);
+    m_molecule->m_elements[m_index].setAtomicNumber(atomicNumber);
     m_molecule->notifyObservers(this, Molecule::AtomAtomicNumberChanged);
 }
 
 /// Returns the atomic number of the atom.
 int Atom::atomicNumber() const
 {
-    return m_element.atomicNumber();
+    return element().atomicNumber();
 }
 
 /// Set the isotope for the atom to \p isotope.
@@ -147,7 +152,7 @@ int Atom::massNumber() const
 /// Returns the atom's expected valence.
 int Atom::expectedValence() const
 {
-    return m_element.expectedValence();
+    return element().expectedValence();
 }
 
 /// Returns the formal charge of the atom. This is equal to the
@@ -155,7 +160,7 @@ int Atom::expectedValence() const
 /// (i.e. valence() - expectedValence()).
 int Atom::formalCharge() const
 {
-    if(is(Hydrogen) || m_element.isMetal())
+    if(is(Hydrogen) || element().isMetal())
         return expectedValence() - valence();
     else
         return valence() - expectedValence();
@@ -177,39 +182,39 @@ Real Atom::partialCharge() const
 /// Returns the elemental symbol for the atom. (e.g. "H" or "Sn").
 std::string Atom::symbol() const
 {
-    return m_element.symbol();
+    return element().symbol();
 }
 
 /// Returns the elemental name of the atom. (e.g. "Hydrogen" or
 /// "Tin").
 std::string Atom::name() const
 {
-    return m_element.name();
+    return element().name();
 }
 
 /// Returns the molar mass of the atom. Mass is in g/mol.
 Real Atom::mass() const
 {
-    return m_element.mass();
+    return element().mass();
 }
 
 /// Returns the electronegativity of the atom using the Pauling
 /// scale.
 Real Atom::electronegativity() const
 {
-    return m_element.electronegativity();
+    return element().electronegativity();
 }
 
 /// Returns the covalent radius of the atom.
 Real Atom::covalentRadius() const
 {
-    return m_element.covalentRadius();
+    return element().covalentRadius();
 }
 
 /// Returns the Van der Waals radius of the atom.
 Real Atom::vanDerWaalsRadius() const
 {
-    return m_element.vanDerWaalsRadius();
+    return element().vanDerWaalsRadius();
 }
 
 /// Returns \c true if this atom is not Carbon or Hydrogen.
