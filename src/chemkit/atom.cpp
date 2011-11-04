@@ -51,7 +51,6 @@ namespace chemkit {
 class AtomPrivate
 {
 public:
-    Point3 position;
 };
 
 // === Atom ================================================================ //
@@ -78,7 +77,6 @@ Atom::Atom(Molecule *molecule, const Element &element)
       m_element(element),
       m_molecule(molecule)
 {
-    d->position = Point3(0, 0, 0);
 }
 
 /// Destroys the atom object.
@@ -497,7 +495,7 @@ bool Atom::isAromatic() const
 /// Sets the coordinates of the atom.
 void Atom::setPosition(const Point3 &position)
 {
-    d->position = position;
+    m_molecule->d->positions[m_index] = position;
     molecule()->notifyObservers(this, Molecule::AtomPositionChanged);
 }
 
@@ -511,7 +509,7 @@ void Atom::setPosition(Real x, Real y, Real z)
 /// Returns the atom's coordinates.
 Point3 Atom::position() const
 {
-    return d->position;
+    return m_molecule->d->positions[m_index];
 }
 
 /// Returns the atom's x coordinate. Equivalent to position().x().

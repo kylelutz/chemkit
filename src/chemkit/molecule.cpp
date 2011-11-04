@@ -352,6 +352,7 @@ Atom* Molecule::addAtom(const Element &element)
 
     // add atom properties
     d->atomBonds.push_back(std::vector<Bond *>());
+    d->positions.push_back(Point3(0, 0, 0));
     d->partialCharges.push_back(0);
 
     setFragmentsPerceived(false);
@@ -392,6 +393,7 @@ void Molecule::removeAtom(Atom *atom)
 
     // remove atom properties
     d->isotopes.erase(atom);
+    d->positions.erase(d->positions.begin() + atom->index());
     d->atomBonds.erase(d->atomBonds.begin() + atom->index());
     d->partialCharges.erase(d->partialCharges.begin() + atom->index());
 

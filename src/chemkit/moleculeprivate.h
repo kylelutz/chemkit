@@ -42,6 +42,7 @@
 #include <string>
 #include <vector>
 
+#include "point3.h"
 #include "isotope.h"
 
 namespace chemkit {
@@ -73,6 +74,7 @@ public:
     std::vector<std::pair<Atom*, Atom*> > bondAtoms;
     std::vector<std::vector<Bond *> > atomBonds;
     std::vector<unsigned char> bondOrders;
+    std::vector<Point3> positions;
 };
 
 } // end chemkit namespace
