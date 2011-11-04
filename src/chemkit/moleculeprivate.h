@@ -49,7 +49,6 @@ namespace chemkit {
 class Atom;
 class Bond;
 class Ring;
-class Residue;
 class Fragment;
 class Conformer;
 class MoleculeObserver;
@@ -71,7 +70,6 @@ class MoleculePrivate
         std::map<std::string, Variant> data;
         std::map<const Atom *, Isotope> isotopes;
         std::vector<Real> partialCharges;
-        std::vector<Residue *> atomResidues;
         std::vector<std::pair<Atom*, Atom*> > bondAtoms;
         std::vector<unsigned char> bondOrders;
 };

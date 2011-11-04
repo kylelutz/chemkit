@@ -48,7 +48,6 @@ namespace chemkit {
 class Atom;
 class Ring;
 class Element;
-class Residue;
 class Fragment;
 class Molecule;
 
@@ -74,7 +73,6 @@ class CHEMKIT_EXPORT Bond
         Vector3 dipoleMoment() const;
         inline Molecule* molecule() const;
         Fragment* fragment() const;
-        Residue* residue() const;
         inline int index() const;
 
         // structure

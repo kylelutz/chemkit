@@ -50,7 +50,6 @@ namespace chemkit {
 
 class Bond;
 class Ring;
-class Residue;
 class Fragment;
 class Molecule;
 class AtomPrivate;
@@ -81,7 +80,6 @@ class CHEMKIT_EXPORT Atom
         bool isHeteroatom() const;
         inline Molecule* molecule() const;
         Fragment* fragment() const;
-        Residue* residue() const;
         inline int index() const;
 
         // structure
@@ -251,11 +249,9 @@ class CHEMKIT_EXPORT Atom
 
         void addBond(Bond *bond);
         void removeBond(Bond *bond);
-        void setResidue(Residue *residue);
 
         CHEMKIT_DISABLE_COPY(Atom)
 
-        friend class Residue;
         friend class Fragment;
         friend class Molecule;
 

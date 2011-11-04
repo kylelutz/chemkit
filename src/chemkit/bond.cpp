@@ -151,17 +151,6 @@ Fragment* Bond::fragment() const
     return atom1()->fragment();
 }
 
-/// Returns the residue the bond is a part of. If the bond is not
-/// a part of any residue or the atoms of the bond are in different
-/// residues then \c 0 is returned.
-Residue* Bond::residue() const
-{
-    if(atom1()->residue() == atom2()->residue())
-        return atom1()->residue();
-    else
-        return 0;
-}
-
 // --- Structure ----------------------------------------------------------- //
 /// Returns \c true if the bond contains atom.
 bool Bond::contains(const Atom *atom) const

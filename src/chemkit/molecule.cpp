@@ -352,7 +352,6 @@ Atom* Molecule::addAtom(const Element &element)
 
     // add atom properties
     d->partialCharges.push_back(0);
-    d->atomResidues.push_back(0);
 
     setFragmentsPerceived(false);
     notifyObservers(atom, AtomAdded);
@@ -393,7 +392,6 @@ void Molecule::removeAtom(Atom *atom)
     // remove atom properties
     d->isotopes.erase(atom);
     d->partialCharges.erase(d->partialCharges.begin() + atom->index());
-    d->atomResidues.erase(d->atomResidues.begin() + atom->index());
 
     // subtract one from the index of all atoms after this one
     for(unsigned int i = atom->m_index; i < m_atoms.size(); i++){

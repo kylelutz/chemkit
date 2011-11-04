@@ -72,7 +72,6 @@ class CHEMKIT_EXPORT Molecule
             AtomPartialChargeChanged,
             AtomPositionChanged,
             AtomChiralityChanged,
-            AtomResidueChanged,
             BondAdded,
             BondRemoved,
             BondOrderChanged,

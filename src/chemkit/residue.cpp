@@ -116,10 +116,6 @@ void Residue::removeAtom(Atom *atom)
     std::vector<Atom *>::iterator location = std::find(d->atoms.begin(), d->atoms.end(), atom);
     if(location != d->atoms.end()){
         d->atoms.erase(location);
-
-        if(atom->residue() == this){
-            atom->setResidue(0);
-        }
     }
 }
 
@@ -162,10 +158,7 @@ int Residue::bondCount() const
 /// Returns \c true if the residue contains the atom.
 bool Residue::contains(const Atom *atom) const
 {
-    if(atom->residue() == this){
-        return true;
-    }
-    else if(std::find(d->atoms.begin(), d->atoms.end(), atom) != d->atoms.end()){
+    if(std::find(d->atoms.begin(), d->atoms.end(), atom) != d->atoms.end()){
         return true;
     }
     else{

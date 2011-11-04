@@ -235,12 +235,6 @@ Fragment* Atom::fragment() const
     return molecule()->fragment(this);
 }
 
-/// Returns the residue the atom is a part of.
-Residue* Atom::residue() const
-{
-    return m_molecule->d->atomResidues[m_index];
-}
-
 // --- Structure ----------------------------------------------------------- //
 /// Returns a list of bonds that this atom is a member of.
 std::vector<Bond *> Atom::bonds() const
@@ -607,12 +601,6 @@ void Atom::addBond(Bond *bond)
 void Atom::removeBond(Bond *bond)
 {
     d->bonds.erase(std::remove(d->bonds.begin(), d->bonds.end(), bond));
-}
-
-void Atom::setResidue(Residue *residue)
-{
-    m_molecule->d->atomResidues[m_index] = residue;
-    molecule()->notifyObservers(this, Molecule::AtomResidueChanged);
 }
 
 } // end chemkit namespace
