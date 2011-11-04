@@ -66,8 +66,9 @@ namespace chemkit {
 
 // --- Construction and Destruction ---------------------------------------- //
 /// Create a new atom object.
-Atom::Atom(Molecule *molecule)
-    : m_molecule(molecule)
+Atom::Atom(Molecule *molecule, int index)
+    : m_molecule(molecule),
+      m_index(index)
 {
 }
 

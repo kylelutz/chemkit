@@ -346,8 +346,7 @@ Atom* Molecule::addAtom(const Element &element)
         return 0;
     }
 
-    Atom *atom = new Atom(this);
-    atom->m_index = m_atoms.size();
+    Atom *atom = new Atom(this, m_atoms.size());
     m_atoms.push_back(atom);
 
     // add atom properties

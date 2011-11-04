@@ -243,7 +243,7 @@ public:
     };
 
 private:
-    Atom(Molecule *molecule);
+    Atom(Molecule *molecule, int index);
     ~Atom();
 
     CHEMKIT_DISABLE_COPY(Atom)
