@@ -47,12 +47,6 @@
 
 namespace chemkit {
 
-// === AtomPrivate ========================================================= //
-class AtomPrivate
-{
-public:
-};
-
 // === Atom ================================================================ //
 /// \class Atom atom.h chemkit/atom.h
 /// \ingroup chemkit
@@ -73,8 +67,7 @@ public:
 // --- Construction and Destruction ---------------------------------------- //
 /// Create a new atom object.
 Atom::Atom(Molecule *molecule, const Element &element)
-    : d(new AtomPrivate),
-      m_element(element),
+    : m_element(element),
       m_molecule(molecule)
 {
 }
@@ -82,7 +75,6 @@ Atom::Atom(Molecule *molecule, const Element &element)
 /// Destroys the atom object.
 Atom::~Atom()
 {
-    delete d;
 }
 
 // --- Properties ---------------------------------------------------------- //

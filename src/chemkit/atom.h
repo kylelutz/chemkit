@@ -52,7 +52,6 @@ class Bond;
 class Ring;
 class Fragment;
 class Molecule;
-class AtomPrivate;
 
 class CHEMKIT_EXPORT Atom
 {
@@ -253,7 +252,6 @@ private:
     friend class Molecule;
 
 private:
-    AtomPrivate* const d;
     Element m_element;
     Molecule *m_molecule;
     int m_index;
