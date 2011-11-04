@@ -84,12 +84,6 @@ void Atom::setElement(const Element &element)
     setAtomicNumber(element.atomicNumber());
 }
 
-/// Returns the atom's element.
-Element Atom::element() const
-{
-    return m_molecule->m_elements[m_index];
-}
-
 /// Sets the atomic number for the atom. This is the number of
 /// protons the atom has and identifies what element the atom is
 // (e.g. Hydrogen, Carbon, or Oxygen).

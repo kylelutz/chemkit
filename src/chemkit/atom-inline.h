@@ -38,9 +38,17 @@
 
 #include "atom.h"
 
+#include "molecule.h"
+
 namespace chemkit {
 
 // --- Properties ---------------------------------------------------------- //
+/// Returns the atom's element.
+inline Element Atom::element() const
+{
+    return m_molecule->m_elements[m_index];
+}
+
 /// Returns the molecule the atom is a part of.
 inline Molecule* Atom::molecule() const
 {

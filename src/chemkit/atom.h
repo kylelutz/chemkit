@@ -58,7 +58,7 @@ class CHEMKIT_EXPORT Atom
 public:
     // properties
     void setElement(const Element &element);
-    Element element() const;
+    inline Element element() const;
     void setAtomicNumber(int atomicNumber);
     int atomicNumber() const;
     void setIsotope(const Isotope &isotope);
