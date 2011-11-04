@@ -70,9 +70,9 @@ void MoleculeEditorTest::addAtom()
     chemkit::MoleculeEditor editor(&molecule);
     QVERIFY(editor.molecule() == &molecule);
 
-    chemkit::Atom *C1 = editor.addAtom(6);
-    chemkit::Atom *C2 = editor.addAtom(6);
-    chemkit::Atom *C3 = editor.addAtom(6);
+    editor.addAtom(6);
+    editor.addAtom(6);
+    editor.addAtom(6);
     QCOMPARE(molecule.formula(), std::string("C3"));
 
     editor.undo();
@@ -81,7 +81,7 @@ void MoleculeEditorTest::addAtom()
     editor.redo();
     QCOMPARE(molecule.formula(), std::string("C3"));
 
-    editor.removeAtom(C1);
+    editor.removeAtom(molecule.atom(0));
     QCOMPARE(molecule.formula(), std::string("C2"));
 
     editor.undo();
@@ -90,8 +90,8 @@ void MoleculeEditorTest::addAtom()
     editor.redo();
     QCOMPARE(molecule.formula(), std::string("C2"));
 
-    editor.removeAtom(C2);
-    editor.removeAtom(C3);
+    editor.removeAtom(molecule.atom(1));
+    editor.removeAtom(molecule.atom(0));
     QCOMPARE(molecule.formula(), std::string());
 
     editor.undo();
