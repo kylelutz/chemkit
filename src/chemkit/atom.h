@@ -247,9 +247,6 @@ private:
     Atom(Molecule *molecule, const Element &element);
     ~Atom();
 
-    void addBond(Bond *bond);
-    void removeBond(Bond *bond);
-
     CHEMKIT_DISABLE_COPY(Atom)
 
     friend class Fragment;

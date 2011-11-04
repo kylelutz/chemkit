@@ -52,7 +52,6 @@ class AtomPrivate
 {
 public:
     Point3 position;
-    std::vector<Bond *> bonds;
 };
 
 // === Atom ================================================================ //
@@ -239,14 +238,14 @@ Fragment* Atom::fragment() const
 /// Returns a list of bonds that this atom is a member of.
 std::vector<Bond *> Atom::bonds() const
 {
-    return d->bonds;
+    return m_molecule->d->atomBonds[m_index];
 }
 
 /// Returns the number of bonds that this atom is a member of.
 /// Equivalent to bonds().size().
 int Atom::bondCount() const
 {
-    return d->bonds.size();
+    return bonds().size();
 }
 
 /// Returns a list of bonds between the atom and the other atom.
@@ -274,7 +273,7 @@ int Atom::valence() const
 {
     int valence = 0;
 
-    foreach(const Bond *bond, d->bonds){
+    foreach(const Bond *bond, bonds()){
         valence += bond->order();
     }
 
@@ -284,7 +283,7 @@ int Atom::valence() const
 /// Returns the bond between the atom and the other atom.
 Bond* Atom::bondTo(const Atom *atom) const
 {
-    foreach(Bond *bond, d->bonds){
+    foreach(Bond *bond, bonds()){
         if(bond->otherAtom(this) == atom){
             return bond;
         }
@@ -305,7 +304,7 @@ std::vector<Atom *> Atom::neighbors() const
 {
     std::vector<Atom *> neighbors;
 
-    foreach(Bond *bond, d->bonds){
+    foreach(Bond *bond, bonds()){
         neighbors.push_back(bond->otherAtom(this));
     }
 
@@ -323,7 +322,7 @@ int Atom::neighborCount(const Element &element) const
 {
     int count = 0;
 
-    foreach(const Bond *bond, d->bonds){
+    foreach(const Bond *bond, bonds()){
         if(bond->otherAtom(this)->is(element)){
             count++;
         }
@@ -590,17 +589,6 @@ Stereochemistry::Type Atom::chirality() const
 bool Atom::isChiral() const
 {
     return chirality() != Stereochemistry::None;
-}
-
-// --- Internal Methods ---------------------------------------------------- //
-void Atom::addBond(Bond *bond)
-{
-    d->bonds.push_back(bond);
-}
-
-void Atom::removeBond(Bond *bond)
-{
-    d->bonds.erase(std::remove(d->bonds.begin(), d->bonds.end(), bond));
 }
 
 } // end chemkit namespace

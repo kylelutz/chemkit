@@ -71,6 +71,7 @@ public:
     std::map<const Atom *, Isotope> isotopes;
     std::vector<Real> partialCharges;
     std::vector<std::pair<Atom*, Atom*> > bondAtoms;
+    std::vector<std::vector<Bond *> > atomBonds;
     std::vector<unsigned char> bondOrders;
 };
 

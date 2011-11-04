@@ -351,6 +351,7 @@ Atom* Molecule::addAtom(const Element &element)
     m_atoms.push_back(atom);
 
     // add atom properties
+    d->atomBonds.push_back(std::vector<Bond *>());
     d->partialCharges.push_back(0);
 
     setFragmentsPerceived(false);
@@ -391,6 +392,7 @@ void Molecule::removeAtom(Atom *atom)
 
     // remove atom properties
     d->isotopes.erase(atom);
+    d->atomBonds.erase(d->atomBonds.begin() + atom->index());
     d->partialCharges.erase(d->partialCharges.begin() + atom->index());
 
     // subtract one from the index of all atoms after this one
@@ -458,8 +460,8 @@ Bond* Molecule::addBond(Atom *a, Atom *b, int order)
     }
 
     Bond *bond = new Bond(this, d->bonds.size());
-    a->addBond(bond);
-    b->addBond(bond);
+    d->atomBonds[a->index()].push_back(bond);
+    d->atomBonds[b->index()].push_back(bond);
     d->bonds.push_back(bond);
 
     // add bond properties
@@ -487,8 +489,12 @@ void Molecule::removeBond(Bond *bond)
 
     d->bonds.erase(d->bonds.begin() + bond->index());
 
-    bond->atom1()->removeBond(bond);
-    bond->atom2()->removeBond(bond);
+    // remove bond from atom bond vectors
+    std::vector<Bond *> &bondsA = d->atomBonds[bond->atom1()->index()];
+    std::vector<Bond *> &bondsB = d->atomBonds[bond->atom2()->index()];
+
+    bondsA.erase(std::find(bondsA.begin(), bondsA.end(), bond));
+    bondsB.erase(std::find(bondsB.begin(), bondsB.end(), bond));
 
     // remove bond properties
     d->bondAtoms.erase(d->bondAtoms.begin() + bond->index());
