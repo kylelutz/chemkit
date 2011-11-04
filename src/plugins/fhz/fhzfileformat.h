@@ -42,12 +42,12 @@
 
 class FhzFileFormat : public chemkit::MoleculeFileFormat
 {
-    public:
-        FhzFileFormat();
-        ~FhzFileFormat();
+public:
+    FhzFileFormat();
+    ~FhzFileFormat();
 
-        bool read(std::istream &input, chemkit::MoleculeFile *file);
-        bool read(QIODevice *iodev, chemkit::MoleculeFile *file);
+    bool read(std::istream &input, chemkit::MoleculeFile *file);
+    bool read(QIODevice *iodev, chemkit::MoleculeFile *file);
 };
 
 #endif // FHZFILEFORMAT_H

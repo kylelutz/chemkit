@@ -43,9 +43,9 @@ namespace chemkit {
 // === MoleculeFilePrivate ================================================= //
 class MoleculeFilePrivate
 {
-    public:
-        std::vector<Molecule *> molecules;
-        std::map<std::string, Variant> fileData;
+public:
+    std::vector<Molecule *> molecules;
+    std::map<std::string, Variant> fileData;
 };
 
 // === MoleculeFile ======================================================== //

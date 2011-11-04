@@ -49,32 +49,32 @@ class TrajectoryFramePrivate;
 
 class CHEMKIT_EXPORT TrajectoryFrame
 {
-    public:
-        // properties
-        int size() const;
-        bool isEmpty() const;
-        int index() const;
-        Trajectory* trajectory() const;
+public:
+    // properties
+    int size() const;
+    bool isEmpty() const;
+    int index() const;
+    Trajectory* trajectory() const;
 
-        // coordinates
-        void setCoordinates(const Coordinates *coordinates);
-        const Coordinates* coordinates() const;
-        void setPosition(int index, const Point3 &position);
-        Point3 position(int index) const;
+    // coordinates
+    void setCoordinates(const Coordinates *coordinates);
+    const Coordinates* coordinates() const;
+    void setPosition(int index, const Point3 &position);
+    Point3 position(int index) const;
 
-        // unit cell
-        void setUnitCell(UnitCell *cell);
-        UnitCell* unitCell() const;
+    // unit cell
+    void setUnitCell(UnitCell *cell);
+    UnitCell* unitCell() const;
 
-    private:
-        // construction and destruction
-        TrajectoryFrame(Trajectory *trajectory);
-        ~TrajectoryFrame();
+private:
+    // construction and destruction
+    TrajectoryFrame(Trajectory *trajectory);
+    ~TrajectoryFrame();
 
-        friend class Trajectory;
+    friend class Trajectory;
 
-    private:
-        TrajectoryFramePrivate* const d;
+private:
+    TrajectoryFramePrivate* const d;
 };
 
 } // end chemkit namespace

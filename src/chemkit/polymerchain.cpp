@@ -46,10 +46,10 @@ namespace chemkit {
 // === PolymerChainPrivate ================================================= //
 class PolymerChainPrivate
 {
-    public:
-        Polymer *polymer;
-        std::string name;
-        std::vector<Residue *> residues;
+public:
+    Polymer *polymer;
+    std::string name;
+    std::vector<Residue *> residues;
 };
 
 // === PolymerChain ======================================================== //

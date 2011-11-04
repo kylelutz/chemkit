@@ -50,9 +50,9 @@ namespace chemkit {
 // === PubChemPrivate ====================================================== //
 class PubChemPrivate
 {
-    public:
-        QUrl url;
-        QString errorString;
+public:
+    QUrl url;
+    QString errorString;
 };
 
 // === PubChem ============================================================= //

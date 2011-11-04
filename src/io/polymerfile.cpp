@@ -43,8 +43,8 @@ namespace chemkit {
 // === PolymerFilePrivate ================================================== //
 class PolymerFilePrivate
 {
-    public:
-        std::vector<Polymer *> polymers;
+public:
+    std::vector<Polymer *> polymers;
 };
 
 // === PolymerFile ========================================================= //

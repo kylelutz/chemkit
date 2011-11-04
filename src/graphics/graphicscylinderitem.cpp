@@ -42,11 +42,11 @@ namespace chemkit {
 // === GraphicsCylinderItemPrivate ========================================= //
 class GraphicsCylinderItemPrivate
 {
-    public:
-        Point3f top;
-        Point3f bottom;
-        float radius;
-        QColor color;
+public:
+    Point3f top;
+    Point3f bottom;
+    float radius;
+    QColor color;
 };
 
 // === GraphicsCylinderItem ================================================ //

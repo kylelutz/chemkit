@@ -40,17 +40,17 @@
 
 class SmilesLineFormat : public chemkit::LineFormat
 {
-    public:
-        // construction and destruction
-        SmilesLineFormat();
+public:
+    // construction and destruction
+    SmilesLineFormat();
 
-        // options
-        virtual chemkit::Variant defaultOption(const std::string &name) const;
+    // options
+    virtual chemkit::Variant defaultOption(const std::string &name) const;
 
-        // input and output
-        bool read(const std::string &formula, chemkit::Molecule *molecule);
-        bool read(const char *formula, chemkit::Molecule *molecule);
-        std::string write(const chemkit::Molecule *molecule);
+    // input and output
+    bool read(const std::string &formula, chemkit::Molecule *molecule);
+    bool read(const char *formula, chemkit::Molecule *molecule);
+    std::string write(const chemkit::Molecule *molecule);
 };
 
 #endif // SMILESLINEFORMAT_H

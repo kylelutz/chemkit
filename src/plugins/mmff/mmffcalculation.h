@@ -43,82 +43,82 @@ class MmffParameters;
 
 class MmffCalculation : public chemkit::ForceFieldCalculation
 {
-    public:
-        const MmffAtom* atom(int index) const;
-        virtual bool setup(const MmffParameters *parameters) = 0;
+public:
+    const MmffAtom* atom(int index) const;
+    virtual bool setup(const MmffParameters *parameters) = 0;
 
-    protected:
-        MmffCalculation(int type, int atomCount, int parameterCount);
+protected:
+    MmffCalculation(int type, int atomCount, int parameterCount);
 };
 
 class MmffBondStrechCalculation : public MmffCalculation
 {
-    public:
-        MmffBondStrechCalculation(const MmffAtom *a, const MmffAtom *b);
+public:
+    MmffBondStrechCalculation(const MmffAtom *a, const MmffAtom *b);
 
-        bool setup(const MmffParameters *parameters);
-        chemkit::Real energy() const;
-        std::vector<chemkit::Vector3> gradient() const;
+    bool setup(const MmffParameters *parameters);
+    chemkit::Real energy() const;
+    std::vector<chemkit::Vector3> gradient() const;
 };
 
 class MmffAngleBendCalculation : public MmffCalculation
 {
-    public:
-        MmffAngleBendCalculation(const MmffAtom *a, const MmffAtom *b, const MmffAtom *c);
+public:
+    MmffAngleBendCalculation(const MmffAtom *a, const MmffAtom *b, const MmffAtom *c);
 
-        bool setup(const MmffParameters *parameters);
-        chemkit::Real energy() const;
-        std::vector<chemkit::Vector3> gradient() const;
+    bool setup(const MmffParameters *parameters);
+    chemkit::Real energy() const;
+    std::vector<chemkit::Vector3> gradient() const;
 };
 
 class MmffStrechBendCalculation : public MmffCalculation
 {
-    public:
-        MmffStrechBendCalculation(const MmffAtom *a, const MmffAtom *b, const MmffAtom *c);
+public:
+    MmffStrechBendCalculation(const MmffAtom *a, const MmffAtom *b, const MmffAtom *c);
 
-        bool setup(const MmffParameters *parameters);
-        chemkit::Real energy() const;
-        std::vector<chemkit::Vector3> gradient() const;
+    bool setup(const MmffParameters *parameters);
+    chemkit::Real energy() const;
+    std::vector<chemkit::Vector3> gradient() const;
 };
 
 class MmffOutOfPlaneBendingCalculation : public MmffCalculation
 {
-    public:
-        MmffOutOfPlaneBendingCalculation(const MmffAtom *a, const MmffAtom *b, const MmffAtom *c, const MmffAtom *d);
+public:
+    MmffOutOfPlaneBendingCalculation(const MmffAtom *a, const MmffAtom *b, const MmffAtom *c, const MmffAtom *d);
 
-        bool setup(const MmffParameters *parameters);
-        chemkit::Real energy() const;
-        std::vector<chemkit::Vector3> gradient() const;
+    bool setup(const MmffParameters *parameters);
+    chemkit::Real energy() const;
+    std::vector<chemkit::Vector3> gradient() const;
 };
 
 class MmffTorsionCalculation : public MmffCalculation
 {
-    public:
-        MmffTorsionCalculation(const MmffAtom *a, const MmffAtom *b, const MmffAtom *c, const MmffAtom *d);
+public:
+    MmffTorsionCalculation(const MmffAtom *a, const MmffAtom *b, const MmffAtom *c, const MmffAtom *d);
 
-        bool setup(const MmffParameters *parameters);
-        chemkit::Real energy() const;
-        std::vector<chemkit::Vector3> gradient() const;
+    bool setup(const MmffParameters *parameters);
+    chemkit::Real energy() const;
+    std::vector<chemkit::Vector3> gradient() const;
 };
 
 class MmffVanDerWaalsCalculation : public MmffCalculation
 {
-    public:
-        MmffVanDerWaalsCalculation(const MmffAtom *a, const MmffAtom *b);
+public:
+    MmffVanDerWaalsCalculation(const MmffAtom *a, const MmffAtom *b);
 
-        bool setup(const MmffParameters *parameters);
-        chemkit::Real energy() const;
-        std::vector<chemkit::Vector3> gradient() const;
+    bool setup(const MmffParameters *parameters);
+    chemkit::Real energy() const;
+    std::vector<chemkit::Vector3> gradient() const;
 };
 
 class MmffElectrostaticCalculation : public MmffCalculation
 {
-    public:
-        MmffElectrostaticCalculation(const MmffAtom *a, const MmffAtom *b);
+public:
+    MmffElectrostaticCalculation(const MmffAtom *a, const MmffAtom *b);
 
-        bool setup(const MmffParameters *parameters);
-        chemkit::Real energy() const;
-        std::vector<chemkit::Vector3> gradient() const;
+    bool setup(const MmffParameters *parameters);
+    chemkit::Real energy() const;
+    std::vector<chemkit::Vector3> gradient() const;
 };
 
 #endif // MMFFCALCULATION_H

@@ -48,11 +48,11 @@ namespace chemkit {
 
 class GraphicsAtomItemPrivate
 {
-    public:
-        const Atom *atom;
-        GraphicsSphere sphere;
-        QColor color;
-        GraphicsVertexBuffer *vertexBuffer;
+public:
+    const Atom *atom;
+    GraphicsSphere sphere;
+    QColor color;
+    GraphicsVertexBuffer *vertexBuffer;
 };
 
 // === GraphicsAtomItem ==================================================== //

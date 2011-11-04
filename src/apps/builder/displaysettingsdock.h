@@ -56,24 +56,24 @@ class DisplaySettingsDock : public QDockWidget
 {
     Q_OBJECT
 
-    public:
-        DisplaySettingsDock(BuilderWindow *builder);
-        ~DisplaySettingsDock();
+public:
+    DisplaySettingsDock(BuilderWindow *builder);
+    ~DisplaySettingsDock();
 
-        void setShowHydrogens(bool showHydrogens);
+    void setShowHydrogens(bool showHydrogens);
 
-    private slots:
-        void moleculeDisplayTypeChanged(int index);
-        void showHydrogensCheckClicked(bool checked);
-        void showBondOrderCheckClicked(bool checked);
-        void moleculeChanged(chemkit::Molecule *molecule);
+private slots:
+    void moleculeDisplayTypeChanged(int index);
+    void showHydrogensCheckClicked(bool checked);
+    void showBondOrderCheckClicked(bool checked);
+    void moleculeChanged(chemkit::Molecule *molecule);
 
-    private:
-        Ui::DisplaySettingsDock *ui;
-        BuilderWindow *m_builder;
-        chemkit::MoleculeWatcher *m_watcher;
-        chemkit::GraphicsMoleculeItem *m_moleculeItem;
-        bool m_showHydrogens;
+private:
+    Ui::DisplaySettingsDock *ui;
+    BuilderWindow *m_builder;
+    chemkit::MoleculeWatcher *m_watcher;
+    chemkit::GraphicsMoleculeItem *m_moleculeItem;
+    bool m_showHydrogens;
 };
 
 #endif // DISPLAYSETTINGSDOCK_H

@@ -55,23 +55,23 @@ class MoleculeObserver;
 
 class MoleculePrivate
 {
-    public:
-        MoleculePrivate();
+public:
+    MoleculePrivate();
 
-        std::string name;
-        std::vector<Bond *> bonds;
-        std::vector<Conformer *> conformers;
-        Conformer *conformer;
-        bool ringsPerceived;
-        std::vector<Ring *> rings;
-        bool fragmentsPerceived;
-        std::vector<Fragment *> fragments;
-        std::vector<MoleculeObserver *> observers;
-        std::map<std::string, Variant> data;
-        std::map<const Atom *, Isotope> isotopes;
-        std::vector<Real> partialCharges;
-        std::vector<std::pair<Atom*, Atom*> > bondAtoms;
-        std::vector<unsigned char> bondOrders;
+    std::string name;
+    std::vector<Bond *> bonds;
+    std::vector<Conformer *> conformers;
+    Conformer *conformer;
+    bool ringsPerceived;
+    std::vector<Ring *> rings;
+    bool fragmentsPerceived;
+    std::vector<Fragment *> fragments;
+    std::vector<MoleculeObserver *> observers;
+    std::map<std::string, Variant> data;
+    std::map<const Atom *, Isotope> isotopes;
+    std::vector<Real> partialCharges;
+    std::vector<std::pair<Atom*, Atom*> > bondAtoms;
+    std::vector<unsigned char> bondOrders;
 };
 
 } // end chemkit namespace

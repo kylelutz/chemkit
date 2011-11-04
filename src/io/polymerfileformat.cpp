@@ -44,9 +44,9 @@ namespace chemkit {
 // === PolymerFileFormatPrivate ============================================ //
 class PolymerFileFormatPrivate
 {
-    public:
-        std::string name;
-        std::string errorString;
+public:
+    std::string name;
+    std::string errorString;
 };
 
 // === PolymerFileFormat =================================================== //

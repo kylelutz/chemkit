@@ -48,28 +48,28 @@ class CHEMKIT_WIDGETS_EXPORT MoleculeWatcher : public QObject, public MoleculeOb
 {
     Q_OBJECT
 
-    public:
-        // construction and destruction
-        MoleculeWatcher(const Molecule *molecule = 0);
-        ~MoleculeWatcher();
+public:
+    // construction and destruction
+    MoleculeWatcher(const Molecule *molecule = 0);
+    ~MoleculeWatcher();
 
-    Q_SIGNALS:
-        void atomAdded(const chemkit::Atom *atom);
-        void atomRemoved(const chemkit::Atom *atom);
-        void atomAtomicNumberChanged(const chemkit::Atom *atom);
-        void atomPositionChanged(const chemkit::Atom *atom);
-        void bondAdded(const chemkit::Bond *bond);
-        void bondRemoved(const chemkit::Bond *bond);
-        void bondOrderChanged(const chemkit::Bond *bond);
-        void conformerAdded(const chemkit::Conformer *conformer);
-        void conformerRemoved(const chemkit::Conformer *conformer);
-        void nameChanged(const chemkit::Molecule *molecule);
+Q_SIGNALS:
+    void atomAdded(const chemkit::Atom *atom);
+    void atomRemoved(const chemkit::Atom *atom);
+    void atomAtomicNumberChanged(const chemkit::Atom *atom);
+    void atomPositionChanged(const chemkit::Atom *atom);
+    void bondAdded(const chemkit::Bond *bond);
+    void bondRemoved(const chemkit::Bond *bond);
+    void bondOrderChanged(const chemkit::Bond *bond);
+    void conformerAdded(const chemkit::Conformer *conformer);
+    void conformerRemoved(const chemkit::Conformer *conformer);
+    void nameChanged(const chemkit::Molecule *molecule);
 
-    protected:
-        virtual void atomChanged(const Atom *atom, Molecule::ChangeType changeType);
-        virtual void bondChanged(const Bond *bond, Molecule::ChangeType changeType);
-        virtual void conformerChanged(const Conformer *conformer, Molecule::ChangeType changeType);
-        virtual void moleculeChanged(const Molecule *molecule, Molecule::ChangeType changeType);
+protected:
+    virtual void atomChanged(const Atom *atom, Molecule::ChangeType changeType);
+    virtual void bondChanged(const Bond *bond, Molecule::ChangeType changeType);
+    virtual void conformerChanged(const Conformer *conformer, Molecule::ChangeType changeType);
+    virtual void moleculeChanged(const Molecule *molecule, Molecule::ChangeType changeType);
 };
 
 } // end chemkit namespace

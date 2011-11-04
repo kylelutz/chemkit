@@ -46,19 +46,19 @@ class UnitCellPrivate;
 
 class CHEMKIT_EXPORT UnitCell
 {
-    public:
-        // construction and destruction
-        UnitCell();
-        UnitCell(const Vector3 &x, const Vector3 &y, const Vector3 &z);
-        ~UnitCell();
+public:
+    // construction and destruction
+    UnitCell();
+    UnitCell(const Vector3 &x, const Vector3 &y, const Vector3 &z);
+    ~UnitCell();
 
-        // properties
-        const Vector3& x() const;
-        const Vector3& y() const;
-        const Vector3& z() const;
+    // properties
+    const Vector3& x() const;
+    const Vector3& y() const;
+    const Vector3& z() const;
 
-    private:
-        UnitCellPrivate* const d;
+private:
+    UnitCellPrivate* const d;
 };
 
 } // end chemkit namespace

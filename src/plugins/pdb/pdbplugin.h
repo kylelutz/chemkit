@@ -42,12 +42,12 @@
 
 class PdbPlugin : public chemkit::Plugin
 {
-    public:
-        PdbPlugin();
-        ~PdbPlugin();
+public:
+    PdbPlugin();
+    ~PdbPlugin();
 
-        static chemkit::PolymerFileFormat* createPdbFormat();
-        static chemkit::MoleculeFileFormat* createPdbMoleculeFormat();
+    static chemkit::PolymerFileFormat* createPdbFormat();
+    static chemkit::MoleculeFileFormat* createPdbMoleculeFormat();
 };
 
 #endif // PDBPLUGIN_H

@@ -47,68 +47,68 @@ class AminoAcidPrivate;
 
 class CHEMKIT_EXPORT AminoAcid : public Residue
 {
-    public:
-        enum Conformation {
-            Coil,
-            AlphaHelix,
-            BetaSheet
-        };
+public:
+    enum Conformation {
+        Coil,
+        AlphaHelix,
+        BetaSheet
+    };
 
-        enum AminoAcidType {
-            Alanine,
-            Arganine,
-            Asparagine,
-            AsparticAcid,
-            Aspartate = AsparticAcid,
-            Cystenine,
-            Glutamine,
-            GlutamicAcid,
-            Glutamate = GlutamicAcid,
-            Glycine,
-            Histadine,
-            Isoleucine,
-            Leucine,
-            Lysine,
-            Methionine,
-            Phenylalanine,
-            Proline,
-            Serine,
-            Threonine,
-            Tryptophan,
-            Tyrosine,
-            Valine,
-            UnspecifiedType
-        };
+    enum AminoAcidType {
+        Alanine,
+        Arganine,
+        Asparagine,
+        AsparticAcid,
+        Aspartate = AsparticAcid,
+        Cystenine,
+        Glutamine,
+        GlutamicAcid,
+        Glutamate = GlutamicAcid,
+        Glycine,
+        Histadine,
+        Isoleucine,
+        Leucine,
+        Lysine,
+        Methionine,
+        Phenylalanine,
+        Proline,
+        Serine,
+        Threonine,
+        Tryptophan,
+        Tyrosine,
+        Valine,
+        UnspecifiedType
+    };
 
-        // construction and destruction
-        AminoAcid(Molecule *molecule);
-        ~AminoAcid();
+    // construction and destruction
+    AminoAcid(Molecule *molecule);
+    ~AminoAcid();
 
-        // properties
-        void setType(AminoAcidType type);
-        void setType(const std::string &letterOrSymbol);
-        AminoAcidType type() const;
-        std::string name() const;
-        std::string symbol() const;
-        char letter() const;
-        void setConformation(Conformation conformation);
-        Conformation conformation() const;
+    // properties
+    void setType(AminoAcidType type);
+    void setType(const std::string &letterOrSymbol);
+    AminoAcidType type() const;
+    std::string name() const;
+    std::string symbol() const;
+    char letter() const;
+    void setConformation(Conformation conformation);
+    Conformation conformation() const;
 
-        // structure
-        void setAlphaCarbon(Atom *atom);
-        Atom* alphaCarbon() const;
-        void setCarbonylCarbon(Atom *atom);
-        Atom* carbonylCarbon() const;
-        void setCarbonylOxygen(Atom *atom);
-        Atom* carbonylOxygen() const;
-        void setAminoNitrogen(Atom *atom);
-        Atom* aminoNitrogen() const;
+    // structure
+    void setAlphaCarbon(Atom *atom);
+    Atom* alphaCarbon() const;
+    void setCarbonylCarbon(Atom *atom);
+    Atom* carbonylCarbon() const;
+    void setCarbonylOxygen(Atom *atom);
+    Atom* carbonylOxygen() const;
+    void setAminoNitrogen(Atom *atom);
+    Atom* aminoNitrogen() const;
 
-        // geometry
-        Vector3 peptidePlaneNormal() const;
+    // geometry
+    Vector3 peptidePlaneNormal() const;
 
-    private:
-        AminoAcidPrivate* const d;
+private:
+    AminoAcidPrivate* const d;
 };
 
 } // end chemkit namespace

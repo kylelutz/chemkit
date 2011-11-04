@@ -48,54 +48,54 @@ class GraphicsCameraPrivate;
 
 class CHEMKIT_GRAPHICS_EXPORT GraphicsCamera
 {
-    public:
-        // construction and destruction
-        GraphicsCamera();
-        GraphicsCamera(const Point3f &position);
-        GraphicsCamera(float x, float y, float z);
-        ~GraphicsCamera();
+public:
+    // construction and destruction
+    GraphicsCamera();
+    GraphicsCamera(const Point3f &position);
+    GraphicsCamera(float x, float y, float z);
+    ~GraphicsCamera();
 
-        // properties
-        GraphicsView* view() const;
+    // properties
+    GraphicsView* view() const;
 
-        // position
-        void setPosition(const Point3f &position);
-        void setPosition(float x, float y, float z);
-        Point3f position() const;
-        float x() const;
-        float y() const;
-        float z() const;
-        void moveTo(const Point3f &position);
-        void moveTo(float x, float y, float z);
-        void moveBy(const Vector3f &vector);
-        void moveBy(float dx, float dy, float dz);
-        void moveBy(float distance, const Vector3f &direction);
-        void moveFoward(float distance);
-        void moveBackward(float distance);
-        void rotate(const Vector3f &axis, float angle, bool rotateDirection = true);
-        void orbit(float dx, float dy, bool rotateDirection = true);
-        void orbit(const Point3f &point, float dx, float dy, bool rotateDirection = true);
+    // position
+    void setPosition(const Point3f &position);
+    void setPosition(float x, float y, float z);
+    Point3f position() const;
+    float x() const;
+    float y() const;
+    float z() const;
+    void moveTo(const Point3f &position);
+    void moveTo(float x, float y, float z);
+    void moveBy(const Vector3f &vector);
+    void moveBy(float dx, float dy, float dz);
+    void moveBy(float distance, const Vector3f &direction);
+    void moveFoward(float distance);
+    void moveBackward(float distance);
+    void rotate(const Vector3f &axis, float angle, bool rotateDirection = true);
+    void orbit(float dx, float dy, bool rotateDirection = true);
+    void orbit(const Point3f &point, float dx, float dy, bool rotateDirection = true);
 
-        // orientation
-        void setDirection(const Vector3f &direction);
-        Vector3f direction() const;
-        void setFocus(const Point3f &point);
-        Point3f focus() const;
-        void lookAt(const Point3f &point);
-        void setUpVector(const Vector3f &upVector);
-        Vector3f upVector() const;
-        void tilt(float angle);
+    // orientation
+    void setDirection(const Vector3f &direction);
+    Vector3f direction() const;
+    void setFocus(const Point3f &point);
+    Point3f focus() const;
+    void lookAt(const Point3f &point);
+    void setUpVector(const Vector3f &upVector);
+    Vector3f upVector() const;
+    void tilt(float angle);
 
-    private:
-        // internal methods
-        void setView(GraphicsView *view);
-        void setChanged(bool changed);
-        bool changed() const;
+private:
+    // internal methods
+    void setView(GraphicsView *view);
+    void setChanged(bool changed);
+    bool changed() const;
 
-        friend class GraphicsView;
+    friend class GraphicsView;
 
-    private:
-        GraphicsCameraPrivate* const d;
+private:
+    GraphicsCameraPrivate* const d;
 };
 
 } // end chemkit namespace

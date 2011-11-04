@@ -42,8 +42,8 @@ namespace chemkit {
 // === GraphicsOverlayPrivate ============================================== //
 class GraphicsOverlayPrivate
 {
-    public:
-        QHash<QGraphicsItem *, Point3f> bindings;
+public:
+    QHash<QGraphicsItem *, Point3f> bindings;
 };
 
 // === GraphicsOverlay ===================================================== //

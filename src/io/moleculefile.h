@@ -51,32 +51,32 @@ class MoleculeFilePrivate;
 
 class CHEMKIT_IO_EXPORT MoleculeFile : public GenericFile<MoleculeFile, MoleculeFileFormat>
 {
-    public:
-        // construction and destruction
-        MoleculeFile();
-        MoleculeFile(const std::string &fileName);
-        ~MoleculeFile();
+public:
+    // construction and destruction
+    MoleculeFile();
+    MoleculeFile(const std::string &fileName);
+    ~MoleculeFile();
 
-        // properties
-        int size() const;
-        bool isEmpty() const;
+    // properties
+    int size() const;
+    bool isEmpty() const;
 
-        // file contents
-        void addMolecule(Molecule *molecule);
-        bool removeMolecule(Molecule *molecule);
-        bool deleteMolecule(Molecule *molecule);
-        std::vector<Molecule *> molecules() const;
-        int moleculeCount() const;
-        Molecule* molecule(int index = 0) const;
-        bool contains(const Molecule *molecule) const;
-        void clear();
+    // file contents
+    void addMolecule(Molecule *molecule);
+    bool removeMolecule(Molecule *molecule);
+    bool deleteMolecule(Molecule *molecule);
+    std::vector<Molecule *> molecules() const;
+    int moleculeCount() const;
+    Molecule* molecule(int index = 0) const;
+    bool contains(const Molecule *molecule) const;
+    void clear();
 
-        // static methods
-        static Molecule* quickRead(const std::string &fileName);
-        static void quickWrite(const Molecule *molecule, const std::string &fileName);
+    // static methods
+    static Molecule* quickRead(const std::string &fileName);
+    static void quickWrite(const Molecule *molecule, const std::string &fileName);
 
-    private:
-        MoleculeFilePrivate* const d;
+private:
+    MoleculeFilePrivate* const d;
 };
 
 } // end chemkit namespace

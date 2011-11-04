@@ -45,9 +45,9 @@ namespace chemkit {
 // === ConformerPrivate ==================================================== //
 class ConformerPrivate
 {
-    public:
-        const Molecule *molecule;
-        std::map<const Atom *, Point3> coordinates;
+public:
+    const Molecule *molecule;
+    std::map<const Atom *, Point3> coordinates;
 };
 
 // === Conformer =========================================================== //

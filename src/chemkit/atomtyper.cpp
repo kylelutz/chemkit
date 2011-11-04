@@ -45,9 +45,9 @@ namespace chemkit {
 // === AtomTyperPrivate ==================================================== //
 class AtomTyperPrivate
 {
-    public:
-        std::string name;
-        const Molecule *molecule;
+public:
+    std::string name;
+    const Molecule *molecule;
 };
 
 // === AtomTyper =========================================================== //

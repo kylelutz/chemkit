@@ -51,22 +51,22 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsOverlay : public QGraphicsScene
 {
     Q_OBJECT
 
-    public:
-        // construction and destruction
-        GraphicsOverlay();
-        ~GraphicsOverlay();
+public:
+    // construction and destruction
+    GraphicsOverlay();
+    ~GraphicsOverlay();
 
-        // items
-        void removeItem(QGraphicsItem *item);
+    // items
+    void removeItem(QGraphicsItem *item);
 
-        // binding
-        void bindItemTo(QGraphicsItem *item, const Point3f &position);
-        void bindItemTo(QGraphicsItem *item, GraphicsItem *sceneItem);
-        void removeBinding(QGraphicsItem *item);
-        void updateBindings(GraphicsView *view);
+    // binding
+    void bindItemTo(QGraphicsItem *item, const Point3f &position);
+    void bindItemTo(QGraphicsItem *item, GraphicsItem *sceneItem);
+    void removeBinding(QGraphicsItem *item);
+    void updateBindings(GraphicsView *view);
 
-    private:
-        GraphicsOverlayPrivate* const d;
+private:
+    GraphicsOverlayPrivate* const d;
 };
 
 } // end chemkit namespace

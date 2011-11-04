@@ -58,8 +58,8 @@ namespace chemkit {
 // === GraphicsPainterPrivate ============================================== //
 class GraphicsPainterPrivate
 {
-    public:
-        QColor drawColor;
+public:
+    QColor drawColor;
 };
 
 // === GraphicsPainter ===================================================== //

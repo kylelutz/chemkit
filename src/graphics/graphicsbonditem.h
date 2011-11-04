@@ -49,37 +49,37 @@ class GraphicsBondItemPrivate;
 
 class CHEMKIT_GRAPHICS_EXPORT GraphicsBondItem : public GraphicsItem
 {
-    public:
-        // construction and destruction
-        GraphicsBondItem(const Bond *bond, float radius = 0.15);
-        ~GraphicsBondItem();
+public:
+    // construction and destruction
+    GraphicsBondItem(const Bond *bond, float radius = 0.15);
+    ~GraphicsBondItem();
 
-        // properties
-        void setBond(const Bond *bond);
-        const Bond* bond() const;
-        void setRadius(float radius);
-        float radius() const;
-        void setMaximumRadius(float radius);
-        float maximumRadius() const;
-        void setNormal(const Vector3f &normal);
-        Vector3f normal() const;
-        void setAtomColored(bool atomColored);
-        bool atomColored() const;
-        void setBondOrderVisible(bool showBondOrder);
-        bool bondOrderVisible() const;
-        void setColor(const QColor &color);
-        QColor color() const;
-        void setAtomColors(const QColor &a, const QColor &b);
-        QPair<QColor, QColor> atomColors();
+    // properties
+    void setBond(const Bond *bond);
+    const Bond* bond() const;
+    void setRadius(float radius);
+    float radius() const;
+    void setMaximumRadius(float radius);
+    float maximumRadius() const;
+    void setNormal(const Vector3f &normal);
+    Vector3f normal() const;
+    void setAtomColored(bool atomColored);
+    bool atomColored() const;
+    void setBondOrderVisible(bool showBondOrder);
+    bool bondOrderVisible() const;
+    void setColor(const QColor &color);
+    QColor color() const;
+    void setAtomColors(const QColor &a, const QColor &b);
+    QPair<QColor, QColor> atomColors();
 
-        // intersection
-        virtual bool intersects(const GraphicsRay &ray, float *distance = 0) const;
+    // intersection
+    virtual bool intersects(const GraphicsRay &ray, float *distance = 0) const;
 
-        // drawing
-        void paint(GraphicsPainter *painter);
+    // drawing
+    void paint(GraphicsPainter *painter);
 
-    private:
-        GraphicsBondItemPrivate* const d;
+private:
+    GraphicsBondItemPrivate* const d;
 };
 
 } // end chemkit namespace

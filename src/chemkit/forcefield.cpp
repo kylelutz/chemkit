@@ -49,16 +49,16 @@ namespace chemkit {
 // === ForceFieldPrivate =================================================== //
 class ForceFieldPrivate
 {
-    public:
-        std::string name;
-        int flags;
-        std::vector<ForceFieldAtom *> atoms;
-        std::vector<ForceFieldCalculation *> calculations;
-        std::vector<const Molecule *> molecules;
-        std::string parameterSet;
-        std::string parameterFile;
-        std::map<std::string, std::string> parameterSets;
-        std::string errorString;
+public:
+    std::string name;
+    int flags;
+    std::vector<ForceFieldAtom *> atoms;
+    std::vector<ForceFieldCalculation *> calculations;
+    std::vector<const Molecule *> molecules;
+    std::string parameterSet;
+    std::string parameterFile;
+    std::map<std::string, std::string> parameterSets;
+    std::string errorString;
 };
 
 // === ForceField ========================================================== //

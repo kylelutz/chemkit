@@ -49,33 +49,33 @@ class PartialChargePredictorPrivate;
 
 class CHEMKIT_EXPORT PartialChargePredictor
 {
-    public:
-        // typedefs
-        typedef PartialChargePredictor* (*CreateFunction)();
+public:
+    // typedefs
+    typedef PartialChargePredictor* (*CreateFunction)();
 
-        // construction and destruction
-        virtual ~PartialChargePredictor();
+    // construction and destruction
+    virtual ~PartialChargePredictor();
 
-        // properties
-        std::string name() const;
-        void setMolecule(const Molecule *molecule);
-        const Molecule* molecule() const;
+    // properties
+    std::string name() const;
+    void setMolecule(const Molecule *molecule);
+    const Molecule* molecule() const;
 
-        // partial charges
-        virtual Real partialCharge(int index) const;
-        virtual Real partialCharge(const Atom *atom) const;
+    // partial charges
+    virtual Real partialCharge(int index) const;
+    virtual Real partialCharge(const Atom *atom) const;
 
-        // static methods
-        static PartialChargePredictor* create(const std::string &name);
-        static std::vector<std::string> predictors();
-        static bool predictPartialCharges(Molecule *molecule, const std::string &predictorName);
+    // static methods
+    static PartialChargePredictor* create(const std::string &name);
+    static std::vector<std::string> predictors();
+    static bool predictPartialCharges(Molecule *molecule, const std::string &predictorName);
 
-    protected:
-        PartialChargePredictor(const std::string &name);
-        virtual void assignPartialCharges(const Molecule *molecule);
+protected:
+    PartialChargePredictor(const std::string &name);
+    virtual void assignPartialCharges(const Molecule *molecule);
 
-    private:
-        PartialChargePredictorPrivate* const d;
+private:
+    PartialChargePredictorPrivate* const d;
 };
 
 } // end chemkit namespace

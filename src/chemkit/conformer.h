@@ -48,24 +48,24 @@ class ConformerPrivate;
 
 class CHEMKIT_EXPORT Conformer
 {
-    public:
-        // properties
-        const Molecule* molecule() const;
+public:
+    // properties
+    const Molecule* molecule() const;
 
-        // coordinates
-        void setPosition(const Atom *atom, const Point3 &position);
-        Point3 position(const Atom *atom) const;
+    // coordinates
+    void setPosition(const Atom *atom, const Point3 &position);
+    Point3 position(const Atom *atom) const;
 
-    private:
-        Conformer(const Molecule *molecule);
-        ~Conformer();
+private:
+    Conformer(const Molecule *molecule);
+    ~Conformer();
 
-        CHEMKIT_DISABLE_COPY(Conformer)
+    CHEMKIT_DISABLE_COPY(Conformer)
 
-        friend class Molecule;
+    friend class Molecule;
 
-    private:
-        ConformerPrivate* const d;
+private:
+    ConformerPrivate* const d;
 };
 
 } // end chemkit namespace

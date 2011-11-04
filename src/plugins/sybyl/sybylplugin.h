@@ -42,14 +42,14 @@
 
 class SybylPlugin : public chemkit::Plugin
 {
-    public:
-        SybylPlugin();
-        ~SybylPlugin();
+public:
+    SybylPlugin();
+    ~SybylPlugin();
 
-        static chemkit::AtomTyper* createSybylAtomTyper();
+    static chemkit::AtomTyper* createSybylAtomTyper();
 
 #ifdef CHEMKIT_WITH_IO
-        static chemkit::MoleculeFileFormat* createMol2FileFormat();
+    static chemkit::MoleculeFileFormat* createMol2FileFormat();
 #endif
 };
 

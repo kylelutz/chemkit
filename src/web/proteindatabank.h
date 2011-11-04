@@ -49,29 +49,29 @@ class ProteinDataBankPrivate;
 
 class CHEMKIT_WEB_EXPORT ProteinDataBank
 {
-    public:
-        // construction and destruction
-        ProteinDataBank();
-        ~ProteinDataBank();
+public:
+    // construction and destruction
+    ProteinDataBank();
+    ~ProteinDataBank();
 
-        // properties
-        void setUrl(const QUrl &url);
-        QUrl url() const;
+    // properties
+    void setUrl(const QUrl &url);
+    QUrl url() const;
 
-        // downloads
-        Polymer* downloadPolymer(const QString &id) const;
-        Molecule* downloadLigand(const QString &name) const;
-        PolymerFile* downloadFile(const QString &id) const;
-        QByteArray downloadFileData(const QString &id, const QString &format) const;
+    // downloads
+    Polymer* downloadPolymer(const QString &id) const;
+    Molecule* downloadLigand(const QString &name) const;
+    PolymerFile* downloadFile(const QString &id) const;
+    QByteArray downloadFileData(const QString &id, const QString &format) const;
 
-        // error handling
-        QString errorString() const;
+    // error handling
+    QString errorString() const;
 
-    private:
-        void setErrorString(const QString &error);
+private:
+    void setErrorString(const QString &error);
 
-    private:
-        ProteinDataBankPrivate* const d;
+private:
+    ProteinDataBankPrivate* const d;
 };
 
 } // end chemkit namespace

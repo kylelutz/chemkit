@@ -45,9 +45,9 @@ namespace chemkit {
 // === AlphaShapePrivate =================================================== //
 class AlphaShapePrivate
 {
-    public:
-        Real alphaValue;
-        DelaunayTriangulation *triangulation;
+public:
+    Real alphaValue;
+    DelaunayTriangulation *triangulation;
 };
 
 // === AlphaShape ========================================================== //

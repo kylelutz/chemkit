@@ -54,91 +54,91 @@ class ForceFieldPrivate;
 
 class CHEMKIT_EXPORT ForceField
 {
-    public:
-        // enumerations
-        enum Flag {
-            AnalyticalGradient = 0x01
-        };
+public:
+    // enumerations
+    enum Flag {
+        AnalyticalGradient = 0x01
+    };
 
-        // typedefs
-        typedef ForceField* (*CreateFunction)();
+    // typedefs
+    typedef ForceField* (*CreateFunction)();
 
-        // construction and destruction
-        virtual ~ForceField();
+    // construction and destruction
+    virtual ~ForceField();
 
-        // properties
-        std::string name() const;
-        int flags() const;
-        int size() const;
-        std::vector<ForceFieldAtom *> atoms() const;
-        int atomCount() const;
-        ForceFieldAtom* atom(int index) const;
-        ForceFieldAtom* atom(const Atom *atom) const;
+    // properties
+    std::string name() const;
+    int flags() const;
+    int size() const;
+    std::vector<ForceFieldAtom *> atoms() const;
+    int atomCount() const;
+    ForceFieldAtom* atom(int index) const;
+    ForceFieldAtom* atom(const Atom *atom) const;
 
-        // setup
-        void addMolecule(const Molecule *molecule);
-        void removeMolecule(const Molecule *molecule);
-        std::vector<const Molecule *> molecules() const;
-        int moleculeCount() const;
-        virtual bool setup();
-        bool isSetup() const;
-        virtual void clear();
+    // setup
+    void addMolecule(const Molecule *molecule);
+    void removeMolecule(const Molecule *molecule);
+    std::vector<const Molecule *> molecules() const;
+    int moleculeCount() const;
+    virtual bool setup();
+    bool isSetup() const;
+    virtual void clear();
 
-        // parameters
-        void setParameterSet(const std::string &name);
-        std::string parameterSet() const;
-        std::vector<std::string> parameterSets() const;
-        void setParameterFile(const std::string &fileName);
-        std::string parameterFile() const;
+    // parameters
+    void setParameterSet(const std::string &name);
+    std::string parameterSet() const;
+    std::vector<std::string> parameterSets() const;
+    void setParameterFile(const std::string &fileName);
+    std::string parameterFile() const;
 
-        // calculations
-        std::vector<ForceFieldCalculation *> calculations() const;
-        int calculationCount() const;
-        virtual Real energy() const;
-        std::vector<Vector3> gradient() const;
-        std::vector<Vector3> numericalGradient() const;
-        Real largestGradient() const;
-        Real rootMeanSquareGradient() const;
+    // calculations
+    std::vector<ForceFieldCalculation *> calculations() const;
+    int calculationCount() const;
+    virtual Real energy() const;
+    std::vector<Vector3> gradient() const;
+    std::vector<Vector3> numericalGradient() const;
+    Real largestGradient() const;
+    Real rootMeanSquareGradient() const;
 
-        // coordinates
-        void readCoordinates(const Molecule *molecule);
-        void readCoordinates(const Atom *atom);
-        void writeCoordinates(Molecule *molecule) const;
-        void writeCoordinates(Atom *atom) const;
+    // coordinates
+    void readCoordinates(const Molecule *molecule);
+    void readCoordinates(const Atom *atom);
+    void writeCoordinates(Molecule *molecule) const;
+    void writeCoordinates(Atom *atom) const;
 
-        // energy minimization
-        bool minimizationStep(Real converganceValue = 0.1);
+    // energy minimization
+    bool minimizationStep(Real converganceValue = 0.1);
 
-        // geometry
-        Real distance(const ForceFieldAtom *a, const ForceFieldAtom *b) const;
-        Real bondAngle(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c) const;
-        Real bondAngleRadians(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c) const;
-        Real torsionAngle(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c, const ForceFieldAtom *d) const;
-        Real torsionAngleRadians(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c, const ForceFieldAtom *d) const;
-        Real wilsonAngle(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c, const ForceFieldAtom *d) const;
-        Real wilsonAngleRadians(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c, const ForceFieldAtom *d) const;
+    // geometry
+    Real distance(const ForceFieldAtom *a, const ForceFieldAtom *b) const;
+    Real bondAngle(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c) const;
+    Real bondAngleRadians(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c) const;
+    Real torsionAngle(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c, const ForceFieldAtom *d) const;
+    Real torsionAngleRadians(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c, const ForceFieldAtom *d) const;
+    Real wilsonAngle(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c, const ForceFieldAtom *d) const;
+    Real wilsonAngleRadians(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c, const ForceFieldAtom *d) const;
 
-        // error handling
-        std::string errorString() const;
+    // error handling
+    std::string errorString() const;
 
-        // static methods
-        static ForceField* create(const std::string &name);
-        static std::vector<std::string> forceFields();
+    // static methods
+    static ForceField* create(const std::string &name);
+    static std::vector<std::string> forceFields();
 
-    protected:
-        ForceField(const std::string &name);
-        void setFlags(int flags);
-        void addAtom(ForceFieldAtom *atom);
-        void removeAtom(ForceFieldAtom *atom);
-        void addCalculation(ForceFieldCalculation *calculation);
-        void removeCalculation(ForceFieldCalculation *calculation);
-        void setCalculationSetup(ForceFieldCalculation *calculation, bool setup);
-        void addParameterSet(const std::string &name, const std::string &fileName);
-        void removeParameterSet(const std::string &name);
-        void setErrorString(const std::string &errorString);
+protected:
+    ForceField(const std::string &name);
+    void setFlags(int flags);
+    void addAtom(ForceFieldAtom *atom);
+    void removeAtom(ForceFieldAtom *atom);
+    void addCalculation(ForceFieldCalculation *calculation);
+    void removeCalculation(ForceFieldCalculation *calculation);
+    void setCalculationSetup(ForceFieldCalculation *calculation, bool setup);
+    void addParameterSet(const std::string &name, const std::string &fileName);
+    void removeParameterSet(const std::string &name);
+    void setErrorString(const std::string &errorString);
 
-    private:
-        ForceFieldPrivate* const d;
+private:
+    ForceFieldPrivate* const d;
 };
 
 } // end chemkit namespace

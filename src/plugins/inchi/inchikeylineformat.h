@@ -41,10 +41,10 @@
 
 class InchiKeyLineFormat : public chemkit::LineFormat
 {
-    public:
-        InchiKeyLineFormat();
+public:
+    InchiKeyLineFormat();
 
-        std::string write(const chemkit::Molecule *molecule);
+    std::string write(const chemkit::Molecule *molecule);
 };
 
 #endif // INCHIKEYLINEFORMAT_H

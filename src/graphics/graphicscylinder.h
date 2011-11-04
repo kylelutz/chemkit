@@ -45,27 +45,27 @@ class GraphicsVertexBuffer;
 
 class CHEMKIT_GRAPHICS_EXPORT GraphicsCylinder
 {
-    public:
-        // construction and destruction
-        GraphicsCylinder();
-        GraphicsCylinder(float radius, float length);
-        ~GraphicsCylinder();
+public:
+    // construction and destruction
+    GraphicsCylinder();
+    GraphicsCylinder(float radius, float length);
+    ~GraphicsCylinder();
 
-        // properties
-        void setRadius(float radius);
-        float radius() const;
-        void setLength(float length);
-        float length() const;
+    // properties
+    void setRadius(float radius);
+    float radius() const;
+    void setLength(float length);
+    float length() const;
 
-        // intersection
-        bool intersects(const GraphicsRay &ray, float *distance = 0) const;
+    // intersection
+    bool intersects(const GraphicsRay &ray, float *distance = 0) const;
 
-        // tesselation
-        GraphicsVertexBuffer* tesselate(int slices, int stacks) const;
+    // tesselation
+    GraphicsVertexBuffer* tesselate(int slices, int stacks) const;
 
-    private:
-        float m_radius;
-        float m_length;
+private:
+    float m_radius;
+    float m_length;
 };
 
 } // end chemkit namespace

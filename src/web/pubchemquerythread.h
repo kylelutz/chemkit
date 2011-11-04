@@ -47,29 +47,29 @@ class PubChemQueryThread : public QThread
 {
     Q_OBJECT
 
-    public:
-        // construction and destruction
-        PubChemQueryThread(const PubChemQuery &query);
-        ~PubChemQueryThread();
+public:
+    // construction and destruction
+    PubChemQueryThread(const PubChemQuery &query);
+    ~PubChemQueryThread();
 
-        // properties
-        QByteArray response() const;
+    // properties
+    QByteArray response() const;
 
-        // thread
-        void run();
+    // thread
+    void run();
 
-    private slots:
-        void replyFinished(QNetworkReply *reply);
+private slots:
+    void replyFinished(QNetworkReply *reply);
 
-    private:
-        void poll(const QString &id);
+private:
+    void poll(const QString &id);
 
-    private:
-        QUrl m_url;
-        QByteArray m_request;
-        QByteArray m_response;
-        QNetworkReply *m_reply;
-        QNetworkAccessManager *m_manager;
+private:
+    QUrl m_url;
+    QByteArray m_request;
+    QByteArray m_response;
+    QNetworkReply *m_reply;
+    QNetworkAccessManager *m_manager;
 };
 
 } // end chemkit namespace

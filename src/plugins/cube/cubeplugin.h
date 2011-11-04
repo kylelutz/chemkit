@@ -41,11 +41,11 @@
 
 class CubePlugin : public chemkit::Plugin
 {
-    public:
-        CubePlugin();
-        ~CubePlugin();
+public:
+    CubePlugin();
+    ~CubePlugin();
 
-        static chemkit::MoleculeFileFormat* createCubeFormat();
+    static chemkit::MoleculeFileFormat* createCubeFormat();
 };
 
 #endif // CUBEPLUGIN_H

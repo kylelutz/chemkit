@@ -42,30 +42,30 @@
 
 class BuilderTool : public virtual chemkit::GraphicsTool
 {
-    public:
-        // construction and destruction
-        BuilderTool(BuilderWindow *builder);
-        virtual ~BuilderTool();
+public:
+    // construction and destruction
+    BuilderTool(BuilderWindow *builder);
+    virtual ~BuilderTool();
 
-        // properties
-        BuilderWindow* builder() const;
-        chemkit::MoleculeEditor* editor() const;
-        virtual QWidget* settingsWidget();
+    // properties
+    BuilderWindow* builder() const;
+    chemkit::MoleculeEditor* editor() const;
+    virtual QWidget* settingsWidget();
 
-        // event handlers
-        virtual void cut();
-        virtual void copy();
-        virtual void paste();
-        virtual void del();
+    // event handlers
+    virtual void cut();
+    virtual void copy();
+    virtual void paste();
+    virtual void del();
 
-    protected:
-        void setCanCut(bool canCut);
-        void setCanCopy(bool canCopy);
-        void setCanPaste(bool canPaste);
-        void setCanDelete(bool canDelete);
+protected:
+    void setCanCut(bool canCut);
+    void setCanCopy(bool canCopy);
+    void setCanPaste(bool canPaste);
+    void setCanDelete(bool canDelete);
 
-    private:
-        BuilderWindow *m_builder;
+private:
+    BuilderWindow *m_builder;
 };
 
 #endif // BUILDERTOOL_H

@@ -40,10 +40,10 @@ namespace chemkit {
 // === UnitCellPrivate ===================================================== //
 class UnitCellPrivate
 {
-    public:
-        Vector3 x;
-        Vector3 y;
-        Vector3 z;
+public:
+    Vector3 x;
+    Vector3 y;
+    Vector3 z;
 };
 
 // === UnitCell ============================================================ //

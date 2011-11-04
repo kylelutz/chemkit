@@ -44,20 +44,20 @@ namespace chemkit {
 // === GraphicsMoleculeItemPrivate ========================================= //
 class GraphicsMoleculeItemPrivate
 {
-    public:
-        const Molecule *molecule;
-        MoleculeWatcher *watcher;
-        GraphicsMoleculeItem::DisplayType displayType;
-        float atomRadius;
-        float bondRadius;
-        float hydrogenScale;
-        bool hydrogensVisible;
-        bool bondOrderVisible;
-        bool atomColoredBonds;
-        GraphicsAtomColorMap *colorMap;
-        QList<GraphicsAtomItem *> atomItems;
-        QList<GraphicsBondItem *> bondItems;
-        QList<const Atom *> hiddenAtoms;
+public:
+    const Molecule *molecule;
+    MoleculeWatcher *watcher;
+    GraphicsMoleculeItem::DisplayType displayType;
+    float atomRadius;
+    float bondRadius;
+    float hydrogenScale;
+    bool hydrogensVisible;
+    bool bondOrderVisible;
+    bool atomColoredBonds;
+    GraphicsAtomColorMap *colorMap;
+    QList<GraphicsAtomItem *> atomItems;
+    QList<GraphicsBondItem *> bondItems;
+    QList<const Atom *> hiddenAtoms;
 };
 
 // === GraphicsMoleculeItem ================================================ //

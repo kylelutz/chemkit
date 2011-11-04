@@ -48,48 +48,48 @@ class PluginManagerPrivate;
 
 class CHEMKIT_EXPORT PluginManager
 {
-    public:
-        // enumerations
-        typedef void (*Function)();
+public:
+    // enumerations
+    typedef void (*Function)();
 
-        // properties
-        Plugin* plugin(const std::string &name) const;
-        const std::vector<Plugin *>& plugins() const;
-        int pluginCount() const;
+    // properties
+    Plugin* plugin(const std::string &name) const;
+    const std::vector<Plugin *>& plugins() const;
+    int pluginCount() const;
 
-        // plugin loading
-        bool loadPlugin(const std::string &fileName);
-        void loadPlugins(const std::string &directory);
-        void loadDefaultPlugins();
-        bool unloadPlugin(Plugin *plugin);
-        bool unloadPlugin(const std::string &name);
+    // plugin loading
+    bool loadPlugin(const std::string &fileName);
+    void loadPlugins(const std::string &directory);
+    void loadDefaultPlugins();
+    bool unloadPlugin(Plugin *plugin);
+    bool unloadPlugin(const std::string &name);
 
-        // plugin classes
-        template<class T> T* createPluginClass(const std::string &pluginName) const;
-        template<class T> std::vector<std::string> pluginClassNames() const;
+    // plugin classes
+    template<class T> T* createPluginClass(const std::string &pluginName) const;
+    template<class T> std::vector<std::string> pluginClassNames() const;
 
-        // error handling
-        std::string errorString() const;
+    // error handling
+    std::string errorString() const;
 
-        // static methods
-        static PluginManager* instance();
+    // static methods
+    static PluginManager* instance();
 
-    private:
-        PluginManager();
-        ~PluginManager();
+private:
+    PluginManager();
+    ~PluginManager();
 
-        void setErrorString(const std::string &errorString);
-        bool registerPluginClass(const std::string &className, const std::string &pluginName, Function function);
-        bool unregisterPluginClass(const std::string &className, const std::string &pluginName);
-        std::vector<std::string> pluginClassNames(const std::string &className) const;
-        Function pluginClassFunction(const std::string &className, const std::string &pluginName) const;
+    void setErrorString(const std::string &errorString);
+    bool registerPluginClass(const std::string &className, const std::string &pluginName, Function function);
+    bool unregisterPluginClass(const std::string &className, const std::string &pluginName);
+    std::vector<std::string> pluginClassNames(const std::string &className) const;
+    Function pluginClassFunction(const std::string &className, const std::string &pluginName) const;
 
-        CHEMKIT_DISABLE_COPY(PluginManager)
+    CHEMKIT_DISABLE_COPY(PluginManager)
 
-        friend class Plugin;
+    friend class Plugin;
 
-    private:
-        PluginManagerPrivate* const d;
+private:
+    PluginManagerPrivate* const d;
 };
 
 } // end chemkit namespace

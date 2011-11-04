@@ -41,11 +41,11 @@
 
 class FormulaPlugin : public chemkit::Plugin
 {
-    public:
-        FormulaPlugin();
-        ~FormulaPlugin();
+public:
+    FormulaPlugin();
+    ~FormulaPlugin();
 
-        static chemkit::LineFormat* createFormulaFormat();
+    static chemkit::LineFormat* createFormulaFormat();
 };
 
 #endif // FORMULAPLUGIN_H

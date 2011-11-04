@@ -48,36 +48,36 @@ class Molecule;
 
 class CHEMKIT_EXPORT Stereochemistry
 {
-    public:
-        // enumerations
-        enum Type {
-            None,
-            Unspecified,
-            R,
-            S,
-            E,
-            Z,
-            Cis = Z,
-            Trans = E
-        };
+public:
+    // enumerations
+    enum Type {
+        None,
+        Unspecified,
+        R,
+        S,
+        E,
+        Z,
+        Cis = Z,
+        Trans = E
+    };
 
-        // construction and destruction
-        Stereochemistry(const Molecule *molecule);
-        ~Stereochemistry();
+    // construction and destruction
+    Stereochemistry(const Molecule *molecule);
+    ~Stereochemistry();
 
-        // properties
-        const Molecule* molecule() const;
+    // properties
+    const Molecule* molecule() const;
 
-        // stereochemistry
-        void setStereochemistry(const Atom *atom, Type type);
-        void setStereochemistry(const Bond *bond, Type type);
-        Type stereochemistry(const Atom *atom) const;
-        Type stereochemistry(const Bond *bond) const;
+    // stereochemistry
+    void setStereochemistry(const Atom *atom, Type type);
+    void setStereochemistry(const Bond *bond, Type type);
+    Type stereochemistry(const Atom *atom) const;
+    Type stereochemistry(const Bond *bond) const;
 
-    private:
-        const Molecule *m_molecule;
-        std::map<const Atom *, Type> m_atomStereochemistry;
-        std::map<const Bond *, Type> m_bondStereochemistry;
+private:
+    const Molecule *m_molecule;
+    std::map<const Atom *, Type> m_atomStereochemistry;
+    std::map<const Bond *, Type> m_bondStereochemistry;
 };
 
 } // end chemkit namespace

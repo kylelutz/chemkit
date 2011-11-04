@@ -40,14 +40,14 @@
 
 class McdlLineFormat : public chemkit::LineFormat
 {
-    public:
-        // construction and destruction
-        McdlLineFormat();
-        ~McdlLineFormat();
+public:
+    // construction and destruction
+    McdlLineFormat();
+    ~McdlLineFormat();
 
-        // input and output
-        bool read(const std::string &formula, chemkit::Molecule *molecule);
-        std::string write(const chemkit::Molecule *molecule);
+    // input and output
+    bool read(const std::string &formula, chemkit::Molecule *molecule);
+    std::string write(const chemkit::Molecule *molecule);
 };
 
 #endif // MCDLLINEFORMAT_H

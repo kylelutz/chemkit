@@ -50,23 +50,23 @@ class TrajectoryFilePrivate;
 
 class CHEMKIT_IO_EXPORT TrajectoryFile : public GenericFile<TrajectoryFile, TrajectoryFileFormat>
 {
-    public:
-        // construction and destruction
-        TrajectoryFile();
-        TrajectoryFile(const std::string &fileName);
-        ~TrajectoryFile();
+public:
+    // construction and destruction
+    TrajectoryFile();
+    TrajectoryFile(const std::string &fileName);
+    ~TrajectoryFile();
 
-        // properties
-        bool isEmpty() const;
+    // properties
+    bool isEmpty() const;
 
-        // file contents
-        void setTrajectory(Trajectory *trajectory);
-        Trajectory* trajectory() const;
-        bool removeTrajectory();
-        bool deleteTrajectory();
+    // file contents
+    void setTrajectory(Trajectory *trajectory);
+    Trajectory* trajectory() const;
+    bool removeTrajectory();
+    bool deleteTrajectory();
 
-    private:
-        TrajectoryFilePrivate* const d;
+private:
+    TrajectoryFilePrivate* const d;
 };
 
 } // end chemkit namespace

@@ -70,16 +70,16 @@ struct AmberNonbondedParameters
 
 class AmberParameters
 {
-    public:
-        // construction and destruction
-        AmberParameters();
-        ~AmberParameters();
+public:
+    // construction and destruction
+    AmberParameters();
+    ~AmberParameters();
 
-        // parameters
-        const AmberBondParameters* bondParameters(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b) const;
-        const AmberAngleParameters* angleParameters(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b, const chemkit::ForceFieldAtom *c) const;
-        const AmberTorsionParameters* torsionParameters(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b, const chemkit::ForceFieldAtom *c, const chemkit::ForceFieldAtom *d) const;
-        const AmberNonbondedParameters* nonbondedParameters(const chemkit::ForceFieldAtom *atom) const;
+    // parameters
+    const AmberBondParameters* bondParameters(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b) const;
+    const AmberAngleParameters* angleParameters(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b, const chemkit::ForceFieldAtom *c) const;
+    const AmberTorsionParameters* torsionParameters(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b, const chemkit::ForceFieldAtom *c, const chemkit::ForceFieldAtom *d) const;
+    const AmberNonbondedParameters* nonbondedParameters(const chemkit::ForceFieldAtom *atom) const;
 };
 
 #endif // AMBERPARAMETERS_H

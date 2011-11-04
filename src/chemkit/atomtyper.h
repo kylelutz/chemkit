@@ -51,36 +51,36 @@ class AtomTyperPrivate;
 
 class CHEMKIT_EXPORT AtomTyper
 {
-    public:
-        // typedefs
-        typedef AtomTyper* (*CreateFunction)();
+public:
+    // typedefs
+    typedef AtomTyper* (*CreateFunction)();
 
-        // construction and destruction
-        virtual ~AtomTyper();
+    // construction and destruction
+    virtual ~AtomTyper();
 
-        // properties
-        std::string name() const;
-        void setMolecule(const Molecule *molecule);
-        const Molecule* molecule() const;
+    // properties
+    std::string name() const;
+    void setMolecule(const Molecule *molecule);
+    const Molecule* molecule() const;
 
-        // types
-        virtual Variant type(int index) const;
-        virtual Variant type(const Atom *atom) const;
-        virtual int typeNumber(int index) const;
-        virtual int typeNumber(const Atom *atom) const;
-        virtual std::string typeString(int index) const;
-        virtual std::string typeString(const Atom *atom) const;
+    // types
+    virtual Variant type(int index) const;
+    virtual Variant type(const Atom *atom) const;
+    virtual int typeNumber(int index) const;
+    virtual int typeNumber(const Atom *atom) const;
+    virtual std::string typeString(int index) const;
+    virtual std::string typeString(const Atom *atom) const;
 
-        // static methods
-        static AtomTyper* create(const std::string &name);
-        static std::vector<std::string> typers();
+    // static methods
+    static AtomTyper* create(const std::string &name);
+    static std::vector<std::string> typers();
 
-    protected:
-        AtomTyper(const std::string &name);
-        virtual void assignTypes(const Molecule *molecule);
+protected:
+    AtomTyper(const std::string &name);
+    virtual void assignTypes(const Molecule *molecule);
 
-    private:
-        AtomTyperPrivate* const d;
+private:
+    AtomTyperPrivate* const d;
 };
 
 } // end chemkit namespace

@@ -48,29 +48,29 @@ class BondPredictorPrivate;
 
 class CHEMKIT_EXPORT BondPredictor
 {
-    public:
-        // construction and destruction
-        BondPredictor(Molecule *molecule);
-        ~BondPredictor();
+public:
+    // construction and destruction
+    BondPredictor(Molecule *molecule);
+    ~BondPredictor();
 
-        // properties
-        void setTolerance(Real tolerance);
-        Real tolerance() const;
-        void setMinimumBondLength(Real length);
-        Real minimumBondLength() const;
-        void setMaximumBondLength(Real length);
-        Real maximumBondLength() const;
-        Molecule* molecule() const;
+    // properties
+    void setTolerance(Real tolerance);
+    Real tolerance() const;
+    void setMinimumBondLength(Real length);
+    Real minimumBondLength() const;
+    void setMaximumBondLength(Real length);
+    Real maximumBondLength() const;
+    Molecule* molecule() const;
 
-        // prediction
-        std::vector<std::pair<Atom *, Atom *> > predictedBonds();
-        bool couldBeBonded(Atom *a, Atom *b) const;
+    // prediction
+    std::vector<std::pair<Atom *, Atom *> > predictedBonds();
+    bool couldBeBonded(Atom *a, Atom *b) const;
 
-        // static methods
-        static void predictBonds(Molecule *molecule);
+    // static methods
+    static void predictBonds(Molecule *molecule);
 
-    private:
-        BondPredictorPrivate* const d;
+private:
+    BondPredictorPrivate* const d;
 };
 
 } // end chemkit namespace

@@ -50,9 +50,9 @@ namespace chemkit {
 // === AtomPrivate ========================================================= //
 class AtomPrivate
 {
-    public:
-        Point3 position;
-        std::vector<Bond *> bonds;
+public:
+    Point3 position;
+    std::vector<Bond *> bonds;
 };
 
 // === Atom ================================================================ //

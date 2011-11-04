@@ -49,40 +49,40 @@ class GraphicsMolecularSurfaceItemPrivate;
 
 class CHEMKIT_GRAPHICS_EXPORT GraphicsMolecularSurfaceItem : public GraphicsItem
 {
-    public:
-        // enumerations
-        enum ColorMode {
-            SolidColor,
-            AtomColor
-        };
+public:
+    // enumerations
+    enum ColorMode {
+        SolidColor,
+        AtomColor
+    };
 
-        // construction and destruction
-        GraphicsMolecularSurfaceItem(const Molecule *molecule = 0);
-        GraphicsMolecularSurfaceItem(const MolecularSurface *surface);
-        ~GraphicsMolecularSurfaceItem();
+    // construction and destruction
+    GraphicsMolecularSurfaceItem(const Molecule *molecule = 0);
+    GraphicsMolecularSurfaceItem(const MolecularSurface *surface);
+    ~GraphicsMolecularSurfaceItem();
 
-        // properties
-        void setSurface(const MolecularSurface *surface);
-        const MolecularSurface* surface() const;
-        void setMolecule(const Molecule *molecule);
-        const Molecule* molecule() const;
-        void setSurfaceType(MolecularSurface::SurfaceType type);
-        MolecularSurface::SurfaceType surfaceType() const;
-        void setProbeRadius(float radius);
-        float probeRadius() const;
-        void setColor(const QColor &color);
-        QColor color() const;
-        void setColorMode(ColorMode mode);
-        ColorMode colorMode() const;
-        void setAtomColorMap(GraphicsAtomColorMap *colorMap);
-        GraphicsAtomColorMap* colorMap() const;
+    // properties
+    void setSurface(const MolecularSurface *surface);
+    const MolecularSurface* surface() const;
+    void setMolecule(const Molecule *molecule);
+    const Molecule* molecule() const;
+    void setSurfaceType(MolecularSurface::SurfaceType type);
+    MolecularSurface::SurfaceType surfaceType() const;
+    void setProbeRadius(float radius);
+    float probeRadius() const;
+    void setColor(const QColor &color);
+    QColor color() const;
+    void setColorMode(ColorMode mode);
+    ColorMode colorMode() const;
+    void setAtomColorMap(GraphicsAtomColorMap *colorMap);
+    GraphicsAtomColorMap* colorMap() const;
 
-    private:
-        void itemChanged(ItemChange change);
-        void recalculate();
+private:
+    void itemChanged(ItemChange change);
+    void recalculate();
 
-    private:
-        GraphicsMolecularSurfaceItemPrivate* const d;
+private:
+    GraphicsMolecularSurfaceItemPrivate* const d;
 };
 
 } // end chemkit namespace

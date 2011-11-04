@@ -54,37 +54,37 @@ class MoleculeAlignerPrivate;
 
 class CHEMKIT_EXPORT MoleculeAligner
 {
-    public:
-        // construction and destruction
-        MoleculeAligner(const std::map<Atom *, Atom *> &mapping);
-        MoleculeAligner(const Molecule *source, const Molecule *target);
-        ~MoleculeAligner();
+public:
+    // construction and destruction
+    MoleculeAligner(const std::map<Atom *, Atom *> &mapping);
+    MoleculeAligner(const Molecule *source, const Molecule *target);
+    ~MoleculeAligner();
 
-        // properties
-        const Molecule* sourceMolecule() const;
-        const Molecule* targetMolecule() const;
-        void setMapping(const std::map<Atom *, Atom *> &mapping);
-        std::map<Atom *, Atom *> mapping() const;
-        void setSourceConformer(const Conformer *conformer);
-        const Conformer* sourceConformer() const;
-        void setTargetConformer(const Conformer *conformer);
-        const Conformer* targetConformer() const;
+    // properties
+    const Molecule* sourceMolecule() const;
+    const Molecule* targetMolecule() const;
+    void setMapping(const std::map<Atom *, Atom *> &mapping);
+    std::map<Atom *, Atom *> mapping() const;
+    void setSourceConformer(const Conformer *conformer);
+    const Conformer* sourceConformer() const;
+    void setTargetConformer(const Conformer *conformer);
+    const Conformer* targetConformer() const;
 
-        // geometry
-        Real deviation() const;
-        Eigen::Matrix<Real, 3, 3> rotationMatrix() const;
-        Vector3 displacementVector() const;
-        void align(Molecule *molecule);
+    // geometry
+    Real deviation() const;
+    Eigen::Matrix<Real, 3, 3> rotationMatrix() const;
+    Vector3 displacementVector() const;
+    void align(Molecule *molecule);
 
-        // static methods
-        static Real rmsd(const Coordinates *a, const Coordinates *b);
+    // static methods
+    static Real rmsd(const Coordinates *a, const Coordinates *b);
 
-    private:
-        Coordinates *sourceCoordinates() const;
-        Coordinates *targetCoordinates() const;
+private:
+    Coordinates *sourceCoordinates() const;
+    Coordinates *targetCoordinates() const;
 
-    private:
-        MoleculeAlignerPrivate* const d;
+private:
+    MoleculeAlignerPrivate* const d;
 };
 
 } // end chemkit namespace

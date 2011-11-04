@@ -46,42 +46,42 @@
 
 class SmilesGraphNode
 {
-    public:
-        SmilesGraphNode(const chemkit::Atom *atom);
+public:
+    SmilesGraphNode(const chemkit::Atom *atom);
 
-        const chemkit::Atom* atom() const { return m_atom; }
+    const chemkit::Atom* atom() const { return m_atom; }
 
-        void setParent(SmilesGraphNode *parent, int bondOrder);
-        SmilesGraphNode* parent() const;
-        int childCount() const;
-        std::vector<SmilesGraphNode *> children() const;
-        std::string toString(bool kekulize) const;
-        void write(std::stringstream &string, bool kekulize) const;
+    void setParent(SmilesGraphNode *parent, int bondOrder);
+    SmilesGraphNode* parent() const;
+    int childCount() const;
+    std::vector<SmilesGraphNode *> children() const;
+    std::string toString(bool kekulize) const;
+    void write(std::stringstream &string, bool kekulize) const;
 
-        void setHydrogenCount(int hydrogenCount);
-        int hydrogenCount() const;
+    void setHydrogenCount(int hydrogenCount);
+    int hydrogenCount() const;
 
-        void addRing(int ringNumber, int bondOrder);
+    void addRing(int ringNumber, int bondOrder);
 
-    private:
-        const chemkit::Atom *m_atom;
-        int m_hydrogenCount;
-        SmilesGraphNode *m_parent;
-        int m_bondOrder;
-        std::vector<SmilesGraphNode *> m_children;
-        std::vector<int> m_rings;
-        std::vector<int> m_ringBondOrders;
+private:
+    const chemkit::Atom *m_atom;
+    int m_hydrogenCount;
+    SmilesGraphNode *m_parent;
+    int m_bondOrder;
+    std::vector<SmilesGraphNode *> m_children;
+    std::vector<int> m_rings;
+    std::vector<int> m_ringBondOrders;
 };
 
 class SmilesGraph
 {
-    public:
-        SmilesGraph(const chemkit::Molecule *molecule);
+public:
+    SmilesGraph(const chemkit::Molecule *molecule);
 
-        std::string toString(bool kekulize) const;
+    std::string toString(bool kekulize) const;
 
-    private:
-        std::vector<SmilesGraphNode *> m_rootNodes;
+private:
+    std::vector<SmilesGraphNode *> m_rootNodes;
 };
 
 #endif // SMILESGRAPH_H

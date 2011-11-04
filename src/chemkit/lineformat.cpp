@@ -47,10 +47,10 @@ namespace chemkit {
 // === LineFormatPrivate =================================================== //
 class LineFormatPrivate
 {
-    public:
-        std::string name;
-        std::string errorString;
-        std::map<std::string, Variant> options;
+public:
+    std::string name;
+    std::string errorString;
+    std::map<std::string, Variant> options;
 };
 
 // === LineFormat ========================================================== //

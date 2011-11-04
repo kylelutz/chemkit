@@ -50,26 +50,26 @@ class GraphicsProteinItemPrivate;
 
 class CHEMKIT_GRAPHICS_EXPORT GraphicsProteinItem : public GraphicsItem
 {
-    public:
-        // construction and destruction
-        GraphicsProteinItem(const Polymer *polymer = 0);
-        ~GraphicsProteinItem();
+public:
+    // construction and destruction
+    GraphicsProteinItem(const Polymer *polymer = 0);
+    ~GraphicsProteinItem();
 
-        // properties
-        void setPolymer(const Polymer *polymer);
-        const Polymer* polymer() const;
-        void setSecondaryStructureVisible(bool visible);
-        bool secondaryStructureVisible() const;
-        void setCoilRadius(float radius);
-        float coilRadius() const;
-        void setHelixDisplayType(GraphicsProteinHelixItem::DisplayType type);
-        GraphicsProteinHelixItem::DisplayType helixDisplayType() const;
+    // properties
+    void setPolymer(const Polymer *polymer);
+    const Polymer* polymer() const;
+    void setSecondaryStructureVisible(bool visible);
+    bool secondaryStructureVisible() const;
+    void setCoilRadius(float radius);
+    float coilRadius() const;
+    void setHelixDisplayType(GraphicsProteinHelixItem::DisplayType type);
+    GraphicsProteinHelixItem::DisplayType helixDisplayType() const;
 
-        // painting
-        virtual void paint(GraphicsPainter *painter);
+    // painting
+    virtual void paint(GraphicsPainter *painter);
 
-    private:
-        GraphicsProteinItemPrivate* const d;
+private:
+    GraphicsProteinItemPrivate* const d;
 };
 
 } // end chemkit namespace

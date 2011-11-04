@@ -51,58 +51,58 @@ class CHEMKIT_WIDGETS_EXPORT MoleculeEditor : public QObject
 {
     Q_OBJECT
 
-    public:
-        // construction and destruction
-        MoleculeEditor(Molecule *molecule = 0);
-        ~MoleculeEditor();
+public:
+    // construction and destruction
+    MoleculeEditor(Molecule *molecule = 0);
+    ~MoleculeEditor();
 
-        // properties
-        void setMolecule(Molecule *molecule);
-        Molecule* molecule() const;
+    // properties
+    void setMolecule(Molecule *molecule);
+    Molecule* molecule() const;
 
-        // editing
-        void undo();
-        bool canUndo() const;
-        void redo();
-        bool canRedo() const;
-        void clearUndoStack();
-        void beginEdit();
-        void endEdit();
-        bool isInEdit() const;
-        void cut(const QList<Atom *> &atoms);
-        void copy(const QList<Atom *> &atoms);
-        QList<Atom *> paste();
-        bool canPaste() const;
-        QList<Atom *> copyBuffer() const;
-        void clearCopyBuffer();
+    // editing
+    void undo();
+    bool canUndo() const;
+    void redo();
+    bool canRedo() const;
+    void clearUndoStack();
+    void beginEdit();
+    void endEdit();
+    bool isInEdit() const;
+    void cut(const QList<Atom *> &atoms);
+    void copy(const QList<Atom *> &atoms);
+    QList<Atom *> paste();
+    bool canPaste() const;
+    QList<Atom *> copyBuffer() const;
+    void clearCopyBuffer();
 
-        // modification
-        Atom* addAtom(const Element &element);
-        Atom* addAtomCopy(const Atom *atom);
-        void removeAtom(Atom *atom);
-        void setAtomAtomicNumber(Atom *atom, int atomicNumber);
-        void setAtomPosition(Atom *atom, const Point3 &position);
-        Bond* addBond(Atom *a, Atom *b, int order = Bond::Single);
-        void removeBond(Bond *bond);
-        void setBondOrder(Bond *bond, int order);
+    // modification
+    Atom* addAtom(const Element &element);
+    Atom* addAtomCopy(const Atom *atom);
+    void removeAtom(Atom *atom);
+    void setAtomAtomicNumber(Atom *atom, int atomicNumber);
+    void setAtomPosition(Atom *atom, const Point3 &position);
+    Bond* addBond(Atom *a, Atom *b, int order = Bond::Single);
+    void removeBond(Bond *bond);
+    void setBondOrder(Bond *bond, int order);
 
-        // internal methods
-        Atom* atom(int id);
-        Bond* bond(int id1, int id2);
-        int id(Atom *atom);
-        void setId(Atom *atom, int id);
+    // internal methods
+    Atom* atom(int id);
+    Bond* bond(int id1, int id2);
+    int id(Atom *atom);
+    void setId(Atom *atom, int id);
 
-    signals:
-        void canUndoChanged(bool canUndo);
-        void canRedoChanged(bool canRedo);
-        void canPasteChanged(bool canPaste);
+signals:
+    void canUndoChanged(bool canUndo);
+    void canRedoChanged(bool canRedo);
+    void canPasteChanged(bool canPaste);
 
-    private slots:
-        void canUndoChangedSlot(bool canUndo);
-        void canRedoChangedSlot(bool canRedo);
+private slots:
+    void canUndoChangedSlot(bool canUndo);
+    void canRedoChangedSlot(bool canRedo);
 
-    private:
-        MoleculeEditorPrivate* const d;
+private:
+    MoleculeEditorPrivate* const d;
 };
 
 } // end chemkit namespace

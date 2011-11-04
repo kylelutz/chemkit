@@ -47,27 +47,27 @@ class GraphicsAtomItemPrivate;
 
 class CHEMKIT_GRAPHICS_EXPORT GraphicsAtomItem : public GraphicsItem
 {
-    public:
-        // construction and destruction
-        GraphicsAtomItem(const Atom *atom, float radius = 0.5);
-        ~GraphicsAtomItem();
+public:
+    // construction and destruction
+    GraphicsAtomItem(const Atom *atom, float radius = 0.5);
+    ~GraphicsAtomItem();
 
-        // properties
-        void setAtom(const Atom *atom);
-        const Atom* atom() const;
-        void setRadius(float radius);
-        float radius() const;
-        void setColor(const QColor &color);
-        QColor color() const;
+    // properties
+    void setAtom(const Atom *atom);
+    const Atom* atom() const;
+    void setRadius(float radius);
+    float radius() const;
+    void setColor(const QColor &color);
+    QColor color() const;
 
-        // geometry
-        bool intersects(const GraphicsRay &ray, float *distance = 0) const;
+    // geometry
+    bool intersects(const GraphicsRay &ray, float *distance = 0) const;
 
-        // drawing
-        virtual void paint(GraphicsPainter *painter);
+    // drawing
+    virtual void paint(GraphicsPainter *painter);
 
-    private:
-        GraphicsAtomItemPrivate* const d;
+private:
+    GraphicsAtomItemPrivate* const d;
 };
 
 } // end chemkit namespace

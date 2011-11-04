@@ -53,58 +53,58 @@ class Molecule;
 
 class CHEMKIT_EXPORT Bond
 {
-    public:
-        enum BondType{
-            Single = 1,
-            Double = 2,
-            Triple = 3,
-            Quadruple = 4
-        };
+public:
+    enum BondType{
+        Single = 1,
+        Double = 2,
+        Triple = 3,
+        Quadruple = 4
+    };
 
-        // properties
-        Atom* atom(int index) const;
-        Atom* atom1() const;
-        Atom* atom2() const;
-        std::vector<Atom *> atoms() const;
-        Atom* otherAtom(const Atom *atom) const;
-        void setOrder(int order);
-        int order() const;
-        Real polarity() const;
-        Vector3 dipoleMoment() const;
-        inline Molecule* molecule() const;
-        Fragment* fragment() const;
-        inline int index() const;
+    // properties
+    Atom* atom(int index) const;
+    Atom* atom1() const;
+    Atom* atom2() const;
+    std::vector<Atom *> atoms() const;
+    Atom* otherAtom(const Atom *atom) const;
+    void setOrder(int order);
+    int order() const;
+    Real polarity() const;
+    Vector3 dipoleMoment() const;
+    inline Molecule* molecule() const;
+    Fragment* fragment() const;
+    inline int index() const;
 
-        // structure
-        bool contains(const Atom *atom) const;
-        bool contains(const Element &element) const;
-        bool containsBoth(const Atom *a, const Atom *b) const;
-        bool containsBoth(const Element &a, const Element &b) const;
-        bool isTerminal() const;
+    // structure
+    bool contains(const Atom *atom) const;
+    bool contains(const Element &element) const;
+    bool containsBoth(const Atom *a, const Atom *b) const;
+    bool containsBoth(const Element &a, const Element &b) const;
+    bool isTerminal() const;
 
-        // ring perception
-        std::vector<Ring *> rings() const;
-        int ringCount() const;
-        bool isInRing() const;
-        bool isInRing(int size) const;
-        Ring* smallestRing() const;
-        bool isAromatic() const;
+    // ring perception
+    std::vector<Ring *> rings() const;
+    int ringCount() const;
+    bool isInRing() const;
+    bool isInRing(int size) const;
+    Ring* smallestRing() const;
+    bool isAromatic() const;
 
-        // geometry
-        Point3 center() const;
-        Real length() const;
+    // geometry
+    Point3 center() const;
+    Real length() const;
 
-    private:
-        Bond(Molecule *molecule, int index);
-        ~Bond();
+private:
+    Bond(Molecule *molecule, int index);
+    ~Bond();
 
-        CHEMKIT_DISABLE_COPY(Bond)
+    CHEMKIT_DISABLE_COPY(Bond)
 
-        friend class Molecule;
+    friend class Molecule;
 
-    private:
-        Molecule *m_molecule;
-        int m_index;
+private:
+    Molecule *m_molecule;
+    int m_index;
 };
 
 } // end chemkit namespace

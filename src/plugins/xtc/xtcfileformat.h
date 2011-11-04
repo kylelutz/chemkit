@@ -40,10 +40,10 @@
 
 class XtcFileFormat : public chemkit::TrajectoryFileFormat
 {
-    public:
-        XtcFileFormat();
+public:
+    XtcFileFormat();
 
-        bool read(std::istream &input, chemkit::TrajectoryFile *file);
+    bool read(std::istream &input, chemkit::TrajectoryFile *file);
 };
 
 #endif // XTCFILEFORMAT_H

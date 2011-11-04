@@ -40,11 +40,11 @@
 
 class CubeFileFormat : public chemkit::MoleculeFileFormat
 {
-    public:
-        CubeFileFormat();
-        ~CubeFileFormat();
+public:
+    CubeFileFormat();
+    ~CubeFileFormat();
 
-        bool read(std::istream &input, chemkit::MoleculeFile *file);
+    bool read(std::istream &input, chemkit::MoleculeFile *file);
 };
 
 #endif // CUBEFILEFORMAT_H

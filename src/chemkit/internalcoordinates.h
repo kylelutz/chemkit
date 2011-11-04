@@ -49,32 +49,32 @@ class InternalCoordinatesPrivate;
 
 class CHEMKIT_EXPORT InternalCoordinates
 {
-    public:
-        // construction and destruction
-        InternalCoordinates();
-        InternalCoordinates(int size);
-        InternalCoordinates(const InternalCoordinates &coordinates);
-        ~InternalCoordinates();
+public:
+    // construction and destruction
+    InternalCoordinates();
+    InternalCoordinates(int size);
+    InternalCoordinates(const InternalCoordinates &coordinates);
+    ~InternalCoordinates();
 
-        // properties
-        int size() const;
+    // properties
+    int size() const;
 
-        // coordinates
-        void setCoordinates(int row, Real r, Real theta = 0, Real phi = 0);
-        void setCoordinatesRadians(int row, Real r, Real theta = 0, Real phi = 0);
-        std::vector<Real> coordinates(int row) const;
-        std::vector<Real> coordinatesRadians(int row) const;
-        void setConnections(int row, int a, int b = 0, int c = 0);
-        std::vector<int> connections(int row) const;
+    // coordinates
+    void setCoordinates(int row, Real r, Real theta = 0, Real phi = 0);
+    void setCoordinatesRadians(int row, Real r, Real theta = 0, Real phi = 0);
+    std::vector<Real> coordinates(int row) const;
+    std::vector<Real> coordinatesRadians(int row) const;
+    void setConnections(int row, int a, int b = 0, int c = 0);
+    std::vector<int> connections(int row) const;
 
-        // conversions
-        Coordinates* toCartesianCoordinates() const;
+    // conversions
+    Coordinates* toCartesianCoordinates() const;
 
-        // operators
-        InternalCoordinates& operator=(const InternalCoordinates &coordinates);
+    // operators
+    InternalCoordinates& operator=(const InternalCoordinates &coordinates);
 
-    private:
-        InternalCoordinatesPrivate* const d;
+private:
+    InternalCoordinatesPrivate* const d;
 };
 
 } // end chemkit namespace

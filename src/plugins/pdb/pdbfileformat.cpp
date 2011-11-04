@@ -54,13 +54,13 @@ namespace {
 // === PdbAtom ============================================================= //
 class PdbAtom
 {
-    public:
-        PdbAtom(const char *data);
+public:
+    PdbAtom(const char *data);
 
-        int id;
-        QString name;
-        chemkit::Point3 position;
-        int atomicNumber;
+    int id;
+    QString name;
+    chemkit::Point3 position;
+    int atomicNumber;
 };
 
 PdbAtom::PdbAtom(const char *data)
@@ -91,20 +91,20 @@ PdbAtom::PdbAtom(const char *data)
 // === PdbResidue ========================================================== //
 class PdbResidue
 {
-    public:
-        PdbResidue(const QString &name, int index);
-        ~PdbResidue();
+public:
+    PdbResidue(const QString &name, int index);
+    ~PdbResidue();
 
-        void addAtom(PdbAtom *atom);
-        QList<PdbAtom *> atoms() const;
+    void addAtom(PdbAtom *atom);
+    QList<PdbAtom *> atoms() const;
 
-        QString name() const;
-        int index() const;
+    QString name() const;
+    int index() const;
 
-    private:
-        QString m_name;
-        int m_index;
-        QList<PdbAtom *> m_atoms;
+private:
+    QString m_name;
+    int m_index;
+    QList<PdbAtom *> m_atoms;
 };
 
 PdbResidue::PdbResidue(const QString &name, int index)
@@ -141,28 +141,28 @@ int PdbResidue::index() const
 // === PdbChain ============================================================ //
 class PdbChain
 {
-    public:
-        enum Type {
-            Protein,
-            DNA,
-            RNA
-        };
+public:
+    enum Type {
+        Protein,
+        DNA,
+        RNA
+    };
 
-        PdbChain(char id);
-        ~PdbChain();
+    PdbChain(char id);
+    ~PdbChain();
 
-        char id() const;
-        QString name() const;
+    char id() const;
+    QString name() const;
 
-        void addResidue(PdbResidue *residue);
-        QList<PdbResidue *> residues() const;
+    void addResidue(PdbResidue *residue);
+    QList<PdbResidue *> residues() const;
 
-        Type guessType() const;
+    Type guessType() const;
 
-    private:
-        char m_id;
-        QString m_name;
-        QList<PdbResidue *> m_residues;
+private:
+    char m_id;
+    QString m_name;
+    QList<PdbResidue *> m_residues;
 };
 
 PdbChain::PdbChain(char id)
@@ -215,19 +215,19 @@ PdbChain::Type PdbChain::guessType() const
 // === PdbConformation ===================================================== //
 class PdbConformation
 {
-    public:
-        PdbConformation(const char *data);
+public:
+    PdbConformation(const char *data);
 
-        chemkit::AminoAcid::Conformation type() const { return m_type; }
-        char chain() const { return m_chain; }
-        int firstResidue() const { return m_firstResidue; }
-        int lastResidue() const { return m_lastResidue; }
+    chemkit::AminoAcid::Conformation type() const { return m_type; }
+    char chain() const { return m_chain; }
+    int firstResidue() const { return m_firstResidue; }
+    int lastResidue() const { return m_lastResidue; }
 
-    private:
-        chemkit::AminoAcid::Conformation m_type;
-        char m_chain;
-        int m_firstResidue;
-        int m_lastResidue;
+private:
+    chemkit::AminoAcid::Conformation m_type;
+    char m_chain;
+    int m_firstResidue;
+    int m_lastResidue;
 };
 
 PdbConformation::PdbConformation(const char *data)
@@ -251,13 +251,13 @@ PdbConformation::PdbConformation(const char *data)
 // === PdbConformer ======================================================== //
 class PdbConformer
 {
-    public:
-        PdbConformer(std::istream &input);
+public:
+    PdbConformer(std::istream &input);
 
-        chemkit::Point3 position(int atom) const;
+    chemkit::Point3 position(int atom) const;
 
-    private:
-        QHash<int, chemkit::Point3> m_positions;
+private:
+    QHash<int, chemkit::Point3> m_positions;
 };
 
 PdbConformer::PdbConformer(std::istream &input)
@@ -293,19 +293,19 @@ chemkit::Point3 PdbConformer::position(int atom) const
 // === PdbFile ============================================================= //
 class PdbFile
 {
-    public:
-        PdbFile();
-        ~PdbFile();
+public:
+    PdbFile();
+    ~PdbFile();
 
-        bool read(std::istream &input);
+    bool read(std::istream &input);
 
-        void addChain(PdbChain *chain);
-        void writePolymerFile(chemkit::PolymerFile *file);
+    void addChain(PdbChain *chain);
+    void writePolymerFile(chemkit::PolymerFile *file);
 
-    private:
-        QList<PdbChain *> m_chains;
-        QList<PdbConformer *> m_conformers;
-        QList<PdbConformation *> m_conformations;
+private:
+    QList<PdbChain *> m_chains;
+    QList<PdbConformer *> m_conformers;
+    QList<PdbConformation *> m_conformations;
 };
 
 PdbFile::PdbFile()

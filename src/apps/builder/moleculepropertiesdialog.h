@@ -52,19 +52,19 @@ class MoleculePropertiesDialog : public QDialog
 {
     Q_OBJECT
 
-    public:
-        explicit MoleculePropertiesDialog(const chemkit::Molecule *molecule, QWidget *parent = 0);
-        ~MoleculePropertiesDialog();
+public:
+    explicit MoleculePropertiesDialog(const chemkit::Molecule *molecule, QWidget *parent = 0);
+    ~MoleculePropertiesDialog();
 
-    private slots:
-        void lineFormatChanged(int index);
+private slots:
+    void lineFormatChanged(int index);
 
-    private:
-        QString formattedFormula(const chemkit::Molecule *molecule) const;
+private:
+    QString formattedFormula(const chemkit::Molecule *molecule) const;
 
-    private:
-        Ui::MoleculePropertiesDialog *ui;
-        const chemkit::Molecule *m_molecule;
+private:
+    Ui::MoleculePropertiesDialog *ui;
+    const chemkit::Molecule *m_molecule;
 };
 
 #endif // MOLECULEPROPERTIESDIALOG_H

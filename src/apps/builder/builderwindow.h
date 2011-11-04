@@ -57,79 +57,79 @@ class BuilderWindow : public QMainWindow
 {
     Q_OBJECT
 
-    public:
-        // construction and destruction
-        BuilderWindow(QWidget *parent = 0);
-        ~BuilderWindow();
+public:
+    // construction and destruction
+    BuilderWindow(QWidget *parent = 0);
+    ~BuilderWindow();
 
-        // properties
-        chemkit::MoleculeFile* file() const { return m_file; }
+    // properties
+    chemkit::MoleculeFile* file() const { return m_file; }
 
-        // molecule
-        void setMolecule(chemkit::Molecule *molecule);
-        chemkit::Molecule* molecule() const;
-        chemkit::GraphicsMoleculeItem* moleculeItem() const;
-        chemkit::MoleculeEditor* editor() const;
-        EnergyMinimizer* energyMinimizer() const;
-        void beginMoleculeEdit();
-        void endMoleculeEdit();
+    // molecule
+    void setMolecule(chemkit::Molecule *molecule);
+    chemkit::Molecule* molecule() const;
+    chemkit::GraphicsMoleculeItem* moleculeItem() const;
+    chemkit::MoleculeEditor* editor() const;
+    EnergyMinimizer* energyMinimizer() const;
+    void beginMoleculeEdit();
+    void endMoleculeEdit();
 
-        // view
-        chemkit::GraphicsView* view() const;
+    // view
+    chemkit::GraphicsView* view() const;
 
-        // tools
-        void setTool(BuilderTool *tool);
-        BuilderTool* tool() const { return m_tool; }
-        BuilderTool* navigateTool() const { return m_navigateTool; }
-        BuilderTool* buildTool() const { return m_buildTool; }
-        BuilderTool* manipulateTool() const { return m_manipulateTool; }
-        void setCanCut(bool canCut);
-        void setCanCopy(bool canCopy);
-        void setCanPaste(bool canPaste);
-        void setCanDelete(bool canDelete);
+    // tools
+    void setTool(BuilderTool *tool);
+    BuilderTool* tool() const { return m_tool; }
+    BuilderTool* navigateTool() const { return m_navigateTool; }
+    BuilderTool* buildTool() const { return m_buildTool; }
+    BuilderTool* manipulateTool() const { return m_manipulateTool; }
+    void setCanCut(bool canCut);
+    void setCanCopy(bool canCopy);
+    void setCanPaste(bool canPaste);
+    void setCanDelete(bool canDelete);
 
-    public slots:
-        void openFile(const QString &fileName);
-        void openFile();
-        void saveFile();
-        void saveFileAs(const QString &fileName);
-        void saveFileAs();
-        void closeFile();
-        void quit();
-        void about();
-        void undo();
-        void redo();
-        void cut();
-        void copy();
-        void paste();
-        void del();
-        void centerCamera();
-        void setBackgroundColor(QAction *action);
-        void setTool(QAction *action);
-        void predictBonds();
-        void adjustHydrogens();
-        void moleculeProperties();
+public slots:
+    void openFile(const QString &fileName);
+    void openFile();
+    void saveFile();
+    void saveFileAs(const QString &fileName);
+    void saveFileAs();
+    void closeFile();
+    void quit();
+    void about();
+    void undo();
+    void redo();
+    void cut();
+    void copy();
+    void paste();
+    void del();
+    void centerCamera();
+    void setBackgroundColor(QAction *action);
+    void setTool(QAction *action);
+    void predictBonds();
+    void adjustHydrogens();
+    void moleculeProperties();
 
-    signals:
-        void fileChanged(chemkit::MoleculeFile *file);
-        void moleculeChanged(chemkit::Molecule *molecule);
-        void toolChanged(BuilderTool *tool);
+signals:
+    void fileChanged(chemkit::MoleculeFile *file);
+    void moleculeChanged(chemkit::Molecule *molecule);
+    void toolChanged(BuilderTool *tool);
 
-    private slots:
-        void minimizerStateChanged(int state);
+private slots:
+    void minimizerStateChanged(int state);
 
-    private:
-        Ui::BuilderWindow *ui;
-        chemkit::MoleculeFile *m_file;
-        chemkit::Molecule *m_molecule;
-        chemkit::GraphicsMoleculeItem *m_moleculeItem;
-        chemkit::MoleculeEditor *m_editor;
-        BuilderTool *m_tool;
-        BuilderTool *m_navigateTool;
-        BuilderTool *m_buildTool;
-        BuilderTool *m_manipulateTool;
-        EnergyMinimizer *m_energyMinimizer;
-        bool m_inMoleculeEdit;
+private:
+    Ui::BuilderWindow *ui;
+    chemkit::MoleculeFile *m_file;
+    chemkit::Molecule *m_molecule;
+    chemkit::GraphicsMoleculeItem *m_moleculeItem;
+    chemkit::MoleculeEditor *m_editor;
+    BuilderTool *m_tool;
+    BuilderTool *m_navigateTool;
+    BuilderTool *m_buildTool;
+    BuilderTool *m_manipulateTool;
+    EnergyMinimizer *m_energyMinimizer;
+    bool m_inMoleculeEdit;
 };
 
 #endif // BUILDERWINDOW_H

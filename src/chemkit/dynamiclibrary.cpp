@@ -57,10 +57,10 @@ namespace chemkit {
 // === DynamicLibraryPrivate =============================================== //
 class DynamicLibraryPrivate
 {
-    public:
-        std::string fileName;
-        std::string errorString;
-        LibraryHandle handle;
+public:
+    std::string fileName;
+    std::string errorString;
+    LibraryHandle handle;
 };
 
 // === DynamicLibrary ====================================================== //

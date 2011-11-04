@@ -55,13 +55,13 @@ struct UffAtomParameters {
 
 class UffParameters
 {
-    public:
-        // construction and destruction
-        UffParameters();
-        ~UffParameters();
+public:
+    // construction and destruction
+    UffParameters();
+    ~UffParameters();
 
-        // parameters
-        const UffAtomParameters* parameters(const chemkit::ForceFieldAtom *atom) const;
+    // parameters
+    const UffAtomParameters* parameters(const chemkit::ForceFieldAtom *atom) const;
 };
 
 #endif // UFFPARAMETERS_H

@@ -40,11 +40,11 @@
 
 class WienerIndexDescriptor : public chemkit::MolecularDescriptor
 {
-    public:
-        WienerIndexDescriptor();
-        ~WienerIndexDescriptor();
+public:
+    WienerIndexDescriptor();
+    ~WienerIndexDescriptor();
 
-        chemkit::Variant value(const chemkit::Molecule *molecule) const;
+    chemkit::Variant value(const chemkit::Molecule *molecule) const;
 };
 
 #endif // WIENERINDEXDESCRIPTOR_H

@@ -42,33 +42,33 @@
 
 class McdlReader
 {
-    public:
-        // construction and destruction
-        McdlReader();
-        ~McdlReader();
+public:
+    // construction and destruction
+    McdlReader();
+    ~McdlReader();
 
-        // reading
-        bool read(const std::string &formula, chemkit::Molecule *molecule);
-        bool read(const char *formula, chemkit::Molecule *molecule);
+    // reading
+    bool read(const std::string &formula, chemkit::Molecule *molecule);
+    bool read(const char *formula, chemkit::Molecule *molecule);
 
-        // error handling
-        std::string errorString() const;
+    // error handling
+    std::string errorString() const;
 
-    private:
-        bool readCompositionModule();
-        bool readConnectionModule();
-        int readNumber(const char **p);
-        int readElement(const char **p);
-        void addFragmentCopies(chemkit::Atom *atom, int quantity);
-        void addFragmentConnections(const QList<int> &connections, int fragment);
-        void setErrorString(const std::string &error);
+private:
+    bool readCompositionModule();
+    bool readConnectionModule();
+    int readNumber(const char **p);
+    int readElement(const char **p);
+    void addFragmentCopies(chemkit::Atom *atom, int quantity);
+    void addFragmentConnections(const QList<int> &connections, int fragment);
+    void setErrorString(const std::string &error);
 
-    private:
-        const char *p;
-        const char *m_formula;
-        chemkit::Molecule *m_molecule;
-        QList<chemkit::Atom *> m_fragments;
-        std::string m_errorString;
+private:
+    const char *p;
+    const char *m_formula;
+    chemkit::Molecule *m_molecule;
+    QList<chemkit::Atom *> m_fragments;
+    std::string m_errorString;
 };
 
 #endif // MCDLREADER_H

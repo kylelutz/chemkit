@@ -46,26 +46,26 @@ class MoleculeObserverPrivate;
 
 class CHEMKIT_EXPORT MoleculeObserver
 {
-    public:
-        // construction and destruction
-        MoleculeObserver(const Molecule *molecule = 0);
-        virtual ~MoleculeObserver();
+public:
+    // construction and destruction
+    MoleculeObserver(const Molecule *molecule = 0);
+    virtual ~MoleculeObserver();
 
-        // properties
-        void setMolecule(const Molecule *molecule);
-        const Molecule* molecule() const;
+    // properties
+    void setMolecule(const Molecule *molecule);
+    const Molecule* molecule() const;
 
-    protected:
-        // events
-        virtual void atomChanged(const Atom *atom, Molecule::ChangeType changeType);
-        virtual void bondChanged(const Bond *bond, Molecule::ChangeType changeType);
-        virtual void conformerChanged(const Conformer *conformer, Molecule::ChangeType changeType);
-        virtual void moleculeChanged(const Molecule *molecule, Molecule::ChangeType changeType);
+protected:
+    // events
+    virtual void atomChanged(const Atom *atom, Molecule::ChangeType changeType);
+    virtual void bondChanged(const Bond *bond, Molecule::ChangeType changeType);
+    virtual void conformerChanged(const Conformer *conformer, Molecule::ChangeType changeType);
+    virtual void moleculeChanged(const Molecule *molecule, Molecule::ChangeType changeType);
 
-        friend class Molecule;
+    friend class Molecule;
 
-    private:
-        MoleculeObserverPrivate* const d;
+private:
+    MoleculeObserverPrivate* const d;
 };
 
 } // end chemkit namespace

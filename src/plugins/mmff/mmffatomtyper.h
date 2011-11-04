@@ -43,36 +43,36 @@
 
 class MmffAtomTyper : public chemkit::AtomTyper
 {
-    public:
-        // construction and destruction
-        MmffAtomTyper(const chemkit::Molecule *molecule = 0);
-        ~MmffAtomTyper();
+public:
+    // construction and destruction
+    MmffAtomTyper(const chemkit::Molecule *molecule = 0);
+    ~MmffAtomTyper();
 
-        // types
-        int typeNumber(int index) const;
-        int typeNumber(const chemkit::Atom *atom) const;
+    // types
+    int typeNumber(int index) const;
+    int typeNumber(const chemkit::Atom *atom) const;
 
-        // charges
-        chemkit::Real formalCharge(int index) const;
-        chemkit::Real formalCharge(const chemkit::Atom *atom) const;
+    // charges
+    chemkit::Real formalCharge(int index) const;
+    chemkit::Real formalCharge(const chemkit::Atom *atom) const;
 
-    protected:
-        void assignTypes(const chemkit::Molecule *molecule);
+protected:
+    void assignTypes(const chemkit::Molecule *molecule);
 
-    private:
-        void setType(int index, int type, chemkit::Real formalCharge = 0);
-        void setType(int index, const chemkit::Atom *atom);
-        void setHydrogenType(int index, const chemkit::Atom *atom);
-        void setCarbonType(int index, const chemkit::Atom *atom);
-        void setNitrogenType(int index, const chemkit::Atom *atom);
-        void setOxygenType(int index, const chemkit::Atom *atom);
-        void setSulfurType(int index, const chemkit::Atom *atom);
-        void setAromaticType(int index, const chemkit::Atom *atom, const chemkit::Ring *ring, int position);
+private:
+    void setType(int index, int type, chemkit::Real formalCharge = 0);
+    void setType(int index, const chemkit::Atom *atom);
+    void setHydrogenType(int index, const chemkit::Atom *atom);
+    void setCarbonType(int index, const chemkit::Atom *atom);
+    void setNitrogenType(int index, const chemkit::Atom *atom);
+    void setOxygenType(int index, const chemkit::Atom *atom);
+    void setSulfurType(int index, const chemkit::Atom *atom);
+    void setAromaticType(int index, const chemkit::Atom *atom, const chemkit::Ring *ring, int position);
 
-    private:
-        std::vector<int> m_types;
-        std::vector<chemkit::Real> m_formalCharges;
-        std::vector<chemkit::Real> m_partialCharges;
+private:
+    std::vector<int> m_types;
+    std::vector<chemkit::Real> m_formalCharges;
+    std::vector<chemkit::Real> m_partialCharges;
 };
 
 #endif // MMFFATOMTYPER_H

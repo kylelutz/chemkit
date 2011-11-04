@@ -46,12 +46,12 @@ namespace chemkit {
 // === MoleculeAlignerPrivate ============================================== //
 class MoleculeAlignerPrivate
 {
-    public:
-        std::map<Atom *, Atom *> mapping;
-        const Molecule *sourceMolecule;
-        const Molecule *targetMolecule;
-        const Conformer *sourceConformer;
-        const Conformer *targetConformer;
+public:
+    std::map<Atom *, Atom *> mapping;
+    const Molecule *sourceMolecule;
+    const Molecule *targetMolecule;
+    const Conformer *sourceConformer;
+    const Conformer *targetConformer;
 };
 
 // === MoleculeAligner ===================================================== //

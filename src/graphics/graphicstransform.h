@@ -47,47 +47,47 @@ namespace chemkit {
 
 class CHEMKIT_GRAPHICS_EXPORT GraphicsTransform
 {
-    public:
-        // construction and destruction
-        GraphicsTransform();
-        GraphicsTransform(const GraphicsTransform &transform);
-        GraphicsTransform(const Eigen::Matrix<float, 4, 4> &matrix);
-        ~GraphicsTransform();
+public:
+    // construction and destruction
+    GraphicsTransform();
+    GraphicsTransform(const GraphicsTransform &transform);
+    GraphicsTransform(const Eigen::Matrix<float, 4, 4> &matrix);
+    ~GraphicsTransform();
 
-        // properties
-        const float* data() const;
+    // properties
+    const float* data() const;
 
-        // math
-        void invert();
-        GraphicsTransform inverted() const;
-        GraphicsRay multiply(const GraphicsRay &ray) const;
-        Point3f multiplyPoint(const Point3f &point) const;
-        Vector3f multiplyVector(const Vector3f &vector) const;
-        Eigen::Matrix<float, 4, 1> multiply(const Eigen::Matrix<float, 4, 1> &vector) const;
-        GraphicsTransform multiply(const GraphicsTransform &transform) const;
-        Point3f inverseMultiplyPoint(const Point3f &point) const;
-        Vector3f inverseMultiplyVector(const Vector3f &vector) const;
-        Eigen::Matrix<float, 4, 1> inverseMultiply(const Eigen::Matrix<float, 4, 1> &vector) const;
+    // math
+    void invert();
+    GraphicsTransform inverted() const;
+    GraphicsRay multiply(const GraphicsRay &ray) const;
+    Point3f multiplyPoint(const Point3f &point) const;
+    Vector3f multiplyVector(const Vector3f &vector) const;
+    Eigen::Matrix<float, 4, 1> multiply(const Eigen::Matrix<float, 4, 1> &vector) const;
+    GraphicsTransform multiply(const GraphicsTransform &transform) const;
+    Point3f inverseMultiplyPoint(const Point3f &point) const;
+    Vector3f inverseMultiplyVector(const Vector3f &vector) const;
+    Eigen::Matrix<float, 4, 1> inverseMultiply(const Eigen::Matrix<float, 4, 1> &vector) const;
 
-        // operators
-        float operator()(int row, int column) const;
-        float& operator()(int row, int column);
-        GraphicsRay operator*(const GraphicsRay &ray) const;
-        Point3f operator*(const Point3f &point) const;
-        GraphicsTransform operator*(const GraphicsTransform &transform) const;
-        GraphicsTransform& operator*=(const GraphicsTransform &transform);
-        GraphicsTransform& operator=(const GraphicsTransform &transform);
+    // operators
+    float operator()(int row, int column) const;
+    float& operator()(int row, int column);
+    GraphicsRay operator*(const GraphicsRay &ray) const;
+    Point3f operator*(const Point3f &point) const;
+    GraphicsTransform operator*(const GraphicsTransform &transform) const;
+    GraphicsTransform& operator*=(const GraphicsTransform &transform);
+    GraphicsTransform& operator=(const GraphicsTransform &transform);
 
-        // static methods
-        static GraphicsTransform identity();
-        static GraphicsTransform translation(const Vector3f &vector);
-        static GraphicsTransform rotation(const Vector3f &axis, float angle);
-        static GraphicsTransform perspective(float angle, float aspectRatio, float nearDistance, float farDistance);
-        static GraphicsTransform frustum(float left, float right, float top, float bottom, float nearDistance, float farDistance);
-        static GraphicsTransform orthographic(float left, float right, float top, float bottom, float near, float far);
+    // static methods
+    static GraphicsTransform identity();
+    static GraphicsTransform translation(const Vector3f &vector);
+    static GraphicsTransform rotation(const Vector3f &axis, float angle);
+    static GraphicsTransform perspective(float angle, float aspectRatio, float nearDistance, float farDistance);
+    static GraphicsTransform frustum(float left, float right, float top, float bottom, float nearDistance, float farDistance);
+    static GraphicsTransform orthographic(float left, float right, float top, float bottom, float near, float far);
 
-    private:
-        Eigen::Matrix<float, 4, 4> *m_matrix;
+private:
+    Eigen::Matrix<float, 4, 4> *m_matrix;
 };
 
 } // end chemkit namespace

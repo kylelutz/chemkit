@@ -46,52 +46,52 @@ class AlphaShapePrivate;
 
 class CHEMKIT_EXPORT AlphaShape
 {
-    public:
-        // enumerations
-        enum Classification {
-            Interior = 0x01,
-            Regular = 0x02,
-            Singular = 0x04
-        };
+public:
+    // enumerations
+    enum Classification {
+        Interior = 0x01,
+        Regular = 0x02,
+        Singular = 0x04
+    };
 
-        // construction and destruction
-        AlphaShape(const std::vector<Point3> &points);
-        AlphaShape(const std::vector<Point3> &points, const std::vector<Real> &weights);
-        ~AlphaShape();
+    // construction and destruction
+    AlphaShape(const std::vector<Point3> &points);
+    AlphaShape(const std::vector<Point3> &points, const std::vector<Real> &weights);
+    ~AlphaShape();
 
-        // properties
-        int size() const;
-        Point3 position(int vertex) const;
-        Real weight(int vertex) const;
-        void setAlphaValue(Real alphaValue);
-        Real alphaValue() const;
+    // properties
+    int size() const;
+    Point3 position(int vertex) const;
+    Real weight(int vertex) const;
+    void setAlphaValue(Real alphaValue);
+    Real alphaValue() const;
 
-        // simplicies
-        std::vector<int> verticies() const;
-        int vertexCount() const;
-        const std::vector<std::vector<int> >& edges() const;
-        int edgeCount() const;
-        const std::vector<std::vector<int> >& triangles() const;
-        int triangleCount() const;
-        const std::vector<std::vector<int> >& tetrahedra() const;
-        int tetrahedronCount() const;
+    // simplicies
+    std::vector<int> verticies() const;
+    int vertexCount() const;
+    const std::vector<std::vector<int> >& edges() const;
+    int edgeCount() const;
+    const std::vector<std::vector<int> >& triangles() const;
+    int triangleCount() const;
+    const std::vector<std::vector<int> >& tetrahedra() const;
+    int tetrahedronCount() const;
 
-        // geometry
-        Real volume() const;
-        Real surfaceArea() const;
-        Point3 orthocenter(int i, int j) const;
-        Point3 orthocenter(int i, int j, int k) const;
-        Point3 orthocenter(int i, int j, int k, int l) const;
-        Real orthoradius(int i, int j) const;
-        Real orthoradius(int i, int j, int k) const;
-        Real orthoradius(int i, int j, int k, int l) const;
-        bool vertexAttached(int i, int j) const;
-        bool edgeAttached(int i, int j, int k) const;
-        bool triangleAttached(int i, int j, int k, int l) const;
-        bool triangleAttached(int i, int j, int k, int l, int m) const;
+    // geometry
+    Real volume() const;
+    Real surfaceArea() const;
+    Point3 orthocenter(int i, int j) const;
+    Point3 orthocenter(int i, int j, int k) const;
+    Point3 orthocenter(int i, int j, int k, int l) const;
+    Real orthoradius(int i, int j) const;
+    Real orthoradius(int i, int j, int k) const;
+    Real orthoradius(int i, int j, int k, int l) const;
+    bool vertexAttached(int i, int j) const;
+    bool edgeAttached(int i, int j, int k) const;
+    bool triangleAttached(int i, int j, int k, int l) const;
+    bool triangleAttached(int i, int j, int k, int l, int m) const;
 
-    private:
-        AlphaShapePrivate* const d;
+private:
+    AlphaShapePrivate* const d;
 };
 
 } // end chemkit namespace

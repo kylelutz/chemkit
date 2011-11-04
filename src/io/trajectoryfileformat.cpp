@@ -44,9 +44,9 @@ namespace chemkit {
 // === TrajectoryFileFormatPrivate ========================================= //
 class TrajectoryFileFormatPrivate
 {
-    public:
-        std::string name;
-        std::string errorString;
+public:
+    std::string name;
+    std::string errorString;
 };
 
 // === TrajectoryFormatFile ================================================ //

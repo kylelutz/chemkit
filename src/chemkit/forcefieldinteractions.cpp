@@ -44,9 +44,9 @@ namespace chemkit {
 // === ForceFieldInteractionsPrivate ======================================= //
 class ForceFieldInteractionsPrivate
 {
-    public:
-        const Molecule *molecule;
-        const ForceField *forceField;
+public:
+    const Molecule *molecule;
+    const ForceField *forceField;
 };
 
 // === ForceFieldInteractions ============================================== //

@@ -42,12 +42,12 @@
 
 class UffPlugin : public chemkit::Plugin
 {
-    public:
-        UffPlugin();
-        ~UffPlugin();
+public:
+    UffPlugin();
+    ~UffPlugin();
 
-        static chemkit::AtomTyper* createUffAtomTyper();
-        static chemkit::ForceField* createUffForceField();
+    static chemkit::AtomTyper* createUffAtomTyper();
+    static chemkit::ForceField* createUffForceField();
 };
 
 #endif // UFFPLUGIN_H

@@ -42,51 +42,51 @@
 
 class OplsCalculation : public chemkit::ForceFieldCalculation
 {
-    public:
-        virtual bool setup(const OplsParameters *parameters) = 0;
+public:
+    virtual bool setup(const OplsParameters *parameters) = 0;
 
-    protected:
-        OplsCalculation(int type, int atomCount, int parameterCount);
+protected:
+    OplsCalculation(int type, int atomCount, int parameterCount);
 };
 
 class OplsBondStrechCalculation : public OplsCalculation
 {
-    public:
-        OplsBondStrechCalculation(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b);
+public:
+    OplsBondStrechCalculation(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b);
 
-        bool setup(const OplsParameters *parameters);
-        chemkit::Real energy() const;
-        std::vector<chemkit::Vector3> gradient() const;
+    bool setup(const OplsParameters *parameters);
+    chemkit::Real energy() const;
+    std::vector<chemkit::Vector3> gradient() const;
 };
 
 class OplsAngleBendCalculation : public OplsCalculation
 {
-    public:
-        OplsAngleBendCalculation(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b, const chemkit::ForceFieldAtom *c);
+public:
+    OplsAngleBendCalculation(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b, const chemkit::ForceFieldAtom *c);
 
-        bool setup(const OplsParameters *parameters);
-        chemkit::Real energy() const;
-        std::vector<chemkit::Vector3> gradient() const;
+    bool setup(const OplsParameters *parameters);
+    chemkit::Real energy() const;
+    std::vector<chemkit::Vector3> gradient() const;
 };
 
 class OplsTorsionCalculation : public OplsCalculation
 {
-    public:
-        OplsTorsionCalculation(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b, const chemkit::ForceFieldAtom *c, const chemkit::ForceFieldAtom *d);
+public:
+    OplsTorsionCalculation(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b, const chemkit::ForceFieldAtom *c, const chemkit::ForceFieldAtom *d);
 
-        bool setup(const OplsParameters *parameters);
-        chemkit::Real energy() const;
-        std::vector<chemkit::Vector3> gradient() const;
+    bool setup(const OplsParameters *parameters);
+    chemkit::Real energy() const;
+    std::vector<chemkit::Vector3> gradient() const;
 };
 
 class OplsNonbondedCalculation : public OplsCalculation
 {
-    public:
-        OplsNonbondedCalculation(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b);
+public:
+    OplsNonbondedCalculation(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b);
 
-        bool setup(const OplsParameters *parameters);
-        chemkit::Real energy() const;
-        std::vector<chemkit::Vector3> gradient() const;
+    bool setup(const OplsParameters *parameters);
+    chemkit::Real energy() const;
+    std::vector<chemkit::Vector3> gradient() const;
 };
 
 #endif // OPLSCALCULATION_H

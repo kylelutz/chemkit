@@ -45,8 +45,8 @@ namespace chemkit {
 // === TrajectoryPrivate =================================================== //
 class TrajectoryPrivate
 {
-    public:
-        std::vector<TrajectoryFrame *> frames;
+public:
+    std::vector<TrajectoryFrame *> frames;
 };
 
 // === Trajectory ========================================================== //

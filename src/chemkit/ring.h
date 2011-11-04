@@ -50,54 +50,54 @@ class Molecule;
 
 class CHEMKIT_EXPORT Ring
 {
-    public:
-        // properties
-        inline int size() const;
-        inline Molecule* molecule() const;
-        inline Fragment* fragment() const;
+public:
+    // properties
+    inline int size() const;
+    inline Molecule* molecule() const;
+    inline Fragment* fragment() const;
 
-        // structure
-        inline Atom* atom(int index) const;
-        inline std::vector<Atom *> atoms() const;
-        inline int atomCount() const;
-        int atomCount(const Element &element) const;
-        Bond* bond(int index) const;
-        std::vector<Bond *> bonds() const;
-        int bondCount() const;
-        std::vector<Bond *> exocyclicBonds() const;
-        int exocyclicBondCount() const;
-        inline bool contains(const Atom *atom) const;
-        inline bool contains(const Bond *bond) const;
-        inline bool contains(const Element &element) const;
-        int heteroatomCount() const;
-        bool isHeterocycle() const;
-        Atom* root() const;
-        int position(const Atom *atom, const Atom *root = 0) const;
-        bool isFusedTo(const Ring *ring) const;
+    // structure
+    inline Atom* atom(int index) const;
+    inline std::vector<Atom *> atoms() const;
+    inline int atomCount() const;
+    int atomCount(const Element &element) const;
+    Bond* bond(int index) const;
+    std::vector<Bond *> bonds() const;
+    int bondCount() const;
+    std::vector<Bond *> exocyclicBonds() const;
+    int exocyclicBondCount() const;
+    inline bool contains(const Atom *atom) const;
+    inline bool contains(const Bond *bond) const;
+    inline bool contains(const Element &element) const;
+    int heteroatomCount() const;
+    bool isHeterocycle() const;
+    Atom* root() const;
+    int position(const Atom *atom, const Atom *root = 0) const;
+    bool isFusedTo(const Ring *ring) const;
 
-        // aromaticity
-        bool isAromatic() const;
+    // aromaticity
+    bool isAromatic() const;
 
-    private:
-        Ring(std::vector<Atom *> path);
-        ~Ring();
+private:
+    Ring(std::vector<Atom *> path);
+    ~Ring();
 
-        // internal methods
-        bool isValid() const;
-        const Atom *nextAtom(const Atom *atom) const;
-        const Atom *previousAtom(const Atom *atom) const;
-        const Bond *nextBond(const Atom *atom) const;
-        const Bond *previousBond(const Atom *atom) const;
-        bool isPlanar() const;
-        int piElectronCount() const;
+    // internal methods
+    bool isValid() const;
+    const Atom *nextAtom(const Atom *atom) const;
+    const Atom *previousAtom(const Atom *atom) const;
+    const Bond *nextBond(const Atom *atom) const;
+    const Bond *previousBond(const Atom *atom) const;
+    bool isPlanar() const;
+    int piElectronCount() const;
 
-        CHEMKIT_DISABLE_COPY(Ring)
+    CHEMKIT_DISABLE_COPY(Ring)
 
-        friend class Molecule;
-        friend class MolecularGraph;
+    friend class Molecule;
+    friend class MolecularGraph;
 
-    private:
-        std::vector<Atom *> m_atoms;
+private:
+    std::vector<Atom *> m_atoms;
 };
 
 } // end chemkit namespace

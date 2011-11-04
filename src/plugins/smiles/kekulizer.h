@@ -42,8 +42,8 @@
 
 class Kekulizer
 {
-    public:
-        static void kekulize(const std::vector<chemkit::Bond *> &bonds);
+public:
+    static void kekulize(const std::vector<chemkit::Bond *> &bonds);
 };
 
 #endif // KEKULIZER_H

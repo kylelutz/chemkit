@@ -43,9 +43,9 @@ namespace chemkit {
 // === GraphicsNavigationToolPrivate ======================================= //
 class GraphicsNavigationToolPrivate
 {
-    public:
-        bool mouseDown;
-        QPoint lastPosition;
+public:
+    bool mouseDown;
+    QPoint lastPosition;
 };
 
 // === GraphicsNavigationTool ============================================== //

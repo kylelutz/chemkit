@@ -46,26 +46,26 @@ class GraphicsSphereItemPrivate;
 
 class CHEMKIT_GRAPHICS_EXPORT GraphicsSphereItem : public GraphicsItem
 {
-    public:
-        // construction and destruction
-        GraphicsSphereItem(const Point3f &position, float radius);
-        GraphicsSphereItem(float x, float y, float z, float radius);
-        ~GraphicsSphereItem();
+public:
+    // construction and destruction
+    GraphicsSphereItem(const Point3f &position, float radius);
+    GraphicsSphereItem(float x, float y, float z, float radius);
+    ~GraphicsSphereItem();
 
-        // properties
-        void setPosition(const Point3f &position);
-        void setPosition(float x, float y, float z);
-        Point3f position() const;
-        void setRadius(float radius);
-        float radius() const;
-        void setColor(const QColor &color);
-        QColor color() const;
+    // properties
+    void setPosition(const Point3f &position);
+    void setPosition(float x, float y, float z);
+    Point3f position() const;
+    void setRadius(float radius);
+    float radius() const;
+    void setColor(const QColor &color);
+    QColor color() const;
 
-        // drawing
-        virtual void paint(GraphicsPainter *painter);
+    // drawing
+    virtual void paint(GraphicsPainter *painter);
 
-    private:
-        GraphicsSphereItemPrivate* const d;
+private:
+    GraphicsSphereItemPrivate* const d;
 };
 
 } // end chemkit namespace

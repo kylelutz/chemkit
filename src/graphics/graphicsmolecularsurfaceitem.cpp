@@ -53,15 +53,15 @@ namespace {
 // === ClippedSphere ======================================================= //
 class ClippedSphere
 {
-    public:
-        ClippedSphere(float radius);
+public:
+    ClippedSphere(float radius);
 
-        void addClipPlane(const Point3f &point, const Vector3f &normal);
-        GraphicsVertexBuffer* tesselate() const;
+    void addClipPlane(const Point3f &point, const Vector3f &normal);
+    GraphicsVertexBuffer* tesselate() const;
 
-    private:
-        float m_radius;
-        QList<QPair<Point3f, Vector3f> > m_clipPlanes;
+private:
+    float m_radius;
+    QList<QPair<Point3f, Vector3f> > m_clipPlanes;
 };
 
 ClippedSphere::ClippedSphere(float radius)
@@ -156,24 +156,24 @@ GraphicsVertexBuffer* ClippedSphere::tesselate() const
 // === ContactPatchItem ==================================================== //
 class ContactPatchItem : public GraphicsItem
 {
-    public:
-        ContactPatchItem(GraphicsMolecularSurfaceItem *parent, const Point3f &center, float radius);
-        ~ContactPatchItem();
+public:
+    ContactPatchItem(GraphicsMolecularSurfaceItem *parent, const Point3f &center, float radius);
+    ~ContactPatchItem();
 
-        Point3f center() const;
-        float radius() const;
-        void setColor(const QColor &color);
-        void addIntersection(const ContactPatchItem *item);
+    Point3f center() const;
+    float radius() const;
+    void setColor(const QColor &color);
+    void addIntersection(const ContactPatchItem *item);
 
-        void paint(GraphicsPainter *painter);
+    void paint(GraphicsPainter *painter);
 
-    private:
-        GraphicsMolecularSurfaceItem *m_parent;
-        Point3f m_center;
-        float m_radius;
-        QColor m_color;
-        GraphicsVertexBuffer *m_buffer;
-        QList<const ContactPatchItem *> m_intersections;
+private:
+    GraphicsMolecularSurfaceItem *m_parent;
+    Point3f m_center;
+    float m_radius;
+    QColor m_color;
+    GraphicsVertexBuffer *m_buffer;
+    QList<const ContactPatchItem *> m_intersections;
 };
 
 ContactPatchItem::ContactPatchItem(GraphicsMolecularSurfaceItem *parent, const Point3f &center, float radius)
@@ -251,12 +251,12 @@ void ContactPatchItem::paint(GraphicsPainter *painter)
 // === GraphicsMolecularSurfaceItemPrivate ================================= //
 class GraphicsMolecularSurfaceItemPrivate
 {
-    public:
-        MolecularSurface *surface;
-        QColor color;
-        GraphicsAtomColorMap *colorMap;
-        GraphicsMolecularSurfaceItem::ColorMode colorMode;
-        QList<ContactPatchItem *> contactPatches;
+public:
+    MolecularSurface *surface;
+    QColor color;
+    GraphicsAtomColorMap *colorMap;
+    GraphicsMolecularSurfaceItem::ColorMode colorMode;
+    QList<ContactPatchItem *> contactPatches;
 };
 
 // === GraphicsMolecularSurfaceItem ======================================== //

@@ -46,15 +46,15 @@ namespace {
 // === MoleculeEditorCommand =============================================== //
 class MoleculeEditorCommand : public QUndoCommand
 {
-    public:
-        MoleculeEditorCommand(MoleculeEditor *editor);
-        virtual ~MoleculeEditorCommand();
+public:
+    MoleculeEditorCommand(MoleculeEditor *editor);
+    virtual ~MoleculeEditorCommand();
 
-        MoleculeEditor* editor() const { return m_editor; }
-        Molecule* molecule() const { return m_editor->molecule(); }
+    MoleculeEditor* editor() const { return m_editor; }
+    Molecule* molecule() const { return m_editor->molecule(); }
 
-    private:
-        MoleculeEditor *m_editor;
+private:
+    MoleculeEditor *m_editor;
 };
 
 MoleculeEditorCommand::MoleculeEditorCommand(MoleculeEditor *editor)
@@ -70,18 +70,18 @@ MoleculeEditorCommand::~MoleculeEditorCommand()
 // === AddAtomCommand ====================================================== //
 class AddAtomCommand : public MoleculeEditorCommand
 {
-    public:
-        AddAtomCommand(MoleculeEditor *editor, const Element &element);
+public:
+    AddAtomCommand(MoleculeEditor *editor, const Element &element);
 
-        void undo();
-        void redo();
+    void undo();
+    void redo();
 
-        Atom* atom() const { return m_atom; }
+    Atom* atom() const { return m_atom; }
 
-    private:
-        Element m_element;
-        Atom *m_atom;
-        int m_atomId;
+private:
+    Element m_element;
+    Atom *m_atom;
+    int m_atomId;
 };
 
 AddAtomCommand::AddAtomCommand(MoleculeEditor *editor, const Element &element)
@@ -114,16 +114,16 @@ void AddAtomCommand::redo()
 // === RemoveAtomCommand =================================================== //
 class RemoveAtomCommand : public MoleculeEditorCommand
 {
-    public:
-        RemoveAtomCommand(MoleculeEditor *editor, Atom *atom);
+public:
+    RemoveAtomCommand(MoleculeEditor *editor, Atom *atom);
 
-        void undo();
-        void redo();
+    void undo();
+    void redo();
 
-    private:
-        int m_atomId;
-        int m_atomicNumber;
-        Point3 m_position;
+private:
+    int m_atomId;
+    int m_atomicNumber;
+    Point3 m_position;
 };
 
 RemoveAtomCommand::RemoveAtomCommand(MoleculeEditor *editor, Atom *atom)
@@ -154,16 +154,16 @@ void RemoveAtomCommand::redo()
 // === SetAtomAtomicNumberCommand ========================================== //
 class SetAtomAtomicNumberCommand : public MoleculeEditorCommand
 {
-    public:
-        SetAtomAtomicNumberCommand(MoleculeEditor *editor, Atom *atom, int atomicNumber);
+public:
+    SetAtomAtomicNumberCommand(MoleculeEditor *editor, Atom *atom, int atomicNumber);
 
-        void undo();
-        void redo();
+    void undo();
+    void redo();
 
-    private:
-        int m_atomId;
-        int m_initialAtomicNumber;
-        int m_finalAtomicNumber;
+private:
+    int m_atomId;
+    int m_initialAtomicNumber;
+    int m_finalAtomicNumber;
 };
 
 SetAtomAtomicNumberCommand::SetAtomAtomicNumberCommand(MoleculeEditor *editor, Atom *atom, int atomicNumber)
@@ -193,16 +193,16 @@ void SetAtomAtomicNumberCommand::redo()
 // === SetAtomPositionCommand ============================================== //
 class SetAtomPositionCommand : public MoleculeEditorCommand
 {
-    public:
-        SetAtomPositionCommand(MoleculeEditor *editor, Atom *atom, const Point3 &position);
+public:
+    SetAtomPositionCommand(MoleculeEditor *editor, Atom *atom, const Point3 &position);
 
-        void undo();
-        void redo();
+    void undo();
+    void redo();
 
-    private:
-        int m_atomId;
-        Point3 m_initialPosition;
-        Point3 m_finalPosition;
+private:
+    int m_atomId;
+    Point3 m_initialPosition;
+    Point3 m_finalPosition;
 };
 
 SetAtomPositionCommand::SetAtomPositionCommand(MoleculeEditor *editor, Atom *atom, const Point3 &position)
@@ -232,18 +232,18 @@ void SetAtomPositionCommand::redo()
 // === AddBondCommand ====================================================== //
 class AddBondCommand : public MoleculeEditorCommand
 {
-    public:
-        AddBondCommand(MoleculeEditor *editor, Atom *a, Atom *b);
+public:
+    AddBondCommand(MoleculeEditor *editor, Atom *a, Atom *b);
 
-        void undo();
-        void redo();
+    void undo();
+    void redo();
 
-        Bond* bond() const { return m_bond; }
+    Bond* bond() const { return m_bond; }
 
-    private:
-        int m_atomId1;
-        int m_atomId2;
-        Bond *m_bond;
+private:
+    int m_atomId1;
+    int m_atomId2;
+    Bond *m_bond;
 };
 
 AddBondCommand::AddBondCommand(MoleculeEditor *editor, Atom *a, Atom *b)
@@ -274,16 +274,16 @@ void AddBondCommand::redo()
 // === RemoveBondCommand =================================================== //
 class RemoveBondCommand : public MoleculeEditorCommand
 {
-    public:
-        RemoveBondCommand(MoleculeEditor *editor, Bond *bond);
+public:
+    RemoveBondCommand(MoleculeEditor *editor, Bond *bond);
 
-        void undo();
-        void redo();
+    void undo();
+    void redo();
 
-    private:
-        int m_atomId1;
-        int m_atomId2;
-        int m_bondOrder;
+private:
+    int m_atomId1;
+    int m_atomId2;
+    int m_bondOrder;
 };
 
 RemoveBondCommand::RemoveBondCommand(MoleculeEditor *editor, Bond *bond)
@@ -314,17 +314,17 @@ void RemoveBondCommand::redo()
 // === SetBondOrderCommand ================================================= //
 class SetBondOrderCommand : public MoleculeEditorCommand
 {
-    public:
-        SetBondOrderCommand(MoleculeEditor *editor, Bond *bond, int order);
+public:
+    SetBondOrderCommand(MoleculeEditor *editor, Bond *bond, int order);
 
-        void undo();
-        void redo();
+    void undo();
+    void redo();
 
-    private:
-        int m_atomId1;
-        int m_atomId2;
-        int m_initialOrder;
-        int m_finalOrder;
+private:
+    int m_atomId1;
+    int m_atomId2;
+    int m_initialOrder;
+    int m_finalOrder;
 };
 
 SetBondOrderCommand::SetBondOrderCommand(MoleculeEditor *editor, Bond *bond, int order)
@@ -357,13 +357,13 @@ void SetBondOrderCommand::redo()
 // === MoleculeEditorPrivate =============================================== //
 class MoleculeEditorPrivate
 {
-    public:
-        Molecule *molecule;
-        bool inEdit;
-        QUndoStack undoStack;
-        QHash<int, Atom *> atomIds;
-        QList<Atom *> copyBuffer;
-        Molecule *cutMolecule;
+public:
+    Molecule *molecule;
+    bool inEdit;
+    QUndoStack undoStack;
+    QHash<int, Atom *> atomIds;
+    QList<Atom *> copyBuffer;
+    Molecule *cutMolecule;
 };
 
 // === MoleculeEditor ====================================================== //

@@ -50,28 +50,28 @@ class MolecularDescriptorPrivate;
 
 class CHEMKIT_EXPORT MolecularDescriptor
 {
-    public:
-        // typedefs
-        typedef MolecularDescriptor* (*CreateFunction)();
+public:
+    // typedefs
+    typedef MolecularDescriptor* (*CreateFunction)();
 
-        // construction and destruction
-        virtual ~MolecularDescriptor();
+    // construction and destruction
+    virtual ~MolecularDescriptor();
 
-        // properties
-        std::string name() const;
+    // properties
+    std::string name() const;
 
-        // descriptor
-        virtual Variant value(const Molecule *molecule) const;
+    // descriptor
+    virtual Variant value(const Molecule *molecule) const;
 
-        // static methods
-        static MolecularDescriptor* create(const std::string &name);
-        static std::vector<std::string> descriptors();
+    // static methods
+    static MolecularDescriptor* create(const std::string &name);
+    static std::vector<std::string> descriptors();
 
-    protected:
-        MolecularDescriptor(const std::string &name);
+protected:
+    MolecularDescriptor(const std::string &name);
 
-    private:
-        MolecularDescriptorPrivate* const d;
+private:
+    MolecularDescriptorPrivate* const d;
 };
 
 } // end chemkit namespace

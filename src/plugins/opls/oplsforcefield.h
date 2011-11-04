@@ -42,17 +42,17 @@ class OplsParameters;
 
 class OplsForceField : public chemkit::ForceField
 {
-    public:
-        // construction and destruction
-        OplsForceField();
-        ~OplsForceField();
+public:
+    // construction and destruction
+    OplsForceField();
+    ~OplsForceField();
 
-        // parameterization
-        bool setup();
-        bool setupMolecule(const chemkit::Molecule *molecule);
+    // parameterization
+    bool setup();
+    bool setupMolecule(const chemkit::Molecule *molecule);
 
-    private:
-        OplsParameters *m_parameters;
+private:
+    OplsParameters *m_parameters;
 };
 
 #endif // OPLSFORCEFIELD_H

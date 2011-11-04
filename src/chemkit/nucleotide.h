@@ -48,40 +48,40 @@ class NucleotidePrivate;
 
 class CHEMKIT_EXPORT Nucleotide : public Residue
 {
-    public:
-        // enumerations
-        enum NucleotideType{
-            Adenine,
-            Guanine,
-            Cytosine,
-            Thymine,
-            Uracil,
-            UnspecifiedType
-        };
+public:
+    // enumerations
+    enum NucleotideType{
+        Adenine,
+        Guanine,
+        Cytosine,
+        Thymine,
+        Uracil,
+        UnspecifiedType
+    };
 
-        enum SugarType{
-            Ribose,
-            Deoxyribose
-        };
+    enum SugarType{
+        Ribose,
+        Deoxyribose
+    };
 
-        // construction and destruction
-        Nucleotide(Molecule *molecule);
-        ~Nucleotide();
+    // construction and destruction
+    Nucleotide(Molecule *molecule);
+    ~Nucleotide();
 
-        // properties
-        void setType(NucleotideType type);
-        void setType(const std::string &symbol);
-        NucleotideType type() const;
-        char letter() const;
-        std::string symbol() const;
-        std::string name() const;
-        void setSugarType(SugarType type);
-        SugarType sugarType() const;
-        bool isPurine() const;
-        bool isPyrimidine() const;
+    // properties
+    void setType(NucleotideType type);
+    void setType(const std::string &symbol);
+    NucleotideType type() const;
+    char letter() const;
+    std::string symbol() const;
+    std::string name() const;
+    void setSugarType(SugarType type);
+    SugarType sugarType() const;
+    bool isPurine() const;
+    bool isPyrimidine() const;
 
-    private:
-        NucleotidePrivate* const d;
+private:
+    NucleotidePrivate* const d;
 };
 
 } // end chemkit namespace

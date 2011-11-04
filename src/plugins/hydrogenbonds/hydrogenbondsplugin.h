@@ -41,12 +41,12 @@
 
 class HydrogenBondsPlugin : public chemkit::Plugin
 {
-    public:
-        HydrogenBondsPlugin();
-        ~HydrogenBondsPlugin();
+public:
+    HydrogenBondsPlugin();
+    ~HydrogenBondsPlugin();
 
-        static chemkit::MolecularDescriptor* createDonorsDescriptor();
-        static chemkit::MolecularDescriptor* createAcceptorsDescriptor();
+    static chemkit::MolecularDescriptor* createDonorsDescriptor();
+    static chemkit::MolecularDescriptor* createAcceptorsDescriptor();
 };
 
 #endif // HYDROGENBONDSPLUGIN_H

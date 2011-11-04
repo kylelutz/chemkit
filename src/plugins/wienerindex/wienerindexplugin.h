@@ -41,11 +41,11 @@
 
 class WienerIndexPlugin : public chemkit::Plugin
 {
-    public:
-        WienerIndexPlugin();
-        ~WienerIndexPlugin();
+public:
+    WienerIndexPlugin();
+    ~WienerIndexPlugin();
 
-        static chemkit::MolecularDescriptor* createWienerIndexDescriptor();
+    static chemkit::MolecularDescriptor* createWienerIndexDescriptor();
 };
 
 #endif // WIENERINDEXPLUGIN_H

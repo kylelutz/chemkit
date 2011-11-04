@@ -44,23 +44,23 @@ class GraphicsMaterialPrivate;
 
 class CHEMKIT_GRAPHICS_EXPORT GraphicsMaterial
 {
-    public:
-        // construction and destruction
-        GraphicsMaterial();
-        ~GraphicsMaterial();
+public:
+    // construction and destruction
+    GraphicsMaterial();
+    ~GraphicsMaterial();
 
-        // properties
-        void setAmbientColor(const QColor &ambient);
-        QColor ambientColor() const;
-        void setDiffuseColor(const QColor &diffuse);
-        QColor diffuseColor() const;
-        void setSpecularColor(const QColor &specular);
-        QColor specularColor() const;
-        void setShininess(int shininess);
-        int shininess() const;
+    // properties
+    void setAmbientColor(const QColor &ambient);
+    QColor ambientColor() const;
+    void setDiffuseColor(const QColor &diffuse);
+    QColor diffuseColor() const;
+    void setSpecularColor(const QColor &specular);
+    QColor specularColor() const;
+    void setShininess(int shininess);
+    int shininess() const;
 
-    private:
-        GraphicsMaterialPrivate* const d;
+private:
+    GraphicsMaterialPrivate* const d;
 };
 
 } // end chemkit namespace

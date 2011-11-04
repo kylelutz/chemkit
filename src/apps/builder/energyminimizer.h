@@ -47,56 +47,56 @@ class EnergyMinimizer : public QObject
 {
     Q_OBJECT
 
-    public:
-        // enumerations
-        enum State {
-            Running,
-            Stopped,
-            SettingUp,
-            SetupFailed,
-            UpdateReady,
-            Converged,
-        };
+public:
+    // enumerations
+    enum State {
+        Running,
+        Stopped,
+        SettingUp,
+        SetupFailed,
+        UpdateReady,
+        Converged,
+    };
 
-        // construction and destruction
-        EnergyMinimizer(chemkit::Molecule *molecule = 0);
-        ~EnergyMinimizer();
+    // construction and destruction
+    EnergyMinimizer(chemkit::Molecule *molecule = 0);
+    ~EnergyMinimizer();
 
-        // properties
-        void setMolecule(chemkit::Molecule *molecule);
-        chemkit::Molecule* molecule() const;
-        void setMoleculeChanged(bool changed);
-        bool moleculeChanged() const;
-        void setForceField(const QString &name);
-        chemkit::ForceField* forceField() const;
-        int state() const;
-        QString stateString() const;
+    // properties
+    void setMolecule(chemkit::Molecule *molecule);
+    chemkit::Molecule* molecule() const;
+    void setMoleculeChanged(bool changed);
+    bool moleculeChanged() const;
+    void setForceField(const QString &name);
+    chemkit::ForceField* forceField() const;
+    int state() const;
+    QString stateString() const;
 
-        // optimization
-        chemkit::Real energy() const;
-        void reload() const;
+    // optimization
+    chemkit::Real energy() const;
+    void reload() const;
 
-    public slots:
-        void start();
-        void stop();
+public slots:
+    void start();
+    void stop();
 
-    signals:
-        void forceFieldChanged(const chemkit::ForceField *forceField);
-        void stateChanged(int state);
+signals:
+    void forceFieldChanged(const chemkit::ForceField *forceField);
+    void stateChanged(int state);
 
-    private slots:
-        void minimizationStepFinished();
+private slots:
+    void minimizationStepFinished();
 
-    private:
-        void setState(int state);
+private:
+    void setState(int state);
 
-    private:
-        bool m_moleculeChanged;
-        chemkit::Molecule *m_molecule;
-        chemkit::ForceField *m_forceField;
-        QString m_forceFieldName;
-        int m_state;
-        QFutureWatcher<bool> m_minimizationWatcher;
+private:
+    bool m_moleculeChanged;
+    chemkit::Molecule *m_molecule;
+    chemkit::ForceField *m_forceField;
+    QString m_forceFieldName;
+    int m_state;
+    QFutureWatcher<bool> m_minimizationWatcher;
 };
 
 #endif // GEOMETRYOPTIMIZER_H

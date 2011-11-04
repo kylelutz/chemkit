@@ -45,14 +45,14 @@
 
 class SmilesPlugin : public chemkit::Plugin
 {
-    public:
-        SmilesPlugin();
-        ~SmilesPlugin();
+public:
+    SmilesPlugin();
+    ~SmilesPlugin();
 
-        static chemkit::LineFormat* createSmilesFormat();
+    static chemkit::LineFormat* createSmilesFormat();
 
 #ifdef CHEMKIT_WITH_IO
-        static chemkit::MoleculeFileFormat* createSmiFormat();
+    static chemkit::MoleculeFileFormat* createSmiFormat();
 #endif
 };
 

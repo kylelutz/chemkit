@@ -45,13 +45,13 @@ namespace chemkit {
 // === AminoAcidPrivate ==================================================== //
 class AminoAcidPrivate
 {
-    public:
-        AminoAcid::AminoAcidType type;
-        AminoAcid::Conformation conformation;
-        Atom *alphaCarbon;
-        Atom *carbonylCarbon;
-        Atom *carbonylOxygen;
-        Atom *aminoNitrogen;
+public:
+    AminoAcid::AminoAcidType type;
+    AminoAcid::Conformation conformation;
+    Atom *alphaCarbon;
+    Atom *carbonylCarbon;
+    Atom *carbonylOxygen;
+    Atom *aminoNitrogen;
 };
 
 // === AminoAcid =========================================================== //

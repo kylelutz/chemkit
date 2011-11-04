@@ -42,58 +42,58 @@ class BuildTool : public QObject, public BuilderTool
 {
     Q_OBJECT
 
-    public:
-        // construction and destruction
-        BuildTool(BuilderWindow *builder);
-        ~BuildTool();
+public:
+    // construction and destruction
+    BuildTool(BuilderWindow *builder);
+    ~BuildTool();
 
-        // properties
-        void setElement(const chemkit::Element &element);
-        chemkit::Element element() const;
-        void setBondOrder(int bondOrder);
-        int bondOrder() const;
+    // properties
+    void setElement(const chemkit::Element &element);
+    chemkit::Element element() const;
+    void setBondOrder(int bondOrder);
+    int bondOrder() const;
 
-        // settings
-        virtual QWidget* settingsWidget();
+    // settings
+    virtual QWidget* settingsWidget();
 
-        // events
-        virtual void mousePressEvent(QMouseEvent *event);
-        virtual void mouseReleaseEvent(QMouseEvent *event);
-        virtual void mouseMoveEvent(QMouseEvent *event);
+    // events
+    virtual void mousePressEvent(QMouseEvent *event);
+    virtual void mouseReleaseEvent(QMouseEvent *event);
+    virtual void mouseMoveEvent(QMouseEvent *event);
 
 
-    private slots:
-        void elementSelectorChanged(int index);
-        void bondOrderSelectorChanged(int index);
-        void addHydrogensChanged(int state);
+private slots:
+    void elementSelectorChanged(int index);
+    void bondOrderSelectorChanged(int index);
+    void addHydrogensChanged(int state);
 
-    private:
-        void beginMoleculeEdit();
-        void endMoleculeEdit();
-        chemkit::Atom* addAtom(int atomicNumber);
-        void removeAtom(chemkit::Atom *atom);
-        void setAtomAtomicNumber(chemkit::Atom *atom, int atomicNumber);
-        void setAtomPosition(chemkit::Atom *atom, const chemkit::Point3 &position);
-        chemkit::Bond* addBond(chemkit::Atom *a, chemkit::Atom *b, int order = chemkit::Bond::Single);
-        void removeBond(chemkit::Bond *bond);
-        void setBondOrder(chemkit::Bond *bond, int order);
-        void adjustHydrogens(chemkit::Atom *atom);
+private:
+    void beginMoleculeEdit();
+    void endMoleculeEdit();
+    chemkit::Atom* addAtom(int atomicNumber);
+    void removeAtom(chemkit::Atom *atom);
+    void setAtomAtomicNumber(chemkit::Atom *atom, int atomicNumber);
+    void setAtomPosition(chemkit::Atom *atom, const chemkit::Point3 &position);
+    chemkit::Bond* addBond(chemkit::Atom *a, chemkit::Atom *b, int order = chemkit::Bond::Single);
+    void removeBond(chemkit::Bond *bond);
+    void setBondOrder(chemkit::Bond *bond, int order);
+    void adjustHydrogens(chemkit::Atom *atom);
 
-    private:
-        chemkit::Element m_element;
-        int m_bondOrder;
-        int m_intialElement;
-        bool m_adjustHydrogens;
-        QList<int> m_elements;
-        QList<int> m_addedElements;
-        chemkit::Atom *m_intialAtom;
-        chemkit::Atom *m_movingAtom;
-        chemkit::Atom *m_bondingAtom;
-        chemkit::Bond *m_newBond;
-        QComboBox *m_elementSelector;
-        QComboBox *m_bondOrderSelector;
-        QCheckBox *m_addHydrogensCheckBox;
-        QSet<chemkit::Atom *> m_modifiedAtoms;
+private:
+    chemkit::Element m_element;
+    int m_bondOrder;
+    int m_intialElement;
+    bool m_adjustHydrogens;
+    QList<int> m_elements;
+    QList<int> m_addedElements;
+    chemkit::Atom *m_intialAtom;
+    chemkit::Atom *m_movingAtom;
+    chemkit::Atom *m_bondingAtom;
+    chemkit::Bond *m_newBond;
+    QComboBox *m_elementSelector;
+    QComboBox *m_bondOrderSelector;
+    QCheckBox *m_addHydrogensCheckBox;
+    QSet<chemkit::Atom *> m_modifiedAtoms;
 };
 
 #endif // BUILDTOOL_H

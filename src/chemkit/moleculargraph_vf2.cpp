@@ -49,13 +49,13 @@ namespace {
 // in each isomorphism test.
 class SharedState
 {
-    public:
-        SharedState(unsigned int sourceSize, unsigned int targetSize);
+public:
+    SharedState(unsigned int sourceSize, unsigned int targetSize);
 
-        std::vector<int> sourceMapping;
-        std::vector<int> targetMapping;
-        std::vector<unsigned int> sourceTerminalSet;
-        std::vector<unsigned int> targetTerminalSet;
+    std::vector<int> sourceMapping;
+    std::vector<int> targetMapping;
+    std::vector<unsigned int> sourceTerminalSet;
+    std::vector<unsigned int> targetTerminalSet;
 };
 
 SharedState::SharedState(unsigned int sourceSize, unsigned int targetSize)
@@ -70,32 +70,32 @@ SharedState::SharedState(unsigned int sourceSize, unsigned int targetSize)
 // algorithm. Every state uses and modifies the same SharedState object.
 class State
 {
-    public:
-        State(const MolecularGraph *source, const MolecularGraph *target);
-        State(const State *state);
-        ~State();
+public:
+    State(const MolecularGraph *source, const MolecularGraph *target);
+    State(const State *state);
+    ~State();
 
-        unsigned int size() const { return m_size; }
-        const MolecularGraph* source() const { return m_source; }
-        const MolecularGraph* target() const { return m_target; }
-        const Atom* sourceAtom(int index) { return m_source->atom(index); }
-        const Atom* targetAtom(int index) { return m_target->atom(index); }
-        std::map<Atom *, Atom *> mapping() const;
-        bool succeeded() const;
-        void addPair(const std::pair<int, int> &candidate);
-        std::pair<int, int> nextCandidate(const std::pair<int, int> &lastCandidate);
-        bool isFeasible(const std::pair<int, int> &candidate);
-        void backTrack();
+    unsigned int size() const { return m_size; }
+    const MolecularGraph* source() const { return m_source; }
+    const MolecularGraph* target() const { return m_target; }
+    const Atom* sourceAtom(int index) { return m_source->atom(index); }
+    const Atom* targetAtom(int index) { return m_target->atom(index); }
+    std::map<Atom *, Atom *> mapping() const;
+    bool succeeded() const;
+    void addPair(const std::pair<int, int> &candidate);
+    std::pair<int, int> nextCandidate(const std::pair<int, int> &lastCandidate);
+    bool isFeasible(const std::pair<int, int> &candidate);
+    void backTrack();
 
-    private:
-        unsigned int m_size;
-        unsigned int m_sourceTerminalSize;
-        unsigned int m_targetTerminalSize;
-        const MolecularGraph *m_source;
-        const MolecularGraph *m_target;
-        std::pair<int, int> m_lastAddition;
-        SharedState *m_sharedState;
-        bool m_ownSharedState;
+private:
+    unsigned int m_size;
+    unsigned int m_sourceTerminalSize;
+    unsigned int m_targetTerminalSize;
+    const MolecularGraph *m_source;
+    const MolecularGraph *m_target;
+    std::pair<int, int> m_lastAddition;
+    SharedState *m_sharedState;
+    bool m_ownSharedState;
 };
 
 State::State(const MolecularGraph *source, const MolecularGraph *target)

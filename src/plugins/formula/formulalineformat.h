@@ -42,11 +42,11 @@
 
 class FormulaLineFormat : public chemkit::LineFormat
 {
-    public:
-        FormulaLineFormat();
+public:
+    FormulaLineFormat();
 
-        bool read(const std::string &formula, chemkit::Molecule *molecule);
-        std::string write(const chemkit::Molecule *molecule);
+    bool read(const std::string &formula, chemkit::Molecule *molecule);
+    std::string write(const chemkit::Molecule *molecule);
 };
 
 #endif // FORMULALINEFORMAT_H

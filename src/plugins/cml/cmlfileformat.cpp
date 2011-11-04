@@ -44,17 +44,17 @@ namespace {
 
 class CmlHandler : public QXmlDefaultHandler
 {
-    public:
-        CmlHandler(chemkit::MoleculeFile *file);
-        ~CmlHandler();
+public:
+    CmlHandler(chemkit::MoleculeFile *file);
+    ~CmlHandler();
 
-        bool startElement(const QString &namespaceURI, const QString &localName, const QString &qName, const QXmlAttributes &atts);
-        bool endElement(const QString &namespaceURI, const QString &localName, const QString &qName);
+    bool startElement(const QString &namespaceURI, const QString &localName, const QString &qName, const QXmlAttributes &atts);
+    bool endElement(const QString &namespaceURI, const QString &localName, const QString &qName);
 
-    private:
-        chemkit::MoleculeFile *m_file;
-        chemkit::Molecule *m_molecule;
-        QHash<QString, chemkit::Atom *> m_atomIds;
+private:
+    chemkit::MoleculeFile *m_file;
+    chemkit::Molecule *m_molecule;
+    QHash<QString, chemkit::Atom *> m_atomIds;
 };
 
 CmlHandler::CmlHandler(chemkit::MoleculeFile *file)

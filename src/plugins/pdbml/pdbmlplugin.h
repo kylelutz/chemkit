@@ -41,11 +41,11 @@
 
 class PdbmlPlugin : public chemkit::Plugin
 {
-    public:
-        PdbmlPlugin();
-        ~PdbmlPlugin();
+public:
+    PdbmlPlugin();
+    ~PdbmlPlugin();
 
-        static chemkit::PolymerFileFormat* createPdbmlFormat();
+    static chemkit::PolymerFileFormat* createPdbmlFormat();
 };
 
 #endif // PDBMLPLUGIN_H

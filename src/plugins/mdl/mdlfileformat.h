@@ -43,28 +43,28 @@
 
 class MdlFileFormat : public chemkit::MoleculeFileFormat
 {
-    public:
-        // construction and destruction
-        MdlFileFormat(const std::string &name);
-        ~MdlFileFormat();
+public:
+    // construction and destruction
+    MdlFileFormat(const std::string &name);
+    ~MdlFileFormat();
 
-        // input and output
-        bool read(std::istream &input, chemkit::MoleculeFile *file);
-        bool read(QIODevice *iodev, chemkit::MoleculeFile *file);
-        bool write(const chemkit::MoleculeFile *file, std::ostream &output);
-        bool write(const chemkit::MoleculeFile *file, QIODevice *iodev);
+    // input and output
+    bool read(std::istream &input, chemkit::MoleculeFile *file);
+    bool read(QIODevice *iodev, chemkit::MoleculeFile *file);
+    bool write(const chemkit::MoleculeFile *file, std::ostream &output);
+    bool write(const chemkit::MoleculeFile *file, QIODevice *iodev);
 
-    private:
-        bool readMolFile(QIODevice *iodev, chemkit::MoleculeFile *file);
-        bool readSdfFile(QIODevice *iodev, chemkit::MoleculeFile *file);
-        bool readAtomBlock(QIODevice *iodev, chemkit::Molecule *molecule, int atomCount);
-        bool readBondBlock(QIODevice *iodev, chemkit::Molecule *molecule, int bondCount);
-        bool readPropertyBlock(QIODevice *iodev, chemkit::Molecule *molecule);
-        bool readDataBlock(QIODevice *iodev, chemkit::Molecule *molecule, chemkit::MoleculeFile *file);
-        void writeMolFile(const chemkit::Molecule *molecule, QIODevice *iodev);
-        void writeSdfFile(const chemkit::MoleculeFile *file, QIODevice *iodev);
-        void writeAtomBlock(const chemkit::Molecule *molecule, QIODevice *iodev);
-        void writeBondBlock(const chemkit::Molecule *molecule, QIODevice *iodev);
+private:
+    bool readMolFile(QIODevice *iodev, chemkit::MoleculeFile *file);
+    bool readSdfFile(QIODevice *iodev, chemkit::MoleculeFile *file);
+    bool readAtomBlock(QIODevice *iodev, chemkit::Molecule *molecule, int atomCount);
+    bool readBondBlock(QIODevice *iodev, chemkit::Molecule *molecule, int bondCount);
+    bool readPropertyBlock(QIODevice *iodev, chemkit::Molecule *molecule);
+    bool readDataBlock(QIODevice *iodev, chemkit::Molecule *molecule, chemkit::MoleculeFile *file);
+    void writeMolFile(const chemkit::Molecule *molecule, QIODevice *iodev);
+    void writeSdfFile(const chemkit::MoleculeFile *file, QIODevice *iodev);
+    void writeAtomBlock(const chemkit::Molecule *molecule, QIODevice *iodev);
+    void writeBondBlock(const chemkit::Molecule *molecule, QIODevice *iodev);
 };
 
 #endif // MDLFILEFORMAT_H

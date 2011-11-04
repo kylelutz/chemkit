@@ -40,21 +40,21 @@
 
 class UffAtomTyper : public chemkit::AtomTyper
 {
-    public:
-        // construction and destruction
-        UffAtomTyper(const chemkit::Molecule *molecule = 0);
-        ~UffAtomTyper();
+public:
+    // construction and destruction
+    UffAtomTyper(const chemkit::Molecule *molecule = 0);
+    ~UffAtomTyper();
 
-        // types
-        std::string typeString(int index) const;
-        std::string typeString(const chemkit::Atom *atom) const;
+    // types
+    std::string typeString(int index) const;
+    std::string typeString(const chemkit::Atom *atom) const;
 
-    protected:
-        std::string atomType(const chemkit::Atom *atom) const;
-        void assignTypes(const chemkit::Molecule *molecule);
+protected:
+    std::string atomType(const chemkit::Atom *atom) const;
+    void assignTypes(const chemkit::Molecule *molecule);
 
-    private:
-        std::vector<std::string> m_types;
+private:
+    std::vector<std::string> m_types;
 };
 
 #endif // UFFATOMTYPER_H

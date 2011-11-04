@@ -42,8 +42,8 @@ namespace chemkit {
 // === TrajectoryFilePrivate =============================================== //
 class TrajectoryFilePrivate
 {
-    public:
-        Trajectory *trajectory;
+public:
+    Trajectory *trajectory;
 };
 
 // === TrajectoryFile ====================================================== //

@@ -48,13 +48,13 @@ namespace chemkit {
 // === GraphicsProteinItemPrivate ========================================== //
 class GraphicsProteinItemPrivate
 {
-    public:
-        const Polymer *polymer;
-        bool secondaryStructureVisible;
-        float coilRadius;
-        QList<GraphicsProteinCoilItem *> coilItems;
-        QList<GraphicsProteinHelixItem *> helixItems;
-        QList<GraphicsProteinSheetItem *> sheetItems;
+public:
+    const Polymer *polymer;
+    bool secondaryStructureVisible;
+    float coilRadius;
+    QList<GraphicsProteinCoilItem *> coilItems;
+    QList<GraphicsProteinHelixItem *> helixItems;
+    QList<GraphicsProteinSheetItem *> sheetItems;
 };
 
 // === GraphicsProteinItem ================================================= //

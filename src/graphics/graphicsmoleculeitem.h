@@ -54,63 +54,63 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsMoleculeItem : public QObject, public Grap
 {
     Q_OBJECT
 
-    public:
-        // enumerations
-        enum DisplayType {
-            BallAndStick,
-            Stick,
-            SpaceFilling
-        };
+public:
+    // enumerations
+    enum DisplayType {
+        BallAndStick,
+        Stick,
+        SpaceFilling
+    };
 
-        // construction and destruction
-        GraphicsMoleculeItem(const Molecule *molecule = 0);
-        ~GraphicsMoleculeItem();
+    // construction and destruction
+    GraphicsMoleculeItem(const Molecule *molecule = 0);
+    ~GraphicsMoleculeItem();
 
-        // properties
-        void setMolecule(const Molecule *molecule);
-        const Molecule* molecule() const;
-        void setDisplayType(DisplayType type);
-        DisplayType displayType() const;
-        void setAtomRadius(float radius);
-        float atomRadius() const;
-        void setBondRadius(float radius);
-        float bondRadius() const;
-        void setAtomVisible(const Atom *atom, bool visible);
-        bool atomVisible(const Atom *atom) const;
-        void setHydrogensVisible(bool visible);
-        bool hydrogensVisible() const;
-        void setHydrogenScale(float scale);
-        float hydrogenScale() const;
-        void setBondOrderVisible(bool visible);
-        bool bondOrderVisible() const;
-        void setAtomColoredBonds(bool atomColoredBonds);
-        bool atomColoredBonds() const;
-        void setAtomColorMap(GraphicsAtomColorMap *colorMap);
-        GraphicsAtomColorMap* atomColorMap() const;
+    // properties
+    void setMolecule(const Molecule *molecule);
+    const Molecule* molecule() const;
+    void setDisplayType(DisplayType type);
+    DisplayType displayType() const;
+    void setAtomRadius(float radius);
+    float atomRadius() const;
+    void setBondRadius(float radius);
+    float bondRadius() const;
+    void setAtomVisible(const Atom *atom, bool visible);
+    bool atomVisible(const Atom *atom) const;
+    void setHydrogensVisible(bool visible);
+    bool hydrogensVisible() const;
+    void setHydrogenScale(float scale);
+    float hydrogenScale() const;
+    void setBondOrderVisible(bool visible);
+    bool bondOrderVisible() const;
+    void setAtomColoredBonds(bool atomColoredBonds);
+    bool atomColoredBonds() const;
+    void setAtomColorMap(GraphicsAtomColorMap *colorMap);
+    GraphicsAtomColorMap* atomColorMap() const;
 
-        // items
-        GraphicsAtomItem* atomItem(const Atom *atom) const;
-        GraphicsBondItem* bondItem(const Bond *bond) const;
+    // items
+    GraphicsAtomItem* atomItem(const Atom *atom) const;
+    GraphicsBondItem* bondItem(const Bond *bond) const;
 
-        // painting
-        virtual void paint(GraphicsPainter *painter);
+    // painting
+    virtual void paint(GraphicsPainter *painter);
 
-    protected:
-        // events
-        void itemChanged(ItemChange change);
+protected:
+    // events
+    void itemChanged(ItemChange change);
 
-    private slots:
-        // slots
-        void atomAdded(const chemkit::Atom *atom);
-        void atomRemoved(const chemkit::Atom *atom);
-        void atomAtomicNumberChanged(const chemkit::Atom *atom);
-        void atomPositionChanged(const chemkit::Atom *atom);
-        void bondAdded(const chemkit::Bond *bond);
-        void bondRemoved(const chemkit::Bond *bond);
-        void bondOrderChanged(const chemkit::Bond *bond);
+private slots:
+    // slots
+    void atomAdded(const chemkit::Atom *atom);
+    void atomRemoved(const chemkit::Atom *atom);
+    void atomAtomicNumberChanged(const chemkit::Atom *atom);
+    void atomPositionChanged(const chemkit::Atom *atom);
+    void bondAdded(const chemkit::Bond *bond);
+    void bondRemoved(const chemkit::Bond *bond);
+    void bondOrderChanged(const chemkit::Bond *bond);
 
-    private:
-        GraphicsMoleculeItemPrivate* const d;
+private:
+    GraphicsMoleculeItemPrivate* const d;
 };
 
 } // end chemkit namespace

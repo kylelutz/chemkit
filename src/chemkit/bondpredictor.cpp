@@ -44,11 +44,11 @@ namespace chemkit {
 // === BondPredictorPrivate ================================================ //
 class BondPredictorPrivate
 {
-    public:
-        Molecule *molecule;
-        Real tolerance;
-        Real minimumBondLength;
-        Real maximumBondLength;
+public:
+    Molecule *molecule;
+    Real tolerance;
+    Real minimumBondLength;
+    Real maximumBondLength;
 };
 
 // === BondPredictor ======================================================= //

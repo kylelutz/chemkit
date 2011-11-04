@@ -47,26 +47,26 @@ class GraphicsIsosurfaceItemPrivate;
 
 class CHEMKIT_GRAPHICS_EXPORT GraphicsIsosurfaceItem : public GraphicsItem
 {
-    public:
-        // construction and destruction
-        GraphicsIsosurfaceItem(const ScalarField *data = 0);
-        ~GraphicsIsosurfaceItem();
+public:
+    // construction and destruction
+    GraphicsIsosurfaceItem(const ScalarField *data = 0);
+    ~GraphicsIsosurfaceItem();
 
-        // properties
-        void setPosition(const Point3f &position);
-        Point3f position() const;
-        void setIsovalue(float isovalue);
-        float isovalue() const;
-        void setColor(const QColor &color);
-        QColor color() const;
-        void setScalarField(const ScalarField *scalarField);
-        const ScalarField* scalarField() const;
+    // properties
+    void setPosition(const Point3f &position);
+    Point3f position() const;
+    void setIsovalue(float isovalue);
+    float isovalue() const;
+    void setColor(const QColor &color);
+    QColor color() const;
+    void setScalarField(const ScalarField *scalarField);
+    const ScalarField* scalarField() const;
 
-        // drawing
-        virtual void paint(GraphicsPainter *painter);
+    // drawing
+    virtual void paint(GraphicsPainter *painter);
 
-    private:
-        GraphicsIsosurfaceItemPrivate* const d;
+private:
+    GraphicsIsosurfaceItemPrivate* const d;
 };
 
 } // end chemkit namespace

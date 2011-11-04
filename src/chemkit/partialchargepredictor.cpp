@@ -45,9 +45,9 @@ namespace chemkit {
 // === PartialChargePredictorPrivate ======================================= //
 class PartialChargePredictorPrivate
 {
-    public:
-        std::string name;
-        const Molecule *molecule;
+public:
+    std::string name;
+    const Molecule *molecule;
 };
 
 // === PartialChargePredictor ============================================== //

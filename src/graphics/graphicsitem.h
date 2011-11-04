@@ -50,72 +50,72 @@ class GraphicsItemPrivate;
 
 class CHEMKIT_GRAPHICS_EXPORT GraphicsItem
 {
-    public:
-        // enumerations
-        enum ItemType {
-            GenericItem,
-            AtomItem,
-            BondItem,
-            MoleculeItem,
-            ProteinItem,
-            ProteinCoilItem,
-            ProteinHelixItem,
-            ProteinSheetItem,
-            NucleicAcidItem,
-            CustomItem = 256
-        };
+public:
+    // enumerations
+    enum ItemType {
+        GenericItem,
+        AtomItem,
+        BondItem,
+        MoleculeItem,
+        ProteinItem,
+        ProteinCoilItem,
+        ProteinHelixItem,
+        ProteinSheetItem,
+        NucleicAcidItem,
+        CustomItem = 256
+    };
 
-        enum ItemChange {
-            ItemOpacityChanged,
-            ItemSceneChanged,
-            ItemVisiblityChanged
-        };
+    enum ItemChange {
+        ItemOpacityChanged,
+        ItemSceneChanged,
+        ItemVisiblityChanged
+    };
 
-        // construction and destruction
-        GraphicsItem(int type = GenericItem);
-        virtual ~GraphicsItem();
+    // construction and destruction
+    GraphicsItem(int type = GenericItem);
+    virtual ~GraphicsItem();
 
-        // properties
-        int type() const;
-        void setVisible(bool visible);
-        bool isVisible() const;
-        void show();
-        void hide();
-        GraphicsScene* scene() const;
-        void setOpacity(float opacity);
-        float opacity() const;
-        bool isOpaque() const;
-        bool isTransparent() const;
-        bool isTranslucent() const;
+    // properties
+    int type() const;
+    void setVisible(bool visible);
+    bool isVisible() const;
+    void show();
+    void hide();
+    GraphicsScene* scene() const;
+    void setOpacity(float opacity);
+    float opacity() const;
+    bool isOpaque() const;
+    bool isTransparent() const;
+    bool isTranslucent() const;
 
-        // material
-        void setMaterial(GraphicsMaterial *material);
-        GraphicsMaterial* material() const;
+    // material
+    void setMaterial(GraphicsMaterial *material);
+    GraphicsMaterial* material() const;
 
-        // geometry
-        void setTransform(const GraphicsTransform &transform);
-        GraphicsTransform transform() const;
-        void translate(const Vector3f &vector);
-        void translate(float x, float y, float z);
-        void rotate(const Vector3f &axis, const float angle);
-        virtual bool intersects(const GraphicsRay &ray, float *distance = 0) const;
+    // geometry
+    void setTransform(const GraphicsTransform &transform);
+    GraphicsTransform transform() const;
+    void translate(const Vector3f &vector);
+    void translate(float x, float y, float z);
+    void rotate(const Vector3f &axis, const float angle);
+    virtual bool intersects(const GraphicsRay &ray, float *distance = 0) const;
 
-        // drawing
-        virtual void paint(GraphicsPainter *painter);
-        void update();
+    // drawing
+    virtual void paint(GraphicsPainter *painter);
+    void update();
 
-    protected:
-        // events
-        virtual void itemChanged(ItemChange change);
+protected:
+    // events
+    virtual void itemChanged(ItemChange change);
 
-    private:
-        // internal methods
-        void setScene(GraphicsScene *scene);
+private:
+    // internal methods
+    void setScene(GraphicsScene *scene);
 
-        friend class GraphicsScene;
+    friend class GraphicsScene;
 
-    private:
-        GraphicsItemPrivate* const d;
+private:
+    GraphicsItemPrivate* const d;
 };
 
 } // end chemkit namespace

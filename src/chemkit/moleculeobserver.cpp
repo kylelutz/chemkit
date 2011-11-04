@@ -40,8 +40,8 @@ namespace chemkit {
 // === MoleculeObserverPrivate ============================================= //
 class MoleculeObserverPrivate
 {
-    public:
-        const Molecule *molecule;
+public:
+    const Molecule *molecule;
 };
 
 // === MoleculeObserver ==================================================== //

@@ -43,10 +43,10 @@ namespace chemkit {
 // === PeriodicTableDialogPrivate ========================================== //
 class PeriodicTableDialogPrivate
 {
-    public:
-        Element element;
-        bool closeOnClick;
-        Ui::PeriodicTableDialog *ui;
+public:
+    Element element;
+    bool closeOnClick;
+    Ui::PeriodicTableDialog *ui;
 };
 
 // === PeriodicTableDialog ================================================= //

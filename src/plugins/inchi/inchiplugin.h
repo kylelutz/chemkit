@@ -45,15 +45,15 @@
 
 class InchiPlugin : public chemkit::Plugin
 {
-    public:
-        InchiPlugin();
-        ~InchiPlugin();
+public:
+    InchiPlugin();
+    ~InchiPlugin();
 
-        static chemkit::LineFormat* createInchiFormat();
-        static chemkit::LineFormat* createInchiKeyFormat();
+    static chemkit::LineFormat* createInchiFormat();
+    static chemkit::LineFormat* createInchiKeyFormat();
 
 #ifdef CHEMKIT_WITH_IO
-        static chemkit::MoleculeFileFormat* createInchiFileFormat();
+    static chemkit::MoleculeFileFormat* createInchiFileFormat();
 #endif
 };
 

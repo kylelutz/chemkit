@@ -46,19 +46,19 @@ class GraphicsNavigationToolPrivate;
 
 class CHEMKIT_GRAPHICS_EXPORT GraphicsNavigationTool : public virtual GraphicsTool
 {
-    public:
-        // construction and destruction
-        GraphicsNavigationTool();
-        ~GraphicsNavigationTool();
+public:
+    // construction and destruction
+    GraphicsNavigationTool();
+    ~GraphicsNavigationTool();
 
-        // events
-        virtual void mousePressEvent(QMouseEvent *event);
-        virtual void mouseReleaseEvent(QMouseEvent *event);
-        virtual void mouseMoveEvent(QMouseEvent *event);
-        virtual void wheelEvent(QWheelEvent *event);
+    // events
+    virtual void mousePressEvent(QMouseEvent *event);
+    virtual void mouseReleaseEvent(QMouseEvent *event);
+    virtual void mouseMoveEvent(QMouseEvent *event);
+    virtual void wheelEvent(QWheelEvent *event);
 
-    private:
-        GraphicsNavigationToolPrivate* const d;
+private:
+    GraphicsNavigationToolPrivate* const d;
 };
 
 } // end chemkit namespace

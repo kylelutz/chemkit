@@ -50,15 +50,15 @@ namespace chemkit {
 // === GraphicsBondItemPrivate ============================================= //
 class GraphicsBondItemPrivate
 {
-    public:
-        const Bond *bond;
-        float radius;
-        float maximumRadius;
-        Vector3f normal;
-        bool bondOrderVisible;
-        bool atomColored;
-        QColor color;
-        QPair<QColor, QColor> atomColors;
+public:
+    const Bond *bond;
+    float radius;
+    float maximumRadius;
+    Vector3f normal;
+    bool bondOrderVisible;
+    bool atomColored;
+    QColor color;
+    QPair<QColor, QColor> atomColors;
 };
 
 // === GraphicsBondItem ==================================================== //

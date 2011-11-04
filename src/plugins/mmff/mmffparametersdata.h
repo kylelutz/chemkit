@@ -42,30 +42,30 @@
 
 class MmffParametersData
 {
-    public:
-        // construction and destruction
-        MmffParametersData();
+public:
+    // construction and destruction
+    MmffParametersData();
 
-        // reference counting
-        void ref();
-        void deref();
+    // reference counting
+    void ref();
+    void deref();
 
-    private:
-        ~MmffParametersData();
+private:
+    ~MmffParametersData();
 
-    public:
-        QMap<int, MmffBondStrechParameters *> bondStrechParameters;
-        QMap<int, MmffAngleBendParameters *> angleBendParameters;
-        QMap<int, MmffStrechBendParameters *> strechBendParameters;
-        QList<MmffDefaultStrechBendParameters *> defaultStrechBendParameters;
-        QMap<int, MmffOutOfPlaneBendingParameters *> outOfPlaneBendingParameters;
-        QMap<int, MmffTorsionParameters *> torsionParameters;
-        QVector<MmffVanDerWaalsParameters *> vanDerWaalsParameters;
-        QList<MmffChargeParameters *> chargeParameters;
-        QVector<MmffPartialChargeParameters *> partialChargeParameters;
+public:
+    QMap<int, MmffBondStrechParameters *> bondStrechParameters;
+    QMap<int, MmffAngleBendParameters *> angleBendParameters;
+    QMap<int, MmffStrechBendParameters *> strechBendParameters;
+    QList<MmffDefaultStrechBendParameters *> defaultStrechBendParameters;
+    QMap<int, MmffOutOfPlaneBendingParameters *> outOfPlaneBendingParameters;
+    QMap<int, MmffTorsionParameters *> torsionParameters;
+    QVector<MmffVanDerWaalsParameters *> vanDerWaalsParameters;
+    QList<MmffChargeParameters *> chargeParameters;
+    QVector<MmffPartialChargeParameters *> partialChargeParameters;
 
-    private:
-        QAtomicInt m_refcount;
+private:
+    QAtomicInt m_refcount;
 };
 
 #endif // MMFFPARAMETERSDATA_H

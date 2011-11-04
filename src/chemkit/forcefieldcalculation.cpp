@@ -44,11 +44,11 @@ namespace chemkit {
 // === ForceFieldCalculationPrivate ======================================== //
 class ForceFieldCalculationPrivate
 {
-    public:
-        int type;
-        bool setup;
-        std::vector<Real> parameters;
-        std::vector<const ForceFieldAtom *> atoms;
+public:
+    int type;
+    bool setup;
+    std::vector<Real> parameters;
+    std::vector<const ForceFieldAtom *> atoms;
 };
 
 // === ForceFieldCalculation =============================================== //

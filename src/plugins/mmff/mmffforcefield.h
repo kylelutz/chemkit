@@ -48,27 +48,27 @@ class MmffParameters;
 
 class MmffForceField : public chemkit::ForceField
 {
-    public:
-        // construction and destruction
-        MmffForceField();
-        ~MmffForceField();
+public:
+    // construction and destruction
+    MmffForceField();
+    ~MmffForceField();
 
-        // atoms
-        MmffAtom* atom(const chemkit::Atom *atom);
-        const MmffAtom* atom(const chemkit::Atom *atom) const;
+    // atoms
+    MmffAtom* atom(const chemkit::Atom *atom);
+    const MmffAtom* atom(const chemkit::Atom *atom) const;
 
-        // parameterization
-        virtual bool setup();
-        const MmffParameters* parameters() const;
+    // parameterization
+    virtual bool setup();
+    const MmffParameters* parameters() const;
 
-        // static methods
-        static bool isAromatic(const chemkit::Ring *ring);
-        static bool isAromatic(const chemkit::Atom *atom);
-        static bool isAromatic(const chemkit::Bond *bond);
-        static int piElectronCount(const chemkit::Ring *ring);
+    // static methods
+    static bool isAromatic(const chemkit::Ring *ring);
+    static bool isAromatic(const chemkit::Atom *atom);
+    static bool isAromatic(const chemkit::Bond *bond);
+    static int piElectronCount(const chemkit::Ring *ring);
 
-    private:
-        MmffParameters *m_parameters;
+private:
+    MmffParameters *m_parameters;
 };
 
 #endif // MMFFFORCEFIELD_H

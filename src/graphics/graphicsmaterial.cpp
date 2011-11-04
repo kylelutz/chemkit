@@ -40,11 +40,11 @@ namespace chemkit {
 // === GraphicsMaterialPrivate ============================================= //
 class GraphicsMaterialPrivate
 {
-    public:
-        int shininess;
-        QColor ambientColor;
-        QColor diffuseColor;
-        QColor specularColor;
+public:
+    int shininess;
+    QColor ambientColor;
+    QColor diffuseColor;
+    QColor specularColor;
 };
 
 // === GraphicsMaterial ==================================================== //

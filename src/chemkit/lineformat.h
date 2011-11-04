@@ -50,39 +50,39 @@ class LineFormatPrivate;
 
 class CHEMKIT_EXPORT LineFormat
 {
-    public:
-        // typedefs
-        typedef LineFormat* (*CreateFunction)();
+public:
+    // typedefs
+    typedef LineFormat* (*CreateFunction)();
 
-        // construction and destruction
-        virtual ~LineFormat();
+    // construction and destruction
+    virtual ~LineFormat();
 
-        // properties
-        std::string name() const;
+    // properties
+    std::string name() const;
 
-        // options
-        void setOption(const std::string &name, const Variant &value);
-        Variant option(const std::string &name) const;
+    // options
+    void setOption(const std::string &name, const Variant &value);
+    Variant option(const std::string &name) const;
 
-        // input and output
-        virtual bool read(const std::string &formula, Molecule *molecule);
-        Molecule* read(const std::string &formula);
-        virtual std::string write(const Molecule *molecule);
+    // input and output
+    virtual bool read(const std::string &formula, Molecule *molecule);
+    Molecule* read(const std::string &formula);
+    virtual std::string write(const Molecule *molecule);
 
-        // error handling
-        std::string errorString() const;
+    // error handling
+    std::string errorString() const;
 
-        // static methods
-        static LineFormat* create(const std::string &name);
-        static std::vector<std::string> formats();
+    // static methods
+    static LineFormat* create(const std::string &name);
+    static std::vector<std::string> formats();
 
-    protected:
-        LineFormat(const std::string &name);
-        void setErrorString(const std::string &error);
-        virtual Variant defaultOption(const std::string &name) const;
+protected:
+    LineFormat(const std::string &name);
+    void setErrorString(const std::string &error);
+    virtual Variant defaultOption(const std::string &name) const;
 
-    private:
-        LineFormatPrivate* const d;
+private:
+    LineFormatPrivate* const d;
 };
 
 } // end chemkit namespace

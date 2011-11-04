@@ -49,20 +49,20 @@ class PolymerPrivate;
 
 class CHEMKIT_EXPORT Polymer : public Molecule
 {
-    public:
-        // construction and destruction
-        Polymer();
-        ~Polymer();
+public:
+    // construction and destruction
+    Polymer();
+    ~Polymer();
 
-        // structure
-        PolymerChain* addChain();
-        void removeChain(PolymerChain *chain);
-        PolymerChain* chain(int index = 0) const;
-        std::vector<PolymerChain *> chains() const;
-        int chainCount() const;
+    // structure
+    PolymerChain* addChain();
+    void removeChain(PolymerChain *chain);
+    PolymerChain* chain(int index = 0) const;
+    std::vector<PolymerChain *> chains() const;
+    int chainCount() const;
 
-    private:
-        PolymerPrivate* const d;
+private:
+    PolymerPrivate* const d;
 };
 
 } // end chemkit namespace

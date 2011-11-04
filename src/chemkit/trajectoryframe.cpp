@@ -47,10 +47,10 @@ namespace chemkit {
 // === TrajectoryFramePrivate ============================================== //
 class TrajectoryFramePrivate
 {
-    public:
-        Trajectory *trajectory;
-        Coordinates *coordinates;
-        UnitCell *unitCell;
+public:
+    Trajectory *trajectory;
+    Coordinates *coordinates;
+    UnitCell *unitCell;
 };
 
 // === TrajectoryFrame ===================================================== //

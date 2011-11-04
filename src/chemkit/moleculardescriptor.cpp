@@ -46,8 +46,8 @@ namespace chemkit {
 // === MolecularDescriptorPrivate ========================================== //
 class MolecularDescriptorPrivate
 {
-    public:
-        std::string name;
+public:
+    std::string name;
 };
 
 // === MolecularDescriptor ================================================= //

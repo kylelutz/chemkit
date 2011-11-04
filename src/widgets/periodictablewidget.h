@@ -50,19 +50,19 @@ class CHEMKIT_WIDGETS_EXPORT PeriodicTableWidget : public QWidget
 {
     Q_OBJECT
 
-    public:
-        // construction and destruction
-        PeriodicTableWidget(QWidget *parent = 0);
-        ~PeriodicTableWidget();
+public:
+    // construction and destruction
+    PeriodicTableWidget(QWidget *parent = 0);
+    ~PeriodicTableWidget();
 
-    signals:
-        void elementClicked(const chemkit::Element &element);
+signals:
+    void elementClicked(const chemkit::Element &element);
 
-    private slots:
-        void buttonClicked(int atomicNumber);
+private slots:
+    void buttonClicked(int atomicNumber);
 
-    private:
-        PeriodicTableWidgetPrivate* const d;
+private:
+    PeriodicTableWidgetPrivate* const d;
 };
 
 } // end chemkit namespace

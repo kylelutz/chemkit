@@ -49,36 +49,36 @@ class ScalarFieldPrivate;
 
 class CHEMKIT_EXPORT ScalarField
 {
-    public:
-        // construction and destruction
-        ScalarField();
-        ScalarField(const std::vector<int> &dimensions, const std::vector<Real> &cellLengths, const std::vector<Real> &data);
-        ~ScalarField();
+public:
+    // construction and destruction
+    ScalarField();
+    ScalarField(const std::vector<int> &dimensions, const std::vector<Real> &cellLengths, const std::vector<Real> &data);
+    ~ScalarField();
 
-        // properties
-        int width() const;
-        int height() const;
-        int depth() const;
-        int size() const;
-        std::vector<int> dimensions() const;
-        Real cellWidth() const;
-        Real cellHeight() const;
-        Real cellDepth() const;
-        std::vector<Real> cellDimensions() const;
-        void setOrigin(const Point3 &origin);
-        Point3 origin() const;
-        std::vector<Real> data() const;
+    // properties
+    int width() const;
+    int height() const;
+    int depth() const;
+    int size() const;
+    std::vector<int> dimensions() const;
+    Real cellWidth() const;
+    Real cellHeight() const;
+    Real cellDepth() const;
+    std::vector<Real> cellDimensions() const;
+    void setOrigin(const Point3 &origin);
+    Point3 origin() const;
+    std::vector<Real> data() const;
 
-        // values
-        void setValue(int i, int j, int k, Real value);
-        Real value(int i, int j, int k) const;
-        Real value(const Point3 &position) const;
-        Point3 position(int i, int j, int k) const;
-        Vector3 gradient(int i, int j, int k) const;
-        Vector3 gradient(const Point3 &position) const;
+    // values
+    void setValue(int i, int j, int k, Real value);
+    Real value(int i, int j, int k) const;
+    Real value(const Point3 &position) const;
+    Point3 position(int i, int j, int k) const;
+    Vector3 gradient(int i, int j, int k) const;
+    Vector3 gradient(const Point3 &position) const;
 
-    private:
-        ScalarFieldPrivate* const d;
+private:
+    ScalarFieldPrivate* const d;
 };
 
 } // end chemkit namespace

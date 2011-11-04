@@ -48,65 +48,65 @@ class MolecularSurfacePrivate;
 
 class CHEMKIT_EXPORT MolecularSurface
 {
-    public:
-        // enumerations
-        enum SurfaceType {
-            VanDerWaals,
-            SolventAccessible,
-            SolventExcluded
-        };
+public:
+    // enumerations
+    enum SurfaceType {
+        VanDerWaals,
+        SolventAccessible,
+        SolventExcluded
+    };
 
-        // construction and destruction
-        MolecularSurface(const Molecule *molecule = 0, SurfaceType type = VanDerWaals);
-        ~MolecularSurface();
+    // construction and destruction
+    MolecularSurface(const Molecule *molecule = 0, SurfaceType type = VanDerWaals);
+    ~MolecularSurface();
 
-        // properties
-        void setMolecule(const Molecule *molecule);
-        const Molecule* molecule() const;
-        void setSurfaceType(SurfaceType type);
-        SurfaceType surfaceType() const;
-        void setProbeRadius(Real radius);
-        Real probeRadius() const;
-        const AlphaShape* alphaShape() const;
+    // properties
+    void setMolecule(const Molecule *molecule);
+    const Molecule* molecule() const;
+    void setSurfaceType(SurfaceType type);
+    SurfaceType surfaceType() const;
+    void setProbeRadius(Real radius);
+    Real probeRadius() const;
+    const AlphaShape* alphaShape() const;
 
-        // geometry
-        Point3 position(int index) const;
-        Real radius(int index) const;
-        Real volume() const;
-        Real surfaceArea() const;
+    // geometry
+    Point3 position(int index) const;
+    Real radius(int index) const;
+    Real volume() const;
+    Real surfaceArea() const;
 
-    private:
-        // internal methods
-        void setCalculated(bool calculated) const;
-        Real intersectionArea(int i, int j) const;
-        Real intersectionArea(int i, int j, int k) const;
-        Real intersectionArea(int i, int j, int k, int l) const;
-        Real intersectionVolume(int i, int j) const;
-        Real intersectionVolume(int i, int j, int k) const;
-        Real intersectionVolume(int i, int j, int k, int l) const;
-        Real ballArea(int index) const;
-        Real capHeight(int i, int j) const;
-        Real capArea(int i, int j) const;
-        Real capVolume(int i, int j) const;
-        Real cap2Area(int i, int j, int k) const;
-        Real cap2Volume(int i, int j, int k) const;
-        Real cap3Area(int i, int j, int k, int l) const;
-        Real cap3Volume(int i, int j, int k, int l) const;
-        Real diskArea(int i, int j) const;
-        Real diskLength(int i, int j) const;
-        Real diskRadius(int i, int j) const;
-        Point3 triangleDual(int i, int j, int k) const;
-        Real segmentArea(int i, int j, int k) const;
-        Real segmentAngle(int i, int j, int k) const;
-        Real segmentLength(int i, int j, int k) const;
-        Real segmentHeight(int i, int j, int k) const;
-        Real segment2Area(int i, int j, int k, int l) const;
-        Real segment2Angle(int i, int j, int k, int l) const;
-        Real segment2Length(int i, int j, int k, int l) const;
-        bool ccw(int i, int j, int k, int l) const;
+private:
+    // internal methods
+    void setCalculated(bool calculated) const;
+    Real intersectionArea(int i, int j) const;
+    Real intersectionArea(int i, int j, int k) const;
+    Real intersectionArea(int i, int j, int k, int l) const;
+    Real intersectionVolume(int i, int j) const;
+    Real intersectionVolume(int i, int j, int k) const;
+    Real intersectionVolume(int i, int j, int k, int l) const;
+    Real ballArea(int index) const;
+    Real capHeight(int i, int j) const;
+    Real capArea(int i, int j) const;
+    Real capVolume(int i, int j) const;
+    Real cap2Area(int i, int j, int k) const;
+    Real cap2Volume(int i, int j, int k) const;
+    Real cap3Area(int i, int j, int k, int l) const;
+    Real cap3Volume(int i, int j, int k, int l) const;
+    Real diskArea(int i, int j) const;
+    Real diskLength(int i, int j) const;
+    Real diskRadius(int i, int j) const;
+    Point3 triangleDual(int i, int j, int k) const;
+    Real segmentArea(int i, int j, int k) const;
+    Real segmentAngle(int i, int j, int k) const;
+    Real segmentLength(int i, int j, int k) const;
+    Real segmentHeight(int i, int j, int k) const;
+    Real segment2Area(int i, int j, int k, int l) const;
+    Real segment2Angle(int i, int j, int k, int l) const;
+    Real segment2Length(int i, int j, int k, int l) const;
+    bool ccw(int i, int j, int k, int l) const;
 
-    private:
-        MolecularSurfacePrivate* const d;
+private:
+    MolecularSurfacePrivate* const d;
 };
 
 } // end chemkit namespace

@@ -47,10 +47,10 @@ namespace chemkit {
 // === MoleculeFileFormatPrivate =========================================== //
 class MoleculeFileFormatPrivate
 {
-    public:
-        std::string name;
-        std::string errorString;
-        std::map<std::string, Variant> options;
+public:
+    std::string name;
+    std::string errorString;
+    std::map<std::string, Variant> options;
 };
 
 // === MoleculeFileFormat ================================================== //

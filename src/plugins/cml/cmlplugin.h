@@ -41,11 +41,11 @@
 
 class CmlPlugin : public chemkit::Plugin
 {
-    public:
-        CmlPlugin();
-        ~CmlPlugin();
+public:
+    CmlPlugin();
+    ~CmlPlugin();
 
-        static chemkit::MoleculeFileFormat* createCmlFormat();
+    static chemkit::MoleculeFileFormat* createCmlFormat();
 };
 
 #endif // CMLPLUGIN_H

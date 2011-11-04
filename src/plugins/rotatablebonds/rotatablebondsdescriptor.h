@@ -41,14 +41,14 @@
 
 class RotatableBondsDescriptor : public chemkit::MolecularDescriptor
 {
-    public:
-        RotatableBondsDescriptor();
-        ~RotatableBondsDescriptor();
+public:
+    RotatableBondsDescriptor();
+    ~RotatableBondsDescriptor();
 
-        chemkit::Variant value(const chemkit::Molecule *molecule) const;
+    chemkit::Variant value(const chemkit::Molecule *molecule) const;
 
-    private:
-        int heavyNeighborCount(const chemkit::Atom *atom) const;
+private:
+    int heavyNeighborCount(const chemkit::Atom *atom) const;
 };
 
 #endif // ROTATABLEBONDSDESCRIPTOR_H

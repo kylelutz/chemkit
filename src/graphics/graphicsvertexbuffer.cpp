@@ -106,13 +106,13 @@ namespace chemkit {
 // === GraphicsVertexBufferPrivate ========================================= //
 class GraphicsVertexBufferPrivate
 {
-    public:
-        bool readyToDraw;
-        GLuint vertexBuffer;
-        GLuint indexBuffer;
-        QVector<Point3f> verticies;
-        QVector<Vector3f> normals;
-        QVector<unsigned short> indicies;
+public:
+    bool readyToDraw;
+    GLuint vertexBuffer;
+    GLuint indexBuffer;
+    QVector<Point3f> verticies;
+    QVector<Vector3f> normals;
+    QVector<unsigned short> indicies;
 };
 
 // === GraphicsVertexBuffer ================================================ //

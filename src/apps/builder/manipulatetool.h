@@ -40,42 +40,42 @@
 
 class ManipulateTool : public BuilderTool
 {
-    public:
-        // construction and destruction
-        ManipulateTool(BuilderWindow *builder);
-        ~ManipulateTool();
+public:
+    // construction and destruction
+    ManipulateTool(BuilderWindow *builder);
+    ~ManipulateTool();
 
-        // events
-        virtual void mousePressEvent(QMouseEvent *event);
-        virtual void mouseReleaseEvent(QMouseEvent *event);
-        virtual void mouseMoveEvent(QMouseEvent *event);
-        virtual void toolChanged(const GraphicsTool *tool);
-        virtual void cut();
-        virtual void copy();
-        virtual void paste();
-        virtual void del();
+    // events
+    virtual void mousePressEvent(QMouseEvent *event);
+    virtual void mouseReleaseEvent(QMouseEvent *event);
+    virtual void mouseMoveEvent(QMouseEvent *event);
+    virtual void toolChanged(const GraphicsTool *tool);
+    virtual void cut();
+    virtual void copy();
+    virtual void paste();
+    virtual void del();
 
-    private:
-        enum State{
-            MovingAtom,
-            Selecting,
-            MovingSelection
-        };
+private:
+    enum State{
+        MovingAtom,
+        Selecting,
+        MovingSelection
+    };
 
-        void setState(State state);
-        State state() const;
-        void setSelection(const QRect &rect);
-        void clearSelection();
-        void moveSelectionBy(int x, int y);
+    void setState(State state);
+    State state() const;
+    void setSelection(const QRect &rect);
+    void clearSelection();
+    void moveSelectionBy(int x, int y);
 
-    private:
-        chemkit::GraphicsItem *m_selectedItem;
-        QGraphicsRectItem *m_selectionOverlayItem;
-        QPointF m_initialPosition;
-        QPointF m_lastPosition;
-        QList<chemkit::Atom *> m_selection;
-        bool m_hasSelection;
-        enum State m_state;
+private:
+    chemkit::GraphicsItem *m_selectedItem;
+    QGraphicsRectItem *m_selectionOverlayItem;
+    QPointF m_initialPosition;
+    QPointF m_lastPosition;
+    QList<chemkit::Atom *> m_selection;
+    bool m_hasSelection;
+    enum State m_state;
 };
 
 #endif // MANIPULATETOOL_H

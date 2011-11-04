@@ -41,12 +41,12 @@
 
 class MopacPlugin : public chemkit::Plugin
 {
-    public:
-        MopacPlugin();
-        ~MopacPlugin();
+public:
+    MopacPlugin();
+    ~MopacPlugin();
 
-        static chemkit::MoleculeFileFormat* createMopinFormat();
-        static chemkit::MoleculeFileFormat* createMopcrtFormat();
+    static chemkit::MoleculeFileFormat* createMopinFormat();
+    static chemkit::MoleculeFileFormat* createMopcrtFormat();
 };
 
 #endif // MOPACPLUGIN_H

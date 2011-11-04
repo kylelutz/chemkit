@@ -46,9 +46,9 @@ namespace chemkit {
 // === GraphicsProteinHelixItemPrivate ===================================== //
 class GraphicsProteinHelixItemPrivate
 {
-    public:
-        QList<AminoAcid *> residues;
-        GraphicsProteinHelixItem::DisplayType displayType;
+public:
+    QList<AminoAcid *> residues;
+    GraphicsProteinHelixItem::DisplayType displayType;
 };
 
 // === GraphicsProteinHelixItem ============================================ //

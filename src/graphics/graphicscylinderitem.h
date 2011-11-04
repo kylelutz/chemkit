@@ -46,26 +46,26 @@ class GraphicsCylinderItemPrivate;
 
 class CHEMKIT_GRAPHICS_EXPORT GraphicsCylinderItem : public GraphicsItem
 {
-    public:
-        // construction and destruction
-        GraphicsCylinderItem(const Point3f &top, const Point3f &bottom, float radius);
-        ~GraphicsCylinderItem();
+public:
+    // construction and destruction
+    GraphicsCylinderItem(const Point3f &top, const Point3f &bottom, float radius);
+    ~GraphicsCylinderItem();
 
-        // properties
-        void setTop(const Point3f &top);
-        Point3f top() const;
-        void setBottom(const Point3f &bottom);
-        Point3f bottom() const;
-        void setRadius(float radius);
-        float radius() const;
-        void setColor(const QColor &color);
-        QColor color() const;
+    // properties
+    void setTop(const Point3f &top);
+    Point3f top() const;
+    void setBottom(const Point3f &bottom);
+    Point3f bottom() const;
+    void setRadius(float radius);
+    float radius() const;
+    void setColor(const QColor &color);
+    QColor color() const;
 
-        // drawing
-        virtual void paint(GraphicsPainter *painter);
+    // drawing
+    virtual void paint(GraphicsPainter *painter);
 
-    private:
-        GraphicsCylinderItemPrivate* const d;
+private:
+    GraphicsCylinderItemPrivate* const d;
 };
 
 } // end chemkit namespace

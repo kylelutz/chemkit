@@ -45,32 +45,32 @@ class DownloadThread : public QThread
 {
     Q_OBJECT
 
-    public:
-        // construction and destruction
-        DownloadThread(const QUrl &url);
-        ~DownloadThread();
+public:
+    // construction and destruction
+    DownloadThread(const QUrl &url);
+    ~DownloadThread();
 
-        // properties
-        QByteArray data() const;
+    // properties
+    QByteArray data() const;
 
-        // thread
-        void run();
+    // thread
+    void run();
 
-        // static methods
-        static QByteArray download(const QUrl &url);
+    // static methods
+    static QByteArray download(const QUrl &url);
 
-    private slots:
-        void replyFinished(QNetworkReply *reply);
-        void replyError(QNetworkReply::NetworkError error);
-        void ftpDone(bool error);
+private slots:
+    void replyFinished(QNetworkReply *reply);
+    void replyError(QNetworkReply::NetworkError error);
+    void ftpDone(bool error);
 
-    private:
-        QUrl m_url;
-        QFtp *m_ftp;
-        QBuffer m_dataBuffer;
-        QNetworkReply *m_reply;
-        QNetworkAccessManager *m_manager;
-        QByteArray m_data;
+private:
+    QUrl m_url;
+    QFtp *m_ftp;
+    QBuffer m_dataBuffer;
+    QNetworkReply *m_reply;
+    QNetworkAccessManager *m_manager;
+    QByteArray m_data;
 };
 
 } // end chemkit namespace

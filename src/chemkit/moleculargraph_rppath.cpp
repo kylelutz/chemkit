@@ -51,18 +51,18 @@ namespace {
 // === DistanceMatrix ====================================================== //
 class DistanceMatrix
 {
-    public:
-        // construction and destruction
-        DistanceMatrix(int size);
-        ~DistanceMatrix();
+public:
+    // construction and destruction
+    DistanceMatrix(int size);
+    ~DistanceMatrix();
 
-        // operators
-        int operator()(int i, int j) const;
-        int& operator()(int i, int j);
+    // operators
+    int operator()(int i, int j) const;
+    int& operator()(int i, int j);
 
-    private:
-        int m_size;
-        int *m_values;
+private:
+    int m_size;
+    int *m_values;
 };
 
 DistanceMatrix::DistanceMatrix(int size)
@@ -91,22 +91,22 @@ int& DistanceMatrix::operator()(int i, int j)
 // The PidMatrix class implements a path-included distance matrix.
 class PidMatrix
 {
-    public:
-        // construction and destruction
-        PidMatrix(int size);
-        ~PidMatrix();
+public:
+    // construction and destruction
+    PidMatrix(int size);
+    ~PidMatrix();
 
-        // paths
-        std::vector<std::vector<int> >& paths(int i, int j);
-        void addPaths(int i, int j, const std::vector<std::vector<int> > &paths);
-        std::vector<std::vector<int> > splice(int i, int j, int k);
+    // paths
+    std::vector<std::vector<int> >& paths(int i, int j);
+    void addPaths(int i, int j, const std::vector<std::vector<int> > &paths);
+    std::vector<std::vector<int> > splice(int i, int j, int k);
 
-        // operators
-        std::vector<std::vector<int> >& operator()(int i, int j);
+    // operators
+    std::vector<std::vector<int> >& operator()(int i, int j);
 
-    private:
-        int m_size;
-        std::vector<std::vector<int> > *m_values;
+private:
+    int m_size;
+    std::vector<std::vector<int> > *m_values;
 };
 
 // --- Construction and Destruction ---------------------------------------- //
@@ -182,22 +182,22 @@ std::vector<std::vector<int> > PidMatrix::splice(int i, int j, int k)
 // === RingCandidate ======================================================= //
 class RingCandidate
 {
-    public:
-        // construction and destruction
-        RingCandidate(int size, int start, int end);
+public:
+    // construction and destruction
+    RingCandidate(int size, int start, int end);
 
-        // properties
-        int size() const;
-        int start() const;
-        int end() const;
+    // properties
+    int size() const;
+    int start() const;
+    int end() const;
 
-        // static methods
-        static bool compareSize(const RingCandidate &a, const RingCandidate &b);
+    // static methods
+    static bool compareSize(const RingCandidate &a, const RingCandidate &b);
 
-    private:
-        int m_size;
-        int m_start;
-        int m_end;
+private:
+    int m_size;
+    int m_start;
+    int m_end;
 };
 
 // --- Construction and Destruction ---------------------------------------- //
@@ -233,23 +233,23 @@ bool RingCandidate::compareSize(const RingCandidate &a, const RingCandidate &b)
 // === Sssr ================================================================ //
 class Sssr
 {
-    public:
-        // construction and destruction
-        Sssr();
-        ~Sssr();
+public:
+    // construction and destruction
+    Sssr();
+    ~Sssr();
 
-        // properties
-        unsigned int size() const;
-        bool isEmpty() const;
+    // properties
+    unsigned int size() const;
+    bool isEmpty() const;
 
-        // rings
-        const std::vector<std::vector<int> >& rings() const;
-        void append(const std::vector<int> &ring);
-        bool isValid(const std::vector<int> &ring) const;
-        bool isUnique(const std::vector<int> &ring) const;
+    // rings
+    const std::vector<std::vector<int> >& rings() const;
+    void append(const std::vector<int> &ring);
+    bool isValid(const std::vector<int> &ring) const;
+    bool isUnique(const std::vector<int> &ring) const;
 
-    private:
-        std::vector<std::vector<int> > m_rings;
+private:
+    std::vector<std::vector<int> > m_rings;
 };
 
 // --- Construction and Destruction ---------------------------------------- //

@@ -43,9 +43,9 @@ namespace chemkit {
 // === GraphicsScenePrivate ================================================ //
 class GraphicsScenePrivate
 {
-    public:
-        QList<GraphicsItem *> items;
-        QList<GraphicsView *> views;
+public:
+    QList<GraphicsItem *> items;
+    QList<GraphicsView *> views;
 };
 
 // === GraphicsScene ======================================================= //

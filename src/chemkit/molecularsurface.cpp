@@ -68,17 +68,17 @@ Real angleDihedral(const Point3 &s, const Point3 &t, const Point3 &u, const Poin
 // === MolecularSurfacePrivate ============================================= //
 class MolecularSurfacePrivate
 {
-    public:
-        const Molecule *molecule;
-        MolecularSurface::SurfaceType surfaceType;
-        Real probeRadius;
-        std::vector<Point3> points;
-        std::vector<Real> radii;
-        AlphaShape *alphaShape;
-        Real volume;
-        Real surfaceArea;
-        bool volumeCalculated;
-        bool surfaceAreaCalculated;
+public:
+    const Molecule *molecule;
+    MolecularSurface::SurfaceType surfaceType;
+    Real probeRadius;
+    std::vector<Point3> points;
+    std::vector<Real> radii;
+    AlphaShape *alphaShape;
+    Real volume;
+    Real surfaceArea;
+    bool volumeCalculated;
+    bool surfaceAreaCalculated;
 };
 
 // === MolecularSurface ==================================================== //

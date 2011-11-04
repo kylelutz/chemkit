@@ -41,11 +41,11 @@
 
 class FhzPlugin : public chemkit::Plugin
 {
-    public:
-        FhzPlugin();
-        ~FhzPlugin();
+public:
+    FhzPlugin();
+    ~FhzPlugin();
 
-        static chemkit::MoleculeFileFormat* createFhzFormat();
+    static chemkit::MoleculeFileFormat* createFhzFormat();
 };
 
 #endif // FHZPLUGIN_H

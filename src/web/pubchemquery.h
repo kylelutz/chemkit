@@ -44,21 +44,21 @@ namespace chemkit {
 
 class PubChemQuery
 {
-    public:
-        // construction and destruction
-        PubChemQuery();
-        ~PubChemQuery();
+public:
+    // construction and destruction
+    PubChemQuery();
+    ~PubChemQuery();
 
-        // properties
-        void setData(const QByteArray &data);
-        QByteArray data() const;
+    // properties
+    void setData(const QByteArray &data);
+    QByteArray data() const;
 
-        // static methods
-        static PubChemQuery downloadQuery(const QStringList &cids, const QString &format);
-        static PubChemQuery standardizationQuery(const std::string &formula, const std::string &inputFormat, const std::string &outputFormat);
+    // static methods
+    static PubChemQuery downloadQuery(const QStringList &cids, const QString &format);
+    static PubChemQuery standardizationQuery(const std::string &formula, const std::string &inputFormat, const std::string &outputFormat);
 
-    private:
-        QByteArray m_data;
+private:
+    QByteArray m_data;
 };
 
 } // end chemkit namespace

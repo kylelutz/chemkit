@@ -42,11 +42,11 @@
 
 class MopinFileFormat : public chemkit::MoleculeFileFormat
 {
-    public:
-        MopinFileFormat();
+public:
+    MopinFileFormat();
 
-        bool read(std::istream &input, chemkit::MoleculeFile *file);
-        bool read(QIODevice *iodev, chemkit::MoleculeFile *file);
+    bool read(std::istream &input, chemkit::MoleculeFile *file);
+    bool read(QIODevice *iodev, chemkit::MoleculeFile *file);
 };
 
 #endif // MOPINFILEFORMAT_H

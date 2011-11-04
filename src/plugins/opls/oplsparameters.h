@@ -77,36 +77,36 @@ struct OplsVanDerWaalsParameters
 
 class OplsParameters
 {
-    public:
-        // construction and destruction
-        OplsParameters(const QString &fileName);
-        ~OplsParameters();
+public:
+    // construction and destruction
+    OplsParameters(const QString &fileName);
+    ~OplsParameters();
 
-        // properties
-        void setFileName(const QString &fileName);
-        QString fileName() const;
+    // properties
+    void setFileName(const QString &fileName);
+    QString fileName() const;
 
-        // parameters
-        int atomClass(int type) const;
-        QString atomName(int type) const;
-        chemkit::Real partialCharge(int type) const;
-        const OplsBondStrechParameters* bondStrechParameters(int a, int b) const;
-        const OplsAngleBendParameters* angleBendParameters(int a, int b, int c) const;
-        const OplsTorsionParameters* torsionParameters(int a, int b, int c, int d) const;
-        const OplsVanDerWaalsParameters* vanDerWaalsParameters(int type) const;
+    // parameters
+    int atomClass(int type) const;
+    QString atomName(int type) const;
+    chemkit::Real partialCharge(int type) const;
+    const OplsBondStrechParameters* bondStrechParameters(int a, int b) const;
+    const OplsAngleBendParameters* angleBendParameters(int a, int b, int c) const;
+    const OplsTorsionParameters* torsionParameters(int a, int b, int c, int d) const;
+    const OplsVanDerWaalsParameters* vanDerWaalsParameters(int type) const;
 
-    private:
-        bool read(const QString &fileName);
+private:
+    bool read(const QString &fileName);
 
-    private:
-        QString m_fileName;
-        QVector<int> m_typeToClass;
-        QVector<QString> m_typeToName;
-        QVector<OplsBondStrechParameters> m_bondStrechParameters;
-        QVector<OplsAngleBendParameters> m_angleBendParameters;
-        QVector<OplsTorsionParameters> m_torsionParameters;
-        QVector<OplsVanDerWaalsParameters> m_vanDerWaalsParameters;
-        QVector<chemkit::Real> m_typeToCharge;
+private:
+    QString m_fileName;
+    QVector<int> m_typeToClass;
+    QVector<QString> m_typeToName;
+    QVector<OplsBondStrechParameters> m_bondStrechParameters;
+    QVector<OplsAngleBendParameters> m_angleBendParameters;
+    QVector<OplsTorsionParameters> m_torsionParameters;
+    QVector<OplsVanDerWaalsParameters> m_vanDerWaalsParameters;
+    QVector<chemkit::Real> m_typeToCharge;
 };
 
 #endif // OPLSPARAMETERS_H

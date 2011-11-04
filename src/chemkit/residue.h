@@ -50,46 +50,46 @@ class ResiduePrivate;
 
 class CHEMKIT_EXPORT Residue
 {
-    public:
-        // enumerations
-        enum ResidueType{
-            AminoAcidResidue,
-            NucleotideResidue,
-            CustomResidue
-        };
+public:
+    // enumerations
+    enum ResidueType{
+        AminoAcidResidue,
+        NucleotideResidue,
+        CustomResidue
+    };
 
-        // construction and destruction
-        Residue(Molecule *molecule, int type = CustomResidue);
-        virtual ~Residue();
+    // construction and destruction
+    Residue(Molecule *molecule, int type = CustomResidue);
+    virtual ~Residue();
 
-        // properties
-        int residueType() const;
-        int size() const;
-        virtual char letter() const;
-        Molecule* molecule() const;
+    // properties
+    int residueType() const;
+    int size() const;
+    virtual char letter() const;
+    Molecule* molecule() const;
 
-        // structure
-        void addAtom(Atom *atom);
-        void removeAtom(Atom *atom);
-        std::vector<Atom *> atoms() const;
-        int atomCount() const;
-        std::vector<Bond *> bonds() const;
-        int bondCount() const;
-        bool contains(const Atom *atom) const;
-        bool contains(const Bond *bond) const;
+    // structure
+    void addAtom(Atom *atom);
+    void removeAtom(Atom *atom);
+    std::vector<Atom *> atoms() const;
+    int atomCount() const;
+    std::vector<Bond *> bonds() const;
+    int bondCount() const;
+    bool contains(const Atom *atom) const;
+    bool contains(const Bond *bond) const;
 
-        // atom types
-        void setAtomType(const Atom *atom, const std::string &type);
-        std::string atomType(const Atom *atom) const;
-        Atom* atom(const std::string &type) const;
+    // atom types
+    void setAtomType(const Atom *atom, const std::string &type);
+    std::string atomType(const Atom *atom) const;
+    Atom* atom(const std::string &type) const;
 
-    private:
-        CHEMKIT_DISABLE_COPY(Residue)
+private:
+    CHEMKIT_DISABLE_COPY(Residue)
 
-        friend class Molecule;
+    friend class Molecule;
 
-    private:
-        ResiduePrivate* const d;
+private:
+    ResiduePrivate* const d;
 };
 
 } // end chemkit namespace

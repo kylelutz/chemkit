@@ -46,8 +46,8 @@ namespace chemkit {
 // === GraphicsProteinSheetItemPrivate ===================================== //
 class GraphicsProteinSheetItemPrivate
 {
-    public:
-        QList<AminoAcid *> residues;
+public:
+    QList<AminoAcid *> residues;
 };
 
 // === GraphicsProteinSheetItem ============================================ //

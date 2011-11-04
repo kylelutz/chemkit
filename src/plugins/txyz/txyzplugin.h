@@ -41,11 +41,11 @@
 
 class TxyzPlugin : public chemkit::Plugin
 {
-    public:
-        TxyzPlugin();
-        ~TxyzPlugin();
+public:
+    TxyzPlugin();
+    ~TxyzPlugin();
 
-        static chemkit::MoleculeFileFormat* createTxyzFormat();
+    static chemkit::MoleculeFileFormat* createTxyzFormat();
 };
 
 #endif // TXYZPLUGIN_H

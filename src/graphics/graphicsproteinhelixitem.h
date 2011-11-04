@@ -47,26 +47,26 @@ class GraphicsProteinHelixItemPrivate;
 
 class CHEMKIT_GRAPHICS_EXPORT GraphicsProteinHelixItem : public GraphicsItem
 {
-    public:
-        // enumerations
-        enum DisplayType{
-            Cylinder,
-            Ribbon
-        };
+public:
+    // enumerations
+    enum DisplayType{
+        Cylinder,
+        Ribbon
+    };
 
-        // construction and destruction
-        GraphicsProteinHelixItem(const QList<AminoAcid *> &residues);
-        ~GraphicsProteinHelixItem();
+    // construction and destruction
+    GraphicsProteinHelixItem(const QList<AminoAcid *> &residues);
+    ~GraphicsProteinHelixItem();
 
-        // properties
-        void setDisplayType(DisplayType type);
-        DisplayType displayType() const;
+    // properties
+    void setDisplayType(DisplayType type);
+    DisplayType displayType() const;
 
-        // drawing
-        virtual void paint(GraphicsPainter *painter);
+    // drawing
+    virtual void paint(GraphicsPainter *painter);
 
-    private:
-        GraphicsProteinHelixItemPrivate* const d;
+private:
+    GraphicsProteinHelixItemPrivate* const d;
 };
 
 } // end chemkit namespace

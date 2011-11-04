@@ -47,16 +47,16 @@ class GraphicsProteinSheetItemPrivate;
 
 class CHEMKIT_GRAPHICS_EXPORT GraphicsProteinSheetItem : public GraphicsItem
 {
-    public:
-        // construction and destruction
-        GraphicsProteinSheetItem(const QList<AminoAcid *> &residues);
-        ~GraphicsProteinSheetItem();
+public:
+    // construction and destruction
+    GraphicsProteinSheetItem(const QList<AminoAcid *> &residues);
+    ~GraphicsProteinSheetItem();
 
-        // drawing
-        virtual void paint(GraphicsPainter *painter);
+    // drawing
+    virtual void paint(GraphicsPainter *painter);
 
-    private:
-        GraphicsProteinSheetItemPrivate* const d;
+private:
+    GraphicsProteinSheetItemPrivate* const d;
 };
 
 } // end chemkit namespace

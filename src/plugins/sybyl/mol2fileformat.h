@@ -43,14 +43,14 @@
 
 class Mol2FileFormat : public chemkit::MoleculeFileFormat
 {
-    public:
-        Mol2FileFormat();
-        ~Mol2FileFormat();
+public:
+    Mol2FileFormat();
+    ~Mol2FileFormat();
 
-        bool read(std::istream &input, chemkit::MoleculeFile *file);
-        bool read(QIODevice *iodev, chemkit::MoleculeFile *file);
-        bool write(const chemkit::MoleculeFile *file, std::ostream &output);
-        bool write(const chemkit::MoleculeFile *file, QIODevice *iodev);
+    bool read(std::istream &input, chemkit::MoleculeFile *file);
+    bool read(QIODevice *iodev, chemkit::MoleculeFile *file);
+    bool write(const chemkit::MoleculeFile *file, std::ostream &output);
+    bool write(const chemkit::MoleculeFile *file, QIODevice *iodev);
 };
 
 #endif // MOL2FILEFORMAT_H

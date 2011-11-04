@@ -41,19 +41,19 @@ class GraphicsViewDesignerPlugin : public QObject, public QDesignerCustomWidgetI
     Q_OBJECT
     Q_INTERFACES(QDesignerCustomWidgetInterface)
 
-    public:
-        // construction and destruction
-        GraphicsViewDesignerPlugin(QObject *parent = 0);
-        ~GraphicsViewDesignerPlugin();
+public:
+    // construction and destruction
+    GraphicsViewDesignerPlugin(QObject *parent = 0);
+    ~GraphicsViewDesignerPlugin();
 
-        // properties
-        QString name() const;
-        QString group() const;
-        QString includeFile() const;
-        QIcon icon() const;
-        QString toolTip() const;
-        QString whatsThis() const;
-        bool isContainer() const;
-        QWidget* createWidget(QWidget *parent);
-        QString domXml() const;
+    // properties
+    QString name() const;
+    QString group() const;
+    QString includeFile() const;
+    QIcon icon() const;
+    QString toolTip() const;
+    QString whatsThis() const;
+    bool isContainer() const;
+    QWidget* createWidget(QWidget *parent);
+    QString domXml() const;
 };

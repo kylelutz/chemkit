@@ -47,46 +47,46 @@ class GraphicsVertexBufferPrivate;
 
 class CHEMKIT_GRAPHICS_EXPORT GraphicsVertexBuffer
 {
-    public:
-        // enumerations
-        enum Usage {
-            Static,
-            Dynamic,
-            Stream
-        };
+public:
+    // enumerations
+    enum Usage {
+        Static,
+        Dynamic,
+        Stream
+    };
 
-        // construction and destruction
-        GraphicsVertexBuffer();
-        GraphicsVertexBuffer(const QVector<Point3f> &verticies);
-        ~GraphicsVertexBuffer();
+    // construction and destruction
+    GraphicsVertexBuffer();
+    GraphicsVertexBuffer(const QVector<Point3f> &verticies);
+    ~GraphicsVertexBuffer();
 
-        // properties
-        int size() const;
-        bool isEmpty() const;
-        void clear();
+    // properties
+    int size() const;
+    bool isEmpty() const;
+    void clear();
 
-        // verticies
-        void setVerticies(const QVector<Point3f> &verticies);
-        QVector<Point3f> verticies() const;
-        int vertexCount() const;
+    // verticies
+    void setVerticies(const QVector<Point3f> &verticies);
+    QVector<Point3f> verticies() const;
+    int vertexCount() const;
 
-        // normals
-        void setNormals(const QVector<Vector3f> &normals);
-        QVector<Vector3f> normals() const;
-        int normalCount() const;
+    // normals
+    void setNormals(const QVector<Vector3f> &normals);
+    QVector<Vector3f> normals() const;
+    int normalCount() const;
 
-        // indicies
-        void setIndicies(const QVector<unsigned short> &indicies);
-        QVector<unsigned short> indicies() const;
-        int indexCount() const;
+    // indicies
+    void setIndicies(const QVector<unsigned short> &indicies);
+    QVector<unsigned short> indicies() const;
+    int indexCount() const;
 
-        // drawing
-        void draw() const;
-        void prepareToDraw() const;
-        bool readyToDraw() const;
+    // drawing
+    void draw() const;
+    void prepareToDraw() const;
+    bool readyToDraw() const;
 
-    private:
-        GraphicsVertexBufferPrivate* const d;
+private:
+    GraphicsVertexBufferPrivate* const d;
 };
 
 } // end chemkit namespace

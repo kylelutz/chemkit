@@ -41,11 +41,11 @@
 
 class McdlPlugin : public chemkit::Plugin
 {
-    public:
-        McdlPlugin();
-        ~McdlPlugin();
+public:
+    McdlPlugin();
+    ~McdlPlugin();
 
-        static chemkit::LineFormat* createMcdlFormat();
+    static chemkit::LineFormat* createMcdlFormat();
 };
 
 #endif // MCDLPLUGIN_H

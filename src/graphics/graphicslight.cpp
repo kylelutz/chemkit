@@ -40,9 +40,9 @@ namespace chemkit {
 // === GraphicsLightPrivate ================================================ //
 class GraphicsLightPrivate
 {
-    public:
-        Point3f position;
-        Vector3f direction;
+public:
+    Point3f position;
+    Vector3f direction;
 };
 
 // === GraphicsLight ======================================================= //

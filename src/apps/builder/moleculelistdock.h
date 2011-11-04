@@ -51,28 +51,28 @@ class MoleculeListDock : public QDockWidget
 {
     Q_OBJECT
 
-    public:
-        MoleculeListDock(BuilderWindow *builder);
-        ~MoleculeListDock();
+public:
+    MoleculeListDock(BuilderWindow *builder);
+    ~MoleculeListDock();
 
-    private slots:
-        void fileChanged(chemkit::MoleculeFile *file);
-        void moleculeChanged(chemkit::Molecule *molecule);
-        void itemSelectionChanged();
-        void itemDoubleClicked(QTableWidgetItem *item);
-        void itemChanged(QTableWidgetItem *item);
-        void customContextMenuRequested(const QPoint &pos);
-        void renameMolecule();
-        void deleteMolecule();
-        void showMoleculeProperties();
+private slots:
+    void fileChanged(chemkit::MoleculeFile *file);
+    void moleculeChanged(chemkit::Molecule *molecule);
+    void itemSelectionChanged();
+    void itemDoubleClicked(QTableWidgetItem *item);
+    void itemChanged(QTableWidgetItem *item);
+    void customContextMenuRequested(const QPoint &pos);
+    void renameMolecule();
+    void deleteMolecule();
+    void showMoleculeProperties();
 
-    private:
-        chemkit::Molecule* currentMolecule() const;
+private:
+    chemkit::Molecule* currentMolecule() const;
 
-    private:
-        Ui::MoleculeListDock *ui;
-        BuilderWindow *m_builder;
-        QTableWidgetItem *m_selectedItem;
+private:
+    Ui::MoleculeListDock *ui;
+    BuilderWindow *m_builder;
+    QTableWidgetItem *m_selectedItem;
 };
 
 #endif // MOLECULELISTDOCK_H

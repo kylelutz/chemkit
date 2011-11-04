@@ -47,25 +47,25 @@ class GraphicsRingItemPrivate;
 
 class CHEMKIT_GRAPHICS_EXPORT GraphicsRingItem : public GraphicsItem
 {
-    public:
-        // construction and destruction
-        GraphicsRingItem(const Ring *ring = 0);
-        ~GraphicsRingItem();
+public:
+    // construction and destruction
+    GraphicsRingItem(const Ring *ring = 0);
+    ~GraphicsRingItem();
 
-        // properties
-        void setRing(const Ring *ring);
-        const Ring* ring() const;
-        void setColor(const QColor &color);
-        QColor color() const;
+    // properties
+    void setRing(const Ring *ring);
+    const Ring* ring() const;
+    void setColor(const QColor &color);
+    QColor color() const;
 
-        // drawing
-        virtual void paint(GraphicsPainter *painter);
+    // drawing
+    virtual void paint(GraphicsPainter *painter);
 
-    private:
-        Point3f ringCenter(const Ring *ring) const;
+private:
+    Point3f ringCenter(const Ring *ring) const;
 
-    private:
-        GraphicsRingItemPrivate* const d;
+private:
+    GraphicsRingItemPrivate* const d;
 };
 
 } // end chemkit namespace

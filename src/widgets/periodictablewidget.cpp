@@ -64,11 +64,10 @@ const int PeriodicTableColumns = 18;
 // === PeriodicTableWidgetPrivate ========================================== //
 class PeriodicTableWidgetPrivate
 {
-    public:
-        Ui::PeriodicTableWidget *ui;
-        QSignalMapper *signalMapper;
+public:
+    Ui::PeriodicTableWidget *ui;
+    QSignalMapper *signalMapper;
 };
-
 
 // === PeriodicTableWidget ================================================= //
 /// \class PeriodicTableWidget periodictablewidget.h chemkit/periodictablewidget.h

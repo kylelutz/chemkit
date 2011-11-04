@@ -48,31 +48,31 @@ class GraphicsAtomColorMapPrivate;
 
 class CHEMKIT_GRAPHICS_EXPORT GraphicsAtomColorMap
 {
-    public:
-        // enumerations
-        enum ColorScheme {
-            DefaultColorScheme,
-            RasmolColorScheme,
-            PymolColorScheme,
-            JmolColorScheme
-        };
+public:
+    // enumerations
+    enum ColorScheme {
+        DefaultColorScheme,
+        RasmolColorScheme,
+        PymolColorScheme,
+        JmolColorScheme
+    };
 
-        // construction and destruction
-        GraphicsAtomColorMap();
-        GraphicsAtomColorMap(ColorScheme scheme);
-        GraphicsAtomColorMap(const GraphicsAtomColorMap &colorMap);
-        virtual ~GraphicsAtomColorMap();
+    // construction and destruction
+    GraphicsAtomColorMap();
+    GraphicsAtomColorMap(ColorScheme scheme);
+    GraphicsAtomColorMap(const GraphicsAtomColorMap &colorMap);
+    virtual ~GraphicsAtomColorMap();
 
-        // colors
-        void setColor(const Element &element, const QColor &color);
-        virtual QColor color(const Element &element) const;
-        virtual QColor color(const Atom *atom) const;
-        void setDefaultColor(const QColor &color);
-        QColor defaultColor() const;
-        void setColorScheme(ColorScheme scheme);
+    // colors
+    void setColor(const Element &element, const QColor &color);
+    virtual QColor color(const Element &element) const;
+    virtual QColor color(const Atom *atom) const;
+    void setDefaultColor(const QColor &color);
+    QColor defaultColor() const;
+    void setColorScheme(ColorScheme scheme);
 
-    private:
-        GraphicsAtomColorMapPrivate* const d;
+private:
+    GraphicsAtomColorMapPrivate* const d;
 };
 
 } // end chemkit namespace

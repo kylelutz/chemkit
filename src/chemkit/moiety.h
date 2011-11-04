@@ -48,27 +48,27 @@ class MoietyPrivate;
 
 class CHEMKIT_EXPORT Moiety
 {
-    public:
-        // construction and destruction
-        Moiety();
-        Moiety(const std::vector<Atom *> &atoms);
-        ~Moiety();
+public:
+    // construction and destruction
+    Moiety();
+    Moiety(const std::vector<Atom *> &atoms);
+    ~Moiety();
 
-        // properties
-        int size() const;
-        bool isEmpty() const;
-        Molecule* molecule() const;
+    // properties
+    int size() const;
+    bool isEmpty() const;
+    Molecule* molecule() const;
 
-        // structure
-        Atom* atom(int index) const;
-        std::vector<Atom *> atoms() const;
-        int atomCount() const;
+    // structure
+    Atom* atom(int index) const;
+    std::vector<Atom *> atoms() const;
+    int atomCount() const;
 
-        // operators
-        Moiety& operator=(const Moiety &moeity);
+    // operators
+    Moiety& operator=(const Moiety &moeity);
 
-    private:
-        MoietyPrivate* const d;
+private:
+    MoietyPrivate* const d;
 };
 
 } // end chemkit namespace

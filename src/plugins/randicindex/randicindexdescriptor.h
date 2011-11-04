@@ -41,14 +41,14 @@
 
 class RandicIndexDescriptor : public chemkit::MolecularDescriptor
 {
-    public:
-        RandicIndexDescriptor();
-        ~RandicIndexDescriptor();
+public:
+    RandicIndexDescriptor();
+    ~RandicIndexDescriptor();
 
-        chemkit::Variant value(const chemkit::Molecule *molecule) const;
+    chemkit::Variant value(const chemkit::Molecule *molecule) const;
 
-    private:
-        int heavyNeighborCount(const chemkit::Atom *atom) const;
+private:
+    int heavyNeighborCount(const chemkit::Atom *atom) const;
 };
 
 #endif // RANDICINDEXDESCRIPTOR_H

@@ -45,13 +45,13 @@ namespace chemkit {
 // === GraphicsItemPrivate ================================================= //
 class GraphicsItemPrivate
 {
-    public:
-        int type;
-        bool visible;
-        GraphicsScene *scene;
-        float opacity;
-        GraphicsMaterial *material;
-        GraphicsTransform transform;
+public:
+    int type;
+    bool visible;
+    GraphicsScene *scene;
+    float opacity;
+    GraphicsMaterial *material;
+    GraphicsTransform transform;
 };
 
 // === GraphicsItem ======================================================== //

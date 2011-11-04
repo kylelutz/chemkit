@@ -40,11 +40,11 @@ namespace chemkit {
 // === ScalarFieldPrivate ================================================== //
 class ScalarFieldPrivate
 {
-    public:
-        Point3 origin;
-        std::vector<int> dimensions;
-        std::vector<Real> lengths;
-        std::vector<Real> data;
+public:
+    Point3 origin;
+    std::vector<int> dimensions;
+    std::vector<Real> lengths;
+    std::vector<Real> data;
 };
 
 // === ScalarField ========================================================= //

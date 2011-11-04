@@ -42,11 +42,11 @@
 
 class RandicIndexPlugin : public chemkit::Plugin
 {
-    public:
-        RandicIndexPlugin();
-        ~RandicIndexPlugin();
+public:
+    RandicIndexPlugin();
+    ~RandicIndexPlugin();
 
-        static chemkit::MolecularDescriptor* createRandicIndexDescriptor();
+    static chemkit::MolecularDescriptor* createRandicIndexDescriptor();
 };
 
 #endif // RANDICINDEXPLUGIN_H

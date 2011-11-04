@@ -50,31 +50,31 @@ class Molecule;
 
 class CHEMKIT_EXPORT Fragment
 {
-    public:
-        // properties
-        inline int size() const;
-        inline Molecule* molecule() const;
+public:
+    // properties
+    inline int size() const;
+    inline Molecule* molecule() const;
 
-        // structure
-        inline Atom* atom(int index) const;
-        inline std::vector<Atom *> atoms() const;
-        inline int atomCount() const;
-        inline bool contains(const Atom *atom) const;
-        std::vector<Bond *> bonds() const;
-        int bondCount() const;
-        bool contains(const Bond *bond) const;
+    // structure
+    inline Atom* atom(int index) const;
+    inline std::vector<Atom *> atoms() const;
+    inline int atomCount() const;
+    inline bool contains(const Atom *atom) const;
+    std::vector<Bond *> bonds() const;
+    int bondCount() const;
+    bool contains(const Bond *bond) const;
 
-    private:
-        Fragment(Molecule *molecule, const boost::dynamic_bitset<> &bitset);
-        ~Fragment();
+private:
+    Fragment(Molecule *molecule, const boost::dynamic_bitset<> &bitset);
+    ~Fragment();
 
-        CHEMKIT_DISABLE_COPY(Fragment)
+    CHEMKIT_DISABLE_COPY(Fragment)
 
-        friend class Molecule;
+    friend class Molecule;
 
-    private:
-        Molecule* m_molecule;
-        boost::dynamic_bitset<> m_bitset;
+private:
+    Molecule* m_molecule;
+    boost::dynamic_bitset<> m_bitset;
 };
 
 } // end chemkit namespace

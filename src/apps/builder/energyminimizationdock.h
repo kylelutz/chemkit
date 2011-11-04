@@ -49,19 +49,19 @@ class EnergyMinimizationDock : public QDockWidget
 {
     Q_OBJECT
 
-    public:
-        // construction and destruction
-        EnergyMinimizationDock(BuilderWindow *parent);
-        ~EnergyMinimizationDock();
+public:
+    // construction and destruction
+    EnergyMinimizationDock(BuilderWindow *parent);
+    ~EnergyMinimizationDock();
 
-    private slots:
-        void stateChanged(int state);
-        void buttonClicked();
-        void forceFieldChanged(int index);
+private slots:
+    void stateChanged(int state);
+    void buttonClicked();
+    void forceFieldChanged(int index);
 
-    private:
-        Ui::EnergyMinimizationDock *ui;
-        BuilderWindow *m_builder;
+private:
+    Ui::EnergyMinimizationDock *ui;
+    BuilderWindow *m_builder;
 };
 
 #endif // ENERGYMINIMIZATIONDOCK_H

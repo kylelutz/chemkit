@@ -42,51 +42,51 @@ class AmberParameters;
 
 class AmberCalculation : public chemkit::ForceFieldCalculation
 {
-    public:
-        virtual bool setup(const AmberParameters *parameters) = 0;
+public:
+    virtual bool setup(const AmberParameters *parameters) = 0;
 
-    protected:
-        AmberCalculation(int type, int atomCount, int parameterCount);
+protected:
+    AmberCalculation(int type, int atomCount, int parameterCount);
 };
 
 class AmberBondCalculation : public AmberCalculation
 {
-    public:
-        AmberBondCalculation(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b);
+public:
+    AmberBondCalculation(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b);
 
-        bool setup(const AmberParameters *parameters);
-        chemkit::Real energy() const;
-        std::vector<chemkit::Vector3> gradient() const;
+    bool setup(const AmberParameters *parameters);
+    chemkit::Real energy() const;
+    std::vector<chemkit::Vector3> gradient() const;
 };
 
 class AmberAngleCalculation : public AmberCalculation
 {
-    public:
-        AmberAngleCalculation(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b, const chemkit::ForceFieldAtom *c);
+public:
+    AmberAngleCalculation(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b, const chemkit::ForceFieldAtom *c);
 
-        bool setup(const AmberParameters *parameters);
-        chemkit::Real energy() const;
-        std::vector<chemkit::Vector3> gradient() const;
+    bool setup(const AmberParameters *parameters);
+    chemkit::Real energy() const;
+    std::vector<chemkit::Vector3> gradient() const;
 };
 
 class AmberTorsionCalculation : public AmberCalculation
 {
-    public:
-        AmberTorsionCalculation(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b, const chemkit::ForceFieldAtom *c, const chemkit::ForceFieldAtom *d);
+public:
+    AmberTorsionCalculation(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b, const chemkit::ForceFieldAtom *c, const chemkit::ForceFieldAtom *d);
 
-        bool setup(const AmberParameters *parameters);
-        chemkit::Real energy() const;
-        std::vector<chemkit::Vector3> gradient() const;
+    bool setup(const AmberParameters *parameters);
+    chemkit::Real energy() const;
+    std::vector<chemkit::Vector3> gradient() const;
 };
 
 class AmberNonbondedCalculation : public AmberCalculation
 {
-    public:
-        AmberNonbondedCalculation(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b);
+public:
+    AmberNonbondedCalculation(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b);
 
-        bool setup(const AmberParameters *parameters);
-        chemkit::Real energy() const;
-        std::vector<chemkit::Vector3> gradient() const;
+    bool setup(const AmberParameters *parameters);
+    chemkit::Real energy() const;
+    std::vector<chemkit::Vector3> gradient() const;
 };
 
 #endif // AMBERCALCULATION_H

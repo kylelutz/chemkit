@@ -51,28 +51,28 @@ class PolymerFilePrivate;
 
 class CHEMKIT_IO_EXPORT PolymerFile : public GenericFile<PolymerFile, PolymerFileFormat>
 {
-    public:
-        // construction and destruction
-        PolymerFile();
-        PolymerFile(const std::string &fileName);
-        ~PolymerFile();
+public:
+    // construction and destruction
+    PolymerFile();
+    PolymerFile(const std::string &fileName);
+    ~PolymerFile();
 
-        // properties
-        int size() const;
-        bool isEmpty() const;
+    // properties
+    int size() const;
+    bool isEmpty() const;
 
-        // file contents
-        void addPolymer(Polymer *polymer);
-        bool removePolymer(Polymer *polymer);
-        bool deletePolymer(Polymer *polymer);
-        Polymer* polymer(int index = 0) const;
-        std::vector<Polymer *> polymers() const;
-        int polymerCount() const;
-        bool contains(const Polymer *polymer) const;
-        void clear();
+    // file contents
+    void addPolymer(Polymer *polymer);
+    bool removePolymer(Polymer *polymer);
+    bool deletePolymer(Polymer *polymer);
+    Polymer* polymer(int index = 0) const;
+    std::vector<Polymer *> polymers() const;
+    int polymerCount() const;
+    bool contains(const Polymer *polymer) const;
+    void clear();
 
-    private:
-        PolymerFilePrivate* const d;
+private:
+    PolymerFilePrivate* const d;
 };
 
 } // end chemkit namespace

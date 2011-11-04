@@ -50,11 +50,11 @@ namespace chemkit {
 // === PluginManagerPrivate ================================================ //
 class PluginManagerPrivate
 {
-    public:
-        std::vector<Plugin *> plugins;
-        std::string errorString;
-        bool defaultPluginsLoaded;
-        std::map<std::string, std::map<std::string, PluginManager::Function> > pluginClasses;
+public:
+    std::vector<Plugin *> plugins;
+    std::string errorString;
+    bool defaultPluginsLoaded;
+    std::map<std::string, std::map<std::string, PluginManager::Function> > pluginClasses;
 };
 
 // === PluginManager ======================================================= //

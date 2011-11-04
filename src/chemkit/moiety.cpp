@@ -41,8 +41,8 @@ namespace chemkit {
 // === MoietyPrivate ======================================================= //
 class MoietyPrivate
 {
-    public:
-        std::vector<Atom *> atoms;
+public:
+    std::vector<Atom *> atoms;
 };
 
 // === Moiety ============================================================== //

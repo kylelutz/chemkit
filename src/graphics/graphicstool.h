@@ -45,29 +45,29 @@ class GraphicsToolPrivate;
 
 class CHEMKIT_GRAPHICS_EXPORT GraphicsTool
 {
-    public:
-        // construction and destruction
-        GraphicsTool();
-        virtual ~GraphicsTool();
+public:
+    // construction and destruction
+    GraphicsTool();
+    virtual ~GraphicsTool();
 
-        // properties
-        GraphicsView* view() const;
+    // properties
+    GraphicsView* view() const;
 
-        // event handling
-        virtual void mousePressEvent(QMouseEvent *event);
-        virtual void mouseReleaseEvent(QMouseEvent *event);
-        virtual void mouseMoveEvent(QMouseEvent *event);
-        virtual void mouseDoubleClickEvent(QMouseEvent *event);
-        virtual void wheelEvent(QWheelEvent *event);
-        virtual void toolChanged(const GraphicsTool *tool);
+    // event handling
+    virtual void mousePressEvent(QMouseEvent *event);
+    virtual void mouseReleaseEvent(QMouseEvent *event);
+    virtual void mouseMoveEvent(QMouseEvent *event);
+    virtual void mouseDoubleClickEvent(QMouseEvent *event);
+    virtual void wheelEvent(QWheelEvent *event);
+    virtual void toolChanged(const GraphicsTool *tool);
 
-    private:
-        void setView(GraphicsView *view);
+private:
+    void setView(GraphicsView *view);
 
-        friend class GraphicsView;
+    friend class GraphicsView;
 
-    private:
-        GraphicsToolPrivate* const d;
+private:
+    GraphicsToolPrivate* const d;
 };
 
 } // end chemkit namespace

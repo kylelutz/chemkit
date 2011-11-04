@@ -53,14 +53,14 @@ namespace {
 // === EdgeSet ============================================================= //
 class EdgeSet
 {
-    public:
-        EdgeSet(int vertexCount);
+public:
+    EdgeSet(int vertexCount);
 
-        void insert(int a, int b);
-        bool contains(int a, int b);
+    void insert(int a, int b);
+    bool contains(int a, int b);
 
-    private:
-        std::vector<std::set<int> > m_edges;
+private:
+    std::vector<std::set<int> > m_edges;
 };
 
 EdgeSet::EdgeSet(int vertexCount)
@@ -87,14 +87,14 @@ bool EdgeSet::contains(int a, int b)
 // === Tetrahedron ========================================================= //
 class Tetrahedron
 {
-    public:
-        int verticies[4];
-        int neighbors[4];
-        bool valid;
-        bool inAlphaShape;
+public:
+    int verticies[4];
+    int neighbors[4];
+    bool valid;
+    bool inAlphaShape;
 
-        bool contains(int vertex) const;
-        std::vector<int> triangle(int index) const;
+    bool contains(int vertex) const;
+    std::vector<int> triangle(int index) const;
 };
 
 bool Tetrahedron::contains(int vertex) const
@@ -145,20 +145,20 @@ std::vector<int> Tetrahedron::triangle(int index) const
 // === DelaunayTriangulationPrivate ======================================== //
 class DelaunayTriangulationPrivate
 {
-    public:
-        std::vector<Point3> verticies;
-        std::vector<Real> weights;
-        std::vector<Tetrahedron> tetrahedra;
+public:
+    std::vector<Point3> verticies;
+    std::vector<Real> weights;
+    std::vector<Tetrahedron> tetrahedra;
 
-        bool alphaShapeCalculated;
+    bool alphaShapeCalculated;
 
-        std::vector<std::vector<int> > delaunayEdges;
-        std::vector<std::vector<int> > delaunayTriangles;
-        std::vector<std::vector<int> > delaunayTetrahedra;
+    std::vector<std::vector<int> > delaunayEdges;
+    std::vector<std::vector<int> > delaunayTriangles;
+    std::vector<std::vector<int> > delaunayTetrahedra;
 
-        std::vector<std::vector<int> > alphaShapeEdges;
-        std::vector<std::vector<int> > alphaShapeTriangles;
-        std::vector<std::vector<int> > alphaShapeTetrahedra;
+    std::vector<std::vector<int> > alphaShapeEdges;
+    std::vector<std::vector<int> > alphaShapeTriangles;
+    std::vector<std::vector<int> > alphaShapeTetrahedra;
 };
 
 // === DelaunayTriangulation =============================================== //

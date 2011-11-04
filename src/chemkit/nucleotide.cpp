@@ -40,9 +40,9 @@ namespace chemkit {
 // === NucleotidePrivate =================================================== //
 class NucleotidePrivate
 {
-    public:
-        Nucleotide::NucleotideType type;
-        Nucleotide::SugarType sugarType;
+public:
+    Nucleotide::NucleotideType type;
+    Nucleotide::SugarType sugarType;
 };
 
 // === Nucleotide ========================================================== //

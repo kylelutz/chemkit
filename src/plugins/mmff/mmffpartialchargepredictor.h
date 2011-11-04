@@ -43,25 +43,25 @@
 
 class MmffPartialChargePredictor : public chemkit::PartialChargePredictor
 {
-    public:
-        // construction and destruction
-        MmffPartialChargePredictor();
-        ~MmffPartialChargePredictor();
+public:
+    // construction and destruction
+    MmffPartialChargePredictor();
+    ~MmffPartialChargePredictor();
 
-        // properties
-        void setAtomTyper(const MmffAtomTyper *typer);
+    // properties
+    void setAtomTyper(const MmffAtomTyper *typer);
 
-        // partial charges
-        virtual chemkit::Real partialCharge(int index) const;
-        virtual chemkit::Real partialCharge(const chemkit::Atom *atom) const;
+    // partial charges
+    virtual chemkit::Real partialCharge(int index) const;
+    virtual chemkit::Real partialCharge(const chemkit::Atom *atom) const;
 
-    protected:
-        virtual void assignPartialCharges(const chemkit::Molecule *molecule);
+protected:
+    virtual void assignPartialCharges(const chemkit::Molecule *molecule);
 
-    private:
-        QVector<chemkit::Real> m_partialCharges;
-        const MmffAtomTyper *m_typer;
-        MmffParameters *m_parameters;
+private:
+    QVector<chemkit::Real> m_partialCharges;
+    const MmffAtomTyper *m_typer;
+    MmffParameters *m_parameters;
 };
 
 #endif // MMFFPARTIALCHARGEPREDICTOR_H

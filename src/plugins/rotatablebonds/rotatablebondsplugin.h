@@ -41,11 +41,11 @@
 
 class RotatableBondsPlugin : public chemkit::Plugin
 {
-    public:
-        RotatableBondsPlugin();
-        ~RotatableBondsPlugin();
+public:
+    RotatableBondsPlugin();
+    ~RotatableBondsPlugin();
 
-        static chemkit::MolecularDescriptor* createRotableBondsDescriptor();
+    static chemkit::MolecularDescriptor* createRotableBondsDescriptor();
 };
 
 #endif // ROTATABLEBONDSPLUGIN_H

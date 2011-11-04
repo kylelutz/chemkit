@@ -45,9 +45,9 @@ namespace chemkit {
 // === GraphicsAtomColorMapPrivate ========================================= //
 class GraphicsAtomColorMapPrivate
 {
-    public:
-        QMap<int, QColor> colorMap;
-        QColor defaultColor;
+public:
+    QMap<int, QColor> colorMap;
+    QColor defaultColor;
 };
 
 // === GraphicsAtomColorMap ================================================ //

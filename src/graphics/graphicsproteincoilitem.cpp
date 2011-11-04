@@ -46,10 +46,10 @@ namespace chemkit {
 // === GraphicsProteinCoilItemPrivate ====================================== //
 class GraphicsProteinCoilItemPrivate
 {
-    public:
-        int curveDegree;
-        float radius;
-        QList<AminoAcid *> residues;
+public:
+    int curveDegree;
+    float radius;
+    QList<AminoAcid *> residues;
 };
 
 // === GraphicsProteinCoilItem ============================================= //

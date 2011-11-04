@@ -47,20 +47,20 @@ class GraphicsNucleicAcidItemPrivate;
 
 class CHEMKIT_GRAPHICS_EXPORT GraphicsNucleicAcidItem : public GraphicsItem
 {
-    public:
-        // construction and destruction
-        GraphicsNucleicAcidItem(const Polymer *polymer = 0);
-        ~GraphicsNucleicAcidItem();
+public:
+    // construction and destruction
+    GraphicsNucleicAcidItem(const Polymer *polymer = 0);
+    ~GraphicsNucleicAcidItem();
 
-        // properties
-        void setPolymer(const Polymer *polymer);
-        const Polymer* polymer() const;
+    // properties
+    void setPolymer(const Polymer *polymer);
+    const Polymer* polymer() const;
 
-        // painting
-        virtual void paint(GraphicsPainter *painter);
+    // painting
+    virtual void paint(GraphicsPainter *painter);
 
-    private:
-        GraphicsNucleicAcidItemPrivate* const d;
+private:
+    GraphicsNucleicAcidItemPrivate* const d;
 };
 
 } // end chemkit namespace

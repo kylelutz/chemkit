@@ -42,13 +42,13 @@ namespace chemkit {
 // === GraphicsCameraPrivate =============================================== //
 class GraphicsCameraPrivate
 {
-    public:
-        Point3f position;
-        Vector3f direction;
-        Vector3f upVector;
-        Point3f focus;
-        GraphicsView *view;
-        bool changed;
+public:
+    Point3f position;
+    Vector3f direction;
+    Vector3f upVector;
+    Point3f focus;
+    GraphicsView *view;
+    bool changed;
 };
 
 // === GraphicsCamera ====================================================== //

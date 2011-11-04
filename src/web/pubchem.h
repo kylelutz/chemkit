@@ -51,38 +51,38 @@ class PubChemPrivate;
 
 class CHEMKIT_WEB_EXPORT PubChem
 {
-    public:
-        // construction and destruction
-        PubChem();
-        ~PubChem();
+public:
+    // construction and destruction
+    PubChem();
+    ~PubChem();
 
-        // properties
-        void setUrl(const QUrl &url);
-        QUrl url() const;
+    // properties
+    void setUrl(const QUrl &url);
+    QUrl url() const;
 
-        // downloads
-        Molecule* downloadMolecule(const QString &id) const;
-        MoleculeFile* downloadFile(const QString &id) const;
-        MoleculeFile* downloadFile(const QStringList &ids) const;
-        QByteArray downloadFileData(const QString &id, const QString &format) const;
-        QByteArray downloadFileData(const QStringList &ids, const QString &format) const;
+    // downloads
+    Molecule* downloadMolecule(const QString &id) const;
+    MoleculeFile* downloadFile(const QString &id) const;
+    MoleculeFile* downloadFile(const QStringList &ids) const;
+    QByteArray downloadFileData(const QString &id, const QString &format) const;
+    QByteArray downloadFileData(const QStringList &ids, const QString &format) const;
 
-        // search
-        QStringList search(const QString &query) const;
+    // search
+    QStringList search(const QString &query) const;
 
-        // standardization
-        std::string standardizeFormula(const std::string &formula, const std::string &format) const;
-        std::string standardizeFormula(const std::string &formula, const std::string &inputFormat, const std::string &outputFormat) const;
-        std::string standardizeFormula(const Molecule *molecule, const std::string &format) const;
+    // standardization
+    std::string standardizeFormula(const std::string &formula, const std::string &format) const;
+    std::string standardizeFormula(const std::string &formula, const std::string &inputFormat, const std::string &outputFormat) const;
+    std::string standardizeFormula(const Molecule *molecule, const std::string &format) const;
 
-        // error handling
-        QString errorString() const;
+    // error handling
+    QString errorString() const;
 
-    private:
-        void setErrorString(const QString &error);
+private:
+    void setErrorString(const QString &error);
 
-    private:
-        PubChemPrivate* const d;
+private:
+    PubChemPrivate* const d;
 };
 
 } // end chemkit namespace

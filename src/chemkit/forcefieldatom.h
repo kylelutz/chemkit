@@ -49,36 +49,36 @@ class ForceFieldAtomPrivate;
 
 class CHEMKIT_EXPORT ForceFieldAtom
 {
-    public:
-        // construction and destruction
-        ForceFieldAtom(ForceField *forceField, const Atom *atom);
-        virtual ~ForceFieldAtom();
+public:
+    // construction and destruction
+    ForceFieldAtom(ForceField *forceField, const Atom *atom);
+    virtual ~ForceFieldAtom();
 
-        // properties
-        const Atom* atom() const;
-        int index() const;
-        virtual bool setType(const std::string &type);
-        virtual std::string type() const;
-        void setCharge(Real charge);
-        Real charge() const;
-        bool isSetup() const;
-        ForceField* forceField() const;
+    // properties
+    const Atom* atom() const;
+    int index() const;
+    virtual bool setType(const std::string &type);
+    virtual std::string type() const;
+    void setCharge(Real charge);
+    Real charge() const;
+    bool isSetup() const;
+    ForceField* forceField() const;
 
-        // calculations
-        Real energy() const;
-        Vector3 gradient() const;
+    // calculations
+    Real energy() const;
+    Vector3 gradient() const;
 
-        // structure
-        bool isOneFour(const ForceFieldAtom *atom) const;
+    // structure
+    bool isOneFour(const ForceFieldAtom *atom) const;
 
-        // geometry
-        void setPosition(const Point3 &position);
-        Point3 position() const;
-        void moveBy(const Vector3 &vector);
-        void moveBy(Real dx, Real dy, Real dz);
+    // geometry
+    void setPosition(const Point3 &position);
+    Point3 position() const;
+    void moveBy(const Vector3 &vector);
+    void moveBy(Real dx, Real dy, Real dz);
 
-    private:
-        ForceFieldAtomPrivate* const d;
+private:
+    ForceFieldAtomPrivate* const d;
 };
 
 } // end chemkit namespace

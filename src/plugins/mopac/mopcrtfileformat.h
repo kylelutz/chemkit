@@ -42,11 +42,11 @@
 
 class MopcrtFileFormat : public chemkit::MoleculeFileFormat
 {
-    public:
-        MopcrtFileFormat();
+public:
+    MopcrtFileFormat();
 
-        bool read(std::istream &input, chemkit::MoleculeFile *file);
-        bool read(QIODevice *iodev, chemkit::MoleculeFile *file);
+    bool read(std::istream &input, chemkit::MoleculeFile *file);
+    bool read(QIODevice *iodev, chemkit::MoleculeFile *file);
 };
 
 #endif // MOPCRTFILEFORMAT_H

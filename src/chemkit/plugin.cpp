@@ -44,9 +44,9 @@ namespace chemkit {
 // === PluginPrivate ======================================================= //
 class PluginPrivate
 {
-    public:
-        std::string name;
-        DynamicLibrary *library;
+public:
+    std::string name;
+    DynamicLibrary *library;
 };
 
 // === Plugin ============================================================== //

@@ -57,24 +57,24 @@ namespace chemkit {
 // === GraphicsViewPrivate ================================================= //
 class GraphicsViewPrivate
 {
-    public:
-        GraphicsViewPrivate();
+public:
+    GraphicsViewPrivate();
 
-        GraphicsScene *scene;
-        bool ownScene;
-        GraphicsCamera *camera;
-        bool ownCamera;
-        GraphicsTool *tool;
-        QColor backgroundColor;
-        QList<GraphicsLight *> lights;
-        GraphicsOverlay *overlay;
-        bool overlayEnabled;
-        GraphicsTransform modelViewTransform;
-        GraphicsTransform projectionTransform;
-        QGLShaderProgram *shader;
-        float nearClipDistance;
-        float farClipDistance;
-        float fieldOfView;
+    GraphicsScene *scene;
+    bool ownScene;
+    GraphicsCamera *camera;
+    bool ownCamera;
+    GraphicsTool *tool;
+    QColor backgroundColor;
+    QList<GraphicsLight *> lights;
+    GraphicsOverlay *overlay;
+    bool overlayEnabled;
+    GraphicsTransform modelViewTransform;
+    GraphicsTransform projectionTransform;
+    QGLShaderProgram *shader;
+    float nearClipDistance;
+    float farClipDistance;
+    float fieldOfView;
 };
 
 GraphicsViewPrivate::GraphicsViewPrivate()

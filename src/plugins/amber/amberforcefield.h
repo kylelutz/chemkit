@@ -42,20 +42,20 @@ class AmberParameters;
 
 class AmberForceField : public chemkit::ForceField
 {
-    public:
-        // construction and destruction
-        AmberForceField();
-        ~AmberForceField();
+public:
+    // construction and destruction
+    AmberForceField();
+    ~AmberForceField();
 
-        // setup
-        virtual bool setup();
-        const AmberParameters* parameters() const;
+    // setup
+    virtual bool setup();
+    const AmberParameters* parameters() const;
 
-    private:
-        std::string atomType(const chemkit::Atom *atom) const;
+private:
+    std::string atomType(const chemkit::Atom *atom) const;
 
-    private:
-        AmberParameters *m_parameters;
+private:
+    AmberParameters *m_parameters;
 };
 
 #endif // AMBERFORCEFIELD_H

@@ -47,24 +47,24 @@ struct MmffAtomParameters;
 
 class MmffAtom : public chemkit::ForceFieldAtom
 {
-    public:
-        // construction and destruction
-        MmffAtom(chemkit::ForceField *forceField, const chemkit::Atom *atom);
+public:
+    // construction and destruction
+    MmffAtom(chemkit::ForceField *forceField, const chemkit::Atom *atom);
 
-        // properties
-        const MmffForceField* forceField() const;
-        void setType(int typeNumber, chemkit::Real formalCharge = 0);
-        virtual std::string type() const;
-        int typeNumber() const;
-        chemkit::Real formalCharge() const;
-        int period() const;
+    // properties
+    const MmffForceField* forceField() const;
+    void setType(int typeNumber, chemkit::Real formalCharge = 0);
+    virtual std::string type() const;
+    int typeNumber() const;
+    chemkit::Real formalCharge() const;
+    int period() const;
 
-        // parameters
-        const MmffAtomParameters* parameters() const;
+    // parameters
+    const MmffAtomParameters* parameters() const;
 
-    private:
-        int m_typeNumber;
-        chemkit::Real m_formalCharge;
+private:
+    int m_typeNumber;
+    chemkit::Real m_formalCharge;
 };
 
 #endif // MMFFATOM_H

@@ -41,14 +41,14 @@
 
 class MdlPlugin : public chemkit::Plugin
 {
-    public:
-        MdlPlugin();
-        ~MdlPlugin();
+public:
+    MdlPlugin();
+    ~MdlPlugin();
 
-        static chemkit::MoleculeFileFormat* createMdlFormat();
-        static chemkit::MoleculeFileFormat* createMolFormat();
-        static chemkit::MoleculeFileFormat* createSdfFormat();
-        static chemkit::MoleculeFileFormat* createSdFormat();
+    static chemkit::MoleculeFileFormat* createMdlFormat();
+    static chemkit::MoleculeFileFormat* createMolFormat();
+    static chemkit::MoleculeFileFormat* createSdfFormat();
+    static chemkit::MoleculeFileFormat* createSdFormat();
 };
 
 #endif // MDLPLUGIN_H

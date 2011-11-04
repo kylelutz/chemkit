@@ -49,20 +49,20 @@ class ToolSettingsDock : public QDockWidget
 {
     Q_OBJECT
 
-    public:
-        ToolSettingsDock(BuilderWindow *parent = 0);
-        ~ToolSettingsDock();
+public:
+    ToolSettingsDock(BuilderWindow *parent = 0);
+    ~ToolSettingsDock();
 
-        BuilderWindow* builder() const { return m_parent; }
+    BuilderWindow* builder() const { return m_parent; }
 
-    private slots:
-        void toolChanged(BuilderTool *tool);
-        void toolComboBoxChanged(int index);
+private slots:
+    void toolChanged(BuilderTool *tool);
+    void toolComboBoxChanged(int index);
 
-    private:
-        Ui::ToolSettingsDock *ui;
-        BuilderWindow *m_parent;
-        QWidget *m_settingsWidget;
+private:
+    Ui::ToolSettingsDock *ui;
+    BuilderWindow *m_parent;
+    QWidget *m_settingsWidget;
 };
 
 #endif // TOOLSETTINGSDOCK_H

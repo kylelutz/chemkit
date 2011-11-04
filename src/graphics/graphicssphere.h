@@ -45,24 +45,24 @@ class GraphicsVertexBuffer;
 
 class CHEMKIT_GRAPHICS_EXPORT GraphicsSphere
 {
-    public:
-        // construction and destruction
-        GraphicsSphere();
-        GraphicsSphere(float radius);
-        ~GraphicsSphere();
+public:
+    // construction and destruction
+    GraphicsSphere();
+    GraphicsSphere(float radius);
+    ~GraphicsSphere();
 
-        // properties
-        void setRadius(const float radius);
-        float radius() const;
+    // properties
+    void setRadius(const float radius);
+    float radius() const;
 
-        // intersection
-        bool intersects(const GraphicsRay &ray, float *distance = 0) const;
+    // intersection
+    bool intersects(const GraphicsRay &ray, float *distance = 0) const;
 
-        // tesselation
-        GraphicsVertexBuffer* tesselate(int subdivisions = 3) const;
+    // tesselation
+    GraphicsVertexBuffer* tesselate(int subdivisions = 3) const;
 
-    private:
-        float m_radius;
+private:
+    float m_radius;
 };
 
 } // end chemkit namespace

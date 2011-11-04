@@ -48,35 +48,35 @@ class GraphicsScenePrivate;
 
 class CHEMKIT_GRAPHICS_EXPORT GraphicsScene
 {
-    public:
-        // construction and destruction
-        GraphicsScene();
-        ~GraphicsScene();
+public:
+    // construction and destruction
+    GraphicsScene();
+    ~GraphicsScene();
 
-        // properties
-        int size() const;
-        bool isEmpty() const;
-        QList<GraphicsView *> views() const;
+    // properties
+    int size() const;
+    bool isEmpty() const;
+    QList<GraphicsView *> views() const;
 
-        // items
-        void addItem(GraphicsItem *item);
-        bool removeItem(GraphicsItem *item);
-        bool deleteItem(GraphicsItem *item);
-        GraphicsItem* item(int index) const;
-        GraphicsItem* item(const GraphicsRay &ray) const;
-        QList<GraphicsItem *> items() const;
-        QList<GraphicsItem *> items(const GraphicsRay &ray, bool sorted = true) const;
-        int itemCount() const;
+    // items
+    void addItem(GraphicsItem *item);
+    bool removeItem(GraphicsItem *item);
+    bool deleteItem(GraphicsItem *item);
+    GraphicsItem* item(int index) const;
+    GraphicsItem* item(const GraphicsRay &ray) const;
+    QList<GraphicsItem *> items() const;
+    QList<GraphicsItem *> items(const GraphicsRay &ray, bool sorted = true) const;
+    int itemCount() const;
 
-    private:
-        // internal methods
-        void addView(GraphicsView *view);
-        void removeView(GraphicsView *view);
+private:
+    // internal methods
+    void addView(GraphicsView *view);
+    void removeView(GraphicsView *view);
 
-        friend class GraphicsView;
+    friend class GraphicsView;
 
-    private:
-        GraphicsScenePrivate* const d;
+private:
+    GraphicsScenePrivate* const d;
 };
 
 } // end chemkit namespace

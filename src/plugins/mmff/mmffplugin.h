@@ -47,19 +47,19 @@ class MmffParametersData;
 
 class MmffPlugin : public chemkit::Plugin
 {
-    public:
-        MmffPlugin();
-        ~MmffPlugin();
+public:
+    MmffPlugin();
+    ~MmffPlugin();
 
-        void storeParameters(const QString &name, MmffParametersData *parameters);
-        MmffParametersData* parameters(const QString &name) const;
+    void storeParameters(const QString &name, MmffParametersData *parameters);
+    MmffParametersData* parameters(const QString &name) const;
 
-        static chemkit::AtomTyper* createMmffAtomTyper();
-        static chemkit::ForceField* createMmffForceField();
-        static chemkit::PartialChargePredictor* createMmffPartialChargePredictor();
+    static chemkit::AtomTyper* createMmffAtomTyper();
+    static chemkit::ForceField* createMmffForceField();
+    static chemkit::PartialChargePredictor* createMmffPartialChargePredictor();
 
-    private:
-        QHash<QString, MmffParametersData *> m_parametersCache;
+private:
+    QHash<QString, MmffParametersData *> m_parametersCache;
 };
 
 #endif // MMFFPLUGIN_H

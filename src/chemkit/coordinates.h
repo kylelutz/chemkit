@@ -54,61 +54,61 @@ class Conformer;
 
 class CHEMKIT_EXPORT Coordinates
 {
-    public:
-        // construction and destruction
-        Coordinates();
-        Coordinates(int size);
-        Coordinates(const Molecule *molecule);
-        Coordinates(const Conformer *conformer);
-        Coordinates(const std::vector<Atom *> &atoms);
-        Coordinates(const std::vector<Point3> &points);
-        Coordinates(const Coordinates &coordinates);
-        ~Coordinates();
+public:
+    // construction and destruction
+    Coordinates();
+    Coordinates(int size);
+    Coordinates(const Molecule *molecule);
+    Coordinates(const Conformer *conformer);
+    Coordinates(const std::vector<Atom *> &atoms);
+    Coordinates(const std::vector<Point3> &points);
+    Coordinates(const Coordinates &coordinates);
+    ~Coordinates();
 
-        // properties
-        void setSize(int size);
-        int size() const;
-        bool isEmpty() const;
-        Matrix toMatrix() const;
+    // properties
+    void setSize(int size);
+    int size() const;
+    bool isEmpty() const;
+    Matrix toMatrix() const;
 
-        // coordinates
-        void setPosition(int index, const Point3 &position);
-        void setPosition(int index, Real x, Real y, Real z);
-        Point3 position(int index) const;
-        void setValue(int row, int column, Real value);
-        Real value(int row, int column) const;
-        void append(const Point3 &position);
-        void append(Real x, Real y, Real z);
-        void insert(int index, const Point3 &position);
-        void insert(int index, Real x, Real y, Real z);
-        void remove(int index);
+    // coordinates
+    void setPosition(int index, const Point3 &position);
+    void setPosition(int index, Real x, Real y, Real z);
+    Point3 position(int index) const;
+    void setValue(int row, int column, Real value);
+    Real value(int row, int column) const;
+    void append(const Point3 &position);
+    void append(Real x, Real y, Real z);
+    void insert(int index, const Point3 &position);
+    void insert(int index, Real x, Real y, Real z);
+    void remove(int index);
 
-        // geometry
-        Real distance(int i, int j) const;
-        Real angle(int i, int j, int k) const;
-        Real angleRadians(int i, int j, int k) const;
-        Real torsionAngle(int i, int j, int k, int l) const;
-        Real torsionAngleRadians(int i, int j, int k, int l) const;
-        Real wilsonAngle(int i, int j, int k, int l) const;
-        Real wilsonAngleRadians(int i, int j, int k, int l) const;
-        Point3 center() const;
-        Point3 weightedCenter(const std::vector<Real> &weights) const;
-        void moveBy(const Vector3 &vector);
-        void moveBy(Real x, Real y, Real z);
-        Matrix distanceMatrix() const;
+    // geometry
+    Real distance(int i, int j) const;
+    Real angle(int i, int j, int k) const;
+    Real angleRadians(int i, int j, int k) const;
+    Real torsionAngle(int i, int j, int k, int l) const;
+    Real torsionAngleRadians(int i, int j, int k, int l) const;
+    Real wilsonAngle(int i, int j, int k, int l) const;
+    Real wilsonAngleRadians(int i, int j, int k, int l) const;
+    Point3 center() const;
+    Point3 weightedCenter(const std::vector<Real> &weights) const;
+    void moveBy(const Vector3 &vector);
+    void moveBy(Real x, Real y, Real z);
+    Matrix distanceMatrix() const;
 
-        // math
-        Coordinates add(const Coordinates &coordinates) const;
-        Coordinates subtract(const Coordinates &coordinates) const;
-        Eigen::Matrix<Real, 3, 3> multiply(const Coordinates *coordinates) const;
+    // math
+    Coordinates add(const Coordinates &coordinates) const;
+    Coordinates subtract(const Coordinates &coordinates) const;
+    Eigen::Matrix<Real, 3, 3> multiply(const Coordinates *coordinates) const;
 
-        // operators
-        Coordinates operator+(const Coordinates &coordinates) const;
-        Coordinates operator-(const Coordinates &coordinates) const;
-        Coordinates& operator=(const Coordinates &coordinates);
+    // operators
+    Coordinates operator+(const Coordinates &coordinates) const;
+    Coordinates operator-(const Coordinates &coordinates) const;
+    Coordinates& operator=(const Coordinates &coordinates);
 
-    private:
-        Matrix m_matrix;
+private:
+    Matrix m_matrix;
 };
 
 } // end chemkit namespace

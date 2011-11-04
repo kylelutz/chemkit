@@ -50,26 +50,26 @@ class ForceFieldInteractionsPrivate;
 
 class CHEMKIT_EXPORT ForceFieldInteractions
 {
-    public:
-        // construction and destruction
-        ForceFieldInteractions(const Molecule *molecule, const ForceField *forceField);
-        ~ForceFieldInteractions();
+public:
+    // construction and destruction
+    ForceFieldInteractions(const Molecule *molecule, const ForceField *forceField);
+    ~ForceFieldInteractions();
 
-        // properties
-        const Molecule* molecule() const;
-        const ForceField* forceField() const;
+    // properties
+    const Molecule* molecule() const;
+    const ForceField* forceField() const;
 
-        // interactions
-        std::vector<std::pair<const ForceFieldAtom *, const ForceFieldAtom *> > bondedPairs();
-        std::vector<std::vector<const ForceFieldAtom *> > angleGroups();
-        std::vector<std::vector<const ForceFieldAtom *> > torsionGroups();
-        std::vector<std::pair<const ForceFieldAtom *, const ForceFieldAtom *> > nonbondedPairs();
+    // interactions
+    std::vector<std::pair<const ForceFieldAtom *, const ForceFieldAtom *> > bondedPairs();
+    std::vector<std::vector<const ForceFieldAtom *> > angleGroups();
+    std::vector<std::vector<const ForceFieldAtom *> > torsionGroups();
+    std::vector<std::pair<const ForceFieldAtom *, const ForceFieldAtom *> > nonbondedPairs();
 
-    private:
-        bool atomsWithinTwoBonds(const Atom *a, const Atom *b);
+private:
+    bool atomsWithinTwoBonds(const Atom *a, const Atom *b);
 
-    private:
-        ForceFieldInteractionsPrivate* const d;
+private:
+    ForceFieldInteractionsPrivate* const d;
 };
 
 } // end chemkit namespace

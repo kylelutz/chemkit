@@ -46,34 +46,34 @@ class DynamicLibraryPrivate;
 
 class CHEMKIT_EXPORT DynamicLibrary
 {
-    public:
-        // construction and destruction
-        DynamicLibrary();
-        DynamicLibrary(const std::string &fileName);
-        ~DynamicLibrary();
+public:
+    // construction and destruction
+    DynamicLibrary();
+    DynamicLibrary(const std::string &fileName);
+    ~DynamicLibrary();
 
-        // properties
-        void setFileName(const std::string &fileName);
-        std::string fileName() const;
+    // properties
+    void setFileName(const std::string &fileName);
+    std::string fileName() const;
 
-        // loading and unloading
-        bool open();
-        void close();
+    // loading and unloading
+    bool open();
+    void close();
 
-        // symbol reslolution
-        void* resolve(const std::string &symbol);
+    // symbol reslolution
+    void* resolve(const std::string &symbol);
 
-        // error handling
-        std::string errorString() const;
+    // error handling
+    std::string errorString() const;
 
-        // static methods
-        static bool isLibrary(const std::string &fileName);
+    // static methods
+    static bool isLibrary(const std::string &fileName);
 
-    private:
-        void setErrorString(const std::string &errorString);
+private:
+    void setErrorString(const std::string &errorString);
 
-    private:
-        DynamicLibraryPrivate* const d;
+private:
+    DynamicLibraryPrivate* const d;
 };
 
 } // end chemkit namespace

@@ -47,22 +47,22 @@ class GraphicsProteinCoilItemPrivate;
 
 class CHEMKIT_GRAPHICS_EXPORT GraphicsProteinCoilItem : public GraphicsItem
 {
-    public:
-        // construction and destruction
-        GraphicsProteinCoilItem(const QList<AminoAcid *> &residues);
-        ~GraphicsProteinCoilItem();
+public:
+    // construction and destruction
+    GraphicsProteinCoilItem(const QList<AminoAcid *> &residues);
+    ~GraphicsProteinCoilItem();
 
-        // properties
-        void setRadius(float radius);
-        float radius() const;
-        void setCurveDegree(int degree);
-        int curveDegree() const;
+    // properties
+    void setRadius(float radius);
+    float radius() const;
+    void setCurveDegree(int degree);
+    int curveDegree() const;
 
-        // drawing
-        virtual void paint(GraphicsPainter *painter);
+    // drawing
+    virtual void paint(GraphicsPainter *painter);
 
-    private:
-        GraphicsProteinCoilItemPrivate* const d;
+private:
+    GraphicsProteinCoilItemPrivate* const d;
 };
 
 } // end chemkit namespace

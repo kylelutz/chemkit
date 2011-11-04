@@ -45,9 +45,9 @@ namespace chemkit {
 // === GraphicsRingItemPrivate ============================================= //
 class GraphicsRingItemPrivate
 {
-    public:
-        const Ring *ring;
-        QColor color;
+public:
+    const Ring *ring;
+    QColor color;
 };
 
 // === GraphicsRingItem ==================================================== //

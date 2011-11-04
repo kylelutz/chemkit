@@ -40,11 +40,11 @@
 
 class HydrogenBondDonorsDescriptor : public chemkit::MolecularDescriptor
 {
-    public:
-        HydrogenBondDonorsDescriptor();
-        ~HydrogenBondDonorsDescriptor();
+public:
+    HydrogenBondDonorsDescriptor();
+    ~HydrogenBondDonorsDescriptor();
 
-        chemkit::Variant value(const chemkit::Molecule *molecule) const;
+    chemkit::Variant value(const chemkit::Molecule *molecule) const;
 };
 
 #endif // HYDROGENBONDDONORSDESCRIPTOR_H

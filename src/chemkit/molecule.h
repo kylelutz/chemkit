@@ -62,151 +62,151 @@ class InternalCoordinates;
 
 class CHEMKIT_EXPORT Molecule
 {
-    public:
-        // enumerations
-        enum ChangeType {
-            AtomAdded,
-            AtomRemoved,
-            AtomAtomicNumberChanged,
-            AtomMassNumberChanged,
-            AtomPartialChargeChanged,
-            AtomPositionChanged,
-            AtomChiralityChanged,
-            BondAdded,
-            BondRemoved,
-            BondOrderChanged,
-            ConformerAdded,
-            ConformerRemoved,
-            ConformerChanged,
-            NameChanged
-        };
+public:
+    // enumerations
+    enum ChangeType {
+        AtomAdded,
+        AtomRemoved,
+        AtomAtomicNumberChanged,
+        AtomMassNumberChanged,
+        AtomPartialChargeChanged,
+        AtomPositionChanged,
+        AtomChiralityChanged,
+        BondAdded,
+        BondRemoved,
+        BondOrderChanged,
+        ConformerAdded,
+        ConformerRemoved,
+        ConformerChanged,
+        NameChanged
+    };
 
-        enum CompareFlag {
-            CompareAtomsOnly = 0x00,
-            CompareHydrogens = 0x01,
-            CompareAromaticity = 0x02
-        };
+    enum CompareFlag {
+        CompareAtomsOnly = 0x00,
+        CompareHydrogens = 0x01,
+        CompareAromaticity = 0x02
+    };
 
-        // construction and destruction
-        Molecule();
-        Molecule(const std::string &formula, const std::string &format);
-        Molecule(const Molecule &molecule);
-        ~Molecule();
+    // construction and destruction
+    Molecule();
+    Molecule(const std::string &formula, const std::string &format);
+    Molecule(const Molecule &molecule);
+    ~Molecule();
 
-        // properties
-        void setName(const std::string &name);
-        std::string name() const;
-        std::string formula() const;
-        std::string formula(const std::string &format) const;
-        Variant descriptor(const std::string &name) const;
-        inline int size() const;
-        inline bool isEmpty() const;
-        Real mass() const;
-        void setData(const std::string &name, const Variant &value);
-        Variant data(const std::string &name) const;
+    // properties
+    void setName(const std::string &name);
+    std::string name() const;
+    std::string formula() const;
+    std::string formula(const std::string &format) const;
+    Variant descriptor(const std::string &name) const;
+    inline int size() const;
+    inline bool isEmpty() const;
+    Real mass() const;
+    void setData(const std::string &name, const Variant &value);
+    Variant data(const std::string &name) const;
 
-        // structure
-        Atom* addAtom(const Element &element);
-        Atom* addAtomCopy(const Atom *atom);
-        void removeAtom(Atom *atom);
-        Atom* atom(int index) const;
-        inline std::vector<Atom *> atoms() const;
-        inline int atomCount() const;
-        int atomCount(const Element &element) const;
-        bool contains(const Atom *atom) const;
-        bool contains(const Element &element) const;
-        Bond* addBond(Atom *a, Atom *b, int order = Bond::Single);
-        Bond* addBond(int a, int b, int order = Bond::Single);
-        void removeBond(Bond *bond);
-        void removeBond(Atom *a, Atom *b);
-        void removeBond(int a, int b);
-        Bond* bond(int index) const;
-        Bond* bond(const Atom *a, const Atom *b) const;
-        Bond* bond(int a, int b) const;
-        std::vector<Bond *> bonds() const;
-        int bondCount() const;
-        bool contains(const Bond *bond) const;
-        void clear();
+    // structure
+    Atom* addAtom(const Element &element);
+    Atom* addAtomCopy(const Atom *atom);
+    void removeAtom(Atom *atom);
+    Atom* atom(int index) const;
+    inline std::vector<Atom *> atoms() const;
+    inline int atomCount() const;
+    int atomCount(const Element &element) const;
+    bool contains(const Atom *atom) const;
+    bool contains(const Element &element) const;
+    Bond* addBond(Atom *a, Atom *b, int order = Bond::Single);
+    Bond* addBond(int a, int b, int order = Bond::Single);
+    void removeBond(Bond *bond);
+    void removeBond(Atom *a, Atom *b);
+    void removeBond(int a, int b);
+    Bond* bond(int index) const;
+    Bond* bond(const Atom *a, const Atom *b) const;
+    Bond* bond(int a, int b) const;
+    std::vector<Bond *> bonds() const;
+    int bondCount() const;
+    bool contains(const Bond *bond) const;
+    void clear();
 
-        // comparison
-        bool equals(const Molecule *molecule, int flags = 0) const;
-        bool contains(const Molecule *molecule, int flags = 0) const;
-        bool isSubstructureOf(const Molecule *molecule, int flags = 0) const;
-        std::map<Atom *, Atom *> mapping(const Molecule *molecule, int flags = 0) const;
-        Moiety find(const Molecule *moiety, int flags = 0) const;
+    // comparison
+    bool equals(const Molecule *molecule, int flags = 0) const;
+    bool contains(const Molecule *molecule, int flags = 0) const;
+    bool isSubstructureOf(const Molecule *molecule, int flags = 0) const;
+    std::map<Atom *, Atom *> mapping(const Molecule *molecule, int flags = 0) const;
+    Moiety find(const Molecule *moiety, int flags = 0) const;
 
-        // ring perception
-        Ring* ring(int index) const;
-        std::vector<Ring *> rings() const;
-        int ringCount() const;
+    // ring perception
+    Ring* ring(int index) const;
+    std::vector<Ring *> rings() const;
+    int ringCount() const;
 
-        // fragment perception
-        Fragment* fragment(int index) const;
-        std::vector<Fragment *> fragments() const;
-        int fragmentCount() const;
-        bool isFragmented() const;
-        void removeFragment(Fragment *fragment);
+    // fragment perception
+    Fragment* fragment(int index) const;
+    std::vector<Fragment *> fragments() const;
+    int fragmentCount() const;
+    bool isFragmented() const;
+    void removeFragment(Fragment *fragment);
 
-        // geometry
-        void setCoordinates(const Coordinates *coordinates);
-        void setCoordinates(const InternalCoordinates *coordinates);
-        Real distance(const Atom *a, const Atom *b) const;
-        Real bondAngle(const Atom *a, const Atom *b, const Atom *c) const;
-        Real torsionAngle(const Atom *a, const Atom *b, const Atom *c, const Atom *d) const;
-        Real wilsonAngle(const Atom *a, const Atom *b, const Atom *c, const Atom *d) const;
-        void setCenter(const Point3 &position);
-        void setCenter(Real x, Real y, Real z);
-        Point3 center() const;
-        Point3 centerOfMass() const;
-        void moveBy(const Vector3 &vector);
-        void moveBy(Real dx, Real dy, Real dz);
-        void rotate(const Vector3 &axis, Real angle);
-        bool hasCoordinates() const;
-        void clearCoordinates();
+    // geometry
+    void setCoordinates(const Coordinates *coordinates);
+    void setCoordinates(const InternalCoordinates *coordinates);
+    Real distance(const Atom *a, const Atom *b) const;
+    Real bondAngle(const Atom *a, const Atom *b, const Atom *c) const;
+    Real torsionAngle(const Atom *a, const Atom *b, const Atom *c, const Atom *d) const;
+    Real wilsonAngle(const Atom *a, const Atom *b, const Atom *c, const Atom *d) const;
+    void setCenter(const Point3 &position);
+    void setCenter(Real x, Real y, Real z);
+    Point3 center() const;
+    Point3 centerOfMass() const;
+    void moveBy(const Vector3 &vector);
+    void moveBy(Real dx, Real dy, Real dz);
+    void rotate(const Vector3 &axis, Real angle);
+    bool hasCoordinates() const;
+    void clearCoordinates();
 
-        // conformers
-        Conformer* addConformer();
-        void removeConformer(Conformer *conformer);
-        void setConformer(Conformer *conformer);
-        Conformer* conformer() const;
-        Conformer* conformer(int index) const;
-        std::vector<Conformer *> conformers() const;
-        int conformerCount() const;
+    // conformers
+    Conformer* addConformer();
+    void removeConformer(Conformer *conformer);
+    void setConformer(Conformer *conformer);
+    Conformer* conformer() const;
+    Conformer* conformer(int index) const;
+    std::vector<Conformer *> conformers() const;
+    int conformerCount() const;
 
-        // operators
-        Molecule& operator=(const Molecule &molecule);
+    // operators
+    Molecule& operator=(const Molecule &molecule);
 
-    private:
-        // internal methods
-        std::vector<Atom *> atomPathBetween(const Atom *a, const Atom *b) const;
-        int atomCountBetween(const Atom *a, const Atom *b) const;
-        int atomCountBetween(const Atom *a, const Atom *b, int maxCount) const;
-        std::vector<Bond *> bondPathBetween(const Atom *a, const Atom *b) const;
-        int bondCountBetween(const Atom *a, const Atom *b) const;
-        int bondCountBetween(const Atom *a, const Atom *b, int maxCount) const;
-        void setRingsPerceived(bool perceived) const;
-        bool ringsPerceived() const;
-        void setFragmentsPerceived(bool perceived) const;
-        bool fragmentsPerceived() const;
-        void perceiveFragments() const;
-        Fragment* fragment(const Atom *atom) const;
-        void notifyObservers(ChangeType type);
-        void notifyObservers(const Atom *atom, ChangeType type);
-        void notifyObservers(const Bond *bond, ChangeType type);
-        void notifyObservers(const Conformer *conformer, ChangeType type);
-        void addObserver(MoleculeObserver *observer) const;
-        void removeObserver(MoleculeObserver *observer) const;
-        bool isSubsetOf(const Molecule *molecule, int flags) const;
-        Stereochemistry* stereochemistry();
+private:
+    // internal methods
+    std::vector<Atom *> atomPathBetween(const Atom *a, const Atom *b) const;
+    int atomCountBetween(const Atom *a, const Atom *b) const;
+    int atomCountBetween(const Atom *a, const Atom *b, int maxCount) const;
+    std::vector<Bond *> bondPathBetween(const Atom *a, const Atom *b) const;
+    int bondCountBetween(const Atom *a, const Atom *b) const;
+    int bondCountBetween(const Atom *a, const Atom *b, int maxCount) const;
+    void setRingsPerceived(bool perceived) const;
+    bool ringsPerceived() const;
+    void setFragmentsPerceived(bool perceived) const;
+    bool fragmentsPerceived() const;
+    void perceiveFragments() const;
+    Fragment* fragment(const Atom *atom) const;
+    void notifyObservers(ChangeType type);
+    void notifyObservers(const Atom *atom, ChangeType type);
+    void notifyObservers(const Bond *bond, ChangeType type);
+    void notifyObservers(const Conformer *conformer, ChangeType type);
+    void addObserver(MoleculeObserver *observer) const;
+    void removeObserver(MoleculeObserver *observer) const;
+    bool isSubsetOf(const Molecule *molecule, int flags) const;
+    Stereochemistry* stereochemistry();
 
-        friend class Atom;
-        friend class Bond;
-        friend class MoleculeObserver;
+    friend class Atom;
+    friend class Bond;
+    friend class MoleculeObserver;
 
-    private:
-        MoleculePrivate* const d;
-        std::vector<Atom *> m_atoms;
-        Stereochemistry *m_stereochemistry;
+private:
+    MoleculePrivate* const d;
+    std::vector<Atom *> m_atoms;
+    Stereochemistry *m_stereochemistry;
 };
 
 } // end chemkit namespace

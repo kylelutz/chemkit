@@ -47,19 +47,19 @@ class GraphicsLightPrivate;
 
 class CHEMKIT_GRAPHICS_EXPORT GraphicsLight
 {
-    public:
-        // construction and destruction
-        GraphicsLight();
-        ~GraphicsLight();
+public:
+    // construction and destruction
+    GraphicsLight();
+    ~GraphicsLight();
 
-        // properties
-        void setPosition(const Point3f &position);
-        Point3f position() const;
-        void setDirection(const Vector3f &direction);
-        Vector3f direction() const;
+    // properties
+    void setPosition(const Point3f &position);
+    Point3f position() const;
+    void setDirection(const Vector3f &direction);
+    Vector3f direction() const;
 
-    private:
-        GraphicsLightPrivate* const d;
+private:
+    GraphicsLightPrivate* const d;
 };
 
 } // end chemkit namespace

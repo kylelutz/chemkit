@@ -47,28 +47,28 @@ class DynamicLibrary;
 
 class CHEMKIT_EXPORT Plugin
 {
-    public:
-        // properties
-        std::string name() const;
-        std::string fileName() const;
-        std::string dataPath() const;
+public:
+    // properties
+    std::string name() const;
+    std::string fileName() const;
+    std::string dataPath() const;
 
-    protected:
-        // construction and destruction
-        Plugin(const std::string &name);
-        virtual ~Plugin();
+protected:
+    // construction and destruction
+    Plugin(const std::string &name);
+    virtual ~Plugin();
 
-        template<class T> bool registerPluginClass(const std::string &name, typename T::CreateFunction function);
-        template<class T> bool unregisterPluginClass(const std::string &name);
+    template<class T> bool registerPluginClass(const std::string &name, typename T::CreateFunction function);
+    template<class T> bool unregisterPluginClass(const std::string &name);
 
-    private:
-        void setLibrary(DynamicLibrary *library);
-        DynamicLibrary* library() const;
+private:
+    void setLibrary(DynamicLibrary *library);
+    DynamicLibrary* library() const;
 
-        friend class PluginManager;
+    friend class PluginManager;
 
-    private:
-        PluginPrivate* const d;
+private:
+    PluginPrivate* const d;
 };
 
 } // end chemkit namespace

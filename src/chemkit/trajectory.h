@@ -47,24 +47,24 @@ class TrajectoryPrivate;
 
 class CHEMKIT_EXPORT Trajectory
 {
-    public:
-        // construction and destruction
-        Trajectory();
-        ~Trajectory();
+public:
+    // construction and destruction
+    Trajectory();
+    ~Trajectory();
 
-        // properties
-        int size() const;
-        bool isEmpty() const;
+    // properties
+    int size() const;
+    bool isEmpty() const;
 
-        // frames
-        TrajectoryFrame* addFrame();
-        bool removeFrame(TrajectoryFrame *frame);
-        TrajectoryFrame* frame(int index) const;
-        std::vector<TrajectoryFrame *> frames() const;
-        int frameCount() const;
+    // frames
+    TrajectoryFrame* addFrame();
+    bool removeFrame(TrajectoryFrame *frame);
+    TrajectoryFrame* frame(int index) const;
+    std::vector<TrajectoryFrame *> frames() const;
+    int frameCount() const;
 
-    private:
-        TrajectoryPrivate* const d;
+private:
+    TrajectoryPrivate* const d;
 };
 
 } // end chemkit namespace

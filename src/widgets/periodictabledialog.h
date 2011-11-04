@@ -50,22 +50,22 @@ class CHEMKIT_WIDGETS_EXPORT PeriodicTableDialog : public QDialog
 {
     Q_OBJECT
 
-    public:
-        // construction and destruction
-        PeriodicTableDialog(QWidget *parent = 0);
-        ~PeriodicTableDialog();
+public:
+    // construction and destruction
+    PeriodicTableDialog(QWidget *parent = 0);
+    ~PeriodicTableDialog();
 
-        // properties
-        Element element() const;
+    // properties
+    Element element() const;
 
-        // static methods
-        static Element getElement(QWidget *parent = 0, const QString &caption = QString());
+    // static methods
+    static Element getElement(QWidget *parent = 0, const QString &caption = QString());
 
-    private slots:
-        void elementClicked(const chemkit::Element &element);
+private slots:
+    void elementClicked(const chemkit::Element &element);
 
-    private:
-        PeriodicTableDialogPrivate* const d;
+private:
+    PeriodicTableDialogPrivate* const d;
 };
 
 } // end chemkit namespace

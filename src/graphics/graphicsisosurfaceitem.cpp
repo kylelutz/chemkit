@@ -475,15 +475,15 @@ GraphicsVertexBuffer* marchCubes(const ScalarField *scalarField, float isovalue)
 // === GraphicsIsosurfaceItemPrivate ======================================= //
 class GraphicsIsosurfaceItemPrivate
 {
-    public:
-        Point3f position;
-        float isovalue;
-        QColor color;
-        QVector<float> values;
-        QVector<int> voxelCounts;
-        QVector<Vector3f> axii;
-        const ScalarField *scalarField;
-        GraphicsVertexBuffer *buffer;
+public:
+    Point3f position;
+    float isovalue;
+    QColor color;
+    QVector<float> values;
+    QVector<int> voxelCounts;
+    QVector<Vector3f> axii;
+    const ScalarField *scalarField;
+    GraphicsVertexBuffer *buffer;
 };
 
 // === GraphicsIsosurfaceItem ============================================== //

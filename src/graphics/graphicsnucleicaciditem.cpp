@@ -48,8 +48,8 @@ namespace chemkit {
 // === GraphicsNucleicAcidItemPrivate ====================================== //
 class GraphicsNucleicAcidItemPrivate
 {
-    public:
-        const Polymer *polymer;
+public:
+    const Polymer *polymer;
 };
 
 // === GraphicsNucleicAcidItem ============================================= //

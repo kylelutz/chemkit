@@ -41,11 +41,11 @@
 
 class XtcPlugin : public chemkit::Plugin
 {
-    public:
-        XtcPlugin();
-        ~XtcPlugin();
+public:
+    XtcPlugin();
+    ~XtcPlugin();
 
-        static chemkit::TrajectoryFileFormat* createXtcFormat();
+    static chemkit::TrajectoryFileFormat* createXtcFormat();
 };
 
 #endif // XTCPLUGIN_H

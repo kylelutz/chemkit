@@ -49,39 +49,39 @@ class PolymerChainPrivate;
 
 class CHEMKIT_EXPORT PolymerChain
 {
-    public:
-        // properties
-        void setName(const std::string &name);
-        std::string name() const;
-        int size() const;
-        bool isEmpty() const;
-        Polymer* polymer() const;
+public:
+    // properties
+    void setName(const std::string &name);
+    std::string name() const;
+    int size() const;
+    bool isEmpty() const;
+    Polymer* polymer() const;
 
-        // structure
-        void addResidue(Residue *residue);
-        void appendResidue(Residue *residue);
-        void prependResidue(Residue *residue);
-        void insertResidue(int index, Residue *residue);
-        bool removeResidue(Residue *residue);
-        bool deleteResidue(Residue *residue);
-        Residue* residue(int index) const;
-        std::vector<Residue *> residues() const;
-        int residueCount() const;
-        int indexOf(const Residue *residue) const;
-        std::string sequenceString() const;
-        int sequenceNumber(const Residue *residue) const;
+    // structure
+    void addResidue(Residue *residue);
+    void appendResidue(Residue *residue);
+    void prependResidue(Residue *residue);
+    void insertResidue(int index, Residue *residue);
+    bool removeResidue(Residue *residue);
+    bool deleteResidue(Residue *residue);
+    Residue* residue(int index) const;
+    std::vector<Residue *> residues() const;
+    int residueCount() const;
+    int indexOf(const Residue *residue) const;
+    std::string sequenceString() const;
+    int sequenceNumber(const Residue *residue) const;
 
-    private:
-        // construction and destruction
-        PolymerChain(Polymer *polymer);
-        ~PolymerChain();
+private:
+    // construction and destruction
+    PolymerChain(Polymer *polymer);
+    ~PolymerChain();
 
-        CHEMKIT_DISABLE_COPY(PolymerChain)
+    CHEMKIT_DISABLE_COPY(PolymerChain)
 
-        friend class Polymer;
+    friend class Polymer;
 
-    private:
-        PolymerChainPrivate* const d;
+private:
+    PolymerChainPrivate* const d;
 };
 
 } // end chemkit namespace

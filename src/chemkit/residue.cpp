@@ -46,11 +46,11 @@ namespace chemkit {
 // === ResiduePrivate ====================================================== //
 class ResiduePrivate
 {
-    public:
-        int type;
-        Molecule *molecule;
-        std::vector<Atom *> atoms;
-        std::map<std::string, const Atom *> types;
+public:
+    int type;
+    Molecule *molecule;
+    std::vector<Atom *> atoms;
+    std::map<std::string, const Atom *> types;
 };
 
 // === Residue ============================================================= //

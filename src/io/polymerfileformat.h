@@ -50,33 +50,33 @@ class PolymerFileFormatPrivate;
 
 class CHEMKIT_IO_EXPORT PolymerFileFormat
 {
-    public:
-        // typedefs
-        typedef PolymerFileFormat* (*CreateFunction)();
+public:
+    // typedefs
+    typedef PolymerFileFormat* (*CreateFunction)();
 
-        // construction and destruction
-        virtual ~PolymerFileFormat();
+    // construction and destruction
+    virtual ~PolymerFileFormat();
 
-        // properties
-        std::string name() const;
+    // properties
+    std::string name() const;
 
-        // input and output
-        virtual bool read(std::istream &input, PolymerFile *file);
-        virtual bool write(const PolymerFile *file, std::ostream &output);
+    // input and output
+    virtual bool read(std::istream &input, PolymerFile *file);
+    virtual bool write(const PolymerFile *file, std::ostream &output);
 
-        // error handling
-        std::string errorString() const;
+    // error handling
+    std::string errorString() const;
 
-        // static methods
-        static PolymerFileFormat* create(const std::string &name);
-        static std::vector<std::string> formats();
+    // static methods
+    static PolymerFileFormat* create(const std::string &name);
+    static std::vector<std::string> formats();
 
-    protected:
-        PolymerFileFormat(const std::string &name);
-        void setErrorString(const std::string &errorString);
+protected:
+    PolymerFileFormat(const std::string &name);
+    void setErrorString(const std::string &errorString);
 
-    private:
-        PolymerFileFormatPrivate* const d;
+private:
+    PolymerFileFormatPrivate* const d;
 };
 
 } // end chemkit namespace

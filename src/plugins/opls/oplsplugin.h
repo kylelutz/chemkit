@@ -42,12 +42,12 @@
 
 class OplsPlugin : public chemkit::Plugin
 {
-    public:
-        OplsPlugin();
-        ~OplsPlugin();
+public:
+    OplsPlugin();
+    ~OplsPlugin();
 
-        static chemkit::AtomTyper* createOplsAtomTyper();
-        static chemkit::ForceField* createOplsForceField();
+    static chemkit::AtomTyper* createOplsAtomTyper();
+    static chemkit::ForceField* createOplsForceField();
 };
 
 #endif // OPLSPLUGIN_H

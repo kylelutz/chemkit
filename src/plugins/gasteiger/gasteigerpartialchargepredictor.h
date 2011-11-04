@@ -48,24 +48,24 @@ struct GasteigerParameters {
 
 class GasteigerPartialChargePredictor : public chemkit::PartialChargePredictor
 {
-    public:
-        // construction and destruction
-        GasteigerPartialChargePredictor();
-        ~GasteigerPartialChargePredictor();
+public:
+    // construction and destruction
+    GasteigerPartialChargePredictor();
+    ~GasteigerPartialChargePredictor();
 
-        // partial charges
-        chemkit::Real partialCharge(int index) const;
+    // partial charges
+    chemkit::Real partialCharge(int index) const;
 
-    protected:
-        void assignPartialCharges(const chemkit::Molecule *molecule);
+protected:
+    void assignPartialCharges(const chemkit::Molecule *molecule);
 
-    private:
-        const GasteigerParameters* atomParameters(const chemkit::Atom *atom) const;
+private:
+    const GasteigerParameters* atomParameters(const chemkit::Atom *atom) const;
 
-    private:
-        QVector<chemkit::Real> m_charges;
-        QVector<chemkit::Real> m_electronegativies;
-        QVector<const GasteigerParameters *> m_parameters;
+private:
+    QVector<chemkit::Real> m_charges;
+    QVector<chemkit::Real> m_electronegativies;
+    QVector<const GasteigerParameters *> m_parameters;
 };
 
 #endif // GASTEIGERPARTIALCHARGEPREDICTOR_H

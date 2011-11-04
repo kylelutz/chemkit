@@ -46,10 +46,10 @@ namespace chemkit {
 // === InternalCoordinatesPrivate ========================================== //
 class InternalCoordinatesPrivate
 {
-    public:
-        int size;
-        int *connections;
-        Real *coordinates;
+public:
+    int size;
+    int *connections;
+    Real *coordinates;
 };
 
 // === InternalCoordinates ================================================= //

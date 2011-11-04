@@ -44,42 +44,42 @@ namespace chemkit {
 
 class CHEMKIT_EXPORT Element
 {
-    public:
-        // construction and destruction
-        Element();
-        Element(int atomicNumber);
-        Element(const char *symbol);
-        Element(const std::string &symbol);
+public:
+    // construction and destruction
+    Element();
+    Element(int atomicNumber);
+    Element(const char *symbol);
+    Element(const std::string &symbol);
 
-        // properties
-        void setAtomicNumber(int atomicNumber);
-        inline int atomicNumber() const;
-        std::string symbol() const;
-        std::string name() const;
-        int period() const;
-        Real mass() const;
-        Real electronegativity() const;
-        Real covalentRadius() const;
-        Real vanDerWaalsRadius() const;
-        int expectedValence() const;
-        inline bool isValid() const;
-        bool isMetal() const;
-        bool isNonmetal() const;
+    // properties
+    void setAtomicNumber(int atomicNumber);
+    inline int atomicNumber() const;
+    std::string symbol() const;
+    std::string name() const;
+    int period() const;
+    Real mass() const;
+    Real electronegativity() const;
+    Real covalentRadius() const;
+    Real vanDerWaalsRadius() const;
+    int expectedValence() const;
+    inline bool isValid() const;
+    bool isMetal() const;
+    bool isNonmetal() const;
 
-        // operators
-        inline bool operator==(const Element &element) const;
-        inline bool operator!=(const Element &element) const;
+    // operators
+    inline bool operator==(const Element &element) const;
+    inline bool operator!=(const Element &element) const;
 
-        // static methods
-        static int atomicNumber(const std::string &symbol);
-        static int atomicNumber(const char *symbol);
-        static int atomicNumber(const char *symbol, int length);
-        static int atomicNumber(char symbol);
-        static bool isValidAtomicNumber(int atomicNumber);
-        static bool isValidSymbol(const std::string &symbol);
+    // static methods
+    static int atomicNumber(const std::string &symbol);
+    static int atomicNumber(const char *symbol);
+    static int atomicNumber(const char *symbol, int length);
+    static int atomicNumber(char symbol);
+    static bool isValidAtomicNumber(int atomicNumber);
+    static bool isValidSymbol(const std::string &symbol);
 
-    private:
-        unsigned char m_atomicNumber;
+private:
+    unsigned char m_atomicNumber;
 };
 
 } // end chemkit namespace

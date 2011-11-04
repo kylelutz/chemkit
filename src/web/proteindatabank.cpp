@@ -47,9 +47,9 @@ namespace chemkit {
 // === ProteinDataBankPrivate ============================================== //
 class ProteinDataBankPrivate
 {
-	public:
-        QUrl url;
-        QString errorString;
+public:
+    QUrl url;
+    QString errorString;
 };
 
 // === ProteinDataBank ===================================================== //

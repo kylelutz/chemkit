@@ -52,37 +52,37 @@ class MoleculeFileFormatPrivate;
 
 class CHEMKIT_IO_EXPORT MoleculeFileFormat
 {
-    public:
-        // typedefs
-        typedef MoleculeFileFormat* (*CreateFunction)();
+public:
+    // typedefs
+    typedef MoleculeFileFormat* (*CreateFunction)();
 
-        // construction and destruction
-        virtual ~MoleculeFileFormat();
+    // construction and destruction
+    virtual ~MoleculeFileFormat();
 
-        // properties
-        std::string name() const;
+    // properties
+    std::string name() const;
 
-        // options
-        void setOption(const std::string &name, const Variant &value);
-        Variant option(const std::string &name) const;
+    // options
+    void setOption(const std::string &name, const Variant &value);
+    Variant option(const std::string &name) const;
 
-        // input and output
-        virtual bool read(std::istream &input, MoleculeFile *file);
-        virtual bool write(const MoleculeFile *file, std::ostream &output);
+    // input and output
+    virtual bool read(std::istream &input, MoleculeFile *file);
+    virtual bool write(const MoleculeFile *file, std::ostream &output);
 
-        // error handling
-        std::string errorString() const;
+    // error handling
+    std::string errorString() const;
 
-        // static methods
-        static MoleculeFileFormat* create(const std::string &format);
-        static std::vector<std::string> formats();
+    // static methods
+    static MoleculeFileFormat* create(const std::string &format);
+    static std::vector<std::string> formats();
 
-    protected:
-        MoleculeFileFormat(const std::string &name);
-        void setErrorString(const std::string &error);
+protected:
+    MoleculeFileFormat(const std::string &name);
+    void setErrorString(const std::string &error);
 
-    private:
-        MoleculeFileFormatPrivate* const d;
+private:
+    MoleculeFileFormatPrivate* const d;
 };
 
 } // end chemkit namespace

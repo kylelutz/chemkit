@@ -49,40 +49,40 @@ class GraphicsPainterPrivate;
 
 class CHEMKIT_GRAPHICS_EXPORT GraphicsPainter
 {
-    public:
-        // enumerations
-        enum PrimitiveType {
-            Triangles,
-            TriangleStrip,
-            TriangleFan,
-            Lines,
-            LineStrip,
-            LineLoop,
-            Points
-        };
+public:
+    // enumerations
+    enum PrimitiveType {
+        Triangles,
+        TriangleStrip,
+        TriangleFan,
+        Lines,
+        LineStrip,
+        LineLoop,
+        Points
+    };
 
-        // construction and destruction
-        GraphicsPainter();
-        ~GraphicsPainter();
+    // construction and destruction
+    GraphicsPainter();
+    ~GraphicsPainter();
 
-        // drawing
-        void draw(const GraphicsVertexBuffer *buffer, PrimitiveType type = Triangles);
-        void drawSphere(float radius);
-        void drawSphere(const Point3f &center, float radius);
-        void drawCylinder(float radius, float length);
-        void drawCylinder(const Point3f &a, const Point3f &b, float radius);
-        void drawCircle(float radius);
-        void drawCircle(const Point3f &center, float radius, const Vector3f &normal);
-        void drawTriangle(const Point3f &a, const Point3f &b, const Point3f &c);
-        void drawRectangle(const Point3f &a, const Point3f &b, const Point3f &c, const Point3f &d);
-        void drawSpline(const QList<Point3f> &points, float radius, int order);
-        void drawNurbsSurface(const QVector<Point3f> &controlPoints, const QVector<float> &uKnots, const QVector<float> &vKnots, int uOrder, int vOrder);
-        void drawText(const QString &text, const QFont &font = QFont());
-        void setColor(const QColor &color);
-        void setMaterial(const GraphicsMaterial *material);
+    // drawing
+    void draw(const GraphicsVertexBuffer *buffer, PrimitiveType type = Triangles);
+    void drawSphere(float radius);
+    void drawSphere(const Point3f &center, float radius);
+    void drawCylinder(float radius, float length);
+    void drawCylinder(const Point3f &a, const Point3f &b, float radius);
+    void drawCircle(float radius);
+    void drawCircle(const Point3f &center, float radius, const Vector3f &normal);
+    void drawTriangle(const Point3f &a, const Point3f &b, const Point3f &c);
+    void drawRectangle(const Point3f &a, const Point3f &b, const Point3f &c, const Point3f &d);
+    void drawSpline(const QList<Point3f> &points, float radius, int order);
+    void drawNurbsSurface(const QVector<Point3f> &controlPoints, const QVector<float> &uKnots, const QVector<float> &vKnots, int uOrder, int vOrder);
+    void drawText(const QString &text, const QFont &font = QFont());
+    void setColor(const QColor &color);
+    void setMaterial(const GraphicsMaterial *material);
 
-    private:
-        GraphicsPainterPrivate* const d;
+private:
+    GraphicsPainterPrivate* const d;
 };
 
 } // end chemkit namespace

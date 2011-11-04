@@ -50,33 +50,33 @@ class TrajectoryFileFormatPrivate;
 
 class CHEMKIT_IO_EXPORT TrajectoryFileFormat
 {
-    public:
-        // typedefs
-        typedef TrajectoryFileFormat* (*CreateFunction)();
+public:
+    // typedefs
+    typedef TrajectoryFileFormat* (*CreateFunction)();
 
-        // construction and destruction
-        virtual ~TrajectoryFileFormat();
+    // construction and destruction
+    virtual ~TrajectoryFileFormat();
 
-        // properties
-        std::string name() const;
+    // properties
+    std::string name() const;
 
-        // input and output
-        virtual bool read(std::istream &input, TrajectoryFile *file);
-        virtual bool write(const TrajectoryFile *file, std::ostream &output);
+    // input and output
+    virtual bool read(std::istream &input, TrajectoryFile *file);
+    virtual bool write(const TrajectoryFile *file, std::ostream &output);
 
-        // error handling
-        std::string errorString() const;
+    // error handling
+    std::string errorString() const;
 
-        // static methods
-        static TrajectoryFileFormat* create(const std::string &name);
-        static std::vector<std::string> formats();
+    // static methods
+    static TrajectoryFileFormat* create(const std::string &name);
+    static std::vector<std::string> formats();
 
-    protected:
-        TrajectoryFileFormat(const std::string &name);
-        void setErrorString(const std::string &errorString);
+protected:
+    TrajectoryFileFormat(const std::string &name);
+    void setErrorString(const std::string &errorString);
 
-    private:
-        TrajectoryFileFormatPrivate* const d;
+private:
+    TrajectoryFileFormatPrivate* const d;
 };
 
 } // end chemkit namespace

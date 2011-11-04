@@ -43,21 +43,21 @@ class UffParameters;
 
 class UffForceField : public chemkit::ForceField
 {
-    public:
-        // construction and destruction
-        UffForceField();
-        ~UffForceField();
+public:
+    // construction and destruction
+    UffForceField();
+    ~UffForceField();
 
-        // parameters
-        const UffParameters* parameters() const;
+    // parameters
+    const UffParameters* parameters() const;
 
-        // setup
-        virtual bool setup();
+    // setup
+    virtual bool setup();
 
-        bool isGroupSix(const chemkit::ForceFieldAtom *atom) const;
+    bool isGroupSix(const chemkit::ForceFieldAtom *atom) const;
 
-    private:
-        UffParameters *m_parameters;
+private:
+    UffParameters *m_parameters;
 };
 
 #endif // UFFFORCEFIELD_H

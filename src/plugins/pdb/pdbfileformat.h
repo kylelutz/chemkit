@@ -40,10 +40,10 @@
 
 class PdbFileFormat : public chemkit::PolymerFileFormat
 {
-    public:
-        PdbFileFormat();
+public:
+    PdbFileFormat();
 
-        bool read(std::istream &input, chemkit::PolymerFile *file);
+    bool read(std::istream &input, chemkit::PolymerFile *file);
 };
 
 #endif // PDBFILEFORMAT_H

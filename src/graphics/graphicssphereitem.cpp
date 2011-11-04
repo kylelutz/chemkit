@@ -42,10 +42,10 @@ namespace chemkit {
 // === GraphicsSphereItemPrivate =========================================== //
 class GraphicsSphereItemPrivate
 {
-    public:
-        Point3f position;
-        float radius;
-        QColor color;
+public:
+    Point3f position;
+    float radius;
+    QColor color;
 };
 
 // === GraphicsSphereItem ================================================== //

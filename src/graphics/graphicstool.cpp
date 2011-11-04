@@ -42,8 +42,8 @@ namespace chemkit {
 // === GraphicsToolPrivate ================================================= //
 class GraphicsToolPrivate
 {
-    public:
-        GraphicsView *view;
+public:
+    GraphicsView *view;
 };
 
 // === GraphicsTool ======================================================== //

@@ -45,26 +45,26 @@ namespace chemkit {
 
 class CHEMKIT_GRAPHICS_EXPORT GraphicsRay
 {
-    public:
-        // construction and destruction
-        GraphicsRay();
-        GraphicsRay(const Point3f &origin, const Vector3f &direction);
-        ~GraphicsRay();
+public:
+    // construction and destruction
+    GraphicsRay();
+    GraphicsRay(const Point3f &origin, const Vector3f &direction);
+    ~GraphicsRay();
 
-        // properties
-        void setOrigin(const Point3f &origin);
-        Point3f origin() const;
-        void setDirection(const Vector3f &direction);
-        Vector3f direction() const;
+    // properties
+    void setOrigin(const Point3f &origin);
+    Point3f origin() const;
+    void setDirection(const Vector3f &direction);
+    Vector3f direction() const;
 
-        // geometry
-        Point3f pointAt(float distance) const;
-        bool intersectsSphere(const Point3f &center, float radius, float *distance = 0) const;
-        bool intersectsCylinder(const Point3f &a, const Point3f &b, float radius, float *distance = 0) const;
+    // geometry
+    Point3f pointAt(float distance) const;
+    bool intersectsSphere(const Point3f &center, float radius, float *distance = 0) const;
+    bool intersectsCylinder(const Point3f &a, const Point3f &b, float radius, float *distance = 0) const;
 
-    private:
-        Point3f m_origin;
-        Vector3f m_direction;
+private:
+    Point3f m_origin;
+    Vector3f m_direction;
 };
 
 } // end chemkit namespace

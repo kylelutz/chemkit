@@ -48,13 +48,13 @@ namespace chemkit {
 // === ForceFieldAtomPrivate =============================================== //
 class ForceFieldAtomPrivate
 {
-    public:
-        const Atom *atom;
-        std::string type;
-        Real charge;
-        Point3 position;
-        bool setup;
-        ForceField *forceField;
+public:
+    const Atom *atom;
+    std::string type;
+    Real charge;
+    Point3 position;
+    bool setup;
+    ForceField *forceField;
 };
 
 // === ForceFieldAtom ====================================================== //

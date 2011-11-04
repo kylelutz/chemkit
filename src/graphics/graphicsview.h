@@ -57,78 +57,78 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsView : public QGLWidget
 {
     Q_OBJECT
 
-    public:
-        // construction and destruction
-        GraphicsView(QWidget *parent = 0);
-        GraphicsView(GraphicsScene *scene, QWidget *parent = 0);
-        ~GraphicsView();
+public:
+    // construction and destruction
+    GraphicsView(QWidget *parent = 0);
+    GraphicsView(GraphicsScene *scene, QWidget *parent = 0);
+    ~GraphicsView();
 
-        // properties
-        void setScene(GraphicsScene *scene);
-        GraphicsScene* scene() const;
-        void setBackgroundColor(const QColor &color);
-        QColor backgroundColor() const;
-        void setTool(GraphicsTool *tool);
-        GraphicsTool* tool() const;
-        const GraphicsTransform& projectionTransform() const;
-        const GraphicsTransform& modelViewTransform() const;
+    // properties
+    void setScene(GraphicsScene *scene);
+    GraphicsScene* scene() const;
+    void setBackgroundColor(const QColor &color);
+    QColor backgroundColor() const;
+    void setTool(GraphicsTool *tool);
+    GraphicsTool* tool() const;
+    const GraphicsTransform& projectionTransform() const;
+    const GraphicsTransform& modelViewTransform() const;
 
-        // items
-        void addItem(GraphicsItem *item);
-        bool removeItem(GraphicsItem *item);
-        bool deleteItem(GraphicsItem *item);
-        QList<GraphicsItem *> items() const;
-        int itemCount() const;
+    // items
+    void addItem(GraphicsItem *item);
+    bool removeItem(GraphicsItem *item);
+    bool deleteItem(GraphicsItem *item);
+    QList<GraphicsItem *> items() const;
+    int itemCount() const;
 
-        // camera
-        void setCamera(GraphicsCamera *camera);
-        GraphicsCamera* camera() const;
-        void setNearClipDistance(float distance);
-        float nearClipDistance() const;
-        void setFarClipDistance(float distance);
-        float farClipDistance() const;
-        QPointF project(const Point3f &point) const;
-        Point3f unproject(qreal x, qreal y, qreal z) const;
-        Point3f unproject(qreal x, qreal y, const Point3f &reference) const;
-        float depth(const Point3f &point) const;
+    // camera
+    void setCamera(GraphicsCamera *camera);
+    GraphicsCamera* camera() const;
+    void setNearClipDistance(float distance);
+    float nearClipDistance() const;
+    void setFarClipDistance(float distance);
+    float farClipDistance() const;
+    QPointF project(const Point3f &point) const;
+    Point3f unproject(qreal x, qreal y, qreal z) const;
+    Point3f unproject(qreal x, qreal y, const Point3f &reference) const;
+    float depth(const Point3f &point) const;
 
-        // lighting
-        void addLight(GraphicsLight *light);
-        bool removeLight(GraphicsLight *light);
-        bool deleteLight(GraphicsLight *light);
-        QList<GraphicsLight *> lights() const;
-        int lightCount() const;
-        GraphicsLight* light(int index = 0) const;
+    // lighting
+    void addLight(GraphicsLight *light);
+    bool removeLight(GraphicsLight *light);
+    bool deleteLight(GraphicsLight *light);
+    QList<GraphicsLight *> lights() const;
+    int lightCount() const;
+    GraphicsLight* light(int index = 0) const;
 
-        // selection
-        GraphicsItem* itemAt(int x, int y) const;
-        QList<GraphicsItem *> itemsAt(int x, int y, bool sorted = true) const;
+    // selection
+    GraphicsItem* itemAt(int x, int y) const;
+    QList<GraphicsItem *> itemsAt(int x, int y, bool sorted = true) const;
 
-        // overlay
-        GraphicsOverlay* overlay() const;
-        void setOverlayEnabled(bool enabled);
-        bool overlayEnabled() const;
+    // overlay
+    GraphicsOverlay* overlay() const;
+    void setOverlayEnabled(bool enabled);
+    bool overlayEnabled() const;
 
-    protected:
-        // opengl
-        virtual void initializeGL();
-        virtual void paintGL();
-        virtual void resizeGL(int width, int height);
+protected:
+    // opengl
+    virtual void initializeGL();
+    virtual void paintGL();
+    virtual void resizeGL(int width, int height);
 
-        // events
-        virtual void paintEvent(QPaintEvent *event);
-        virtual void mousePressEvent(QMouseEvent *event);
-        virtual void mouseReleaseEvent(QMouseEvent *event);
-        virtual void mouseDoubleClickEvent(QMouseEvent *event);
-        virtual void mouseMoveEvent(QMouseEvent *event);
-        virtual void wheelEvent(QWheelEvent *event);
+    // events
+    virtual void paintEvent(QPaintEvent *event);
+    virtual void mousePressEvent(QMouseEvent *event);
+    virtual void mouseReleaseEvent(QMouseEvent *event);
+    virtual void mouseDoubleClickEvent(QMouseEvent *event);
+    virtual void mouseMoveEvent(QMouseEvent *event);
+    virtual void wheelEvent(QWheelEvent *event);
 
-    private:
-        // internal methods
-        GraphicsRay buildPickRay(int x, int y) const;
+private:
+    // internal methods
+    GraphicsRay buildPickRay(int x, int y) const;
 
-    private:
-        GraphicsViewPrivate* const d;
+private:
+    GraphicsViewPrivate* const d;
 };
 
 } // end chemkit namespace
