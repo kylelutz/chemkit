@@ -92,7 +92,7 @@ public:
     Molecule();
     Molecule(const std::string &formula, const std::string &format);
     Molecule(const Molecule &molecule);
-    ~Molecule();
+    virtual ~Molecule();
 
     // properties
     void setName(const std::string &name);

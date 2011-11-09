@@ -52,7 +52,7 @@ class CHEMKIT_EXPORT Polymer : public Molecule
 public:
     // construction and destruction
     Polymer();
-    ~Polymer();
+    virtual ~Polymer();
 
     // structure
     PolymerChain* addChain();
