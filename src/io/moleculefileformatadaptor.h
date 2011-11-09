@@ -54,7 +54,7 @@ class MoleculeFileFormatAdaptor<LineFormat> : public MoleculeFileFormat
 public:
     MoleculeFileFormatAdaptor(LineFormat *format);
     MoleculeFileFormatAdaptor(LineFormat *format, const std::string &name);
-    ~MoleculeFileFormatAdaptor();
+    virtual ~MoleculeFileFormatAdaptor();
 
     virtual bool read(std::istream &input, MoleculeFile *file);
     virtual bool write(const MoleculeFile *file, std::ostream &output);
@@ -68,7 +68,7 @@ class MoleculeFileFormatAdaptor<PolymerFileFormat> : public MoleculeFileFormat
 {
 public:
     MoleculeFileFormatAdaptor(PolymerFileFormat *format);
-    ~MoleculeFileFormatAdaptor();
+    virtual ~MoleculeFileFormatAdaptor();
 
     virtual bool read(std::istream &input, MoleculeFile *file);
 

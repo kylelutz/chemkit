@@ -55,7 +55,7 @@ public:
     // construction and destruction
     MoleculeFile();
     MoleculeFile(const std::string &fileName);
-    ~MoleculeFile();
+    virtual ~MoleculeFile();
 
     // properties
     int size() const;

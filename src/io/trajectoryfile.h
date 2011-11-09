@@ -54,7 +54,7 @@ public:
     // construction and destruction
     TrajectoryFile();
     TrajectoryFile(const std::string &fileName);
-    ~TrajectoryFile();
+    virtual ~TrajectoryFile();
 
     // properties
     bool isEmpty() const;

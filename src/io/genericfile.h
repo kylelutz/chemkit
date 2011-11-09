@@ -55,7 +55,7 @@ public:
     // construction and destruction
     GenericFile();
     GenericFile(const std::string &fileName);
-    ~GenericFile();
+    virtual ~GenericFile();
 
     // properties
     void setFileName(const std::string &fileName);

@@ -55,7 +55,7 @@ public:
     // construction and destruction
     PolymerFile();
     PolymerFile(const std::string &fileName);
-    ~PolymerFile();
+    virtual ~PolymerFile();
 
     // properties
     int size() const;
