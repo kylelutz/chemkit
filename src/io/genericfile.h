@@ -51,54 +51,54 @@ namespace chemkit {
 template<typename File, typename Format>
 class GenericFile
 {
-    public:
-        // construction and destruction
-        GenericFile();
-        GenericFile(const std::string &fileName);
-        ~GenericFile();
+public:
+    // construction and destruction
+    GenericFile();
+    GenericFile(const std::string &fileName);
+    ~GenericFile();
 
-        // properties
-        void setFileName(const std::string &fileName);
-        std::string fileName() const;
-        void setFormat(Format *format);
-        bool setFormat(const std::string &formatName);
-        Format* format() const;
-        std::string formatName() const;
+    // properties
+    void setFileName(const std::string &fileName);
+    std::string fileName() const;
+    void setFormat(Format *format);
+    bool setFormat(const std::string &formatName);
+    Format* format() const;
+    std::string formatName() const;
 
-        // input and output
-        bool read();
-        bool read(const std::string &fileName);
-        bool read(const std::string &fileName, const std::string &formatName);
-        bool read(std::istream &input, const std::string &formatName);
-        bool read(std::istream &input);
-        bool write();
-        bool write(const std::string &fileName);
-        bool write(const std::string &fileName, const std::string &formatName);
-        bool write(std::ostream &output, const std::string &formatName);
-        bool write(std::ostream &output);
-        bool write(std::ostream &output, Format *format);
+    // input and output
+    bool read();
+    bool read(const std::string &fileName);
+    bool read(const std::string &fileName, const std::string &formatName);
+    bool read(std::istream &input, const std::string &formatName);
+    bool read(std::istream &input);
+    bool write();
+    bool write(const std::string &fileName);
+    bool write(const std::string &fileName, const std::string &formatName);
+    bool write(std::ostream &output, const std::string &formatName);
+    bool write(std::ostream &output);
+    bool write(std::ostream &output, Format *format);
 
-        // file data
-        void setData(const std::string &name, const Variant &value);
-        Variant data(const std::string &name) const;
+    // file data
+    void setData(const std::string &name, const Variant &value);
+    Variant data(const std::string &name) const;
 
-        // error handling
-        std::string errorString() const;
+    // error handling
+    std::string errorString() const;
 
-        // static methods
-        static std::vector<std::string> formats();
+    // static methods
+    static std::vector<std::string> formats();
 
-    protected:
-        void setErrorString(const std::string &errorString);
+protected:
+    void setErrorString(const std::string &errorString);
 
-    private:
-        std::string suffix(const std::string &fileName);
+private:
+    std::string suffix(const std::string &fileName);
 
-    private:
-        Format *m_format;
-        std::string m_fileName;
-        std::string m_errorString;
-        std::map<std::string, Variant> m_data;
+private:
+    Format *m_format;
+    std::string m_fileName;
+    std::string m_errorString;
+    std::map<std::string, Variant> m_data;
 };
 
 } // end chemkit namespace
