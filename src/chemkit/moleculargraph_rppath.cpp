@@ -142,8 +142,8 @@ std::vector<std::vector<int> > PidMatrix::splice(int i, int j, int k)
 {
     std::vector<std::vector<int> > splicedPaths;
 
-    std::vector<std::vector<int> > ijPaths = paths(i, j);
-    std::vector<std::vector<int> > jkPaths = paths(j, k);
+    const std::vector<std::vector<int> > &ijPaths = paths(i, j);
+    const std::vector<std::vector<int> > &jkPaths = paths(j, k);
 
     if(ijPaths.empty() && jkPaths.empty()){
         std::vector<int> path;
