@@ -62,7 +62,7 @@ public:
     Real covalentRadius() const;
     Real vanDerWaalsRadius() const;
     int expectedValence() const;
-    inline bool isValid() const;
+    bool isValid() const;
     bool isMetal() const;
     bool isNonmetal() const;
 

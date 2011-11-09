@@ -187,10 +187,7 @@ Element::Element()
 /// Creates a new element with the given atomic number.
 Element::Element(int atomicNumber)
 {
-    if(isValidAtomicNumber(atomicNumber))
-        m_atomicNumber = atomicNumber;
-    else
-        m_atomicNumber = 0;
+    m_atomicNumber = atomicNumber;
 }
 
 /// Creates a new element with the given symbol. If the symbol is not
@@ -225,28 +222,35 @@ Element::Element(const std::string &symbol)
 /// Sets the atomic number for the element to \p atomicNumber.
 void Element::setAtomicNumber(int atomicNumber)
 {
-    if(isValidAtomicNumber(atomicNumber))
-        m_atomicNumber = atomicNumber;
-    else
-        m_atomicNumber = 0;
+    m_atomicNumber = atomicNumber;
 }
 
 /// Returns the element's symbol.
 std::string Element::symbol() const
 {
+    if(!isValid()){
+        return std::string();
+    }
+
     return ElementData[m_atomicNumber].symbol;
 }
 
 /// Returns the element's name.
 std::string Element::name() const
 {
+    if(!isValid()){
+        return std::string();
+    }
+
     return ElementData[m_atomicNumber].name;
 }
 
 /// Returns the element's period (row) in the periodic table.
 int Element::period() const
 {
-    if(m_atomicNumber < 3)
+    if(!isValid())
+        return 0;
+    else if(m_atomicNumber < 3)
         return 1;
     else if(m_atomicNumber < 11)
         return 2;
@@ -265,24 +269,40 @@ int Element::period() const
 /// Returns the element's mass. Mass is in \c g/mol.
 Real Element::mass() const
 {
+    if(!isValid()){
+        return 0;
+    }
+
     return ElementData[m_atomicNumber].mass;
 }
 
 /// Returns the element's electronegativity using the Pauling scale.
 Real Element::electronegativity() const
 {
+    if(!isValid()){
+        return 0;
+    }
+
     return ElementData[m_atomicNumber].electronegativity;
 }
 
 /// Returns the element's covalent radius.
 Real Element::covalentRadius() const
 {
+    if(!isValid()){
+        return 0;
+    }
+
     return ElementData[m_atomicNumber].covalentRadius;
 }
 
 /// Returns the element's Van der Waals radius.
 Real Element::vanDerWaalsRadius() const
 {
+    if(!isValid()){
+        return 0;
+    }
+
     return ElementData[m_atomicNumber].vanDerWaalsRadius;
 }
 
@@ -322,9 +342,19 @@ int Element::expectedValence() const
     }
 }
 
+/// Returns \c true if the element is valid.
+bool Element::isValid() const
+{
+    return isValidAtomicNumber(m_atomicNumber);
+}
+
 /// Returns \c true if the element is a metal.
 bool Element::isMetal() const
 {
+    if(!isValid()){
+        return false;
+    }
+
     return !isNonmetal();
 }
 

@@ -47,12 +47,6 @@ inline int Element::atomicNumber() const
     return m_atomicNumber;
 }
 
-/// Returns \c true if the element is valid.
-inline bool Element::isValid() const
-{
-    return m_atomicNumber != 0;
-}
-
 // --- Operators ----------------------------------------------------------- //
 inline bool Element::operator==(const Element &element) const
 {
