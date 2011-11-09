@@ -51,28 +51,28 @@ class MoleculeFileFormatAdaptor : public MoleculeFileFormat
 template<>
 class MoleculeFileFormatAdaptor<LineFormat> : public MoleculeFileFormat
 {
-    public:
-        MoleculeFileFormatAdaptor(LineFormat *format);
-        ~MoleculeFileFormatAdaptor();
+public:
+    MoleculeFileFormatAdaptor(LineFormat *format);
+    ~MoleculeFileFormatAdaptor();
 
-        virtual bool read(std::istream &input, MoleculeFile *file);
-        virtual bool write(const MoleculeFile *file, std::ostream &output);
+    virtual bool read(std::istream &input, MoleculeFile *file);
+    virtual bool write(const MoleculeFile *file, std::ostream &output);
 
-    private:
-        LineFormat *m_format;
+private:
+    LineFormat *m_format;
 };
 
 template<>
 class MoleculeFileFormatAdaptor<PolymerFileFormat> : public MoleculeFileFormat
 {
-    public:
-        MoleculeFileFormatAdaptor(PolymerFileFormat *format);
-        ~MoleculeFileFormatAdaptor();
+public:
+    MoleculeFileFormatAdaptor(PolymerFileFormat *format);
+    ~MoleculeFileFormatAdaptor();
 
-        virtual bool read(std::istream &input, MoleculeFile *file);
+    virtual bool read(std::istream &input, MoleculeFile *file);
 
-    private:
-        PolymerFileFormat *m_format;
+private:
+    PolymerFileFormat *m_format;
 };
 
 } // end chemkit namespace
