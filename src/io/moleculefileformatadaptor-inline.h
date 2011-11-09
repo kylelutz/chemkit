@@ -57,6 +57,13 @@ inline MoleculeFileFormatAdaptor<LineFormat>::MoleculeFileFormatAdaptor(LineForm
     m_format = format;
 }
 
+inline MoleculeFileFormatAdaptor<LineFormat>::MoleculeFileFormatAdaptor(LineFormat *format,
+                                                                        const std::string &name)
+    : MoleculeFileFormat(name)
+{
+    m_format = format;
+}
+
 inline MoleculeFileFormatAdaptor<LineFormat>::~MoleculeFileFormatAdaptor()
 {
     delete m_format;

@@ -53,6 +53,7 @@ class MoleculeFileFormatAdaptor<LineFormat> : public MoleculeFileFormat
 {
 public:
     MoleculeFileFormatAdaptor(LineFormat *format);
+    MoleculeFileFormatAdaptor(LineFormat *format, const std::string &name);
     ~MoleculeFileFormatAdaptor();
 
     virtual bool read(std::istream &input, MoleculeFile *file);

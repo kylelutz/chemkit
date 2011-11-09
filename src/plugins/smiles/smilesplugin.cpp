@@ -68,7 +68,7 @@ chemkit::LineFormat* SmilesPlugin::createSmilesFormat()
 #ifdef CHEMKIT_WITH_IO
 chemkit::MoleculeFileFormat* SmilesPlugin::createSmiFormat()
 {
-    return new chemkit::MoleculeFileFormatAdaptor<chemkit::LineFormat>(new SmilesLineFormat);
+    return new chemkit::MoleculeFileFormatAdaptor<chemkit::LineFormat>(new SmilesLineFormat, "smi");
 }
 #endif
 
