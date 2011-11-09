@@ -41,6 +41,7 @@
 #include <fstream>
 #include <boost/format.hpp>
 #include <boost/filesystem.hpp>
+#include <boost/scoped_ptr.hpp>
 
 namespace chemkit {
 
@@ -289,13 +290,13 @@ inline bool GenericFile<File, Format>::write(const std::string &fileName, const 
 template<typename File, typename Format>
 inline bool GenericFile<File, Format>::write(std::ostream &output, const std::string &formatName)
 {
-    Format *format = Format::create(formatName);
+    boost::scoped_ptr<Format> format(Format::create(formatName));
     if(!format){
         setErrorString((boost::format("File format '%s' is not supported.") % formatName).str());
         return false;
     }
 
-    return write(output, format);
+    return write(output, format.get());
 }
 
 /// Writes the file to \p output using the set format. Returns
