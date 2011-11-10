@@ -361,7 +361,7 @@ Atom* Molecule::addAtom(const Element &element)
 /// properties as atom (atomic number, mass number, etc).
 Atom* Molecule::addAtomCopy(const Atom *atom)
 {
-    Atom *newAtom = addAtom(atom->atomicNumber());
+    Atom *newAtom = addAtom(atom->element());
 
     newAtom->setMassNumber(atom->massNumber());
     newAtom->setPartialCharge(atom->partialCharge());
