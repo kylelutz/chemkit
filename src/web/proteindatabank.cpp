@@ -43,6 +43,7 @@
 #include <chemkit/moleculefile.h>
 
 namespace chemkit {
+namespace web {
 
 // === ProteinDataBankPrivate ============================================== //
 class ProteinDataBankPrivate
@@ -188,4 +189,5 @@ QString ProteinDataBank::errorString() const
     return d->errorString;
 }
 
+} // end web namespace
 } // end chemkit namespace

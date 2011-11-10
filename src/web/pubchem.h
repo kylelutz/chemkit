@@ -47,6 +47,9 @@ namespace chemkit {
 
 class Molecule;
 class MoleculeFile;
+
+namespace web {
+
 class PubChemPrivate;
 
 class CHEMKIT_WEB_EXPORT PubChem
@@ -85,6 +88,7 @@ private:
     PubChemPrivate* const d;
 };
 
+} // end web namespace
 } // end chemkit namespace
 
 #endif // CHEMKIT_PUBCHEM_H

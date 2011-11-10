@@ -40,6 +40,7 @@
 #include <QtNetwork>
 
 namespace chemkit {
+namespace web {
 
 class PubChemQuery;
 
@@ -72,6 +73,7 @@ private:
     QNetworkAccessManager *m_manager;
 };
 
+} // end web namespace
 } // end chemkit namespace
 
 #endif // CHEMKIT_PUBCHEMQUERYTHREAD_H

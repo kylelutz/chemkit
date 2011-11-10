@@ -46,6 +46,7 @@
 #include <chemkit/moleculefile.h>
 
 namespace chemkit {
+namespace web {
 
 // === PubChemPrivate ====================================================== //
 class PubChemPrivate
@@ -296,4 +297,5 @@ QString PubChem::errorString() const
     return d->errorString;
 }
 
+} // end web namespace
 } // end chemkit namespace

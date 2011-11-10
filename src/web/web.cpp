@@ -48,4 +48,8 @@
 
 namespace chemkit {
 
+/// The chemkit::web namespace contains the web classes.
+namespace web {
+
+} // end web namespace
 } // end chemkit namespace

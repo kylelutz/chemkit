@@ -45,6 +45,9 @@ namespace chemkit {
 class Polymer;
 class Molecule;
 class PolymerFile;
+
+namespace web {
+
 class ProteinDataBankPrivate;
 
 class CHEMKIT_WEB_EXPORT ProteinDataBank
@@ -74,6 +77,7 @@ private:
     ProteinDataBankPrivate* const d;
 };
 
+} // end web namespace
 } // end chemkit namespace
 
 #endif // CHEMKIT_PROTEINDATABANK_H

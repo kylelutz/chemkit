@@ -40,6 +40,7 @@
 #include "pubchemquery.h"
 
 namespace chemkit {
+namespace web {
 
 // === PubChemQueryThread ================================================== //
 /// \class PubChemQueryThread PubChemQueryThread.h
@@ -128,4 +129,5 @@ void PubChemQueryThread::poll(const QString &id)
     m_reply = m_manager->post(QNetworkRequest(m_url), request);
 }
 
+} // end web namespace
 } // end chemkit namespace

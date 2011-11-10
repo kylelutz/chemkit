@@ -36,6 +36,7 @@
 #include "downloadthread.h"
 
 namespace chemkit {
+namespace web {
 
 // === DownloadThread ====================================================== //
 /// \class DownloadThread downloadthread.h
@@ -141,4 +142,5 @@ void DownloadThread::ftpDone(bool error)
     exit(0);
 }
 
+} // end web namespace
 } // end chemkit namespace

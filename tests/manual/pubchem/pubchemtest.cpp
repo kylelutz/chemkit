@@ -41,7 +41,7 @@
 
 void PubChemTest::downloadFile()
 {
-    chemkit::PubChem pubchem;
+    chemkit::web::PubChem pubchem;
 
     // CID 5950 is alanine
     chemkit::MoleculeFile *file = pubchem.downloadFile("5950");
@@ -56,7 +56,7 @@ void PubChemTest::downloadFile()
 
 void PubChemTest::downloadMultiFile()
 {
-    chemkit::PubChem pubchem;
+    chemkit::web::PubChem pubchem;
 
     QStringList ids;
     ids << "1" << "4" << "92" << "8" << "109" << "12";
@@ -77,7 +77,7 @@ void PubChemTest::downloadMultiFile()
 
 void PubChemTest::search()
 {
-    chemkit::PubChem pubchem;
+    chemkit::web::PubChem pubchem;
 
     // search for caffeine from is CAS number
     QStringList results = pubchem.search("58-08-2");
@@ -87,7 +87,7 @@ void PubChemTest::search()
 
 void PubChemTest::standardizeFormula()
 {
-    chemkit::PubChem pubchem;
+    chemkit::web::PubChem pubchem;
 
     std::string formula = pubchem.standardizeFormula("c3cccOc3", "smiles");
     QCOMPARE(formula, std::string("C1C=CC=CO1"));
