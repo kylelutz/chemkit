@@ -178,18 +178,6 @@ const int ElementDataSize = sizeof(ElementData) / sizeof(*ElementData);
 /// \image html element-properties.png "Element Properties" height=2
 
 // --- Construction and Destruction ---------------------------------------- //
-/// Creates a new element with an atomic number of \c 0.
-Element::Element()
-{
-    m_atomicNumber = 0;
-}
-
-/// Creates a new element with the given atomic number.
-Element::Element(int atomicNumber)
-{
-    m_atomicNumber = atomicNumber;
-}
-
 /// Creates a new element with the given symbol. If the symbol is not
 /// valid the atomic number is set to \c 0.
 Element::Element(const char *symbol)

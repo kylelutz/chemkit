@@ -40,6 +40,19 @@
 
 namespace chemkit {
 
+// --- Construction and Destruction ---------------------------------------- //
+/// Creates a new element with an atomic number of \c 0.
+inline Element::Element()
+{
+    m_atomicNumber = 0;
+}
+
+/// Creates a new element with the given atomic number.
+inline Element::Element(int atomicNumber)
+{
+    m_atomicNumber = atomicNumber;
+}
+
 // --- Properties ---------------------------------------------------------- //
 /// Returns the atomic number of the element.
 inline int Element::atomicNumber() const

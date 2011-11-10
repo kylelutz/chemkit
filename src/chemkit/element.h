@@ -46,8 +46,8 @@ class CHEMKIT_EXPORT Element
 {
 public:
     // construction and destruction
-    Element();
-    Element(int atomicNumber);
+    inline Element();
+    inline Element(int atomicNumber);
     Element(const char *symbol);
     Element(const std::string &symbol);
 
