@@ -207,12 +207,6 @@ Element::Element(const std::string &symbol)
 }
 
 // --- Properties ---------------------------------------------------------- //
-/// Sets the atomic number for the element to \p atomicNumber.
-void Element::setAtomicNumber(int atomicNumber)
-{
-    m_atomicNumber = atomicNumber;
-}
-
 /// Returns the element's symbol.
 std::string Element::symbol() const
 {

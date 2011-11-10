@@ -54,6 +54,12 @@ inline Element::Element(int atomicNumber)
 }
 
 // --- Properties ---------------------------------------------------------- //
+/// Sets the atomic number for the element to \p atomicNumber.
+inline void Element::setAtomicNumber(int atomicNumber)
+{
+    m_atomicNumber = atomicNumber;
+}
+
 /// Returns the atomic number of the element.
 inline int Element::atomicNumber() const
 {

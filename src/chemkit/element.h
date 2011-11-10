@@ -52,7 +52,7 @@ public:
     Element(const std::string &symbol);
 
     // properties
-    void setAtomicNumber(int atomicNumber);
+    inline void setAtomicNumber(int atomicNumber);
     inline int atomicNumber() const;
     std::string symbol() const;
     std::string name() const;
