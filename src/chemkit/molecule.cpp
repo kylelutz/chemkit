@@ -366,7 +366,10 @@ Atom* Molecule::addAtomCopy(const Atom *atom)
     newAtom->setMassNumber(atom->massNumber());
     newAtom->setPartialCharge(atom->partialCharge());
     newAtom->setPosition(atom->position());
-    newAtom->setChirality(atom->chirality());
+
+    if(atom->chirality() != Stereochemistry::None){
+        newAtom->setChirality(atom->chirality());
+    }
 
     return newAtom;
 }
