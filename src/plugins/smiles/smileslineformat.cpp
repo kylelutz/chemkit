@@ -258,7 +258,7 @@ bracket_atom:
         goto parse_error;
     }
 
-    if(!atom){
+    if(!atom->element().isValid()){
         goto invalid_atom_error;
     }
 
@@ -359,7 +359,7 @@ bracket_atom:
 
 organic_atom:
     atom = molecule->addAtom(readOrganicSymbol(&p));
-    if(!atom)
+    if(!atom->element().isValid())
         goto invalid_atom_error;
 
     organicAtoms.push_back(atom);
@@ -390,7 +390,7 @@ aromatic_atom:
     assert(islower(*p));
 
     atom = molecule->addAtom(readAromaticSymbol(&p));
-    if(!atom){
+    if(!atom->element().isValid()){
         goto invalid_atom_error;
     }
 

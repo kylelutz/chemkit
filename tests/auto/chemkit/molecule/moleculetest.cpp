@@ -110,30 +110,28 @@ void MoleculeTest::addAtom()
     chemkit::Atom *atom2;
 
     atom1 = molecule.addAtom(chemkit::Atom::Carbon);
-    QVERIFY(atom1 != 0);
     QCOMPARE(atom1->atomicNumber(), 6);
 
     atom2 = molecule.addAtom(0);
-    QVERIFY(atom2 == 0);
+    QCOMPARE(atom2->element().isValid(), false);
 
     atom2 = molecule.addAtom(-1);
-    QVERIFY(atom2 == 0);
+    QCOMPARE(atom2->element().isValid(), false);
 
     atom2 = molecule.addAtom(500);
-    QVERIFY(atom2 == 0);
+    QCOMPARE(atom2->element().isValid(), false);
 
     atom1 = molecule.addAtom("C");
-    QVERIFY(atom1 != 0);
     QCOMPARE(atom1->symbol(), std::string("C"));
 
     atom2 = molecule.addAtom(std::string());
-    QVERIFY(atom2 == 0);
+    QCOMPARE(atom2->element().isValid(), false);
 
     atom2 = molecule.addAtom("");
-    QVERIFY(atom2 == 0);
+    QCOMPARE(atom2->element().isValid(), false);
 
     atom2 = molecule.addAtom("X");
-    QVERIFY(atom2 == 0);
+    QCOMPARE(atom2->element().isValid(), false);
 }
 
 void MoleculeTest::addAtomCopy()

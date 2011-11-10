@@ -319,8 +319,7 @@ Variant Molecule::data(const std::string &name) const
 }
 
 // --- Structure ----------------------------------------------------------- //
-/// Adds a new atom of the given \p element to the molecule. If
-/// the element is invalid 0 will be returned.
+/// Adds a new atom of the given \p element to the molecule.
 ///
 /// The Element class has a number of constructors which take
 /// either an atomic number or an element symbol. Any of the
@@ -343,10 +342,6 @@ Variant Molecule::data(const std::string &name) const
 /// \endcode
 Atom* Molecule::addAtom(const Element &element)
 {
-    if(!element.isValid()){
-        return 0;
-    }
-
     Atom *atom = new Atom(this, m_atoms.size());
     m_atoms.push_back(atom);
 
