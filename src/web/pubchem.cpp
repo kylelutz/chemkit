@@ -222,7 +222,7 @@ QStringList PubChem::search(const QString &query) const
 
 // --- Standardization ----------------------------------------------------- //
 /// Returns a string containing the standardized version of
-/// \p formula in \p format. If an error occurs an empty QString is
+/// \p formula in \p format. If an error occurs an empty string is
 /// returned.
 ///
 /// For example, to standardize a SMILES formula:
@@ -236,7 +236,7 @@ std::string PubChem::standardizeFormula(const std::string &formula, const std::s
 
 /// Returns a string containing the standardized version of
 /// \p formula from \p inputFormat in \p outputFormat. If an error
-/// occurs an empty QString is returned.
+/// occurs an empty string is returned.
 ///
 /// For example, to convert an InChI string to standardized SMILES:
 /// \code
@@ -272,7 +272,7 @@ std::string PubChem::standardizeFormula(const std::string &formula, const std::s
 }
 
 /// Returns a string containing the standardized formula in \p format
-/// for the \p molecule. If an error occurs an empty QString is
+/// for the \p molecule. If an error occurs an empty string is
 /// returned.
 ///
 /// For example, to get the standardized InChI formula for a
