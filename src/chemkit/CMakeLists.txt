@@ -130,5 +130,10 @@ add_definitions(
 add_chemkit_library(chemkit ${SOURCES})
 target_link_libraries(chemkit ${Boost_LIBRARIES})
 
+# link to libdl on unix for dlopen/dlclose/dlsym
+if(UNIX)
+  target_link_libraries(chemkit dl)
+endif()
+
 # install header files
 install(FILES ${HEADERS} DESTINATION include/chemkit/)

@@ -14,3 +14,4 @@ include_directories(../../../include)
 
 add_subdirectory(convert)
 add_subdirectory(grep)
+add_subdirectory(translate)
