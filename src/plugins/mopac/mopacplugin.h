@@ -45,8 +45,8 @@ public:
     MopacPlugin();
     ~MopacPlugin();
 
-    static chemkit::MoleculeFileFormat* createMopinFormat();
-    static chemkit::MoleculeFileFormat* createMopcrtFormat();
+    static chemkit::io::MoleculeFileFormat* createMopinFormat();
+    static chemkit::io::MoleculeFileFormat* createMopcrtFormat();
 };
 
 #endif // MOPACPLUGIN_H

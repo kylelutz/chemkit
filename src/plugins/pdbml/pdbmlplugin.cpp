@@ -40,15 +40,15 @@
 PdbmlPlugin::PdbmlPlugin()
     : chemkit::Plugin("pdbml")
 {
-    registerPluginClass<chemkit::PolymerFileFormat>("pdbml", createPdbmlFormat);
+    registerPluginClass<chemkit::io::PolymerFileFormat>("pdbml", createPdbmlFormat);
 }
 
 PdbmlPlugin::~PdbmlPlugin()
 {
-    unregisterPluginClass<chemkit::PolymerFileFormat>("pdbml");
+    unregisterPluginClass<chemkit::io::PolymerFileFormat>("pdbml");
 }
 
-chemkit::PolymerFileFormat* PdbmlPlugin::createPdbmlFormat()
+chemkit::io::PolymerFileFormat* PdbmlPlugin::createPdbmlFormat()
 {
     return new PdbmlFileFormat;
 }

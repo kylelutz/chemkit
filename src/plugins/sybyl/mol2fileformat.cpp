@@ -40,7 +40,7 @@
 #include <chemkit/moleculefile.h>
 
 Mol2FileFormat::Mol2FileFormat()
-    : chemkit::MoleculeFileFormat("mol2")
+    : chemkit::io::MoleculeFileFormat("mol2")
 {
 }
 
@@ -48,7 +48,7 @@ Mol2FileFormat::~Mol2FileFormat()
 {
 }
 
-bool Mol2FileFormat::read(std::istream &input, chemkit::MoleculeFile *file)
+bool Mol2FileFormat::read(std::istream &input, chemkit::io::MoleculeFile *file)
 {
     QByteArray data;
     while(!input.eof()){
@@ -62,7 +62,7 @@ bool Mol2FileFormat::read(std::istream &input, chemkit::MoleculeFile *file)
     return read(&buffer, file);
 }
 
-bool Mol2FileFormat::read(QIODevice *iodev, chemkit::MoleculeFile *file)
+bool Mol2FileFormat::read(QIODevice *iodev, chemkit::io::MoleculeFile *file)
 {
     iodev->setTextModeEnabled(true);
 
@@ -185,7 +185,7 @@ bool Mol2FileFormat::read(QIODevice *iodev, chemkit::MoleculeFile *file)
     return true;
 }
 
-bool Mol2FileFormat::write(const chemkit::MoleculeFile *file, std::ostream &output)
+bool Mol2FileFormat::write(const chemkit::io::MoleculeFile *file, std::ostream &output)
 {
     QBuffer buffer;
     buffer.open(QBuffer::WriteOnly);
@@ -198,7 +198,7 @@ bool Mol2FileFormat::write(const chemkit::MoleculeFile *file, std::ostream &outp
     return true;
 }
 
-bool Mol2FileFormat::write(const chemkit::MoleculeFile *file, QIODevice *iodev)
+bool Mol2FileFormat::write(const chemkit::io::MoleculeFile *file, QIODevice *iodev)
 {
     iodev->setTextModeEnabled(true);
 

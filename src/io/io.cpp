@@ -41,4 +41,8 @@
 
 namespace chemkit {
 
+/// The chemkit::io namespace contains the io classes.
+namespace io {
+
+} // end io namespace
 } // end chemkit namespace

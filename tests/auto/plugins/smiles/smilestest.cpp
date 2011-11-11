@@ -51,7 +51,7 @@ void SmilesTest::initTestCase()
     std::vector<std::string> lineFormats = chemkit::LineFormat::formats();
     QVERIFY(std::find(lineFormats.begin(), lineFormats.end(), "smiles") != lineFormats.end());
 
-    std::vector<std::string> fileFormats = chemkit::MoleculeFileFormat::formats();
+    std::vector<std::string> fileFormats = chemkit::io::MoleculeFileFormat::formats();
     QVERIFY(std::find(fileFormats.begin(), fileFormats.end(), "smi") != fileFormats.end());
 }
 
@@ -1302,7 +1302,7 @@ void SmilesTest::wildcardAtom()
 // --- File Tests ---------------------------------------------------------- //
 void SmilesTest::herg()
 {
-    chemkit::MoleculeFile file(dataPath + "herg.smi");
+    chemkit::io::MoleculeFile file(dataPath + "herg.smi");
 
     bool ok = file.read();
     if(!ok)
@@ -1318,7 +1318,7 @@ void SmilesTest::herg()
 
 void SmilesTest::cox2()
 {
-    chemkit::MoleculeFile file(dataPath + "cox2.smi");
+    chemkit::io::MoleculeFile file(dataPath + "cox2.smi");
 
     bool ok = file.read();
     if(!ok)

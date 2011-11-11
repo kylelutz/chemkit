@@ -47,6 +47,9 @@
 namespace chemkit {
 
 class Molecule;
+
+namespace io {
+
 class MoleculeFilePrivate;
 
 class CHEMKIT_IO_EXPORT MoleculeFile : public GenericFile<MoleculeFile, MoleculeFileFormat>
@@ -79,6 +82,7 @@ private:
     MoleculeFilePrivate* const d;
 };
 
+} // end io namespace
 } // end chemkit namespace
 
 #endif // CHEMKIT_MOLECULEFILE_H

@@ -53,7 +53,7 @@ void AmberTest::initTestCase()
 
 void AmberTest::adenosine()
 {
-    chemkit::MoleculeFile file(dataPath + "adenosine.mol");
+    chemkit::io::MoleculeFile file(dataPath + "adenosine.mol");
     bool ok = file.read();
     if(!ok)
         qDebug() << file.errorString().c_str();
@@ -113,7 +113,7 @@ void AmberTest::adenosine()
 
 void AmberTest::serine()
 {
-    chemkit::MoleculeFile file(dataPath + "serine.mol");
+    chemkit::io::MoleculeFile file(dataPath + "serine.mol");
     bool ok = file.read();
     if(!ok)
         qDebug() << file.errorString().c_str();

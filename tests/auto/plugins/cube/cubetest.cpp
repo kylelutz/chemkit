@@ -45,13 +45,13 @@ const std::string dataPath = "../../../data/";
 
 void CubeTest::initTestCase()
 {
-    std::vector<std::string> formats = chemkit::MoleculeFileFormat::formats();
+    std::vector<std::string> formats = chemkit::io::MoleculeFileFormat::formats();
     QVERIFY(std::find(formats.begin(), formats.end(), "cube") != formats.end());
 }
 
 void CubeTest::readBenzene()
 {
-    chemkit::MoleculeFile file(dataPath + "benzene-homo.cube");
+    chemkit::io::MoleculeFile file(dataPath + "benzene-homo.cube");
     bool ok = file.read();
     if(!ok)
         qDebug() << file.errorString().c_str();

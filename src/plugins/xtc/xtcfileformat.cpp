@@ -48,11 +48,11 @@
 #include "../../3rdparty/xdrf/xdrf.h"
 
 XtcFileFormat::XtcFileFormat()
-    : chemkit::TrajectoryFileFormat("xtc")
+    : chemkit::io::TrajectoryFileFormat("xtc")
 {
 }
 
-bool XtcFileFormat::read(std::istream &input, chemkit::TrajectoryFile *file)
+bool XtcFileFormat::read(std::istream &input, chemkit::io::TrajectoryFile *file)
 {
     // read data into temporary file
     QTemporaryFile dataFile;

@@ -44,7 +44,7 @@ const std::string dataPath = "../../data/";
 void MmffEnergyBenchmark::benchmark()
 {
     // load test file
-    chemkit::MoleculeFile file(dataPath + "MMFF94_hypervalent.mol2");
+    chemkit::io::MoleculeFile file(dataPath + "MMFF94_hypervalent.mol2");
     bool ok = file.read();
     if(!ok)
         qDebug() << file.errorString().c_str();

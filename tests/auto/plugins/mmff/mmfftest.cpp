@@ -66,7 +66,7 @@ void MmffTest::initTestCase()
 void MmffTest::validate()
 {
     // open molecule data file
-    chemkit::MoleculeFile dataFile(dataPath + "MMFF94_hypervalent.mol2");
+    chemkit::io::MoleculeFile dataFile(dataPath + "MMFF94_hypervalent.mol2");
     bool ok = dataFile.read();
     if(!ok)
         qDebug() << dataFile.errorString().c_str();

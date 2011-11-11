@@ -41,7 +41,7 @@
 #include <chemkit/molecule.h>
 #include <chemkit/moleculefileformat.h>
 
-class MdlFileFormat : public chemkit::MoleculeFileFormat
+class MdlFileFormat : public chemkit::io::MoleculeFileFormat
 {
 public:
     // construction and destruction
@@ -49,20 +49,20 @@ public:
     ~MdlFileFormat();
 
     // input and output
-    bool read(std::istream &input, chemkit::MoleculeFile *file);
-    bool read(QIODevice *iodev, chemkit::MoleculeFile *file);
-    bool write(const chemkit::MoleculeFile *file, std::ostream &output);
-    bool write(const chemkit::MoleculeFile *file, QIODevice *iodev);
+    bool read(std::istream &input, chemkit::io::MoleculeFile *file);
+    bool read(QIODevice *iodev, chemkit::io::MoleculeFile *file);
+    bool write(const chemkit::io::MoleculeFile *file, std::ostream &output);
+    bool write(const chemkit::io::MoleculeFile *file, QIODevice *iodev);
 
 private:
-    bool readMolFile(QIODevice *iodev, chemkit::MoleculeFile *file);
-    bool readSdfFile(QIODevice *iodev, chemkit::MoleculeFile *file);
+    bool readMolFile(QIODevice *iodev, chemkit::io::MoleculeFile *file);
+    bool readSdfFile(QIODevice *iodev, chemkit::io::MoleculeFile *file);
     bool readAtomBlock(QIODevice *iodev, chemkit::Molecule *molecule, int atomCount);
     bool readBondBlock(QIODevice *iodev, chemkit::Molecule *molecule, int bondCount);
     bool readPropertyBlock(QIODevice *iodev, chemkit::Molecule *molecule);
-    bool readDataBlock(QIODevice *iodev, chemkit::Molecule *molecule, chemkit::MoleculeFile *file);
+    bool readDataBlock(QIODevice *iodev, chemkit::Molecule *molecule, chemkit::io::MoleculeFile *file);
     void writeMolFile(const chemkit::Molecule *molecule, QIODevice *iodev);
-    void writeSdfFile(const chemkit::MoleculeFile *file, QIODevice *iodev);
+    void writeSdfFile(const chemkit::io::MoleculeFile *file, QIODevice *iodev);
     void writeAtomBlock(const chemkit::Molecule *molecule, QIODevice *iodev);
     void writeBondBlock(const chemkit::Molecule *molecule, QIODevice *iodev);
 };

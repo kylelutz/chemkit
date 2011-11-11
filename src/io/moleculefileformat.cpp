@@ -43,6 +43,7 @@
 #include <chemkit/pluginmanager.h>
 
 namespace chemkit {
+namespace io {
 
 // === MoleculeFileFormatPrivate =========================================== //
 class MoleculeFileFormatPrivate
@@ -152,4 +153,5 @@ std::vector<std::string> MoleculeFileFormat::formats()
     return PluginManager::instance()->pluginClassNames<MoleculeFileFormat>();
 }
 
+} // end io namespace
 } // end chemkit namespace

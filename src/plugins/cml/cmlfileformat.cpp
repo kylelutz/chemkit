@@ -47,19 +47,19 @@ namespace {
 class CmlHandler : public QXmlDefaultHandler
 {
 public:
-    CmlHandler(chemkit::MoleculeFile *file);
+    CmlHandler(chemkit::io::MoleculeFile *file);
     ~CmlHandler();
 
     bool startElement(const QString &namespaceURI, const QString &localName, const QString &qName, const QXmlAttributes &atts);
     bool endElement(const QString &namespaceURI, const QString &localName, const QString &qName);
 
 private:
-    chemkit::MoleculeFile *m_file;
+    chemkit::io::MoleculeFile *m_file;
     chemkit::Molecule *m_molecule;
     QHash<QString, chemkit::Atom *> m_atomIds;
 };
 
-CmlHandler::CmlHandler(chemkit::MoleculeFile *file)
+CmlHandler::CmlHandler(chemkit::io::MoleculeFile *file)
     : QXmlDefaultHandler(),
       m_file(file),
       m_molecule(0)
@@ -163,7 +163,7 @@ bool CmlHandler::endElement(const QString &namespaceURI, const QString &localNam
 } // end anonymous namespace
 
 CmlFileFormat::CmlFileFormat()
-    : chemkit::MoleculeFileFormat("cml")
+    : chemkit::io::MoleculeFileFormat("cml")
 {
 }
 
@@ -171,7 +171,7 @@ CmlFileFormat::~CmlFileFormat()
 {
 }
 
-bool CmlFileFormat::read(std::istream &input, chemkit::MoleculeFile *file)
+bool CmlFileFormat::read(std::istream &input, chemkit::io::MoleculeFile *file)
 {
     QByteArray data;
     while(!input.eof()){
@@ -196,7 +196,7 @@ bool CmlFileFormat::read(std::istream &input, chemkit::MoleculeFile *file)
     return ok;
 }
 
-bool CmlFileFormat::write(const chemkit::MoleculeFile *file, std::ostream &output)
+bool CmlFileFormat::write(const chemkit::io::MoleculeFile *file, std::ostream &output)
 {
     QBuffer buffer;
     buffer.open(QBuffer::WriteOnly);

@@ -45,7 +45,7 @@ public:
     CmlPlugin();
     ~CmlPlugin();
 
-    static chemkit::MoleculeFileFormat* createCmlFormat();
+    static chemkit::io::MoleculeFileFormat* createCmlFormat();
 };
 
 #endif // CMLPLUGIN_H

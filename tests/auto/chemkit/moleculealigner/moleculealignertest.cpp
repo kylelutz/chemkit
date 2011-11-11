@@ -83,7 +83,7 @@ void MoleculeAlignerTest::water()
 // to perform the alignment and obtain the minimized RMSD values.
 void MoleculeAlignerTest::ubiquitin()
 {
-    chemkit::PolymerFile file(dataPath + "1D3Z.pdb");
+    chemkit::io::PolymerFile file(dataPath + "1D3Z.pdb");
     bool ok = file.read();
     if(!ok)
         qDebug() << file.errorString().c_str();

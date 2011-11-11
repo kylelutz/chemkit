@@ -46,13 +46,13 @@ const std::string dataPath = "../../../data/";
 
 void PdbmlTest::initTestCase()
 {
-    std::vector<std::string> formats = chemkit::PolymerFileFormat::formats();
+    std::vector<std::string> formats = chemkit::io::PolymerFileFormat::formats();
     QVERIFY(std::find(formats.begin(), formats.end(), "pdbml") != formats.end());
 }
 
 void PdbmlTest::read_1UBQ()
 {
-    chemkit::PolymerFile file(dataPath + "1UBQ.pdbml");
+    chemkit::io::PolymerFile file(dataPath + "1UBQ.pdbml");
 
     bool ok = file.read();
     if(!ok)
@@ -78,7 +78,7 @@ void PdbmlTest::read_1UBQ()
 
 void PdbmlTest::read_2DHB()
 {
-    chemkit::PolymerFile file(dataPath + "2DHB.pdbml");
+    chemkit::io::PolymerFile file(dataPath + "2DHB.pdbml");
 
     bool ok = file.read();
     if(!ok)

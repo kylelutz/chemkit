@@ -49,7 +49,7 @@ InchiPlugin::InchiPlugin()
     registerPluginClass<chemkit::LineFormat>("inchikey", createInchiKeyFormat);
 
 #ifdef CHEMKIT_WITH_IO
-    registerPluginClass<chemkit::MoleculeFileFormat>("inchi", createInchiFileFormat);
+    registerPluginClass<chemkit::io::MoleculeFileFormat>("inchi", createInchiFileFormat);
 #endif
 }
 
@@ -59,7 +59,7 @@ InchiPlugin::~InchiPlugin()
     unregisterPluginClass<chemkit::LineFormat>("inchikey");
 
 #ifdef CHEMKIT_WITH_IO
-    unregisterPluginClass<chemkit::MoleculeFileFormat>("inchi");
+    unregisterPluginClass<chemkit::io::MoleculeFileFormat>("inchi");
 #endif
 }
 
@@ -74,9 +74,9 @@ chemkit::LineFormat* InchiPlugin::createInchiKeyFormat()
 }
 
 #ifdef CHEMKIT_WITH_IO
-chemkit::MoleculeFileFormat* InchiPlugin::createInchiFileFormat()
+chemkit::io::MoleculeFileFormat* InchiPlugin::createInchiFileFormat()
 {
-    return new chemkit::MoleculeFileFormatAdaptor<chemkit::LineFormat>(new InchiLineFormat);
+    return new chemkit::io::MoleculeFileFormatAdaptor<chemkit::LineFormat>(new InchiLineFormat);
 }
 #endif
 

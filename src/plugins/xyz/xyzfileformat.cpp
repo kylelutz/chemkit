@@ -44,7 +44,7 @@
 #include <chemkit/moleculefile.h>
 
 XyzFileFormat::XyzFileFormat()
-    : chemkit::MoleculeFileFormat("xyz")
+    : chemkit::io::MoleculeFileFormat("xyz")
 {
 }
 
@@ -52,7 +52,7 @@ XyzFileFormat::~XyzFileFormat()
 {
 }
 
-bool XyzFileFormat::read(std::istream &input, chemkit::MoleculeFile *file)
+bool XyzFileFormat::read(std::istream &input, chemkit::io::MoleculeFile *file)
 {
     // atom count line
     int atomCount = 0;
@@ -104,7 +104,7 @@ bool XyzFileFormat::read(std::istream &input, chemkit::MoleculeFile *file)
     return true;
 }
 
-bool XyzFileFormat::write(const chemkit::MoleculeFile *file, std::ostream &output)
+bool XyzFileFormat::write(const chemkit::io::MoleculeFile *file, std::ostream &output)
 {
     chemkit::Molecule *molecule = file->molecule();
     if(!molecule){

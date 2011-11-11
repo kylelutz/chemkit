@@ -98,7 +98,7 @@ QUrl ProteinDataBank::url() const
 /// \endcode
 Polymer* ProteinDataBank::downloadPolymer(const QString &id) const
 {
-    QScopedPointer<PolymerFile> file(downloadFile(id));
+    QScopedPointer<chemkit::io::PolymerFile> file(downloadFile(id));
     if(!file){
         return 0;
     }
@@ -129,7 +129,7 @@ Molecule* ProteinDataBank::downloadLigand(const QString &name) const
 
     std::stringstream buffer(std::string(data.constData(), data.size()));
 
-    MoleculeFile file;
+    chemkit::io::MoleculeFile file;
     bool ok = file.read(buffer, "sdf");
 
     if(!ok || file.isEmpty()){
@@ -151,7 +151,7 @@ Molecule* ProteinDataBank::downloadLigand(const QString &name) const
 /// \code
 /// PolymerFile *file = pdb.downloadFile("1UBQ");
 /// \endcode
-PolymerFile* ProteinDataBank::downloadFile(const QString &id) const
+chemkit::io::PolymerFile* ProteinDataBank::downloadFile(const QString &id) const
 {
     QByteArray data = downloadFileData(id, "pdb");
     if(data.isEmpty()){
@@ -160,7 +160,7 @@ PolymerFile* ProteinDataBank::downloadFile(const QString &id) const
 
     std::stringstream buffer(std::string(data.constData(), data.size()));
 
-    PolymerFile *file = new PolymerFile;
+    chemkit::io::PolymerFile *file = new chemkit::io::PolymerFile;
     file->read(buffer, "pdb");
 
     return file;

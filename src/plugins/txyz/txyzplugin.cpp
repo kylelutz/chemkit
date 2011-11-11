@@ -40,15 +40,15 @@
 TxyzPlugin::TxyzPlugin()
     : chemkit::Plugin("txyz")
 {
-    registerPluginClass<chemkit::MoleculeFileFormat>("txyz", createTxyzFormat);
+    registerPluginClass<chemkit::io::MoleculeFileFormat>("txyz", createTxyzFormat);
 }
 
 TxyzPlugin::~TxyzPlugin()
 {
-    unregisterPluginClass<chemkit::MoleculeFileFormat>("txyz");
+    unregisterPluginClass<chemkit::io::MoleculeFileFormat>("txyz");
 }
 
-chemkit::MoleculeFileFormat* TxyzPlugin::createTxyzFormat()
+chemkit::io::MoleculeFileFormat* TxyzPlugin::createTxyzFormat()
 {
     return new TxyzFileFormat;
 }

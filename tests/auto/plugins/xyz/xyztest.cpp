@@ -45,7 +45,7 @@ const std::string dataPath = "../../../data/";
 
 void XyzTest::initTestCase()
 {
-    std::vector<std::string> formats = chemkit::MoleculeFileFormat::formats();
+    std::vector<std::string> formats = chemkit::io::MoleculeFileFormat::formats();
     QVERIFY(std::find(formats.begin(), formats.end(), "xyz") != formats.end());
 }
 
@@ -63,7 +63,7 @@ void XyzTest::read()
     QFETCH(QString, fileName);
     QFETCH(QString, formula);
 
-    chemkit::MoleculeFile file(dataPath + fileName.toStdString());
+    chemkit::io::MoleculeFile file(dataPath + fileName.toStdString());
     bool ok = file.read();
     if(!ok)
         qDebug() << file.errorString().c_str();
@@ -90,7 +90,7 @@ void XyzTest::readWriteReadLoop()
     QFETCH(QString, formula);
 
     // read file
-    chemkit::MoleculeFile file(dataPath + fileName.toStdString());
+    chemkit::io::MoleculeFile file(dataPath + fileName.toStdString());
     bool ok = file.read();
     if(!ok)
         qDebug() << "Failed to read file: " << file.errorString().c_str();

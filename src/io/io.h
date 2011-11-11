@@ -44,8 +44,4 @@
     #define CHEMKIT_IO_EXPORT CHEMKIT_DECL_IMPORT
 #endif
 
-namespace chemkit {
-
-} // end chemkit namespace
-
 #endif // CHEMKIT_IO_H

@@ -46,6 +46,9 @@
 namespace chemkit {
 
 class Trajectory;
+
+namespace io {
+
 class TrajectoryFilePrivate;
 
 class CHEMKIT_IO_EXPORT TrajectoryFile : public GenericFile<TrajectoryFile, TrajectoryFileFormat>
@@ -69,6 +72,7 @@ private:
     TrajectoryFilePrivate* const d;
 };
 
+} // end io namespace
 } // end chemkit namespace
 
 #endif // CHEMKIT_TRAJECTORYFILE_H

@@ -52,7 +52,7 @@ public:
     static chemkit::LineFormat* createSmilesFormat();
 
 #ifdef CHEMKIT_WITH_IO
-    static chemkit::MoleculeFileFormat* createSmiFormat();
+    static chemkit::io::MoleculeFileFormat* createSmiFormat();
 #endif
 };
 

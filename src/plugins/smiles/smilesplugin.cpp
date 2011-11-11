@@ -47,7 +47,7 @@ SmilesPlugin::SmilesPlugin()
     registerPluginClass<chemkit::LineFormat>("smiles", createSmilesFormat);
 
 #ifdef CHEMKIT_WITH_IO
-    registerPluginClass<chemkit::MoleculeFileFormat>("smi", createSmiFormat);
+    registerPluginClass<chemkit::io::MoleculeFileFormat>("smi", createSmiFormat);
 #endif
 }
 
@@ -56,7 +56,7 @@ SmilesPlugin::~SmilesPlugin()
     unregisterPluginClass<chemkit::LineFormat>("smiles");
 
 #ifdef CHEMKIT_WITH_IO
-    unregisterPluginClass<chemkit::MoleculeFileFormat>("smi");
+    unregisterPluginClass<chemkit::io::MoleculeFileFormat>("smi");
 #endif
 }
 
@@ -66,9 +66,9 @@ chemkit::LineFormat* SmilesPlugin::createSmilesFormat()
 }
 
 #ifdef CHEMKIT_WITH_IO
-chemkit::MoleculeFileFormat* SmilesPlugin::createSmiFormat()
+chemkit::io::MoleculeFileFormat* SmilesPlugin::createSmiFormat()
 {
-    return new chemkit::MoleculeFileFormatAdaptor<chemkit::LineFormat>(new SmilesLineFormat, "smi");
+    return new chemkit::io::MoleculeFileFormatAdaptor<chemkit::LineFormat>(new SmilesLineFormat, "smi");
 }
 #endif
 

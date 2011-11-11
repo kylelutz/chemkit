@@ -51,7 +51,7 @@ int main(int argc, char *argv[])
 
     std::string fileName = argv[1];
 
-    chemkit::MoleculeFile file(fileName);
+    chemkit::io::MoleculeFile file(fileName);
     bool ok = file.read();
     if(!ok){
         err << "Failed to read file: " << fileName.c_str() << "\n";

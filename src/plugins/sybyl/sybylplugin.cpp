@@ -47,7 +47,7 @@ SybylPlugin::SybylPlugin()
     registerPluginClass<chemkit::AtomTyper>("sybyl", createSybylAtomTyper);
 
 #ifdef CHEMKIT_WITH_IO
-    registerPluginClass<chemkit::MoleculeFileFormat>("mol2", createMol2FileFormat);
+    registerPluginClass<chemkit::io::MoleculeFileFormat>("mol2", createMol2FileFormat);
 #endif
 }
 
@@ -56,7 +56,7 @@ SybylPlugin::~SybylPlugin()
     unregisterPluginClass<chemkit::AtomTyper>("sybyl");
 
 #ifdef CHEMKIT_WITH_IO
-    unregisterPluginClass<chemkit::MoleculeFileFormat>("mol2");
+    unregisterPluginClass<chemkit::io::MoleculeFileFormat>("mol2");
 #endif
 }
 
@@ -66,7 +66,7 @@ chemkit::AtomTyper* SybylPlugin::createSybylAtomTyper()
 }
 
 #ifdef CHEMKIT_WITH_IO
-chemkit::MoleculeFileFormat* SybylPlugin::createMol2FileFormat()
+chemkit::io::MoleculeFileFormat* SybylPlugin::createMol2FileFormat()
 {
     return new Mol2FileFormat;
 }

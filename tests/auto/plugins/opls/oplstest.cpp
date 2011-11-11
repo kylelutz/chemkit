@@ -75,7 +75,7 @@ void OplsTest::energy()
     QFETCH(QString, formula);
     QFETCH(double, energy);
 
-    chemkit::Molecule *molecule = chemkit::MoleculeFile::quickRead(dataPath + fileName.toStdString());
+    chemkit::Molecule *molecule = chemkit::io::MoleculeFile::quickRead(dataPath + fileName.toStdString());
     QVERIFY(molecule != 0);
     QCOMPARE(molecule->formula(), formula.toStdString());
 

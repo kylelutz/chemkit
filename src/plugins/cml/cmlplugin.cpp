@@ -40,15 +40,15 @@
 CmlPlugin::CmlPlugin()
     : chemkit::Plugin("cml")
 {
-    registerPluginClass<chemkit::MoleculeFileFormat>("cml", createCmlFormat);
+    registerPluginClass<chemkit::io::MoleculeFileFormat>("cml", createCmlFormat);
 }
 
 CmlPlugin::~CmlPlugin()
 {
-    unregisterPluginClass<chemkit::MoleculeFileFormat>("cml");
+    unregisterPluginClass<chemkit::io::MoleculeFileFormat>("cml");
 }
 
-chemkit::MoleculeFileFormat* CmlPlugin::createCmlFormat()
+chemkit::io::MoleculeFileFormat* CmlPlugin::createCmlFormat()
 {
     return new CmlFileFormat;
 }

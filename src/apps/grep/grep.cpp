@@ -152,13 +152,13 @@ int main(int argc, char *argv[])
     }
 
     // read input file
-    chemkit::MoleculeFile inputFile(inputFileName.toStdString());
+    chemkit::io::MoleculeFile inputFile(inputFileName.toStdString());
     if(!inputFile.read()){
         err << "Error: failed to read input file: " << inputFile.errorString().c_str() << "\n";
         return -1;
     }
 
-    chemkit::MoleculeFile outputFile;
+    chemkit::io::MoleculeFile outputFile;
 
     int flags = 0;
 

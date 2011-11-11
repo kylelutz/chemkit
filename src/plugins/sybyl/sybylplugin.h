@@ -49,7 +49,7 @@ public:
     static chemkit::AtomTyper* createSybylAtomTyper();
 
 #ifdef CHEMKIT_WITH_IO
-    static chemkit::MoleculeFileFormat* createMol2FileFormat();
+    static chemkit::io::MoleculeFileFormat* createMol2FileFormat();
 #endif
 };
 

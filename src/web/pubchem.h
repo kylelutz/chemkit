@@ -46,7 +46,12 @@
 namespace chemkit {
 
 class Molecule;
+
+namespace io {
+
 class MoleculeFile;
+
+} // end io namespace
 
 namespace web {
 
@@ -65,8 +70,8 @@ public:
 
     // downloads
     Molecule* downloadMolecule(const QString &id) const;
-    MoleculeFile* downloadFile(const QString &id) const;
-    MoleculeFile* downloadFile(const QStringList &ids) const;
+    chemkit::io::MoleculeFile* downloadFile(const QString &id) const;
+    chemkit::io::MoleculeFile* downloadFile(const QStringList &ids) const;
     QByteArray downloadFileData(const QString &id, const QString &format) const;
     QByteArray downloadFileData(const QStringList &ids, const QString &format) const;
 

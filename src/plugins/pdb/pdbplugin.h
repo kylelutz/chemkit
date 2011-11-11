@@ -46,8 +46,8 @@ public:
     PdbPlugin();
     ~PdbPlugin();
 
-    static chemkit::PolymerFileFormat* createPdbFormat();
-    static chemkit::MoleculeFileFormat* createPdbMoleculeFormat();
+    static chemkit::io::PolymerFileFormat* createPdbFormat();
+    static chemkit::io::MoleculeFileFormat* createPdbMoleculeFormat();
 };
 
 #endif // PDBPLUGIN_H

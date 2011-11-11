@@ -45,13 +45,13 @@ const std::string dataPath = "../../../data/";
 
 void TxyzTest::initTestCase()
 {
-    std::vector<std::string> formats = chemkit::MoleculeFileFormat::formats();
+    std::vector<std::string> formats = chemkit::io::MoleculeFileFormat::formats();
     QVERIFY(std::find(formats.begin(), formats.end(), "txyz") != formats.end());
 }
 
 void TxyzTest::uridine()
 {
-    chemkit::MoleculeFile file(dataPath + "uridine.txyz");
+    chemkit::io::MoleculeFile file(dataPath + "uridine.txyz");
     bool ok = file.read();
     if(!ok)
         qDebug() << file.errorString().c_str();

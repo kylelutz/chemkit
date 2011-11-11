@@ -45,7 +45,7 @@
 #include <chemkit/polymerchain.h>
 
 PdbmlFileFormat::PdbmlFileFormat()
-    : chemkit::PolymerFileFormat("pdbml")
+    : chemkit::io::PolymerFileFormat("pdbml")
 {
 }
 
@@ -53,7 +53,7 @@ PdbmlFileFormat::~PdbmlFileFormat()
 {
 }
 
-bool PdbmlFileFormat::read(std::istream &input, chemkit::PolymerFile *file)
+bool PdbmlFileFormat::read(std::istream &input, chemkit::io::PolymerFile *file)
 {
     QByteArray data;
     while(!input.eof()){

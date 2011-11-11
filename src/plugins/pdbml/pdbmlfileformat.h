@@ -38,13 +38,13 @@
 
 #include <chemkit/polymerfileformat.h>
 
-class PdbmlFileFormat : public chemkit::PolymerFileFormat
+class PdbmlFileFormat : public chemkit::io::PolymerFileFormat
 {
 public:
     PdbmlFileFormat();
     ~PdbmlFileFormat();
 
-    bool read(std::istream &input, chemkit::PolymerFile *file);
+    bool read(std::istream &input, chemkit::io::PolymerFile *file);
 };
 
 #endif // PDBMLFILEFORMAT_H

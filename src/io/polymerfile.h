@@ -47,6 +47,9 @@
 namespace chemkit {
 
 class Polymer;
+
+namespace io {
+
 class PolymerFilePrivate;
 
 class CHEMKIT_IO_EXPORT PolymerFile : public GenericFile<PolymerFile, PolymerFileFormat>
@@ -75,6 +78,7 @@ private:
     PolymerFilePrivate* const d;
 };
 
+} // end io namespace
 } // end chemkit namespace
 
 #endif // CHEMKIT_POLYMERFILE_H

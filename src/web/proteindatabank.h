@@ -44,7 +44,12 @@ namespace chemkit {
 
 class Polymer;
 class Molecule;
+
+namespace io {
+
 class PolymerFile;
+
+} // end io namespace
 
 namespace web {
 
@@ -64,7 +69,7 @@ public:
     // downloads
     Polymer* downloadPolymer(const QString &id) const;
     Molecule* downloadLigand(const QString &name) const;
-    PolymerFile* downloadFile(const QString &id) const;
+    chemkit::io::PolymerFile* downloadFile(const QString &id) const;
     QByteArray downloadFileData(const QString &id, const QString &format) const;
 
     // error handling

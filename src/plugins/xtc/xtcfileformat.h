@@ -38,12 +38,12 @@
 
 #include <chemkit/trajectoryfileformat.h>
 
-class XtcFileFormat : public chemkit::TrajectoryFileFormat
+class XtcFileFormat : public chemkit::io::TrajectoryFileFormat
 {
 public:
     XtcFileFormat();
 
-    bool read(std::istream &input, chemkit::TrajectoryFile *file);
+    bool read(std::istream &input, chemkit::io::TrajectoryFile *file);
 };
 
 #endif // XTCFILEFORMAT_H

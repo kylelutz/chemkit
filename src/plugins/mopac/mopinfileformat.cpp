@@ -42,11 +42,11 @@
 #include <chemkit/internalcoordinates.h>
 
 MopinFileFormat::MopinFileFormat()
-    : chemkit::MoleculeFileFormat("mopin")
+    : chemkit::io::MoleculeFileFormat("mopin")
 {
 }
 
-bool MopinFileFormat::read(std::istream &input, chemkit::MoleculeFile *file)
+bool MopinFileFormat::read(std::istream &input, chemkit::io::MoleculeFile *file)
 {
     QByteArray data;
     while(!input.eof()){
@@ -60,7 +60,7 @@ bool MopinFileFormat::read(std::istream &input, chemkit::MoleculeFile *file)
     return read(&buffer, file);
 }
 
-bool MopinFileFormat::read(QIODevice *iodev, chemkit::MoleculeFile *file)
+bool MopinFileFormat::read(QIODevice *iodev, chemkit::io::MoleculeFile *file)
 {
     iodev->setTextModeEnabled(true);
 

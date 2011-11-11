@@ -46,6 +46,7 @@
 #include <chemkit/variant.h>
 
 namespace chemkit {
+namespace io {
 
 class MoleculeFile;
 class MoleculeFileFormatPrivate;
@@ -85,6 +86,7 @@ private:
     MoleculeFileFormatPrivate* const d;
 };
 
+} // end io namespace
 } // end chemkit namespace
 
 #endif // CHEMKIT_MOLECULEFILEFORMAT_H

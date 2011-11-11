@@ -46,7 +46,7 @@ void ProteinDataBankTest::downloadFile()
     chemkit::web::ProteinDataBank pdb;
 
     // download file for lysozyme
-    chemkit::PolymerFile *file = pdb.downloadFile("2LYZ");
+    chemkit::io::PolymerFile *file = pdb.downloadFile("2LYZ");
     QVERIFY(file != 0);
 
     QCOMPARE(file->polymerCount(), 1);

@@ -42,7 +42,7 @@
 #include <chemkit/moleculefile.h>
 
 TxyzFileFormat::TxyzFileFormat()
-    : chemkit::MoleculeFileFormat("txyz")
+    : chemkit::io::MoleculeFileFormat("txyz")
 {
 }
 
@@ -50,7 +50,7 @@ TxyzFileFormat::~TxyzFileFormat()
 {
 }
 
-bool TxyzFileFormat::read(std::istream &input, chemkit::MoleculeFile *file)
+bool TxyzFileFormat::read(std::istream &input, chemkit::io::MoleculeFile *file)
 {
     QByteArray data;
     while(!input.eof()){
@@ -64,7 +64,7 @@ bool TxyzFileFormat::read(std::istream &input, chemkit::MoleculeFile *file)
     return read(&buffer, file);
 }
 
-bool TxyzFileFormat::read(QIODevice *iodev, chemkit::MoleculeFile *file)
+bool TxyzFileFormat::read(QIODevice *iodev, chemkit::io::MoleculeFile *file)
 {
     iodev->setTextModeEnabled(true);
 
@@ -134,7 +134,7 @@ bool TxyzFileFormat::read(QIODevice *iodev, chemkit::MoleculeFile *file)
     return true;
 }
 
-bool TxyzFileFormat::write(const chemkit::MoleculeFile *file, std::ostream &output)
+bool TxyzFileFormat::write(const chemkit::io::MoleculeFile *file, std::ostream &output)
 {
     QBuffer buffer;
     buffer.open(QBuffer::WriteOnly);
@@ -147,7 +147,7 @@ bool TxyzFileFormat::write(const chemkit::MoleculeFile *file, std::ostream &outp
     return true;
 }
 
-bool TxyzFileFormat::write(const chemkit::MoleculeFile *file, QIODevice *iodev)
+bool TxyzFileFormat::write(const chemkit::io::MoleculeFile *file, QIODevice *iodev)
 {
     iodev->setTextModeEnabled(true);
 

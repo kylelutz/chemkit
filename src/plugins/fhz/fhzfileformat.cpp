@@ -42,7 +42,7 @@
 #include <chemkit/internalcoordinates.h>
 
 FhzFileFormat::FhzFileFormat()
-    : chemkit::MoleculeFileFormat("fhz")
+    : chemkit::io::MoleculeFileFormat("fhz")
 {
 }
 
@@ -50,7 +50,7 @@ FhzFileFormat::~FhzFileFormat()
 {
 }
 
-bool FhzFileFormat::read(std::istream &input, chemkit::MoleculeFile *file)
+bool FhzFileFormat::read(std::istream &input, chemkit::io::MoleculeFile *file)
 {
     QByteArray data;
     while(!input.eof()){
@@ -64,7 +64,7 @@ bool FhzFileFormat::read(std::istream &input, chemkit::MoleculeFile *file)
     return read(&buffer, file);
 }
 
-bool FhzFileFormat::read(QIODevice *iodev, chemkit::MoleculeFile *file)
+bool FhzFileFormat::read(QIODevice *iodev, chemkit::io::MoleculeFile *file)
 {
     iodev->setTextModeEnabled(true);
 

@@ -39,14 +39,14 @@
 #include <chemkit/molecule.h>
 #include <chemkit/moleculefileformat.h>
 
-class XyzFileFormat : public chemkit::MoleculeFileFormat
+class XyzFileFormat : public chemkit::io::MoleculeFileFormat
 {
 public:
     XyzFileFormat();
     ~XyzFileFormat();
 
-    bool read(std::istream &input, chemkit::MoleculeFile *file);
-    bool write(const chemkit::MoleculeFile *file, std::ostream &output);
+    bool read(std::istream &input, chemkit::io::MoleculeFile *file);
+    bool write(const chemkit::io::MoleculeFile *file, std::ostream &output);
 };
 
 #endif // XYZFILEFORMAT_H

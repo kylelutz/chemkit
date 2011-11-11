@@ -40,7 +40,7 @@
 
 void MoleculeFileTest::fileName()
 {
-    chemkit::MoleculeFile file;
+    chemkit::io::MoleculeFile file;
     QCOMPARE(file.fileName(), std::string());
 
     file.setFileName("foo");
@@ -52,19 +52,19 @@ void MoleculeFileTest::fileName()
     file.setFileName(std::string());
     QCOMPARE(file.fileName(), std::string());
 
-    chemkit::MoleculeFile fileWithName("foobar");
+    chemkit::io::MoleculeFile fileWithName("foobar");
     QCOMPARE(fileWithName.fileName(), std::string("foobar"));
 }
 
 void MoleculeFileTest::format()
 {
-    chemkit::MoleculeFile file;
+    chemkit::io::MoleculeFile file;
     QVERIFY(file.format() == 0);
 }
 
 void MoleculeFileTest::contains()
 {
-    chemkit::MoleculeFile file;
+    chemkit::io::MoleculeFile file;
     QCOMPARE(file.contains(0), false);
 
     chemkit::Molecule *molecule = new chemkit::Molecule;
@@ -85,7 +85,7 @@ void MoleculeFileTest::contains()
 
 void MoleculeFileTest::data()
 {
-    chemkit::MoleculeFile file;
+    chemkit::io::MoleculeFile file;
 
     file.setData("foo", "bar");
     QCOMPARE(file.data("foo").toString(), std::string("bar"));

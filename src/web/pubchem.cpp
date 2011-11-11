@@ -96,7 +96,7 @@ QUrl PubChem::url() const
 /// The ownership of the returned molecule is passed to the caller.
 Molecule* PubChem::downloadMolecule(const QString &id) const
 {
-    QScopedPointer<MoleculeFile> file(downloadFile(id));
+    QScopedPointer<chemkit::io::MoleculeFile> file(downloadFile(id));
     if(!file){
         return 0;
     }
@@ -111,7 +111,7 @@ Molecule* PubChem::downloadMolecule(const QString &id) const
 /// error occurs \c 0 is returned.
 ///
 /// The ownership of the returned file is passed to the caller.
-MoleculeFile* PubChem::downloadFile(const QString &id) const
+chemkit::io::MoleculeFile* PubChem::downloadFile(const QString &id) const
 {
     QByteArray data = downloadFileData(id, "sdf");
     if(data.isEmpty()){
@@ -120,7 +120,7 @@ MoleculeFile* PubChem::downloadFile(const QString &id) const
 
     std::stringstream buffer(std::string(data.constData(), data.size()));
 
-    MoleculeFile *file = new MoleculeFile;
+    chemkit::io::MoleculeFile *file = new chemkit::io::MoleculeFile;
     file->read(buffer, "sdf");
 
     return file;
@@ -138,7 +138,7 @@ MoleculeFile* PubChem::downloadFile(const QString &id) const
 /// ids << "1" << "2" << "3" << "42" << "57";
 /// MoleculeFile *file = pubchem.downloadFile(ids);
 /// \endcode
-MoleculeFile* PubChem::downloadFile(const QStringList &ids) const
+chemkit::io::MoleculeFile* PubChem::downloadFile(const QStringList &ids) const
 {
     QByteArray data = downloadFileData(ids, "sdf");
     if(data.isEmpty()){
@@ -147,7 +147,7 @@ MoleculeFile* PubChem::downloadFile(const QStringList &ids) const
 
     std::stringstream buffer(std::string(data.constData(), data.size()));
 
-    MoleculeFile *file = new MoleculeFile;
+    chemkit::io::MoleculeFile *file = new chemkit::io::MoleculeFile;
     file->read(buffer, "sdf");
 
     return file;
