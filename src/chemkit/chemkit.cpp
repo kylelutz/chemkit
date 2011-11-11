@@ -61,11 +61,8 @@
 /// \defgroup chemkit chemkit
 /// \brief The chemkit module contains the core chemkit classes.
 ///
-/// To use the chemkit module add the following to the project (.pro)
-/// file.
-/// \code
-/// LIBS += -lchemkit
-/// \endcode
+/// The classes in the chemkit library are contained within the
+/// chemkit namespace.
 
 /// The chemkit namespace contains all of the chemkit classes.
 namespace chemkit {

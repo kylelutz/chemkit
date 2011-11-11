@@ -39,12 +39,8 @@
 /// \brief The chemkit-web module contains classes for accessing
 ///        internet resources.
 ///
-/// To use the chemkit-web module add the following to the project
-/// (.pro) file.
-/// \code
-/// QT += network
-/// LIBS += -lchemkit-web
-/// \endcode
+/// The classes in the chemkit-web library are contained within the
+/// chemkit::web namespace.
 
 namespace chemkit {
 
