@@ -75,6 +75,9 @@ public:
     // static methods
     static LineFormat* create(const std::string &name);
     static std::vector<std::string> formats();
+    static std::string convert(const std::string &formula,
+                               const std::string &inputFormatName,
+                               const std::string &outputFormatName);
 
 protected:
     LineFormat(const std::string &name);

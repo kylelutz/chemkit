@@ -38,6 +38,7 @@
 #include <map>
 
 #include <boost/format.hpp>
+#include <boost/scoped_ptr.hpp>
 #include <boost/algorithm/string.hpp>
 
 #include "pluginmanager.h"
@@ -172,6 +173,33 @@ LineFormat* LineFormat::create(const std::string &name)
 std::vector<std::string> LineFormat::formats()
 {
     return PluginManager::instance()->pluginClassNames<LineFormat>();
+}
+
+/// Converts \p formula in \p inputFormatName to \p outputFormatName.
+std::string LineFormat::convert(const std::string &formula,
+                                const std::string &inputFormatName,
+                                const std::string &outputFormatName)
+{
+    // create input format
+    boost::scoped_ptr<LineFormat> inputFormat(create(inputFormatName));
+    if(!inputFormat){
+        return std::string();
+    }
+
+    // read input formula
+    boost::scoped_ptr<Molecule> molecule(inputFormat->read(formula));
+    if(!molecule){
+        return std::string();
+    }
+
+    // create output format
+    boost::scoped_ptr<LineFormat> outputFormat(create(outputFormatName));
+    if(!outputFormat){
+        return std::string();
+    }
+
+    // return output formula
+    return outputFormat->write(molecule.get());
 }
 
 } // end chemkit namespace
