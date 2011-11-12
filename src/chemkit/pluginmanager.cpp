@@ -176,7 +176,7 @@ void PluginManager::loadDefaultPlugins()
     std::vector<std::string> directories;
 
     // add default plugin directory
-#if defined(CHEMKIT_OS_LINUX)
+#if defined(CHEMKIT_OS_UNIX)
     directories.push_back(CHEMKIT_INSTALL_PREFIX "/share/chemkit/plugins/");
 #endif
 
