@@ -171,7 +171,7 @@ bool MdlFileFormat::readSdfFile(QIODevice *iodev, chemkit::io::MoleculeFile *fil
 
         // read data block
         chemkit::Molecule *molecule = file->molecules().back();
-        readDataBlock(iodev, molecule, file);
+        readDataBlock(iodev, molecule);
     }
 
     // return false if we failed to read any molecules
@@ -261,7 +261,7 @@ bool MdlFileFormat::readPropertyBlock(QIODevice *iodev, chemkit::Molecule *molec
     return false;
 }
 
-bool MdlFileFormat::readDataBlock(QIODevice *iodev, chemkit::Molecule *molecule, chemkit::io::MoleculeFile *file)
+bool MdlFileFormat::readDataBlock(QIODevice *iodev, chemkit::Molecule *molecule)
 {
     QString dataName;
     QString dataValue;

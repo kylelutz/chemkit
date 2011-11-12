@@ -60,7 +60,7 @@ private:
     bool readAtomBlock(QIODevice *iodev, chemkit::Molecule *molecule, int atomCount);
     bool readBondBlock(QIODevice *iodev, chemkit::Molecule *molecule, int bondCount);
     bool readPropertyBlock(QIODevice *iodev, chemkit::Molecule *molecule);
-    bool readDataBlock(QIODevice *iodev, chemkit::Molecule *molecule, chemkit::io::MoleculeFile *file);
+    bool readDataBlock(QIODevice *iodev, chemkit::Molecule *molecule);
     void writeMolFile(const chemkit::Molecule *molecule, QIODevice *iodev);
     void writeSdfFile(const chemkit::io::MoleculeFile *file, QIODevice *iodev);
     void writeAtomBlock(const chemkit::Molecule *molecule, QIODevice *iodev);
