@@ -75,7 +75,9 @@ PluginManager::PluginManager()
 PluginManager::~PluginManager()
 {
     foreach(Plugin *plugin, d->plugins){
+        DynamicLibrary *library = plugin->library();
         delete plugin;
+        delete library;
     }
 
     delete d;
@@ -200,8 +202,9 @@ bool PluginManager::unloadPlugin(Plugin *plugin)
     }
 
     d->plugins.erase(std::remove(d->plugins.begin(), d->plugins.end(), plugin));
-    delete plugin->library();
+    DynamicLibrary *library = plugin->library();
     delete plugin;
+    delete library;
 
     return true;
 }
