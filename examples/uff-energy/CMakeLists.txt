@@ -1,4 +1,4 @@
-if(NOT ${CHEMKIT_WITH_IO})
+if(NOT ${CHEMKIT_WITH_IO} OR NOT ${CHEMKIT_WITH_MD})
   return()
 endif()
 
@@ -15,4 +15,4 @@ include_directories(../../include)
 set(SOURCES uffenergyexample.cpp)
 
 add_executable(uff-energy ${SOURCES})
-target_link_libraries(uff-energy chemkit chemkit-io ${QT_LIBRARIES})
+target_link_libraries(uff-energy chemkit chemkit-io chemkit-md ${QT_LIBRARIES})

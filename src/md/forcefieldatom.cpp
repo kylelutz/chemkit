@@ -37,8 +37,9 @@
 
 #include <algorithm>
 
-#include "atom.h"
-#include "foreach.h"
+#include <chemkit/atom.h>
+#include <chemkit/foreach.h>
+
 #include "forcefield.h"
 #include "forcefieldatom.h"
 #include "forcefieldcalculation.h"
@@ -59,7 +60,7 @@ public:
 
 // === ForceFieldAtom ====================================================== //
 /// \class ForceFieldAtom forcefieldatom.h chemkit/forcefieldatom.h
-/// \ingroup chemkit
+/// \ingroup chemkit-md
 /// \brief The ForceFieldAtom class represents an atom in a force
 ///        field.
 ///

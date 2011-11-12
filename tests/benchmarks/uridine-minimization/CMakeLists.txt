@@ -1,4 +1,4 @@
-if(NOT ${CHEMKIT_WITH_IO})
+if(NOT ${CHEMKIT_WITH_IO} OR NOT ${CHEMKIT_WITH_MD})
   return()
 endif()
 
@@ -14,4 +14,4 @@ include_directories(../../../include)
 
 qt4_wrap_cpp(MOC_SOURCES uridineminimizationbenchmark.h)
 add_executable(uridineminimizationbenchmark uridineminimizationbenchmark.cpp ${MOC_SOURCES})
-target_link_libraries(uridineminimizationbenchmark chemkit chemkit-io ${QT_LIBRARIES})
+target_link_libraries(uridineminimizationbenchmark chemkit chemkit-io chemkit-md ${QT_LIBRARIES})

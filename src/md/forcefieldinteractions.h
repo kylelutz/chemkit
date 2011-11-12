@@ -36,7 +36,7 @@
 #ifndef CHEMKIT_FORCEFIELDINTERACTIONS_H
 #define CHEMKIT_FORCEFIELDINTERACTIONS_H
 
-#include "chemkit.h"
+#include "md.h"
 
 #include <vector>
 
@@ -48,7 +48,7 @@ class ForceField;
 class ForceFieldAtom;
 class ForceFieldInteractionsPrivate;
 
-class CHEMKIT_EXPORT ForceFieldInteractions
+class CHEMKIT_MD_EXPORT ForceFieldInteractions
 {
 public:
     // construction and destruction

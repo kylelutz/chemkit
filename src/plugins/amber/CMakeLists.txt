@@ -9,4 +9,4 @@ set(SOURCES
 )
 
 add_chemkit_plugin(amber ${SOURCES})
-target_link_libraries(amber chemkit)
+target_link_libraries(amber chemkit chemkit-md)

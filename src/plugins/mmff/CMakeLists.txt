@@ -17,4 +17,4 @@ set(SOURCES
 )
 
 add_chemkit_plugin(mmff ${SOURCES})
-target_link_libraries(mmff chemkit ${QT_LIBRARIES})
+target_link_libraries(mmff chemkit chemkit-md ${QT_LIBRARIES})

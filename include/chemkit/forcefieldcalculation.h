@@ -1,1 +1,1 @@
-#include "../../src/chemkit/forcefieldcalculation.h"
+#include "../../src/md/forcefieldcalculation.h"

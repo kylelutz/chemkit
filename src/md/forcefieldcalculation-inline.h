@@ -38,8 +38,9 @@
 
 #include "forcefieldcalculation.h"
 
-#include "point3.h"
-#include "geometry.h"
+#include <chemkit/point3.h>
+#include <chemkit/geometry.h>
+
 #include "forcefieldatom.h"
 
 namespace chemkit {

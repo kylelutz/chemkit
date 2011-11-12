@@ -31,11 +31,6 @@ set(HEADERS
   dynamiclibrary.h
   element.h
   element-inline.h
-  forcefield.h
-  forcefieldatom.h
-  forcefieldcalculation.h
-  forcefieldcalculation-inline.h
-  forcefieldinteractions.h
   foreach.h
   fragment.h
   fragment-inline.h
@@ -89,10 +84,6 @@ set(SOURCES
   delaunaytriangulation.cpp
   dynamiclibrary.cpp
   element.cpp
-  forcefield.cpp
-  forcefieldatom.cpp
-  forcefieldcalculation.cpp
-  forcefieldinteractions.cpp
   fragment.cpp
   geometry.cpp
   internalcoordinates.cpp

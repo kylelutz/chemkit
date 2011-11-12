@@ -10,4 +10,4 @@ set(SOURCES
 )
 
 add_chemkit_plugin(uff ${SOURCES})
-target_link_libraries(uff chemkit)
+target_link_libraries(uff chemkit chemkit-md)

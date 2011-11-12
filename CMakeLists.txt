@@ -21,6 +21,7 @@ add_custom_target(uninstall
 # build options
 option(CHEMKIT_WITH_GRAPHICS "Build the chemkit-graphics library." ON)
 option(CHEMKIT_WITH_IO "Build the chemkit-io library." ON)
+option(CHEMKIT_WITH_MD "Build the chemkit-md library." ON)
 option(CHEMKIT_WITH_WEB "Build the chemkit-web library." ON)
 option(CHEMKIT_WITH_WIDGETS "Build the chemkit-widgets library." ON)
 option(CHEMKIT_BUILD_APPS "Build the chemkit applications" ON)

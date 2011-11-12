@@ -35,12 +35,13 @@
 
 #include "forcefield.h"
 
-#include "atom.h"
-#include "foreach.h"
-#include "geometry.h"
-#include "molecule.h"
-#include "constants.h"
-#include "pluginmanager.h"
+#include <chemkit/atom.h>
+#include <chemkit/foreach.h>
+#include <chemkit/geometry.h>
+#include <chemkit/molecule.h>
+#include <chemkit/constants.h>
+#include <chemkit/pluginmanager.h>
+
 #include "forcefieldatom.h"
 #include "forcefieldcalculation.h"
 
@@ -63,7 +64,7 @@ public:
 
 // === ForceField ========================================================== //
 /// \class ForceField forcefield.h chemkit/forcefield.h
-/// \ingroup chemkit
+/// \ingroup chemkit-md
 /// \brief The ForceField class provides a generic interface to
 ///        molecular mechanics force fields.
 ///

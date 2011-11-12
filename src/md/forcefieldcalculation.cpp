@@ -53,7 +53,7 @@ public:
 
 // === ForceFieldCalculation =============================================== //
 /// \class ForceFieldCalculation forcefieldcalculation.h chemkit/forcefieldcalculation.h
-/// \ingroup chemkit
+/// \ingroup chemkit-md
 /// \brief The ForceFieldCalculation class represents an energy
 ///        calculation in a force field.
 ///

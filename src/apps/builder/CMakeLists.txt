@@ -53,4 +53,4 @@ qt4_wrap_ui(UI_SOURCES ${UI_FORMS})
 qt4_wrap_cpp(MOC_SOURCES ${MOC_HEADERS})
 
 add_chemkit_executable(builder ${SOURCES} ${MOC_SOURCES} ${UI_SOURCES})
-target_link_libraries(builder chemkit chemkit-io chemkit-graphics chemkit-widgets ${QT_LIBRARIES})
+target_link_libraries(builder chemkit chemkit-io chemkit-md chemkit-graphics chemkit-widgets ${QT_LIBRARIES})

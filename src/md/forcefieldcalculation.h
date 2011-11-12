@@ -36,12 +36,12 @@
 #ifndef CHEMKIT_FORCEFIELDCALCULATION_H
 #define CHEMKIT_FORCEFIELDCALCULATION_H
 
-#include "chemkit.h"
+#include "md.h"
 
 #include <vector>
 
-#include "point3.h"
-#include "vector3.h"
+#include <chemkit/point3.h>
+#include <chemkit/vector3.h>
 
 namespace chemkit {
 
@@ -49,7 +49,7 @@ class ForceField;
 class ForceFieldAtom;
 class ForceFieldCalculationPrivate;
 
-class CHEMKIT_EXPORT ForceFieldCalculation
+class CHEMKIT_MD_EXPORT ForceFieldCalculation
 {
 public:
     // enumerations

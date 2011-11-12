@@ -14,4 +14,4 @@ set(SOURCES
 )
 
 add_chemkit_plugin(opls ${SOURCES})
-target_link_libraries(opls chemkit ${QT_LIBRARIES})
+target_link_libraries(opls chemkit chemkit-md ${QT_LIBRARIES})

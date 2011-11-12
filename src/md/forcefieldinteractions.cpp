@@ -35,10 +35,11 @@
 
 #include "forcefieldinteractions.h"
 
-#include "atom.h"
-#include "bond.h"
-#include "foreach.h"
-#include "molecule.h"
+#include <chemkit/atom.h>
+#include <chemkit/bond.h>
+#include <chemkit/foreach.h>
+#include <chemkit/molecule.h>
+
 #include "forcefield.h"
 
 namespace chemkit {
@@ -53,7 +54,7 @@ public:
 
 // === ForceFieldInteractions ============================================== //
 /// \class ForceFieldInteractions forcefieldinteractions.h chemkit/forcefieldinteractions.h
-/// \ingroup chemkit
+/// \ingroup chemkit-md
 /// \internal
 /// \brief The ForceFieldInteractions class enumerates atomic
 ///        interactions in a force field.

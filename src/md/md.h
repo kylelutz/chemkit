@@ -33,54 +33,15 @@
 **
 ******************************************************************************/
 
-#ifndef CHEMKIT_FORCEFIELDATOM_H
-#define CHEMKIT_FORCEFIELDATOM_H
+#ifndef CHEMKIT_MD_H
+#define CHEMKIT_MD_H
 
-#include "chemkit.h"
+#include <chemkit/chemkit.h>
 
-#include "point3.h"
-#include "vector3.h"
+#ifdef CHEMKIT_MD_LIBRARY
+    #define CHEMKIT_MD_EXPORT CHEMKIT_DECL_EXPORT
+#else
+    #define CHEMKIT_MD_EXPORT CHEMKIT_DECL_IMPORT
+#endif
 
-namespace chemkit {
-
-class Atom;
-class ForceField;
-class ForceFieldAtomPrivate;
-
-class CHEMKIT_EXPORT ForceFieldAtom
-{
-public:
-    // construction and destruction
-    ForceFieldAtom(ForceField *forceField, const Atom *atom);
-    virtual ~ForceFieldAtom();
-
-    // properties
-    const Atom* atom() const;
-    int index() const;
-    virtual bool setType(const std::string &type);
-    virtual std::string type() const;
-    void setCharge(Real charge);
-    Real charge() const;
-    bool isSetup() const;
-    ForceField* forceField() const;
-
-    // calculations
-    Real energy() const;
-    Vector3 gradient() const;
-
-    // structure
-    bool isOneFour(const ForceFieldAtom *atom) const;
-
-    // geometry
-    void setPosition(const Point3 &position);
-    Point3 position() const;
-    void moveBy(const Vector3 &vector);
-    void moveBy(Real dx, Real dy, Real dz);
-
-private:
-    ForceFieldAtomPrivate* const d;
-};
-
-} // end chemkit namespace
-
-#endif // CHEMKIT_FORCEFIELDATOM_H
+#endif // CHEMKIT_MD_H
