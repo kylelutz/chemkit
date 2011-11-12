@@ -48,6 +48,7 @@ class SmilesGraphNode
 {
 public:
     SmilesGraphNode(const chemkit::Atom *atom);
+    ~SmilesGraphNode();
 
     const chemkit::Atom* atom() const { return m_atom; }
 
@@ -77,6 +78,7 @@ class SmilesGraph
 {
 public:
     SmilesGraph(const chemkit::Molecule *molecule);
+    ~SmilesGraph();
 
     std::string toString(bool kekulize) const;
 

@@ -176,6 +176,13 @@ SmilesGraphNode::SmilesGraphNode(const chemkit::Atom *atom)
 {
 }
 
+SmilesGraphNode::~SmilesGraphNode()
+{
+    foreach(SmilesGraphNode *child, m_children){
+        delete child;
+    }
+}
+
 void SmilesGraphNode::setParent(SmilesGraphNode *parent, int bondOrder)
 {
     m_parent = parent;
@@ -449,6 +456,13 @@ SmilesGraph::SmilesGraph(const chemkit::Molecule *molecule)
 
             parentNode->setHydrogenCount(hydrogenCount);
         }
+    }
+}
+
+SmilesGraph::~SmilesGraph()
+{
+    foreach(SmilesGraphNode *node, m_rootNodes){
+        delete node;
     }
 }
 
