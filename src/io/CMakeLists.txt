@@ -15,8 +15,6 @@ set(HEADERS
   moleculefileformatadaptor-inline.h
   polymerfile.h
   polymerfileformat.h
-  trajectoryfile.h
-  trajectoryfileformat.h
 )
 
 set(SOURCES
@@ -25,8 +23,6 @@ set(SOURCES
   moleculefileformat.cpp
   polymerfile.cpp
   polymerfileformat.cpp
-  trajectoryfile.cpp
-  trajectoryfileformat.cpp
 )
 
 add_definitions(

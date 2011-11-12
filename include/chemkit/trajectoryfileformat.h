@@ -1,1 +1,1 @@
-#include "../../src/io/trajectoryfileformat.h"
+#include "../../src/md/trajectoryfileformat.h"

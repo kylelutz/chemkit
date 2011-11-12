@@ -38,11 +38,13 @@
 #include <vector>
 #include <algorithm>
 
-#include "unitcell.h"
+#include <chemkit/unitcell.h>
+#include <chemkit/coordinates.h>
+
 #include "trajectory.h"
-#include "coordinates.h"
 
 namespace chemkit {
+namespace md {
 
 // === TrajectoryFramePrivate ============================================== //
 class TrajectoryFramePrivate
@@ -147,4 +149,5 @@ UnitCell* TrajectoryFrame::unitCell() const
     return d->unitCell;
 }
 
+} // end md namespace
 } // end chemkit namespace

@@ -48,11 +48,11 @@
 #include "../../3rdparty/xdrf/xdrf.h"
 
 XtcFileFormat::XtcFileFormat()
-    : chemkit::io::TrajectoryFileFormat("xtc")
+    : chemkit::md::TrajectoryFileFormat("xtc")
 {
 }
 
-bool XtcFileFormat::read(std::istream &input, chemkit::io::TrajectoryFile *file)
+bool XtcFileFormat::read(std::istream &input, chemkit::md::TrajectoryFile *file)
 {
     // read data into temporary file
     QTemporaryFile dataFile;
@@ -74,7 +74,7 @@ bool XtcFileFormat::read(std::istream &input, chemkit::io::TrajectoryFile *file)
     XDR xdrs;
     xdropen(&xdrs, dataFile.fileName().toAscii().constData(), "r");
 
-    chemkit::Trajectory *trajectory = new chemkit::Trajectory;
+    chemkit::md::Trajectory *trajectory = new chemkit::md::Trajectory;
 
     while(xdr_getpos(&xdrs) < dataSize){
         // read magic (should be '1995')
@@ -85,7 +85,7 @@ bool XtcFileFormat::read(std::istream &input, chemkit::io::TrajectoryFile *file)
         }
 
         // create new frame
-        chemkit::TrajectoryFrame *frame = trajectory->addFrame();
+        chemkit::md::TrajectoryFrame *frame = trajectory->addFrame();
 
         // read atom count
         int atomCount = 0;

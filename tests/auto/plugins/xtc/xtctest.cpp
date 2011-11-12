@@ -46,19 +46,19 @@ const std::string dataPath = "../../../data/";
 
 void XtcTest::initTestCase()
 {
-    std::vector<std::string> formats = chemkit::io::TrajectoryFileFormat::formats();
+    std::vector<std::string> formats = chemkit::md::TrajectoryFileFormat::formats();
     QVERIFY(std::find(formats.begin(), formats.end(), "xtc") != formats.end());
 }
 
 void XtcTest::spc216()
 {
-    chemkit::io::TrajectoryFile file(dataPath + "spc216.xtc");
+    chemkit::md::TrajectoryFile file(dataPath + "spc216.xtc");
     bool ok = file.read();
     if(!ok)
         qDebug() << file.errorString().c_str();
     QVERIFY(ok);
 
-    chemkit::Trajectory *trajectory = file.trajectory();
+    chemkit::md::Trajectory *trajectory = file.trajectory();
     QVERIFY(trajectory != 0);
     QCOMPARE(trajectory->frameCount(), 201);
 }

@@ -33,96 +33,98 @@
 **
 ******************************************************************************/
 
-#include "trajectory.h"
+#include "trajectoryfile.h"
 
-#include <algorithm>
-
-#include "foreach.h"
-#include "trajectoryframe.h"
+#include <chemkit/trajectory.h>
 
 namespace chemkit {
+namespace md {
 
-// === TrajectoryPrivate =================================================== //
-class TrajectoryPrivate
+// === TrajectoryFilePrivate =============================================== //
+class TrajectoryFilePrivate
 {
 public:
-    std::vector<TrajectoryFrame *> frames;
+    Trajectory *trajectory;
 };
 
-// === Trajectory ========================================================== //
-/// \class Trajectory trajectory.h chemkit/trajectory.h
-/// \ingroup chemkit
-/// \brief The Trajectory class contains a trajectory.
+// === TrajectoryFile ====================================================== //
+/// \class TrajectoryFile trajectoryfile.h chemkit/trajectoryfile.h
+/// \ingroup chemkit-io
+/// \brief The TrajectoryFile class contains a trajectory.
+///
+/// The following trajectory file formats are supported in chemkit:
+///     - \c xtc
+///
+/// \see Trajectory, TrajectoryFileFormat
 
 // --- Construction and Destruction ---------------------------------------- //
-/// Creates a new trajectory.
-Trajectory::Trajectory()
-    : d(new TrajectoryPrivate)
+/// Creates a new trajectory file.
+TrajectoryFile::TrajectoryFile()
+    : d(new TrajectoryFilePrivate)
 {
+    d->trajectory = 0;
 }
 
-/// Destroys the trajectory object.
-Trajectory::~Trajectory()
+/// Creates a new trajectory file with \p fileName.
+TrajectoryFile::TrajectoryFile(const std::string &fileName)
+    : GenericFile<TrajectoryFile, TrajectoryFileFormat>(fileName),
+      d(new TrajectoryFilePrivate)
 {
-    foreach(TrajectoryFrame *frame, d->frames){
-        delete frame;
-    }
+    d->trajectory = 0;
+}
 
+/// Destroys the trajectory file object.
+TrajectoryFile::~TrajectoryFile()
+{
+    delete d->trajectory;
     delete d;
 }
 
 // --- Properties ---------------------------------------------------------- //
-/// Returns the number of frames in the trajectory.
-int Trajectory::size() const
+/// Returns \c true if the trajectory file is empty.
+bool TrajectoryFile::isEmpty() const
 {
-    return frameCount();
+    return d->trajectory == 0;
 }
 
-/// Returns \c true if the trajectory contains no frames.
-bool Trajectory::isEmpty() const
+// --- File Contents ------------------------------------------------------- //
+/// Sets the trajectory for the file to \p trajectory.
+void TrajectoryFile::setTrajectory(Trajectory *trajectory)
 {
-    return size() == 0;
+    // delete current trajectory
+    deleteTrajectory();
+
+    d->trajectory = trajectory;
 }
 
-// --- Frames -------------------------------------------------------------- //
-/// Adds a new frame to the trajectory.
-TrajectoryFrame* Trajectory::addFrame()
+/// Returns the trajectory that the file contains.
+Trajectory* TrajectoryFile::trajectory() const
 {
-    TrajectoryFrame *frame = new TrajectoryFrame(this);
-    d->frames.push_back(frame);
-    return frame;
+    return d->trajectory;
 }
 
-/// Removes \p frame from the trajectory.
-bool Trajectory::removeFrame(TrajectoryFrame *frame)
+/// Removes the trajectory from the file.
+bool TrajectoryFile::removeTrajectory()
 {
-    std::vector<TrajectoryFrame *>::iterator location = std::find(d->frames.begin(), d->frames.end(), frame);
-    if(location == d->frames.end()){
+    if(!d->trajectory){
         return false;
     }
 
-    d->frames.erase(location);
-    delete frame;
-
+    d->trajectory = 0;
     return true;
 }
 
-/// Returns the frame at \p index in the trajectory.
-TrajectoryFrame* Trajectory::frame(int index) const
+/// Remove the trajectory from the file and deletes it.
+bool TrajectoryFile::deleteTrajectory()
 {
-    return d->frames[index];
+    if(!d->trajectory){
+        return false;
+    }
+
+    delete d->trajectory;
+    d->trajectory = 0;
+    return true;
 }
 
-/// Returns a list of the frames in the trajectory.
-std::vector<TrajectoryFrame *> Trajectory::frames() const
-{
-    return d->frames;
-}
-
-/// Returns the number of frames in the trajectory.
-int Trajectory::frameCount() const
-{
-    return d->frames.size();
-}
-
+} // end md namespace
 } // end chemkit namespace

@@ -33,46 +33,42 @@
 **
 ******************************************************************************/
 
-#ifndef CHEMKIT_TRAJECTORYFILE_H
-#define CHEMKIT_TRAJECTORYFILE_H
+#ifndef CHEMKIT_TRAJECTORY_H
+#define CHEMKIT_TRAJECTORY_H
 
-#include "io.h"
+#include "md.h"
 
-#include <string>
-
-#include "genericfile.h"
-#include "trajectoryfileformat.h"
+#include <vector>
 
 namespace chemkit {
+namespace md {
 
-class Trajectory;
+class TrajectoryFrame;
+class TrajectoryPrivate;
 
-namespace io {
-
-class TrajectoryFilePrivate;
-
-class CHEMKIT_IO_EXPORT TrajectoryFile : public GenericFile<TrajectoryFile, TrajectoryFileFormat>
+class CHEMKIT_MD_EXPORT Trajectory
 {
 public:
     // construction and destruction
-    TrajectoryFile();
-    TrajectoryFile(const std::string &fileName);
-    virtual ~TrajectoryFile();
+    Trajectory();
+    ~Trajectory();
 
     // properties
+    int size() const;
     bool isEmpty() const;
 
-    // file contents
-    void setTrajectory(Trajectory *trajectory);
-    Trajectory* trajectory() const;
-    bool removeTrajectory();
-    bool deleteTrajectory();
+    // frames
+    TrajectoryFrame* addFrame();
+    bool removeFrame(TrajectoryFrame *frame);
+    TrajectoryFrame* frame(int index) const;
+    std::vector<TrajectoryFrame *> frames() const;
+    int frameCount() const;
 
 private:
-    TrajectoryFilePrivate* const d;
+    TrajectoryPrivate* const d;
 };
 
-} // end io namespace
+} // end md namespace
 } // end chemkit namespace
 
-#endif // CHEMKIT_TRAJECTORYFILE_H
+#endif // CHEMKIT_TRAJECTORY_H

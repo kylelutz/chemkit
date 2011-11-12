@@ -63,8 +63,6 @@ set(HEADERS
   ring-inline.h
   scalarfield.h
   stereochemistry.h
-  trajectory.h
-  trajectoryframe.h
   unitcell.h
   variant.h
   variant-inline.h
@@ -109,8 +107,6 @@ set(SOURCES
   ring.cpp
   scalarfield.cpp
   stereochemistry.cpp
-  trajectory.cpp
-  trajectoryframe.cpp
   unitcell.cpp
 )
 

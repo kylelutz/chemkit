@@ -1,1 +1,1 @@
-#include "../../src/chemkit/trajectory.h"
+#include "../../src/md/trajectory.h"

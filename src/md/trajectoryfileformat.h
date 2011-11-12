@@ -36,7 +36,7 @@
 #ifndef CHEMKIT_TRAJECTORYFILEFORMAT_H
 #define CHEMKIT_TRAJECTORYFILEFORMAT_H
 
-#include "io.h"
+#include "md.h"
 
 #include <string>
 #include <vector>
@@ -44,12 +44,12 @@
 #include <ostream>
 
 namespace chemkit {
-namespace io {
+namespace md {
 
 class TrajectoryFile;
 class TrajectoryFileFormatPrivate;
 
-class CHEMKIT_IO_EXPORT TrajectoryFileFormat
+class CHEMKIT_MD_EXPORT TrajectoryFileFormat
 {
 public:
     // typedefs
@@ -80,7 +80,7 @@ private:
     TrajectoryFileFormatPrivate* const d;
 };
 
-} // end io namespace
+} // end md namespace
 } // end chemkit namespace
 
 #endif // CHEMKIT_TRAJECTORYFILEFORMAT_H

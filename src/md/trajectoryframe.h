@@ -36,18 +36,21 @@
 #ifndef CHEMKIT_TRAJECTORYFRAME_H
 #define CHEMKIT_TRAJECTORYFRAME_H
 
-#include "chemkit.h"
+#include "md.h"
 
-#include "point3.h"
+#include <chemkit/point3.h>
 
 namespace chemkit {
 
 class UnitCell;
-class Trajectory;
 class Coordinates;
+
+namespace md {
+
+class Trajectory;
 class TrajectoryFramePrivate;
 
-class CHEMKIT_EXPORT TrajectoryFrame
+class CHEMKIT_MD_EXPORT TrajectoryFrame
 {
 public:
     // properties
@@ -77,6 +80,7 @@ private:
     TrajectoryFramePrivate* const d;
 };
 
+} // end md namespace
 } // end chemkit namespace
 
 #endif // CHEMKIT_TRAJECTORYFRAME_H
