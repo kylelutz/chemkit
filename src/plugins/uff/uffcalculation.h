@@ -40,7 +40,7 @@
 
 #include "uffparameters.h"
 
-class UffCalculation : public chemkit::ForceFieldCalculation
+class UffCalculation : public chemkit::md::ForceFieldCalculation
 {
 public:
     UffCalculation(int type, int atomCount, int parameterCount);
@@ -48,15 +48,15 @@ public:
     virtual bool setup() = 0;
 
 protected:
-    chemkit::Real bondOrder(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b) const;
+    chemkit::Real bondOrder(const chemkit::md::ForceFieldAtom *a, const chemkit::md::ForceFieldAtom *b) const;
     chemkit::Real bondLength(const UffAtomParameters *a, const UffAtomParameters *b, chemkit::Real bondOrder) const;
-    const UffAtomParameters* parameters(const chemkit::ForceFieldAtom *atom) const;
+    const UffAtomParameters* parameters(const chemkit::md::ForceFieldAtom *atom) const;
 };
 
 class UffBondStrechCalculation : public UffCalculation
 {
 public:
-    UffBondStrechCalculation(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b);
+    UffBondStrechCalculation(const chemkit::md::ForceFieldAtom *a, const chemkit::md::ForceFieldAtom *b);
 
     bool setup();
     chemkit::Real energy() const;
@@ -66,7 +66,7 @@ public:
 class UffAngleBendCalculation : public UffCalculation
 {
 public:
-    UffAngleBendCalculation(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b, const chemkit::ForceFieldAtom *c);
+    UffAngleBendCalculation(const chemkit::md::ForceFieldAtom *a, const chemkit::md::ForceFieldAtom *b, const chemkit::md::ForceFieldAtom *c);
 
     bool setup();
     chemkit::Real energy() const;
@@ -76,7 +76,7 @@ public:
 class UffTorsionCalculation : public UffCalculation
 {
 public:
-    UffTorsionCalculation(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b, const chemkit::ForceFieldAtom *c, const chemkit::ForceFieldAtom *d);
+    UffTorsionCalculation(const chemkit::md::ForceFieldAtom *a, const chemkit::md::ForceFieldAtom *b, const chemkit::md::ForceFieldAtom *c, const chemkit::md::ForceFieldAtom *d);
 
     bool setup();
     chemkit::Real energy() const;
@@ -86,7 +86,7 @@ public:
 class UffInversionCalculation : public UffCalculation
 {
 public:
-    UffInversionCalculation(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b, const chemkit::ForceFieldAtom *c, const chemkit::ForceFieldAtom *d);
+    UffInversionCalculation(const chemkit::md::ForceFieldAtom *a, const chemkit::md::ForceFieldAtom *b, const chemkit::md::ForceFieldAtom *c, const chemkit::md::ForceFieldAtom *d);
 
     bool setup();
     chemkit::Real energy() const;
@@ -96,7 +96,7 @@ public:
 class UffVanDerWaalsCalculation : public UffCalculation
 {
 public:
-    UffVanDerWaalsCalculation(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b);
+    UffVanDerWaalsCalculation(const chemkit::md::ForceFieldAtom *a, const chemkit::md::ForceFieldAtom *b);
 
     bool setup();
     chemkit::Real energy() const;
@@ -106,7 +106,7 @@ public:
 class UffElectrostaticCalculation : public UffCalculation
 {
 public:
-    UffElectrostaticCalculation(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b);
+    UffElectrostaticCalculation(const chemkit::md::ForceFieldAtom *a, const chemkit::md::ForceFieldAtom *b);
 
     bool setup();
     chemkit::Real energy() const;

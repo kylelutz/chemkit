@@ -47,7 +47,7 @@ const std::string dataPath = "../../../data/";
 
 void AmberTest::initTestCase()
 {
-    std::vector<std::string> forceFields = chemkit::ForceField::forceFields();
+    std::vector<std::string> forceFields = chemkit::md::ForceField::forceFields();
     QVERIFY(std::find(forceFields.begin(), forceFields.end(), "amber") != forceFields.end());
 }
 
@@ -63,7 +63,7 @@ void AmberTest::adenosine()
     chemkit::Molecule *molecule = file.molecule();
     QCOMPARE(molecule->formula(), std::string("C10H13N5O4"));
 
-    chemkit::ForceField *forceField = chemkit::ForceField::create("amber");
+    chemkit::md::ForceField *forceField = chemkit::md::ForceField::create("amber");
     QVERIFY(forceField != 0);
 
     forceField->addMolecule(molecule);
@@ -71,7 +71,7 @@ void AmberTest::adenosine()
     QVERIFY(forceField->isSetup());
 
     QCOMPARE(forceField->atomCount(), 32);
-    const std::vector<chemkit::ForceFieldAtom *> &atoms = forceField->atoms();
+    const std::vector<chemkit::md::ForceFieldAtom *> &atoms = forceField->atoms();
     QCOMPARE(atoms[0]->type(), std::string("CT"));
     QCOMPARE(atoms[1]->type(), std::string("OS"));
     QCOMPARE(atoms[2]->type(), std::string("CT"));
@@ -123,7 +123,7 @@ void AmberTest::serine()
     chemkit::Molecule *molecule = file.molecule();
     QCOMPARE(molecule->formula(), std::string("C3H7NO3"));
 
-    chemkit::ForceField *forceField = chemkit::ForceField::create("amber");
+    chemkit::md::ForceField *forceField = chemkit::md::ForceField::create("amber");
     QVERIFY(forceField != 0);
 
     forceField->addMolecule(molecule);
@@ -131,7 +131,7 @@ void AmberTest::serine()
     QVERIFY(forceField->isSetup());
 
     QCOMPARE(forceField->atomCount(), 14);
-    const std::vector<chemkit::ForceFieldAtom *> &atoms = forceField->atoms();
+    const std::vector<chemkit::md::ForceFieldAtom *> &atoms = forceField->atoms();
     QCOMPARE(atoms[0]->type(), std::string("N3"));
     QCOMPARE(atoms[1]->type(), std::string("CT"));
     QCOMPARE(atoms[2]->type(), std::string("H"));
@@ -165,7 +165,7 @@ void AmberTest::water()
     H2->setPosition(2, 1, 0);
     H3->setPosition(1, 2, 0);
 
-    chemkit::ForceField *forceField = chemkit::ForceField::create("amber");
+    chemkit::md::ForceField *forceField = chemkit::md::ForceField::create("amber");
     QVERIFY(forceField != 0);
 
     forceField->addMolecule(&water);

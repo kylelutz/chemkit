@@ -50,7 +50,7 @@ void MmffEnergyBenchmark::benchmark()
         qDebug() << file.errorString().c_str();
     QVERIFY(ok);
 
-    chemkit::ForceField *mmff = chemkit::ForceField::create("mmff");
+    chemkit::md::ForceField *mmff = chemkit::md::ForceField::create("mmff");
     mmff->setup();
     delete mmff;
 
@@ -59,7 +59,7 @@ void MmffEnergyBenchmark::benchmark()
 
     QBENCHMARK_ONCE {
         foreach(const chemkit::Molecule *molecule, file.molecules()){
-            chemkit::ForceField *forceField = chemkit::ForceField::create("mmff");
+            chemkit::md::ForceField *forceField = chemkit::md::ForceField::create("mmff");
             QVERIFY(forceField);
 
             forceField->addMolecule(molecule);

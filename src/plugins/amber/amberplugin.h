@@ -45,7 +45,7 @@ public:
     AmberPlugin();
     ~AmberPlugin();
 
-    static chemkit::ForceField* createAmberForceField();
+    static chemkit::md::ForceField* createAmberForceField();
 };
 
 #endif // AMBERPLUGIN_H

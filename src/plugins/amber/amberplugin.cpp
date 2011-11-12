@@ -40,15 +40,15 @@
 AmberPlugin::AmberPlugin()
     : chemkit::Plugin("amber")
 {
-    registerPluginClass<chemkit::ForceField>("amber", createAmberForceField);
+    registerPluginClass<chemkit::md::ForceField>("amber", createAmberForceField);
 }
 
 AmberPlugin::~AmberPlugin()
 {
-    unregisterPluginClass<chemkit::ForceField>("amber");
+    unregisterPluginClass<chemkit::md::ForceField>("amber");
 }
 
-chemkit::ForceField* AmberPlugin::createAmberForceField()
+chemkit::md::ForceField* AmberPlugin::createAmberForceField()
 {
     return new AmberForceField;
 }

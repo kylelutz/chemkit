@@ -53,7 +53,7 @@ void OplsTest::initTestCase()
     std::vector<std::string> typers = chemkit::AtomTyper::typers();
     QVERIFY(std::find(typers.begin(), typers.end(), "opls") != typers.end());
 
-    std::vector<std::string> forceFields = chemkit::ForceField::forceFields();
+    std::vector<std::string> forceFields = chemkit::md::ForceField::forceFields();
     QVERIFY(std::find(forceFields.begin(), forceFields.end(), "opls") != forceFields.end());
 }
 
@@ -79,7 +79,7 @@ void OplsTest::energy()
     QVERIFY(molecule != 0);
     QCOMPARE(molecule->formula(), formula.toStdString());
 
-    chemkit::ForceField *opls = chemkit::ForceField::create("opls");
+    chemkit::md::ForceField *opls = chemkit::md::ForceField::create("opls");
     QVERIFY(opls != 0);
 
     opls->addMolecule(molecule);

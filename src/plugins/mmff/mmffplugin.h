@@ -55,7 +55,7 @@ public:
     MmffParametersData* parameters(const QString &name) const;
 
     static chemkit::AtomTyper* createMmffAtomTyper();
-    static chemkit::ForceField* createMmffForceField();
+    static chemkit::md::ForceField* createMmffForceField();
     static chemkit::PartialChargePredictor* createMmffPartialChargePredictor();
 
 private:

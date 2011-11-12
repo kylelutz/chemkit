@@ -64,7 +64,7 @@ int main(int argc, char *argv[])
         return -1;
     }
 
-    chemkit::ForceField *uff = chemkit::ForceField::create("uff");
+    chemkit::md::ForceField *uff = chemkit::md::ForceField::create("uff");
     if(!uff){
         err << "UFF force field plugin not found.\n";
         return -1;

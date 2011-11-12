@@ -40,7 +40,7 @@
 
 class AmberParameters;
 
-class AmberForceField : public chemkit::ForceField
+class AmberForceField : public chemkit::md::ForceField
 {
 public:
     // construction and destruction

@@ -47,7 +47,7 @@ public:
     ~OplsPlugin();
 
     static chemkit::AtomTyper* createOplsAtomTyper();
-    static chemkit::ForceField* createOplsForceField();
+    static chemkit::md::ForceField* createOplsForceField();
 };
 
 #endif // OPLSPLUGIN_H

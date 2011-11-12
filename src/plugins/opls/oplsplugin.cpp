@@ -42,13 +42,13 @@ OplsPlugin::OplsPlugin()
     : chemkit::Plugin("opls")
 {
     registerPluginClass<chemkit::AtomTyper>("opls", createOplsAtomTyper);
-    registerPluginClass<chemkit::ForceField>("opls", createOplsForceField);
+    registerPluginClass<chemkit::md::ForceField>("opls", createOplsForceField);
 }
 
 OplsPlugin::~OplsPlugin()
 {
     unregisterPluginClass<chemkit::AtomTyper>("opls");
-    unregisterPluginClass<chemkit::ForceField>("opls");
+    unregisterPluginClass<chemkit::md::ForceField>("opls");
 }
 
 chemkit::AtomTyper* OplsPlugin::createOplsAtomTyper()
@@ -56,7 +56,7 @@ chemkit::AtomTyper* OplsPlugin::createOplsAtomTyper()
     return new OplsAtomTyper;
 }
 
-chemkit::ForceField* OplsPlugin::createOplsForceField()
+chemkit::md::ForceField* OplsPlugin::createOplsForceField()
 {
     return new OplsForceField;
 }

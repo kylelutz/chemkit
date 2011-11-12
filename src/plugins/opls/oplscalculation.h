@@ -40,7 +40,7 @@
 
 #include "oplsparameters.h"
 
-class OplsCalculation : public chemkit::ForceFieldCalculation
+class OplsCalculation : public chemkit::md::ForceFieldCalculation
 {
 public:
     virtual bool setup(const OplsParameters *parameters) = 0;
@@ -52,7 +52,7 @@ protected:
 class OplsBondStrechCalculation : public OplsCalculation
 {
 public:
-    OplsBondStrechCalculation(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b);
+    OplsBondStrechCalculation(const chemkit::md::ForceFieldAtom *a, const chemkit::md::ForceFieldAtom *b);
 
     bool setup(const OplsParameters *parameters);
     chemkit::Real energy() const;
@@ -62,7 +62,7 @@ public:
 class OplsAngleBendCalculation : public OplsCalculation
 {
 public:
-    OplsAngleBendCalculation(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b, const chemkit::ForceFieldAtom *c);
+    OplsAngleBendCalculation(const chemkit::md::ForceFieldAtom *a, const chemkit::md::ForceFieldAtom *b, const chemkit::md::ForceFieldAtom *c);
 
     bool setup(const OplsParameters *parameters);
     chemkit::Real energy() const;
@@ -72,7 +72,7 @@ public:
 class OplsTorsionCalculation : public OplsCalculation
 {
 public:
-    OplsTorsionCalculation(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b, const chemkit::ForceFieldAtom *c, const chemkit::ForceFieldAtom *d);
+    OplsTorsionCalculation(const chemkit::md::ForceFieldAtom *a, const chemkit::md::ForceFieldAtom *b, const chemkit::md::ForceFieldAtom *c, const chemkit::md::ForceFieldAtom *d);
 
     bool setup(const OplsParameters *parameters);
     chemkit::Real energy() const;
@@ -82,7 +82,7 @@ public:
 class OplsNonbondedCalculation : public OplsCalculation
 {
 public:
-    OplsNonbondedCalculation(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b);
+    OplsNonbondedCalculation(const chemkit::md::ForceFieldAtom *a, const chemkit::md::ForceFieldAtom *b);
 
     bool setup(const OplsParameters *parameters);
     chemkit::Real energy() const;

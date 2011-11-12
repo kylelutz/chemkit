@@ -567,8 +567,8 @@ bool MmffElectrostaticCalculation::setup(const MmffParameters *parameters)
 
 chemkit::Real MmffElectrostaticCalculation::energy() const
 {
-    const chemkit::ForceFieldAtom *a = atom(0);
-    const chemkit::ForceFieldAtom *b = atom(1);
+    const chemkit::md::ForceFieldAtom *a = atom(0);
+    const chemkit::md::ForceFieldAtom *b = atom(1);
 
     chemkit::Real qa = parameter(0);
     chemkit::Real qb = parameter(1);
@@ -584,8 +584,8 @@ chemkit::Real MmffElectrostaticCalculation::energy() const
 
 std::vector<chemkit::Vector3> MmffElectrostaticCalculation::gradient() const
 {
-    const chemkit::ForceFieldAtom *a = atom(0);
-    const chemkit::ForceFieldAtom *b = atom(1);
+    const chemkit::md::ForceFieldAtom *a = atom(0);
+    const chemkit::md::ForceFieldAtom *b = atom(1);
 
     chemkit::Real qa = parameter(0);
     chemkit::Real qb = parameter(1);

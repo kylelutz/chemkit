@@ -49,7 +49,7 @@ UffCalculation::UffCalculation(int type, int atomCount, int parameterCount)
 }
 
 // Returns the parameters for the given atom.
-const UffAtomParameters* UffCalculation::parameters(const chemkit::ForceFieldAtom *atom) const
+const UffAtomParameters* UffCalculation::parameters(const chemkit::md::ForceFieldAtom *atom) const
 {
     const UffForceField *forceField = static_cast<const UffForceField *>(this->forceField());
     const UffParameters *parameters = forceField->parameters();
@@ -60,7 +60,7 @@ const UffAtomParameters* UffCalculation::parameters(const chemkit::ForceFieldAto
 // Returns the bond order of the bond between atom's a and b. If both
 // atoms have a resonant type the bond order returned is 1.5.
 // Otherwise the integer value of the bond order is returned.
-chemkit::Real UffCalculation::bondOrder(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b) const
+chemkit::Real UffCalculation::bondOrder(const chemkit::md::ForceFieldAtom *a, const chemkit::md::ForceFieldAtom *b) const
 {
     const chemkit::Bond *bond = a->atom()->bondTo(b->atom());
 
@@ -85,7 +85,7 @@ chemkit::Real UffCalculation::bondLength(const UffAtomParameters *a, const UffAt
 }
 
 // === UffBondStrechCalculation ============================================ //
-UffBondStrechCalculation::UffBondStrechCalculation(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b)
+UffBondStrechCalculation::UffBondStrechCalculation(const chemkit::md::ForceFieldAtom *a, const chemkit::md::ForceFieldAtom *b)
     : UffCalculation(BondStrech, 2, 2)
 {
     setAtom(0, a);
@@ -119,8 +119,8 @@ bool UffBondStrechCalculation::setup()
 
 chemkit::Real UffBondStrechCalculation::energy() const
 {
-    const chemkit::ForceFieldAtom *a = atom(0);
-    const chemkit::ForceFieldAtom *b = atom(1);
+    const chemkit::md::ForceFieldAtom *a = atom(0);
+    const chemkit::md::ForceFieldAtom *b = atom(1);
 
     chemkit::Real kb = parameter(0);
     chemkit::Real r0 = parameter(1);
@@ -131,8 +131,8 @@ chemkit::Real UffBondStrechCalculation::energy() const
 
 std::vector<chemkit::Vector3> UffBondStrechCalculation::gradient() const
 {
-    const chemkit::ForceFieldAtom *a = atom(0);
-    const chemkit::ForceFieldAtom *b = atom(1);
+    const chemkit::md::ForceFieldAtom *a = atom(0);
+    const chemkit::md::ForceFieldAtom *b = atom(1);
 
     chemkit::Real kb = parameter(0);
     chemkit::Real r0 = parameter(1);
@@ -150,9 +150,9 @@ std::vector<chemkit::Vector3> UffBondStrechCalculation::gradient() const
 }
 
 // === UffAngleBendCalculation ============================================= //
-UffAngleBendCalculation::UffAngleBendCalculation(const chemkit::ForceFieldAtom *a,
-                                                 const chemkit::ForceFieldAtom *b,
-                                                 const chemkit::ForceFieldAtom *c)
+UffAngleBendCalculation::UffAngleBendCalculation(const chemkit::md::ForceFieldAtom *a,
+                                                 const chemkit::md::ForceFieldAtom *b,
+                                                 const chemkit::md::ForceFieldAtom *c)
     : UffCalculation(AngleBend, 3, 4)
 {
     setAtom(0, a);
@@ -205,9 +205,9 @@ bool UffAngleBendCalculation::setup()
 
 chemkit::Real UffAngleBendCalculation::energy() const
 {
-    const chemkit::ForceFieldAtom *a = atom(0);
-    const chemkit::ForceFieldAtom *b = atom(1);
-    const chemkit::ForceFieldAtom *c = atom(2);
+    const chemkit::md::ForceFieldAtom *a = atom(0);
+    const chemkit::md::ForceFieldAtom *b = atom(1);
+    const chemkit::md::ForceFieldAtom *c = atom(2);
 
     chemkit::Real ka = parameter(0);
     chemkit::Real c0 = parameter(1);
@@ -221,9 +221,9 @@ chemkit::Real UffAngleBendCalculation::energy() const
 
 std::vector<chemkit::Vector3> UffAngleBendCalculation::gradient() const
 {
-    const chemkit::ForceFieldAtom *a = atom(0);
-    const chemkit::ForceFieldAtom *b = atom(1);
-    const chemkit::ForceFieldAtom *c = atom(2);
+    const chemkit::md::ForceFieldAtom *a = atom(0);
+    const chemkit::md::ForceFieldAtom *b = atom(1);
+    const chemkit::md::ForceFieldAtom *c = atom(2);
 
     chemkit::Real ka = parameter(0);
     chemkit::Real c1 = parameter(2);
@@ -244,10 +244,10 @@ std::vector<chemkit::Vector3> UffAngleBendCalculation::gradient() const
 }
 
 // === UffTorsionCalculation =============================================== //
-UffTorsionCalculation::UffTorsionCalculation(const chemkit::ForceFieldAtom *a,
-                                             const chemkit::ForceFieldAtom *b,
-                                             const chemkit::ForceFieldAtom *c,
-                                             const chemkit::ForceFieldAtom *d)
+UffTorsionCalculation::UffTorsionCalculation(const chemkit::md::ForceFieldAtom *a,
+                                             const chemkit::md::ForceFieldAtom *b,
+                                             const chemkit::md::ForceFieldAtom *c,
+                                             const chemkit::md::ForceFieldAtom *d)
     : UffCalculation(Torsion, 4, 3)
 {
     setAtom(0, a);
@@ -260,8 +260,8 @@ bool UffTorsionCalculation::setup()
 {
     UffForceField *forceField = static_cast<UffForceField *>(this->forceField());
 
-    const chemkit::ForceFieldAtom *b = atom(1);
-    const chemkit::ForceFieldAtom *c = atom(2);
+    const chemkit::md::ForceFieldAtom *b = atom(1);
+    const chemkit::md::ForceFieldAtom *c = atom(2);
 
     if(b->type().length() < 3 || c->type().length() < 3){
         return false;
@@ -343,10 +343,10 @@ bool UffTorsionCalculation::setup()
 
 chemkit::Real UffTorsionCalculation::energy() const
 {
-    const chemkit::ForceFieldAtom *a = atom(0);
-    const chemkit::ForceFieldAtom *b = atom(1);
-    const chemkit::ForceFieldAtom *c = atom(2);
-    const chemkit::ForceFieldAtom *d = atom(3);
+    const chemkit::md::ForceFieldAtom *a = atom(0);
+    const chemkit::md::ForceFieldAtom *b = atom(1);
+    const chemkit::md::ForceFieldAtom *c = atom(2);
+    const chemkit::md::ForceFieldAtom *d = atom(3);
 
     chemkit::Real V = parameter(0);
     chemkit::Real n = parameter(1);
@@ -359,10 +359,10 @@ chemkit::Real UffTorsionCalculation::energy() const
 
 std::vector<chemkit::Vector3> UffTorsionCalculation::gradient() const
 {
-    const chemkit::ForceFieldAtom *a = atom(0);
-    const chemkit::ForceFieldAtom *b = atom(1);
-    const chemkit::ForceFieldAtom *c = atom(2);
-    const chemkit::ForceFieldAtom *d = atom(3);
+    const chemkit::md::ForceFieldAtom *a = atom(0);
+    const chemkit::md::ForceFieldAtom *b = atom(1);
+    const chemkit::md::ForceFieldAtom *c = atom(2);
+    const chemkit::md::ForceFieldAtom *d = atom(3);
 
     chemkit::Real V = parameter(0);
     chemkit::Real n = parameter(1);
@@ -384,10 +384,10 @@ std::vector<chemkit::Vector3> UffTorsionCalculation::gradient() const
 }
 
 // === UffInversionCalculation ============================================= //
-UffInversionCalculation::UffInversionCalculation(const chemkit::ForceFieldAtom *a,
-                                                 const chemkit::ForceFieldAtom *b,
-                                                 const chemkit::ForceFieldAtom *c,
-                                                 const chemkit::ForceFieldAtom *d)
+UffInversionCalculation::UffInversionCalculation(const chemkit::md::ForceFieldAtom *a,
+                                                 const chemkit::md::ForceFieldAtom *b,
+                                                 const chemkit::md::ForceFieldAtom *c,
+                                                 const chemkit::md::ForceFieldAtom *d)
     : UffCalculation(Inversion, 4, 4)
 {
     setAtom(0, a);
@@ -399,10 +399,10 @@ UffInversionCalculation::UffInversionCalculation(const chemkit::ForceFieldAtom *
 bool UffInversionCalculation::setup()
 {
     // b is the center atom
-    const chemkit::ForceFieldAtom *a = atom(0);
-    const chemkit::ForceFieldAtom *b = atom(1);
-    const chemkit::ForceFieldAtom *c = atom(2);
-    const chemkit::ForceFieldAtom *d = atom(3);
+    const chemkit::md::ForceFieldAtom *a = atom(0);
+    const chemkit::md::ForceFieldAtom *b = atom(1);
+    const chemkit::md::ForceFieldAtom *c = atom(2);
+    const chemkit::md::ForceFieldAtom *d = atom(3);
 
     chemkit::Real k = 0;
     chemkit::Real c0 = 0;
@@ -436,10 +436,10 @@ bool UffInversionCalculation::setup()
 
 chemkit::Real UffInversionCalculation::energy() const
 {
-    const chemkit::ForceFieldAtom *a = atom(0);
-    const chemkit::ForceFieldAtom *b = atom(1);
-    const chemkit::ForceFieldAtom *c = atom(2);
-    const chemkit::ForceFieldAtom *d = atom(3);
+    const chemkit::md::ForceFieldAtom *a = atom(0);
+    const chemkit::md::ForceFieldAtom *b = atom(1);
+    const chemkit::md::ForceFieldAtom *c = atom(2);
+    const chemkit::md::ForceFieldAtom *d = atom(3);
 
     chemkit::Real k = parameter(0);
     chemkit::Real c0 = parameter(1);
@@ -454,10 +454,10 @@ chemkit::Real UffInversionCalculation::energy() const
 
 std::vector<chemkit::Vector3> UffInversionCalculation::gradient() const
 {
-    const chemkit::ForceFieldAtom *a = atom(0);
-    const chemkit::ForceFieldAtom *b = atom(1);
-    const chemkit::ForceFieldAtom *c = atom(2);
-    const chemkit::ForceFieldAtom *d = atom(3);
+    const chemkit::md::ForceFieldAtom *a = atom(0);
+    const chemkit::md::ForceFieldAtom *b = atom(1);
+    const chemkit::md::ForceFieldAtom *c = atom(2);
+    const chemkit::md::ForceFieldAtom *d = atom(3);
 
     chemkit::Real k = parameter(0);
     chemkit::Real c1 = parameter(2);
@@ -480,8 +480,8 @@ std::vector<chemkit::Vector3> UffInversionCalculation::gradient() const
 }
 
 // === UffVanDerWaalsCalculation =========================================== //
-UffVanDerWaalsCalculation::UffVanDerWaalsCalculation(const chemkit::ForceFieldAtom *a,
-                                                     const chemkit::ForceFieldAtom *b)
+UffVanDerWaalsCalculation::UffVanDerWaalsCalculation(const chemkit::md::ForceFieldAtom *a,
+                                                     const chemkit::md::ForceFieldAtom *b)
     : UffCalculation(VanDerWaals, 2, 2)
 {
     setAtom(0, a);
@@ -490,8 +490,8 @@ UffVanDerWaalsCalculation::UffVanDerWaalsCalculation(const chemkit::ForceFieldAt
 
 bool UffVanDerWaalsCalculation::setup()
 {
-    const chemkit::ForceFieldAtom *a = atom(0);
-    const chemkit::ForceFieldAtom *b = atom(1);
+    const chemkit::md::ForceFieldAtom *a = atom(0);
+    const chemkit::md::ForceFieldAtom *b = atom(1);
 
     const UffAtomParameters *pa = parameters(a);
     const UffAtomParameters *pb = parameters(b);
@@ -514,8 +514,8 @@ bool UffVanDerWaalsCalculation::setup()
 
 chemkit::Real UffVanDerWaalsCalculation::energy() const
 {
-    const chemkit::ForceFieldAtom *a = atom(0);
-    const chemkit::ForceFieldAtom *b = atom(1);
+    const chemkit::md::ForceFieldAtom *a = atom(0);
+    const chemkit::md::ForceFieldAtom *b = atom(1);
 
     chemkit::Real d = parameter(0);
     chemkit::Real x = parameter(1);
@@ -526,8 +526,8 @@ chemkit::Real UffVanDerWaalsCalculation::energy() const
 
 std::vector<chemkit::Vector3> UffVanDerWaalsCalculation::gradient() const
 {
-    const chemkit::ForceFieldAtom *a = atom(0);
-    const chemkit::ForceFieldAtom *b = atom(1);
+    const chemkit::md::ForceFieldAtom *a = atom(0);
+    const chemkit::md::ForceFieldAtom *b = atom(1);
 
     chemkit::Real d = parameter(0);
     chemkit::Real x = parameter(1);
@@ -545,8 +545,8 @@ std::vector<chemkit::Vector3> UffVanDerWaalsCalculation::gradient() const
 }
 
 // === UffElectrostaticCalculation ========================================= //
-UffElectrostaticCalculation::UffElectrostaticCalculation(const chemkit::ForceFieldAtom *a,
-                                                         const chemkit::ForceFieldAtom *b)
+UffElectrostaticCalculation::UffElectrostaticCalculation(const chemkit::md::ForceFieldAtom *a,
+                                                         const chemkit::md::ForceFieldAtom *b)
     : UffCalculation(Electrostatic, 2, 2)
 {
     setAtom(0, a);
@@ -560,8 +560,8 @@ bool UffElectrostaticCalculation::setup()
 
 chemkit::Real UffElectrostaticCalculation::energy() const
 {
-    const chemkit::ForceFieldAtom *a = atom(0);
-    const chemkit::ForceFieldAtom *b = atom(1);
+    const chemkit::md::ForceFieldAtom *a = atom(0);
+    const chemkit::md::ForceFieldAtom *b = atom(1);
 
     chemkit::Real qa = parameter(0);
     chemkit::Real qb = parameter(1);

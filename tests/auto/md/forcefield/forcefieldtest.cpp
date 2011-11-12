@@ -47,23 +47,23 @@ void ForceFieldTest::initTestCase()
 {
     m_plugin = new MockForceFieldPlugin;
 
-    std::vector<std::string> forceFields = chemkit::ForceField::forceFields();
+    std::vector<std::string> forceFields = chemkit::md::ForceField::forceFields();
     QVERIFY(std::find(forceFields.begin(), forceFields.end(), "mock") != forceFields.end());
 }
 
 void ForceFieldTest::create()
 {
-    chemkit::ForceField *forceField = chemkit::ForceField::create("mock");
+    chemkit::md::ForceField *forceField = chemkit::md::ForceField::create("mock");
     QVERIFY(forceField != 0);
     delete forceField;
 
-    forceField = chemkit::ForceField::create("invalid_name");
+    forceField = chemkit::md::ForceField::create("invalid_name");
     QVERIFY(forceField == 0);
 }
 
 void ForceFieldTest::name()
 {
-    chemkit::ForceField *forceField = chemkit::ForceField::create("mock");
+    chemkit::md::ForceField *forceField = chemkit::md::ForceField::create("mock");
     QCOMPARE(forceField->name(), std::string("mock"));
     delete forceField;
 }
@@ -72,7 +72,7 @@ void ForceFieldTest::cleanupTestCase()
 {
     delete m_plugin;
 
-    std::vector<std::string> forceFields = chemkit::ForceField::forceFields();
+    std::vector<std::string> forceFields = chemkit::md::ForceField::forceFields();
     QVERIFY(std::find(forceFields.begin(), forceFields.end(), "mock") == forceFields.end());
 }
 

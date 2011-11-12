@@ -38,7 +38,7 @@
 // === MockForceField ====================================================== //
 // --- Construction and Destruction ---------------------------------------- //
 MockForceField::MockForceField()
-    : chemkit::ForceField("mock")
+    : chemkit::md::ForceField("mock")
 {
 }
 
@@ -50,15 +50,15 @@ MockForceField::~MockForceField()
 MockForceFieldPlugin::MockForceFieldPlugin()
     : chemkit::Plugin("mock")
 {
-    registerPluginClass<chemkit::ForceField>("mock", createMockForceField);
+    registerPluginClass<chemkit::md::ForceField>("mock", createMockForceField);
 }
 
 MockForceFieldPlugin::~MockForceFieldPlugin()
 {
-    unregisterPluginClass<chemkit::ForceField>("mock");
+    unregisterPluginClass<chemkit::md::ForceField>("mock");
 }
 
-chemkit::ForceField* MockForceFieldPlugin::createMockForceField()
+chemkit::md::ForceField* MockForceFieldPlugin::createMockForceField()
 {
     return new MockForceField;
 }

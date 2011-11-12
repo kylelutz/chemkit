@@ -46,7 +46,7 @@ void UridineMinimizationBenchmark::benchmark()
     chemkit::Molecule *molecule = chemkit::io::MoleculeFile::quickRead(dataPath + "uridine.mol2");
     QVERIFY(molecule != 0);
 
-    chemkit::ForceField *forceField = chemkit::ForceField::create("uff");
+    chemkit::md::ForceField *forceField = chemkit::md::ForceField::create("uff");
     QVERIFY(forceField != 0);
 
     forceField->addMolecule(molecule);

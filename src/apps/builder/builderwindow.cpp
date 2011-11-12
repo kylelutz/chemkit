@@ -435,8 +435,8 @@ void BuilderWindow::minimizerStateChanged(int state)
 
         m_editor->beginEdit();
         // update atom positions
-        chemkit::ForceField *forceField = m_energyMinimizer->forceField();
-        foreach(chemkit::ForceFieldAtom *forceFieldAtom, forceField->atoms()){
+        chemkit::md::ForceField *forceField = m_energyMinimizer->forceField();
+        foreach(chemkit::md::ForceFieldAtom *forceFieldAtom, forceField->atoms()){
             m_editor->setAtomPosition(const_cast<chemkit::Atom *>(forceFieldAtom->atom()), forceFieldAtom->position());
         }
         m_editor->endEdit();

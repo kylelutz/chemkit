@@ -52,11 +52,11 @@
 
 // --- Construction and Destruction ---------------------------------------- //
 UffForceField::UffForceField()
-    : chemkit::ForceField("uff")
+    : chemkit::md::ForceField("uff")
 {
     m_parameters = new UffParameters;
 
-    setFlags(chemkit::ForceField::AnalyticalGradient);
+    setFlags(chemkit::md::ForceField::AnalyticalGradient);
 }
 
 UffForceField::~UffForceField()
@@ -74,28 +74,28 @@ const UffParameters* UffForceField::parameters() const
 bool UffForceField::setup()
 {
     foreach(const chemkit::Molecule *molecule, molecules()){
-        std::map<const chemkit::Atom *, chemkit::ForceFieldAtom *> atoms;
+        std::map<const chemkit::Atom *, chemkit::md::ForceFieldAtom *> atoms;
 
         UffAtomTyper typer(molecule);
 
         foreach(const chemkit::Atom *atom, molecule->atoms()){
-            chemkit::ForceFieldAtom *forceFieldAtom = new chemkit::ForceFieldAtom(this, atom);
+            chemkit::md::ForceFieldAtom *forceFieldAtom = new chemkit::md::ForceFieldAtom(this, atom);
             atoms[atom] = forceFieldAtom;
             addAtom(forceFieldAtom);
             forceFieldAtom->setType(typer.typeString(atom).c_str());
         }
 
-        chemkit::ForceFieldInteractions interactions(molecule, this);
+        chemkit::md::ForceFieldInteractions interactions(molecule, this);
 
         // bond strech
-        std::pair<const chemkit::ForceFieldAtom *, const chemkit::ForceFieldAtom *> bondedPair;
+        std::pair<const chemkit::md::ForceFieldAtom *, const chemkit::md::ForceFieldAtom *> bondedPair;
         foreach(bondedPair, interactions.bondedPairs()){
             addCalculation(new UffBondStrechCalculation(bondedPair.first,
                                                         bondedPair.second));
         }
 
         // angle bend
-        std::vector<const chemkit::ForceFieldAtom *> angleGroup;
+        std::vector<const chemkit::md::ForceFieldAtom *> angleGroup;
         foreach(angleGroup, interactions.angleGroups()){
             addCalculation(new UffAngleBendCalculation(angleGroup[0],
                                                        angleGroup[1],
@@ -103,7 +103,7 @@ bool UffForceField::setup()
         }
 
         // torsion
-        std::vector<const chemkit::ForceFieldAtom *> torsionGroup;
+        std::vector<const chemkit::md::ForceFieldAtom *> torsionGroup;
         foreach(torsionGroup, interactions.torsionGroups()){
             addCalculation(new UffTorsionCalculation(torsionGroup[0],
                                                      torsionGroup[1],
@@ -137,7 +137,7 @@ bool UffForceField::setup()
         }
 
         // van der waals
-        std::pair<const chemkit::ForceFieldAtom *, const chemkit::ForceFieldAtom *> nonbondedPair;
+        std::pair<const chemkit::md::ForceFieldAtom *, const chemkit::md::ForceFieldAtom *> nonbondedPair;
         foreach(nonbondedPair, interactions.nonbondedPairs()){
             addCalculation(new UffVanDerWaalsCalculation(nonbondedPair.first,
                                                          nonbondedPair.second));
@@ -146,7 +146,7 @@ bool UffForceField::setup()
 
     bool ok = true;
 
-    foreach(chemkit::ForceFieldCalculation *calculation, calculations()){
+    foreach(chemkit::md::ForceFieldCalculation *calculation, calculations()){
         bool setup = static_cast<UffCalculation *>(calculation)->setup();
 
         if(!setup){
@@ -159,7 +159,7 @@ bool UffForceField::setup()
     return ok;
 }
 
-bool UffForceField::isGroupSix(const chemkit::ForceFieldAtom *atom) const
+bool UffForceField::isGroupSix(const chemkit::md::ForceFieldAtom *atom) const
 {
     switch(atom->atom()->atomicNumber()){
         case 8:

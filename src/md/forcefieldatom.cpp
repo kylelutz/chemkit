@@ -45,6 +45,7 @@
 #include "forcefieldcalculation.h"
 
 namespace chemkit {
+namespace md {
 
 // === ForceFieldAtomPrivate =============================================== //
 class ForceFieldAtomPrivate
@@ -208,4 +209,5 @@ void ForceFieldAtom::moveBy(Real dx, Real dy, Real dz)
     d->position += Vector3(dx, dy, dz);
 }
 
+} // end md namespace
 } // end chemkit namespace

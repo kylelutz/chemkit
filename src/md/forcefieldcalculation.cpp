@@ -40,6 +40,7 @@
 #include "forcefieldatom.h"
 
 namespace chemkit {
+namespace md {
 
 // === ForceFieldCalculationPrivate ======================================== //
 class ForceFieldCalculationPrivate
@@ -232,4 +233,5 @@ void ForceFieldCalculation::setSetup(bool setup)
     d->setup = setup;
 }
 
+} // end md namespace
 } // end chemkit namespace

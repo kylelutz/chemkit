@@ -47,8 +47,8 @@ AmberCalculation::AmberCalculation(int type, int atomCount, int parameterCount)
 }
 
 // === AmberBondCalculation ================================================ //
-AmberBondCalculation::AmberBondCalculation(const chemkit::ForceFieldAtom *a,
-                                           const chemkit::ForceFieldAtom *b)
+AmberBondCalculation::AmberBondCalculation(const chemkit::md::ForceFieldAtom *a,
+                                           const chemkit::md::ForceFieldAtom *b)
     : AmberCalculation(BondStrech, 2, 2)
 {
     setAtom(0, a);
@@ -57,8 +57,8 @@ AmberBondCalculation::AmberBondCalculation(const chemkit::ForceFieldAtom *a,
 
 bool AmberBondCalculation::setup(const AmberParameters *parameters)
 {
-    const chemkit::ForceFieldAtom *a = atom(0);
-    const chemkit::ForceFieldAtom *b = atom(1);
+    const chemkit::md::ForceFieldAtom *a = atom(0);
+    const chemkit::md::ForceFieldAtom *b = atom(1);
 
     const AmberBondParameters *bondParameters = parameters->bondParameters(a, b);
     if(!bondParameters){
@@ -73,8 +73,8 @@ bool AmberBondCalculation::setup(const AmberParameters *parameters)
 
 chemkit::Real AmberBondCalculation::energy() const
 {
-    const chemkit::ForceFieldAtom *a = atom(0);
-    const chemkit::ForceFieldAtom *b = atom(1);
+    const chemkit::md::ForceFieldAtom *a = atom(0);
+    const chemkit::md::ForceFieldAtom *b = atom(1);
 
     chemkit::Real kb = parameter(0);
     chemkit::Real r0 = parameter(1);
@@ -86,8 +86,8 @@ chemkit::Real AmberBondCalculation::energy() const
 
 std::vector<chemkit::Vector3> AmberBondCalculation::gradient() const
 {
-    const chemkit::ForceFieldAtom *a = atom(0);
-    const chemkit::ForceFieldAtom *b = atom(1);
+    const chemkit::md::ForceFieldAtom *a = atom(0);
+    const chemkit::md::ForceFieldAtom *b = atom(1);
 
     chemkit::Real kb = parameter(0);
     chemkit::Real r0 = parameter(1);
@@ -105,9 +105,9 @@ std::vector<chemkit::Vector3> AmberBondCalculation::gradient() const
 }
 
 // === AmberAngleCalculation =============================================== //
-AmberAngleCalculation::AmberAngleCalculation(const chemkit::ForceFieldAtom *a,
-                                             const chemkit::ForceFieldAtom *b,
-                                             const chemkit::ForceFieldAtom *c)
+AmberAngleCalculation::AmberAngleCalculation(const chemkit::md::ForceFieldAtom *a,
+                                             const chemkit::md::ForceFieldAtom *b,
+                                             const chemkit::md::ForceFieldAtom *c)
     : AmberCalculation(AngleBend, 3, 2)
 {
     setAtom(0, a);
@@ -117,9 +117,9 @@ AmberAngleCalculation::AmberAngleCalculation(const chemkit::ForceFieldAtom *a,
 
 bool AmberAngleCalculation::setup(const AmberParameters *parameters)
 {
-    const chemkit::ForceFieldAtom *a = atom(0);
-    const chemkit::ForceFieldAtom *b = atom(1);
-    const chemkit::ForceFieldAtom *c = atom(2);
+    const chemkit::md::ForceFieldAtom *a = atom(0);
+    const chemkit::md::ForceFieldAtom *b = atom(1);
+    const chemkit::md::ForceFieldAtom *c = atom(2);
 
     const AmberAngleParameters *angleParameters = parameters->angleParameters(a, b, c);
     if(!angleParameters){
@@ -134,9 +134,9 @@ bool AmberAngleCalculation::setup(const AmberParameters *parameters)
 
 chemkit::Real AmberAngleCalculation::energy() const
 {
-    const chemkit::ForceFieldAtom *a = atom(0);
-    const chemkit::ForceFieldAtom *b = atom(1);
-    const chemkit::ForceFieldAtom *c = atom(2);
+    const chemkit::md::ForceFieldAtom *a = atom(0);
+    const chemkit::md::ForceFieldAtom *b = atom(1);
+    const chemkit::md::ForceFieldAtom *c = atom(2);
 
     chemkit::Real ka = parameter(0);
     chemkit::Real theta0 = parameter(1);
@@ -148,9 +148,9 @@ chemkit::Real AmberAngleCalculation::energy() const
 
 std::vector<chemkit::Vector3> AmberAngleCalculation::gradient() const
 {
-    const chemkit::ForceFieldAtom *a = atom(0);
-    const chemkit::ForceFieldAtom *b = atom(1);
-    const chemkit::ForceFieldAtom *c = atom(2);
+    const chemkit::md::ForceFieldAtom *a = atom(0);
+    const chemkit::md::ForceFieldAtom *b = atom(1);
+    const chemkit::md::ForceFieldAtom *c = atom(2);
 
     chemkit::Real ka = parameter(0);
     chemkit::Real theta0 = parameter(1);
@@ -169,10 +169,10 @@ std::vector<chemkit::Vector3> AmberAngleCalculation::gradient() const
 }
 
 // === AmberTorsionCalculation ============================================= //
-AmberTorsionCalculation::AmberTorsionCalculation(const chemkit::ForceFieldAtom *a,
-                                                 const chemkit::ForceFieldAtom *b,
-                                                 const chemkit::ForceFieldAtom *c,
-                                                 const chemkit::ForceFieldAtom *d)
+AmberTorsionCalculation::AmberTorsionCalculation(const chemkit::md::ForceFieldAtom *a,
+                                                 const chemkit::md::ForceFieldAtom *b,
+                                                 const chemkit::md::ForceFieldAtom *c,
+                                                 const chemkit::md::ForceFieldAtom *d)
     : AmberCalculation(Torsion, 4, 8)
 {
     setAtom(0, a);
@@ -183,10 +183,10 @@ AmberTorsionCalculation::AmberTorsionCalculation(const chemkit::ForceFieldAtom *
 
 bool AmberTorsionCalculation::setup(const AmberParameters *parameters)
 {
-    const chemkit::ForceFieldAtom *a = atom(0);
-    const chemkit::ForceFieldAtom *b = atom(1);
-    const chemkit::ForceFieldAtom *c = atom(2);
-    const chemkit::ForceFieldAtom *d = atom(3);
+    const chemkit::md::ForceFieldAtom *a = atom(0);
+    const chemkit::md::ForceFieldAtom *b = atom(1);
+    const chemkit::md::ForceFieldAtom *c = atom(2);
+    const chemkit::md::ForceFieldAtom *d = atom(3);
 
     const AmberTorsionParameters *torsionParameters = parameters->torsionParameters(a, b, c, d);
     if(!torsionParameters){
@@ -207,10 +207,10 @@ bool AmberTorsionCalculation::setup(const AmberParameters *parameters)
 
 chemkit::Real AmberTorsionCalculation::energy() const
 {
-    const chemkit::ForceFieldAtom *a = atom(0);
-    const chemkit::ForceFieldAtom *b = atom(1);
-    const chemkit::ForceFieldAtom *c = atom(2);
-    const chemkit::ForceFieldAtom *d = atom(3);
+    const chemkit::md::ForceFieldAtom *a = atom(0);
+    const chemkit::md::ForceFieldAtom *b = atom(1);
+    const chemkit::md::ForceFieldAtom *c = atom(2);
+    const chemkit::md::ForceFieldAtom *d = atom(3);
 
     chemkit::Real V1 = parameter(0);
     chemkit::Real V2 = parameter(1);
@@ -234,10 +234,10 @@ chemkit::Real AmberTorsionCalculation::energy() const
 
 std::vector<chemkit::Vector3> AmberTorsionCalculation::gradient() const
 {
-    const chemkit::ForceFieldAtom *a = atom(0);
-    const chemkit::ForceFieldAtom *b = atom(1);
-    const chemkit::ForceFieldAtom *c = atom(2);
-    const chemkit::ForceFieldAtom *d = atom(3);
+    const chemkit::md::ForceFieldAtom *a = atom(0);
+    const chemkit::md::ForceFieldAtom *b = atom(1);
+    const chemkit::md::ForceFieldAtom *c = atom(2);
+    const chemkit::md::ForceFieldAtom *d = atom(3);
 
     chemkit::Real V1 = parameter(0);
     chemkit::Real V2 = parameter(1);
@@ -269,8 +269,8 @@ std::vector<chemkit::Vector3> AmberTorsionCalculation::gradient() const
 }
 
 // === AmberNonbondedCalculation =========================================== //
-AmberNonbondedCalculation::AmberNonbondedCalculation(const chemkit::ForceFieldAtom *a,
-                                                     const chemkit::ForceFieldAtom *b)
+AmberNonbondedCalculation::AmberNonbondedCalculation(const chemkit::md::ForceFieldAtom *a,
+                                                     const chemkit::md::ForceFieldAtom *b)
     : AmberCalculation(VanDerWaals | Electrostatic, 2, 2)
 {
     setAtom(0, a);
@@ -279,8 +279,8 @@ AmberNonbondedCalculation::AmberNonbondedCalculation(const chemkit::ForceFieldAt
 
 bool AmberNonbondedCalculation::setup(const AmberParameters *parameters)
 {
-    const chemkit::ForceFieldAtom *a = atom(0);
-    const chemkit::ForceFieldAtom *b = atom(1);
+    const chemkit::md::ForceFieldAtom *a = atom(0);
+    const chemkit::md::ForceFieldAtom *b = atom(1);
 
     const struct AmberNonbondedParameters *parametersA = parameters->nonbondedParameters(a);
     const struct AmberNonbondedParameters *parametersB = parameters->nonbondedParameters(b);
@@ -299,8 +299,8 @@ bool AmberNonbondedCalculation::setup(const AmberParameters *parameters)
 
 chemkit::Real AmberNonbondedCalculation::energy() const
 {
-    const chemkit::ForceFieldAtom *a = atom(0);
-    const chemkit::ForceFieldAtom *b = atom(1);
+    const chemkit::md::ForceFieldAtom *a = atom(0);
+    const chemkit::md::ForceFieldAtom *b = atom(1);
 
     chemkit::Real epsilon = parameter(0);
     chemkit::Real sigma = parameter(1);
@@ -315,8 +315,8 @@ chemkit::Real AmberNonbondedCalculation::energy() const
 
 std::vector<chemkit::Vector3> AmberNonbondedCalculation::gradient() const
 {
-    const chemkit::ForceFieldAtom *a = atom(0);
-    const chemkit::ForceFieldAtom *b = atom(1);
+    const chemkit::md::ForceFieldAtom *a = atom(0);
+    const chemkit::md::ForceFieldAtom *b = atom(1);
 
     chemkit::Real epsilon = parameter(0);
     chemkit::Real sigma = parameter(1);

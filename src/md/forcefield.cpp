@@ -46,6 +46,7 @@
 #include "forcefieldcalculation.h"
 
 namespace chemkit {
+namespace md {
 
 // === ForceFieldPrivate =================================================== //
 class ForceFieldPrivate
@@ -622,4 +623,5 @@ std::vector<std::string> ForceField::forceFields()
     return PluginManager::instance()->pluginClassNames<ForceField>();
 }
 
+} // end md namespace
 } // end chemkit namespace

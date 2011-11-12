@@ -49,11 +49,11 @@
 
 // --- Construction and Destruction ---------------------------------------- //
 AmberForceField::AmberForceField()
-    : chemkit::ForceField("amber")
+    : chemkit::md::ForceField("amber")
 {
     m_parameters = new AmberParameters;
 
-    setFlags(chemkit::ForceField::AnalyticalGradient);
+    setFlags(chemkit::md::ForceField::AnalyticalGradient);
 }
 
 AmberForceField::~AmberForceField()
@@ -67,22 +67,22 @@ bool AmberForceField::setup()
     foreach(const chemkit::Molecule *molecule, molecules()){
         // add atoms
         foreach(const chemkit::Atom *atom, molecule->atoms()){
-            chemkit::ForceFieldAtom *forceFieldAtom = new chemkit::ForceFieldAtom(this, atom);
+            chemkit::md::ForceFieldAtom *forceFieldAtom = new chemkit::md::ForceFieldAtom(this, atom);
             forceFieldAtom->setType(atomType(atom));
             addAtom(forceFieldAtom);
         }
 
-        chemkit::ForceFieldInteractions interactions(molecule, this);
+        chemkit::md::ForceFieldInteractions interactions(molecule, this);
 
         // add bond calculations
-        std::pair<const chemkit::ForceFieldAtom *, const chemkit::ForceFieldAtom *> bondedPair;
+        std::pair<const chemkit::md::ForceFieldAtom *, const chemkit::md::ForceFieldAtom *> bondedPair;
         foreach(bondedPair, interactions.bondedPairs()){
             addCalculation(new AmberBondCalculation(bondedPair.first,
                                                     bondedPair.second));
         }
 
         // add angle calculations
-        std::vector<const chemkit::ForceFieldAtom *> angleGroup;
+        std::vector<const chemkit::md::ForceFieldAtom *> angleGroup;
         foreach(angleGroup, interactions.angleGroups()){
             addCalculation(new AmberAngleCalculation(angleGroup[0],
                                                      angleGroup[1],
@@ -90,7 +90,7 @@ bool AmberForceField::setup()
         }
 
         // add torsion calculations
-        std::vector<const chemkit::ForceFieldAtom *> torsionGroup;
+        std::vector<const chemkit::md::ForceFieldAtom *> torsionGroup;
         foreach(torsionGroup, interactions.torsionGroups()){
             addCalculation(new AmberTorsionCalculation(torsionGroup[0],
                                                        torsionGroup[1],
@@ -99,7 +99,7 @@ bool AmberForceField::setup()
         }
 
         // add nonbonded calculations
-        std::pair<const chemkit::ForceFieldAtom *, const chemkit::ForceFieldAtom *> nonbondedPair;
+        std::pair<const chemkit::md::ForceFieldAtom *, const chemkit::md::ForceFieldAtom *> nonbondedPair;
         foreach(nonbondedPair, interactions.nonbondedPairs()){
             addCalculation(new AmberNonbondedCalculation(nonbondedPair.first,
                                                          nonbondedPair.second));
@@ -108,7 +108,7 @@ bool AmberForceField::setup()
 
     bool ok = true;
 
-    foreach(chemkit::ForceFieldCalculation *calculation, calculations()){
+    foreach(chemkit::md::ForceFieldCalculation *calculation, calculations()){
         bool setup = static_cast<AmberCalculation *>(calculation)->setup(m_parameters);
 
         if(!setup){

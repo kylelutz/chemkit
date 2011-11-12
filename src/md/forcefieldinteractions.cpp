@@ -43,6 +43,7 @@
 #include "forcefield.h"
 
 namespace chemkit {
+namespace md {
 
 // === ForceFieldInteractionsPrivate ======================================= //
 class ForceFieldInteractionsPrivate
@@ -201,4 +202,5 @@ bool ForceFieldInteractions::atomsWithinTwoBonds(const Atom *a, const Atom *b)
     return false;
 }
 
+} // end md namespace
 } // end chemkit namespace

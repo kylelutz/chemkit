@@ -46,7 +46,7 @@
 class MmffAtom;
 class MmffParameters;
 
-class MmffForceField : public chemkit::ForceField
+class MmffForceField : public chemkit::md::ForceField
 {
 public:
     // construction and destruction

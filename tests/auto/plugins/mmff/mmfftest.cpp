@@ -55,7 +55,7 @@ void MmffTest::initTestCase()
     std::vector<std::string> predictors = chemkit::PartialChargePredictor::predictors();
     QVERIFY(std::find(predictors.begin(), predictors.end(), "mmff") != predictors.end());
 
-    std::vector<std::string> forceFields = chemkit::ForceField::forceFields();
+    std::vector<std::string> forceFields = chemkit::md::ForceField::forceFields();
     QVERIFY(std::find(forceFields.begin(), forceFields.end(), "mmff") != forceFields.end());
 }
 
@@ -86,7 +86,7 @@ void MmffTest::validate()
     QCOMPARE(expectedMolecule.tagName(), QString("molecule"));
 
     // validate molecules
-    QList<chemkit::ForceField *> failedMolecules;
+    QList<chemkit::md::ForceField *> failedMolecules;
     foreach(const chemkit::Molecule *molecule, dataFile.molecules()){
         bool failed = false;
 
@@ -94,7 +94,7 @@ void MmffTest::validate()
         QCOMPARE(expectedMolecule.attribute("name").toStdString(), molecule->name());
 
         // create mmff force field
-        chemkit::ForceField *forceField = chemkit::ForceField::create("mmff");
+        chemkit::md::ForceField *forceField = chemkit::md::ForceField::create("mmff");
         QVERIFY(forceField);
 
         // add molecule and setup force field
@@ -113,7 +113,7 @@ void MmffTest::validate()
 
         QDomElement expectedAtom = expectedMolecule.firstChildElement();
         QCOMPARE(expectedAtom.tagName(), QString("atom"));
-        foreach(const chemkit::ForceFieldAtom *forceFieldAtom, forceField->atoms()){
+        foreach(const chemkit::md::ForceFieldAtom *forceFieldAtom, forceField->atoms()){
             std::string type = forceFieldAtom->type();
             std::string expectedType = expectedAtom.attribute("type").toStdString();
             if(type != expectedType){
@@ -156,7 +156,7 @@ void MmffTest::validate()
 
         actualFile.write("<molecules>\n");
 
-        foreach(chemkit::ForceField *forceField, failedMolecules){
+        foreach(chemkit::md::ForceField *forceField, failedMolecules){
             const chemkit::Molecule *molecule = forceField->molecules()[0];
 
             actualFile.write(QString("  <molecule name=\"%1\" energy=\"%2\" atomCount=\"%3\">\n")
@@ -165,7 +165,7 @@ void MmffTest::validate()
                                 .arg(forceField->atomCount())
                                 .toAscii());
 
-            foreach(const chemkit::ForceFieldAtom *forceFieldAtom, forceField->atoms()){
+            foreach(const chemkit::md::ForceFieldAtom *forceFieldAtom, forceField->atoms()){
                 actualFile.write(QString("    <atom type=\"%1\" charge=\"%2\"/>\n")
                                     .arg(forceFieldAtom->type().c_str())
                                     .arg(forceFieldAtom->charge())

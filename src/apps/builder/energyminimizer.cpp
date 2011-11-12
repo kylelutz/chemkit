@@ -86,7 +86,7 @@ void EnergyMinimizer::setForceField(const QString &name)
     m_moleculeChanged = true;
 }
 
-chemkit::ForceField* EnergyMinimizer::forceField() const
+chemkit::md::ForceField* EnergyMinimizer::forceField() const
 {
     return m_forceField;
 }
@@ -129,7 +129,7 @@ void EnergyMinimizer::start()
     if(m_moleculeChanged){
         delete m_forceField;
 
-        m_forceField = chemkit::ForceField::create(m_forceFieldName.toStdString());
+        m_forceField = chemkit::md::ForceField::create(m_forceFieldName.toStdString());
         if(!m_forceField){
             setState(SetupFailed);
             return;
@@ -148,7 +148,7 @@ void EnergyMinimizer::start()
         m_moleculeChanged = false;
     }
 
-    QFuture<bool> future = QtConcurrent::run(m_forceField, &chemkit::ForceField::minimizationStep, 0.1);
+    QFuture<bool> future = QtConcurrent::run(m_forceField, &chemkit::md::ForceField::minimizationStep, 0.1);
     m_minimizationWatcher.setFuture(future);
 
     setState(Running);

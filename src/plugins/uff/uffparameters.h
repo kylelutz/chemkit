@@ -61,7 +61,7 @@ public:
     ~UffParameters();
 
     // parameters
-    const UffAtomParameters* parameters(const chemkit::ForceFieldAtom *atom) const;
+    const UffAtomParameters* parameters(const chemkit::md::ForceFieldAtom *atom) const;
 };
 
 #endif // UFFPARAMETERS_H
