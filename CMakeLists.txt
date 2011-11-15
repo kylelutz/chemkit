@@ -7,7 +7,13 @@ set(chemkit_VERSION_MINOR 0)
 
 set(CMAKE_MODULE_PATH ${chemkit_SOURCE_DIR}/cmake)
 
-set(CMAKE_BUILD_TYPE Release)
+# add option for CMAKE_BUILD_TYPE
+if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
+  set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the type of build." FORCE)
+  # Set the possible values of build type for cmake-gui
+  set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug" "Release"
+    "MinSizeRel" "RelWithDebInfo")
+endif()
 
 # uninstall target
 configure_file(
