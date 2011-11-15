@@ -476,7 +476,10 @@ void PdbFile::writePolymerFile(chemkit::io::PolymerFile *file)
                 if(pdbConformation->chain() == pdbChain->id()){
                     for(int residue = pdbConformation->firstResidue(); residue < pdbConformation->lastResidue(); residue++){
                         chemkit::AminoAcid *aminoAcid = static_cast<chemkit::AminoAcid *>(chain->residue(residue));
-                        aminoAcid->setConformation(pdbConformation->type());
+
+                        if(aminoAcid){
+                            aminoAcid->setConformation(pdbConformation->type());
+                        }
                     }
                 }
             }
