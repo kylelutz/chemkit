@@ -5,20 +5,20 @@ macro(add_chemkit_plugin plugin_name)
   add_library(${plugin_name} SHARED ${ARGN})
 
   # add install target
-  install(TARGETS ${plugin_name} DESTINATION share/chemkit/plugins/)
+  install(TARGETS ${plugin_name} DESTINATION lib/chemkit/plugins/)
 
   # copy plugin into build directory
   get_target_property(plugin_location ${plugin_name} LOCATION)
   get_filename_component(plugin_filename ${plugin_location} NAME)
-  add_custom_command(TARGET ${plugin_name} POST_BUILD COMMAND ${CMAKE_COMMAND} ARGS -E copy ${plugin_location} ${CMAKE_BINARY_DIR}/share/chemkit/plugins/${plugin_filename})
+  add_custom_command(TARGET ${plugin_name} POST_BUILD COMMAND ${CMAKE_COMMAND} ARGS -E copy ${plugin_location} ${CMAKE_BINARY_DIR}/lib/chemkit/plugins/${plugin_filename})
 
   # plugin data
   if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/data)
     # copy plugin data into build directory
-    file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/data/ DESTINATION ${CMAKE_BINARY_DIR}/share/chemkit/plugins/data/${plugin_name}/)
+    file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/data/ DESTINATION ${CMAKE_BINARY_DIR}/lib/chemkit/plugins/data/${plugin_name}/)
     
     # install plugin data directory
-    install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/data/ DESTINATION share/chemkit/plugins/data/${plugin_name})
+    install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/data/ DESTINATION lib/chemkit/plugins/data/${plugin_name})
   endif()
 endmacro(add_chemkit_plugin)
 

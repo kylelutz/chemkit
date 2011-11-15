@@ -177,7 +177,7 @@ void PluginManager::loadDefaultPlugins()
 
     // add default plugin directory
 #if defined(CHEMKIT_OS_UNIX)
-    directories.push_back(CHEMKIT_INSTALL_PREFIX "/share/chemkit/plugins/");
+    directories.push_back(CHEMKIT_INSTALL_PREFIX "/lib/chemkit/plugins/");
 #endif
 
     // add directory from the CHEMKIT_PLUGIN_PATH environment variable

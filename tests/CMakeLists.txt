@@ -4,7 +4,7 @@ endif()
 
 macro(add_chemkit_test test_name test_executable)
   add_test(${test_name} ${test_executable})
-  set_tests_properties(${test_name} PROPERTIES ENVIRONMENT "CHEMKIT_PLUGIN_PATH=${CMAKE_BINARY_DIR}/share/chemkit/plugins/")
+  set_tests_properties(${test_name} PROPERTIES ENVIRONMENT "CHEMKIT_PLUGIN_PATH=${CMAKE_BINARY_DIR}/lib/chemkit/plugins/")
 endmacro(add_chemkit_test)
 
 add_subdirectory(auto)
