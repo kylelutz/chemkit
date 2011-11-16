@@ -1,4 +1,4 @@
 qt4_wrap_cpp(MOC_SOURCES internalcoordinatestest.h)
 add_executable(internalcoordinatestest internalcoordinatestest.cpp ${MOC_SOURCES})
 target_link_libraries(internalcoordinatestest chemkit ${QT_LIBRARIES})
-add_chemkit_test(internalcoordinates internalcoordinatestest)
+add_chemkit_test(chemkit.InternalCoordinates internalcoordinatestest)

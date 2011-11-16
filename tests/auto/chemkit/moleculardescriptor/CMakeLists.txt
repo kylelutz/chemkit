@@ -1,4 +1,4 @@
 qt4_wrap_cpp(MOC_SOURCES moleculardescriptortest.h)
 add_executable(moleculardescriptortest moleculardescriptortest.cpp mockdescriptor.cpp ${MOC_SOURCES})
 target_link_libraries(moleculardescriptortest chemkit ${QT_LIBRARIES})
-add_chemkit_test(moleculardescriptor moleculardescriptortest)
+add_chemkit_test(chemkit.MolecularDescriptor moleculardescriptortest)
