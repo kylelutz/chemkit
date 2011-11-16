@@ -100,7 +100,7 @@ void Vector3Test::normalize()
     QCOMPARE(qRound(vector.norm()), 1);
     QCOMPARE(qRound(vector.x()), 1);
 
-    chemkit::Vector3 nullVector;
+    chemkit::Vector3 nullVector(0, 0, 0);
     QCOMPARE(qRound(nullVector.norm()), 0);
     nullVector.normalize();
     QCOMPARE(qRound(nullVector.norm()), 0);
