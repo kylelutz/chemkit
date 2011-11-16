@@ -35,6 +35,7 @@
 
 #include "polymer.h"
 
+#include "foreach.h"
 #include "polymerchain.h"
 
 namespace chemkit {
@@ -64,6 +65,10 @@ Polymer::Polymer()
 /// Destroys the polymer object.
 Polymer::~Polymer()
 {
+    foreach(PolymerChain *chain, d->chains){
+        delete chain;
+    }
+
     delete d;
 }
 
