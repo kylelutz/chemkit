@@ -2,8 +2,8 @@ if(NOT ${CHEMKIT_WITH_IO})
   return()
 endif()
 
-find_package(Boost REQUIRED)
-include_directories(${Boost_INCLUDE_DIRS})
+find_package(Chemkit COMPONENTS io REQUIRED)
+include_directories(${CHEMKIT_INCLUDE_DIRS})
 
 set(SOURCES
   cubefileformat.cpp
@@ -11,4 +11,4 @@ set(SOURCES
 )
 
 add_chemkit_plugin(cube ${SOURCES})
-target_link_libraries(cube chemkit chemkit-io)
+target_link_libraries(cube ${CHEMKIT_LIBRARIES})

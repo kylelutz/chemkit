@@ -1,5 +1,5 @@
-find_package(Boost REQUIRED)
-include_directories(${Boost_INCLUDE_DIRS})
+find_package(Chemkit REQUIRED)
+include_directories(${CHEMKIT_INCLUDE_DIRS})
 
 set(SOURCES
   randicindexdescriptor.cpp
@@ -7,4 +7,4 @@ set(SOURCES
 )
 
 add_chemkit_plugin(randicindex ${SOURCES})
-target_link_libraries(randicindex chemkit)
+target_link_libraries(randicindex ${CHEMKIT_LIBRARIES})

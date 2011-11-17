@@ -1,5 +1,5 @@
-find_package(Boost REQUIRED)
-include_directories(${Boost_INCLUDE_DIRS})
+find_package(Chemkit COMPONENTS md REQUIRED)
+include_directories(${CHEMKIT_INCLUDE_DIRS})
 
 set(SOURCES
   ambercalculation.cpp
@@ -9,4 +9,4 @@ set(SOURCES
 )
 
 add_chemkit_plugin(amber ${SOURCES})
-target_link_libraries(amber chemkit chemkit-md)
+target_link_libraries(amber ${CHEMKIT_LIBRARIES})

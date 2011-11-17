@@ -1,5 +1,3 @@
-include_directories(../../include)
-
 macro(add_chemkit_plugin plugin_name)
   # add library
   add_library(${plugin_name} SHARED ${ARGN})

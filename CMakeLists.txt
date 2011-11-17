@@ -1,11 +1,15 @@
 cmake_minimum_required(VERSION 2.8)
 
-project(chemkit)
+project(Chemkit)
 
-set(chemkit_VERSION_MAJOR 0)
-set(chemkit_VERSION_MINOR 0)
+set(CHEMKIT_VERSION_MAJOR 0)
+set(CHEMKIT_VERSION_MINOR 0)
 
-set(CMAKE_MODULE_PATH ${chemkit_SOURCE_DIR}/cmake)
+set(CMAKE_MODULE_PATH ${Chemkit_SOURCE_DIR}/cmake)
+
+# find dependencies
+find_package(Eigen3 REQUIRED)
+find_package(Boost REQUIRED)
 
 # add option for CMAKE_BUILD_TYPE
 if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
@@ -24,6 +28,22 @@ configure_file(
 add_custom_target(uninstall 
 	COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake)
 
+# configure and install ChemkitConfig.cmake file
+configure_file(
+    "${CMAKE_MODULE_PATH}/ChemkitConfig.cmake.in"
+    "${CMAKE_BINARY_DIR}/ChemkitConfig.cmake"
+    IMMEDIATE @ONLY)
+install(FILES ${CMAKE_BINARY_DIR}/ChemkitConfig.cmake DESTINATION lib/chemkit)
+
+# Create a ChemkitBuildTreeSettings.cmake file for the use from the build tree
+configure_file(
+    "${CMAKE_MODULE_PATH}/ChemkitBuildTreeSettings.cmake.in"
+    "${CMAKE_BINARY_DIR}/ChemkitBuildTreeSettings.cmake"
+    IMMEDIATE @ONLY)
+
+# export the Chemkit package
+export(PACKAGE Chemkit)
+
 # build options
 option(CHEMKIT_WITH_GRAPHICS "Build the chemkit-graphics library." ON)
 option(CHEMKIT_WITH_IO "Build the chemkit-io library." ON)
@@ -34,10 +54,6 @@ option(CHEMKIT_BUILD_APPS "Build the chemkit applications" ON)
 option(CHEMKIT_BUILD_QT_DESIGNER_PLUGINS "Build the chemkit QtDesigner plugins." OFF)
 option(CHEMKIT_BUILD_EXAMPLES "Build the chemkit examples." OFF)
 option(CHEMKIT_BUILD_TESTS "Build the chemkit tests." OFF)
-
-# find eigen3
-find_package(Eigen3 REQUIRED)
-include_directories(${EIGEN3_INCLUDE_DIR})
 
 add_subdirectory(src)
 add_subdirectory(examples)

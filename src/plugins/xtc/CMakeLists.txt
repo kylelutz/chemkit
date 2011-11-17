@@ -1,6 +1,9 @@
-if(NOT ${CHEMKIT_WITH_IO})
+if(NOT ${CHEMKIT_WITH_MD} OR NOT ${CHEMKIT_WITH_MD})
   return()
 endif()
+
+find_package(Chemkit COMPONENTS io md REQUIRED)
+include_directories(${CHEMKIT_INCLUDE_DIRS})
 
 find_package(Qt4 4.6 COMPONENTS QtCore REQUIRED)
 set(QT_DONT_USE_QTGUI TRUE)
@@ -14,4 +17,4 @@ set(SOURCES
 aux_source_directory(../../3rdparty/xdrf/ XDRF_SOURCES)
 
 add_chemkit_plugin(xtc ${SOURCES} ${XDRF_SOURCES})
-target_link_libraries(xtc chemkit chemkit-md ${QT_LIBRARIES})
+target_link_libraries(xtc ${CHEMKIT_LIBRARIES} ${QT_LIBRARIES})

@@ -1,5 +1,5 @@
-find_package(Boost REQUIRED)
-include_directories(${Boost_INCLUDE_DIRS})
+find_package(Chemkit REQUIRED)
+include_directories(${CHEMKIT_INCLUDE_DIRS})
 
 set(SOURCES
   hydrogenbondacceptorsdescriptor.cpp
@@ -8,4 +8,4 @@ set(SOURCES
 )
 
 add_chemkit_plugin(hydrogenbonds ${SOURCES})
-target_link_libraries(hydrogenbonds chemkit)
+target_link_libraries(hydrogenbonds ${CHEMKIT_LIBRARIES})

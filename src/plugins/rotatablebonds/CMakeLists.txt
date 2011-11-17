@@ -1,5 +1,5 @@
-find_package(Boost REQUIRED)
-include_directories(${Boost_INCLUDE_DIRS})
+find_package(Chemkit REQUIRED)
+include_directories(${CHEMKIT_INCLUDE_DIRS})
 
 set(SOURCES
   rotatablebondsdescriptor.cpp
@@ -7,4 +7,4 @@ set(SOURCES
 )
 
 add_chemkit_plugin(rotatablebonds ${SOURCES})
-target_link_libraries(rotatablebonds chemkit)
+target_link_libraries(rotatablebonds ${CHEMKIT_LIBRARIES})

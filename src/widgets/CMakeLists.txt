@@ -1,12 +1,12 @@
+find_package(Chemkit)
+include_directories(${CHEMKIT_INCLUDE_DIRS})
+
 if(NOT ${CHEMKIT_WITH_WIDGETS})
   return()
 endif()
 
 find_package(Qt4 4.6 COMPONENTS QtCore QtGui REQUIRED)
 include(${QT_USE_FILE})
-
-find_package(Boost REQUIRED)
-include_directories(${Boost_INCLUDE_DIRS})
 
 set(HEADERS
   moleculeeditor.h
@@ -43,11 +43,10 @@ add_definitions(
   -DCHEMKIT_WIDGETS_LIBRARY
 )
 
-include_directories(../../include)
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
 add_chemkit_library(chemkit-widgets ${SOURCES} ${UI_SOURCES} ${MOC_SOURCES})
-target_link_libraries(chemkit-widgets chemkit ${QT_LIBRARIES})
+target_link_libraries(chemkit-widgets ${CHEMKIT_LIBRARIES} ${QT_LIBRARIES})
 
 # install header files
 install(FILES ${HEADERS} DESTINATION include/chemkit/)

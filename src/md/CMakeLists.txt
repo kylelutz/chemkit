@@ -2,8 +2,8 @@ if(NOT ${CHEMKIT_WITH_MD})
   return()
 endif()
 
-find_package(Boost REQUIRED)
-include_directories(${Boost_INCLUDE_DIRS})
+find_package(Chemkit COMPONENTS io REQUIRED)
+include_directories(${CHEMKIT_INCLUDE_DIRS})
 
 set(HEADERS
   forcefieldatom.h
@@ -43,14 +43,8 @@ add_definitions(
   -DCHEMKIT_MD_LIBRARY
 )
 
-include_directories(../../include)
-
 add_chemkit_library(chemkit-md ${SOURCES})
-target_link_libraries(chemkit-md chemkit)
-
-if(${CHEMKIT_WITH_IO})
-  target_link_libraries(chemkit-md chemkit-io)
-endif()
+target_link_libraries(chemkit-md ${CHEMKIT_LIBRARIES})
 
 # install header files
 install(FILES ${HEADERS} DESTINATION include/chemkit/)

@@ -4,15 +4,14 @@ if(NOT ${CHEMKIT_WITH_IO} OR
   return()
 endif()
 
+find_package(Chemkit COMPONENTS io md graphics widgets REQUIRED)
+include_directories(${CHEMKIT_INCLUDE_DIRS})
+
 find_package(Qt4 4.6 COMPONENTS QtCore QtGui QtOpenGL REQUIRED)
 set(QT_USE_QTGUI TRUE)
 include(${QT_USE_FILE})
 
-find_package(Boost REQUIRED)
-include_directories(${Boost_INCLUDE_DIRS})
-
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
-include_directories(../../../include)
 
 set(SOURCES
   builder.cpp
@@ -53,4 +52,4 @@ qt4_wrap_ui(UI_SOURCES ${UI_FORMS})
 qt4_wrap_cpp(MOC_SOURCES ${MOC_HEADERS})
 
 add_chemkit_executable(builder ${SOURCES} ${MOC_SOURCES} ${UI_SOURCES})
-target_link_libraries(builder chemkit chemkit-io chemkit-md chemkit-graphics chemkit-widgets ${QT_LIBRARIES})
+target_link_libraries(builder ${CHEMKIT_LIBRARIES} ${QT_LIBRARIES})

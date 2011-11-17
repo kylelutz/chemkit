@@ -2,12 +2,12 @@ if(NOT ${CHEMKIT_WITH_IO})
   return()
 endif()
 
+find_package(Chemkit COMPONENTS io REQUIRED)
+include_directories(${CHEMKIT_INCLUDE_DIRS})
+
 find_package(Qt4 4.6 COMPONENTS QtCore REQUIRED)
 set(QT_DONT_USE_QTGUI TRUE)
 include(${QT_USE_FILE})
-
-find_package(Boost REQUIRED)
-include_directories(${Boost_INCLUDE_DIRS})
 
 set(SOURCES
   fhzfileformat.cpp
@@ -15,4 +15,4 @@ set(SOURCES
 )
 
 add_chemkit_plugin(fhz ${SOURCES})
-target_link_libraries(fhz chemkit chemkit-io ${QT_LIBRARIES})
+target_link_libraries(fhz ${CHEMKIT_LIBRARIES} ${QT_LIBRARIES})

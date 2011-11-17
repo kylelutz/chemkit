@@ -2,12 +2,12 @@ if(NOT ${CHEMKIT_WITH_GRAPHICS})
   return()
 endif()
 
+find_package(Chemkit COMPONENTS widgets REQUIRED)
+include_directories(${CHEMKIT_INCLUDE_DIRS})
+
 find_package(Qt4 4.6 COMPONENTS QtCore QtGui QtOpenGL REQUIRED)
 set(QT_USE_QTOPENGL TRUE)
 include(${QT_USE_FILE})
-
-find_package(Boost REQUIRED)
-include_directories(${Boost_INCLUDE_DIRS})
 
 find_package(OpenGL REQUIRED)
 
@@ -90,10 +90,8 @@ add_definitions(
   -DCHEMKIT_GRAPHICS_LIBRARY
 )
 
-include_directories(../../include)
-
 add_chemkit_library(chemkit-graphics ${SOURCES} ${MOC_SOURCES} ${RCC_SOURCES})
-target_link_libraries(chemkit-graphics chemkit chemkit-widgets ${QT_LIBRARIES} ${OPENGL_LIBRARIES})
+target_link_libraries(chemkit-graphics ${CHEMKIT_LIBRARIES} ${QT_LIBRARIES} ${OPENGL_LIBRARIES})
 
 # install header files
 install(FILES ${HEADERS} DESTINATION include/chemkit/)

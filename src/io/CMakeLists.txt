@@ -1,9 +1,9 @@
+find_package(Chemkit REQUIRED)
+include_directories(${CHEMKIT_INCLUDE_DIRS})
+
 if(NOT ${CHEMKIT_WITH_IO})
   return()
 endif()
-
-find_package(Boost REQUIRED)
-include_directories(${Boost_INCLUDE_DIRS})
 
 set(HEADERS
   genericfile.h
@@ -29,10 +29,8 @@ add_definitions(
   -DCHEMKIT_IO_LIBRARY
 )
 
-include_directories(../../include)
-
 add_chemkit_library(chemkit-io ${SOURCES})
-target_link_libraries(chemkit-io chemkit)
+target_link_libraries(chemkit-io ${CHEMKIT_LIBRARIES})
 
 # install header files
 install(FILES ${HEADERS} DESTINATION include/chemkit/)

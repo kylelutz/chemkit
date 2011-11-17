@@ -8,8 +8,8 @@ set(QT_USE_QTNETWORK TRUE)
 set(QT_USE_QTXML TRUE)
 include(${QT_USE_FILE})
 
-find_package(Boost REQUIRED)
-include_directories(${Boost_INCLUDE_DIRS})
+find_package(Chemkit COMPONENTS io REQUIRED)
+include_directories(${CHEMKIT_INCLUDE_DIRS})
 
 set(HEADERS
   proteindatabank.h
@@ -37,10 +37,8 @@ add_definitions(
   -DCHEMKIT_WEB_LIBRARY
 )
 
-include_directories(../../include)
-
 add_chemkit_library(chemkit-web ${SOURCES} ${MOC_SOURCES})
-target_link_libraries(chemkit-web chemkit chemkit-io ${QT_LIBRARIES})
+target_link_libraries(chemkit-web ${CHEMKIT_LIBRARIES} ${QT_LIBRARIES})
 
 # install header files
 install(FILES ${HEADERS} DESTINATION include/chemkit/)
