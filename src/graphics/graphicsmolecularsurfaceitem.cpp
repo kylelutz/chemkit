@@ -501,7 +501,7 @@ void GraphicsMolecularSurfaceItem::recalculate()
     // add intersections from alpha shape edges
     const AlphaShape *alphaShape = d->surface->alphaShape();
 
-    foreach(const std::vector<int> &edge, alphaShape->edges()){
+    foreach(const AlphaShape::Edge &edge, alphaShape->edges()){
         ContactPatchItem *itemA = d->contactPatches[edge[0]];
         ContactPatchItem *itemB = d->contactPatches[edge[1]];
 

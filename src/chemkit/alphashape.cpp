@@ -38,7 +38,6 @@
 #include "foreach.h"
 #include "vector3.h"
 #include "geometry.h"
-#include "delaunaytriangulation.h"
 
 namespace chemkit {
 
@@ -127,7 +126,7 @@ int AlphaShape::vertexCount() const
 }
 
 /// Returns a list of edges in the alpha shape.
-const std::vector<std::vector<int> >& AlphaShape::edges() const
+const std::vector<AlphaShape::Edge>& AlphaShape::edges() const
 {
     return d->triangulation->alphaShapeEdges(this);
 }
@@ -139,7 +138,7 @@ int AlphaShape::edgeCount() const
 }
 
 /// Returns a list of the triangles in the alpha shape.
-const std::vector<std::vector<int> >& AlphaShape::triangles() const
+const std::vector<AlphaShape::Triangle>& AlphaShape::triangles() const
 {
     return d->triangulation->alphaShapeTriangles(this);
 }

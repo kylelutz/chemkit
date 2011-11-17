@@ -40,6 +40,8 @@
 
 #include <vector>
 
+#include <boost/array.hpp>
+
 #include "point3.h"
 
 namespace chemkit {
@@ -50,6 +52,10 @@ class DelaunayTriangulationPrivate;
 class CHEMKIT_EXPORT DelaunayTriangulation
 {
 public:
+    // typedefs
+    typedef boost::array<int, 2> Edge;
+    typedef boost::array<int, 3> Triangle;
+
     // construction and destruction
     DelaunayTriangulation(const std::vector<Point3> &points);
     DelaunayTriangulation(const std::vector<Point3> &points, const std::vector<Real> &weights);
@@ -64,9 +70,9 @@ public:
     // simplicies
     std::vector<int> verticies() const;
     int vertexCount() const;
-    const std::vector<std::vector<int> >& edges() const;
+    const std::vector<Edge>& edges() const;
     int edgeCount() const;
-    const std::vector<std::vector<int> >& triangles() const;
+    const std::vector<Triangle>& triangles() const;
     int triangleCount() const;
     const std::vector<std::vector<int> >& tetrahedra() const;
     int tetrahedronCount() const;
@@ -84,8 +90,8 @@ private:
     bool isExternal(int tetrahedron) const;
 
     // alpha shape
-    const std::vector<std::vector<int> >& alphaShapeEdges(const AlphaShape *alphaShape) const;
-    const std::vector<std::vector<int> >& alphaShapeTriangles(const AlphaShape *alphaShape) const;
+    const std::vector<Edge>& alphaShapeEdges(const AlphaShape *alphaShape) const;
+    const std::vector<Triangle>& alphaShapeTriangles(const AlphaShape *alphaShape) const;
     const std::vector<std::vector<int> >& alphaShapeTetrahedra(const AlphaShape *alphaShape) const;
     void calculateAlphaShape(const AlphaShape *alphaShape) const;
 

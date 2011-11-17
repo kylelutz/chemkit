@@ -245,12 +245,12 @@ Real MolecularSurface::volume() const
         }
 
         // subtract volume from each edge
-        foreach(const std::vector<int> &edge, alphaShape->edges()){
+        foreach(const AlphaShape::Edge &edge, alphaShape->edges()){
             d->volume -= intersectionVolume(edge[0], edge[1]);
         }
 
         // add volume from each triangle
-        foreach(const std::vector<int> &triangle, alphaShape->triangles()){
+        foreach(const AlphaShape::Triangle &triangle, alphaShape->triangles()){
             d->volume += intersectionVolume(triangle[0], triangle[1], triangle[2]);
         }
 
@@ -282,12 +282,12 @@ Real MolecularSurface::surfaceArea() const
         }
 
         // subtract volume and area from each edge
-        foreach(const std::vector<int> &edge, alphaShape->edges()){
+        foreach(const AlphaShape::Edge &edge, alphaShape->edges()){
             d->surfaceArea -= intersectionArea(edge[0], edge[1]);
         }
 
         // add volume and area from each triangle
-        foreach(const std::vector<int> &triangle, alphaShape->triangles()){
+        foreach(const AlphaShape::Triangle &triangle, alphaShape->triangles()){
             d->surfaceArea += intersectionArea(triangle[0], triangle[1], triangle[2]);
         }
 

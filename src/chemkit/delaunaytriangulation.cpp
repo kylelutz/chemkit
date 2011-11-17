@@ -94,7 +94,7 @@ public:
     bool inAlphaShape;
 
     bool contains(int vertex) const;
-    std::vector<int> triangle(int index) const;
+    DelaunayTriangulation::Triangle triangle(int index) const;
 };
 
 bool Tetrahedron::contains(int vertex) const
@@ -108,9 +108,9 @@ bool Tetrahedron::contains(int vertex) const
     return false;
 }
 
-std::vector<int> Tetrahedron::triangle(int index) const
+DelaunayTriangulation::Triangle Tetrahedron::triangle(int index) const
 {
-    std::vector<int> triangle(3);
+    DelaunayTriangulation::Triangle triangle;
 
     // abc
     if(index == 0){
@@ -152,12 +152,12 @@ public:
 
     bool alphaShapeCalculated;
 
-    std::vector<std::vector<int> > delaunayEdges;
-    std::vector<std::vector<int> > delaunayTriangles;
+    std::vector<DelaunayTriangulation::Edge> delaunayEdges;
+    std::vector<DelaunayTriangulation::Triangle> delaunayTriangles;
     std::vector<std::vector<int> > delaunayTetrahedra;
 
-    std::vector<std::vector<int> > alphaShapeEdges;
-    std::vector<std::vector<int> > alphaShapeTriangles;
+    std::vector<DelaunayTriangulation::Edge> alphaShapeEdges;
+    std::vector<DelaunayTriangulation::Triangle> alphaShapeTriangles;
     std::vector<std::vector<int> > alphaShapeTetrahedra;
 };
 
@@ -251,16 +251,16 @@ int DelaunayTriangulation::vertexCount() const
 }
 
 /// Returns a list of edges in the delaunay triangulation.
-const std::vector<std::vector<int> >& DelaunayTriangulation::edges() const
+const std::vector<DelaunayTriangulation::Edge>& DelaunayTriangulation::edges() const
 {
     if(d->delaunayEdges.empty()){
-        std::vector<std::vector<int> > edges;
+        std::vector<Edge> edges;
         EdgeSet edgeSet(d->verticies.size());
 
         foreach(const std::vector<int> &tetrahedron, tetrahedra()){
             for(int i = 0; i < 4; i++){
                 for(int j = i + 1; j < 4; j++){
-                    std::vector<int> edge(2);
+                    Edge edge;
                     edge[0] = tetrahedron[i];
                     edge[1] = tetrahedron[j];
 
@@ -285,7 +285,7 @@ int DelaunayTriangulation::edgeCount() const
 }
 
 /// Returns a list of faces in the delaunay triangulation.
-const std::vector<std::vector<int> >& DelaunayTriangulation::triangles() const
+const std::vector<DelaunayTriangulation::Triangle>& DelaunayTriangulation::triangles() const
 {
     if(d->delaunayTriangles.empty()){
         int initialTetrahedron = 0;
@@ -400,16 +400,16 @@ Real DelaunayTriangulation::surfaceArea() const
 }
 
 // --- Alpha Shape --------------------------------------------------------- //
-const std::vector<std::vector<int> >& DelaunayTriangulation::alphaShapeEdges(const AlphaShape *alphaShape) const
+const std::vector<DelaunayTriangulation::Edge>& DelaunayTriangulation::alphaShapeEdges(const AlphaShape *alphaShape) const
 {
     if(d->alphaShapeEdges.empty()){
-        std::vector<std::vector<int> > alphaShapeEdges;
+        std::vector<Edge> alphaShapeEdges;
         EdgeSet alphaEdgeSet(d->verticies.size());
 
-        foreach(const std::vector<int> &triangle, alphaShapeTriangles(alphaShape)){
+        foreach(const Triangle &triangle, alphaShapeTriangles(alphaShape)){
             for(int i = 0; i < 3; i++){
                 for(int j = i + 1; j < 3; j++){
-                    std::vector<int> edge(2);
+                    Edge edge;
                     edge[0] = triangle[i];
                     edge[1] = triangle[j];
 
@@ -424,7 +424,7 @@ const std::vector<std::vector<int> >& DelaunayTriangulation::alphaShapeEdges(con
 
         EdgeSet attachedEdgeSet(d->verticies.size());
 
-        foreach(const std::vector<int> &triangle, triangles()){
+        foreach(const Triangle &triangle, triangles()){
             int a = triangle[0];
             int b = triangle[1];
             int c = triangle[2];
@@ -439,7 +439,7 @@ const std::vector<std::vector<int> >& DelaunayTriangulation::alphaShapeEdges(con
                 attachedEdgeSet.insert(b, c);
         }
 
-        foreach(const std::vector<int> edge, edges()){
+        foreach(const Edge &edge, edges()){
             if(alphaEdgeSet.contains(edge[0], edge[1])){
                 continue;
             }
@@ -458,12 +458,12 @@ const std::vector<std::vector<int> >& DelaunayTriangulation::alphaShapeEdges(con
     return d->alphaShapeEdges;
 }
 
-const std::vector<std::vector<int> >& DelaunayTriangulation::alphaShapeTriangles(const AlphaShape *alphaShape) const
+const std::vector<DelaunayTriangulation::Triangle>& DelaunayTriangulation::alphaShapeTriangles(const AlphaShape *alphaShape) const
 {
     if(d->alphaShapeTriangles.empty()){
         calculateAlphaShape(alphaShape);
 
-        std::vector<std::vector<int> > triangles;
+        std::vector<Triangle> triangles;
 
         int initialTetrahedron = 0;
         for(unsigned int i = 0; i < d->tetrahedra.size(); i++){
@@ -503,7 +503,7 @@ const std::vector<std::vector<int> >& DelaunayTriangulation::alphaShapeTriangles
                     visited.insert(neighborIndex);
                 }
 
-                std::vector<int> triangle = tetrahedron.triangle(triangleIndex);
+                Triangle triangle = tetrahedron.triangle(triangleIndex);
 
                 if(tetrahedron.inAlphaShape && (!neighborExternal && neighbor.inAlphaShape)){
                     triangles.push_back(triangle);
@@ -761,9 +761,9 @@ void DelaunayTriangulation::insertPoint(int index)
 {
     Point3 point = position(index);
 
-    std::vector<int> containingTetrahedra = findContainingTetrahedra(index);
+    const std::vector<int> containingTetrahedra = findContainingTetrahedra(index);
 
-    std::vector<std::vector<int> > faces;
+    std::vector<Triangle> faces;
     std::vector<std::pair<int, int> > faceNeighbor;
     std::vector<int> count;
 
@@ -772,7 +772,7 @@ void DelaunayTriangulation::insertPoint(int index)
         for(int i = 0; i < 4; i++){
             for(int j = i + 1; j < 4; j++){
                 for(int k = j + 1; k < 4; k++){
-                    std::vector<int> face(3);
+                    Triangle face;
                     face[0] = tetrahedron.verticies[i];
                     face[1] = tetrahedron.verticies[j];
                     face[2] = tetrahedron.verticies[k];
@@ -812,7 +812,7 @@ void DelaunayTriangulation::insertPoint(int index)
     std::vector<int> newTetrahedra;
     for(unsigned int i = 0; i < faces.size(); i++){
         if(count[i] == 1){
-            std::vector<int> face = faces[i];
+            const Triangle &face = faces[i];
             Tetrahedron tetrahedron;
             int tetrahedronIndex = d->tetrahedra.size();
 
@@ -873,7 +873,7 @@ void DelaunayTriangulation::insertPoint(int index)
 
             int otherIndex = newTetrahedra[j];
             const Tetrahedron &other = d->tetrahedra[otherIndex];
-            std::vector<int> verticies(4);
+            boost::array<int, 4> verticies;
             verticies[0] = other.verticies[0];
             verticies[1] = other.verticies[1];
             verticies[2] = other.verticies[2];

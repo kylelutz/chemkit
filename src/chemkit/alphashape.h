@@ -39,6 +39,7 @@
 #include <vector>
 
 #include "point3.h"
+#include "delaunaytriangulation.h"
 
 namespace chemkit {
 
@@ -47,6 +48,10 @@ class AlphaShapePrivate;
 class CHEMKIT_EXPORT AlphaShape
 {
 public:
+    // typedefs
+    typedef DelaunayTriangulation::Edge Edge;
+    typedef DelaunayTriangulation::Triangle Triangle;
+
     // enumerations
     enum Classification {
         Interior = 0x01,
@@ -69,9 +74,9 @@ public:
     // simplicies
     std::vector<int> verticies() const;
     int vertexCount() const;
-    const std::vector<std::vector<int> >& edges() const;
+    const std::vector<Edge>& edges() const;
     int edgeCount() const;
-    const std::vector<std::vector<int> >& triangles() const;
+    const std::vector<Triangle>& triangles() const;
     int triangleCount() const;
     const std::vector<std::vector<int> >& tetrahedra() const;
     int tetrahedronCount() const;
