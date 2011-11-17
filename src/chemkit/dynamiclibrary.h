@@ -44,7 +44,7 @@ namespace chemkit {
 
 class DynamicLibraryPrivate;
 
-class CHEMKIT_EXPORT DynamicLibrary
+class DynamicLibrary
 {
 public:
     // construction and destruction

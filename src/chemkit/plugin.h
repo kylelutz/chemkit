@@ -75,7 +75,7 @@ private:
 
 /// Export a plugin.
 #define CHEMKIT_EXPORT_PLUGIN(name, className) \
-    extern "C" chemkit::Plugin* chemkit_plugin_init() \
+    extern "C" CHEMKIT_DECL_EXPORT chemkit::Plugin* chemkit_plugin_init() \
     { \
         return new className; \
     }

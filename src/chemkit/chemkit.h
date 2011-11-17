@@ -40,10 +40,12 @@
 
 #if defined(CHEMKIT_OS_UNIX)
     #define CHEMKIT_DECL_IMPORT
-    #define CHEMKIT_DECL_EXPORT
+    #define CHEMKIT_DECL_EXPORT  __attribute__((visibility("default")))
+    #define CHEMKIT_DECL_PRIVATE __attribute__((visibility("hidden")))
 #elif defined(CHEMKIT_OS_WIN32)
-    #define CHEMKIT_DECL_IMPORT __declspec(dllimport)
-    #define CHEMKIT_DECL_EXPORT __declspec(dllexport)
+    #define CHEMKIT_DECL_IMPORT  __declspec(dllimport)
+    #define CHEMKIT_DECL_EXPORT  __declspec(dllexport)
+    #define CHEMKIT_DECL_PRIVATE
 #endif
 
 #ifdef CHEMKIT_LIBRARY
