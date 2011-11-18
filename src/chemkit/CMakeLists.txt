@@ -10,8 +10,10 @@ endif()
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config.h.in ${CMAKE_CURRENT_SOURCE_DIR}/config.h)
 
+find_package(Chemkit)
+include_directories(${CHEMKIT_INCLUDE_DIRS})
+
 find_package(Boost COMPONENTS system filesystem REQUIRED)
-include_directories(${Boost_INCLUDE_DIRS})
 
 set(HEADERS
   alphashape.h

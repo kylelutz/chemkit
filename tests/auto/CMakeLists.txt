@@ -1,3 +1,6 @@
+find_package(Chemkit)
+include_directories(${CHEMKIT_INCLUDE_DIRS})
+
 add_subdirectory(chemkit)
 add_subdirectory(graphics)
 add_subdirectory(io)
