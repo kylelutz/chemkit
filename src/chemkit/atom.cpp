@@ -341,18 +341,6 @@ int Atom::atomCountTo(const Atom *atom, int maxCount) const
     return m_molecule->atomCountBetween(this, atom, maxCount);
 }
 
-/// Returns the other neighboring atom for a divalent atom.
-Atom* Atom::otherNeighbor(const Atom *neighbor) const
-{
-    foreach(Atom *atom, neighbors()){
-        if(atom != neighbor){
-            return atom;
-        }
-    }
-
-    return 0;
-}
-
 /// Returns \c true if the atom is bonded to the other atom.
 bool Atom::isBondedTo(const Atom *atom) const
 {

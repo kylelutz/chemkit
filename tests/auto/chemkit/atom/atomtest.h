@@ -58,7 +58,6 @@ class AtomTest : public QObject
         void position();
         void distance();
         void pathTo();
-        void otherNeighbor();
 };
 
 #endif // ATOMTEST_H

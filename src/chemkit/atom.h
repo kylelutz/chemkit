@@ -96,7 +96,6 @@ public:
     std::vector<Atom *> atomPathTo(const Atom *atom) const;
     int atomCountTo(const Atom *atom) const;
     int atomCountTo(const Atom *atom, int maxCount) const;
-    Atom* otherNeighbor(const Atom *neighbor) const;
     bool isBondedTo(const Atom *atom) const;
     bool isBondedTo(const Element &element) const;
     bool isBondedTo(const Element &element, int bondOrder) const;

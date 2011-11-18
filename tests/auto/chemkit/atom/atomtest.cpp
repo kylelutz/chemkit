@@ -480,16 +480,4 @@ void AtomTest::pathTo()
     Q_UNUSED(P28_O31);
 }
 
-void AtomTest::otherNeighbor()
-{
-    chemkit::Molecule water;
-    chemkit::Atom *O1 = water.addAtom("O");
-    chemkit::Atom *H2 = water.addAtom("H");
-    chemkit::Atom *H3 = water.addAtom("H");
-    water.addBond(O1, H2);
-    water.addBond(O1, H3);
-    QVERIFY(O1->otherNeighbor(H2) == H3);
-    QVERIFY(O1->otherNeighbor(H3) == H2);
-}
-
 QTEST_APPLESS_MAIN(AtomTest)
