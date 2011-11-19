@@ -39,6 +39,7 @@
 #include "moleculargraph.h"
 
 #include <set>
+#include <limits>
 #include <algorithm>
 
 #include <Eigen/Core>
@@ -372,7 +373,7 @@ std::vector<Ring *> MolecularGraph::sssr_rpPath(const MolecularGraph *graph)
                 D(i, j) = 1;
             }
             else{
-                D(i, j) = INT_MAX/2; // ~ infinity
+                D(i, j) = std::numeric_limits<int>::max() / 2; // ~ infinity
             }
         }
     }
