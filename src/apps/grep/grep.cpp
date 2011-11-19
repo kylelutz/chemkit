@@ -33,103 +33,85 @@
 **
 ******************************************************************************/
 
-#include <QtCore>
-
-#include <getopt.h>
+#include <string>
 #include <iostream>
 
+#include <boost/scoped_ptr.hpp>
+#include <boost/program_options.hpp>
+#include <boost/algorithm/string.hpp>
+
 #include <chemkit/chemkit.h>
+#include <chemkit/foreach.h>
 #include <chemkit/molecule.h>
 #include <chemkit/lineformat.h>
 #include <chemkit/moleculefile.h>
 
-// option flags
-int COMPOSITION_FLAG = 0;
-int EXACT_MATCH_FLAG = 0;
-int NAMES_ONLY_FLAG = 0;
-int INVERT_MATCH_FLAG = 0;
-
-struct option options[] = {
-    {"composition", no_argument, &COMPOSITION_FLAG, 'c'},
-    {"exact-match", no_argument, &EXACT_MATCH_FLAG, 'e'},
-    {"help", no_argument, 0, 'h'},
-    {"names-only", no_argument, &NAMES_ONLY_FLAG, 'n'},
-    {"invert-match", no_argument, &INVERT_MATCH_FLAG, 'v'},
-    {0, 0, 0, 0},
-};
-
-void printHelp()
+void printHelp(char *argv[], const boost::program_options::options_description &options)
 {
-    QTextStream out(stdout);
-
-    out << QString("Usage: %1 [OPTIONS] PATTERN FILE\n").arg(qAppName());
-    out << "\n";
-    out << "Search for molecules matching PATTERN in FILE. PATTERN is a line\n";
-    out << "representation (e.g. InChI or SMILES) of a molecule to search\n";
-    out << "for. A matching molecule is either an exact match or a\n";
-    out << "superstructure of PATTERN.\n";
-    out << "\n";
-    out << "Options:\n";
-    out << "  -c, --composition    Match composition rather than structure.\n";
-    out << "  -e, --exact-match    Return molecules that exactly match PATTERN.\n";
-    out << "  -h, --help           Display this help and exit.\n";
-    out << "  -n, --names-only     Output only the names of matching molecules.\n";
-    out << "  -v, --invert-match   Return only non-matching molecules.\n";
-    out << "\n";
+    std::cout << "Usage: " << argv[0] << " [OPTIONS] PATTERN FILE\n";
+    std::cout << "\n";
+    std::cout << "Search for molecules matching PATTERN in FILE. PATTERN is a line\n";
+    std::cout << "representation (e.g. InChI or SMILES) of a molecule to search\n";
+    std::cout << "for. A matching molecule is either an exact match or a\n";
+    std::cout << "superstructure of PATTERN.\n";
+    std::cout << "\n";
+    std::cout << "Options:\n";
+    std::cout << options << "\n";
 }
 
 int main(int argc, char *argv[])
 {
-    QCoreApplication app(argc, argv);
-    app.setApplicationName(argv[0]);
+    std::string formula;
+    std::string fileName;
 
-    QTextStream out(stdout);
-    QTextStream err(stderr);
+    boost::program_options::options_description options;
+    options.add_options()
+        ("formula",
+            boost::program_options::value<std::string>(&formula),
+            "Input formula to match against.")
+        ("file",
+            boost::program_options::value<std::string>(&fileName),
+            "Input file to search.")
+        ("composition,c",
+            "Match composition rather than structure.")
+        ("exact-match,e",
+            "Return molecules that exactly match PATTERN.")
+        ("invert-match,v",
+            "Return only non-matching molecules.")
+        ("names-only,n",
+            "Output only the names of matching molecules.")
+        ("help,h",
+            "Shows this help message");
 
-    QString inputPattern;
-    QString inputFileName;
+    boost::program_options::positional_options_description positionalOptions;
+    positionalOptions.add("formula", 1).add("file", 1);
 
-    // parse options
-    for(;;){
-        int optionIndex = 0;
+    boost::program_options::variables_map variables;
+    boost::program_options::store(
+        boost::program_options::command_line_parser(argc, argv)
+            .options(options)
+            .positional(positionalOptions).run(),
+        variables);
+    boost::program_options::notify(variables);
 
-        int c = getopt_long_only(argc, argv, "cehnv", options, &optionIndex);
-
-        // no more options
-        if(c == -1){
-            if(argc > optind)
-                inputPattern = argv[optind];
-            if(argc > optind + 1)
-                inputFileName = argv[optind+1];
-            break;
-        }
-
-        switch(c){
-            case '?':
-                return -1; // invalid argument
-            case 'h':
-                printHelp();
-                return 0;
-            default:
-                break;
-        }
+    if(variables.count("help")){
+        printHelp(argv, options);
+        return 0;
     }
-
-    if(inputPattern.isEmpty()){
-        err << "Error: no input pattern given\n";
-        printHelp();
+    else if(formula.empty()){
+        printHelp(argv, options);
+        std::cerr << "Error: no input formula given." << std::endl;
         return -1;
     }
-
-    if(inputFileName.isEmpty()){
-        err << "Error: no input file given\n";
-        printHelp();
+    else if(fileName.empty()){
+        printHelp(argv, options);
+        std::cerr << "Error: no input file given." << std::endl;
         return -1;
     }
 
     // select input line format based on the input pattern given
-    QString inputFormat;
-    if(inputPattern.startsWith("InChI=") || inputPattern[0].isDigit()){
+    std::string inputFormat;
+    if(boost::algorithm::starts_with(formula, "InChI=") || isdigit(formula[0])){
         inputFormat = "inchi";
     }
     else{
@@ -137,66 +119,67 @@ int main(int argc, char *argv[])
     }
 
     // create input line format
-    chemkit::LineFormat *patternFormat = chemkit::LineFormat::create(inputFormat.toStdString());
+    boost::scoped_ptr<chemkit::LineFormat> patternFormat(chemkit::LineFormat::create(inputFormat));
     if(!patternFormat){
-        err << "Error: failed to create line format\n";
+        std::cerr << "Error: failed to create line format." << std::endl;
         return -1;
     }
 
     // read input molecule
-    chemkit::Molecule *patternMolecule = patternFormat->read(inputPattern.toStdString());
+    boost::scoped_ptr<chemkit::Molecule> patternMolecule(patternFormat->read(formula));
     if(!patternMolecule){
-        err << "Error: failed to read pattern molecule: " << patternFormat->errorString().c_str() << "\n";
-        delete patternFormat;
+        std::cerr << "Error: failed to read pattern molecule: " << patternFormat->errorString() << std::endl;
         return -1;
     }
 
     // read input file
-    chemkit::io::MoleculeFile inputFile(inputFileName.toStdString());
+    chemkit::io::MoleculeFile inputFile(fileName);
     if(!inputFile.read()){
-        err << "Error: failed to read input file: " << inputFile.errorString().c_str() << "\n";
+        std::cerr << "Error: failed to read input file: " << inputFile.errorString() << std::endl;
         return -1;
+    }
+
+    // get options
+    bool compositionOnly = variables.find("composition") != variables.end();
+    bool exactMatch = variables.find("exact-match") != variables.end();
+    bool invertMatch = variables.find("invert-match") != variables.end();
+    bool namesOnly = variables.find("names-only") != variables.end();
+
+    int flags = 0;
+    if(compositionOnly){
+        flags |= chemkit::Molecule::CompareAtomsOnly;
     }
 
     chemkit::io::MoleculeFile outputFile;
 
-    int flags = 0;
-
-    if(COMPOSITION_FLAG){
-        flags |= chemkit::Molecule::CompareAtomsOnly;
-    }
-
     foreach(chemkit::Molecule *molecule, inputFile.molecules()){
         bool match = false;
 
-        if(EXACT_MATCH_FLAG){
+        if(exactMatch){
             match = patternMolecule->equals(molecule, flags);
         }
         else{
             match = patternMolecule->isSubstructureOf(molecule, flags);
         }
 
-        if((match && !INVERT_MATCH_FLAG) || (!match && INVERT_MATCH_FLAG)){
+        if((match && !invertMatch) || (!match && invertMatch)){
             inputFile.removeMolecule(molecule);
             outputFile.addMolecule(molecule);
         }
     }
 
-    if(NAMES_ONLY_FLAG){
+    if(namesOnly){
         foreach(const chemkit::Molecule *molecule, outputFile.molecules()){
-            out << molecule->name().c_str() << "\n";
+            std::cout << molecule->name() << "\n";
         }
     }
     else{
         bool ok = outputFile.write(std::cout, inputFile.formatName());
         if(!ok){
-            err << "Error: failed to write output file: " << outputFile.errorString().c_str() << "\n";
+            std::cerr << "Error: failed to write output file: " << outputFile.errorString() << std::endl;
             return -1;
         }
     }
-
-    delete patternFormat;
-    delete patternMolecule;
 
     return 0;
 }
