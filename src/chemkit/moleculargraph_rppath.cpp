@@ -51,7 +51,7 @@ namespace chemkit {
 
 namespace {
 
-typedef Eigen::Matrix<int, Eigen::Dynamic, Eigen::Dynamic> DistanceMatrix;
+typedef Eigen::Matrix<unsigned int, Eigen::Dynamic, Eigen::Dynamic> DistanceMatrix;
 
 // === PidMatrix =========================================================== //
 // The PidMatrix class implements a path-included distance matrix.
@@ -373,7 +373,7 @@ std::vector<Ring *> MolecularGraph::sssr_rpPath(const MolecularGraph *graph)
                 D(i, j) = 1;
             }
             else{
-                D(i, j) = std::numeric_limits<int>::max() / 2; // ~ infinity
+                D(i, j) = std::numeric_limits<unsigned int>::max() / 2; // ~ infinity
             }
         }
     }
