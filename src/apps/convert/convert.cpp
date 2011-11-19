@@ -33,111 +33,99 @@
 **
 ******************************************************************************/
 
-#include <QtCore>
-#include <getopt.h>
+#include <string>
+#include <iostream>
+
+#include <boost/scoped_ptr.hpp>
+#include <boost/program_options.hpp>
+#include <boost/algorithm/string.hpp>
 
 #include <chemkit/chemkit.h>
 #include <chemkit/moleculefile.h>
 
-struct option options[] = {
-    {"input-format", required_argument, 0, 'i'},
-    {"output-format", required_argument, 0, 'o'},
-    {"help", no_argument, 0, 'h'},
-    {0, 0, 0, 0},
-};
-
-void printHelp()
+void printHelp(char *argv[], const boost::program_options::options_description &options)
 {
-    QTextStream out(stdout);
-
-    out << QString("Usage: %1 [OPTIONS] inputFile outputFile\n").arg(qAppName());
-    out << "\n";
-    out << "Converts a chemical input file to a new file with\n";
-    out << "a different file format.\n";
-    out << "\n";
-    out << "Options:\n";
-    out << "  -i, --input-format=FORMAT    Sets the input format.\n";
-    out << "  -o, --output-format=FORMAT   Sets the output format.\n";
-    out << "  -h, --help                   Shows this help message.\n";
-    out << "\n";
-
-    out.flush();
+    std::cout << "Usage: " << argv[0] << " [OPTIONS] inputFile outputFile\n";
+    std::cout << "\n";
+    std::cout << "Converts a chemical input file to a new file with\n";
+    std::cout << "a different file format.\n";
+    std::cout << "\n";
+    std::cout << "Options:\n";
+    std::cout << options << "\n";
 }
 
 int main(int argc, char *argv[])
 {
-    QCoreApplication app(argc, argv);
-    app.setApplicationName(argv[0]);
+    std::string inputFileName;
+    std::string inputFormatName;
+    std::string outputFileName;
+    std::string outputFormatName;
 
-    QTextStream out(stdout);
-    QTextStream err(stderr);
+    boost::program_options::options_description options;
+    options.add_options()
+        ("input-file",
+            boost::program_options::value<std::string>(&inputFileName),
+            "The input file.")
+        ("output-file",
+            boost::program_options::value<std::string>(&outputFileName),
+            "The output file.")
+        ("input-format,i",
+            boost::program_options::value<std::string>(&inputFormatName),
+            "Sets the input format.")
+        ("output-format,o",
+            boost::program_options::value<std::string>(&outputFormatName),
+            "Sets the output format.")
+        ("help,h",
+            "Shows this help message");
 
-    QString inputFileName;
-    QString inputFormatName;
-    QString outputFileName;
-    QString outputFormatName;
+    boost::program_options::positional_options_description positionalOptions;
+    positionalOptions.add("input-file", 1).add("output-file", 1);
 
-    // parse options
-    for(;;){
-        int optionIndex = 0;
+    boost::program_options::variables_map variables;
+    boost::program_options::store(
+        boost::program_options::command_line_parser(argc, argv)
+            .options(options)
+            .positional(positionalOptions).run(),
+        variables);
+    boost::program_options::notify(variables);
 
-        int c = getopt_long_only(argc, argv, "ioh", options, &optionIndex);
-
-        // no more options
-        if(c == -1){
-            if(argc > optind)
-                inputFileName = argv[optind];
-            if(argc > optind + 1)
-                outputFileName = argv[optind+1];
-            break;
-        }
-
-        switch(c){
-            case '?':
-                return -1; // invalid argument
-            case 'i':
-                inputFormatName = optarg;
-                break;
-            case 'o':
-                outputFormatName = optarg;
-                break;
-            case 'h':
-                printHelp();
-                return 0;
-            default:
-                break;
-        }
+    if(variables.count("help")){
+        printHelp(argv, options);
+        return 0;
     }
-
-    if(inputFileName.isEmpty()){
-        err << "Error: no input file given\n";
-        printHelp();
+    else if(inputFileName.empty()){
+        printHelp(argv, options);
+        std::cerr << "Error: No input file specified." << std::endl;
         return -1;
     }
-    if(outputFileName.isEmpty()){
-        err << "Error: no output file given\n";
-        printHelp();
+    else if(outputFileName.empty()){
+        printHelp(argv, options);
+        std::cerr << "Error: No output file specified." << std::endl;
         return -1;
-    }
-
-    if(inputFormatName.isEmpty()){
-        inputFormatName = QFileInfo(inputFileName).suffix();
-    }
-    if(outputFormatName.isEmpty()){
-        outputFormatName = QFileInfo(outputFileName).suffix();
     }
 
     // read input
-    chemkit::io::MoleculeFile inputFile(inputFileName.toStdString());
-    inputFile.setFormat(inputFormatName.toStdString());
-    if(!inputFile.read()){
-        err << "Error: failed to read input file: " << inputFile.errorString().c_str() << "\n";
+    chemkit::io::MoleculeFile inputFile(inputFileName);
+    if(!inputFormatName.empty()){
+        inputFile.setFormat(inputFormatName);
+    }
+
+    bool ok = inputFile.read();
+    if(!ok){
+        std::cerr << "Error: Failed to read input file: " << inputFile.errorString() << std::endl;
         return -1;
     }
 
     // write output
-    if(!inputFile.write(outputFileName.toStdString(), outputFormatName.toStdString())){
-        err << "Error: failed to write output file: " << inputFile.errorString().c_str() << "\n";
+    if(outputFormatName.empty()){
+        ok = inputFile.write(outputFileName);
+    }
+    else{
+        ok = inputFile.write(outputFileName, outputFormatName);
+    }
+
+    if(!ok){
+        std::cerr << "Error: failed to write output file: " << inputFile.errorString() << std::endl;
         return -1;
     }
 
