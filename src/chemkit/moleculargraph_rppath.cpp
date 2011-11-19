@@ -41,6 +41,8 @@
 #include <set>
 #include <algorithm>
 
+#include <Eigen/Core>
+
 #include "ring.h"
 #include "foreach.h"
 
@@ -48,44 +50,7 @@ namespace chemkit {
 
 namespace {
 
-// === DistanceMatrix ====================================================== //
-class DistanceMatrix
-{
-public:
-    // construction and destruction
-    DistanceMatrix(int size);
-    ~DistanceMatrix();
-
-    // operators
-    int operator()(int i, int j) const;
-    int& operator()(int i, int j);
-
-private:
-    int m_size;
-    int *m_values;
-};
-
-DistanceMatrix::DistanceMatrix(int size)
-{
-    m_size = size;
-    m_values = new int[size*size];
-    memset(m_values, 0, size*size*sizeof(int));
-}
-
-DistanceMatrix::~DistanceMatrix()
-{
-    delete [] m_values;
-}
-
-int DistanceMatrix::operator()(int i, int j) const
-{
-    return m_values[i * m_size + j];
-}
-
-int& DistanceMatrix::operator()(int i, int j)
-{
-    return m_values[i * m_size + j];
-}
+typedef Eigen::Matrix<int, Eigen::Dynamic, Eigen::Dynamic> DistanceMatrix;
 
 // === PidMatrix =========================================================== //
 // The PidMatrix class implements a path-included distance matrix.
@@ -394,7 +359,7 @@ std::vector<Ring *> MolecularGraph::sssr_rpPath(const MolecularGraph *graph)
     }
 
     // algorithm 1 - create the distance and pid matrices
-    DistanceMatrix D(n);
+    DistanceMatrix D(n, n);
     PidMatrix P(n);
     PidMatrix Pt(n);
 
