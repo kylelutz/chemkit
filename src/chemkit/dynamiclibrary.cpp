@@ -184,6 +184,26 @@ void* DynamicLibrary::resolve(const std::string &symbol)
 #endif
 }
 
+/// Resolves \p symbol and returns its address as a function
+/// pointer. Returns \c 0 if the symbol does not exist.
+DynamicLibrary::Function DynamicLibrary::resolveFunction(const std::string &symbol)
+{
+    void *address = resolve(symbol);
+    if(!address){
+        return 0;
+    }
+
+    union FunctionPointer {
+        void *address;
+        Function function;
+    };
+
+    FunctionPointer pointer;
+    pointer.address = address;
+
+    return pointer.function;
+}
+
 // --- Error Handling ------------------------------------------------------ //
 void DynamicLibrary::setErrorString(const std::string &errorString)
 {

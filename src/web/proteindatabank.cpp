@@ -175,7 +175,7 @@ QByteArray ProteinDataBank::downloadFileData(const QString &id, const QString &f
                                                                                                   .arg(id.toUpper()));
 
     return DownloadThread::download(url);
-};
+}
 
 // --- Error Handling ------------------------------------------------------ //
 void ProteinDataBank::setErrorString(const QString &error)

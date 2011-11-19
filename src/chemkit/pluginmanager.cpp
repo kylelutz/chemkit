@@ -125,7 +125,7 @@ bool PluginManager::loadPlugin(const std::string &fileName)
     }
 
     typedef Plugin* (*InitFunction)();
-    InitFunction initFunction = reinterpret_cast<InitFunction>(library->resolve("chemkit_plugin_init"));
+    InitFunction initFunction = reinterpret_cast<InitFunction>(library->resolveFunction("chemkit_plugin_init"));
     if(!initFunction){
         std::cerr << "PluginManager: Error: Failed to load plugin: (" << fileName << "):"
                   << "Plugin contains no init() function." << std::endl;

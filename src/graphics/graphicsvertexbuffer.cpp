@@ -51,6 +51,20 @@ PFNGLBUFFERDATAPROC glBufferData = 0;
 PFNGLBUFFERSUBDATAPROC glBufferSubData = 0;
 PFNGLDELETEBUFFERSPROC glDeleteBuffers = 0;
 
+template<typename T>
+T function_pointer_cast(void *address)
+{
+    union FunctionPointer {
+        void *address;
+        T function;
+    };
+
+    FunctionPointer pointer;
+    pointer.address = address;
+
+    return pointer.function;
+}
+
 void setupGlFunctions()
 {
     const QGLContext *context = QGLContext::currentContext();
@@ -59,7 +73,7 @@ void setupGlFunctions()
     }
 
     if(!glGenBuffers){
-        glGenBuffers = (PFNGLGENBUFFERSPROC) context->getProcAddress("glGenBuffersARB");
+        glGenBuffers = function_pointer_cast<PFNGLGENBUFFERSPROC>(context->getProcAddress("glGenBuffersARB"));
 
         if(!glGenBuffers){
             return;
@@ -67,7 +81,7 @@ void setupGlFunctions()
     }
 
     if(!glBindBuffer){
-        glBindBuffer = (PFNGLBINDBUFFERPROC) context->getProcAddress("glBindBufferARB");
+        glBindBuffer = function_pointer_cast<PFNGLBINDBUFFERPROC>(context->getProcAddress("glBindBufferARB"));
 
         if(!glBindBuffer){
             return;
@@ -75,7 +89,7 @@ void setupGlFunctions()
     }
 
     if(!glBufferData){
-        glBufferData = (PFNGLBUFFERDATAPROC) context->getProcAddress("glBufferDataARB");
+        glBufferData = function_pointer_cast<PFNGLBUFFERDATAPROC>(context->getProcAddress("glBufferDataARB"));
 
         if(!glBufferData){
             return;
@@ -83,7 +97,7 @@ void setupGlFunctions()
     }
 
     if(!glBufferSubData){
-        glBufferSubData = (PFNGLBUFFERSUBDATAPROC) context->getProcAddress("glBufferSubDataARB");
+        glBufferSubData = function_pointer_cast<PFNGLBUFFERSUBDATAPROC>(context->getProcAddress("glBufferSubDataARB"));
 
         if(!glBufferSubData){
             return;
@@ -91,7 +105,7 @@ void setupGlFunctions()
     }
 
     if(!glDeleteBuffers){
-        glDeleteBuffers = (PFNGLDELETEBUFFERSPROC) context->getProcAddress("glDeleteBuffersARB");
+        glDeleteBuffers = function_pointer_cast<PFNGLDELETEBUFFERSPROC>(context->getProcAddress("glDeleteBuffersARB"));
 
         if(!glDeleteBuffers){
             return;

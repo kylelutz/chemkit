@@ -53,4 +53,4 @@ chemkit::md::ForceField* AmberPlugin::createAmberForceField()
     return new AmberForceField;
 }
 
-CHEMKIT_EXPORT_PLUGIN(amber, AmberPlugin);
+CHEMKIT_EXPORT_PLUGIN(amber, AmberPlugin)

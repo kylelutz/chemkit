@@ -61,4 +61,4 @@ chemkit::MolecularDescriptor* HydrogenBondsPlugin::createAcceptorsDescriptor()
     return new HydrogenBondAcceptorsDescriptor;
 }
 
-CHEMKIT_EXPORT_PLUGIN(hydrogenbonds, HydrogenBondsPlugin);
+CHEMKIT_EXPORT_PLUGIN(hydrogenbonds, HydrogenBondsPlugin)

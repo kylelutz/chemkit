@@ -47,6 +47,9 @@ class DynamicLibraryPrivate;
 class DynamicLibrary
 {
 public:
+    // typedefs
+    typedef void (*Function)();
+
     // construction and destruction
     DynamicLibrary();
     DynamicLibrary(const std::string &fileName);
@@ -62,6 +65,7 @@ public:
 
     // symbol reslolution
     void* resolve(const std::string &symbol);
+    Function resolveFunction(const std::string &symbol);
 
     // error handling
     std::string errorString() const;

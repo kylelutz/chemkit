@@ -114,9 +114,9 @@ bool XtcFileFormat::read(std::istream &input, chemkit::md::TrajectoryFile *file)
         frame->setUnitCell(new chemkit::UnitCell(x * 10, y * 10, z * 10));
 
         // read coordinates
-        float coordinateData[3 * atomCount];
+        std::vector<float> coordinateData(3 * atomCount);
         float precision = 1000.0f;
-        xdr3dfcoord(&xdrs, coordinateData, &atomCount, &precision);
+        xdr3dfcoord(&xdrs, &coordinateData[0], &atomCount, &precision);
 
         chemkit::Coordinates coordinates(atomCount);
 

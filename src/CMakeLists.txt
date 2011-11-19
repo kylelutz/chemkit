@@ -1,6 +1,6 @@
 # set compiler warning flags
 if(CMAKE_COMPILER_IS_GNUCXX)
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fvisibility=hidden -fvisibility-inlines-hidden -ansi -Wall -Wextra")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fvisibility=hidden -fvisibility-inlines-hidden -ansi -pedantic -Wall -Wextra -Wno-long-long")
 endif()
 
 macro(add_chemkit_library library_name)

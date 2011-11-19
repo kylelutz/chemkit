@@ -55,7 +55,7 @@ public:
         SettingUp,
         SetupFailed,
         UpdateReady,
-        Converged,
+        Converged
     };
 
     // construction and destruction
