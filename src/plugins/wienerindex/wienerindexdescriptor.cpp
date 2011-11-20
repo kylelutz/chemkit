@@ -54,9 +54,15 @@ chemkit::Variant WienerIndexDescriptor::value(const chemkit::Molecule *molecule)
 
     for(int i = 0; i < molecule->atomCount(); i++){
         const chemkit::Atom *a = molecule->atom(i);
+        if(a->isTerminalHydrogen()){
+            continue;
+        }
 
         for(int j = i + 1; j < molecule->size(); j++){
             const chemkit::Atom *b = molecule->atom(j);
+            if(b->isTerminalHydrogen()){
+                continue;
+            }
 
             index += a->atomCountTo(b);
         }

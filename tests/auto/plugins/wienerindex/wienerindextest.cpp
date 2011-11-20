@@ -50,7 +50,7 @@ void WienerIndexTest::ethane()
 {
     chemkit::Molecule ethane("CC", "smiles");
     QCOMPARE(ethane.formula(), std::string("C2H6"));
-    QCOMPARE(ethane.descriptor("wiener-index").toInt(), 58);
+    QCOMPARE(ethane.descriptor("wiener-index").toInt(), 1);
 }
 
 QTEST_APPLESS_MAIN(WienerIndexTest)
