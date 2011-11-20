@@ -46,11 +46,30 @@ void WienerIndexTest::initTestCase()
     QVERIFY(std::find(descriptors.begin(), descriptors.end(), "wiener-index") != descriptors.end());
 }
 
-void WienerIndexTest::ethane()
+void WienerIndexTest::test_data()
 {
-    chemkit::Molecule ethane("CC", "smiles");
-    QCOMPARE(ethane.formula(), std::string("C2H6"));
-    QCOMPARE(ethane.descriptor("wiener-index").toInt(), 1);
+    QTest::addColumn<QString>("smiles");
+    QTest::addColumn<QString>("formula");
+    QTest::addColumn<int>("wienerIndex");
+
+    QTest::newRow("ethane") << "CC" << "C2H6" << 1;
+    QTest::newRow("butane") << "CCC" << "C3H8" << 4;
+    QTest::newRow("cyclohexane") << "C1CCCCC1" << "C6H12" << 27;
+    QTest::newRow("toluene") << "Cc1ccccc1" << "C7H8" << 42;
+    QTest::newRow("naphthalene") << "c1ccc2ccccc2c1" << "C10H8" << 109;
+    QTest::newRow("biotin") << "OC(=O)CCCC[C@@H]1SC[C@@H]2NC(=O)N[C@H]12" << "C10H16N2O3S" << 500;
+    QTest::newRow("adenosine") << "Nc1ncnc2n(cnc12)[C@@H]1O[C@H](CO)[C@@H](O)[C@H]1O" << "C10H13N5O4" << 657;
+}
+
+void WienerIndexTest::test()
+{
+    QFETCH(QString, smiles);
+    QFETCH(QString, formula);
+    QFETCH(int, wienerIndex);
+
+    chemkit::Molecule molecule(smiles.toStdString(), "smiles");
+    QCOMPARE(molecule.formula(), formula.toStdString());
+    QCOMPARE(molecule.descriptor("wiener-index").toInt(), wienerIndex);
 }
 
 QTEST_APPLESS_MAIN(WienerIndexTest)

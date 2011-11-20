@@ -44,7 +44,8 @@ class WienerIndexTest : public QObject
 
     private slots:
         void initTestCase();
-        void ethane();
+        void test_data();
+        void test();
 };
 
 #endif // WIENERINDEXTEST_H
