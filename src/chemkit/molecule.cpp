@@ -276,16 +276,12 @@ std::string Molecule::formula(const std::string &format) const
 /// \see MolecularDescriptor
 Variant Molecule::descriptor(const std::string &name) const
 {
-    MolecularDescriptor *descriptor = MolecularDescriptor::create(name);
+    boost::scoped_ptr<MolecularDescriptor> descriptor(MolecularDescriptor::create(name));
     if(!descriptor){
         return Variant();
     }
 
-    Variant value = descriptor->value(this);
-
-    delete descriptor;
-
-    return value;
+    return descriptor->value(this);
 }
 
 /// Returns the total molar mass of the molecule. Mass is in g/mol.
