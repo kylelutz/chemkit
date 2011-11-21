@@ -139,14 +139,12 @@ Molecule::Molecule(const std::string &formula, const std::string &format)
 {
     m_stereochemistry = 0;
 
-    LineFormat *lineFormat = LineFormat::create(format);
+    boost::scoped_ptr<LineFormat> lineFormat(LineFormat::create(format));
     if(!lineFormat){
         return;
     }
 
     lineFormat->read(formula, this);
-
-    delete lineFormat;
 }
 
 /// Creates a new molecule that is a copy of \p molecule.
