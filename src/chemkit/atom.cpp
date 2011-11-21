@@ -238,26 +238,6 @@ int Atom::bondCount() const
     return bonds().size();
 }
 
-/// Returns a list of bonds between the atom and the other atom.
-std::vector<Bond *> Atom::bondPathTo(const Atom *atom) const
-{
-    return m_molecule->bondPathBetween(this, atom);
-}
-
-/// Returns the number of bonds between the atom and the other atom.
-int Atom::bondCountTo(const Atom *atom) const
-{
-    return m_molecule->bondCountBetween(this, atom);
-}
-
-/// Returns the number of bonds between the atom and the other atom.
-/// Returns \c 0 if \p maxCount is exceeded while searching for
-/// \p atom.
-int Atom::bondCountTo(const Atom *atom, int maxCount) const
-{
-    return m_molecule->bondCountBetween(this, atom, maxCount);
-}
-
 /// Returns the number of bonds to the atom.
 int Atom::valence() const
 {
@@ -319,26 +299,6 @@ int Atom::neighborCount(const Element &element) const
     }
 
     return count;
-}
-
-/// Returns the path of atoms between the atom and the other atom.
-std::vector<Atom *> Atom::atomPathTo(const Atom *atom) const
-{
-    return m_molecule->atomPathBetween(this, atom);
-}
-
-/// Returns the number of atoms between the atom and the other atom.
-int Atom::atomCountTo(const Atom *atom) const
-{
-    return m_molecule->atomCountBetween(this, atom);
-}
-
-/// Returns the number of atoms between the atom and the other atom.
-/// Returns \c 0 if \p maxCount is exceeded while searching for
-/// \p atom.
-int Atom::atomCountTo(const Atom *atom, int maxCount) const
-{
-    return m_molecule->atomCountBetween(this, atom, maxCount);
 }
 
 /// Returns \c true if the atom is bonded to the other atom.

@@ -84,18 +84,12 @@ public:
     // structure
     std::vector<Bond *> bonds() const;
     int bondCount() const;
-    std::vector<Bond *> bondPathTo(const Atom *atom) const;
-    int bondCountTo(const Atom *atom) const;
-    int bondCountTo(const Atom *atom, int maxCount) const;
     int valence() const;
     Bond* bondTo(const Atom *atom) const;
     Atom* neighbor(int index) const;
     std::vector<Atom *> neighbors() const;
     int neighborCount() const;
     int neighborCount(const Element &element) const;
-    std::vector<Atom *> atomPathTo(const Atom *atom) const;
-    int atomCountTo(const Atom *atom) const;
-    int atomCountTo(const Atom *atom, int maxCount) const;
     bool isBondedTo(const Atom *atom) const;
     bool isBondedTo(const Element &element) const;
     bool isBondedTo(const Element &element, int bondOrder) const;

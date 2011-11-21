@@ -179,12 +179,6 @@ public:
 
 private:
     // internal methods
-    std::vector<Atom *> atomPathBetween(const Atom *a, const Atom *b) const;
-    int atomCountBetween(const Atom *a, const Atom *b) const;
-    int atomCountBetween(const Atom *a, const Atom *b, int maxCount) const;
-    std::vector<Bond *> bondPathBetween(const Atom *a, const Atom *b) const;
-    int bondCountBetween(const Atom *a, const Atom *b) const;
-    int bondCountBetween(const Atom *a, const Atom *b, int maxCount) const;
     void setRingsPerceived(bool perceived) const;
     bool ringsPerceived() const;
     void setFragmentsPerceived(bool perceived) const;

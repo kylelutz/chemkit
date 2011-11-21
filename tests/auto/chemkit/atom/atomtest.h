@@ -57,7 +57,6 @@ class AtomTest : public QObject
         void rings();
         void position();
         void distance();
-        void pathTo();
 };
 
 #endif // ATOMTEST_H
