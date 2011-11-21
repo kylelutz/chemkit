@@ -36,6 +36,7 @@
 #ifndef WIENERINDEXDESCRIPTOR_H
 #define WIENERINDEXDESCRIPTOR_H
 
+#include <chemkit/atom.h>
 #include <chemkit/moleculardescriptor.h>
 
 class WienerIndexDescriptor : public chemkit::MolecularDescriptor

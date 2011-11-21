@@ -35,8 +35,55 @@
 
 #include "wienerindexdescriptor.h"
 
+#include <set>
+#include <vector>
+
 #include <chemkit/atom.h>
+#include <chemkit/foreach.h>
 #include <chemkit/molecule.h>
+
+namespace {
+
+// Returns the graph distance between the two atoms.
+int distanceBetween(const chemkit::Atom *a, const chemkit::Atom *b)
+{
+    int distance = 0;
+
+    std::set<const chemkit::Atom*> visited;
+
+    std::vector<const chemkit::Atom*> row;
+    row.push_back(a);
+
+    while(!row.empty()){
+        std::vector<const chemkit::Atom*> nextRow;
+
+        foreach(const chemkit::Atom *atom, row){
+            if(atom == b){
+                return distance;
+            }
+
+            visited.insert(atom);
+
+            foreach(const chemkit::Atom *neighbor, atom->neighbors()){
+                if(visited.find(neighbor) != visited.end()){
+                    continue;
+                }
+                else if(neighbor->isTerminalHydrogen()){
+                    continue;
+                }
+
+                nextRow.push_back(neighbor);
+            }
+        }
+
+        row = nextRow;
+        distance++;
+    }
+
+    return 0;
+}
+
+} // end anonymous namespace
 
 WienerIndexDescriptor::WienerIndexDescriptor()
     : chemkit::MolecularDescriptor("wiener-index")
@@ -64,7 +111,7 @@ chemkit::Variant WienerIndexDescriptor::value(const chemkit::Molecule *molecule)
                 continue;
             }
 
-            index += a->atomCountTo(b);
+            index += distanceBetween(a, b);
         }
     }
 
