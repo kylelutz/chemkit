@@ -40,6 +40,8 @@
 #include <sstream>
 #include <algorithm>
 
+#include <boost/scoped_ptr.hpp>
+
 #include <Eigen/Core>
 #include <Eigen/Geometry>
 
@@ -254,16 +256,12 @@ std::string Molecule::formula() const
 /// \see LineFormat
 std::string Molecule::formula(const std::string &format) const
 {
-    LineFormat *lineFormat = LineFormat::create(format);
+    boost::scoped_ptr<LineFormat> lineFormat(LineFormat::create(format));
     if(!lineFormat){
         return std::string();
     }
 
-    std::string formula = lineFormat->write(this);
-
-    delete lineFormat;
-
-    return formula;
+    return lineFormat->write(this);
 }
 
 /// Calculates and returns the molecular descriptor \p name. If the
