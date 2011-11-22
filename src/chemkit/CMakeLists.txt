@@ -21,6 +21,7 @@ set(HEADERS
   atom.h
   atom-inline.h
   atomtyper.h
+  bitset.h
   bond.h
   bond-inline.h
   bondpredictor.h
