@@ -25,6 +25,7 @@ endmacro(add_chemkit_plugin)
 
 add_subdirectory(amber)
 add_subdirectory(cml)
+add_subdirectory(countdescriptors)
 add_subdirectory(cube)
 add_subdirectory(fhz)
 add_subdirectory(formula)
