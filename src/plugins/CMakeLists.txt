@@ -5,6 +5,9 @@ macro(add_chemkit_plugin plugin_name)
   # add install target
   install(TARGETS ${plugin_name} DESTINATION lib/chemkit/plugins/)
 
+  # remove 'lib' prefix
+  set_target_properties(${plugin_name} PROPERTIES PREFIX "")
+
   # copy plugin into build directory
   get_target_property(plugin_location ${plugin_name} LOCATION)
   get_filename_component(plugin_filename ${plugin_location} NAME)
