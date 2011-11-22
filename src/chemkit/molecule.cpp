@@ -48,6 +48,7 @@
 #include "atom.h"
 #include "bond.h"
 #include "ring.h"
+#include "bitset.h"
 #include "point3.h"
 #include "element.h"
 #include "foreach.h"
@@ -856,12 +857,12 @@ void Molecule::perceiveFragments() const
     size_t position = 0;
 
     // bitset marking each atom not visited yet
-    boost::dynamic_bitset<> unvisited(m_atoms.size());
+    Bitset unvisited(m_atoms.size());
     unvisited.set();
 
     for(;;){
         // bitset marking the atoms contained in the fragment
-        boost::dynamic_bitset<> bitset(m_atoms.size());
+        Bitset bitset(m_atoms.size());
 
         // perform depth-first search
         std::vector<const Atom *> row;
@@ -890,7 +891,7 @@ void Molecule::perceiveFragments() const
 
         // find next unvisited atom
         position = unvisited.find_next(position);
-        if(position == boost::dynamic_bitset<>::npos){
+        if(position == Bitset::npos){
             break;
         }
     }

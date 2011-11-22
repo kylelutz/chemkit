@@ -55,7 +55,7 @@ namespace chemkit {
 // --- Construction and Destruction ---------------------------------------- //
 /// Creates a new fragment that contains all the atoms attached to
 /// \p root.
-Fragment::Fragment(Molecule *molecule, const boost::dynamic_bitset<> &bitset)
+Fragment::Fragment(Molecule *molecule, const Bitset &bitset)
     : m_molecule(molecule),
       m_bitset(bitset)
 {

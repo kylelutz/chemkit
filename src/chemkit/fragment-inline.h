@@ -65,7 +65,7 @@ inline Atom* Fragment::atom(int index) const
     while(index--){
         position = m_bitset.find_next(position);
 
-        if(position == boost::dynamic_bitset<>::npos){
+        if(position == Bitset::npos){
             return 0;
         }
     }

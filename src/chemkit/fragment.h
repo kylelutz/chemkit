@@ -40,7 +40,7 @@
 
 #include <vector>
 
-#include <boost/dynamic_bitset.hpp>
+#include "bitset.h"
 
 namespace chemkit {
 
@@ -65,7 +65,7 @@ public:
     bool contains(const Bond *bond) const;
 
 private:
-    Fragment(Molecule *molecule, const boost::dynamic_bitset<> &bitset);
+    Fragment(Molecule *molecule, const Bitset &bitset);
     ~Fragment();
 
     CHEMKIT_DISABLE_COPY(Fragment)
@@ -74,7 +74,7 @@ private:
 
 private:
     Molecule* m_molecule;
-    boost::dynamic_bitset<> m_bitset;
+    Bitset m_bitset;
 };
 
 } // end chemkit namespace
