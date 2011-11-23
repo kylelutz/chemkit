@@ -9,6 +9,8 @@ set(HEADERS
   forcefieldatom.h
   forcefieldcalculation.h
   forcefieldcalculation-inline.h
+  forcefieldenergydescriptor.h
+  forcefieldenergydescriptor-inline.h
   forcefield.h
   forcefieldinteractions.h
   md.h

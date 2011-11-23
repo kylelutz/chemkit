@@ -35,6 +35,8 @@
 
 #include "mmffplugin.h"
 
+#include <chemkit/forcefieldenergydescriptor.h>
+
 #include "mmffatomtyper.h"
 #include "mmffforcefield.h"
 #include "mmffparametersdata.h"
@@ -45,6 +47,7 @@ MmffPlugin::MmffPlugin()
 {
     registerPluginClass<chemkit::AtomTyper>("mmff", createMmffAtomTyper);
     registerPluginClass<chemkit::md::ForceField>("mmff", createMmffForceField);
+    registerPluginClass<chemkit::MolecularDescriptor>("mmff-energy", createMmffEnergyDescriptor);
     registerPluginClass<chemkit::PartialChargePredictor>("mmff", createMmffPartialChargePredictor);
 }
 
@@ -82,6 +85,11 @@ chemkit::AtomTyper* MmffPlugin::createMmffAtomTyper()
 chemkit::md::ForceField* MmffPlugin::createMmffForceField()
 {
     return new MmffForceField;
+}
+
+chemkit::MolecularDescriptor* MmffPlugin::createMmffEnergyDescriptor()
+{
+    return new chemkit::md::ForceFieldEnergyDescriptor<MmffForceField>("mmff-energy");
 }
 
 chemkit::PartialChargePredictor* MmffPlugin::createMmffPartialChargePredictor()

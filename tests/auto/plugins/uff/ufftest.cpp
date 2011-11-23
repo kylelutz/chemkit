@@ -41,6 +41,7 @@
 #include <chemkit/atomtyper.h>
 #include <chemkit/forcefield.h>
 #include <chemkit/moleculefile.h>
+#include <chemkit/moleculardescriptor.h>
 
 void UffTest::initTestCase()
 {
@@ -49,6 +50,9 @@ void UffTest::initTestCase()
 
     std::vector<std::string> forceFields = chemkit::md::ForceField::forceFields();
     QVERIFY(std::find(forceFields.begin(), forceFields.end(), "uff") != forceFields.end());
+
+    std::vector<std::string> descriptors = chemkit::MolecularDescriptor::descriptors();
+    QVERIFY(std::find(descriptors.begin(), descriptors.end(), "uff-energy") != descriptors.end());
 }
 
 QTEST_APPLESS_MAIN(UffTest)

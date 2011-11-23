@@ -42,6 +42,7 @@
 #include <chemkit/forcefield.h>
 #include <chemkit/moleculefile.h>
 #include <chemkit/forcefieldatom.h>
+#include <chemkit/moleculardescriptor.h>
 
 const std::string dataPath = "../../../data/";
 
@@ -49,6 +50,9 @@ void AmberTest::initTestCase()
 {
     std::vector<std::string> forceFields = chemkit::md::ForceField::forceFields();
     QVERIFY(std::find(forceFields.begin(), forceFields.end(), "amber") != forceFields.end());
+
+    std::vector<std::string> descriptors = chemkit::MolecularDescriptor::descriptors();
+    QVERIFY(std::find(descriptors.begin(), descriptors.end(), "opls-energy") != descriptors.end());
 }
 
 void AmberTest::adenosine()
@@ -108,6 +112,9 @@ void AmberTest::adenosine()
     QCOMPARE(forceField->calculationCount(), 585);
     QCOMPARE(qRound(forceField->energy()), 1460);
 
+    // check amber energy descriptor
+    QCOMPARE(qRound(molecule->descriptor("amber-energy").toDouble()), 1460);
+
     delete forceField;
 }
 
@@ -149,6 +156,9 @@ void AmberTest::serine()
 
     QCOMPARE(forceField->calculationCount(), 118);
     QCOMPARE(qRound(forceField->energy()), 322);
+
+    // check amber energy descriptor
+    QCOMPARE(qRound(molecule->descriptor("amber-energy").toDouble()), 322);
 
     delete forceField;
 }

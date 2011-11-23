@@ -43,6 +43,7 @@
 #include <chemkit/atomtyper.h>
 #include <chemkit/forcefield.h>
 #include <chemkit/moleculefile.h>
+#include <chemkit/moleculardescriptor.h>
 #include <chemkit/partialchargepredictor.h>
 
 const std::string dataPath = "../../../data/";
@@ -57,6 +58,9 @@ void MmffTest::initTestCase()
 
     std::vector<std::string> forceFields = chemkit::md::ForceField::forceFields();
     QVERIFY(std::find(forceFields.begin(), forceFields.end(), "mmff") != forceFields.end());
+
+    std::vector<std::string> descriptors = chemkit::MolecularDescriptor::descriptors();
+    QVERIFY(std::find(descriptors.begin(), descriptors.end(), "mmff-energy") != descriptors.end());
 }
 
 // The validate() method validates the MMFF force field using the MMFF94

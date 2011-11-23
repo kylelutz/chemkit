@@ -39,6 +39,7 @@
 #include <chemkit/plugin.h>
 #include <chemkit/atomtyper.h>
 #include <chemkit/forcefield.h>
+#include <chemkit/moleculardescriptor.h>
 
 class UffPlugin : public chemkit::Plugin
 {
@@ -48,6 +49,7 @@ public:
 
     static chemkit::AtomTyper* createUffAtomTyper();
     static chemkit::md::ForceField* createUffForceField();
+    static chemkit::MolecularDescriptor* createUffEnergyDescriptor();
 };
 
 #endif // UFFPLUGIN_H
