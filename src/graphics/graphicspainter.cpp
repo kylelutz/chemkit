@@ -378,10 +378,10 @@ void GraphicsPainter::setMaterial(const GraphicsMaterial *material)
 {
     glMateriali(GL_FRONT, GL_SHININESS, material->shininess());
 
-    float specular[] = {material->specularColor().redF(),
-                                material->specularColor().greenF(),
-                                material->specularColor().blueF(),
-                                material->specularColor().alphaF()};
+    float specular[] = {static_cast<float>(material->specularColor().redF()),
+                        static_cast<float>(material->specularColor().greenF()),
+                        static_cast<float>(material->specularColor().blueF()),
+                        static_cast<float>(material->specularColor().alphaF())};
     glMaterialfv(GL_FRONT, GL_SPECULAR, specular);
 }
 
