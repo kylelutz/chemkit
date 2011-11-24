@@ -39,12 +39,12 @@
 
 // === OplsCalculation ===================================================== //
 OplsCalculation::OplsCalculation(int type, int atomCount, int parameterCount)
-    : chemkit::md::ForceFieldCalculation(type, atomCount, parameterCount)
+    : chemkit::ForceFieldCalculation(type, atomCount, parameterCount)
 {
 }
 
 // === OplsBondStrechCalculation =========================================== //
-OplsBondStrechCalculation::OplsBondStrechCalculation(const chemkit::md::ForceFieldAtom *a, const chemkit::md::ForceFieldAtom *b)
+OplsBondStrechCalculation::OplsBondStrechCalculation(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b)
     : OplsCalculation(BondStrech, 2, 2)
 {
     setAtom(0, a);
@@ -53,8 +53,8 @@ OplsBondStrechCalculation::OplsBondStrechCalculation(const chemkit::md::ForceFie
 
 bool OplsBondStrechCalculation::setup(const OplsParameters *parameters)
 {
-    const chemkit::md::ForceFieldAtom *a = atom(0);
-    const chemkit::md::ForceFieldAtom *b = atom(1);
+    const chemkit::ForceFieldAtom *a = atom(0);
+    const chemkit::ForceFieldAtom *b = atom(1);
 
     int typeA = boost::lexical_cast<int>(a->type());
     int typeB = boost::lexical_cast<int>(b->type());
@@ -72,8 +72,8 @@ bool OplsBondStrechCalculation::setup(const OplsParameters *parameters)
 
 chemkit::Real OplsBondStrechCalculation::energy() const
 {
-    const chemkit::md::ForceFieldAtom *a = atom(0);
-    const chemkit::md::ForceFieldAtom *b = atom(1);
+    const chemkit::ForceFieldAtom *a = atom(0);
+    const chemkit::ForceFieldAtom *b = atom(1);
 
     chemkit::Real kb = parameter(0);
     chemkit::Real r0 = parameter(1);
@@ -85,8 +85,8 @@ chemkit::Real OplsBondStrechCalculation::energy() const
 
 std::vector<chemkit::Vector3> OplsBondStrechCalculation::gradient() const
 {
-    const chemkit::md::ForceFieldAtom *a = atom(0);
-    const chemkit::md::ForceFieldAtom *b = atom(1);
+    const chemkit::ForceFieldAtom *a = atom(0);
+    const chemkit::ForceFieldAtom *b = atom(1);
 
     chemkit::Real kb = parameter(0);
     chemkit::Real r0 = parameter(1);
@@ -105,7 +105,7 @@ std::vector<chemkit::Vector3> OplsBondStrechCalculation::gradient() const
 }
 
 // === OplsAngleBendCalculation ============================================ //
-OplsAngleBendCalculation::OplsAngleBendCalculation(const chemkit::md::ForceFieldAtom *a, const chemkit::md::ForceFieldAtom *b, const chemkit::md::ForceFieldAtom *c)
+OplsAngleBendCalculation::OplsAngleBendCalculation(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b, const chemkit::ForceFieldAtom *c)
     : OplsCalculation(AngleBend, 3, 2)
 {
     setAtom(0, a);
@@ -115,9 +115,9 @@ OplsAngleBendCalculation::OplsAngleBendCalculation(const chemkit::md::ForceField
 
 bool OplsAngleBendCalculation::setup(const OplsParameters *parameters)
 {
-    const chemkit::md::ForceFieldAtom *a = atom(0);
-    const chemkit::md::ForceFieldAtom *b = atom(1);
-    const chemkit::md::ForceFieldAtom *c = atom(2);
+    const chemkit::ForceFieldAtom *a = atom(0);
+    const chemkit::ForceFieldAtom *b = atom(1);
+    const chemkit::ForceFieldAtom *c = atom(2);
 
     int typeA = boost::lexical_cast<int>(a->type());
     int typeB = boost::lexical_cast<int>(b->type());
@@ -136,9 +136,9 @@ bool OplsAngleBendCalculation::setup(const OplsParameters *parameters)
 
 chemkit::Real OplsAngleBendCalculation::energy() const
 {
-    const chemkit::md::ForceFieldAtom *a = atom(0);
-    const chemkit::md::ForceFieldAtom *b = atom(1);
-    const chemkit::md::ForceFieldAtom *c = atom(2);
+    const chemkit::ForceFieldAtom *a = atom(0);
+    const chemkit::ForceFieldAtom *b = atom(1);
+    const chemkit::ForceFieldAtom *c = atom(2);
 
     chemkit::Real ka = parameter(0);
     chemkit::Real theta0 = parameter(1);
@@ -150,9 +150,9 @@ chemkit::Real OplsAngleBendCalculation::energy() const
 
 std::vector<chemkit::Vector3> OplsAngleBendCalculation::gradient() const
 {
-    const chemkit::md::ForceFieldAtom *a = atom(0);
-    const chemkit::md::ForceFieldAtom *b = atom(1);
-    const chemkit::md::ForceFieldAtom *c = atom(2);
+    const chemkit::ForceFieldAtom *a = atom(0);
+    const chemkit::ForceFieldAtom *b = atom(1);
+    const chemkit::ForceFieldAtom *c = atom(2);
 
     chemkit::Real ka = parameter(0);
     chemkit::Real theta0 = parameter(1);
@@ -172,7 +172,7 @@ std::vector<chemkit::Vector3> OplsAngleBendCalculation::gradient() const
 }
 
 // === OplsTorsionCalculation ============================================== //
-OplsTorsionCalculation::OplsTorsionCalculation(const chemkit::md::ForceFieldAtom *a, const chemkit::md::ForceFieldAtom *b, const chemkit::md::ForceFieldAtom *c, const chemkit::md::ForceFieldAtom *d)
+OplsTorsionCalculation::OplsTorsionCalculation(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b, const chemkit::ForceFieldAtom *c, const chemkit::ForceFieldAtom *d)
     : OplsCalculation(Torsion, 4, 3)
 {
     setAtom(0, a);
@@ -183,10 +183,10 @@ OplsTorsionCalculation::OplsTorsionCalculation(const chemkit::md::ForceFieldAtom
 
 bool OplsTorsionCalculation::setup(const OplsParameters *parameters)
 {
-    const chemkit::md::ForceFieldAtom *a = atom(0);
-    const chemkit::md::ForceFieldAtom *b = atom(1);
-    const chemkit::md::ForceFieldAtom *c = atom(2);
-    const chemkit::md::ForceFieldAtom *d = atom(3);
+    const chemkit::ForceFieldAtom *a = atom(0);
+    const chemkit::ForceFieldAtom *b = atom(1);
+    const chemkit::ForceFieldAtom *c = atom(2);
+    const chemkit::ForceFieldAtom *d = atom(3);
 
     int typeA = boost::lexical_cast<int>(a->type());
     int typeB = boost::lexical_cast<int>(b->type());
@@ -207,10 +207,10 @@ bool OplsTorsionCalculation::setup(const OplsParameters *parameters)
 
 chemkit::Real OplsTorsionCalculation::energy() const
 {
-    const chemkit::md::ForceFieldAtom *a = atom(0);
-    const chemkit::md::ForceFieldAtom *b = atom(1);
-    const chemkit::md::ForceFieldAtom *c = atom(2);
-    const chemkit::md::ForceFieldAtom *d = atom(3);
+    const chemkit::ForceFieldAtom *a = atom(0);
+    const chemkit::ForceFieldAtom *b = atom(1);
+    const chemkit::ForceFieldAtom *c = atom(2);
+    const chemkit::ForceFieldAtom *d = atom(3);
 
     chemkit::Real v1 = parameter(0);
     chemkit::Real v2 = parameter(1);
@@ -223,10 +223,10 @@ chemkit::Real OplsTorsionCalculation::energy() const
 
 std::vector<chemkit::Vector3> OplsTorsionCalculation::gradient() const
 {
-    const chemkit::md::ForceFieldAtom *a = atom(0);
-    const chemkit::md::ForceFieldAtom *b = atom(1);
-    const chemkit::md::ForceFieldAtom *c = atom(2);
-    const chemkit::md::ForceFieldAtom *d = atom(3);
+    const chemkit::ForceFieldAtom *a = atom(0);
+    const chemkit::ForceFieldAtom *b = atom(1);
+    const chemkit::ForceFieldAtom *c = atom(2);
+    const chemkit::ForceFieldAtom *d = atom(3);
 
     chemkit::Real v1 = parameter(0);
     chemkit::Real v2 = parameter(1);
@@ -248,7 +248,7 @@ std::vector<chemkit::Vector3> OplsTorsionCalculation::gradient() const
 }
 
 // === OplsNonbondedCalculation ============================================ //
-OplsNonbondedCalculation::OplsNonbondedCalculation(const chemkit::md::ForceFieldAtom *a, const chemkit::md::ForceFieldAtom *b)
+OplsNonbondedCalculation::OplsNonbondedCalculation(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b)
     : OplsCalculation(VanDerWaals | Electrostatic, 2, 5)
 {
     setAtom(0, a);
@@ -257,8 +257,8 @@ OplsNonbondedCalculation::OplsNonbondedCalculation(const chemkit::md::ForceField
 
 bool OplsNonbondedCalculation::setup(const OplsParameters *parameters)
 {
-    const chemkit::md::ForceFieldAtom *a = atom(0);
-    const chemkit::md::ForceFieldAtom *b = atom(1);
+    const chemkit::ForceFieldAtom *a = atom(0);
+    const chemkit::ForceFieldAtom *b = atom(1);
 
     int typeA = boost::lexical_cast<int>(a->type());
     int typeB = boost::lexical_cast<int>(b->type());
@@ -292,8 +292,8 @@ bool OplsNonbondedCalculation::setup(const OplsParameters *parameters)
 
 chemkit::Real OplsNonbondedCalculation::energy() const
 {
-    const chemkit::md::ForceFieldAtom *a = atom(0);
-    const chemkit::md::ForceFieldAtom *b = atom(1);
+    const chemkit::ForceFieldAtom *a = atom(0);
+    const chemkit::ForceFieldAtom *b = atom(1);
 
     chemkit::Real qa = parameter(0);
     chemkit::Real qb = parameter(1);
@@ -311,8 +311,8 @@ std::vector<chemkit::Vector3> OplsNonbondedCalculation::gradient() const
 {
     std::vector<chemkit::Vector3> gradient(2);
 
-    const chemkit::md::ForceFieldAtom *a = atom(0);
-    const chemkit::md::ForceFieldAtom *b = atom(1);
+    const chemkit::ForceFieldAtom *a = atom(0);
+    const chemkit::ForceFieldAtom *b = atom(1);
 
     chemkit::Real qa = parameter(0);
     chemkit::Real qb = parameter(1);

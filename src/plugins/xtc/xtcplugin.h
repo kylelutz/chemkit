@@ -45,7 +45,7 @@ public:
     XtcPlugin();
     ~XtcPlugin();
 
-    static chemkit::md::TrajectoryFileFormat* createXtcFormat();
+    static chemkit::TrajectoryFileFormat* createXtcFormat();
 };
 
 #endif // XTCPLUGIN_H

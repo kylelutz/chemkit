@@ -74,7 +74,7 @@ void SurfaceDescriptorsTest::test()
     QFETCH(int, solventAccessibleArea);
     QFETCH(int, solventAccessibleVolume);
 
-    chemkit::io::MoleculeFile file(dataPath + fileName.toStdString());
+    chemkit::MoleculeFile file(dataPath + fileName.toStdString());
     bool ok = file.read();
     if(!ok)
         qDebug() << file.errorString().c_str();

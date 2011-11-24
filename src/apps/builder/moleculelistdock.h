@@ -56,7 +56,7 @@ public:
     ~MoleculeListDock();
 
 private slots:
-    void fileChanged(chemkit::io::MoleculeFile *file);
+    void fileChanged(chemkit::MoleculeFile *file);
     void moleculeChanged(chemkit::Molecule *molecule);
     void itemSelectionChanged();
     void itemDoubleClicked(QTableWidgetItem *item);

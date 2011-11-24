@@ -44,7 +44,6 @@
 #include <chemkit/vector3.h>
 
 namespace chemkit {
-namespace md {
 
 class ForceField;
 class ForceFieldAtom;
@@ -117,7 +116,6 @@ private:
     ForceFieldCalculationPrivate* const d;
 };
 
-} // end md namespace
 } // end chemkit namespace
 
 #include "forcefieldcalculation-inline.h"

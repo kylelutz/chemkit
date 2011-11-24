@@ -46,7 +46,7 @@ MmffPlugin::MmffPlugin()
     : chemkit::Plugin("mmff")
 {
     registerPluginClass<chemkit::AtomTyper>("mmff", createMmffAtomTyper);
-    registerPluginClass<chemkit::md::ForceField>("mmff", createMmffForceField);
+    registerPluginClass<chemkit::ForceField>("mmff", createMmffForceField);
     registerPluginClass<chemkit::MolecularDescriptor>("mmff-energy", createMmffEnergyDescriptor);
     registerPluginClass<chemkit::PartialChargePredictor>("mmff", createMmffPartialChargePredictor);
 }
@@ -58,7 +58,7 @@ MmffPlugin::~MmffPlugin()
     }
 
     unregisterPluginClass<chemkit::AtomTyper>("mmff");
-    unregisterPluginClass<chemkit::md::ForceField>("mmff");
+    unregisterPluginClass<chemkit::ForceField>("mmff");
     unregisterPluginClass<chemkit::PartialChargePredictor>("mmff");
 }
 
@@ -82,14 +82,14 @@ chemkit::AtomTyper* MmffPlugin::createMmffAtomTyper()
     return new MmffAtomTyper;
 }
 
-chemkit::md::ForceField* MmffPlugin::createMmffForceField()
+chemkit::ForceField* MmffPlugin::createMmffForceField()
 {
     return new MmffForceField;
 }
 
 chemkit::MolecularDescriptor* MmffPlugin::createMmffEnergyDescriptor()
 {
-    return new chemkit::md::ForceFieldEnergyDescriptor<MmffForceField>("mmff-energy");
+    return new chemkit::ForceFieldEnergyDescriptor<MmffForceField>("mmff-energy");
 }
 
 chemkit::PartialChargePredictor* MmffPlugin::createMmffPartialChargePredictor()

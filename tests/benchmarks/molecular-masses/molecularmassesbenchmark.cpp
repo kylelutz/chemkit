@@ -46,7 +46,7 @@
 void MolecularMassesBenchmark::benchmark()
 {
     QBENCHMARK {
-        chemkit::io::MoleculeFile file("pubchem_sample_33.sdf");
+        chemkit::MoleculeFile file("pubchem_sample_33.sdf");
         bool ok = file.read();
         if(!ok)
             qDebug() << file.errorString().c_str();

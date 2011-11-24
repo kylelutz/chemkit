@@ -44,9 +44,6 @@ namespace chemkit {
 
 class UnitCell;
 class Coordinates;
-
-namespace md {
-
 class Trajectory;
 class TrajectoryFramePrivate;
 
@@ -80,7 +77,6 @@ private:
     TrajectoryFramePrivate* const d;
 };
 
-} // end md namespace
 } // end chemkit namespace
 
 #endif // CHEMKIT_TRAJECTORYFRAME_H

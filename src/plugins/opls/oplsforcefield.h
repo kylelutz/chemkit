@@ -40,7 +40,7 @@
 
 class OplsParameters;
 
-class OplsForceField : public chemkit::md::ForceField
+class OplsForceField : public chemkit::ForceField
 {
 public:
     // construction and destruction

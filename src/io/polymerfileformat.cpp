@@ -40,7 +40,6 @@
 #include <chemkit/pluginmanager.h>
 
 namespace chemkit {
-namespace io {
 
 // === PolymerFileFormatPrivate ============================================ //
 class PolymerFileFormatPrivate
@@ -124,5 +123,4 @@ std::vector<std::string> PolymerFileFormat::formats()
     return PluginManager::instance()->pluginClassNames<PolymerFileFormat>();
 }
 
-} // end io namespace
 } // end chemkit namespace

@@ -39,7 +39,6 @@
 #include <chemkit/molecule.h>
 
 namespace chemkit {
-namespace io {
 
 // === MoleculeFilePrivate ================================================= //
 class MoleculeFilePrivate
@@ -233,5 +232,4 @@ void MoleculeFile::quickWrite(const Molecule *molecule, const std::string &fileN
     file.removeMolecule(const_cast<Molecule *>(molecule));
 }
 
-} // end io namespace
 } // end chemkit namespace

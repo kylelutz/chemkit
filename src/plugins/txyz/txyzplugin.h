@@ -45,7 +45,7 @@ public:
     TxyzPlugin();
     ~TxyzPlugin();
 
-    static chemkit::io::MoleculeFileFormat* createTxyzFormat();
+    static chemkit::MoleculeFileFormat* createTxyzFormat();
 };
 
 #endif // TXYZPLUGIN_H

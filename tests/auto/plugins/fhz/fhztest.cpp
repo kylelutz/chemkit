@@ -45,7 +45,7 @@ const std::string dataPath = "../../../data/";
 
 void FhzTest::initTestCase()
 {
-    std::vector<std::string> formats = chemkit::io::MoleculeFileFormat::formats();
+    std::vector<std::string> formats = chemkit::MoleculeFileFormat::formats();
     QVERIFY(std::find(formats.begin(), formats.end(), "fh") != formats.end());
     QVERIFY(std::find(formats.begin(), formats.end(), "fhz") != formats.end());
 }
@@ -64,7 +64,7 @@ void FhzTest::read()
     QFETCH(QString, fileName);
     QFETCH(QString, formula);
 
-    chemkit::io::MoleculeFile file(dataPath + fileName.toStdString());
+    chemkit::MoleculeFile file(dataPath + fileName.toStdString());
     bool ok = file.read();
     if(!ok)
         qDebug() << file.errorString().c_str();

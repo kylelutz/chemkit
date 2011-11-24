@@ -40,15 +40,15 @@
 CubePlugin::CubePlugin()
     : chemkit::Plugin("cube")
 {
-    registerPluginClass<chemkit::io::MoleculeFileFormat>("cube", createCubeFormat);
+    registerPluginClass<chemkit::MoleculeFileFormat>("cube", createCubeFormat);
 }
 
 CubePlugin::~CubePlugin()
 {
-    unregisterPluginClass<chemkit::io::MoleculeFileFormat>("cube");
+    unregisterPluginClass<chemkit::MoleculeFileFormat>("cube");
 }
 
-chemkit::io::MoleculeFileFormat* CubePlugin::createCubeFormat()
+chemkit::MoleculeFileFormat* CubePlugin::createCubeFormat()
 {
     return new CubeFileFormat;
 }

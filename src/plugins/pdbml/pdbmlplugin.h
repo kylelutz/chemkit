@@ -45,7 +45,7 @@ public:
     PdbmlPlugin();
     ~PdbmlPlugin();
 
-    static chemkit::io::PolymerFileFormat* createPdbmlFormat();
+    static chemkit::PolymerFileFormat* createPdbmlFormat();
 };
 
 #endif // PDBMLPLUGIN_H

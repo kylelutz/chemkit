@@ -44,7 +44,6 @@
 #include <ostream>
 
 namespace chemkit {
-namespace md {
 
 class TrajectoryFile;
 class TrajectoryFileFormatPrivate;
@@ -80,7 +79,6 @@ private:
     TrajectoryFileFormatPrivate* const d;
 };
 
-} // end md namespace
 } // end chemkit namespace
 
 #endif // CHEMKIT_TRAJECTORYFILEFORMAT_H

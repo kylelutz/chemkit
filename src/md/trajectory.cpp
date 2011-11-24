@@ -42,7 +42,6 @@
 #include "trajectoryframe.h"
 
 namespace chemkit {
-namespace md {
 
 // === TrajectoryPrivate =================================================== //
 class TrajectoryPrivate
@@ -127,5 +126,4 @@ int Trajectory::frameCount() const
     return d->frames.size();
 }
 
-} // end md namespace
 } // end chemkit namespace

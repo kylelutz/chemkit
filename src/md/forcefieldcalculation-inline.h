@@ -44,7 +44,6 @@
 #include "forcefieldatom.h"
 
 namespace chemkit {
-namespace md {
 
 /// Returns the distance between atoms \p a and \p b. Distance is in
 /// Angstroms.
@@ -252,7 +251,6 @@ inline std::vector<Vector3> ForceFieldCalculation::wilsonAngleGradientRadians(co
     return gradient;
 }
 
-} // end md namespace
 } // end chemkit namespace
 
 #endif // CHEMKIT_FORCEFIELDCALCULATION_INLINE_H

@@ -41,7 +41,7 @@
 
 class UffParameters;
 
-class UffForceField : public chemkit::md::ForceField
+class UffForceField : public chemkit::ForceField
 {
 public:
     // construction and destruction
@@ -54,7 +54,7 @@ public:
     // setup
     virtual bool setup();
 
-    bool isGroupSix(const chemkit::md::ForceFieldAtom *atom) const;
+    bool isGroupSix(const chemkit::ForceFieldAtom *atom) const;
 
 private:
     UffParameters *m_parameters;

@@ -45,7 +45,7 @@ public:
     XyzPlugin();
     ~XyzPlugin();
 
-    static chemkit::io::MoleculeFileFormat* createXyzFormat();
+    static chemkit::MoleculeFileFormat* createXyzFormat();
 };
 
 #endif // XYZPLUGIN_H

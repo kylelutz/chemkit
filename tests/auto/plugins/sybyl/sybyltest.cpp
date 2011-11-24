@@ -49,7 +49,7 @@ void SybylTest::initTestCase()
     std::vector<std::string> typers = chemkit::AtomTyper::typers();
     QVERIFY(std::find(typers.begin(), typers.end(), "sybyl") != typers.end());
 
-    std::vector<std::string> fileFormats = chemkit::io::MoleculeFileFormat::formats();
+    std::vector<std::string> fileFormats = chemkit::MoleculeFileFormat::formats();
     QVERIFY(std::find(fileFormats.begin(), fileFormats.end(), "mol2") != fileFormats.end());
 }
 
@@ -66,7 +66,7 @@ void SybylTest::readMol2()
     QFETCH(QString, fileName);
     QFETCH(QString, formula);
 
-    chemkit::io::MoleculeFile file(dataPath + fileName.toStdString());
+    chemkit::MoleculeFile file(dataPath + fileName.toStdString());
     bool ok = file.read();
     if(!ok)
         qDebug() << file.errorString().c_str();

@@ -49,7 +49,7 @@ void InchiTest::initTestCase()
     QVERIFY(std::find(lineFormats.begin(), lineFormats.end(), "inchi") != lineFormats.end());
     QVERIFY(std::find(lineFormats.begin(), lineFormats.end(), "inchikey") != lineFormats.end());
 
-    std::vector<std::string> fileFormats = chemkit::io::MoleculeFileFormat::formats();
+    std::vector<std::string> fileFormats = chemkit::MoleculeFileFormat::formats();
     QVERIFY(std::find(fileFormats.begin(), fileFormats.end(), "inchi") != fileFormats.end());
 }
 

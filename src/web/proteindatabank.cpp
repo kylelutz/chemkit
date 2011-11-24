@@ -43,7 +43,6 @@
 #include <chemkit/moleculefile.h>
 
 namespace chemkit {
-namespace web {
 
 // === ProteinDataBankPrivate ============================================== //
 class ProteinDataBankPrivate
@@ -98,7 +97,7 @@ QUrl ProteinDataBank::url() const
 /// \endcode
 Polymer* ProteinDataBank::downloadPolymer(const QString &id) const
 {
-    QScopedPointer<chemkit::io::PolymerFile> file(downloadFile(id));
+    QScopedPointer<PolymerFile> file(downloadFile(id));
     if(!file){
         return 0;
     }
@@ -129,7 +128,7 @@ Molecule* ProteinDataBank::downloadLigand(const QString &name) const
 
     std::stringstream buffer(std::string(data.constData(), data.size()));
 
-    chemkit::io::MoleculeFile file;
+    MoleculeFile file;
     bool ok = file.read(buffer, "sdf");
 
     if(!ok || file.isEmpty()){
@@ -151,7 +150,7 @@ Molecule* ProteinDataBank::downloadLigand(const QString &name) const
 /// \code
 /// PolymerFile *file = pdb.downloadFile("1UBQ");
 /// \endcode
-chemkit::io::PolymerFile* ProteinDataBank::downloadFile(const QString &id) const
+PolymerFile* ProteinDataBank::downloadFile(const QString &id) const
 {
     QByteArray data = downloadFileData(id, "pdb");
     if(data.isEmpty()){
@@ -160,7 +159,7 @@ chemkit::io::PolymerFile* ProteinDataBank::downloadFile(const QString &id) const
 
     std::stringstream buffer(std::string(data.constData(), data.size()));
 
-    chemkit::io::PolymerFile *file = new chemkit::io::PolymerFile;
+    PolymerFile *file = new PolymerFile;
     file->read(buffer, "pdb");
 
     return file;
@@ -189,5 +188,4 @@ QString ProteinDataBank::errorString() const
     return d->errorString;
 }
 
-} // end web namespace
 } // end chemkit namespace

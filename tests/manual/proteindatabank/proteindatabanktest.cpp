@@ -43,10 +43,10 @@
 
 void ProteinDataBankTest::downloadFile()
 {
-    chemkit::web::ProteinDataBank pdb;
+    chemkit::ProteinDataBank pdb;
 
     // download file for lysozyme
-    chemkit::io::PolymerFile *file = pdb.downloadFile("2LYZ");
+    chemkit::PolymerFile *file = pdb.downloadFile("2LYZ");
     QVERIFY(file != 0);
 
     QCOMPARE(file->polymerCount(), 1);
@@ -59,7 +59,7 @@ void ProteinDataBankTest::downloadFile()
 
 void ProteinDataBankTest::downloadLigand()
 {
-    chemkit::web::ProteinDataBank pdb;
+    chemkit::ProteinDataBank pdb;
 
     chemkit::Molecule *molecule = pdb.downloadLigand("ADP");
     QVERIFY(molecule != 0);

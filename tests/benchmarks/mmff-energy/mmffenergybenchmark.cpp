@@ -44,13 +44,13 @@ const std::string dataPath = "../../data/";
 void MmffEnergyBenchmark::benchmark()
 {
     // load test file
-    chemkit::io::MoleculeFile file(dataPath + "MMFF94_hypervalent.mol2");
+    chemkit::MoleculeFile file(dataPath + "MMFF94_hypervalent.mol2");
     bool ok = file.read();
     if(!ok)
         qDebug() << file.errorString().c_str();
     QVERIFY(ok);
 
-    chemkit::md::ForceField *mmff = chemkit::md::ForceField::create("mmff");
+    chemkit::ForceField *mmff = chemkit::ForceField::create("mmff");
     mmff->setup();
     delete mmff;
 
@@ -59,7 +59,7 @@ void MmffEnergyBenchmark::benchmark()
 
     QBENCHMARK_ONCE {
         foreach(const chemkit::Molecule *molecule, file.molecules()){
-            chemkit::md::ForceField *forceField = chemkit::md::ForceField::create("mmff");
+            chemkit::ForceField *forceField = chemkit::ForceField::create("mmff");
             QVERIFY(forceField);
 
             forceField->addMolecule(molecule);

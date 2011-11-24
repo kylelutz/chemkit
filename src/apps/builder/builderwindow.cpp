@@ -286,7 +286,7 @@ void BuilderWindow::openFile(const QString &fileName)
     closeFile();
 
     // open and read file
-    chemkit::io::MoleculeFile *file = new chemkit::io::MoleculeFile(fileName.toStdString());
+    chemkit::MoleculeFile *file = new chemkit::MoleculeFile(fileName.toStdString());
     if(!file->read()){
         QMessageBox::critical(this, "Error", QString("Error opening file: %1").arg(file->errorString().c_str()));
         delete file;
@@ -311,7 +311,7 @@ void BuilderWindow::openFile(const QString &fileName)
 
 void BuilderWindow::openFile()
 {
-    std::vector<std::string> formats = chemkit::io::MoleculeFile::formats();
+    std::vector<std::string> formats = chemkit::MoleculeFile::formats();
     std::sort(formats.begin(), formats.end());
 
     QString formatsString;
@@ -342,7 +342,7 @@ void BuilderWindow::saveFile()
 void BuilderWindow::saveFileAs(const QString &fileName)
 {
     if(!m_file){
-        m_file = new chemkit::io::MoleculeFile(fileName.toStdString());
+        m_file = new chemkit::MoleculeFile(fileName.toStdString());
         m_file->addMolecule(m_molecule);
     }
 
@@ -435,8 +435,8 @@ void BuilderWindow::minimizerStateChanged(int state)
 
         m_editor->beginEdit();
         // update atom positions
-        chemkit::md::ForceField *forceField = m_energyMinimizer->forceField();
-        foreach(chemkit::md::ForceFieldAtom *forceFieldAtom, forceField->atoms()){
+        chemkit::ForceField *forceField = m_energyMinimizer->forceField();
+        foreach(chemkit::ForceFieldAtom *forceFieldAtom, forceField->atoms()){
             m_editor->setAtomPosition(const_cast<chemkit::Atom *>(forceFieldAtom->atom()), forceFieldAtom->position());
         }
         m_editor->endEdit();

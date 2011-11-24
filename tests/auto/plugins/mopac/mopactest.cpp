@@ -45,14 +45,14 @@ const std::string dataPath = "../../../data/";
 
 void MopacTest::initTestCase()
 {
-    std::vector<std::string> formats = chemkit::io::MoleculeFileFormat::formats();
+    std::vector<std::string> formats = chemkit::MoleculeFileFormat::formats();
     QVERIFY(std::find(formats.begin(), formats.end(), "mopin") != formats.end());
     QVERIFY(std::find(formats.begin(), formats.end(), "mopcrt") != formats.end());
 }
 
 void MopacTest::ethanol()
 {
-    chemkit::io::MoleculeFile file(dataPath + "ethanol.mopin");
+    chemkit::MoleculeFile file(dataPath + "ethanol.mopin");
     bool ok = file.read();
     if(!ok)
         qDebug() << file.errorString().c_str();
@@ -65,7 +65,7 @@ void MopacTest::ethanol()
 
 void MopacTest::guanine()
 {
-    chemkit::io::MoleculeFile file(dataPath + "guanine.mopcrt");
+    chemkit::MoleculeFile file(dataPath + "guanine.mopcrt");
     bool ok = file.read();
     if(!ok)
         qDebug() << file.errorString().c_str();

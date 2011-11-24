@@ -44,7 +44,6 @@
 #include "trajectory.h"
 
 namespace chemkit {
-namespace md {
 
 // === TrajectoryFramePrivate ============================================== //
 class TrajectoryFramePrivate
@@ -149,5 +148,4 @@ UnitCell* TrajectoryFrame::unitCell() const
     return d->unitCell;
 }
 
-} // end md namespace
 } // end chemkit namespace

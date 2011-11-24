@@ -38,14 +38,14 @@
 
 #include <chemkit/moleculefileformat.h>
 
-class CmlFileFormat : public chemkit::io::MoleculeFileFormat
+class CmlFileFormat : public chemkit::MoleculeFileFormat
 {
 public:
     CmlFileFormat();
     ~CmlFileFormat();
 
-    bool read(std::istream &input, chemkit::io::MoleculeFile *file);
-    bool write(const chemkit::io::MoleculeFile *file, std::ostream &output);
+    bool read(std::istream &input, chemkit::MoleculeFile *file);
+    bool write(const chemkit::MoleculeFile *file, std::ostream &output);
 };
 
 #endif // CMLFILEFORMAT_H

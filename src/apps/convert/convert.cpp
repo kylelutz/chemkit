@@ -105,7 +105,7 @@ int main(int argc, char *argv[])
     }
 
     // read input
-    chemkit::io::MoleculeFile inputFile(inputFileName);
+    chemkit::MoleculeFile inputFile(inputFileName);
     if(!inputFormatName.empty()){
         inputFile.setFormat(inputFormatName);
     }

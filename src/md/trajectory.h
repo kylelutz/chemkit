@@ -41,7 +41,6 @@
 #include <vector>
 
 namespace chemkit {
-namespace md {
 
 class TrajectoryFrame;
 class TrajectoryPrivate;
@@ -68,7 +67,6 @@ private:
     TrajectoryPrivate* const d;
 };
 
-} // end md namespace
 } // end chemkit namespace
 
 #endif // CHEMKIT_TRAJECTORY_H

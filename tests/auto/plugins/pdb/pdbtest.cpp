@@ -46,14 +46,14 @@ const std::string dataPath = "../../../data/";
 
 void PdbTest::initTestCase()
 {
-    std::vector<std::string> formats = chemkit::io::PolymerFileFormat::formats();
+    std::vector<std::string> formats = chemkit::PolymerFileFormat::formats();
     QVERIFY(std::find(formats.begin(), formats.end(), "pdb") != formats.end());
 }
 
 void PdbTest::read_1BNA()
 {
     // create file
-    chemkit::io::PolymerFile file;
+    chemkit::PolymerFile file;
 
     // read file
     bool ok = file.read(dataPath + "1BNA.pdb");
@@ -80,7 +80,7 @@ void PdbTest::read_1BNA()
 void PdbTest::read_1UBQ()
 {
     // create file
-    chemkit::io::PolymerFile file;
+    chemkit::PolymerFile file;
 
     // read file
     bool ok = file.read(dataPath + "1UBQ.pdb");
@@ -110,7 +110,7 @@ void PdbTest::read_1UBQ()
 void PdbTest::read_2DHB()
 {
     // create file
-    chemkit::io::PolymerFile file;
+    chemkit::PolymerFile file;
 
     // read file
     bool ok = file.read(dataPath + "2DHB.pdb");
@@ -146,7 +146,7 @@ void PdbTest::read_2DHB()
 void PdbTest::read_alphabet()
 {
     // create file
-    chemkit::io::PolymerFile file(dataPath + "alphabet.pdb");
+    chemkit::PolymerFile file(dataPath + "alphabet.pdb");
 
     // read file
     bool ok = file.read();
@@ -167,7 +167,7 @@ void PdbTest::read_alphabet()
 
 void PdbTest::read_fmc()
 {
-    chemkit::io::PolymerFile file(dataPath + "fmc.pdb");
+    chemkit::PolymerFile file(dataPath + "fmc.pdb");
     bool ok = file.read();
     if(!ok)
         qDebug() << "Failed to read file: " << file.errorString().c_str();

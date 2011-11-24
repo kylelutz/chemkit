@@ -40,7 +40,6 @@
 #include <chemkit/pluginmanager.h>
 
 namespace chemkit {
-namespace md {
 
 // === TrajectoryFileFormatPrivate ========================================= //
 class TrajectoryFileFormatPrivate
@@ -125,5 +124,4 @@ std::vector<std::string> TrajectoryFileFormat::formats()
     return PluginManager::instance()->pluginClassNames<TrajectoryFileFormat>();
 }
 
-} // end md namespace
 } // end chemkit namespace

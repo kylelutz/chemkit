@@ -47,7 +47,6 @@
 #include <chemkit/variant.h>
 
 namespace chemkit {
-namespace io {
 
 template<typename File, typename Format>
 class GenericFile
@@ -102,7 +101,6 @@ private:
     std::map<std::string, Variant> m_data;
 };
 
-} // end io namespace
 } // end chemkit namespace
 
 #include "genericfile-inline.h"

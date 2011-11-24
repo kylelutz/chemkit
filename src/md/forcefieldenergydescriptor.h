@@ -6,7 +6,6 @@
 #include <chemkit/moleculardescriptor.h>
 
 namespace chemkit {
-namespace md {
 
 template<typename ForceField>
 class ForceFieldEnergyDescriptor : public MolecularDescriptor
@@ -20,7 +19,6 @@ public:
     virtual Variant value(const Molecule *molecule) const;
 };
 
-} // end md namespace
 } // end chemkit namespace
 
 #include "forcefieldenergydescriptor-inline.h"

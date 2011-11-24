@@ -45,7 +45,7 @@ public:
     CubePlugin();
     ~CubePlugin();
 
-    static chemkit::io::MoleculeFileFormat* createCubeFormat();
+    static chemkit::MoleculeFileFormat* createCubeFormat();
 };
 
 #endif // CUBEPLUGIN_H

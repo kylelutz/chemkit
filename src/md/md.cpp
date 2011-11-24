@@ -38,14 +38,7 @@
 /// \defgroup chemkit-md chemkit-md
 /// \brief The chemkit-md module contains classes used for molecular
 ///        dynamics.
-///
-/// The classes in the chemkit-md library are contained within the
-/// chemkit::md namespace.
 
 namespace chemkit {
 
-/// The chemkit::md namespace contains molecular dynamics classes.
-namespace md {
-
-} // end md namespace
 } // end chemkit namespace

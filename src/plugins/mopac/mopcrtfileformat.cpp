@@ -42,11 +42,11 @@
 #include <chemkit/moleculefile.h>
 
 MopcrtFileFormat::MopcrtFileFormat()
-    : chemkit::io::MoleculeFileFormat("mopcrt")
+    : chemkit::MoleculeFileFormat("mopcrt")
 {
 }
 
-bool MopcrtFileFormat::read(std::istream &input, chemkit::io::MoleculeFile *file)
+bool MopcrtFileFormat::read(std::istream &input, chemkit::MoleculeFile *file)
 {
     QByteArray data;
     while(!input.eof()){
@@ -60,7 +60,7 @@ bool MopcrtFileFormat::read(std::istream &input, chemkit::io::MoleculeFile *file
     return read(&buffer, file);
 }
 
-bool MopcrtFileFormat::read(QIODevice *iodev, chemkit::io::MoleculeFile *file)
+bool MopcrtFileFormat::read(QIODevice *iodev, chemkit::MoleculeFile *file)
 {
     iodev->setTextModeEnabled(true);
 

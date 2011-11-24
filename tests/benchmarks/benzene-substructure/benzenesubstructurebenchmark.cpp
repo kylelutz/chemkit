@@ -48,7 +48,7 @@ const std::string dataPath = "../../data/";
 void BenzeneSubstructureBenchmark::benchmark()
 {
     // load test file
-    chemkit::io::MoleculeFile file(dataPath + "pubchem_416_benzenes.sdf");
+    chemkit::MoleculeFile file(dataPath + "pubchem_416_benzenes.sdf");
     bool ok = file.read();
     if(!ok)
         qDebug() << file.errorString().c_str();

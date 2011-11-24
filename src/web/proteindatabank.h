@@ -44,15 +44,7 @@ namespace chemkit {
 
 class Polymer;
 class Molecule;
-
-namespace io {
-
 class PolymerFile;
-
-} // end io namespace
-
-namespace web {
-
 class ProteinDataBankPrivate;
 
 class CHEMKIT_WEB_EXPORT ProteinDataBank
@@ -69,7 +61,7 @@ public:
     // downloads
     Polymer* downloadPolymer(const QString &id) const;
     Molecule* downloadLigand(const QString &name) const;
-    chemkit::io::PolymerFile* downloadFile(const QString &id) const;
+    PolymerFile* downloadFile(const QString &id) const;
     QByteArray downloadFileData(const QString &id, const QString &format) const;
 
     // error handling
@@ -82,7 +74,6 @@ private:
     ProteinDataBankPrivate* const d;
 };
 
-} // end web namespace
 } // end chemkit namespace
 
 #endif // CHEMKIT_PROTEINDATABANK_H

@@ -301,7 +301,7 @@ public:
     bool read(std::istream &input);
 
     void addChain(PdbChain *chain);
-    void writePolymerFile(chemkit::io::PolymerFile *file);
+    void writePolymerFile(chemkit::PolymerFile *file);
 
 private:
     QList<PdbChain *> m_chains;
@@ -377,7 +377,7 @@ void PdbFile::addChain(PdbChain *chain)
     m_chains.append(chain);
 }
 
-void PdbFile::writePolymerFile(chemkit::io::PolymerFile *file)
+void PdbFile::writePolymerFile(chemkit::PolymerFile *file)
 {
     if(m_chains.isEmpty()){
         return;
@@ -501,11 +501,11 @@ void PdbFile::writePolymerFile(chemkit::io::PolymerFile *file)
 } // end anonymous namespace
 
 PdbFileFormat::PdbFileFormat()
-    : chemkit::io::PolymerFileFormat("pdb")
+    : chemkit::PolymerFileFormat("pdb")
 {
 }
 
-bool PdbFileFormat::read(std::istream &input, chemkit::io::PolymerFile *file)
+bool PdbFileFormat::read(std::istream &input, chemkit::PolymerFile *file)
 {
     PdbFile pdb;
     bool ok = pdb.read(input);

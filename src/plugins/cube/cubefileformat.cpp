@@ -45,7 +45,7 @@
 const double BohrToAnstroms = 0.52918;
 
 CubeFileFormat::CubeFileFormat()
-    : chemkit::io::MoleculeFileFormat("cube")
+    : chemkit::MoleculeFileFormat("cube")
 {
 }
 
@@ -53,7 +53,7 @@ CubeFileFormat::~CubeFileFormat()
 {
 }
 
-bool CubeFileFormat::read(std::istream &input, chemkit::io::MoleculeFile *file)
+bool CubeFileFormat::read(std::istream &input, chemkit::MoleculeFile *file)
 {
     chemkit::Molecule *molecule = new chemkit::Molecule;
 

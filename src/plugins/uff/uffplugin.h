@@ -48,7 +48,7 @@ public:
     ~UffPlugin();
 
     static chemkit::AtomTyper* createUffAtomTyper();
-    static chemkit::md::ForceField* createUffForceField();
+    static chemkit::ForceField* createUffForceField();
     static chemkit::MolecularDescriptor* createUffEnergyDescriptor();
 };
 

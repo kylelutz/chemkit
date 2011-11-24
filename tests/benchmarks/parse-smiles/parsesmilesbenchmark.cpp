@@ -43,7 +43,7 @@
 void ParseSmilesBenchmark::benchmark()
 {
     QBENCHMARK {
-        chemkit::io::MoleculeFile file("pubchem-smiles.smi");
+        chemkit::MoleculeFile file("pubchem-smiles.smi");
         bool ok = file.read();
         if(!ok)
             qDebug() << file.errorString().c_str();

@@ -57,7 +57,7 @@ class PdbViewerWindow : public QMainWindow
         PdbViewerWindow(QWidget *parent = 0);
         ~PdbViewerWindow();
 
-        void setFile(chemkit::io::PolymerFile *file);
+        void setFile(chemkit::PolymerFile *file);
 
     public slots:
         void openFile();
@@ -67,7 +67,7 @@ class PdbViewerWindow : public QMainWindow
     private:
         Ui::PdbViewerWindow *ui;
         chemkit::GraphicsView *m_view;
-        chemkit::io::PolymerFile *m_file;
+        chemkit::PolymerFile *m_file;
         chemkit::GraphicsProteinItem *m_proteinItem;
         chemkit::GraphicsNucleicAcidItem *m_nucleicAcidItem;
 };

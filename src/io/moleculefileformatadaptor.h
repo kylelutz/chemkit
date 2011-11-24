@@ -41,9 +41,6 @@
 namespace chemkit {
 
 class LineFormat;
-
-namespace io {
-
 class PolymerFileFormat;
 
 template<typename T>
@@ -79,7 +76,6 @@ private:
     PolymerFileFormat *m_format;
 };
 
-} // end io namespace
 } // end chemkit namespace
 
 #include "moleculefileformatadaptor-inline.h"

@@ -46,7 +46,7 @@ public:
     AmberPlugin();
     ~AmberPlugin();
 
-    static chemkit::md::ForceField* createAmberForceField();
+    static chemkit::ForceField* createAmberForceField();
     static chemkit::MolecularDescriptor* createAmberEnergyDescriptor();
 };
 

@@ -38,14 +38,7 @@
 /// \defgroup chemkit-web chemkit-web
 /// \brief The chemkit-web module contains classes for accessing
 ///        internet resources.
-///
-/// The classes in the chemkit-web library are contained within the
-/// chemkit::web namespace.
 
 namespace chemkit {
 
-/// The chemkit::web namespace contains the web classes.
-namespace web {
-
-} // end web namespace
 } // end chemkit namespace

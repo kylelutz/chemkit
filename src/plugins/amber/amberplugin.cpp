@@ -42,24 +42,24 @@
 AmberPlugin::AmberPlugin()
     : chemkit::Plugin("amber")
 {
-    registerPluginClass<chemkit::md::ForceField>("amber", createAmberForceField);
+    registerPluginClass<chemkit::ForceField>("amber", createAmberForceField);
     registerPluginClass<chemkit::MolecularDescriptor>("amber-energy", createAmberEnergyDescriptor);
 }
 
 AmberPlugin::~AmberPlugin()
 {
-    unregisterPluginClass<chemkit::md::ForceField>("amber");
+    unregisterPluginClass<chemkit::ForceField>("amber");
     unregisterPluginClass<chemkit::MolecularDescriptor>("amber-energy");
 }
 
-chemkit::md::ForceField* AmberPlugin::createAmberForceField()
+chemkit::ForceField* AmberPlugin::createAmberForceField()
 {
     return new AmberForceField;
 }
 
 chemkit::MolecularDescriptor* AmberPlugin::createAmberEnergyDescriptor()
 {
-    return new chemkit::md::ForceFieldEnergyDescriptor<AmberForceField>("amber-energy");
+    return new chemkit::ForceFieldEnergyDescriptor<AmberForceField>("amber-energy");
 }
 
 CHEMKIT_EXPORT_PLUGIN(amber, AmberPlugin)

@@ -44,7 +44,6 @@
 #include <ostream>
 
 namespace chemkit {
-namespace io {
 
 class PolymerFile;
 class PolymerFileFormatPrivate;
@@ -80,7 +79,6 @@ private:
     PolymerFileFormatPrivate* const d;
 };
 
-} // end io namespace
 } // end chemkit namespace
 
 #endif // CHEMKIT_POLYMERFILEFORMAT_H

@@ -45,11 +45,11 @@
 class MmffForceField;
 struct MmffAtomParameters;
 
-class MmffAtom : public chemkit::md::ForceFieldAtom
+class MmffAtom : public chemkit::ForceFieldAtom
 {
 public:
     // construction and destruction
-    MmffAtom(chemkit::md::ForceField *forceField, const chemkit::Atom *atom);
+    MmffAtom(chemkit::ForceField *forceField, const chemkit::Atom *atom);
 
     // properties
     const MmffForceField* forceField() const;

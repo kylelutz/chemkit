@@ -38,7 +38,6 @@
 #include <chemkit/trajectory.h>
 
 namespace chemkit {
-namespace md {
 
 // === TrajectoryFilePrivate =============================================== //
 class TrajectoryFilePrivate
@@ -126,5 +125,4 @@ bool TrajectoryFile::deleteTrajectory()
     return true;
 }
 
-} // end md namespace
 } // end chemkit namespace

@@ -43,8 +43,8 @@
 #include "mmffparameters.h"
 
 // --- Construction and Destruction ---------------------------------------- //
-MmffAtom::MmffAtom(chemkit::md::ForceField *forceField, const chemkit::Atom *atom)
-    : chemkit::md::ForceFieldAtom(forceField, atom)
+MmffAtom::MmffAtom(chemkit::ForceField *forceField, const chemkit::Atom *atom)
+    : chemkit::ForceFieldAtom(forceField, atom)
 {
     m_typeNumber = 0;
     m_formalCharge = 0;
@@ -53,7 +53,7 @@ MmffAtom::MmffAtom(chemkit::md::ForceField *forceField, const chemkit::Atom *ato
 // --- Properties ---------------------------------------------------------- //
 const MmffForceField* MmffAtom::forceField() const
 {
-    return static_cast<const MmffForceField *>(chemkit::md::ForceFieldAtom::forceField());
+    return static_cast<const MmffForceField *>(chemkit::ForceFieldAtom::forceField());
 }
 
 void MmffAtom::setType(int typeNumber, chemkit::Real formalCharge)

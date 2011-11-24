@@ -39,7 +39,6 @@
 #include <chemkit/polymer.h>
 
 namespace chemkit {
-namespace io {
 
 // === PolymerFilePrivate ================================================== //
 class PolymerFilePrivate
@@ -160,5 +159,4 @@ void PolymerFile::clear()
     d->polymers.clear();
 }
 
-} // end io namespace
 } // end chemkit namespace

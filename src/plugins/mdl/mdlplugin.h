@@ -45,10 +45,10 @@ public:
     MdlPlugin();
     ~MdlPlugin();
 
-    static chemkit::io::MoleculeFileFormat* createMdlFormat();
-    static chemkit::io::MoleculeFileFormat* createMolFormat();
-    static chemkit::io::MoleculeFileFormat* createSdfFormat();
-    static chemkit::io::MoleculeFileFormat* createSdFormat();
+    static chemkit::MoleculeFileFormat* createMdlFormat();
+    static chemkit::MoleculeFileFormat* createMolFormat();
+    static chemkit::MoleculeFileFormat* createSdfFormat();
+    static chemkit::MoleculeFileFormat* createSdFormat();
 };
 
 #endif // MDLPLUGIN_H

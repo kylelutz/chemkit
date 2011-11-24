@@ -41,7 +41,6 @@
 #include <QtCore>
 
 namespace chemkit {
-namespace web {
 
 class PubChemQuery
 {
@@ -62,7 +61,6 @@ private:
     QByteArray m_data;
 };
 
-} // end web namespace
 } // end chemkit namespace
 
 #endif // CHEMKIT_PUBCHEMQUERY_H

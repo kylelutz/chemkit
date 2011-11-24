@@ -63,7 +63,7 @@ public:
     ~BuilderWindow();
 
     // properties
-    chemkit::io::MoleculeFile* file() const { return m_file; }
+    chemkit::MoleculeFile* file() const { return m_file; }
 
     // molecule
     void setMolecule(chemkit::Molecule *molecule);
@@ -111,7 +111,7 @@ public slots:
     void moleculeProperties();
 
 signals:
-    void fileChanged(chemkit::io::MoleculeFile *file);
+    void fileChanged(chemkit::MoleculeFile *file);
     void moleculeChanged(chemkit::Molecule *molecule);
     void toolChanged(BuilderTool *tool);
 
@@ -120,7 +120,7 @@ private slots:
 
 private:
     Ui::BuilderWindow *ui;
-    chemkit::io::MoleculeFile *m_file;
+    chemkit::MoleculeFile *m_file;
     chemkit::Molecule *m_molecule;
     chemkit::GraphicsMoleculeItem *m_moleculeItem;
     chemkit::MoleculeEditor *m_editor;

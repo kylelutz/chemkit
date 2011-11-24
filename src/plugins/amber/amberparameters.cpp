@@ -634,7 +634,7 @@ AmberParameters::~AmberParameters()
 }
 
 // --- Parameters ---------------------------------------------------------- //
-const AmberBondParameters* AmberParameters::bondParameters(const chemkit::md::ForceFieldAtom *a, const chemkit::md::ForceFieldAtom *b) const
+const AmberBondParameters* AmberParameters::bondParameters(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b) const
 {
     for(int i = 0; i < BondParametersCount; i++){
         const struct BondParameters *parameters = &BondParameters[i];
@@ -648,7 +648,7 @@ const AmberBondParameters* AmberParameters::bondParameters(const chemkit::md::Fo
     return 0;
 }
 
-const AmberAngleParameters* AmberParameters::angleParameters(const chemkit::md::ForceFieldAtom *a, const chemkit::md::ForceFieldAtom *b, const chemkit::md::ForceFieldAtom *c) const
+const AmberAngleParameters* AmberParameters::angleParameters(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b, const chemkit::ForceFieldAtom *c) const
 {
     for(int i = 0; i < AngleParametersCount; i++){
         const struct AngleParameters *parameters = &AngleParameters[i];
@@ -664,7 +664,7 @@ const AmberAngleParameters* AmberParameters::angleParameters(const chemkit::md::
     return 0;
 }
 
-const AmberTorsionParameters* AmberParameters::torsionParameters(const chemkit::md::ForceFieldAtom *a, const chemkit::md::ForceFieldAtom *b, const chemkit::md::ForceFieldAtom *c, const chemkit::md::ForceFieldAtom *d) const
+const AmberTorsionParameters* AmberParameters::torsionParameters(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b, const chemkit::ForceFieldAtom *c, const chemkit::ForceFieldAtom *d) const
 {
     std::string typeA = a->type();
     std::string typeB = b->type();
@@ -692,7 +692,7 @@ const AmberTorsionParameters* AmberParameters::torsionParameters(const chemkit::
     return 0;
 }
 
-const AmberNonbondedParameters* AmberParameters::nonbondedParameters(const chemkit::md::ForceFieldAtom *atom) const
+const AmberNonbondedParameters* AmberParameters::nonbondedParameters(const chemkit::ForceFieldAtom *atom) const
 {
     for(int i = 0; i < NonbondedParametersCount; i++){
         const struct NonbondedParameters *parameters = &NonbondedParameters[i];

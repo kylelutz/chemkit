@@ -58,7 +58,7 @@ void GrepTest::ironComposition()
     process.waitForFinished();
     process.close();
 
-    chemkit::io::MoleculeFile file;
+    chemkit::MoleculeFile file;
     bool ok = file.read(output.fileName().toStdString(), "mol2");
     if(!ok){
         qDebug() << file.errorString().c_str();

@@ -45,7 +45,7 @@ public:
     FhzPlugin();
     ~FhzPlugin();
 
-    static chemkit::io::MoleculeFileFormat* createFhzFormat();
+    static chemkit::MoleculeFileFormat* createFhzFormat();
 };
 
 #endif // FHZPLUGIN_H

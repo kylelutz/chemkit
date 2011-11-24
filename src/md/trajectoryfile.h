@@ -45,12 +45,11 @@
 #include "trajectoryfileformat.h"
 
 namespace chemkit {
-namespace md {
 
 class Trajectory;
 class TrajectoryFilePrivate;
 
-class CHEMKIT_MD_EXPORT TrajectoryFile : public chemkit::io::GenericFile<TrajectoryFile, TrajectoryFileFormat>
+class CHEMKIT_MD_EXPORT TrajectoryFile : public GenericFile<TrajectoryFile, TrajectoryFileFormat>
 {
 public:
     // construction and destruction
@@ -71,7 +70,6 @@ private:
     TrajectoryFilePrivate* const d;
 };
 
-} // end md namespace
 } // end chemkit namespace
 
 #endif // CHEMKIT_TRAJECTORYFILE_H

@@ -43,10 +43,10 @@ const std::string dataPath = "../../data/";
 
 void UridineMinimizationBenchmark::benchmark()
 {
-    chemkit::Molecule *molecule = chemkit::io::MoleculeFile::quickRead(dataPath + "uridine.mol2");
+    chemkit::Molecule *molecule = chemkit::MoleculeFile::quickRead(dataPath + "uridine.mol2");
     QVERIFY(molecule != 0);
 
-    chemkit::md::ForceField *forceField = chemkit::md::ForceField::create("uff");
+    chemkit::ForceField *forceField = chemkit::ForceField::create("uff");
     QVERIFY(forceField != 0);
 
     forceField->addMolecule(molecule);

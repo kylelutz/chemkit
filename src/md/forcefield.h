@@ -51,9 +51,6 @@ namespace chemkit {
 
 class Atom;
 class Molecule;
-
-namespace md {
-
 class ForceFieldPrivate;
 
 class CHEMKIT_MD_EXPORT ForceField
@@ -145,7 +142,6 @@ private:
     ForceFieldPrivate* const d;
 };
 
-} // end md namespace
 } // end chemkit namespace
 
 #endif // CHEMKIT_FORCEFIELD_H

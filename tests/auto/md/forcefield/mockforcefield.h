@@ -39,7 +39,7 @@
 #include <chemkit/plugin.h>
 #include <chemkit/forcefield.h>
 
-class MockForceField : public chemkit::md::ForceField
+class MockForceField : public chemkit::ForceField
 {
     public:
         // construction and destruction
@@ -53,7 +53,7 @@ class MockForceFieldPlugin : public chemkit::Plugin
         MockForceFieldPlugin();
         ~MockForceFieldPlugin();
 
-        static chemkit::md::ForceField* createMockForceField();
+        static chemkit::ForceField* createMockForceField();
 };
 
 #endif // MOCKFORCEFIELD_H

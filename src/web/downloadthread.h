@@ -40,7 +40,6 @@
 #include <QtNetwork>
 
 namespace chemkit {
-namespace web {
 
 class DownloadThread : public QThread
 {
@@ -74,7 +73,6 @@ private:
     QByteArray m_data;
 };
 
-} // end web namespace
 } // end chemkit namespace
 
 #endif // CHEMKIT_DOWNLOADTHREAD_H

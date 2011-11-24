@@ -44,7 +44,6 @@
 #include <boost/scoped_ptr.hpp>
 
 namespace chemkit {
-namespace io {
 
 // === GenericFile ========================================================= //
 /// \class GenericFile genericfile.h chemkit/genericfile.h
@@ -382,7 +381,6 @@ inline std::string GenericFile<File, Format>::suffix(const std::string &fileName
     return suffix;
 }
 
-} // end io namespace
 } // end chemkit namespace
 
 #endif // CHEMKIT_GENERICFILE_INLINE_H

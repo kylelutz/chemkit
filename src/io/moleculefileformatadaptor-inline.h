@@ -49,7 +49,6 @@
 #include "polymerfileformat.h"
 
 namespace chemkit {
-namespace io {
 
 // === MoleculeFileFormatAdaptor<LineFormat> =============================== //
 inline MoleculeFileFormatAdaptor<LineFormat>::MoleculeFileFormatAdaptor(LineFormat *format)
@@ -151,7 +150,6 @@ inline bool MoleculeFileFormatAdaptor<PolymerFileFormat>::read(std::istream &inp
     return true;
 }
 
-} // end io namespace
 } // end chemkit namespace
 
 #endif // CHEMKIT_MOLECULEFILEFORMATADAPTOR_INLINE_H

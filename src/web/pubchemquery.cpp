@@ -36,7 +36,6 @@
 #include "pubchemquery.h"
 
 namespace chemkit {
-namespace web {
 
 // === PubChemQuery ======================================================== //
 /// \class PubChemQuery pubchemquery.h
@@ -142,5 +141,4 @@ PubChemQuery PubChemQuery::standardizationQuery(const std::string &formula, cons
     return query;
 }
 
-} // end web namespace
 } // end chemkit namespace

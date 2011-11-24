@@ -51,7 +51,7 @@ int main(int argc, char *argv[])
 
     std::string fileName = argv[1];
 
-    chemkit::io::MoleculeFile file(fileName);
+    chemkit::MoleculeFile file(fileName);
     bool ok = file.read();
     if(!ok){
         err << "Failed to read file: " << fileName.c_str() << "\n";
@@ -64,7 +64,7 @@ int main(int argc, char *argv[])
         return -1;
     }
 
-    chemkit::md::ForceField *uff = chemkit::md::ForceField::create("uff");
+    chemkit::ForceField *uff = chemkit::ForceField::create("uff");
     if(!uff){
         err << "UFF force field plugin not found.\n";
         return -1;

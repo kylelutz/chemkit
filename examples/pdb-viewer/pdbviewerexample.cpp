@@ -78,7 +78,7 @@ PdbViewerWindow::~PdbViewerWindow()
 }
 
 // --- Properties ---------------------------------------------------------- //
-void PdbViewerWindow::setFile(chemkit::io::PolymerFile *file)
+void PdbViewerWindow::setFile(chemkit::PolymerFile *file)
 {
     if(m_file){
         delete m_file;
@@ -124,7 +124,7 @@ void PdbViewerWindow::openFile(const QString &fileName)
         format = "pdbml";
 
     // open and read file
-    chemkit::io::PolymerFile *file = new chemkit::io::PolymerFile;
+    chemkit::PolymerFile *file = new chemkit::PolymerFile;
 
     bool ok = file->read(fileName.toStdString(), format);
     if(!ok){

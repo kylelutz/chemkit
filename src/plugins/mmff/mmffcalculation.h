@@ -41,7 +41,7 @@
 class MmffAtom;
 class MmffParameters;
 
-class MmffCalculation : public chemkit::md::ForceFieldCalculation
+class MmffCalculation : public chemkit::ForceFieldCalculation
 {
 public:
     const MmffAtom* atom(int index) const;

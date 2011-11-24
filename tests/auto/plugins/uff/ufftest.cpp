@@ -48,7 +48,7 @@ void UffTest::initTestCase()
     std::vector<std::string> typers = chemkit::AtomTyper::typers();
     QVERIFY(std::find(typers.begin(), typers.end(), "uff") != typers.end());
 
-    std::vector<std::string> forceFields = chemkit::md::ForceField::forceFields();
+    std::vector<std::string> forceFields = chemkit::ForceField::forceFields();
     QVERIFY(std::find(forceFields.begin(), forceFields.end(), "uff") != forceFields.end());
 
     std::vector<std::string> descriptors = chemkit::MolecularDescriptor::descriptors();

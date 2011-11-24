@@ -42,24 +42,24 @@
 PdbPlugin::PdbPlugin()
     : chemkit::Plugin("pdb")
 {
-    registerPluginClass<chemkit::io::PolymerFileFormat>("pdb", createPdbFormat);
-    registerPluginClass<chemkit::io::MoleculeFileFormat>("pdb", createPdbMoleculeFormat);
+    registerPluginClass<chemkit::PolymerFileFormat>("pdb", createPdbFormat);
+    registerPluginClass<chemkit::MoleculeFileFormat>("pdb", createPdbMoleculeFormat);
 }
 
 PdbPlugin::~PdbPlugin()
 {
-    unregisterPluginClass<chemkit::io::PolymerFileFormat>("pdb");
-    unregisterPluginClass<chemkit::io::MoleculeFileFormat>("pdb");
+    unregisterPluginClass<chemkit::PolymerFileFormat>("pdb");
+    unregisterPluginClass<chemkit::MoleculeFileFormat>("pdb");
 }
 
-chemkit::io::PolymerFileFormat* PdbPlugin::createPdbFormat()
+chemkit::PolymerFileFormat* PdbPlugin::createPdbFormat()
 {
     return new PdbFileFormat;
 }
 
-chemkit::io::MoleculeFileFormat* PdbPlugin::createPdbMoleculeFormat()
+chemkit::MoleculeFileFormat* PdbPlugin::createPdbMoleculeFormat()
 {
-    return new chemkit::io::MoleculeFileFormatAdaptor<chemkit::io::PolymerFileFormat>(new PdbFileFormat);
+    return new chemkit::MoleculeFileFormatAdaptor<chemkit::PolymerFileFormat>(new PdbFileFormat);
 }
 
 CHEMKIT_EXPORT_PLUGIN(pdb, PdbPlugin)

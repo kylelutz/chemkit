@@ -40,17 +40,17 @@
 FhzPlugin::FhzPlugin()
     : chemkit::Plugin("fhz")
 {
-    registerPluginClass<chemkit::io::MoleculeFileFormat>("fh", createFhzFormat);
-    registerPluginClass<chemkit::io::MoleculeFileFormat>("fhz", createFhzFormat);
+    registerPluginClass<chemkit::MoleculeFileFormat>("fh", createFhzFormat);
+    registerPluginClass<chemkit::MoleculeFileFormat>("fhz", createFhzFormat);
 }
 
 FhzPlugin::~FhzPlugin()
 {
-    unregisterPluginClass<chemkit::io::MoleculeFileFormat>("fh");
-    unregisterPluginClass<chemkit::io::MoleculeFileFormat>("fhz");
+    unregisterPluginClass<chemkit::MoleculeFileFormat>("fh");
+    unregisterPluginClass<chemkit::MoleculeFileFormat>("fhz");
 }
 
-chemkit::io::MoleculeFileFormat* FhzPlugin::createFhzFormat()
+chemkit::MoleculeFileFormat* FhzPlugin::createFhzFormat()
 {
     return new FhzFileFormat;
 }

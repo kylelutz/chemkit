@@ -63,7 +63,7 @@
 
 // --- Construction and Destruction ---------------------------------------- //
 MmffForceField::MmffForceField()
-    : chemkit::md::ForceField("mmff"),
+    : chemkit::ForceField("mmff"),
       m_parameters(0)
 {
     const chemkit::Plugin *mmffPlugin = chemkit::PluginManager::instance()->plugin("mmff");
@@ -73,7 +73,7 @@ MmffForceField::MmffForceField()
         setParameterSet("mmff94");
     }
 
-    setFlags(chemkit::md::ForceField::AnalyticalGradient);
+    setFlags(chemkit::ForceField::AnalyticalGradient);
 }
 
 MmffForceField::~MmffForceField()
@@ -84,7 +84,7 @@ MmffForceField::~MmffForceField()
 // --- Atoms --------------------------------------------------------------- //
 MmffAtom* MmffForceField::atom(const chemkit::Atom *atom)
 {
-    foreach(chemkit::md::ForceFieldAtom *forceFieldAtom, atoms()){
+    foreach(chemkit::ForceFieldAtom *forceFieldAtom, atoms()){
         if(forceFieldAtom->atom() == atom){
             return static_cast<MmffAtom *>(forceFieldAtom);
         }
@@ -127,15 +127,15 @@ bool MmffForceField::setup()
         partialCharges.setAtomTyper(&typer);
         partialCharges.setMolecule(molecule);
 
-        foreach(chemkit::md::ForceFieldAtom *atom, atoms()){
+        foreach(chemkit::ForceFieldAtom *atom, atoms()){
             atom->setCharge(partialCharges.partialCharge(atom->atom()));
         }
 
         // add calculations
-        chemkit::md::ForceFieldInteractions interactions(molecule, this);
+        chemkit::ForceFieldInteractions interactions(molecule, this);
 
         // bond strech calculations
-        std::pair<const chemkit::md::ForceFieldAtom *, const chemkit::md::ForceFieldAtom *> bondedPair;
+        std::pair<const chemkit::ForceFieldAtom *, const chemkit::ForceFieldAtom *> bondedPair;
         foreach(bondedPair, interactions.bondedPairs()){
             const MmffAtom *a = static_cast<const MmffAtom *>(bondedPair.first);
             const MmffAtom *b = static_cast<const MmffAtom *>(bondedPair.second);
@@ -144,7 +144,7 @@ bool MmffForceField::setup()
         }
 
         // angle bend and strech bend calculations
-        std::vector<const chemkit::md::ForceFieldAtom *> angleGroup;
+        std::vector<const chemkit::ForceFieldAtom *> angleGroup;
         foreach(angleGroup, interactions.angleGroups()){
             const MmffAtom *a = static_cast<const MmffAtom *>(angleGroup[0]);
             const MmffAtom *b = static_cast<const MmffAtom *>(angleGroup[1]);
@@ -170,7 +170,7 @@ bool MmffForceField::setup()
         }
 
         // torsion calculations (for each dihedral)
-        std::vector<const chemkit::md::ForceFieldAtom *> torsionGroup;
+        std::vector<const chemkit::ForceFieldAtom *> torsionGroup;
         foreach(torsionGroup, interactions.torsionGroups()){
             const MmffAtom *a = static_cast<const MmffAtom *>(torsionGroup[0]);
             const MmffAtom *b = static_cast<const MmffAtom *>(torsionGroup[1]);
@@ -181,7 +181,7 @@ bool MmffForceField::setup()
         }
 
         // van der waals and electrostatic calculations
-        std::pair<const chemkit::md::ForceFieldAtom *, const chemkit::md::ForceFieldAtom *> nonbondedPair;
+        std::pair<const chemkit::ForceFieldAtom *, const chemkit::ForceFieldAtom *> nonbondedPair;
         foreach(nonbondedPair, interactions.nonbondedPairs()){
             const MmffAtom *a = static_cast<const MmffAtom *>(nonbondedPair.first);
             const MmffAtom *b = static_cast<const MmffAtom *>(nonbondedPair.second);
@@ -193,7 +193,7 @@ bool MmffForceField::setup()
 
     bool ok = true;
 
-    foreach(chemkit::md::ForceFieldCalculation *calculation, calculations()){
+    foreach(chemkit::ForceFieldCalculation *calculation, calculations()){
         bool setup = static_cast<MmffCalculation *>(calculation)->setup(m_parameters);
 
         if(!setup){

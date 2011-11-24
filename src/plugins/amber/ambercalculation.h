@@ -40,7 +40,7 @@
 
 class AmberParameters;
 
-class AmberCalculation : public chemkit::md::ForceFieldCalculation
+class AmberCalculation : public chemkit::ForceFieldCalculation
 {
 public:
     virtual bool setup(const AmberParameters *parameters) = 0;
@@ -52,7 +52,7 @@ protected:
 class AmberBondCalculation : public AmberCalculation
 {
 public:
-    AmberBondCalculation(const chemkit::md::ForceFieldAtom *a, const chemkit::md::ForceFieldAtom *b);
+    AmberBondCalculation(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b);
 
     bool setup(const AmberParameters *parameters);
     chemkit::Real energy() const;
@@ -62,7 +62,7 @@ public:
 class AmberAngleCalculation : public AmberCalculation
 {
 public:
-    AmberAngleCalculation(const chemkit::md::ForceFieldAtom *a, const chemkit::md::ForceFieldAtom *b, const chemkit::md::ForceFieldAtom *c);
+    AmberAngleCalculation(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b, const chemkit::ForceFieldAtom *c);
 
     bool setup(const AmberParameters *parameters);
     chemkit::Real energy() const;
@@ -72,7 +72,7 @@ public:
 class AmberTorsionCalculation : public AmberCalculation
 {
 public:
-    AmberTorsionCalculation(const chemkit::md::ForceFieldAtom *a, const chemkit::md::ForceFieldAtom *b, const chemkit::md::ForceFieldAtom *c, const chemkit::md::ForceFieldAtom *d);
+    AmberTorsionCalculation(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b, const chemkit::ForceFieldAtom *c, const chemkit::ForceFieldAtom *d);
 
     bool setup(const AmberParameters *parameters);
     chemkit::Real energy() const;
@@ -82,7 +82,7 @@ public:
 class AmberNonbondedCalculation : public AmberCalculation
 {
 public:
-    AmberNonbondedCalculation(const chemkit::md::ForceFieldAtom *a, const chemkit::md::ForceFieldAtom *b);
+    AmberNonbondedCalculation(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b);
 
     bool setup(const AmberParameters *parameters);
     chemkit::Real energy() const;

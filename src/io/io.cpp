@@ -38,14 +38,7 @@
 /// \defgroup chemkit-io chemkit-io
 /// \brief The chemkit-io module contains classes used for
 ///        reading and writing files.
-///
-/// The classes in the chemkit-io library are contained within the
-/// chemkit::io namespace.
 
 namespace chemkit {
 
-/// The chemkit::io namespace contains the io classes.
-namespace io {
-
-} // end io namespace
 } // end chemkit namespace

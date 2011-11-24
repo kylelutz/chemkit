@@ -53,7 +53,7 @@ public:
     static chemkit::LineFormat* createInchiKeyFormat();
 
 #ifdef CHEMKIT_WITH_IO
-    static chemkit::io::MoleculeFileFormat* createInchiFileFormat();
+    static chemkit::MoleculeFileFormat* createInchiFileFormat();
 #endif
 };
 

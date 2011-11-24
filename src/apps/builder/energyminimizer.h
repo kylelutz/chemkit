@@ -68,7 +68,7 @@ public:
     void setMoleculeChanged(bool changed);
     bool moleculeChanged() const;
     void setForceField(const QString &name);
-    chemkit::md::ForceField* forceField() const;
+    chemkit::ForceField* forceField() const;
     int state() const;
     QString stateString() const;
 
@@ -81,7 +81,7 @@ public slots:
     void stop();
 
 signals:
-    void forceFieldChanged(const chemkit::md::ForceField *forceField);
+    void forceFieldChanged(const chemkit::ForceField *forceField);
     void stateChanged(int state);
 
 private slots:
@@ -93,7 +93,7 @@ private:
 private:
     bool m_moleculeChanged;
     chemkit::Molecule *m_molecule;
-    chemkit::md::ForceField *m_forceField;
+    chemkit::ForceField *m_forceField;
     QString m_forceFieldName;
     int m_state;
     QFutureWatcher<bool> m_minimizationWatcher;

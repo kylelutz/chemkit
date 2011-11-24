@@ -41,16 +41,16 @@
 
 #include <QIODevice>
 
-class TxyzFileFormat : public chemkit::io::MoleculeFileFormat
+class TxyzFileFormat : public chemkit::MoleculeFileFormat
 {
 public:
     TxyzFileFormat();
     ~TxyzFileFormat();
 
-    bool read(std::istream &input, chemkit::io::MoleculeFile *file);
-    bool read(QIODevice *iodev, chemkit::io::MoleculeFile *file);
-    bool write(const chemkit::io::MoleculeFile *file, std::ostream &output);
-    bool write(const chemkit::io::MoleculeFile *file, QIODevice *iodev);
+    bool read(std::istream &input, chemkit::MoleculeFile *file);
+    bool read(QIODevice *iodev, chemkit::MoleculeFile *file);
+    bool write(const chemkit::MoleculeFile *file, std::ostream &output);
+    bool write(const chemkit::MoleculeFile *file, QIODevice *iodev);
 };
 
 #endif // TXYZFILEFORMAT_H

@@ -48,7 +48,7 @@ public:
     ~OplsPlugin();
 
     static chemkit::AtomTyper* createOplsAtomTyper();
-    static chemkit::md::ForceField* createOplsForceField();
+    static chemkit::ForceField* createOplsForceField();
     static chemkit::MolecularDescriptor* createOplsEnergyDescriptor();
 };
 

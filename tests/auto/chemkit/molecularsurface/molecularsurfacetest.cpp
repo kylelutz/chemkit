@@ -121,7 +121,7 @@ void MolecularSurfaceTest::water()
 
 void MolecularSurfaceTest::serine()
 {
-    chemkit::io::MoleculeFile file(dataPath + "serine.mol");
+    chemkit::MoleculeFile file(dataPath + "serine.mol");
     bool ok = file.read();
     if(!ok)
         qDebug() << file.errorString().c_str();
@@ -145,7 +145,7 @@ void MolecularSurfaceTest::serine()
 
 void MolecularSurfaceTest::guanine()
 {
-    chemkit::io::MoleculeFile file(dataPath + "guanine.mol");
+    chemkit::MoleculeFile file(dataPath + "guanine.mol");
     bool ok = file.read();
     if(!ok)
         qDebug() << file.errorString().c_str();
@@ -169,7 +169,7 @@ void MolecularSurfaceTest::guanine()
 
 void MolecularSurfaceTest::methane()
 {
-    chemkit::io::MoleculeFile file(dataPath + "methane.xyz");
+    chemkit::MoleculeFile file(dataPath + "methane.xyz");
     bool ok = file.read();
     if(!ok)
         qDebug() << file.errorString().c_str();
@@ -193,7 +193,7 @@ void MolecularSurfaceTest::methane()
 
 void MolecularSurfaceTest::ethanol()
 {
-    chemkit::io::MoleculeFile file(dataPath + "ethanol.cml");
+    chemkit::MoleculeFile file(dataPath + "ethanol.cml");
     bool ok = file.read();
     if(!ok)
         qDebug() << file.errorString().c_str();
@@ -217,7 +217,7 @@ void MolecularSurfaceTest::ethanol()
 
 void MolecularSurfaceTest::adenosine()
 {
-    chemkit::io::MoleculeFile file(dataPath + "adenosine.mol");
+    chemkit::MoleculeFile file(dataPath + "adenosine.mol");
     bool ok = file.read();
     if(!ok)
         qDebug() << file.errorString().c_str();
@@ -247,7 +247,7 @@ void MolecularSurfaceTest::adenosine()
 
 void MolecularSurfaceTest::lysozyme()
 {
-    chemkit::io::PolymerFile file(dataPath + "2LYZ.pdb");
+    chemkit::PolymerFile file(dataPath + "2LYZ.pdb");
     bool ok = file.read();
     if(!ok)
         qDebug() << file.errorString().c_str();
@@ -271,7 +271,7 @@ void MolecularSurfaceTest::lysozyme()
 
 void MolecularSurfaceTest::cytochrome()
 {
-    chemkit::io::PolymerFile file(dataPath + "3CYT.pdb");
+    chemkit::PolymerFile file(dataPath + "3CYT.pdb");
     bool ok = file.read();
     if(!ok)
         qDebug() << file.errorString().c_str();
@@ -295,7 +295,7 @@ void MolecularSurfaceTest::cytochrome()
 
 void MolecularSurfaceTest::toxin()
 {
-    chemkit::io::PolymerFile file(dataPath + "2SN3.pdb");
+    chemkit::PolymerFile file(dataPath + "2SN3.pdb");
     bool ok = file.read();
     if(!ok)
         qDebug() << file.errorString().c_str();
@@ -319,7 +319,7 @@ void MolecularSurfaceTest::toxin()
 
 void MolecularSurfaceTest::hydrolase()
 {
-    chemkit::io::PolymerFile file(dataPath + "1THM.pdb");
+    chemkit::PolymerFile file(dataPath + "1THM.pdb");
     bool ok = file.read();
     if(!ok)
         qDebug() << file.errorString().c_str();
@@ -343,7 +343,7 @@ void MolecularSurfaceTest::hydrolase()
 
 void MolecularSurfaceTest::hemoglobin()
 {
-    chemkit::io::PolymerFile file(dataPath + "2DHB.pdb");
+    chemkit::PolymerFile file(dataPath + "2DHB.pdb");
     bool ok = file.read();
     if(!ok)
         qDebug() << file.errorString().c_str();
@@ -367,7 +367,7 @@ void MolecularSurfaceTest::hemoglobin()
 
 void MolecularSurfaceTest::dna()
 {
-    chemkit::io::PolymerFile file(dataPath + "1BNA.pdb");
+    chemkit::PolymerFile file(dataPath + "1BNA.pdb");
     bool ok = file.read();
     if(!ok)
         qDebug() << file.errorString().c_str();
@@ -391,7 +391,7 @@ void MolecularSurfaceTest::dna()
 
 void MolecularSurfaceTest::ribozyme()
 {
-    chemkit::io::PolymerFile file(dataPath + "1MME.pdb");
+    chemkit::PolymerFile file(dataPath + "1MME.pdb");
     bool ok = file.read();
     if(!ok)
         qDebug() << file.errorString().c_str();
@@ -415,7 +415,7 @@ void MolecularSurfaceTest::ribozyme()
 
 void MolecularSurfaceTest::ubiqutin()
 {
-    chemkit::io::PolymerFile file(dataPath + "1UBQ.pdb");
+    chemkit::PolymerFile file(dataPath + "1UBQ.pdb");
     bool ok = file.read();
     if(!ok)
         qDebug() << file.errorString().c_str();

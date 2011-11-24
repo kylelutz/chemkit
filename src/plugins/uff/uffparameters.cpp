@@ -183,7 +183,7 @@ UffParameters::~UffParameters()
 }
 
 // --- Parameters ---------------------------------------------------------- //
-const UffAtomParameters* UffParameters::parameters(const chemkit::md::ForceFieldAtom *atom) const
+const UffAtomParameters* UffParameters::parameters(const chemkit::ForceFieldAtom *atom) const
 {
     for(int i = 0; i < AtomParametersCount; i++){
         if(atom->type() == AtomParameters[i].type){

@@ -38,13 +38,13 @@
 
 #include <chemkit/moleculefileformat.h>
 
-class CubeFileFormat : public chemkit::io::MoleculeFileFormat
+class CubeFileFormat : public chemkit::MoleculeFileFormat
 {
 public:
     CubeFileFormat();
     ~CubeFileFormat();
 
-    bool read(std::istream &input, chemkit::io::MoleculeFile *file);
+    bool read(std::istream &input, chemkit::MoleculeFile *file);
 };
 
 #endif // CUBEFILEFORMAT_H

@@ -133,7 +133,7 @@ int main(int argc, char *argv[])
     }
 
     // read input file
-    chemkit::io::MoleculeFile inputFile(fileName);
+    chemkit::MoleculeFile inputFile(fileName);
     if(!inputFile.read()){
         std::cerr << "Error: failed to read input file: " << inputFile.errorString() << std::endl;
         return -1;
@@ -150,7 +150,7 @@ int main(int argc, char *argv[])
         flags |= chemkit::Molecule::CompareAtomsOnly;
     }
 
-    chemkit::io::MoleculeFile outputFile;
+    chemkit::MoleculeFile outputFile;
 
     foreach(chemkit::Molecule *molecule, inputFile.molecules()){
         bool match = false;

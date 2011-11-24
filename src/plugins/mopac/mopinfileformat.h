@@ -40,13 +40,13 @@
 
 #include <QIODevice>
 
-class MopinFileFormat : public chemkit::io::MoleculeFileFormat
+class MopinFileFormat : public chemkit::MoleculeFileFormat
 {
 public:
     MopinFileFormat();
 
-    bool read(std::istream &input, chemkit::io::MoleculeFile *file);
-    bool read(QIODevice *iodev, chemkit::io::MoleculeFile *file);
+    bool read(std::istream &input, chemkit::MoleculeFile *file);
+    bool read(QIODevice *iodev, chemkit::MoleculeFile *file);
 };
 
 #endif // MOPINFILEFORMAT_H

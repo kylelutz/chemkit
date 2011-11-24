@@ -48,7 +48,7 @@ const std::string dataPath = "../../data/";
 
 void ProteinSurfaceBenchmark::benchmark()
 {
-    chemkit::io::PolymerFile file(dataPath + "2DHB.pdb");
+    chemkit::PolymerFile file(dataPath + "2DHB.pdb");
     bool ok = file.read();
     if(!ok)
         qDebug() << file.errorString().c_str();

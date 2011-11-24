@@ -6,7 +6,6 @@
 #include "forcefield.h"
 
 namespace chemkit {
-namespace md {
 
 // === ForceFieldEnergyDescriptor ========================================== //
 /// \class ForceFieldEnergyDescriptor forcefieldenergydescriptor.h chemkit/forcefieldenergydescriptor.h
@@ -45,7 +44,6 @@ Variant ForceFieldEnergyDescriptor<ForceField>::value(const Molecule *molecule) 
     return forceField.energy();
 }
 
-} // end md namespace
 } // end chemkit namespace
 
 #endif // CHEMKIT_FORCEFIELDENERGYDESCRIPTOR_INLINE_H

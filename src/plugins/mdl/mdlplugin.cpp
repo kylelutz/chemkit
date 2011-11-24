@@ -40,36 +40,36 @@
 MdlPlugin::MdlPlugin()
     : chemkit::Plugin("mdl")
 {
-    registerPluginClass<chemkit::io::MoleculeFileFormat>("mdl", createMdlFormat);
-    registerPluginClass<chemkit::io::MoleculeFileFormat>("mol", createMolFormat);
-    registerPluginClass<chemkit::io::MoleculeFileFormat>("sdf", createSdfFormat);
-    registerPluginClass<chemkit::io::MoleculeFileFormat>("sd", createSdFormat);
+    registerPluginClass<chemkit::MoleculeFileFormat>("mdl", createMdlFormat);
+    registerPluginClass<chemkit::MoleculeFileFormat>("mol", createMolFormat);
+    registerPluginClass<chemkit::MoleculeFileFormat>("sdf", createSdfFormat);
+    registerPluginClass<chemkit::MoleculeFileFormat>("sd", createSdFormat);
 }
 
 MdlPlugin::~MdlPlugin()
 {
-    unregisterPluginClass<chemkit::io::MoleculeFileFormat>("mdl");
-    unregisterPluginClass<chemkit::io::MoleculeFileFormat>("mol");
-    unregisterPluginClass<chemkit::io::MoleculeFileFormat>("sdf");
-    unregisterPluginClass<chemkit::io::MoleculeFileFormat>("sd");
+    unregisterPluginClass<chemkit::MoleculeFileFormat>("mdl");
+    unregisterPluginClass<chemkit::MoleculeFileFormat>("mol");
+    unregisterPluginClass<chemkit::MoleculeFileFormat>("sdf");
+    unregisterPluginClass<chemkit::MoleculeFileFormat>("sd");
 }
 
-chemkit::io::MoleculeFileFormat* MdlPlugin::createMdlFormat()
+chemkit::MoleculeFileFormat* MdlPlugin::createMdlFormat()
 {
     return new MdlFileFormat("mdl");
 }
 
-chemkit::io::MoleculeFileFormat* MdlPlugin::createMolFormat()
+chemkit::MoleculeFileFormat* MdlPlugin::createMolFormat()
 {
     return new MdlFileFormat("mol");
 }
 
-chemkit::io::MoleculeFileFormat* MdlPlugin::createSdfFormat()
+chemkit::MoleculeFileFormat* MdlPlugin::createSdfFormat()
 {
     return new MdlFileFormat("sdf");
 }
 
-chemkit::io::MoleculeFileFormat* MdlPlugin::createSdFormat()
+chemkit::MoleculeFileFormat* MdlPlugin::createSdFormat()
 {
     return new MdlFileFormat("sd");
 }
