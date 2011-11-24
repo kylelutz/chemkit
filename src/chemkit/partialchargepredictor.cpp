@@ -134,7 +134,7 @@ bool PartialChargePredictor::predictPartialCharges(Molecule *molecule, const std
 
     predictor->setMolecule(molecule);
 
-    foreach(chemkit::Atom *atom, molecule->atoms()){
+    foreach(Atom *atom, molecule->atoms()){
         atom->setPartialCharge(predictor->partialCharge(atom));
     }
 
