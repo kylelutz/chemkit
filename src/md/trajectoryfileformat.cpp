@@ -51,7 +51,7 @@ public:
 
 // === TrajectoryFormatFile ================================================ //
 /// \class TrajectoryFileFormat trajectoryfileformat.h chemkit/trajectoryfileformat.h
-/// \ingroup chemkit-io
+/// \ingroup chemkit-md
 /// \brief The TrajectoryFileFormat class represents a trajectory
 ///        file format.
 

@@ -56,7 +56,7 @@ public:
 
 // === TrajectoryFrame ===================================================== //
 /// \class TrajectoryFrame trajectoryframe.h chemkit/trajectoryframe.h
-/// \ingroup chemkit
+/// \ingroup chemkit-md
 /// \brief The TrajectoryFrame class represents a single frame in a
 ///        trajectory.
 ///

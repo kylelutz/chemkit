@@ -48,7 +48,7 @@ public:
 
 // === TrajectoryFile ====================================================== //
 /// \class TrajectoryFile trajectoryfile.h chemkit/trajectoryfile.h
-/// \ingroup chemkit-io
+/// \ingroup chemkit-md
 /// \brief The TrajectoryFile class contains a trajectory.
 ///
 /// The following trajectory file formats are supported in chemkit:

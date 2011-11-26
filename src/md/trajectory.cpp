@@ -52,7 +52,7 @@ public:
 
 // === Trajectory ========================================================== //
 /// \class Trajectory trajectory.h chemkit/trajectory.h
-/// \ingroup chemkit
+/// \ingroup chemkit-md
 /// \brief The Trajectory class contains a trajectory.
 
 // --- Construction and Destruction ---------------------------------------- //
