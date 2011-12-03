@@ -35,7 +35,7 @@
 
 #include "inchikeylineformat.h"
 
-#include <QtCore>
+#include <boost/format.hpp>
 
 #include "../../3rdparty/inchi/inchi_api.h"
 
@@ -65,7 +65,7 @@ std::string InchiKeyLineFormat::write(const chemkit::Molecule *molecule)
 
     int ret = GetStdINCHIKeyFromStdINCHI(inchi.c_str(), inchiKey);
     if(ret != INCHIKEY_OK){
-        setErrorString(QString("InChIKey failed: the generator returned '%1'.").arg(ret).toStdString());
+        setErrorString((boost::format("InChIKey failed: the generator returned '%d'.") % ret).str());
         return std::string();
     }
 

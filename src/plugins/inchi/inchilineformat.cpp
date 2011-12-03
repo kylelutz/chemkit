@@ -35,13 +35,16 @@
 
 #include "inchilineformat.h"
 
-#include <QString>
-#include <QVector>
+#include <string>
+#include <vector>
+
+#include <boost/algorithm/string.hpp>
 
 #include "../../3rdparty/inchi/inchi_api.h"
 
 #include <chemkit/atom.h>
 #include <chemkit/bond.h>
+#include <chemkit/foreach.h>
 
 InchiLineFormat::InchiLineFormat()
     : chemkit::LineFormat("inchi")
@@ -55,18 +58,17 @@ bool InchiLineFormat::read(const std::string &formula, chemkit::Molecule *molecu
         return 0;
     }
 
-    QString formulaString = formula.c_str();
+    std::string formulaString = formula;
 
     // add `InChI=` to the start if it is not there
-    if(formula.compare(0, 6, "InChI=") != 0){
-        formulaString.prepend("InChI=");
+    if(!boost::starts_with(formula,  "InChI=")){
+        formulaString = "InChI=" + formulaString;
     }
 
     // setup input struct
     inchi_InputINCHI input;
 
-    input.szInChI = new char[formulaString.size()+1];
-    strncpy(input.szInChI, formulaString.toAscii().data(), formulaString.size()+1);
+    input.szInChI = const_cast<char *>(formulaString.c_str());
     input.szOptions = 0;
 
     // get inchi output
@@ -75,7 +77,7 @@ bool InchiLineFormat::read(const std::string &formula, chemkit::Molecule *molecu
     CHEMKIT_UNUSED(ret);
 
     // build molecule from inchi output
-    QVector<chemkit::Atom *> atoms(output.num_atoms);
+    std::vector<chemkit::Atom *> atoms(output.num_atoms);
 
     bool addHydrogens = option("add-hydrogens").toBool();
 
@@ -133,7 +135,7 @@ std::string InchiLineFormat::write(const chemkit::Molecule *molecule)
 
     inchi_Atom *inputAtom = &input.atom[0];
 
-    QList<const chemkit::Atom *> chiralAtoms;
+    std::vector<const chemkit::Atom *> chiralAtoms;
 
     foreach(const chemkit::Atom *atom, molecule->atoms()){
 
@@ -175,7 +177,7 @@ std::string InchiLineFormat::write(const chemkit::Molecule *molecule)
 
         // chiral atoms
         if(atom->isChiral()){
-            chiralAtoms.append(atom);
+            chiralAtoms.push_back(atom);
         }
 
         // move pointer to the next position in the atom array
@@ -193,7 +195,7 @@ std::string InchiLineFormat::write(const chemkit::Molecule *molecule)
 
         foreach(const chemkit::Atom *atom, chiralAtoms){
             inchi_Stereo0D *stereo = &input.stereo0D[chiralIndex];
-            qMemSet(stereo, 0, sizeof(*stereo));
+            memset(stereo, 0, sizeof(*stereo));
             stereo->central_atom = atom->index();
 
             int neighborIndex = 0;
