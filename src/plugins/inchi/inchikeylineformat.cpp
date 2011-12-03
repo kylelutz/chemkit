@@ -37,6 +37,7 @@
 
 #include <boost/format.hpp>
 
+#include "inchilineformat.h"
 #include "../../3rdparty/inchi/inchi_api.h"
 
 InchiKeyLineFormat::InchiKeyLineFormat()
@@ -46,20 +47,11 @@ InchiKeyLineFormat::InchiKeyLineFormat()
 
 std::string InchiKeyLineFormat::write(const chemkit::Molecule *molecule)
 {
-    LineFormat *inchiLineFormat = chemkit::LineFormat::create("inchi");
-    if(!inchiLineFormat){
-        setErrorString("Failed to load the InChI line format.");
-        return std::string();
-    }
-
-    std::string inchi = inchiLineFormat->write(molecule);
+    std::string inchi = InchiLineFormat().write(molecule);
     if(inchi.empty()){
-        setErrorString(inchiLineFormat->errorString());
-        delete inchiLineFormat;
+        setErrorString("Failed to generate InChI.");
         return std::string();
     }
-
-    delete inchiLineFormat;
 
     char inchiKey[28]; // 27 characters + null terminator
 
