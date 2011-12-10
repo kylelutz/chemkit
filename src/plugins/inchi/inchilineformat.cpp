@@ -109,8 +109,7 @@ bool InchiLineFormat::read(const std::string &formula, chemkit::Molecule *molecu
         }
     }
 
-    // free input and output structures
-    delete [] input.szInChI;
+    // free output structure
     FreeStructFromStdINCHI(&output);
 
     return true;
