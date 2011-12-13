@@ -107,12 +107,12 @@ void MoleculeEditorTest::removeAtom()
 {
 }
 
-void MoleculeEditorTest::setAtomAtomicNumber()
+void MoleculeEditorTest::setAtomElement()
 {
     chemkit::Molecule molecule;
     chemkit::Atom *atom = molecule.addAtom(6);
     chemkit::MoleculeEditor editor(&molecule);
-    editor.setAtomAtomicNumber(atom, 1);
+    editor.setAtomElement(atom, 1);
     QCOMPARE(atom->atomicNumber(), 1);
 
     editor.undo();
@@ -121,10 +121,10 @@ void MoleculeEditorTest::setAtomAtomicNumber()
     editor.redo();
     QCOMPARE(atom->atomicNumber(), 1);
 
-    editor.setAtomAtomicNumber(atom, 2);
+    editor.setAtomElement(atom, 2);
     QCOMPARE(atom->atomicNumber(), 2);
 
-    editor.setAtomAtomicNumber(atom, 3);
+    editor.setAtomElement(atom, 3);
     QCOMPARE(atom->atomicNumber(), 3);
 
     editor.undo();

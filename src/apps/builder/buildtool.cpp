@@ -413,7 +413,7 @@ void BuildTool::removeAtom(chemkit::Atom *atom)
 void BuildTool::setAtomAtomicNumber(chemkit::Atom *atom, int atomicNumber)
 {
     m_modifiedAtoms.insert(atom);
-    editor()->setAtomAtomicNumber(atom, atomicNumber);
+    editor()->setAtomElement(atom, atomicNumber);
 }
 
 void BuildTool::setAtomPosition(chemkit::Atom *atom, const chemkit::Point3 &position)

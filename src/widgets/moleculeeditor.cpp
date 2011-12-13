@@ -156,43 +156,43 @@ void RemoveAtomCommand::redo()
     molecule()->removeAtom(atom);
 }
 
-// === SetAtomAtomicNumberCommand ========================================== //
-class SetAtomAtomicNumberCommand : public MoleculeEditorCommand
+// === SetAtomElementCommand =============================================== //
+class SetAtomElementCommand : public MoleculeEditorCommand
 {
 public:
-    SetAtomAtomicNumberCommand(MoleculeEditor *editor, Atom *atom, int atomicNumber);
+    SetAtomElementCommand(MoleculeEditor *editor, Atom *atom, const Element &element);
 
     void undo();
     void redo();
 
 private:
     int m_atomId;
-    int m_initialAtomicNumber;
-    int m_finalAtomicNumber;
+    Element m_initialElement;
+    Element m_finalElement;
 };
 
-SetAtomAtomicNumberCommand::SetAtomAtomicNumberCommand(MoleculeEditor *editor, Atom *atom, int atomicNumber)
+SetAtomElementCommand::SetAtomElementCommand(MoleculeEditor *editor, Atom *atom, const Element &element)
     : MoleculeEditorCommand(editor)
 {
     m_atomId = editor->id(atom);
-    m_initialAtomicNumber = atom->atomicNumber();
-    m_finalAtomicNumber = atomicNumber;
+    m_initialElement = atom->element();
+    m_finalElement = element;
 }
 
-void SetAtomAtomicNumberCommand::undo()
+void SetAtomElementCommand::undo()
 {
     Atom *atom = editor()->atom(m_atomId);
     assert(atom);
 
-    atom->setAtomicNumber(m_initialAtomicNumber);
+    atom->setElement(m_initialElement);
 }
 
-void SetAtomAtomicNumberCommand::redo()
+void SetAtomElementCommand::redo()
 {
     Atom *atom = editor()->atom(m_atomId);
     assert(atom);
 
-    atom->setAtomicNumber(m_finalAtomicNumber);
+    atom->setElement(m_finalElement);
 }
 
 // === SetAtomPositionCommand ============================================== //
@@ -628,9 +628,9 @@ void MoleculeEditor::removeAtom(Atom *atom)
 /// Sets the atomic number of \p atom to \p atomicNumber.
 ///
 /// \see Atom::setAtomicNumber()
-void MoleculeEditor::setAtomAtomicNumber(Atom *atom, int atomicNumber)
+void MoleculeEditor::setAtomElement(Atom *atom, const Element &element)
 {
-    SetAtomAtomicNumberCommand *command = new SetAtomAtomicNumberCommand(this, atom, atomicNumber);
+    SetAtomElementCommand *command = new SetAtomElementCommand(this, atom, element);
     d->undoStack.push(command);
 }
 

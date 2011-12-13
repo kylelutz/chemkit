@@ -47,7 +47,7 @@ class MoleculeEditorTest : public QObject
         void setMolecule();
         void addAtom();
         void removeAtom();
-        void setAtomAtomicNumber();
+        void setAtomElement();
         void setAtomPosition();
         void addBond();
         void removeBond();

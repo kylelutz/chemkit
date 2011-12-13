@@ -80,7 +80,7 @@ public:
     Atom* addAtom(const Element &element);
     Atom* addAtomCopy(const Atom *atom);
     void removeAtom(Atom *atom);
-    void setAtomAtomicNumber(Atom *atom, int atomicNumber);
+    void setAtomElement(Atom *atom, const Element &element);
     void setAtomPosition(Atom *atom, const Point3 &position);
     Bond* addBond(Atom *a, Atom *b, int order = 1);
     void removeBond(Bond *bond);
