@@ -39,6 +39,13 @@
 
 namespace chemkit {
 
+// === MoleculeWatcherPrivate ============================================== //
+class MoleculeWatcherPrivate
+{
+public:
+    const Molecule *molecule;
+};
+
 // === MoleculeWatcher ===================================================== //
 /// \class MoleculeWatcher moleculewatcher.h chemkit/moleculewatcher.h
 /// \ingroup chemkit
@@ -48,13 +55,44 @@ namespace chemkit {
 // --- Construction and Destruction ---------------------------------------- //
 /// Creates a new molecule watcher that monitors molecule.
 MoleculeWatcher::MoleculeWatcher(const Molecule *molecule)
-    : MoleculeObserver(molecule)
+    : d(new MoleculeWatcherPrivate)
 {
+    d->molecule = 0;
+
+    setMolecule(molecule);
 }
 
 /// Destroys the molecule watcher object.
 MoleculeWatcher::~MoleculeWatcher()
 {
+    setMolecule(0);
+
+    delete d;
+}
+
+// --- Properties ---------------------------------------------------------- //
+/// Sets the molecule for the watcher to monitor.
+void MoleculeWatcher::setMolecule(const Molecule *molecule)
+{
+    if(molecule == d->molecule){
+        return;
+    }
+
+    if(d->molecule){
+        d->molecule->removeWatcher(this);
+    }
+
+    d->molecule = molecule;
+
+    if(d->molecule){
+        molecule->addWatcher(this);
+    }
+}
+
+/// Returns the molecule that the watcher is monitoring.
+const Molecule* MoleculeWatcher::molecule() const
+{
+    return d->molecule;
 }
 
 // --- Signals ------------------------------------------------------------- //

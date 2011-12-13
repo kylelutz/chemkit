@@ -62,7 +62,7 @@
 #include "coordinates.h"
 #include "moleculargraph.h"
 #include "moleculeprivate.h"
-#include "moleculeobserver.h"
+#include "moleculewatcher.h"
 #include "internalcoordinates.h"
 #include "moleculardescriptor.h"
 
@@ -194,7 +194,7 @@ Molecule::~Molecule()
 void Molecule::setName(const std::string &name)
 {
     d->name = name;
-    notifyObservers(NameChanged);
+    notifyWatchers(NameChanged);
 }
 
 /// Returns the name of the molecule.
@@ -345,7 +345,7 @@ Atom* Molecule::addAtom(const Element &element)
     d->partialCharges.push_back(0);
 
     setFragmentsPerceived(false);
-    notifyObservers(atom, AtomAdded);
+    notifyWatchers(atom, AtomAdded);
 
     return atom;
 }
@@ -396,7 +396,7 @@ void Molecule::removeAtom(Atom *atom)
     }
 
     atom->m_molecule = 0;
-    notifyObservers(atom, AtomRemoved);
+    notifyWatchers(atom, AtomRemoved);
 
     delete atom;
 }
@@ -466,7 +466,7 @@ Bond* Molecule::addBond(Atom *a, Atom *b, int order)
     setRingsPerceived(false);
     setFragmentsPerceived(false);
 
-    notifyObservers(bond, BondAdded);
+    notifyWatchers(bond, BondAdded);
 
     return bond;
 }
@@ -503,7 +503,7 @@ void Molecule::removeBond(Bond *bond)
     setRingsPerceived(false);
     setFragmentsPerceived(false);
 
-    notifyObservers(bond, BondRemoved);
+    notifyWatchers(bond, BondRemoved);
 
     delete bond;
 }
@@ -1192,35 +1192,35 @@ Molecule& Molecule::operator=(const Molecule &molecule)
 }
 
 // --- Internal Methods ---------------------------------------------------- //
-void Molecule::notifyObservers(ChangeType type)
+void Molecule::notifyWatchers(ChangeType type)
 {
-    foreach(MoleculeObserver *observer, d->observers){
-        observer->moleculeChanged(this, type);
+    foreach(MoleculeWatcher *watcher, d->watchers){
+        watcher->moleculeChanged(this, type);
     }
 }
 
-void Molecule::notifyObservers(const Atom *atom, ChangeType type)
+void Molecule::notifyWatchers(const Atom *atom, ChangeType type)
 {
-    foreach(MoleculeObserver *observer, d->observers){
-        observer->atomChanged(atom, type);
+    foreach(MoleculeWatcher *watcher, d->watchers){
+        watcher->atomChanged(atom, type);
     }
 }
 
-void Molecule::notifyObservers(const Bond *bond, ChangeType type)
+void Molecule::notifyWatchers(const Bond *bond, ChangeType type)
 {
-    foreach(MoleculeObserver *observer, d->observers){
-        observer->bondChanged(bond, type);
+    foreach(MoleculeWatcher *watcher, d->watchers){
+        watcher->bondChanged(bond, type);
     }
 }
 
-void Molecule::addObserver(MoleculeObserver *observer) const
+void Molecule::addWatcher(MoleculeWatcher *watcher) const
 {
-    d->observers.push_back(observer);
+    d->watchers.push_back(watcher);
 }
 
-void Molecule::removeObserver(MoleculeObserver *observer) const
+void Molecule::removeWatcher(MoleculeWatcher *watcher) const
 {
-    d->observers.erase(std::remove(d->observers.begin(), d->observers.end(), observer));
+    d->watchers.erase(std::remove(d->watchers.begin(), d->watchers.end(), watcher));
 }
 
 bool Molecule::isSubsetOf(const Molecule *molecule, int flags) const

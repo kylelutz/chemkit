@@ -57,8 +57,8 @@ class Fragment;
 class Conformer;
 class Coordinates;
 class MoleculePrivate;
+class MoleculeWatcher;
 class Stereochemistry;
-class MoleculeObserver;
 class InternalCoordinates;
 
 class CHEMKIT_EXPORT Molecule
@@ -185,18 +185,18 @@ private:
     bool fragmentsPerceived() const;
     void perceiveFragments() const;
     Fragment* fragment(const Atom *atom) const;
-    void notifyObservers(ChangeType type);
-    void notifyObservers(const Atom *atom, ChangeType type);
-    void notifyObservers(const Bond *bond, ChangeType type);
-    void notifyObservers(const Conformer *conformer, ChangeType type);
-    void addObserver(MoleculeObserver *observer) const;
-    void removeObserver(MoleculeObserver *observer) const;
+    void notifyWatchers(ChangeType type);
+    void notifyWatchers(const Atom *atom, ChangeType type);
+    void notifyWatchers(const Bond *bond, ChangeType type);
+    void notifyWatchers(const Conformer *conformer, ChangeType type);
+    void addWatcher(MoleculeWatcher *watcher) const;
+    void removeWatcher(MoleculeWatcher *watcher) const;
     bool isSubsetOf(const Molecule *molecule, int flags) const;
     Stereochemistry* stereochemistry();
 
     friend class Atom;
     friend class Bond;
-    friend class MoleculeObserver;
+    friend class MoleculeWatcher;
 
 private:
     MoleculePrivate* const d;

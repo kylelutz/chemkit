@@ -98,7 +98,7 @@ void Atom::setAtomicNumber(int atomicNumber)
     }
 
     m_molecule->m_elements[m_index].setAtomicNumber(atomicNumber);
-    m_molecule->notifyObservers(this, Molecule::AtomAtomicNumberChanged);
+    m_molecule->notifyWatchers(this, Molecule::AtomAtomicNumberChanged);
 }
 
 /// Returns the atomic number of the atom.
@@ -115,7 +115,7 @@ void Atom::setIsotope(const Isotope &isotope)
     }
 
     m_molecule->d->isotopes[this] = isotope;
-    m_molecule->notifyObservers(this, Molecule::AtomMassNumberChanged);
+    m_molecule->notifyWatchers(this, Molecule::AtomMassNumberChanged);
 }
 
 /// Returns the isotope for the atom.
@@ -165,7 +165,7 @@ int Atom::formalCharge() const
 void Atom::setPartialCharge(Real charge)
 {
     m_molecule->d->partialCharges[m_index] = charge;
-    m_molecule->notifyObservers(this, Molecule::AtomPartialChargeChanged);
+    m_molecule->notifyWatchers(this, Molecule::AtomPartialChargeChanged);
 }
 
 /// Returns the partial charge of the atom.
@@ -436,7 +436,7 @@ bool Atom::isAromatic() const
 void Atom::setPosition(const Point3 &position)
 {
     m_molecule->d->positions[m_index] = position;
-    molecule()->notifyObservers(this, Molecule::AtomPositionChanged);
+    molecule()->notifyWatchers(this, Molecule::AtomPositionChanged);
 }
 
 /// Sets the coordinates of the atom to (x, y, z). Equivalent to
@@ -508,7 +508,7 @@ Real Atom::distance(const Atom *atom) const
 void Atom::setChirality(Stereochemistry::Type chirality)
 {
     m_molecule->stereochemistry()->setStereochemistry(this, chirality);
-    m_molecule->notifyObservers(this, Molecule::AtomChiralityChanged);
+    m_molecule->notifyWatchers(this, Molecule::AtomChiralityChanged);
 }
 
 /// Returns the chirality of the atom.

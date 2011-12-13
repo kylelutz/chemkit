@@ -52,7 +52,7 @@ class Bond;
 class Ring;
 class Fragment;
 class Conformer;
-class MoleculeObserver;
+class MoleculeWatcher;
 
 class MoleculePrivate
 {
@@ -67,7 +67,7 @@ public:
     std::vector<Ring *> rings;
     bool fragmentsPerceived;
     std::vector<Fragment *> fragments;
-    std::vector<MoleculeObserver *> observers;
+    std::vector<MoleculeWatcher *> watchers;
     std::map<std::string, Variant> data;
     std::map<const Atom *, Isotope> isotopes;
     std::vector<Real> partialCharges;

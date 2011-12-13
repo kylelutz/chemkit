@@ -40,16 +40,22 @@
 
 #include <boost/signals2/signal.hpp>
 
-#include <chemkit/moleculeobserver.h>
+#include "molecule.h"
 
 namespace chemkit {
 
-class CHEMKIT_EXPORT MoleculeWatcher : public MoleculeObserver
+class MoleculeWatcherPrivate;
+
+class CHEMKIT_EXPORT MoleculeWatcher
 {
 public:
     // construction and destruction
     MoleculeWatcher(const Molecule *molecule = 0);
     ~MoleculeWatcher();
+
+    // properties
+    void setMolecule(const Molecule *molecule);
+    const Molecule* molecule() const;
 
     // signals
     boost::signals2::signal<void (const Atom *atom)> atomAdded;
@@ -61,10 +67,15 @@ public:
     boost::signals2::signal<void (const Bond *bond)> bondOrderChanged;
     boost::signals2::signal<void (const Molecule *molecule)> nameChanged;
 
-protected:
-    virtual void atomChanged(const Atom *atom, Molecule::ChangeType changeType);
-    virtual void bondChanged(const Bond *bond, Molecule::ChangeType changeType);
-    virtual void moleculeChanged(const Molecule *molecule, Molecule::ChangeType changeType);
+private:
+    void atomChanged(const Atom *atom, Molecule::ChangeType changeType);
+    void bondChanged(const Bond *bond, Molecule::ChangeType changeType);
+    void moleculeChanged(const Molecule *molecule, Molecule::ChangeType changeType);
+
+    friend class Molecule;
+
+private:
+    MoleculeWatcherPrivate* const d;
 };
 
 } // end chemkit namespace

@@ -114,7 +114,7 @@ void Bond::setOrder(int order)
 {
     m_molecule->d->bondOrders[m_index] = order;
 
-    molecule()->notifyObservers(this, Molecule::BondOrderChanged);
+    molecule()->notifyWatchers(this, Molecule::BondOrderChanged);
 }
 
 /// Returns the bond order.
