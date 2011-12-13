@@ -41,7 +41,7 @@ namespace chemkit {
 
 // === MoleculeWatcher ===================================================== //
 /// \class MoleculeWatcher moleculewatcher.h chemkit/moleculewatcher.h
-/// \ingroup chemkit-widgets
+/// \ingroup chemkit
 /// \brief The MoleculeWatcher class monitors a molecule and emits
 ///        signals when changes occur.
 

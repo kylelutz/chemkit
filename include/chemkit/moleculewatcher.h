@@ -1,1 +1,1 @@
-#include "../../src/widgets/moleculewatcher.h"
+#include "../../src/chemkit/moleculewatcher.h"

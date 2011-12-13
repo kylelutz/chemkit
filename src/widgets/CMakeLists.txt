@@ -10,7 +10,6 @@ include(${QT_USE_FILE})
 
 set(HEADERS
   moleculeeditor.h
-  moleculewatcher.h
   periodictabledialog.h
   periodictablewidget.h
   widgets.h
@@ -18,7 +17,6 @@ set(HEADERS
 
 set(SOURCES
   moleculeeditor.cpp
-  moleculewatcher.cpp
   periodictabledialog.cpp
   periodictablewidget.cpp
   widgets.cpp

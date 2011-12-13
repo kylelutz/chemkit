@@ -36,7 +36,7 @@
 #ifndef CHEMKIT_MOLECULEWATCHER_H
 #define CHEMKIT_MOLECULEWATCHER_H
 
-#include "widgets.h"
+#include "chemkit.h"
 
 #include <boost/signals2/signal.hpp>
 
@@ -44,7 +44,7 @@
 
 namespace chemkit {
 
-class CHEMKIT_WIDGETS_EXPORT MoleculeWatcher : public MoleculeObserver
+class CHEMKIT_EXPORT MoleculeWatcher : public MoleculeObserver
 {
 public:
     // construction and destruction
