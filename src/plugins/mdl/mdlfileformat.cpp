@@ -40,10 +40,33 @@
 
 #include "mdlfileformat.h"
 
+#include <boost/algorithm/string.hpp>
+
 #include <chemkit/atom.h>
 #include <chemkit/bond.h>
+#include <chemkit/foreach.h>
 #include <chemkit/molecule.h>
 #include <chemkit/moleculefile.h>
+
+namespace {
+
+int readNumber(const char *s, int length)
+{
+    // skip any leading white space
+    while(isspace(*s) && --length){
+        s++;
+    }
+
+    int number = 0;
+
+    while(length-- && isdigit(*s)){
+        number = number * 10 + (*s++ - '0');
+    }
+
+    return number;
+}
+
+} // end anonymous namespace
 
 // --- Construction and Destruction ---------------------------------------- //
 MdlFileFormat::MdlFileFormat(const std::string &name)
@@ -58,27 +81,11 @@ MdlFileFormat::~MdlFileFormat()
 // --- Input and Output ---------------------------------------------------- //
 bool MdlFileFormat::read(std::istream &input, chemkit::MoleculeFile *file)
 {
-    QByteArray data;
-    while(!input.eof()){
-        data += input.get();
-    }
-    data.chop(1);
-
-    QBuffer buffer;
-    buffer.setData(data);
-    buffer.open(QBuffer::ReadOnly);
-    return read(&buffer, file);
-}
-
-bool MdlFileFormat::read(QIODevice *iodev, chemkit::MoleculeFile *file)
-{
-    iodev->setTextModeEnabled(true);
-
     if(name() == "mol" || name() == "mdl"){
-        return readMolFile(iodev, file);
+        return readMolFile(input, file);
     }
     else if(name() == "sdf" || name() == "sd"){
-        return readSdfFile(iodev, file);
+        return readSdfFile(input, file);
     }
     else{
         return false;
@@ -87,30 +94,15 @@ bool MdlFileFormat::read(QIODevice *iodev, chemkit::MoleculeFile *file)
 
 bool MdlFileFormat::write(const chemkit::MoleculeFile *file, std::ostream &output)
 {
-    QBuffer buffer;
-    buffer.open(QBuffer::WriteOnly);
-    bool ok = write(file, &buffer);
-    if(!ok){
-        return false;
-    }
-
-    output.write(buffer.data().constData(), buffer.size());
-    return true;
-}
-
-bool MdlFileFormat::write(const chemkit::MoleculeFile *file, QIODevice *iodev)
-{
     if(file->isEmpty()){
         return false;
     }
 
-    iodev->setTextModeEnabled(true);
-
     if(name() == "mol" || name() == "mdl"){
-        writeMolFile(file->molecule(), iodev);
+        writeMolFile(file->molecule(), output);
     }
     else if(name() == "sdf" || name() == "sd"){
-        writeSdfFile(file, iodev);
+        writeSdfFile(file, output);
     }
     else{
         return false;
@@ -120,42 +112,46 @@ bool MdlFileFormat::write(const chemkit::MoleculeFile *file, QIODevice *iodev)
 }
 
 // --- Internal Methods ---------------------------------------------------- //
-bool MdlFileFormat::readMolFile(QIODevice *iodev, chemkit::MoleculeFile *file)
+bool MdlFileFormat::readMolFile(std::istream &input, chemkit::MoleculeFile *file)
 {
-    QString title = iodev->readLine().trimmed(); // title line
-    iodev->readLine(); // creator line
-    iodev->readLine(); // comment line
-    if(iodev->atEnd()){
+    // title line
+    std::string title;
+    std::getline(input, title);
+
+     // creator line
+    std::string creator;
+    std::getline(input, creator);
+
+    // comment line
+    std::string comment;
+    std::getline(input, comment);
+
+    if(input.eof()){
         setErrorString("File is empty");
         return false;
     }
 
     // read counts line
-    char countsLine[41];
-    int countsLineLength = iodev->readLine(countsLine, sizeof(countsLine));
-    if(countsLineLength == -1){
-        setErrorString("Failed to read counts line.");
-        return false;
-    }
+    std::string countsLine;
+    std::getline(input, countsLine);
 
-    int atomCount = 0;
-    int bondCount = 0;
-    sscanf(countsLine, "%3d%3d", &atomCount, &bondCount);
+    int atomCount = readNumber(&countsLine[0], 3);
+    int bondCount = readNumber(&countsLine[3], 3);
 
     // create molecule
     chemkit::Molecule *molecule = new chemkit::Molecule;
-    if(!title.isEmpty()){
-        molecule->setName(title.toStdString());
+    if(!title.empty()){
+        molecule->setName(title);
     }
 
     // read atoms
-    readAtomBlock(iodev, molecule, atomCount);
+    readAtomBlock(input, molecule, atomCount);
 
     // read bonds
-    readBondBlock(iodev, molecule, bondCount);
+    readBondBlock(input, molecule, bondCount);
 
     // read properties
-    readPropertyBlock(iodev, molecule);
+    readPropertyBlock(input, molecule);
 
     // add molecule to the file
     file->addMolecule(molecule);
@@ -163,15 +159,15 @@ bool MdlFileFormat::readMolFile(QIODevice *iodev, chemkit::MoleculeFile *file)
     return true;
 }
 
-bool MdlFileFormat::readSdfFile(QIODevice *iodev, chemkit::MoleculeFile *file)
+bool MdlFileFormat::readSdfFile(std::istream &input, chemkit::MoleculeFile *file)
 {
-    while(!iodev->atEnd()){
+    while(!input.eof()){
         // read molecule
-        readMolFile(iodev, file);
+        readMolFile(input, file);
 
         // read data block
         chemkit::Molecule *molecule = file->molecules().back();
-        readDataBlock(iodev, molecule);
+        readDataBlock(input, molecule);
     }
 
     // return false if we failed to read any molecules
@@ -182,63 +178,47 @@ bool MdlFileFormat::readSdfFile(QIODevice *iodev, chemkit::MoleculeFile *file)
     return true;
 }
 
-bool MdlFileFormat::readAtomBlock(QIODevice *iodev, chemkit::Molecule *molecule, int atomCount)
+bool MdlFileFormat::readAtomBlock(std::istream &input, chemkit::Molecule *molecule, int atomCount)
 {
     for(int i = 0; i < atomCount; i++){
-        char line[72];
+        std::string line;
+        std::getline(input, line);
 
-        int lineLength = iodev->readLine(line, 72);
-        if(lineLength == -1){
-            return false;
-        }
-        if(lineLength < 33){
+        if(line.size() < 33){
             // line too short
             continue;
         }
 
         double x, y, z;
         char symbol[3];
-        sscanf(line, "%10lf%10lf%10lf%3s", &x, &y, &z, symbol);
+        sscanf(&line[0], "%10lf%10lf%10lf%3s", &x, &y, &z, symbol);
 
         chemkit::Atom *atom = molecule->addAtom(symbol);
-        if(!atom){
-            // invalid atomic symbol
-            return false;
-        }
-
         atom->setPosition(x, y, z);
     }
 
     return true;
 }
 
-bool MdlFileFormat::readBondBlock(QIODevice *iodev, chemkit::Molecule *molecule, int bondCount)
+bool MdlFileFormat::readBondBlock(std::istream &input, chemkit::Molecule *molecule, int bondCount)
 {
     for(int i = 0; i < bondCount; i++){
-        char line[24];
-        int lineLength = iodev->readLine(line, 24);
-        if(lineLength == -1){
-            return false;
-        }
-        else if(lineLength < 9){
+        std::string line;
+        std::getline(input, line);
+        if(line.size() < 9){
             // line too short
             return false;
         }
 
-        int firstAtomIndex;
-        int secondAtomIndex;
-        int bondOrder;
-        sscanf(line, "%3d%3d%3d", &firstAtomIndex, &secondAtomIndex, &bondOrder);
+        int firstAtomIndex = readNumber(&line[0], 3);
+        int secondAtomIndex = readNumber(&line[3], 3);
 
         chemkit::Atom *firstAtom = molecule->atom(firstAtomIndex - 1);
         chemkit::Atom *secondAtom = molecule->atom(secondAtomIndex - 1);
         if(firstAtom && secondAtom){
             chemkit::Bond *bond = molecule->addBond(firstAtom, secondAtom);
 
-            // aromatic bond
-            if(bondOrder == 4)
-                bondOrder = 1;
-
+            int bondOrder = line[8] - '0';
             bond->setOrder(bondOrder);
         }
     }
@@ -246,14 +226,15 @@ bool MdlFileFormat::readBondBlock(QIODevice *iodev, chemkit::Molecule *molecule,
     return true;
 }
 
-bool MdlFileFormat::readPropertyBlock(QIODevice *iodev, chemkit::Molecule *molecule)
+bool MdlFileFormat::readPropertyBlock(std::istream &input, chemkit::Molecule *molecule)
 {
     CHEMKIT_UNUSED(molecule);
 
-    while(!iodev->atEnd()){
-        QString line = iodev->readLine();
+    while(!input.eof()){
+        std::string line;
+        std::getline(input, line);
 
-        if(line.startsWith("M  END")){
+        if(boost::starts_with(line, "M  END")){
             return true;
         }
     }
@@ -261,29 +242,31 @@ bool MdlFileFormat::readPropertyBlock(QIODevice *iodev, chemkit::Molecule *molec
     return false;
 }
 
-bool MdlFileFormat::readDataBlock(QIODevice *iodev, chemkit::Molecule *molecule)
+bool MdlFileFormat::readDataBlock(std::istream &input, chemkit::Molecule *molecule)
 {
-    QString dataName;
-    QString dataValue;
+    std::string dataName;
+    std::string dataValue;
 
     bool readingValue = false;
 
-    while(!iodev->atEnd()){
-        QString line = iodev->readLine().trimmed();
+    while(!input.eof()){
+        std::string line;
+        std::getline(input, line);
+        boost::algorithm::trim(line);
 
-        if(line.startsWith("$$$$")){
+        if(boost::starts_with(line, "$$$$")){
             return true;
         }
-        else if(line.startsWith("> <")){
-            dataName = line.mid(3, line.length() - 4);
+        else if(boost::starts_with(line, "> <")){
+            dataName = line.substr(3, line.length() - 4);
             readingValue = true;
         }
-        else if(readingValue && line.isEmpty()){
-            molecule->setData(dataName.toStdString(), dataValue.toStdString());
+        else if(readingValue && line.empty()){
+            molecule->setData(dataName, dataValue);
             dataValue.clear();
         }
         else if(readingValue){
-            if(!dataValue.isEmpty())
+            if(!dataValue.empty())
                 dataValue += "\n";
             dataValue += line;
         }
@@ -296,37 +279,38 @@ bool MdlFileFormat::readDataBlock(QIODevice *iodev, chemkit::Molecule *molecule)
     return false;
 }
 
-void MdlFileFormat::writeMolFile(const chemkit::Molecule *molecule, QIODevice *iodev)
+void MdlFileFormat::writeMolFile(const chemkit::Molecule *molecule, std::ostream &output)
 {
     // name, creator, and comment lines
-    iodev->write(molecule->name().c_str());
-    iodev->write("\n\n\n");
+    output << molecule->name() << "\n";
+    output << "\n";
+    output << "\n";
 
     // counts line
     char countsLine[41];
     sprintf(countsLine, "%3d%3d  0  0  0  0  0  0  0  0999 V2000\n", molecule->atomCount(),
                                                                      molecule->bondCount());
-    iodev->write(countsLine, sizeof(countsLine) - 1);
+    output.write(countsLine, sizeof(countsLine) - 1);
 
     // atoms
-    writeAtomBlock(molecule, iodev);
+    writeAtomBlock(molecule, output);
 
     // bonds
-    writeBondBlock(molecule, iodev);
+    writeBondBlock(molecule, output);
 
     // properties
-    iodev->write("M  END\n");
+    output << "M  END\n";
 }
 
-void MdlFileFormat::writeSdfFile(const chemkit::MoleculeFile *file, QIODevice *iodev)
+void MdlFileFormat::writeSdfFile(const chemkit::MoleculeFile *file, std::ostream &output)
 {
     foreach(const chemkit::Molecule *molecule, file->molecules()){
-        writeMolFile(molecule, iodev);
-        iodev->write("$$$$\n");
+        writeMolFile(molecule, output);
+        output << "$$$$\n";
     }
 }
 
-void MdlFileFormat::writeAtomBlock(const chemkit::Molecule *molecule, QIODevice *iodev)
+void MdlFileFormat::writeAtomBlock(const chemkit::Molecule *molecule, std::ostream &output)
 {
     foreach(const chemkit::Atom *atom, molecule->atoms()){
         char line[50];
@@ -334,17 +318,17 @@ void MdlFileFormat::writeAtomBlock(const chemkit::Molecule *molecule, QIODevice 
                                                                 atom->y(),
                                                                 atom->z(),
                                                                 atom->symbol().c_str());
-        iodev->write(line, sizeof(line) - 1);
+        output.write(line, sizeof(line) - 1);
     }
 }
 
-void MdlFileFormat::writeBondBlock(const chemkit::Molecule *molecule, QIODevice *iodev)
+void MdlFileFormat::writeBondBlock(const chemkit::Molecule *molecule, std::ostream &output)
 {
     foreach(const chemkit::Bond *bond, molecule->bonds()){
         char line[23];
         sprintf(line, "%3d%3d%3d  0  0  0  0\n", bond->atom1()->index() + 1,
                                                  bond->atom2()->index() + 1,
                                                  bond->order());
-        iodev->write(line, sizeof(line) - 1);
+        output.write(line, sizeof(line) - 1);
     }
 }

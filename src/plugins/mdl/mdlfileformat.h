@@ -36,8 +36,6 @@
 #ifndef MDLFILEFORMAT_H
 #define MDLFILEFORMAT_H
 
-#include <QtCore>
-
 #include <chemkit/molecule.h>
 #include <chemkit/moleculefileformat.h>
 
@@ -50,21 +48,19 @@ public:
 
     // input and output
     bool read(std::istream &input, chemkit::MoleculeFile *file);
-    bool read(QIODevice *iodev, chemkit::MoleculeFile *file);
     bool write(const chemkit::MoleculeFile *file, std::ostream &output);
-    bool write(const chemkit::MoleculeFile *file, QIODevice *iodev);
 
 private:
-    bool readMolFile(QIODevice *iodev, chemkit::MoleculeFile *file);
-    bool readSdfFile(QIODevice *iodev, chemkit::MoleculeFile *file);
-    bool readAtomBlock(QIODevice *iodev, chemkit::Molecule *molecule, int atomCount);
-    bool readBondBlock(QIODevice *iodev, chemkit::Molecule *molecule, int bondCount);
-    bool readPropertyBlock(QIODevice *iodev, chemkit::Molecule *molecule);
-    bool readDataBlock(QIODevice *iodev, chemkit::Molecule *molecule);
-    void writeMolFile(const chemkit::Molecule *molecule, QIODevice *iodev);
-    void writeSdfFile(const chemkit::MoleculeFile *file, QIODevice *iodev);
-    void writeAtomBlock(const chemkit::Molecule *molecule, QIODevice *iodev);
-    void writeBondBlock(const chemkit::Molecule *molecule, QIODevice *iodev);
+    bool readMolFile(std::istream &input, chemkit::MoleculeFile *file);
+    bool readSdfFile(std::istream &input, chemkit::MoleculeFile *file);
+    bool readAtomBlock(std::istream &input, chemkit::Molecule *molecule, int atomCount);
+    bool readBondBlock(std::istream &input, chemkit::Molecule *molecule, int bondCount);
+    bool readPropertyBlock(std::istream &input, chemkit::Molecule *molecule);
+    bool readDataBlock(std::istream &input, chemkit::Molecule *molecule);
+    void writeMolFile(const chemkit::Molecule *molecule, std::ostream &output);
+    void writeSdfFile(const chemkit::MoleculeFile *file, std::ostream &output);
+    void writeAtomBlock(const chemkit::Molecule *molecule, std::ostream &output);
+    void writeBondBlock(const chemkit::Molecule *molecule, std::ostream &output);
 };
 
 #endif // MDLFILEFORMAT_H
