@@ -38,37 +38,32 @@
 
 #include "widgets.h"
 
-#include <QObject>
+#include <boost/signals2/signal.hpp>
 
 #include <chemkit/moleculeobserver.h>
 
 namespace chemkit {
 
-class CHEMKIT_WIDGETS_EXPORT MoleculeWatcher : public QObject, public MoleculeObserver
+class CHEMKIT_WIDGETS_EXPORT MoleculeWatcher : public MoleculeObserver
 {
-    Q_OBJECT
-
 public:
     // construction and destruction
     MoleculeWatcher(const Molecule *molecule = 0);
     ~MoleculeWatcher();
 
-Q_SIGNALS:
-    void atomAdded(const chemkit::Atom *atom);
-    void atomRemoved(const chemkit::Atom *atom);
-    void atomAtomicNumberChanged(const chemkit::Atom *atom);
-    void atomPositionChanged(const chemkit::Atom *atom);
-    void bondAdded(const chemkit::Bond *bond);
-    void bondRemoved(const chemkit::Bond *bond);
-    void bondOrderChanged(const chemkit::Bond *bond);
-    void conformerAdded(const chemkit::Conformer *conformer);
-    void conformerRemoved(const chemkit::Conformer *conformer);
-    void nameChanged(const chemkit::Molecule *molecule);
+    // signals
+    boost::signals2::signal<void (const Atom *atom)> atomAdded;
+    boost::signals2::signal<void (const Atom *atom)> atomRemoved;
+    boost::signals2::signal<void (const Atom *atom)> atomAtomicNumberChanged;
+    boost::signals2::signal<void (const Atom *atom)> atomPositionChanged;
+    boost::signals2::signal<void (const Bond *bond)> bondAdded;
+    boost::signals2::signal<void (const Bond *bond)> bondRemoved;
+    boost::signals2::signal<void (const Bond *bond)> bondOrderChanged;
+    boost::signals2::signal<void (const Molecule *molecule)> nameChanged;
 
 protected:
     virtual void atomChanged(const Atom *atom, Molecule::ChangeType changeType);
     virtual void bondChanged(const Bond *bond, Molecule::ChangeType changeType);
-    virtual void conformerChanged(const Conformer *conformer, Molecule::ChangeType changeType);
     virtual void moleculeChanged(const Molecule *molecule, Molecule::ChangeType changeType);
 };
 

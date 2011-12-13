@@ -35,6 +35,8 @@
 
 #include "graphicsmoleculeitem.h"
 
+#include <boost/bind.hpp>
+
 #include "graphicsscene.h"
 
 #include <chemkit/atom.h>
@@ -104,13 +106,13 @@ GraphicsMoleculeItem::GraphicsMoleculeItem(const Molecule *molecule)
     d->displayType = BallAndStick;
     d->colorMap = new GraphicsAtomColorMap(GraphicsAtomColorMap::DefaultColorScheme);
 
-    connect(d->watcher, SIGNAL(atomAdded(const chemkit::Atom*)), SLOT(atomAdded(const chemkit::Atom*)));
-    connect(d->watcher, SIGNAL(atomRemoved(const chemkit::Atom*)), SLOT(atomRemoved(const chemkit::Atom*)));
-    connect(d->watcher, SIGNAL(atomAtomicNumberChanged(const chemkit::Atom*)), SLOT(atomAtomicNumberChanged(const chemkit::Atom*)));
-    connect(d->watcher, SIGNAL(atomPositionChanged(const chemkit::Atom*)), SLOT(atomPositionChanged(const chemkit::Atom*)));
-    connect(d->watcher, SIGNAL(bondAdded(const chemkit::Bond*)), SLOT(bondAdded(const chemkit::Bond*)));
-    connect(d->watcher, SIGNAL(bondRemoved(const chemkit::Bond*)), SLOT(bondRemoved(const chemkit::Bond*)));
-    connect(d->watcher, SIGNAL(bondOrderChanged(const chemkit::Bond*)), SLOT(bondOrderChanged(const chemkit::Bond*)));
+    d->watcher->atomAdded.connect(boost::bind(&GraphicsMoleculeItem::atomAdded, this, _1));
+    d->watcher->atomRemoved.connect(boost::bind(&GraphicsMoleculeItem::atomRemoved, this, _1));
+    d->watcher->atomAtomicNumberChanged.connect(boost::bind(&GraphicsMoleculeItem::atomAtomicNumberChanged, this, _1));
+    d->watcher->atomPositionChanged.connect(boost::bind(&GraphicsMoleculeItem::atomPositionChanged, this, _1));
+    d->watcher->bondAdded.connect(boost::bind(&GraphicsMoleculeItem::bondAdded, this, _1));
+    d->watcher->bondRemoved.connect(boost::bind(&GraphicsMoleculeItem::bondRemoved, this, _1));
+    d->watcher->bondOrderChanged.connect(boost::bind(&GraphicsMoleculeItem::bondOrderChanged, this, _1));
 
     setMolecule(molecule);
 }
@@ -378,7 +380,7 @@ void GraphicsMoleculeItem::itemChanged(ItemChange change)
 }
 
 // --- Slots --------------------------------------------------------------- //
-void GraphicsMoleculeItem::atomAdded(const chemkit::Atom *atom)
+void GraphicsMoleculeItem::atomAdded(const Atom *atom)
 {
     float radius;
     if(d->displayType == SpaceFilling){
@@ -403,7 +405,7 @@ void GraphicsMoleculeItem::atomAdded(const chemkit::Atom *atom)
     d->atomItems.append(item);
 }
 
-void GraphicsMoleculeItem::atomRemoved(const chemkit::Atom *atom)
+void GraphicsMoleculeItem::atomRemoved(const Atom *atom)
 {
     foreach(GraphicsAtomItem *item, d->atomItems){
         if(item->atom() == atom){
@@ -420,7 +422,7 @@ void GraphicsMoleculeItem::atomRemoved(const chemkit::Atom *atom)
     }
 }
 
-void GraphicsMoleculeItem::atomAtomicNumberChanged(const chemkit::Atom *atom)
+void GraphicsMoleculeItem::atomAtomicNumberChanged(const Atom *atom)
 {
     GraphicsAtomItem *item = atomItem(atom);
     item->setColor(d->colorMap->color(atom));
@@ -444,7 +446,7 @@ void GraphicsMoleculeItem::atomAtomicNumberChanged(const chemkit::Atom *atom)
     update();
 }
 
-void GraphicsMoleculeItem::atomPositionChanged(const chemkit::Atom *atom)
+void GraphicsMoleculeItem::atomPositionChanged(const Atom *atom)
 {
     foreach(GraphicsAtomItem *item, d->atomItems){
         if(item->atom() == atom){
@@ -460,7 +462,7 @@ void GraphicsMoleculeItem::atomPositionChanged(const chemkit::Atom *atom)
     }
 }
 
-void GraphicsMoleculeItem::bondAdded(const chemkit::Bond *bond)
+void GraphicsMoleculeItem::bondAdded(const Bond *bond)
 {
     GraphicsBondItem *item = new GraphicsBondItem(const_cast<Bond *>(bond));
     item->setVisible(isVisible());
@@ -485,7 +487,7 @@ void GraphicsMoleculeItem::bondAdded(const chemkit::Bond *bond)
     update();
 }
 
-void GraphicsMoleculeItem::bondRemoved(const chemkit::Bond *bond)
+void GraphicsMoleculeItem::bondRemoved(const Bond *bond)
 {
     foreach(GraphicsBondItem *item, d->bondItems){
         if(item->bond() == bond){
@@ -501,7 +503,7 @@ void GraphicsMoleculeItem::bondRemoved(const chemkit::Bond *bond)
     update();
 }
 
-void GraphicsMoleculeItem::bondOrderChanged(const chemkit::Bond *bond)
+void GraphicsMoleculeItem::bondOrderChanged(const Bond *bond)
 {
     Q_UNUSED(bond);
 

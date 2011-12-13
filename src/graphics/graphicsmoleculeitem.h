@@ -99,15 +99,15 @@ protected:
     // events
     void itemChanged(ItemChange change);
 
-private slots:
+private:
     // slots
-    void atomAdded(const chemkit::Atom *atom);
-    void atomRemoved(const chemkit::Atom *atom);
-    void atomAtomicNumberChanged(const chemkit::Atom *atom);
-    void atomPositionChanged(const chemkit::Atom *atom);
-    void bondAdded(const chemkit::Bond *bond);
-    void bondRemoved(const chemkit::Bond *bond);
-    void bondOrderChanged(const chemkit::Bond *bond);
+    void atomAdded(const Atom *atom);
+    void atomRemoved(const Atom *atom);
+    void atomAtomicNumberChanged(const Atom *atom);
+    void atomPositionChanged(const Atom *atom);
+    void bondAdded(const Bond *bond);
+    void bondRemoved(const Bond *bond);
+    void bondOrderChanged(const Bond *bond);
 
 private:
     GraphicsMoleculeItemPrivate* const d;

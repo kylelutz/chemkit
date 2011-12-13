@@ -48,8 +48,7 @@ namespace chemkit {
 // --- Construction and Destruction ---------------------------------------- //
 /// Creates a new molecule watcher that monitors molecule.
 MoleculeWatcher::MoleculeWatcher(const Molecule *molecule)
-    : QObject(),
-      MoleculeObserver(molecule)
+    : MoleculeObserver(molecule)
 {
 }
 
@@ -59,51 +58,35 @@ MoleculeWatcher::~MoleculeWatcher()
 }
 
 // --- Signals ------------------------------------------------------------- //
-/// \fn void MoleculeWatcher::atomAdded(const chemkit::Atom *atom)
+/// \fn void MoleculeWatcher::atomAdded(const Atom *atom)
 ///
 /// This signal is emitted when an atom is added.
 
-/// \fn void MoleculeWatcher::atomRemoved(const chemkit::Atom *atom)
+/// \fn void MoleculeWatcher::atomRemoved(const Atom *atom)
 ///
 /// This signal is emitted when an atom is removed.
 
-/// \fn void MoleculeWatcher::atomAtomicNumberChanged(const chemkit::Atom *atom)
+/// \fn void MoleculeWatcher::atomAtomicNumberChanged(const Atom *atom)
 ///
 /// This signal is emitted when an atom's atomic number changes.
 
-/// \fn void MoleculeWatcher::atomPositionChanged(const chemkit::Atom *atom)
+/// \fn void MoleculeWatcher::atomPositionChanged(const Atom *atom)
 ///
 /// This signal is emitted when an atom's position changes.
 
-/// \fn void MoleculeWatcher::bondAdded(const chemkit::Bond *bond)
+/// \fn void MoleculeWatcher::bondAdded(const Bond *bond)
 ///
 /// This signal is emitted when a bond is added.
 
-/// \fn void MoleculeWatcher::bondRemoved(const chemkit::Bond *bond)
+/// \fn void MoleculeWatcher::bondRemoved(const Bond *bond)
 ///
 /// This signal is emitted when a bond is removed.
 
-/// \fn void MoleculeWatcher::bondOrderChanged(const chemkit::Bond *bond)
+/// \fn void MoleculeWatcher::bondOrderChanged(const Bond *bond)
 ///
 /// This signal is emitted when a bond's order changes.
 
-/// \fn void MoleculeWatcher::residueAdded(const chemkit::Residue *residue)
-///
-/// This signal is emitted when a residue is added.
-
-/// \fn void MoleculeWatcher::residueRemoved(const chemkit::Residue *residue)
-///
-/// This signal is emitted when a residue is removed.
-
-/// \fn void MoleculeWatcher::conformerAdded(const chemkit::Conformer *conformer)
-///
-/// This signal is emitted when a conformer is added.
-
-/// \fn void MoleculeWatcher::conformerRemoved(const chemkit::Conformer *conformer)
-///
-/// This signal is emitted when a conformer is removed.
-
-/// \fn void MoleculeWatcher::nameChanged(const chemkit::Molecule *molecule)
+/// \fn void MoleculeWatcher::nameChanged(const Molecule *molecule)
 ///
 /// This signal is emitted when the molecule's name changes.
 
@@ -112,7 +95,7 @@ void MoleculeWatcher::moleculeChanged(const Molecule *molecule, Molecule::Change
 {
     switch(changeType){
         case Molecule::NameChanged:
-            Q_EMIT nameChanged(molecule);
+            nameChanged(molecule);
             break;
         default:
             break;
@@ -123,16 +106,16 @@ void MoleculeWatcher::atomChanged(const Atom *atom, Molecule::ChangeType changeT
 {
     switch(changeType){
         case Molecule::AtomAdded:
-            Q_EMIT atomAdded(atom);
+            atomAdded(atom);
             break;
         case Molecule::AtomRemoved:
-            Q_EMIT atomRemoved(atom);
+            atomRemoved(atom);
             break;
         case Molecule::AtomAtomicNumberChanged:
-            Q_EMIT atomAtomicNumberChanged(atom);
+            atomAtomicNumberChanged(atom);
             break;
         case Molecule::AtomPositionChanged:
-            Q_EMIT atomPositionChanged(atom);
+            atomPositionChanged(atom);
             break;
         default:
             break;
@@ -143,27 +126,13 @@ void MoleculeWatcher::bondChanged(const Bond *bond, Molecule::ChangeType changeT
 {
     switch(changeType){
         case Molecule::BondAdded:
-            Q_EMIT bondAdded(bond);
+            bondAdded(bond);
             break;
         case Molecule::BondRemoved:
-            Q_EMIT bondRemoved(bond);
+            bondRemoved(bond);
             break;
         case Molecule::BondOrderChanged:
-            Q_EMIT bondOrderChanged(bond);
-        default:
-            break;
-    }
-}
-
-void MoleculeWatcher::conformerChanged(const Conformer *conformer, Molecule::ChangeType changeType)
-{
-    switch(changeType){
-        case Molecule::ConformerAdded:
-            Q_EMIT conformerAdded(conformer);
-            break;
-        case Molecule::ConformerRemoved:
-            Q_EMIT conformerRemoved(conformer);
-            break;
+            bondOrderChanged(bond);
         default:
             break;
     }
