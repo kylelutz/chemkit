@@ -76,9 +76,6 @@ public:
         BondAdded,
         BondRemoved,
         BondOrderChanged,
-        ConformerAdded,
-        ConformerRemoved,
-        ConformerChanged,
         NameChanged
     };
 
@@ -188,7 +185,6 @@ private:
     void notifyWatchers(ChangeType type);
     void notifyWatchers(const Atom *atom, ChangeType type);
     void notifyWatchers(const Bond *bond, ChangeType type);
-    void notifyWatchers(const Conformer *conformer, ChangeType type);
     void addWatcher(MoleculeWatcher *watcher) const;
     void removeWatcher(MoleculeWatcher *watcher) const;
     bool isSubsetOf(const Molecule *molecule, int flags) const;
