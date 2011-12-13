@@ -537,6 +537,15 @@ int Molecule::bondCount() const
     return bonds().size();
 }
 
+/// Returns an iterator range containing the bonds in the
+/// molecule.
+///
+/// \internal
+Molecule::BondRange Molecule::bondRange() const
+{
+    return boost::make_iterator_range(d->bonds.begin(), d->bonds.end());
+}
+
 /// Returns the bond at index.
 Bond* Molecule::bond(int index) const
 {

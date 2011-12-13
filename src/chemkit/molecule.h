@@ -42,6 +42,8 @@
 #include <string>
 #include <vector>
 
+#include <boost/range/iterator_range.hpp>
+
 #include "moiety.h"
 #include "point3.h"
 #include "element.h"
@@ -85,6 +87,10 @@ public:
         CompareAromaticity = 0x02
     };
 
+    // typedefs
+    typedef boost::iterator_range<std::vector<Atom *>::const_iterator> AtomRange;
+    typedef boost::iterator_range<std::vector<Bond *>::const_iterator> BondRange;
+
     // construction and destruction
     Molecule();
     Molecule(const std::string &formula, const std::string &format);
@@ -111,6 +117,7 @@ public:
     inline std::vector<Atom *> atoms() const;
     inline int atomCount() const;
     int atomCount(const Element &element) const;
+    inline AtomRange atomRange() const;
     bool contains(const Atom *atom) const;
     bool contains(const Element &element) const;
     Bond* addBond(Atom *a, Atom *b, int order = 1);
@@ -123,6 +130,7 @@ public:
     Bond* bond(int a, int b) const;
     std::vector<Bond *> bonds() const;
     int bondCount() const;
+    BondRange bondRange() const;
     bool contains(const Bond *bond) const;
     void clear();
 

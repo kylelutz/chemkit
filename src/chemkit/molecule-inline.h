@@ -67,6 +67,15 @@ inline int Molecule::atomCount() const
     return m_atoms.size();
 }
 
+/// Returns an iterator range containing the atoms in the
+/// molecule.
+///
+/// \internal
+inline Molecule::AtomRange Molecule::atomRange() const
+{
+    return boost::make_iterator_range(m_atoms.begin(), m_atoms.end());
+}
+
 /// Returns the atom at \p index.
 inline Atom* Molecule::atom(int index) const
 {
