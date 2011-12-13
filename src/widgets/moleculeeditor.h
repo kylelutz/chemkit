@@ -39,7 +39,6 @@
 #include "widgets.h"
 
 #include <QObject>
-#include <QUndoStack>
 
 #include <chemkit/molecule.h>
 

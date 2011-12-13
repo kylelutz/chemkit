@@ -35,9 +35,12 @@
 
 #include "moleculeeditor.h"
 
+#include <stack>
 #include <cassert>
 
-#include <QUndoCommand>
+#include <boost/bind.hpp>
+#include <boost/foreach.hpp>
+#include <boost/signals2.hpp>
 
 #include <chemkit/atom.h>
 #include <chemkit/bond.h>
@@ -46,8 +49,286 @@ namespace chemkit {
 
 namespace {
 
+// === UndoCommand ========================================================= //
+class UndoCommand
+{
+public:
+    // construction and destruction
+    UndoCommand();
+    virtual ~UndoCommand();
+
+    // command
+    virtual void undo() = 0;
+    virtual void redo() = 0;
+};
+
+/// Creates a new undo command.
+UndoCommand::UndoCommand()
+{
+}
+
+/// Destroys the undo command.
+UndoCommand::~UndoCommand()
+{
+}
+
+// === UndoCommandGroup ==================================================== //
+class UndoCommandGroup : public UndoCommand
+{
+public:
+    // construction an destruction
+    UndoCommandGroup();
+    virtual ~UndoCommandGroup();
+
+    // properties
+    void addCommand(UndoCommand *command);
+
+    // command
+    virtual void undo();
+    virtual void redo();
+
+private:
+    std::vector<UndoCommand *> m_commands;
+};
+
+/// Creates a new, empty undo command group.
+UndoCommandGroup::UndoCommandGroup()
+{
+}
+
+/// Destroys the undo command group as well as all the commands
+/// within the group.
+UndoCommandGroup::~UndoCommandGroup()
+{
+    foreach(UndoCommand *command, m_commands){
+        delete command;
+    }
+}
+
+/// Adds a new command to the group.
+void UndoCommandGroup::addCommand(UndoCommand *command)
+{
+    m_commands.push_back(command);
+}
+
+/// Undoes each of the commands in the group.
+void UndoCommandGroup::undo()
+{
+    BOOST_REVERSE_FOREACH(UndoCommand *command, m_commands){
+        command->undo();
+    }
+}
+
+/// Redoes each of the commands in the group.
+void UndoCommandGroup::redo()
+{
+    BOOST_FOREACH(UndoCommand *command, m_commands){
+        command->redo();
+    }
+}
+
+// === UndoStack =========================================================== //
+class UndoStack
+{
+public:
+    // construction and destruction
+    UndoStack();
+    ~UndoStack();
+
+    // properties
+    size_t size() const;
+    bool isEmpty() const;
+    bool canUndo() const;
+    bool canRedo() const;
+    void clear();
+
+    // stack
+    void push(UndoCommand *command);
+
+    // undo and redo
+    void undo();
+    void redo();
+
+    // groups
+    void beginGroup();
+    void endGroup();
+    bool inGroup() const;
+
+    // signals
+    boost::signals2::signal<void (bool canUndo)> canUndoChanged;
+    boost::signals2::signal<void (bool canRedo)> canRedoChanged;
+
+private:
+    std::stack<UndoCommand *> m_undoStack;
+    std::stack<UndoCommand *> m_redoStack;
+    UndoCommandGroup *m_groupCommand;
+};
+
+// --- Construction and Destruction ---------------------------------------- //
+/// Creates a new, empty undo stack.
+UndoStack::UndoStack()
+{
+    m_groupCommand = 0;
+}
+
+/// Destroys the undo stack and all commands it contains.
+UndoStack::~UndoStack()
+{
+    clear();
+}
+
+// --- Properties ---------------------------------------------------------- //
+/// Returns the number of commands in the undo stack.
+size_t UndoStack::size() const
+{
+    return m_undoStack.size() + m_redoStack.size();
+}
+
+/// Returns \c true if the undo stack contains no commands.
+bool UndoStack::isEmpty() const
+{
+    return m_undoStack.empty() && m_redoStack.empty();
+}
+
+/// Returns \c true if it is possible to undo a command.
+bool UndoStack::canUndo() const
+{
+    return !m_undoStack.empty();
+}
+
+/// Returns \c true if it is possible to redo a command.
+bool UndoStack::canRedo() const
+{
+    return !m_redoStack.empty();
+}
+
+/// Removes all commands from the undo stack.
+void UndoStack::clear()
+{
+    while(!m_undoStack.empty()){
+        delete m_undoStack.top();
+        m_undoStack.pop();
+    }
+
+    canUndoChanged(false);
+
+    while(!m_redoStack.empty()){
+        delete m_redoStack.top();
+        m_redoStack.pop();
+    }
+
+    canRedoChanged(false);
+}
+
+// --- Stack --------------------------------------------------------------- //
+/// Pushes a new command onto the undo stack.
+void UndoStack::push(UndoCommand *command)
+{
+    // execute the command
+    command->redo();
+
+    if(inGroup()){
+        // add command to current command group
+        m_groupCommand->addCommand(command);
+    }
+    else{
+        // push command onto the undo stack
+        m_undoStack.push(command);
+    }
+
+    canUndoChanged(true);
+
+    // clear the redo stack
+    while(!m_redoStack.empty()){
+        delete m_redoStack.top();
+        m_redoStack.pop();
+    }
+
+    canRedoChanged(false);
+}
+
+// --- Undo and Redo ------------------------------------------------------- //
+/// Undoes the last command pushed onto the undo stack.
+void UndoStack::undo()
+{
+    if(inGroup()){
+        endGroup();
+    }
+
+    if(!canUndo()){
+        return;
+    }
+
+    UndoCommand *command = m_undoStack.top();
+    m_undoStack.pop();
+    command->undo();
+    m_redoStack.push(command);
+
+    if(m_redoStack.size() == 1){
+        canRedoChanged(true);
+    }
+
+    if(m_undoStack.empty()){
+        canUndoChanged(false);
+    }
+}
+
+/// Reverts the last command issued by undo().
+void UndoStack::redo()
+{
+    if(inGroup()){
+        endGroup();
+    }
+
+    if(!canRedo()){
+        return;
+    }
+
+    UndoCommand *command = m_redoStack.top();
+    m_redoStack.pop();
+    command->redo();
+    m_undoStack.push(command);
+
+    if(m_undoStack.size() == 1){
+        canUndoChanged(true);
+    }
+
+    if(m_redoStack.empty()){
+        canRedoChanged(false);
+    }
+}
+
+// --- Groups -------------------------------------------------------------- //
+/// Starts a new undo group action.
+void UndoStack::beginGroup()
+{
+    if(inGroup()){
+        endGroup();
+    }
+
+    m_groupCommand = new UndoCommandGroup;
+}
+
+/// Finishes the current undo group action.
+void UndoStack::endGroup()
+{
+    if(!inGroup()){
+        return;
+    }
+
+    m_undoStack.push(m_groupCommand);
+    m_groupCommand = 0;
+}
+
+/// Returns \c true if the undo stack is currently in a group
+/// action.
+bool UndoStack::inGroup() const
+{
+    return m_groupCommand != 0;
+}
+
 // === MoleculeEditorCommand =============================================== //
-class MoleculeEditorCommand : public QUndoCommand
+class MoleculeEditorCommand : public UndoCommand
 {
 public:
     MoleculeEditorCommand(MoleculeEditor *editor);
@@ -61,7 +342,6 @@ private:
 };
 
 MoleculeEditorCommand::MoleculeEditorCommand(MoleculeEditor *editor)
-    : QUndoCommand()
 {
     m_editor = editor;
 }
@@ -363,7 +643,7 @@ class MoleculeEditorPrivate
 public:
     Molecule *molecule;
     bool inEdit;
-    QUndoStack undoStack;
+    UndoStack undoStack;
     std::map<int, Atom *> atomIds;
     std::vector<Atom *> copyBuffer;
     Molecule *cutMolecule;
@@ -385,8 +665,8 @@ MoleculeEditor::MoleculeEditor(Molecule *molecule)
     d->inEdit = false;
     d->cutMolecule = new Molecule;
 
-    connect(&d->undoStack, SIGNAL(canUndoChanged(bool)), SLOT(canUndoChangedSlot(bool)));
-    connect(&d->undoStack, SIGNAL(canRedoChanged(bool)), SLOT(canRedoChangedSlot(bool)));
+    d->undoStack.canUndoChanged.connect(boost::bind(&MoleculeEditor::canUndoChangedSlot, this, _1));
+    d->undoStack.canRedoChanged.connect(boost::bind(&MoleculeEditor::canRedoChangedSlot, this, _1));
 }
 
 /// Destroys the molecule editor object.
@@ -450,14 +730,14 @@ void MoleculeEditor::clearUndoStack()
 /// beginEdit() and endEdit() are grouped into a single action.
 void MoleculeEditor::beginEdit()
 {
-    d->undoStack.beginMacro(QString());
+    d->undoStack.beginGroup();
     d->inEdit = true;
 }
 
 /// Ends an edit action.
 void MoleculeEditor::endEdit()
 {
-    d->undoStack.endMacro();
+    d->undoStack.endGroup();
     d->inEdit = false;
 }
 
