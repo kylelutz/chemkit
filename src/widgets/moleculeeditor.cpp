@@ -38,10 +38,9 @@
 #include <stack>
 #include <cassert>
 
-#include <boost/foreach.hpp>
-
 #include <chemkit/atom.h>
 #include <chemkit/bond.h>
+#include <chemkit/foreach.h>
 
 namespace chemkit {
 
@@ -120,7 +119,7 @@ void UndoCommandGroup::undo()
 /// Redoes each of the commands in the group.
 void UndoCommandGroup::redo()
 {
-    BOOST_FOREACH(UndoCommand *command, m_commands){
+    foreach(UndoCommand *command, m_commands){
         command->redo();
     }
 }
@@ -656,8 +655,7 @@ public:
 // --- Construction and Destruction ---------------------------------------- //
 /// Creates a new molecule editor object for \p molecule.
 MoleculeEditor::MoleculeEditor(Molecule *molecule)
-    : QObject(),
-      d(new MoleculeEditorPrivate)
+    : d(new MoleculeEditorPrivate)
 {
     d->molecule = molecule;
     d->inEdit = false;

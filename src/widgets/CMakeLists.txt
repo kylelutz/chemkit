@@ -23,7 +23,6 @@ set(SOURCES
 )
 
 set(MOC_HEADERS
-  moleculeeditor.h
   periodictabledialog.h
   periodictablewidget.h
 )

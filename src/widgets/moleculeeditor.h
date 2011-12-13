@@ -38,8 +38,6 @@
 
 #include "widgets.h"
 
-#include <QObject>
-
 #include <boost/signals2.hpp>
 
 #include <chemkit/molecule.h>
@@ -48,10 +46,8 @@ namespace chemkit {
 
 class MoleculeEditorPrivate;
 
-class CHEMKIT_WIDGETS_EXPORT MoleculeEditor : public QObject
+class CHEMKIT_WIDGETS_EXPORT MoleculeEditor
 {
-    Q_OBJECT
-
 public:
     // construction and destruction
     MoleculeEditor(Molecule *molecule = 0);
