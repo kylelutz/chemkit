@@ -35,6 +35,8 @@
 
 #include "moleculeeditor.h"
 
+#include <cassert>
+
 #include <QHash>
 #include <QVector>
 #include <QUndoCommand>
@@ -97,7 +99,7 @@ AddAtomCommand::AddAtomCommand(MoleculeEditor *editor, const Element &element)
 void AddAtomCommand::undo()
 {
     Atom *atom = editor()->atom(m_atomId);
-    Q_ASSERT(atom);
+    assert(atom);
 
     molecule()->removeAtom(atom);
 }
@@ -140,7 +142,7 @@ RemoveAtomCommand::RemoveAtomCommand(MoleculeEditor *editor, Atom *atom)
 void RemoveAtomCommand::undo()
 {
     Atom *atom = molecule()->addAtom(m_atomicNumber);
-    Q_ASSERT(atom);
+    assert(atom);
 
     atom->setPosition(m_position);
     editor()->setId(atom, m_atomId);
@@ -149,7 +151,7 @@ void RemoveAtomCommand::undo()
 void RemoveAtomCommand::redo()
 {
     Atom *atom = editor()->atom(m_atomId);
-    Q_ASSERT(atom);
+    assert(atom);
 
     molecule()->removeAtom(atom);
 }
@@ -180,7 +182,7 @@ SetAtomAtomicNumberCommand::SetAtomAtomicNumberCommand(MoleculeEditor *editor, A
 void SetAtomAtomicNumberCommand::undo()
 {
     Atom *atom = editor()->atom(m_atomId);
-    Q_ASSERT(atom);
+    assert(atom);
 
     atom->setAtomicNumber(m_initialAtomicNumber);
 }
@@ -188,7 +190,7 @@ void SetAtomAtomicNumberCommand::undo()
 void SetAtomAtomicNumberCommand::redo()
 {
     Atom *atom = editor()->atom(m_atomId);
-    Q_ASSERT(atom);
+    assert(atom);
 
     atom->setAtomicNumber(m_finalAtomicNumber);
 }
@@ -219,7 +221,7 @@ SetAtomPositionCommand::SetAtomPositionCommand(MoleculeEditor *editor, Atom *ato
 void SetAtomPositionCommand::undo()
 {
     Atom *atom = editor()->atom(m_atomId);
-    Q_ASSERT(atom);
+    assert(atom);
 
     atom->setPosition(m_initialPosition);
 }
@@ -227,7 +229,7 @@ void SetAtomPositionCommand::undo()
 void SetAtomPositionCommand::redo()
 {
     Atom *atom = editor()->atom(m_atomId);
-    Q_ASSERT(atom);
+    assert(atom);
 
     atom->setPosition(m_finalPosition);
 }
@@ -259,7 +261,7 @@ AddBondCommand::AddBondCommand(MoleculeEditor *editor, Atom *a, Atom *b)
 void AddBondCommand::undo()
 {
     Bond *bond = editor()->bond(m_atomId1, m_atomId2);
-    Q_ASSERT(bond);
+    assert(bond);
 
     molecule()->removeBond(bond);
 }
@@ -268,8 +270,8 @@ void AddBondCommand::redo()
 {
     Atom *atom1 = editor()->atom(m_atomId1);
     Atom *atom2 = editor()->atom(m_atomId2);
-    Q_ASSERT(atom1);
-    Q_ASSERT(atom2);
+    assert(atom1);
+    assert(atom2);
 
     m_bond = molecule()->addBond(atom1, atom2);
 }
@@ -301,7 +303,7 @@ void RemoveBondCommand::undo()
 {
     Atom *atom1 = editor()->atom(m_atomId1);
     Atom *atom2 = editor()->atom(m_atomId2);
-    Q_ASSERT(!atom1->isBondedTo(atom2));
+    assert(!atom1->isBondedTo(atom2));
 
     molecule()->addBond(atom1, atom2, m_bondOrder);
 }
@@ -309,7 +311,7 @@ void RemoveBondCommand::undo()
 void RemoveBondCommand::redo()
 {
     Bond *bond = editor()->bond(m_atomId1, m_atomId2);
-    Q_ASSERT(bond != 0);
+    assert(bond != 0);
 
     molecule()->removeBond(bond);
 }
@@ -342,7 +344,7 @@ SetBondOrderCommand::SetBondOrderCommand(MoleculeEditor *editor, Bond *bond, int
 void SetBondOrderCommand::undo()
 {
     Bond *bond = editor()->bond(m_atomId1, m_atomId2);
-    Q_ASSERT(bond != 0);
+    assert(bond != 0);
 
     bond->setOrder(m_initialOrder);
 }
@@ -350,7 +352,7 @@ void SetBondOrderCommand::undo()
 void SetBondOrderCommand::redo()
 {
     Bond *bond = editor()->bond(m_atomId1, m_atomId2);
-    Q_ASSERT(bond != 0);
+    assert(bond != 0);
 
     bond->setOrder(m_finalOrder);
 }
@@ -686,7 +688,7 @@ void MoleculeEditor::setBondOrder(Bond *bond, int order)
 // --- Internal Methods ---------------------------------------------------- //
 Atom* MoleculeEditor::atom(int id)
 {
-    Q_ASSERT(d->atomIds.contains(id));
+    assert(d->atomIds.contains(id));
 
     return d->atomIds[id];
 }
