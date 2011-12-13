@@ -42,6 +42,10 @@
 #include <boost/format.hpp>
 #include <boost/filesystem.hpp>
 #include <boost/scoped_ptr.hpp>
+#include <boost/algorithm/string.hpp>
+#include <boost/iostreams/filter/gzip.hpp>
+#include <boost/iostreams/filter/bzip2.hpp>
+#include <boost/iostreams/filtering_stream.hpp>
 
 namespace chemkit {
 
@@ -85,9 +89,39 @@ template<typename File, typename Format>
 inline void GenericFile<File, Format>::setFileName(const std::string &fileName)
 {
     m_fileName = fileName;
+    m_compressionFormat.clear();
 
-    if(!m_format){
-        setFormat(suffix(fileName));
+    // attempt to detect the file format and compression format
+    std::vector<std::string> fileNameTokens;
+    boost::split(fileNameTokens,
+                 fileName,
+                 boost::is_any_of("."));
+
+    if(fileNameTokens.size() > 1){
+        std::string formatName;
+        std::string compressionFormatName;
+
+        // check if the file name contains a compression format name
+        const std::vector<std::string> &compressionFormats = this->compressionFormats();
+        if(std::find(compressionFormats.begin(),
+                     compressionFormats.end(),
+                     fileNameTokens.back()) != compressionFormats.end()){
+            compressionFormatName = fileNameTokens.back();
+            formatName = fileNameTokens[fileNameTokens.size() - 2];
+        }
+        else{
+            formatName = fileNameTokens.back();
+        }
+
+        // set file format
+        if(!m_format){
+            setFormat(formatName);
+        }
+
+        // set compression format
+        if(m_compressionFormat.empty() && !compressionFormatName.empty()){
+            setCompressionFormat(compressionFormatName);
+        }
     }
 }
 
@@ -142,6 +176,27 @@ inline std::string GenericFile<File, Format>::formatName() const
     }
 
     return std::string();
+}
+
+/// Sets the file compression format.
+template<typename File, typename Format>
+inline bool GenericFile<File, Format>::setCompressionFormat(const std::string &name)
+{
+    const std::vector<std::string> &supportedFormats = compressionFormats();
+
+    if(std::find(supportedFormats.begin(), supportedFormats.end(), name) == supportedFormats.end()){
+        return false;
+    }
+
+    m_compressionFormat = name;
+    return true;
+}
+
+/// Returns the file compression format.
+template<typename File, typename Format>
+inline std::string GenericFile<File, Format>::compressionFormat() const
+{
+    return m_compressionFormat;
 }
 
 // --- Input and Output ---------------------------------------------------- //
@@ -240,8 +295,22 @@ inline bool GenericFile<File, Format>::read(std::istream &input)
         return false;
     }
 
+    // create input stream
+    boost::iostreams::filtering_istream inputStream;
+
+    // insert stream decompressor
+    if(m_compressionFormat == "gz"){
+        inputStream.push(boost::iostreams::gzip_decompressor());
+    }
+    else if(m_compressionFormat == "bz2"){
+        inputStream.push(boost::iostreams::bzip2_decompressor());
+    }
+
+    // insert input stream
+    inputStream.push(input);
+
     // read the file
-    bool ok = m_format->read(input, static_cast<File *>(this));
+    bool ok = m_format->read(inputStream, static_cast<File *>(this));
     if(!ok){
         setErrorString(m_format->errorString());
     }
@@ -267,6 +336,8 @@ inline bool GenericFile<File, Format>::write()
 template<typename File, typename Format>
 inline bool GenericFile<File, Format>::write(const std::string &fileName)
 {
+    setFileName(fileName);
+
     return write(fileName, suffix(fileName));
 }
 
@@ -317,7 +388,21 @@ inline bool GenericFile<File, Format>::write(std::ostream &output, Format *forma
         return false;
     }
 
-    return format->write(static_cast<const File *>(this), output);
+    // create output stream
+    boost::iostreams::filtering_ostream outputStream;
+
+    // insert stream compressor
+    if(m_compressionFormat == "gz"){
+        outputStream.push(boost::iostreams::gzip_compressor());
+    }
+    else if(m_compressionFormat == "bz2"){
+        outputStream.push(boost::iostreams::bzip2_compressor());
+    }
+
+    // insert output stream
+    outputStream.push(output);
+
+    return format->write(static_cast<const File *>(this), outputStream);
 }
 
 // --- File Data ----------------------------------------------------------- //
@@ -361,6 +446,18 @@ template<typename File, typename Format>
 inline std::vector<std::string> GenericFile<File, Format>::formats()
 {
     return Format::formats();
+}
+
+/// Returns a list of all the supported file compression formats.
+template<typename File, typename Format>
+inline std::vector<std::string> GenericFile<File, Format>::compressionFormats()
+{
+    std::vector<std::string> formats;
+
+    formats.push_back("gz");
+    formats.push_back("bz2");
+
+    return formats;
 }
 
 // --- Internal Methods ---------------------------------------------------- //

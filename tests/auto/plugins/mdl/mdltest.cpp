@@ -116,4 +116,31 @@ void MdlTest::read_benzenes()
     }
 }
 
+void MdlTest::read_serine()
+{
+    // check that gz compression is supported
+    const std::vector<std::string> &compressionFormats = chemkit::MoleculeFile::compressionFormats();
+    if(std::find(compressionFormats.begin(),
+                 compressionFormats.end(),
+                 "gz") == compressionFormats.end()){
+        QSKIP("Gzip compression not supported", SkipSingle);
+    }
+
+    chemkit::MoleculeFile file(dataPath + "serine.mol.gz");
+
+    bool ok = file.read();
+    if(!ok)
+        qDebug() << file.errorString().c_str();
+    QVERIFY(ok);
+
+    // check format
+    QVERIFY(file.format() != 0);
+    QCOMPARE(file.formatName(), std::string("mol"));
+
+    // check molecule
+    chemkit::Molecule *molecule = file.molecule();
+    QVERIFY(molecule != 0);
+    QCOMPARE(molecule->formula(), std::string("C3H7NO3"));
+}
+
 QTEST_APPLESS_MAIN(MdlTest)

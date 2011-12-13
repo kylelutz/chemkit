@@ -1,6 +1,9 @@
 find_package(Chemkit REQUIRED)
 include_directories(${CHEMKIT_INCLUDE_DIRS})
 
+find_package(Boost COMPONENTS iostreams REQUIRED)
+include_directories(${BOOST_INCLUDE_DIRS})
+
 if(NOT ${CHEMKIT_WITH_IO})
   return()
 endif()
@@ -30,7 +33,7 @@ add_definitions(
 )
 
 add_chemkit_library(chemkit-io ${SOURCES})
-target_link_libraries(chemkit-io ${CHEMKIT_LIBRARIES})
+target_link_libraries(chemkit-io ${CHEMKIT_LIBRARIES} ${Boost_LIBRARIES})
 
 # install header files
 install(FILES ${HEADERS} DESTINATION include/chemkit/)

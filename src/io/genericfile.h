@@ -64,6 +64,8 @@ public:
     bool setFormat(const std::string &formatName);
     Format* format() const;
     std::string formatName() const;
+    bool setCompressionFormat(const std::string &name);
+    std::string compressionFormat() const;
 
     // input and output
     bool read();
@@ -87,6 +89,7 @@ public:
 
     // static methods
     static std::vector<std::string> formats();
+    static std::vector<std::string> compressionFormats();
 
 protected:
     void setErrorString(const std::string &errorString);
@@ -98,6 +101,7 @@ private:
     Format *m_format;
     std::string m_fileName;
     std::string m_errorString;
+    std::string m_compressionFormat;
     std::map<std::string, Variant> m_data;
 };
 

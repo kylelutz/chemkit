@@ -47,6 +47,7 @@ class MdlTest : public QObject
         void read_methanol();
         void read_guanine();
         void read_benzenes();
+        void read_serine();
 };
 
 #endif // MDLTEST_H
