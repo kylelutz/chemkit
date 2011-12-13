@@ -40,6 +40,8 @@
 
 #include <QObject>
 
+#include <boost/signals2.hpp>
+
 #include <chemkit/molecule.h>
 
 namespace chemkit {
@@ -85,20 +87,16 @@ public:
     void removeBond(Bond *bond);
     void setBondOrder(Bond *bond, int order);
 
+    // signals
+    boost::signals2::signal<void (bool canUndo)> canUndoChanged;
+    boost::signals2::signal<void (bool canRedo)> canRedoChanged;
+    boost::signals2::signal<void (bool canPaste)> canPasteChanged;
+
     // internal methods
     Atom* atom(int id);
     Bond* bond(int id1, int id2);
     int id(Atom *atom);
     void setId(Atom *atom, int id);
-
-signals:
-    void canUndoChanged(bool canUndo);
-    void canRedoChanged(bool canRedo);
-    void canPasteChanged(bool canPaste);
-
-private slots:
-    void canUndoChangedSlot(bool canUndo);
-    void canRedoChangedSlot(bool canRedo);
 
 private:
     MoleculeEditorPrivate* const d;

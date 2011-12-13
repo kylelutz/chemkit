@@ -122,9 +122,9 @@ BuilderWindow::BuilderWindow(QWidget *parent)
     ui->actionCopy->setEnabled(false);
     ui->actionPaste->setEnabled(false);
     ui->actionDelete->setEnabled(false);
-    connect(m_editor, SIGNAL(canUndoChanged(bool)), ui->actionUndo, SLOT(setEnabled(bool)));
-    connect(m_editor, SIGNAL(canRedoChanged(bool)), ui->actionRedo, SLOT(setEnabled(bool)));
-    connect(m_editor, SIGNAL(canPasteChanged(bool)), ui->actionPaste, SLOT(setEnabled(bool)));
+    m_editor->canUndoChanged.connect(boost::bind(&QAction::setEnabled, ui->actionUndo, _1));
+    m_editor->canRedoChanged.connect(boost::bind(&QAction::setEnabled, ui->actionRedo, _1));
+    m_editor->canPasteChanged.connect(boost::bind(&QAction::setEnabled, ui->actionPaste, _1));
 
     // setup energy minimizer
     m_energyMinimizer = new EnergyMinimizer;

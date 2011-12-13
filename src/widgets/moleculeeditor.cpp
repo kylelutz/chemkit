@@ -38,9 +38,7 @@
 #include <stack>
 #include <cassert>
 
-#include <boost/bind.hpp>
 #include <boost/foreach.hpp>
-#include <boost/signals2.hpp>
 
 #include <chemkit/atom.h>
 #include <chemkit/bond.h>
@@ -665,8 +663,9 @@ MoleculeEditor::MoleculeEditor(Molecule *molecule)
     d->inEdit = false;
     d->cutMolecule = new Molecule;
 
-    d->undoStack.canUndoChanged.connect(boost::bind(&MoleculeEditor::canUndoChangedSlot, this, _1));
-    d->undoStack.canRedoChanged.connect(boost::bind(&MoleculeEditor::canRedoChangedSlot, this, _1));
+    // forward the undo stacks's signals to our signals
+    d->undoStack.canUndoChanged.connect(canUndoChanged);
+    d->undoStack.canRedoChanged.connect(canRedoChanged);
 }
 
 /// Destroys the molecule editor object.
@@ -783,7 +782,7 @@ void MoleculeEditor::cut(const std::vector<Atom *> &atoms)
 
     d->copyBuffer = d->cutMolecule->atoms();
 
-    emit canPasteChanged(true);
+    canPasteChanged(true);
 }
 
 /// Copies each atom in \p atoms.
@@ -791,7 +790,7 @@ void MoleculeEditor::copy(const std::vector<Atom *> &atoms)
 {
     d->copyBuffer = atoms;
 
-    emit canPasteChanged(true);
+    canPasteChanged(true);
 }
 
 /// Paste the atoms from the copy buffer.
@@ -853,7 +852,7 @@ void MoleculeEditor::clearCopyBuffer()
 {
     d->copyBuffer.clear();
 
-    emit canPasteChanged(false);
+    canPasteChanged(false);
 }
 
 // --- Modification -------------------------------------------------------- //
@@ -1011,16 +1010,6 @@ int MoleculeEditor::id(Atom *atom)
 void MoleculeEditor::setId(Atom *atom, int id)
 {
     d->atomIds[id] = atom;
-}
-
-void MoleculeEditor::canUndoChangedSlot(bool canUndo)
-{
-    emit canUndoChanged(canUndo);
-}
-
-void MoleculeEditor::canRedoChangedSlot(bool canRedo)
-{
-    emit canRedoChanged(canRedo);
 }
 
 } // end chemkit namespace
