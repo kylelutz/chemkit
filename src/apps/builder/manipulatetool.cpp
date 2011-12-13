@@ -35,6 +35,8 @@
 
 #include "manipulatetool.h"
 
+#include <set>
+
 #include <chemkit/atom.h>
 #include <chemkit/point3.h>
 #include <chemkit/vector3.h>
@@ -154,7 +156,7 @@ void ManipulateTool::copy()
 void ManipulateTool::paste()
 {
     builder()->beginMoleculeEdit();
-    QList<chemkit::Atom *> newAtoms = editor()->paste();
+    std::vector<chemkit::Atom *> newAtoms = editor()->paste();
     m_selection = newAtoms;
     moveSelectionBy(30, -30);
     builder()->endMoleculeEdit();
@@ -189,7 +191,7 @@ ManipulateTool::State ManipulateTool::state() const
 
 void ManipulateTool::setSelection(const QRect &rect)
 {
-    QSet<chemkit::Atom *> selection;
+    std::set<chemkit::Atom *> selection;
 
     for(int x = rect.x(); x < rect.right(); x += 5){
         for(int y = rect.y(); y < rect.bottom(); y += 5){
@@ -201,11 +203,11 @@ void ManipulateTool::setSelection(const QRect &rect)
         }
     }
 
-    if(selection.isEmpty()){
+    if(selection.empty()){
         clearSelection();
     }
     else{
-        m_selection = selection.toList();
+        m_selection = std::vector<chemkit::Atom *>(selection.begin(), selection.end());
         m_hasSelection = true;
 
         setCanCut(true);

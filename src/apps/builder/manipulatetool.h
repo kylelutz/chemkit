@@ -73,7 +73,7 @@ private:
     QGraphicsRectItem *m_selectionOverlayItem;
     QPointF m_initialPosition;
     QPointF m_lastPosition;
-    QList<chemkit::Atom *> m_selection;
+    std::vector<chemkit::Atom *> m_selection;
     bool m_hasSelection;
     enum State m_state;
 };

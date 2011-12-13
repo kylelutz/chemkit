@@ -37,8 +37,6 @@
 
 #include <cassert>
 
-#include <QHash>
-#include <QVector>
 #include <QUndoCommand>
 
 #include <chemkit/atom.h>
@@ -366,8 +364,8 @@ public:
     Molecule *molecule;
     bool inEdit;
     QUndoStack undoStack;
-    QHash<int, Atom *> atomIds;
-    QList<Atom *> copyBuffer;
+    std::map<int, Atom *> atomIds;
+    std::vector<Atom *> copyBuffer;
     Molecule *cutMolecule;
 };
 
@@ -470,19 +468,19 @@ bool MoleculeEditor::isInEdit() const
 }
 
 /// Cuts each atom in \p atoms from the molecule.
-void MoleculeEditor::cut(const QList<Atom *> &atoms)
+void MoleculeEditor::cut(const std::vector<Atom *> &atoms)
 {
     d->cutMolecule->clear();
 
-    QHash<const Atom *, Atom *> cutAtomMap;
+    std::map<const Atom *, Atom *> cutAtomMap;
 
     foreach(Atom *atom, atoms){
         Atom *cutAtom = d->cutMolecule->addAtomCopy(atom);
         cutAtomMap[atom] = cutAtom;
     }
 
-    for(int i = 0; i < atoms.size(); i++){
-        for(int j = i + 1; j < atoms.size(); j++){
+    for(size_t i = 0; i < atoms.size(); i++){
+        for(size_t j = i + 1; j < atoms.size(); j++){
             Bond *bond = atoms[i]->bondTo(atoms[j]);
             if(bond)
                 d->cutMolecule->addBond(cutAtomMap[atoms[i]], cutAtomMap[atoms[j]], bond->order());
@@ -503,13 +501,13 @@ void MoleculeEditor::cut(const QList<Atom *> &atoms)
         endEdit();
     }
 
-    d->copyBuffer = QVector<Atom *>::fromStdVector(d->cutMolecule->atoms()).toList();
+    d->copyBuffer = d->cutMolecule->atoms();
 
     emit canPasteChanged(true);
 }
 
 /// Copies each atom in \p atoms.
-void MoleculeEditor::copy(const QList<Atom *> &atoms)
+void MoleculeEditor::copy(const std::vector<Atom *> &atoms)
 {
     d->copyBuffer = atoms;
 
@@ -517,7 +515,7 @@ void MoleculeEditor::copy(const QList<Atom *> &atoms)
 }
 
 /// Paste the atoms from the copy buffer.
-QList<Atom *> MoleculeEditor::paste()
+std::vector<Atom *> MoleculeEditor::paste()
 {
     bool wasInEdit = isInEdit();
 
@@ -525,16 +523,16 @@ QList<Atom *> MoleculeEditor::paste()
         beginEdit();
     }
 
-    QHash<const Atom *, Atom *> oldToNew;
+    std::map<const Atom *, Atom *> oldToNew;
 
     foreach(const Atom *atom, d->copyBuffer){
         Atom *newAtom = addAtomCopy(atom);
         oldToNew[atom] = newAtom;
     }
 
-    for(int i = 0; i < d->copyBuffer.size(); i++){
+    for(size_t i = 0; i < d->copyBuffer.size(); i++){
         Atom *oldAtom1 = d->copyBuffer[i];
-        for(int j = i + 1; j < d->copyBuffer.size(); j++){
+        for(size_t j = i + 1; j < d->copyBuffer.size(); j++){
             Atom *oldAtom2 = d->copyBuffer[j];
             Bond *bond = oldAtom1->bondTo(oldAtom2);
             if(bond){
@@ -547,17 +545,25 @@ QList<Atom *> MoleculeEditor::paste()
         endEdit();
     }
 
-    return oldToNew.values();
+    std::vector<Atom *> atoms;
+
+    for(std::map<const Atom *, Atom *>::iterator iter = oldToNew.begin();
+        iter != oldToNew.end();
+        iter++){
+        atoms.push_back(iter->second);
+    }
+
+    return atoms;
 }
 
 /// Returns \c true if it is possible to paste atoms.
 bool MoleculeEditor::canPaste() const
 {
-    return !copyBuffer().isEmpty();
+    return !d->copyBuffer.empty();
 }
 
 /// Returns a list of atoms in the copy buffer.
-QList<Atom *> MoleculeEditor::copyBuffer() const
+std::vector<Atom *> MoleculeEditor::copyBuffer() const
 {
     return d->copyBuffer;
 }
@@ -688,7 +694,7 @@ void MoleculeEditor::setBondOrder(Bond *bond, int order)
 // --- Internal Methods ---------------------------------------------------- //
 Atom* MoleculeEditor::atom(int id)
 {
-    assert(d->atomIds.contains(id));
+    assert(d->atomIds.find(id) != d->atomIds.end());
 
     return d->atomIds[id];
 }
@@ -700,11 +706,19 @@ Bond* MoleculeEditor::bond(int id1, int id2)
 
 int MoleculeEditor::id(Atom *atom)
 {
-    int id = d->atomIds.key(atom, 0);
+    int id = 0;
+
+    for(std::map<int, Atom *>::iterator iter = d->atomIds.begin();
+        iter != d->atomIds.end();
+        iter++){
+        if(iter->second == atom){
+            id = iter->first;
+        }
+    }
 
     if(!id){
         for(id = 1;;id++){
-            if(!d->atomIds.contains(id)){
+            if(d->atomIds.find(id) == d->atomIds.end()){
                 d->atomIds[id] = atom;
                 break;
             }

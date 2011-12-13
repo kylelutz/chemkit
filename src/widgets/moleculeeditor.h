@@ -69,11 +69,11 @@ public:
     void beginEdit();
     void endEdit();
     bool isInEdit() const;
-    void cut(const QList<Atom *> &atoms);
-    void copy(const QList<Atom *> &atoms);
-    QList<Atom *> paste();
+    void cut(const std::vector<Atom *> &atoms);
+    void copy(const std::vector<Atom *> &atoms);
+    std::vector<Atom *> paste();
     bool canPaste() const;
-    QList<Atom *> copyBuffer() const;
+    std::vector<Atom *> copyBuffer() const;
     void clearCopyBuffer();
 
     // modification

@@ -236,8 +236,8 @@ void MoleculeEditorTest::copy()
     QCOMPARE(molecule.bondCount(), 2);
 
     chemkit::MoleculeEditor editor(&molecule);
-    editor.copy(QVector<chemkit::Atom *>::fromStdVector(molecule.atoms()).toList());
-    QCOMPARE(editor.copyBuffer().size(), 3);
+    editor.copy(molecule.atoms());
+    QCOMPARE(editor.copyBuffer().size(), size_t(3));
 
     editor.paste();
     QCOMPARE(molecule.formula(), std::string("C4O2"));
@@ -259,17 +259,17 @@ void MoleculeEditorTest::copy()
     QCOMPARE(molecule.formula(), std::string("C4O2"));
     QCOMPARE(molecule.bondCount(), 4);
 
-    QList<chemkit::Atom *> oxygens;
+    std::vector<chemkit::Atom *> oxygens;
     foreach(chemkit::Atom *atom, molecule.atoms()){
         if(atom->is(chemkit::Atom::Oxygen)){
-            oxygens.append(atom);
+            oxygens.push_back(atom);
         }
     }
     editor.copy(oxygens);
-    QCOMPARE(editor.copyBuffer().size(), 2);
+    QCOMPARE(editor.copyBuffer().size(), size_t(2));
 
-    QList<chemkit::Atom *> newAtoms = editor.paste();
-    QCOMPARE(newAtoms.size(), 2);
+    std::vector<chemkit::Atom *> newAtoms = editor.paste();
+    QCOMPARE(newAtoms.size(), size_t(2));
     foreach(chemkit::Atom *atom, newAtoms){
         QCOMPARE(atom->is(chemkit::Atom::Oxygen), true);
     }
@@ -280,18 +280,18 @@ void MoleculeEditorTest::copy()
 void MoleculeEditorTest::clearCopyBuffer()
 {
     chemkit::MoleculeEditor editor;
-    QCOMPARE(editor.copyBuffer().size(), 0);
+    QCOMPARE(editor.copyBuffer().size(), size_t(0));
     editor.clearCopyBuffer();
-    QCOMPARE(editor.copyBuffer().size(), 0);
+    QCOMPARE(editor.copyBuffer().size(), size_t(0));
 
     chemkit::Molecule molecule;
     molecule.addAtom("H");
     molecule.addAtom("H");
     editor.setMolecule(&molecule);
-    editor.copy(QVector<chemkit::Atom *>::fromStdVector(molecule.atoms()).toList());
-    QCOMPARE(editor.copyBuffer().size(), 2);
+    editor.copy(molecule.atoms());
+    QCOMPARE(editor.copyBuffer().size(), size_t(2));
     editor.clearCopyBuffer();
-    QCOMPARE(editor.copyBuffer().size(), 0);
+    QCOMPARE(editor.copyBuffer().size(), size_t(0));
 }
 
 QTEST_APPLESS_MAIN(MoleculeEditorTest)
