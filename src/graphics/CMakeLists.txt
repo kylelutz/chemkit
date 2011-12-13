@@ -78,7 +78,6 @@ set(SOURCES
 )
 
 set(MOC_HEADERS
-  graphicsmoleculeitem.h
   graphicsoverlay.h
   graphicsview.h
 )

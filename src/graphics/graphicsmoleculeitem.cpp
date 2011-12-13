@@ -91,8 +91,7 @@ public:
 // --- Construction and Destruction ---------------------------------------- //
 /// Creates a new molecule item to display \p molecule.
 GraphicsMoleculeItem::GraphicsMoleculeItem(const Molecule *molecule)
-    : QObject(),
-      GraphicsItem(MoleculeItem),
+    : GraphicsItem(MoleculeItem),
       d(new GraphicsMoleculeItemPrivate)
 {
     d->molecule = 0;

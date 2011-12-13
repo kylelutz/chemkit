@@ -50,10 +50,8 @@ namespace chemkit {
 
 class GraphicsMoleculeItemPrivate;
 
-class CHEMKIT_GRAPHICS_EXPORT GraphicsMoleculeItem : public QObject, public GraphicsItem
+class CHEMKIT_GRAPHICS_EXPORT GraphicsMoleculeItem : public GraphicsItem
 {
-    Q_OBJECT
-
 public:
     // enumerations
     enum DisplayType {
