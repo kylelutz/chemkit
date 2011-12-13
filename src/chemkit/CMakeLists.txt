@@ -50,6 +50,7 @@ set(HEADERS
   molecule.h
   molecule-inline.h
   moleculealigner.h
+  moleculeeditor.h
   moleculewatcher.h
   nucleotide.h
   partialchargepredictor.h
@@ -99,6 +100,7 @@ set(SOURCES
   molecularsurface.cpp
   molecule.cpp
   moleculealigner.cpp
+  moleculeeditor.cpp
   moleculewatcher.cpp
   nucleotide.cpp
   partialchargepredictor.cpp

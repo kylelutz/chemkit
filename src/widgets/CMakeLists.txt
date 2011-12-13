@@ -9,14 +9,12 @@ find_package(Qt4 4.6 COMPONENTS QtCore QtGui REQUIRED)
 include(${QT_USE_FILE})
 
 set(HEADERS
-  moleculeeditor.h
   periodictabledialog.h
   periodictablewidget.h
   widgets.h
 )
 
 set(SOURCES
-  moleculeeditor.cpp
   periodictabledialog.cpp
   periodictablewidget.cpp
   widgets.cpp

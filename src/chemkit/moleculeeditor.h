@@ -36,17 +36,17 @@
 #ifndef CHEMKIT_MOLECULEEDITOR_H
 #define CHEMKIT_MOLECULEEDITOR_H
 
-#include "widgets.h"
+#include "chemkit.h"
 
 #include <boost/signals2.hpp>
 
-#include <chemkit/molecule.h>
+#include "molecule.h"
 
 namespace chemkit {
 
 class MoleculeEditorPrivate;
 
-class CHEMKIT_WIDGETS_EXPORT MoleculeEditor
+class CHEMKIT_EXPORT MoleculeEditor
 {
 public:
     // construction and destruction

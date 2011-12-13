@@ -648,7 +648,7 @@ public:
 
 // === MoleculeEditor ====================================================== //
 /// \class MoleculeEditor moleculeeditor.h chemkit/moleculeeditor.h
-/// \ingroup chemkit-widgets
+/// \ingroup chemkit
 /// \brief The MoleculeEditor class provides editing functions for
 ///        molecules.
 
