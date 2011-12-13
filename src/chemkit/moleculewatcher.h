@@ -60,7 +60,7 @@ public:
     // signals
     boost::signals2::signal<void (const Atom *atom)> atomAdded;
     boost::signals2::signal<void (const Atom *atom)> atomRemoved;
-    boost::signals2::signal<void (const Atom *atom)> atomAtomicNumberChanged;
+    boost::signals2::signal<void (const Atom *atom)> atomElementChanged;
     boost::signals2::signal<void (const Atom *atom)> atomPositionChanged;
     boost::signals2::signal<void (const Bond *bond)> bondAdded;
     boost::signals2::signal<void (const Bond *bond)> bondRemoved;

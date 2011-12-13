@@ -108,7 +108,7 @@ GraphicsMoleculeItem::GraphicsMoleculeItem(const Molecule *molecule)
 
     d->watcher->atomAdded.connect(boost::bind(&GraphicsMoleculeItem::atomAdded, this, _1));
     d->watcher->atomRemoved.connect(boost::bind(&GraphicsMoleculeItem::atomRemoved, this, _1));
-    d->watcher->atomAtomicNumberChanged.connect(boost::bind(&GraphicsMoleculeItem::atomAtomicNumberChanged, this, _1));
+    d->watcher->atomElementChanged.connect(boost::bind(&GraphicsMoleculeItem::atomElementChanged, this, _1));
     d->watcher->atomPositionChanged.connect(boost::bind(&GraphicsMoleculeItem::atomPositionChanged, this, _1));
     d->watcher->bondAdded.connect(boost::bind(&GraphicsMoleculeItem::bondAdded, this, _1));
     d->watcher->bondRemoved.connect(boost::bind(&GraphicsMoleculeItem::bondRemoved, this, _1));
@@ -422,7 +422,7 @@ void GraphicsMoleculeItem::atomRemoved(const Atom *atom)
     }
 }
 
-void GraphicsMoleculeItem::atomAtomicNumberChanged(const Atom *atom)
+void GraphicsMoleculeItem::atomElementChanged(const Atom *atom)
 {
     GraphicsAtomItem *item = atomItem(atom);
     item->setColor(d->colorMap->color(atom));

@@ -98,7 +98,7 @@ void Atom::setAtomicNumber(int atomicNumber)
     }
 
     m_molecule->m_elements[m_index].setAtomicNumber(atomicNumber);
-    m_molecule->notifyWatchers(this, Molecule::AtomAtomicNumberChanged);
+    m_molecule->notifyWatchers(this, Molecule::AtomElementChanged);
 }
 
 /// Returns the atomic number of the atom.

@@ -68,7 +68,7 @@ public:
     enum ChangeType {
         AtomAdded,
         AtomRemoved,
-        AtomAtomicNumberChanged,
+        AtomElementChanged,
         AtomMassNumberChanged,
         AtomPartialChargeChanged,
         AtomPositionChanged,

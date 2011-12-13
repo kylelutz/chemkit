@@ -104,9 +104,9 @@ const Molecule* MoleculeWatcher::molecule() const
 ///
 /// This signal is emitted when an atom is removed.
 
-/// \fn void MoleculeWatcher::atomAtomicNumberChanged(const Atom *atom)
+/// \fn void MoleculeWatcher::atomElementChanged(const Atom *atom)
 ///
-/// This signal is emitted when an atom's atomic number changes.
+/// This signal is emitted when an atom's element changes.
 
 /// \fn void MoleculeWatcher::atomPositionChanged(const Atom *atom)
 ///
@@ -149,8 +149,8 @@ void MoleculeWatcher::atomChanged(const Atom *atom, Molecule::ChangeType changeT
         case Molecule::AtomRemoved:
             atomRemoved(atom);
             break;
-        case Molecule::AtomAtomicNumberChanged:
-            atomAtomicNumberChanged(atom);
+        case Molecule::AtomElementChanged:
+            atomElementChanged(atom);
             break;
         case Molecule::AtomPositionChanged:
             atomPositionChanged(atom);

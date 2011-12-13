@@ -103,7 +103,7 @@ private:
     // slots
     void atomAdded(const Atom *atom);
     void atomRemoved(const Atom *atom);
-    void atomAtomicNumberChanged(const Atom *atom);
+    void atomElementChanged(const Atom *atom);
     void atomPositionChanged(const Atom *atom);
     void bondAdded(const Bond *bond);
     void bondRemoved(const Bond *bond);
