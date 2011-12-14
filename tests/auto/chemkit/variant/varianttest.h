@@ -50,6 +50,7 @@ class VariantTest : public QObject
         void toShort();
         void toInt();
         void toLong();
+        void toSizeT();
         void toFloat();
         void toDouble();
         void toPointer();

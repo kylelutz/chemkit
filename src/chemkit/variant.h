@@ -82,6 +82,7 @@ class CHEMKIT_EXPORT Variant
         inline unsigned int toUInt() const;
         inline long toLong() const;
         inline unsigned long toULong() const;
+        inline size_t toSizeT() const;
         inline float toFloat() const;
         inline double toDouble() const;
         inline Real toReal() const;

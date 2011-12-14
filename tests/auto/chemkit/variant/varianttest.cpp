@@ -124,6 +124,18 @@ void VariantTest::toLong()
     QCOMPARE(variant.toLong(), 562L);
 }
 
+void VariantTest::toSizeT()
+{
+    chemkit::Variant variant(size_t(12345));
+    QCOMPARE(variant.toSizeT(), size_t(12345));
+
+    variant.setValue(size_t(-54321));
+    QCOMPARE(variant.toSizeT(), size_t(-54321));
+
+    variant.setValue("98765");
+    QCOMPARE(variant.toSizeT(), size_t(98765));
+}
+
 void VariantTest::toFloat()
 {
     chemkit::Variant variant(12.3f);

@@ -164,6 +164,17 @@ inline bool Variant::setValue(long value)
 }
 
 template<>
+inline bool Variant::setValue(size_t value)
+{
+    clear();
+
+    m_type = Long;
+    m_value._long = value;
+
+    return true;
+}
+
+template<>
 inline bool Variant::setValue(float value)
 {
     clear();
@@ -292,6 +303,22 @@ inline long Variant::value() const
     }
     else if(m_type == String){
         return boost::lexical_cast<long>(*m_value.string);
+    }
+
+    return 0;
+}
+
+template<>
+inline size_t Variant::value() const
+{
+    if(m_type == Long){
+        return static_cast<size_t>(m_value._long);
+    }
+    else if(m_type == Int){
+        return static_cast<size_t>(m_value._int);
+    }
+    else if(m_type == String){
+        return boost::lexical_cast<size_t>(*m_value.string);
     }
 
     return 0;
@@ -428,6 +455,12 @@ inline long Variant::toLong() const
 inline unsigned long Variant::toULong() const
 {
     return value<unsigned long>();
+}
+
+/// Returns the value of the variant as a \p size_t.
+inline size_t Variant::toSizeT() const
+{
+    return value<size_t>();
 }
 
 /// Returns the value of the variant as a \c float.
