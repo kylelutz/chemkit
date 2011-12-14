@@ -534,7 +534,7 @@ std::vector<Bond *> Molecule::bonds() const
 /// Returns the number of bonds in the molecule.
 int Molecule::bondCount() const
 {
-    return bonds().size();
+    return d->bonds.size();
 }
 
 /// Returns an iterator range containing the bonds in the
