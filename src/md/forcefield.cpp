@@ -35,6 +35,8 @@
 
 #include "forcefield.h"
 
+#include <boost/math/special_functions/fpclassify.hpp>
+
 #include <chemkit/atom.h>
 #include <chemkit/foreach.h>
 #include <chemkit/geometry.h>
@@ -515,7 +517,7 @@ bool ForceField::minimizationStep(Real converganceValue)
         // simulation exploded so we reset the initial atom
         // positions and then 'wiggle' each atom by one
         // Angstrom in a random direction
-        if(std::isnan(finalEnergy)){
+        if((boost::math::isnan)(finalEnergy)){
             for(int atomIndex = 0; atomIndex < atomCount(); atomIndex++){
                 d->atoms[atomIndex]->setPosition(initialPositions[atomIndex]);
                 d->atoms[atomIndex]->moveBy(Vector3::Random().normalized());
