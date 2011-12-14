@@ -193,7 +193,7 @@ bool Bond::containsBoth(const Element &a, const Element &b) const
 /// terminal.
 bool Bond::isTerminal() const
 {
-    return (atom1()->isTerminal() || atom2()->isTerminal());
+    return atom1()->isTerminal() || atom2()->isTerminal();
 }
 
 // --- Ring Perception ----------------------------------------------------- //
