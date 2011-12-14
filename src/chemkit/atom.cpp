@@ -37,6 +37,8 @@
 
 #include <algorithm>
 
+#include <boost/bind.hpp>
+
 #include "ring.h"
 #include "foreach.h"
 #include "vector3.h"
@@ -310,6 +312,21 @@ int Atom::neighborCount(const Element &element) const
     }
 
     return count;
+}
+
+/// Returns an iterator range containing the atoms that are
+/// bonded to the atom.
+///
+/// \internal
+Atom::NeighborRange Atom::neighborRange() const
+{
+    const std::vector<Bond *> &bonds = m_molecule->d->atomBonds[m_index];
+
+    return boost::make_iterator_range(
+                boost::make_transform_iterator(
+                    bonds.begin(), boost::bind(&Bond::otherAtom, _1, this)),
+                boost::make_transform_iterator(
+                    bonds.end(), boost::bind(&Bond::otherAtom, _1, this)));
 }
 
 /// Returns \c true if the atom is bonded to the other atom.

@@ -40,7 +40,9 @@
 
 #include <vector>
 
+#include <boost/function.hpp>
 #include <boost/range/iterator_range.hpp>
+#include <boost/iterator/transform_iterator.hpp>
 
 #include "point3.h"
 #include "element.h"
@@ -60,6 +62,10 @@ class CHEMKIT_EXPORT Atom
 public:
     // typedefs
     typedef boost::iterator_range<std::vector<Bond *>::const_iterator> BondRange;
+    typedef boost::iterator_range<
+                boost::transform_iterator<
+                    boost::function<Atom* (Bond *)>,
+                    std::vector<Bond *>::const_iterator> > NeighborRange;
 
     // properties
     void setElement(const Element &element);
@@ -96,6 +102,7 @@ public:
     std::vector<Atom *> neighbors() const;
     int neighborCount() const;
     int neighborCount(const Element &element) const;
+    NeighborRange neighborRange() const;
     bool isBondedTo(const Atom *atom) const;
     bool isBondedTo(const Element &element) const;
     bool isBondedTo(const Element &element, int bondOrder) const;
