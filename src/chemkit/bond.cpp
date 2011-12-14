@@ -106,7 +106,9 @@ std::vector<Atom *> Bond::atoms() const
 /// part of the bond.
 Atom* Bond::otherAtom(const Atom *atom) const
 {
-    return atom == atom1() ? atom2() : atom1();
+    const std::pair<Atom *, Atom *> &pair = m_molecule->d->bondAtoms[m_index];
+
+    return atom == pair.first ? pair.second : pair.first;
 }
 
 /// Sets the bond order for the bond to \p order.
