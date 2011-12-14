@@ -163,7 +163,7 @@ const struct ElementData ElementData[] = {
     {"Meitnerium", "Mt", 266, 0, 0, 0},
 };
 
-const int ElementDataSize = sizeof(ElementData) / sizeof(*ElementData);
+const Element::AtomicNumberType ElementDataSize = sizeof(ElementData) / sizeof(*ElementData);
 
 } // end anonymous namespace
 
@@ -403,7 +403,7 @@ int Element::atomicNumber(char symbol)
 }
 
 /// Returns \c true if the atomic number is valid.
-bool Element::isValidAtomicNumber(int atomicNumber)
+bool Element::isValidAtomicNumber(AtomicNumberType atomicNumber)
 {
     return atomicNumber > 0 && atomicNumber < ElementDataSize;
 }

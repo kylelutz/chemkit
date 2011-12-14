@@ -41,27 +41,21 @@
 namespace chemkit {
 
 // --- Construction and Destruction ---------------------------------------- //
-/// Creates a new element with an atomic number of \c 0.
-inline Element::Element()
-{
-    m_atomicNumber = 0;
-}
-
 /// Creates a new element with the given atomic number.
-inline Element::Element(int atomicNumber)
+inline Element::Element(AtomicNumberType atomicNumber)
 {
     m_atomicNumber = atomicNumber;
 }
 
 // --- Properties ---------------------------------------------------------- //
 /// Sets the atomic number for the element to \p atomicNumber.
-inline void Element::setAtomicNumber(int atomicNumber)
+inline void Element::setAtomicNumber(AtomicNumberType atomicNumber)
 {
     m_atomicNumber = atomicNumber;
 }
 
 /// Returns the atomic number of the element.
-inline int Element::atomicNumber() const
+inline Element::AtomicNumberType Element::atomicNumber() const
 {
     return m_atomicNumber;
 }

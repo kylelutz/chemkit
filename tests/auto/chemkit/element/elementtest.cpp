@@ -39,10 +39,10 @@
 
 void ElementTest::symbol()
 {
+    QCOMPARE(chemkit::Element().symbol(), std::string());
     QCOMPARE(chemkit::Element(6).symbol(), std::string("C"));
     QCOMPARE(chemkit::Element(1).symbol(), std::string("H"));
-    QCOMPARE(chemkit::Element(0).symbol(), std::string());
-    QCOMPARE(chemkit::Element(500).symbol(), std::string());
+    QCOMPARE(chemkit::Element(200).symbol(), std::string());
     QCOMPARE(chemkit::Element(-1).symbol(), std::string());
     QCOMPARE(chemkit::Element(109).symbol(), std::string("Mt"));
     QCOMPARE(chemkit::Element(110).symbol(), std::string());
@@ -50,10 +50,10 @@ void ElementTest::symbol()
 
 void ElementTest::name()
 {
+    QCOMPARE(chemkit::Element().name(), std::string());
     QCOMPARE(chemkit::Element(6).name(), std::string("Carbon"));
     QCOMPARE(chemkit::Element(1).name(), std::string("Hydrogen"));
-    QCOMPARE(chemkit::Element(0).name(), std::string());
-    QCOMPARE(chemkit::Element(500).name(), std::string());
+    QCOMPARE(chemkit::Element(200).name(), std::string());
     QCOMPARE(chemkit::Element(-1).name(), std::string());
     QCOMPARE(chemkit::Element(109).name(), std::string("Meitnerium"));
     QCOMPARE(chemkit::Element(110).name(), std::string());
@@ -61,14 +61,14 @@ void ElementTest::name()
 
 void ElementTest::atomicNumber()
 {
-    QCOMPARE(chemkit::Element("C").atomicNumber(), 6);
-    QCOMPARE(chemkit::Element("H").atomicNumber(), 1);
-    QCOMPARE(chemkit::Element("").atomicNumber(), 0);
-    QCOMPARE(chemkit::Element(std::string()).atomicNumber(), 0);
-    QCOMPARE(chemkit::Element("X").atomicNumber(), 0);
-    QCOMPARE(chemkit::Element("Xa").atomicNumber(), 0);
-    QCOMPARE(chemkit::Element("Xaa").atomicNumber(), 0);
-    QCOMPARE(chemkit::Element("He").atomicNumber(), 2);
+    QCOMPARE(chemkit::Element("C").atomicNumber(), chemkit::Element::AtomicNumberType(6));
+    QCOMPARE(chemkit::Element("H").atomicNumber(), chemkit::Element::AtomicNumberType(1));
+    QCOMPARE(chemkit::Element("").atomicNumber(), chemkit::Element::AtomicNumberType(0));
+    QCOMPARE(chemkit::Element(std::string()).atomicNumber(), chemkit::Element::AtomicNumberType(0));
+    QCOMPARE(chemkit::Element("X").atomicNumber(), chemkit::Element::AtomicNumberType(0));
+    QCOMPARE(chemkit::Element("Xa").atomicNumber(), chemkit::Element::AtomicNumberType(0));
+    QCOMPARE(chemkit::Element("Xaa").atomicNumber(), chemkit::Element::AtomicNumberType(0));
+    QCOMPARE(chemkit::Element("He").atomicNumber(), chemkit::Element::AtomicNumberType(2));
 }
 
 void ElementTest::mass()
@@ -122,7 +122,7 @@ void ElementTest::isValidAtomicNumber()
     QCOMPARE(chemkit::Element::isValidAtomicNumber(1), true);
     QCOMPARE(chemkit::Element::isValidAtomicNumber(6), true);
     QCOMPARE(chemkit::Element::isValidAtomicNumber(0), false);
-    QCOMPARE(chemkit::Element::isValidAtomicNumber(500), false);
+    QCOMPARE(chemkit::Element::isValidAtomicNumber(200), false);
     QCOMPARE(chemkit::Element::isValidAtomicNumber(-1), false);
     QCOMPARE(chemkit::Element::isValidAtomicNumber(109), true);
     QCOMPARE(chemkit::Element::isValidAtomicNumber(110), false);

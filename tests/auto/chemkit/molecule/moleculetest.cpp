@@ -112,13 +112,13 @@ void MoleculeTest::addAtom()
     atom1 = molecule.addAtom(chemkit::Atom::Carbon);
     QCOMPARE(atom1->atomicNumber(), 6);
 
-    atom2 = molecule.addAtom(0);
+    atom2 = molecule.addAtom(chemkit::Element());
     QCOMPARE(atom2->element().isValid(), false);
 
     atom2 = molecule.addAtom(-1);
     QCOMPARE(atom2->element().isValid(), false);
 
-    atom2 = molecule.addAtom(500);
+    atom2 = molecule.addAtom(200);
     QCOMPARE(atom2->element().isValid(), false);
 
     atom1 = molecule.addAtom("C");

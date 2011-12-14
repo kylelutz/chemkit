@@ -45,15 +45,17 @@ namespace chemkit {
 class CHEMKIT_EXPORT Element
 {
 public:
+    // typedefs
+    typedef unsigned char AtomicNumberType;
+
     // construction and destruction
-    inline Element();
-    inline Element(int atomicNumber);
+    inline Element(AtomicNumberType atomicNumber = 0);
     Element(const char *symbol);
     Element(const std::string &symbol);
 
     // properties
-    inline void setAtomicNumber(int atomicNumber);
-    inline int atomicNumber() const;
+    inline void setAtomicNumber(AtomicNumberType atomicNumber);
+    inline AtomicNumberType atomicNumber() const;
     std::string symbol() const;
     std::string name() const;
     int period() const;
@@ -75,11 +77,11 @@ public:
     static int atomicNumber(const char *symbol);
     static int atomicNumber(const char *symbol, int length);
     static int atomicNumber(char symbol);
-    static bool isValidAtomicNumber(int atomicNumber);
+    static bool isValidAtomicNumber(AtomicNumberType atomicNumber);
     static bool isValidSymbol(const std::string &symbol);
 
 private:
-    unsigned char m_atomicNumber;
+    AtomicNumberType m_atomicNumber;
 };
 
 } // end chemkit namespace
