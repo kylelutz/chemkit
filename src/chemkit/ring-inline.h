@@ -83,6 +83,14 @@ inline int Ring::atomCount() const
     return atoms().size();
 }
 
+/// Returns an iterator range for the atoms in the ring.
+///
+/// \internal
+inline Ring::AtomRange Ring::atomRange() const
+{
+    return boost::make_iterator_range(m_atoms.begin(), m_atoms.end());
+}
+
 /// Returns \c true if the ring contains atom.
 inline bool Ring::contains(const Atom *atom) const
 {

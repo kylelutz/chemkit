@@ -40,6 +40,8 @@
 
 #include <vector>
 
+#include <boost/range/iterator_range.hpp>
+
 namespace chemkit {
 
 class Atom;
@@ -51,6 +53,9 @@ class Molecule;
 class CHEMKIT_EXPORT Ring
 {
 public:
+    // typedefs
+    typedef boost::iterator_range<std::vector<Atom *>::const_iterator> AtomRange;
+
     // properties
     inline int size() const;
     inline Molecule* molecule() const;
@@ -61,6 +66,7 @@ public:
     inline std::vector<Atom *> atoms() const;
     inline int atomCount() const;
     int atomCount(const Element &element) const;
+    inline AtomRange atomRange() const;
     Bond* bond(int index) const;
     std::vector<Bond *> bonds() const;
     int bondCount() const;
