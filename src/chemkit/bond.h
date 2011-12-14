@@ -54,6 +54,7 @@ class Molecule;
 class CHEMKIT_EXPORT Bond
 {
 public:
+    // enumerations
     enum BondType{
         Single = 1,
         Double = 2,
