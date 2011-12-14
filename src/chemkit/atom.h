@@ -40,6 +40,8 @@
 
 #include <vector>
 
+#include <boost/range/iterator_range.hpp>
+
 #include "point3.h"
 #include "element.h"
 #include "isotope.h"
@@ -56,6 +58,9 @@ class Molecule;
 class CHEMKIT_EXPORT Atom
 {
 public:
+    // typedefs
+    typedef boost::iterator_range<std::vector<Bond *>::const_iterator> BondRange;
+
     // properties
     void setElement(const Element &element);
     inline Element element() const;
@@ -84,6 +89,7 @@ public:
     // structure
     std::vector<Bond *> bonds() const;
     int bondCount() const;
+    BondRange bondRange() const;
     int valence() const;
     Bond* bondTo(const Atom *atom) const;
     Atom* neighbor(int index) const;

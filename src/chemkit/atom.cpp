@@ -235,7 +235,18 @@ std::vector<Bond *> Atom::bonds() const
 /// Equivalent to bonds().size().
 int Atom::bondCount() const
 {
-    return bonds().size();
+    return bondRange().size();
+}
+
+/// Returns an iterator range containing the bonds that the
+/// atom is a member of.
+///
+/// \internal
+Atom::BondRange Atom::bondRange() const
+{
+    const std::vector<Bond *> &bonds = m_molecule->d->atomBonds[m_index];
+
+    return boost::make_iterator_range(bonds.begin(), bonds.end());
 }
 
 /// Returns the number of bonds to the atom.
@@ -243,7 +254,7 @@ int Atom::valence() const
 {
     int valence = 0;
 
-    foreach(const Bond *bond, bonds()){
+    foreach(const Bond *bond, bondRange()){
         valence += bond->order();
     }
 
@@ -253,7 +264,7 @@ int Atom::valence() const
 /// Returns the bond between the atom and the other atom.
 Bond* Atom::bondTo(const Atom *atom) const
 {
-    foreach(Bond *bond, bonds()){
+    foreach(Bond *bond, bondRange()){
         if(bond->otherAtom(this) == atom){
             return bond;
         }
@@ -274,7 +285,7 @@ std::vector<Atom *> Atom::neighbors() const
 {
     std::vector<Atom *> neighbors;
 
-    foreach(Bond *bond, bonds()){
+    foreach(Bond *bond, bondRange()){
         neighbors.push_back(bond->otherAtom(this));
     }
 
@@ -292,7 +303,7 @@ int Atom::neighborCount(const Element &element) const
 {
     int count = 0;
 
-    foreach(const Bond *bond, bonds()){
+    foreach(const Bond *bond, bondRange()){
         if(bond->otherAtom(this)->is(element)){
             count++;
         }
@@ -311,7 +322,7 @@ bool Atom::isBondedTo(const Atom *atom) const
 /// \p element.
 bool Atom::isBondedTo(const Element &element) const
 {
-    foreach(const Bond *bond, bonds()){
+    foreach(const Bond *bond, bondRange()){
         if(bond->otherAtom(this)->is(element)){
             return true;
         }
@@ -324,7 +335,7 @@ bool Atom::isBondedTo(const Element &element) const
 /// \p element via a bond with \p bondOrder.
 bool Atom::isBondedTo(const Element &element, int bondOrder) const
 {
-    foreach(const Bond *bond, bonds()){
+    foreach(const Bond *bond, bondRange()){
         if(bond->otherAtom(this)->is(element) && bond->order() == bondOrder){
             return true;
         }
