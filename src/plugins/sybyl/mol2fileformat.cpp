@@ -232,16 +232,16 @@ bool Mol2FileFormat::write(const chemkit::MoleculeFile *file, QIODevice *iodev)
                 type = atom->symbol();
             }
 
-            line.sprintf("%9u %s%u %g %g %g %s %u <%u> %g\n", atomNumber,
-                                                              atom->symbol().c_str(),
-                                                              atomNumber,
-                                                              atom->x(),
-                                                              atom->y(),
-                                                              atom->z(),
-                                                              type.c_str(),
-                                                              1,
-                                                              1,
-                                                              atom->partialCharge());
+            line.sprintf("%7u %2s %10.4g %10.4g %10.4g %6s %u  LIG1 %10.4g\n",
+                         atomNumber,
+                         atom->symbol().c_str(),
+                         atom->x(),
+                         atom->y(),
+                         atom->z(),
+                         type.c_str(),
+                         1,
+                         atom->partialCharge());
+
             iodev->write(line.toAscii());
             atomNumber++;
         }
