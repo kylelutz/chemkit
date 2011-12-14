@@ -101,7 +101,7 @@ void AminoAcid::setType(const std::string &letterOrSymbol)
 {
     // set by 1-character letter
     if(letterOrSymbol.length() == 1){
-        char letter = std::toupper(letterOrSymbol[0]);
+        char letter = toupper(letterOrSymbol[0]);
 
         if(letter == 'A')
             setType(Alanine);
