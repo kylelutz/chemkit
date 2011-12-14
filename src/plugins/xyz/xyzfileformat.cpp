@@ -84,7 +84,7 @@ bool XyzFileFormat::read(std::istream &input, chemkit::MoleculeFile *file)
         if(symbol.empty()){
             continue;
         }
-        else if(std::isdigit(symbol.at(0))){
+        else if(isdigit(symbol.at(0))){
             int atomicNumber = boost::lexical_cast<int>(symbol);
             atom = molecule->addAtom(atomicNumber);
         }
