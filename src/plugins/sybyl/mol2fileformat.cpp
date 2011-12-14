@@ -39,6 +39,8 @@
 #include <chemkit/bond.h>
 #include <chemkit/moleculefile.h>
 
+#include "sybylatomtyper.h"
+
 Mol2FileFormat::Mol2FileFormat()
     : chemkit::MoleculeFileFormat("mol2")
 {
@@ -203,6 +205,10 @@ bool Mol2FileFormat::write(const chemkit::MoleculeFile *file, QIODevice *iodev)
     iodev->setTextModeEnabled(true);
 
     foreach(chemkit::Molecule *molecule, file->molecules()){
+        // perceive sybyl atom types
+        SybylAtomTyper atomTyper;
+        atomTyper.setMolecule(molecule);
+
         iodev->write("@<TRIPOS>MOLECULE\n");
         iodev->write((molecule->name() + "\n").c_str());
         QString countsLine;
@@ -217,13 +223,22 @@ bool Mol2FileFormat::write(const chemkit::MoleculeFile *file, QIODevice *iodev)
         int atomNumber = 1;
         foreach(chemkit::Atom *atom, molecule->atoms()){
             QString line;
+
+            // get atom type from the atom typer
+            std::string type = atomTyper.typeString(atom);
+
+            // use the atom's symbol if no type assigned
+            if(type.empty()){
+                type = atom->symbol();
+            }
+
             line.sprintf("%9u %s%u %g %g %g %s %u <%u> %g\n", atomNumber,
                                                               atom->symbol().c_str(),
                                                               atomNumber,
                                                               atom->x(),
                                                               atom->y(),
                                                               atom->z(),
-                                                              atom->symbol().c_str(),
+                                                              type.c_str(),
                                                               1,
                                                               1,
                                                               atom->partialCharge());
