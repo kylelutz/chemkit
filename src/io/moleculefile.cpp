@@ -171,6 +171,16 @@ int MoleculeFile::moleculeCount() const
     return d->molecules.size();
 }
 
+/// Returns an iterator range containing the molecules in the
+/// file.
+///
+/// \internal
+MoleculeFile::MoleculeRange MoleculeFile::moleculeRange() const
+{
+    return boost::make_iterator_range(d->molecules.begin(),
+                                      d->molecules.end());
+}
+
 /// Returns the molecule at \p index in the file.
 Molecule* MoleculeFile::molecule(int index) const
 {

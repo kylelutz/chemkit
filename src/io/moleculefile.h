@@ -41,6 +41,8 @@
 #include <string>
 #include <vector>
 
+#include <boost/range/iterator_range.hpp>
+
 #include "genericfile.h"
 #include "moleculefileformat.h"
 
@@ -52,6 +54,9 @@ class MoleculeFilePrivate;
 class CHEMKIT_IO_EXPORT MoleculeFile : public GenericFile<MoleculeFile, MoleculeFileFormat>
 {
 public:
+    // typedefs
+    typedef boost::iterator_range<std::vector<Molecule *>::const_iterator> MoleculeRange;
+
     // construction and destruction
     MoleculeFile();
     MoleculeFile(const std::string &fileName);
@@ -67,6 +72,7 @@ public:
     bool deleteMolecule(Molecule *molecule);
     std::vector<Molecule *> molecules() const;
     int moleculeCount() const;
+    MoleculeRange moleculeRange() const;
     Molecule* molecule(int index = 0) const;
     bool contains(const Molecule *molecule) const;
     void clear();
