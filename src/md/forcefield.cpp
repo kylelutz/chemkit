@@ -353,6 +353,7 @@ std::vector<Vector3> ForceField::gradient() const
 {
     if(d->flags & AnalyticalGradient){
         std::vector<Vector3> gradient(atomCount());
+        std::fill(gradient.begin(), gradient.end(), Vector3(0, 0, 0));
 
         foreach(const ForceFieldCalculation *calculation, d->calculations){
             std::vector<Vector3> atomGradients = calculation->gradient();
