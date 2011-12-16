@@ -1065,14 +1065,6 @@ void Molecule::rotate(const Vector3 &axis, Real angle)
     }
 }
 
-/// Removes all of the atomic coordinates in the molecule.
-void Molecule::clearCoordinates()
-{
-    foreach(Atom *atom, m_atoms){
-        atom->setPosition(Point3());
-    }
-}
-
 // --- Conformers ---------------------------------------------------------- //
 /// Adds a new conformer to the molecule and returns it.
 Conformer* Molecule::addConformer()

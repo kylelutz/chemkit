@@ -167,7 +167,6 @@ public:
     void moveBy(const Vector3 &vector);
     void moveBy(Real dx, Real dy, Real dz);
     void rotate(const Vector3 &axis, Real angle);
-    void clearCoordinates();
 
     // conformers
     Conformer* addConformer();
