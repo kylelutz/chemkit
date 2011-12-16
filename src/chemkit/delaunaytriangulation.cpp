@@ -81,7 +81,7 @@ bool EdgeSet::contains(int a, int b)
     if(a > b)
         std::swap(a, b);
 
-    return m_edges[a].count(b);
+    return m_edges[a].count(b) != 0;
 }
 
 // === Tetrahedron ========================================================= //
