@@ -31,6 +31,7 @@ set(HEADERS
   conformer.h
   constants.h
   delaunaytriangulation.h
+  diagramcoordinates.h
   dynamiclibrary.h
   element.h
   element-inline.h
@@ -84,6 +85,7 @@ set(SOURCES
   chemkit.cpp
   conformer.cpp
   delaunaytriangulation.cpp
+  diagramcoordinates.cpp
   dynamiclibrary.cpp
   element.cpp
   fragment.cpp

@@ -1,0 +1,4 @@
+qt4_wrap_cpp(MOC_SOURCES diagramcoordinatestest.h)
+add_executable(diagramcoordinatestest diagramcoordinatestest.cpp ${MOC_SOURCES})
+target_link_libraries(diagramcoordinatestest chemkit ${QT_LIBRARIES})
+add_chemkit_test(chemkit.DiagramCoordinates diagramcoordinatestest)
