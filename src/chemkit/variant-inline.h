@@ -238,7 +238,7 @@ inline bool Variant::value() const
         return m_value._bool;
     }
     else if(m_type == Int){
-        return static_cast<bool>(m_value._int);
+        return m_value._int != 0;
     }
 
     return false;
