@@ -1065,19 +1065,6 @@ void Molecule::rotate(const Vector3 &axis, Real angle)
     }
 }
 
-/// Returns \c true if the molecule has coordinates for any of the
-/// atoms.
-bool Molecule::hasCoordinates() const
-{
-    foreach(const Atom *atom, m_atoms){
-        if(!atom->position().isZero()){
-            return true;
-        }
-    }
-
-    return false;
-}
-
 /// Removes all of the atomic coordinates in the molecule.
 void Molecule::clearCoordinates()
 {
