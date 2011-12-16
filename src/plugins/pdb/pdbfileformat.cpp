@@ -37,6 +37,7 @@
 
 #include <QHash>
 #include <QString>
+#include <QVector>
 
 #include <boost/algorithm/string.hpp>
 
@@ -258,7 +259,7 @@ public:
     chemkit::Point3 position(int atom) const;
 
 private:
-    QHash<int, chemkit::Point3> m_positions;
+    QVector<chemkit::Point3> m_positions;
 };
 
 PdbConformer::PdbConformer(std::istream &input)
@@ -272,13 +273,11 @@ PdbConformer::PdbConformer(std::istream &input)
         }
 
         if(boost::starts_with(line, "ATOM")){
-            int id = boost::lexical_cast<int>(boost::trim_left_copy(line.substr(7, 4)));
-
             chemkit::Real x = boost::lexical_cast<chemkit::Real>(boost::trim_left_copy(line.substr(30, 8)));
             chemkit::Real y = boost::lexical_cast<chemkit::Real>(boost::trim_left_copy(line.substr(38, 8)));
             chemkit::Real z = boost::lexical_cast<chemkit::Real>(boost::trim_left_copy(line.substr(46, 8)));
 
-            m_positions[id] = chemkit::Point3(x, y, z);
+            m_positions.append(chemkit::Point3(x, y, z));
         }
         else if(boost::starts_with(line, "ENDMDL")){
             break;
@@ -288,7 +287,7 @@ PdbConformer::PdbConformer(std::istream &input)
 
 chemkit::Point3 PdbConformer::position(int atom) const
 {
-    return m_positions.value(atom);
+    return m_positions[atom];
 }
 
 // === PdbFile ============================================================= //
@@ -491,7 +490,7 @@ void PdbFile::writePolymerFile(chemkit::PolymerFile *file)
         chemkit::Conformer *conformer = polymer->addConformer();
 
         foreach(int atomId, atomIds.keys()){
-            conformer->setPosition(atomIds[atomId], pdbConformer->position(atomId));
+            conformer->setPosition(atomIds[atomId], pdbConformer->position(atomId - 1));
         }
     }
 
