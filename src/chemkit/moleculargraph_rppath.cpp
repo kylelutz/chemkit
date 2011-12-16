@@ -307,7 +307,7 @@ bool Sssr::isUnique(const std::vector<int> &path) const
             continue;
         }
 
-        for(unsigned int i = 0; i < ring.size(); i++){
+        for(unsigned int i = 0; i < ring.size() - 1; i++){
             pathBonds.erase(std::make_pair(std::min(ring[i], ring[i+1]),
                                            std::max(ring[i], ring[i+1])));
         }
