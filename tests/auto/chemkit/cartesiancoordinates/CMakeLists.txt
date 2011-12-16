@@ -1,0 +1,4 @@
+qt4_wrap_cpp(MOC_SOURCES cartesiancoordinatestest.h)
+add_executable(cartesiancoordinatestest cartesiancoordinatestest.cpp ${MOC_SOURCES})
+target_link_libraries(cartesiancoordinatestest chemkit ${QT_LIBRARIES})
+add_chemkit_test(chemkit.CartesianCoordinates cartesiancoordinatestest)

@@ -33,8 +33,8 @@
 **
 ******************************************************************************/
 
-#ifndef CHEMKIT_COORDINATES_H
-#define CHEMKIT_COORDINATES_H
+#ifndef CHEMKIT_CARTESIANCOORDINATES_H
+#define CHEMKIT_CARTESIANCOORDINATES_H
 
 #include "chemkit.h"
 
@@ -52,18 +52,18 @@ class Atom;
 class Molecule;
 class Conformer;
 
-class CHEMKIT_EXPORT Coordinates
+class CHEMKIT_EXPORT CartesianCoordinates
 {
 public:
     // construction and destruction
-    Coordinates();
-    Coordinates(int size);
-    Coordinates(const Molecule *molecule);
-    Coordinates(const Conformer *conformer);
-    Coordinates(const std::vector<Atom *> &atoms);
-    Coordinates(const std::vector<Point3> &points);
-    Coordinates(const Coordinates &coordinates);
-    ~Coordinates();
+    CartesianCoordinates();
+    CartesianCoordinates(int size);
+    CartesianCoordinates(const Molecule *molecule);
+    CartesianCoordinates(const Conformer *conformer);
+    CartesianCoordinates(const std::vector<Atom *> &atoms);
+    CartesianCoordinates(const std::vector<Point3> &points);
+    CartesianCoordinates(const CartesianCoordinates &coordinates);
+    ~CartesianCoordinates();
 
     // properties
     void setSize(int size);
@@ -98,14 +98,14 @@ public:
     Matrix distanceMatrix() const;
 
     // math
-    Coordinates add(const Coordinates &coordinates) const;
-    Coordinates subtract(const Coordinates &coordinates) const;
-    Eigen::Matrix<Real, 3, 3> multiply(const Coordinates *coordinates) const;
+    CartesianCoordinates add(const CartesianCoordinates &coordinates) const;
+    CartesianCoordinates subtract(const CartesianCoordinates &coordinates) const;
+    Eigen::Matrix<Real, 3, 3> multiply(const CartesianCoordinates *coordinates) const;
 
     // operators
-    Coordinates operator+(const Coordinates &coordinates) const;
-    Coordinates operator-(const Coordinates &coordinates) const;
-    Coordinates& operator=(const Coordinates &coordinates);
+    CartesianCoordinates operator+(const CartesianCoordinates &coordinates) const;
+    CartesianCoordinates operator-(const CartesianCoordinates &coordinates) const;
+    CartesianCoordinates& operator=(const CartesianCoordinates &coordinates);
 
 private:
     Matrix m_matrix;
@@ -113,4 +113,4 @@ private:
 
 } // end chemkit namespace
 
-#endif // CHEMKIT_COORDINATES_H
+#endif // CHEMKIT_CARTESIANCOORDINATES_H

@@ -44,7 +44,7 @@
 
 namespace chemkit {
 
-class Coordinates;
+class CartesianCoordinates;
 class InternalCoordinatesPrivate;
 
 class CHEMKIT_EXPORT InternalCoordinates
@@ -68,7 +68,7 @@ public:
     std::vector<int> connections(int row) const;
 
     // conversions
-    Coordinates* toCartesianCoordinates() const;
+    CartesianCoordinates* toCartesianCoordinates() const;
 
     // operators
     InternalCoordinates& operator=(const InternalCoordinates &coordinates);

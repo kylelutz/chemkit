@@ -41,9 +41,9 @@
 #include <chemkit/vector3.h>
 #include <chemkit/unitcell.h>
 #include <chemkit/trajectory.h>
-#include <chemkit/coordinates.h>
 #include <chemkit/trajectoryfile.h>
 #include <chemkit/trajectoryframe.h>
+#include <chemkit/cartesiancoordinates.h>
 
 #include "../../3rdparty/xdrf/xdrf.h"
 
@@ -118,7 +118,7 @@ bool XtcFileFormat::read(std::istream &input, chemkit::TrajectoryFile *file)
         float precision = 1000.0f;
         xdr3dfcoord(&xdrs, &coordinateData[0], &atomCount, &precision);
 
-        chemkit::Coordinates coordinates(atomCount);
+        chemkit::CartesianCoordinates coordinates(atomCount);
 
         for(int i = 0; i < atomCount; i++){
             // multiply each coordinate by 10 to convert

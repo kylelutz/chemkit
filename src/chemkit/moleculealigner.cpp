@@ -41,7 +41,7 @@
 #include "geometry.h"
 #include "molecule.h"
 #include "conformer.h"
-#include "coordinates.h"
+#include "cartesiancoordinates.h"
 
 namespace chemkit {
 
@@ -164,8 +164,8 @@ const Conformer* MoleculeAligner::targetConformer() const
 /// of the source and target molecules.
 Real MoleculeAligner::deviation() const
 {
-    Coordinates *sourceMatrix = sourceCoordinates();
-    Coordinates *targetMatrix = targetCoordinates();
+    CartesianCoordinates *sourceMatrix = sourceCoordinates();
+    CartesianCoordinates *targetMatrix = targetCoordinates();
 
     Real rmsd = this->rmsd(sourceMatrix, targetMatrix);
 
@@ -180,8 +180,8 @@ Real MoleculeAligner::deviation() const
 /// deviation.
 Eigen::Matrix<Real, 3, 3> MoleculeAligner::rotationMatrix() const
 {
-    Coordinates *sourceMatrix = sourceCoordinates();
-    Coordinates *targetMatrix = targetCoordinates();
+    CartesianCoordinates *sourceMatrix = sourceCoordinates();
+    CartesianCoordinates *targetMatrix = targetCoordinates();
 
     sourceMatrix->moveBy(-sourceMatrix->center());
     targetMatrix->moveBy(-targetMatrix->center());
@@ -208,8 +208,8 @@ Eigen::Matrix<Real, 3, 3> MoleculeAligner::rotationMatrix() const
 /// of the source and target molecules.
 Vector3 MoleculeAligner::displacementVector() const
 {
-    Coordinates *sourceMatrix = sourceCoordinates();
-    Coordinates *targetMatrix = targetCoordinates();
+    CartesianCoordinates *sourceMatrix = sourceCoordinates();
+    CartesianCoordinates *targetMatrix = targetCoordinates();
 
     Vector3 displacement = targetCoordinates()->center() - sourceCoordinates()->center();
 
@@ -238,7 +238,7 @@ void MoleculeAligner::align(Molecule *molecule)
 // --- Static Methods ------------------------------------------------------ //
 /// Returns the root mean square deviation between the coordinates
 /// in \p a and \p b.
-Real MoleculeAligner::rmsd(const Coordinates *a, const Coordinates *b)
+Real MoleculeAligner::rmsd(const CartesianCoordinates *a, const CartesianCoordinates *b)
 {
     int size = std::min(a->size(), b->size());
 
@@ -252,23 +252,23 @@ Real MoleculeAligner::rmsd(const Coordinates *a, const Coordinates *b)
 }
 
 // --- Internal Methods ---------------------------------------------------- //
-Coordinates* MoleculeAligner::sourceCoordinates() const
+CartesianCoordinates* MoleculeAligner::sourceCoordinates() const
 {
     if(d->sourceConformer){
-        return new Coordinates(d->sourceConformer);
+        return new CartesianCoordinates(d->sourceConformer);
     }
     else{
-        return new Coordinates(sourceMolecule());
+        return new CartesianCoordinates(sourceMolecule());
     }
 }
 
-Coordinates* MoleculeAligner::targetCoordinates() const
+CartesianCoordinates* MoleculeAligner::targetCoordinates() const
 {
     if(d->targetConformer){
-        return new Coordinates(d->targetConformer);
+        return new CartesianCoordinates(d->targetConformer);
     }
     else{
-        return new Coordinates(targetMolecule());
+        return new CartesianCoordinates(targetMolecule());
     }
 }
 

@@ -59,12 +59,12 @@
 #include "constants.h"
 #include "lineformat.h"
 #include "quaternion.h"
-#include "coordinates.h"
 #include "moleculargraph.h"
 #include "moleculeprivate.h"
 #include "moleculewatcher.h"
 #include "internalcoordinates.h"
 #include "moleculardescriptor.h"
+#include "cartesiancoordinates.h"
 
 namespace chemkit {
 
@@ -909,7 +909,7 @@ void Molecule::perceiveFragments() const
 // --- Geometry ------------------------------------------------------------ //
 /// Sets the coordinates for the atoms in the molecule to
 /// \p coordinates.
-void Molecule::setCoordinates(const Coordinates *coordinates)
+void Molecule::setCoordinates(const CartesianCoordinates *coordinates)
 {
     int size = std::min(this->size(), coordinates->size());
 
@@ -922,7 +922,7 @@ void Molecule::setCoordinates(const Coordinates *coordinates)
 /// \p coordinates.
 void Molecule::setCoordinates(const InternalCoordinates *coordinates)
 {
-    Coordinates *cartesianCoordinates = coordinates->toCartesianCoordinates();
+    CartesianCoordinates *cartesianCoordinates = coordinates->toCartesianCoordinates();
     setCoordinates(cartesianCoordinates);
     delete cartesianCoordinates;
 }

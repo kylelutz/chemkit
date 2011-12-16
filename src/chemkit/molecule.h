@@ -57,7 +57,7 @@ class Bond;
 class Ring;
 class Fragment;
 class Conformer;
-class Coordinates;
+class CartesianCoordinates;
 class MoleculePrivate;
 class MoleculeWatcher;
 class Stereochemistry;
@@ -154,7 +154,7 @@ public:
     void removeFragment(Fragment *fragment);
 
     // geometry
-    void setCoordinates(const Coordinates *coordinates);
+    void setCoordinates(const CartesianCoordinates *coordinates);
     void setCoordinates(const InternalCoordinates *coordinates);
     Real distance(const Atom *a, const Atom *b) const;
     Real bondAngle(const Atom *a, const Atom *b, const Atom *c) const;

@@ -25,11 +25,11 @@ set(HEADERS
   bond.h
   bond-inline.h
   bondpredictor.h
+  cartesiancoordinates.h
   chemkit.h
   config.h
   conformer.h
   constants.h
-  coordinates.h
   delaunaytriangulation.h
   dynamiclibrary.h
   element.h
@@ -80,9 +80,9 @@ set(SOURCES
   atomtyper.cpp
   bond.cpp
   bondpredictor.cpp
+  cartesiancoordinates.cpp
   chemkit.cpp
   conformer.cpp
-  coordinates.cpp
   delaunaytriangulation.cpp
   dynamiclibrary.cpp
   element.cpp

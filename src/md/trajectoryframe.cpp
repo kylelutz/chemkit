@@ -39,7 +39,7 @@
 #include <algorithm>
 
 #include <chemkit/unitcell.h>
-#include <chemkit/coordinates.h>
+#include <chemkit/cartesiancoordinates.h>
 
 #include "trajectory.h"
 
@@ -50,7 +50,7 @@ class TrajectoryFramePrivate
 {
 public:
     Trajectory *trajectory;
-    Coordinates *coordinates;
+    CartesianCoordinates *coordinates;
     UnitCell *unitCell;
 };
 
@@ -111,14 +111,14 @@ Trajectory* TrajectoryFrame::trajectory() const
 
 // --- Coordinates --------------------------------------------------------- //
 /// Sets the coordinates for the frame to \p coordinates.
-void TrajectoryFrame::setCoordinates(const Coordinates *coordinates)
+void TrajectoryFrame::setCoordinates(const CartesianCoordinates *coordinates)
 {
     delete d->coordinates;
-    d->coordinates = new Coordinates(*coordinates);
+    d->coordinates = new CartesianCoordinates(*coordinates);
 }
 
 /// Returns the coordinates for the frame.
-const Coordinates* TrajectoryFrame::coordinates() const
+const CartesianCoordinates* TrajectoryFrame::coordinates() const
 {
     return d->coordinates;
 }

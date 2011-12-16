@@ -49,7 +49,7 @@ namespace chemkit {
 class Atom;
 class Molecule;
 class Conformer;
-class Coordinates;
+class CartesianCoordinates;
 class MoleculeAlignerPrivate;
 
 class CHEMKIT_EXPORT MoleculeAligner
@@ -77,11 +77,11 @@ public:
     void align(Molecule *molecule);
 
     // static methods
-    static Real rmsd(const Coordinates *a, const Coordinates *b);
+    static Real rmsd(const CartesianCoordinates *a, const CartesianCoordinates *b);
 
 private:
-    Coordinates *sourceCoordinates() const;
-    Coordinates *targetCoordinates() const;
+    CartesianCoordinates *sourceCoordinates() const;
+    CartesianCoordinates *targetCoordinates() const;
 
 private:
     MoleculeAlignerPrivate* const d;

@@ -43,7 +43,7 @@
 namespace chemkit {
 
 class UnitCell;
-class Coordinates;
+class CartesianCoordinates;
 class Trajectory;
 class TrajectoryFramePrivate;
 
@@ -57,8 +57,8 @@ public:
     Trajectory* trajectory() const;
 
     // coordinates
-    void setCoordinates(const Coordinates *coordinates);
-    const Coordinates* coordinates() const;
+    void setCoordinates(const CartesianCoordinates *coordinates);
+    const CartesianCoordinates* coordinates() const;
     void setPosition(int index, const Point3 &position);
     Point3 position(int index) const;
 

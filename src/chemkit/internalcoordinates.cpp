@@ -39,7 +39,7 @@
 
 #include "vector3.h"
 #include "constants.h"
-#include "coordinates.h"
+#include "cartesiancoordinates.h"
 
 namespace chemkit {
 
@@ -196,9 +196,9 @@ std::vector<int> InternalCoordinates::connections(int row) const
 /// This method implements the Natural Extension Reference Frame
 /// (NeRF) algorithm presented in [Parsons 2005].
 /// \endinternal
-Coordinates* InternalCoordinates::toCartesianCoordinates() const
+CartesianCoordinates* InternalCoordinates::toCartesianCoordinates() const
 {
-    Coordinates *cartesianCoordinates = new Coordinates(d->size);
+    CartesianCoordinates *cartesianCoordinates = new CartesianCoordinates(d->size);
 
     // set positions for the first three atoms
     if(d->size >= 0){

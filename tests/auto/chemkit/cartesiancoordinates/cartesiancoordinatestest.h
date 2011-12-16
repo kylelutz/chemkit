@@ -33,12 +33,12 @@
 **
 ******************************************************************************/
 
-#ifndef COORDINATESTEST_H
-#define COORDINATESTEST_H
+#ifndef CARTESIANCOORDINATESTEST_H
+#define CARTESIANCOORDINATESTEST_H
 
 #include <QtTest>
 
-class CoordinatesTest : public QObject
+class CartesianCoordinatesTest : public QObject
 {
     Q_OBJECT
 
@@ -53,4 +53,4 @@ class CoordinatesTest : public QObject
         void distanceMatrix();
 };
 
-#endif // COORDINATESTEST_H
+#endif // CARTESIANCOORDINATESTEST_H

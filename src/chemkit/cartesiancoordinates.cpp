@@ -33,7 +33,7 @@
 **
 ******************************************************************************/
 
-#include "coordinates.h"
+#include "cartesiancoordinates.h"
 
 #include <cassert>
 
@@ -45,21 +45,21 @@
 
 namespace chemkit {
 
-// === Coordinates ========================================================= //
-/// \class Coordinates coordinates.h chemkit/coordinates.h
+// === CartesianCoordinates ================================================ //
+/// \class CartesianCoordinates cartesiancoordinates.h chemkit/cartesiancoordinates.h
 /// \ingroup chemkit
-/// \brief The Coordinates class contains cartesian coordinates.
+/// \brief The CartesianCoordinates class contains cartesian coordinates.
 
 // --- Construction and Destruction ---------------------------------------- //
 /// Creates a new, empty coordinate matrix.
-Coordinates::Coordinates()
+CartesianCoordinates::CartesianCoordinates()
     : m_matrix(0, 3)
 {
 }
 
 /// Creates a new, empty coordinate matrix with space for \p size
 /// points.
-Coordinates::Coordinates(int size)
+CartesianCoordinates::CartesianCoordinates(int size)
     : m_matrix(size, 3)
 {
     m_matrix.setZero();
@@ -67,7 +67,7 @@ Coordinates::Coordinates(int size)
 
 /// Creates a new coordinate matrix with the coordinates from
 /// \p molecule.
-Coordinates::Coordinates(const Molecule *molecule)
+CartesianCoordinates::CartesianCoordinates(const Molecule *molecule)
     : m_matrix(molecule->size(), 3)
 {
     int size = molecule->size();
@@ -82,7 +82,7 @@ Coordinates::Coordinates(const Molecule *molecule)
 
 /// Creates a new coordinate matrix with the coordinates from
 /// \p conformer.
-Coordinates::Coordinates(const Conformer *conformer)
+CartesianCoordinates::CartesianCoordinates(const Conformer *conformer)
     : m_matrix(conformer->molecule()->size(), 3)
 {
     int size = conformer->molecule()->size();
@@ -97,7 +97,7 @@ Coordinates::Coordinates(const Conformer *conformer)
 
 /// Creates a new coordinate matrix with the coordinates from
 /// \p atoms.
-Coordinates::Coordinates(const std::vector<Atom *> &atoms)
+CartesianCoordinates::CartesianCoordinates(const std::vector<Atom *> &atoms)
     : m_matrix(atoms.size(), 3)
 {
     unsigned int size = atoms.size();
@@ -111,7 +111,7 @@ Coordinates::Coordinates(const std::vector<Atom *> &atoms)
 }
 
 /// Creates a new coordinate matrix that contains \p points.
-Coordinates::Coordinates(const std::vector<Point3> &points)
+CartesianCoordinates::CartesianCoordinates(const std::vector<Point3> &points)
     : m_matrix(points.size(), 3)
 {
     for(unsigned int i = 0; i < points.size(); i++){
@@ -123,44 +123,44 @@ Coordinates::Coordinates(const std::vector<Point3> &points)
 }
 
 /// Creates a new coordinate matrix that is a copy of \p coordinates.
-Coordinates::Coordinates(const Coordinates &coordinates)
+CartesianCoordinates::CartesianCoordinates(const CartesianCoordinates &coordinates)
     : m_matrix(coordinates.m_matrix)
 {
 }
 
 /// Destroys the coordinate matrix.
-Coordinates::~Coordinates()
+CartesianCoordinates::~CartesianCoordinates()
 {
 }
 
 // --- Properties ---------------------------------------------------------- //
 /// Sets the size of the matrix to \p size.
-void Coordinates::setSize(int size)
+void CartesianCoordinates::setSize(int size)
 {
     m_matrix.conservativeResize(size, Eigen::NoChange);
 }
 
 /// Returns the number of coordinates in the matrix.
-int Coordinates::size() const
+int CartesianCoordinates::size() const
 {
     return m_matrix.rows();
 }
 
 /// Returns \c true if the matrix is empty.
-bool Coordinates::isEmpty() const
+bool CartesianCoordinates::isEmpty() const
 {
     return size() == 0;
 }
 
 /// Returns a matrix containing the data in the coordinate matrix.
-Matrix Coordinates::toMatrix() const
+Matrix CartesianCoordinates::toMatrix() const
 {
     return m_matrix;
 }
 
 // --- Coordinates --------------------------------------------------------- //
 /// Sets the position at \p index to \p position.
-void Coordinates::setPosition(int index, const Point3 &position)
+void CartesianCoordinates::setPosition(int index, const Point3 &position)
 {
     m_matrix(index, 0) = position.x();
     m_matrix(index, 1) = position.y();
@@ -168,13 +168,13 @@ void Coordinates::setPosition(int index, const Point3 &position)
 }
 
 /// Sets the position at \p index to (\p x, \p y, \p z).
-void Coordinates::setPosition(int index, Real x, Real y, Real z)
+void CartesianCoordinates::setPosition(int index, Real x, Real y, Real z)
 {
     setPosition(index, Point3(x, y, z));
 }
 
 /// Returns the coordinates at \p index.
-Point3 Coordinates::position(int index) const
+Point3 CartesianCoordinates::position(int index) const
 {
     return Point3(m_matrix(index, 0),
                   m_matrix(index, 1),
@@ -182,31 +182,31 @@ Point3 Coordinates::position(int index) const
 }
 
 /// Sets the value at \p row and \p column to \p value.
-void Coordinates::setValue(int row, int column, Real value)
+void CartesianCoordinates::setValue(int row, int column, Real value)
 {
     m_matrix(row, column) = value;
 }
 
 /// Returns the value at \p row and \p column;
-Real Coordinates::value(int row, int column) const
+Real CartesianCoordinates::value(int row, int column) const
 {
     return m_matrix(row, column);
 }
 
 /// Appends \p position to the coordinates.
-void Coordinates::append(const Point3 &position)
+void CartesianCoordinates::append(const Point3 &position)
 {
     insert(size(), position);
 }
 
 /// Appends the point (\p x, \p y, \p z) to the coordinates.
-void Coordinates::append(Real x, Real y, Real z)
+void CartesianCoordinates::append(Real x, Real y, Real z)
 {
     append(Point3(x, y, z));
 }
 
 /// Inserts \p position at \p index.
-void Coordinates::insert(int index, const Point3 &position)
+void CartesianCoordinates::insert(int index, const Point3 &position)
 {
     // resize to make space for the new position
     if(index >= size()){
@@ -226,13 +226,13 @@ void Coordinates::insert(int index, const Point3 &position)
 }
 
 /// Inserts the point (\p x, \p y, \p z) at \p index.
-void Coordinates::insert(int index, Real x, Real y, Real z)
+void CartesianCoordinates::insert(int index, Real x, Real y, Real z)
 {
     insert(index, Point3(x, y, z));
 }
 
 /// Removes the position at \p index.
-void Coordinates::remove(int index)
+void CartesianCoordinates::remove(int index)
 {
     for(int i = index + 1; i < size(); i++){
         setPosition(i - 1, position(i));
@@ -244,56 +244,56 @@ void Coordinates::remove(int index)
 // --- Geometry ------------------------------------------------------------ //
 /// Returns the distance between the points at \p i and \p j. The
 /// returned distance is in Angstroms.
-Real Coordinates::distance(int i, int j) const
+Real CartesianCoordinates::distance(int i, int j) const
 {
     return chemkit::geometry::distance(position(i), position(j));
 }
 
 /// Returns the bond angle between the points at \p i, \p j, and
 /// \p k. The returned angle is in degrees.
-Real Coordinates::angle(int i, int j, int k) const
+Real CartesianCoordinates::angle(int i, int j, int k) const
 {
     return chemkit::geometry::angle(position(i), position(j), position(k));
 }
 
 /// Returns the bond angle between the points at \p i, \p j, and
 /// \p k. The returned angle is in radians.
-Real Coordinates::angleRadians(int i, int j, int k) const
+Real CartesianCoordinates::angleRadians(int i, int j, int k) const
 {
     return chemkit::geometry::angleRadians(position(i), position(j), position(k));
 }
 
 /// Returns the torsion angle between the points at \p i, \p j, \p k,
 /// and \p l. The returned angle is in degrees.
-Real Coordinates::torsionAngle(int i, int j, int k, int l) const
+Real CartesianCoordinates::torsionAngle(int i, int j, int k, int l) const
 {
     return chemkit::geometry::torsionAngle(position(i), position(j), position(k), position(l));
 }
 
 /// Returns the torsion angle between the points at \p i, \p j, \p k,
 /// and \p l. The returned angle is in radians.
-Real Coordinates::torsionAngleRadians(int i, int j, int k, int l) const
+Real CartesianCoordinates::torsionAngleRadians(int i, int j, int k, int l) const
 {
     return chemkit::geometry::torsionAngleRadians(position(i), position(j), position(k), position(l));
 }
 
 /// Returns the wilson angle between the points at \p i, \p j, \p k
 /// and \p l. The returned angle is in degrees.
-Real Coordinates::wilsonAngle(int i, int j, int k, int l) const
+Real CartesianCoordinates::wilsonAngle(int i, int j, int k, int l) const
 {
     return chemkit::geometry::wilsonAngle(position(i), position(j), position(k), position(l));
 }
 
 /// Returns the wilson angle between the points at \p i, \p j, \p k
 /// and \p l. The returned angle is in radians.
-Real Coordinates::wilsonAngleRadians(int i, int j, int k, int l) const
+Real CartesianCoordinates::wilsonAngleRadians(int i, int j, int k, int l) const
 {
     return chemkit::geometry::wilsonAngleRadians(position(i), position(j), position(k), position(l));
 }
 
 /// Returns the center of the positions in the coordinates. This is
 /// also known as the centroid.
-Point3 Coordinates::center() const
+Point3 CartesianCoordinates::center() const
 {
     if(isEmpty()){
         return Point3(0, 0, 0);
@@ -317,7 +317,7 @@ Point3 Coordinates::center() const
 
 /// Returns the center of the coordinates after weighting each
 /// position with \p weights.
-Point3 Coordinates::weightedCenter(const std::vector<Real> &weights) const
+Point3 CartesianCoordinates::weightedCenter(const std::vector<Real> &weights) const
 {
     assert(static_cast<unsigned long>(size()) == weights.size());
 
@@ -349,7 +349,7 @@ Point3 Coordinates::weightedCenter(const std::vector<Real> &weights) const
 }
 
 /// Moves all of the coordinates by \p vector.
-void Coordinates::moveBy(const Vector3 &vector)
+void CartesianCoordinates::moveBy(const Vector3 &vector)
 {
     for(int i = 0; i < size(); i++){
         m_matrix(i, 0) += vector.x();
@@ -359,14 +359,14 @@ void Coordinates::moveBy(const Vector3 &vector)
 }
 
 /// Moves all of the coordinates by (\p x, \p y, \p z).
-void Coordinates::moveBy(Real x, Real y, Real z)
+void CartesianCoordinates::moveBy(Real x, Real y, Real z)
 {
     moveBy(Vector3(x, y, z));
 }
 
 /// Returns a matrix containing the distances between each pair of
 /// points in the coordinates.
-Matrix Coordinates::distanceMatrix() const
+Matrix CartesianCoordinates::distanceMatrix() const
 {
     Matrix matrix(size(), size());
 
@@ -388,11 +388,11 @@ Matrix Coordinates::distanceMatrix() const
 // --- Math ---------------------------------------------------------------- //
 /// Returns a new coordinate matrix containing the result of adding
 /// the coordinates with \p coordinates.
-Coordinates Coordinates::add(const Coordinates &coordinates) const
+CartesianCoordinates CartesianCoordinates::add(const CartesianCoordinates &coordinates) const
 {
     int size = std::min(this->size(), coordinates.size());
 
-    Coordinates result(size);
+    CartesianCoordinates result(size);
 
     for(int i = 0; i < size; i++){
         const Point3 &a = position(i);
@@ -406,11 +406,11 @@ Coordinates Coordinates::add(const Coordinates &coordinates) const
 
 /// Returns a new coordinate matrix containing the result of
 /// subtracting the coordinates with \p coordinates.
-Coordinates Coordinates::subtract(const Coordinates &coordinates) const
+CartesianCoordinates CartesianCoordinates::subtract(const CartesianCoordinates &coordinates) const
 {
     int size = std::min(this->size(), coordinates.size());
 
-    Coordinates result(size);
+    CartesianCoordinates result(size);
 
     for(int i = 0; i < size; i++){
         const Point3 &a = position(i);
@@ -424,23 +424,23 @@ Coordinates Coordinates::subtract(const Coordinates &coordinates) const
 
 /// Returns the 3x3 matrix product of the transpose of the matrix
 /// and \p coordinates.
-Eigen::Matrix<Real, 3, 3> Coordinates::multiply(const Coordinates *coordinates) const
+Eigen::Matrix<Real, 3, 3> CartesianCoordinates::multiply(const CartesianCoordinates *coordinates) const
 {
     return m_matrix.transpose() * coordinates->m_matrix;
 }
 
 // --- Operators ----------------------------------------------------------- //
-Coordinates Coordinates::operator+(const Coordinates &coordinates) const
+CartesianCoordinates CartesianCoordinates::operator+(const CartesianCoordinates &coordinates) const
 {
     return add(coordinates);
 }
 
-Coordinates Coordinates::operator-(const Coordinates &coordinates) const
+CartesianCoordinates CartesianCoordinates::operator-(const CartesianCoordinates &coordinates) const
 {
     return subtract(coordinates);
 }
 
-Coordinates& Coordinates::operator=(const Coordinates &coordinates)
+CartesianCoordinates& CartesianCoordinates::operator=(const CartesianCoordinates &coordinates)
 {
     m_matrix = coordinates.m_matrix;
 

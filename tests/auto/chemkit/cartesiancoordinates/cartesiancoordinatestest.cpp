@@ -33,16 +33,16 @@
 **
 ******************************************************************************/
 
-#include "coordinatestest.h"
+#include "cartesiancoordinatestest.h"
 
 #include <chemkit/atom.h>
 #include <chemkit/molecule.h>
-#include <chemkit/coordinates.h>
+#include <chemkit/cartesiancoordinates.h>
 
-void CoordinatesTest::basic()
+void CartesianCoordinatesTest::basic()
 {
     chemkit::Molecule molecule;
-    chemkit::Coordinates matrix(&molecule);
+    chemkit::CartesianCoordinates matrix(&molecule);
     QCOMPARE(matrix.size(), 0);
     QCOMPARE(matrix.isEmpty(), true);
 
@@ -52,7 +52,7 @@ void CoordinatesTest::basic()
     C1->setPosition(2, 1, 0);
     C2->setPosition(3, -2, -4);
     C3->setPosition(0, 0, 0);
-    matrix = chemkit::Coordinates(&molecule);
+    matrix = chemkit::CartesianCoordinates(&molecule);
     QCOMPARE(matrix.size(), 3);
     QCOMPARE(matrix.isEmpty(), false);
     QCOMPARE(matrix.position(0), chemkit::Point3(2, 1, 0));
@@ -60,9 +60,9 @@ void CoordinatesTest::basic()
     QCOMPARE(matrix.position(2), chemkit::Point3(0, 0, 0));
 }
 
-void CoordinatesTest::setPosition()
+void CartesianCoordinatesTest::setPosition()
 {
-    chemkit::Coordinates matrix(5);
+    chemkit::CartesianCoordinates matrix(5);
     QCOMPARE(matrix.position(0), chemkit::Point3(0, 0, 0));
 
     matrix.setPosition(1, chemkit::Point3(1, 2, 3));
@@ -72,9 +72,9 @@ void CoordinatesTest::setPosition()
     QCOMPARE(matrix.position(2), chemkit::Point3(-5, 8, 0.5));
 }
 
-void CoordinatesTest::append()
+void CartesianCoordinatesTest::append()
 {
-    chemkit::Coordinates matrix;
+    chemkit::CartesianCoordinates matrix;
     QCOMPARE(matrix.size(), 0);
 
     matrix.append(1, 2, 3);
@@ -87,9 +87,9 @@ void CoordinatesTest::append()
     QCOMPARE(matrix.position(1), chemkit::Point3(4, 5, 6));
 }
 
-void CoordinatesTest::insert()
+void CartesianCoordinatesTest::insert()
 {
-    chemkit::Coordinates matrix(3);
+    chemkit::CartesianCoordinates matrix(3);
     matrix.setPosition(0, 1.0, 2.0, 3.0);
     matrix.setPosition(1, 4.0, 5.0, 6.0);
     matrix.setPosition(2, 7.0, 8.0, 9.0);
@@ -107,9 +107,9 @@ void CoordinatesTest::insert()
     QCOMPARE(matrix.position(3), chemkit::Point3(7.0, 8.0, 9.0));
 }
 
-void CoordinatesTest::remove()
+void CartesianCoordinatesTest::remove()
 {
-    chemkit::Coordinates matrix(3);
+    chemkit::CartesianCoordinates matrix(3);
     matrix.setPosition(0, 1.0, 2.0, 3.0);
     matrix.setPosition(1, 4.0, 5.0, 6.0);
     matrix.setPosition(2, 7.0, 8.0, 9.0);
@@ -127,20 +127,20 @@ void CoordinatesTest::remove()
     QCOMPARE(matrix.size(), 0);
 }
 
-void CoordinatesTest::center()
+void CartesianCoordinatesTest::center()
 {
-    chemkit::Coordinates matrix;
+    chemkit::CartesianCoordinates matrix;
     QCOMPARE(matrix.center(), chemkit::Point3(0, 0, 0));
 
-    matrix = chemkit::Coordinates(2);
+    matrix = chemkit::CartesianCoordinates(2);
     matrix.setPosition(0, chemkit::Point3(0, 0, 0));
     matrix.setPosition(1, chemkit::Point3(0, 5, 0));
     QCOMPARE(matrix.center(), chemkit::Point3(0, 2.5, 0));
 }
 
-void CoordinatesTest::multiply()
+void CartesianCoordinatesTest::multiply()
 {
-    chemkit::Coordinates a(7);
+    chemkit::CartesianCoordinates a(7);
     a.setPosition(0, chemkit::Point3(5, 5, 5));
     a.setPosition(1, chemkit::Point3(8, -2, 1.5));
     a.setPosition(2, chemkit::Point3(0, 4, 1));
@@ -149,7 +149,7 @@ void CoordinatesTest::multiply()
     a.setPosition(5, chemkit::Point3(-1, 2.5, 3));
     a.setPosition(6, chemkit::Point3(0, -9, 11.75));
 
-    chemkit::Coordinates b(7);
+    chemkit::CartesianCoordinates b(7);
     b.setPosition(0, chemkit::Point3(19, 12, 1));
     b.setPosition(1, chemkit::Point3(0, 0, 0));
     b.setPosition(2, chemkit::Point3(-8, -9, 13));
@@ -170,9 +170,9 @@ void CoordinatesTest::multiply()
     QCOMPARE(product(2, 2), chemkit::Real(-6.8));
 }
 
-void CoordinatesTest::distanceMatrix()
+void CartesianCoordinatesTest::distanceMatrix()
 {
-    chemkit::Coordinates coordinates(4);
+    chemkit::CartesianCoordinates coordinates(4);
     coordinates.setPosition(0, chemkit::Point3(1, 0, 0));
     coordinates.setPosition(1, chemkit::Point3(2, 0, 0));
     coordinates.setPosition(2, chemkit::Point3(0, 5, 0));
@@ -186,4 +186,4 @@ void CoordinatesTest::distanceMatrix()
     QCOMPARE(qRound(distances(1, 0)), 1);
 }
 
-QTEST_APPLESS_MAIN(CoordinatesTest)
+QTEST_APPLESS_MAIN(CartesianCoordinatesTest)
