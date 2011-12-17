@@ -9,4 +9,5 @@ include(${QT_USE_FILE})
 
 add_subdirectory(convert)
 add_subdirectory(grep)
+add_subdirectory(gen3d)
 add_subdirectory(translate)

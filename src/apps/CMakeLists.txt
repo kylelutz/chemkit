@@ -15,5 +15,6 @@ endmacro(add_chemkit_executable)
 
 add_subdirectory(builder)
 add_subdirectory(convert)
+add_subdirectory(gen3d)
 add_subdirectory(grep)
 add_subdirectory(translate)
