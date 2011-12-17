@@ -546,10 +546,8 @@ Real MolecularSurface::segment2Area(int i, int j, int k, int l) const
     if(!ccw(i, j, k, l))
         std::swap(k, l);
 
-    Point3 pjk = triangleDual(i, j, k);
     Point3 pkj = triangleDual(i, k, j);
     Point3 pjl = triangleDual(i, j, l);
-    Point3 plj = triangleDual(i, l, j);
 
     Point3 y = d->alphaShape->orthocenter(i, j, k, l);
 
