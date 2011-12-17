@@ -59,6 +59,7 @@ set(HEADERS
   plugin-inline.h
   pluginmanager.h
   pluginmanager-inline.h
+  point2.h
   point3.h
   polymer.h
   polymerchain.h
@@ -71,6 +72,7 @@ set(HEADERS
   unitcell.h
   variant.h
   variant-inline.h
+  vector2.h
   vector3.h
 )
 
