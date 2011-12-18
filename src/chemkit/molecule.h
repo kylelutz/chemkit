@@ -154,6 +154,18 @@ public:
     bool isFragmented() const;
     void removeFragment(Fragment *fragment);
 
+    // coordinates
+    CartesianCoordinates* coordinates() const;
+    void addCoordinateSet(CoordinateSet *coordinates);
+    void addCoordinateSet(CartesianCoordinates *coordinates);
+    void addCoordinateSet(InternalCoordinates *coordinates);
+    void addCoordinateSet(DiagramCoordinates *coordinates);
+    bool removeCoordinateSet(CoordinateSet *coordinates);
+    bool deleteCoordinateSet(CoordinateSet *coordinates);
+    CoordinateSet* coordinateSet(size_t index) const;
+    std::vector<CoordinateSet *> coordinateSets() const;
+    size_t coordinateSetCount() const;
+
     // geometry
     Real distance(const Atom *a, const Atom *b) const;
     Real bondAngle(const Atom *a, const Atom *b, const Atom *c) const;
@@ -166,18 +178,6 @@ public:
     void moveBy(const Vector3 &vector);
     void moveBy(Real dx, Real dy, Real dz);
     void rotate(const Vector3 &axis, Real angle);
-
-    // coordinates
-    CartesianCoordinates* coordinates() const;
-    void addCoordinateSet(CoordinateSet *coordinates);
-    void addCoordinateSet(CartesianCoordinates *coordinates);
-    void addCoordinateSet(InternalCoordinates *coordinates);
-    void addCoordinateSet(DiagramCoordinates *coordinates);
-    bool removeCoordinateSet(CoordinateSet *coordinates);
-    bool deleteCoordinateSet(CoordinateSet *coordinates);
-    CoordinateSet* coordinateSet(size_t index) const;
-    std::vector<CoordinateSet *> coordinateSets() const;
-    size_t coordinateSetCount() const;
 
     // operators
     Molecule& operator=(const Molecule &molecule);

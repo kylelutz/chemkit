@@ -930,118 +930,6 @@ void Molecule::perceiveFragments() const
     }
 }
 
-// --- Geometry ------------------------------------------------------------ //
-/// Returns the distance between atoms \p a and \p b. The returned
-/// distance is in Angstroms.
-Real Molecule::distance(const Atom *a, const Atom *b) const
-{
-    return coordinates()->distance(a->index(), b->index());
-}
-
-/// Returns the angle between atoms \p a, \p b, and \p c. The
-/// returned angle is in degrees.
-Real Molecule::bondAngle(const Atom *a, const Atom *b, const Atom *c) const
-{
-    return coordinates()->angle(a->index(), b->index(), c->index());
-}
-
-/// Returns the torsion angle (also known as the dihedral angle)
-/// between atoms \p a, \p b, \p c, and \p d. The returned angle is
-/// in degrees.
-Real Molecule::torsionAngle(const Atom *a, const Atom *b, const Atom *c, const Atom *d) const
-{
-    return coordinates()->torsionAngle(a->index(), b->index(), c->index(), d->index());
-}
-
-/// Returns the wilson angle between the plane made by atoms \p a,
-/// \p b, \p c and the vector from \p c to \p d. The returned angle
-/// is in degrees.
-Real Molecule::wilsonAngle(const Atom *a, const Atom *b, const Atom *c, const Atom *d) const
-{
-    return coordinates()->wilsonAngle(a->index(), b->index(), c->index(), d->index());
-}
-
-/// Moves all of the atoms in the molecule so that the center point
-/// is at \p position.
-void Molecule::setCenter(const Point3 &position)
-{
-    moveBy(position - center());
-}
-
-/// Moves all of the atoms in the molecule so that the new center
-/// point is at (\p x, \p y, \p z). This convenience function is
-/// equivalent to calling setCenter(Point(\p x, \p y, \p z)).
-void Molecule::setCenter(Real x, Real y, Real z)
-{
-    setCenter(Point3(x, y, z));
-}
-
-/// Returns the center point of the molecule. This is also known as
-/// the centriod.
-///
-/// \see centerOfMass()
-Point3 Molecule::center() const
-{
-    if(!m_coordinates){
-        return Point3(0, 0, 0);
-    }
-
-    return m_coordinates->center();
-}
-
-/// Returns the center of mass for the molecule.
-Point3 Molecule::centerOfMass() const
-{
-    if(!m_coordinates){
-        return Point3(0, 0, 0);
-    }
-
-    std::vector<Real> weights;
-
-    foreach(const Atom *atom, m_atoms){
-        weights.push_back(atom->mass());
-    }
-
-    return m_coordinates->weightedCenter(weights);
-}
-
-/// Moves all the atoms in the molecule by \p vector.
-void Molecule::moveBy(const Vector3 &vector)
-{
-    foreach(Atom *atom, m_atoms){
-        atom->moveBy(vector);
-    }
-}
-
-/// Moves all of the atoms in the molecule by (\p dx, \p dy, \p dz).
-void Molecule::moveBy(Real dx, Real dy, Real dz)
-{
-    foreach(Atom *atom, m_atoms){
-        atom->moveBy(dx, dy, dz);
-    }
-}
-
-/// Rotates the positions of all the atoms in the molecule
-/// by \p angle degrees around \p axis.
-void Molecule::rotate(const Vector3 &axis, Real angle)
-{
-    // convert angle to radians
-    angle *= chemkit::constants::DegreesToRadians;
-
-    // build rotation transform
-    Eigen::Matrix<Real, 3, 1> axisVector(axis.x(), axis.y(), axis.z());
-    Eigen::Transform<Real, 3, 3> transform(Eigen::AngleAxis<Real>(angle, axisVector));
-
-    // rotate each atom
-    foreach(Atom *atom, m_atoms){
-        Eigen::Matrix<Real, 3, 1> position(atom->x(), atom->y(), atom->z());
-
-        position = transform * position;
-
-        atom->setPosition(position.x(), position.y(), position.z());
-    }
-}
-
 // --- Coordinates --------------------------------------------------------- //
 /// Returns the coordinates for the molecule.
 CartesianCoordinates* Molecule::coordinates() const
@@ -1157,6 +1045,118 @@ std::vector<CoordinateSet *> Molecule::coordinateSets() const
 size_t Molecule::coordinateSetCount() const
 {
     return d->coordinateSets.size();
+}
+
+// --- Geometry ------------------------------------------------------------ //
+/// Returns the distance between atoms \p a and \p b. The returned
+/// distance is in Angstroms.
+Real Molecule::distance(const Atom *a, const Atom *b) const
+{
+    return coordinates()->distance(a->index(), b->index());
+}
+
+/// Returns the angle between atoms \p a, \p b, and \p c. The
+/// returned angle is in degrees.
+Real Molecule::bondAngle(const Atom *a, const Atom *b, const Atom *c) const
+{
+    return coordinates()->angle(a->index(), b->index(), c->index());
+}
+
+/// Returns the torsion angle (also known as the dihedral angle)
+/// between atoms \p a, \p b, \p c, and \p d. The returned angle is
+/// in degrees.
+Real Molecule::torsionAngle(const Atom *a, const Atom *b, const Atom *c, const Atom *d) const
+{
+    return coordinates()->torsionAngle(a->index(), b->index(), c->index(), d->index());
+}
+
+/// Returns the wilson angle between the plane made by atoms \p a,
+/// \p b, \p c and the vector from \p c to \p d. The returned angle
+/// is in degrees.
+Real Molecule::wilsonAngle(const Atom *a, const Atom *b, const Atom *c, const Atom *d) const
+{
+    return coordinates()->wilsonAngle(a->index(), b->index(), c->index(), d->index());
+}
+
+/// Moves all of the atoms in the molecule so that the center point
+/// is at \p position.
+void Molecule::setCenter(const Point3 &position)
+{
+    moveBy(position - center());
+}
+
+/// Moves all of the atoms in the molecule so that the new center
+/// point is at (\p x, \p y, \p z). This convenience function is
+/// equivalent to calling setCenter(Point(\p x, \p y, \p z)).
+void Molecule::setCenter(Real x, Real y, Real z)
+{
+    setCenter(Point3(x, y, z));
+}
+
+/// Returns the center point of the molecule. This is also known as
+/// the centriod.
+///
+/// \see centerOfMass()
+Point3 Molecule::center() const
+{
+    if(!m_coordinates){
+        return Point3(0, 0, 0);
+    }
+
+    return m_coordinates->center();
+}
+
+/// Returns the center of mass for the molecule.
+Point3 Molecule::centerOfMass() const
+{
+    if(!m_coordinates){
+        return Point3(0, 0, 0);
+    }
+
+    std::vector<Real> weights;
+
+    foreach(const Atom *atom, m_atoms){
+        weights.push_back(atom->mass());
+    }
+
+    return m_coordinates->weightedCenter(weights);
+}
+
+/// Moves all the atoms in the molecule by \p vector.
+void Molecule::moveBy(const Vector3 &vector)
+{
+    foreach(Atom *atom, m_atoms){
+        atom->moveBy(vector);
+    }
+}
+
+/// Moves all of the atoms in the molecule by (\p dx, \p dy, \p dz).
+void Molecule::moveBy(Real dx, Real dy, Real dz)
+{
+    foreach(Atom *atom, m_atoms){
+        atom->moveBy(dx, dy, dz);
+    }
+}
+
+/// Rotates the positions of all the atoms in the molecule
+/// by \p angle degrees around \p axis.
+void Molecule::rotate(const Vector3 &axis, Real angle)
+{
+    // convert angle to radians
+    angle *= chemkit::constants::DegreesToRadians;
+
+    // build rotation transform
+    Eigen::Matrix<Real, 3, 1> axisVector(axis.x(), axis.y(), axis.z());
+    Eigen::Transform<Real, 3, 3> transform(Eigen::AngleAxis<Real>(angle, axisVector));
+
+    // rotate each atom
+    foreach(Atom *atom, m_atoms){
+        Eigen::Matrix<Real, 3, 1> position(atom->x(), atom->y(), atom->z());
+
+        position = transform * position;
+
+        atom->setPosition(position.x(), position.y(), position.z());
+    }
 }
 
 // --- Operators ----------------------------------------------------------- //
