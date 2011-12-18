@@ -51,7 +51,7 @@ class Atom;
 class Bond;
 class Ring;
 class Fragment;
-class Conformer;
+class CoordinateSet;
 class MoleculeWatcher;
 
 class MoleculePrivate
@@ -61,8 +61,6 @@ public:
 
     std::string name;
     std::vector<Bond *> bonds;
-    std::vector<Conformer *> conformers;
-    Conformer *conformer;
     bool ringsPerceived;
     std::vector<Ring *> rings;
     bool fragmentsPerceived;
@@ -74,7 +72,7 @@ public:
     std::vector<std::pair<Atom*, Atom*> > bondAtoms;
     std::vector<std::vector<Bond *> > atomBonds;
     std::vector<unsigned char> bondOrders;
-    std::vector<Point3> positions;
+    std::vector<CoordinateSet *> coordinateSets;
 };
 
 } // end chemkit namespace

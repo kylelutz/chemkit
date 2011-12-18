@@ -56,12 +56,13 @@ class Atom;
 class Bond;
 class Ring;
 class Fragment;
-class Conformer;
-class CartesianCoordinates;
+class CoordinateSet;
 class MoleculePrivate;
 class MoleculeWatcher;
 class Stereochemistry;
+class DiagramCoordinates;
 class InternalCoordinates;
+class CartesianCoordinates;
 
 class CHEMKIT_EXPORT Molecule
 {
@@ -154,8 +155,6 @@ public:
     void removeFragment(Fragment *fragment);
 
     // geometry
-    void setCoordinates(const CartesianCoordinates *coordinates);
-    void setCoordinates(const InternalCoordinates *coordinates);
     Real distance(const Atom *a, const Atom *b) const;
     Real bondAngle(const Atom *a, const Atom *b, const Atom *c) const;
     Real torsionAngle(const Atom *a, const Atom *b, const Atom *c, const Atom *d) const;
@@ -168,14 +167,17 @@ public:
     void moveBy(Real dx, Real dy, Real dz);
     void rotate(const Vector3 &axis, Real angle);
 
-    // conformers
-    Conformer* addConformer();
-    void removeConformer(Conformer *conformer);
-    void setConformer(Conformer *conformer);
-    Conformer* conformer() const;
-    Conformer* conformer(int index) const;
-    std::vector<Conformer *> conformers() const;
-    int conformerCount() const;
+    // coordinates
+    CartesianCoordinates* coordinates() const;
+    void addCoordinateSet(CoordinateSet *coordinates);
+    void addCoordinateSet(CartesianCoordinates *coordinates);
+    void addCoordinateSet(InternalCoordinates *coordinates);
+    void addCoordinateSet(DiagramCoordinates *coordinates);
+    bool removeCoordinateSet(CoordinateSet *coordinates);
+    bool deleteCoordinateSet(CoordinateSet *coordinates);
+    CoordinateSet* coordinateSet(size_t index) const;
+    std::vector<CoordinateSet *> coordinateSets() const;
+    size_t coordinateSetCount() const;
 
     // operators
     Molecule& operator=(const Molecule &molecule);
@@ -204,6 +206,7 @@ private:
     MoleculePrivate* const d;
     std::vector<Atom *> m_atoms;
     std::vector<Element> m_elements;
+    mutable CartesianCoordinates *m_coordinates;
     Stereochemistry *m_stereochemistry;
 };
 

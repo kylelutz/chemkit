@@ -46,10 +46,11 @@
 #include <chemkit/residue.h>
 #include <chemkit/molecule.h>
 #include <chemkit/aminoacid.h>
-#include <chemkit/conformer.h>
 #include <chemkit/nucleotide.h>
 #include <chemkit/polymerfile.h>
 #include <chemkit/polymerchain.h>
+#include <chemkit/coordinateset.h>
+#include <chemkit/cartesiancoordinates.h>
 
 namespace {
 
@@ -487,11 +488,13 @@ void PdbFile::writePolymerFile(chemkit::PolymerFile *file)
 
     // add conformers
     foreach(const PdbConformer *pdbConformer, m_conformers){
-        chemkit::Conformer *conformer = polymer->addConformer();
+        chemkit::CartesianCoordinates *coordinates = new chemkit::CartesianCoordinates(polymer->size());
 
-        foreach(int atomId, atomIds.keys()){
-            conformer->setPosition(atomIds[atomId], pdbConformer->position(atomId - 1));
+        for(int i = 0; i < polymer->size(); i++){
+            coordinates->setPosition(i, pdbConformer->position(i));
         }
+
+        polymer->addCoordinateSet(coordinates);
     }
 
     file->addPolymer(polymer);

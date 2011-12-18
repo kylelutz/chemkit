@@ -48,7 +48,7 @@ namespace chemkit {
 
 class Atom;
 class Molecule;
-class Conformer;
+class CoordinateSet;
 class CartesianCoordinates;
 class MoleculeAlignerPrivate;
 
@@ -65,10 +65,10 @@ public:
     const Molecule* targetMolecule() const;
     void setMapping(const std::map<Atom *, Atom *> &mapping);
     std::map<Atom *, Atom *> mapping() const;
-    void setSourceConformer(const Conformer *conformer);
-    const Conformer* sourceConformer() const;
-    void setTargetConformer(const Conformer *conformer);
-    const Conformer* targetConformer() const;
+    void setSourceCoordinateSet(const CoordinateSet *coordinates);
+    const CoordinateSet* sourceCoordinateSet() const;
+    void setTargetCoordinateSet(const CoordinateSet *conformer);
+    const CoordinateSet* targetCoordinateSet() const;
 
     // geometry
     Real deviation() const;

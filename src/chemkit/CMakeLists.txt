@@ -28,7 +28,6 @@ set(HEADERS
   cartesiancoordinates.h
   chemkit.h
   config.h
-  conformer.h
   constants.h
   coordinateset.h
   delaunaytriangulation.h
@@ -86,7 +85,6 @@ set(SOURCES
   bondpredictor.cpp
   cartesiancoordinates.cpp
   chemkit.cpp
-  conformer.cpp
   coordinateset.cpp
   delaunaytriangulation.cpp
   diagramcoordinates.cpp

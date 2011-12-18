@@ -41,7 +41,6 @@
 #include "vector3.h"
 #include "geometry.h"
 #include "molecule.h"
-#include "conformer.h"
 
 namespace chemkit {
 
@@ -74,21 +73,6 @@ CartesianCoordinates::CartesianCoordinates(const Molecule *molecule)
 
     for(int i = 0; i < size; i++){
         Point3 position = molecule->atom(i)->position();
-        m_matrix(i, 0) = position.x();
-        m_matrix(i, 1) = position.y();
-        m_matrix(i, 2) = position.z();
-    }
-}
-
-/// Creates a new coordinate matrix with the coordinates from
-/// \p conformer.
-CartesianCoordinates::CartesianCoordinates(const Conformer *conformer)
-    : m_matrix(conformer->molecule()->size(), 3)
-{
-    int size = conformer->molecule()->size();
-
-    for(int i = 0; i < size; i++){
-        Point3 position = conformer->position(conformer->molecule()->atom(i));
         m_matrix(i, 0) = position.x();
         m_matrix(i, 1) = position.y();
         m_matrix(i, 2) = position.z();

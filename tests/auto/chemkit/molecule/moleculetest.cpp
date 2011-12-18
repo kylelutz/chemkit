@@ -39,7 +39,6 @@
 #include <chemkit/bond.h>
 #include <chemkit/chemkit.h>
 #include <chemkit/molecule.h>
-#include <chemkit/conformer.h>
 #include <chemkit/lineformat.h>
 
 void MoleculeTest::name()
@@ -542,48 +541,6 @@ void MoleculeTest::rotate()
     QVERIFY(C1->position().isApprox(chemkit::Vector3(1, 0, 0)));
     QVERIFY(C2->position().isApprox(chemkit::Vector3(0, 0, 0)));
     QVERIFY(C3->position().isApprox(chemkit::Vector3(0, 1, 0)));
-}
-
-void MoleculeTest::addConformer()
-{
-    chemkit::Molecule molecule;
-    chemkit::Atom *Na1 = molecule.addAtom("Na");
-    chemkit::Atom *Cl2 = molecule.addAtom("Cl");
-    QCOMPARE(molecule.center(), chemkit::Point3(0, 0, 0));
-
-    chemkit::Conformer *conformer = molecule.addConformer();
-    conformer->setPosition(Na1, chemkit::Point3(1, 0, 0));
-    conformer->setPosition(Cl2, chemkit::Point3(3, 0, 0));
-    QCOMPARE(molecule.center(), chemkit::Point3(0, 0, 0));
-
-    chemkit::Conformer *originalConformer = molecule.conformer();
-    molecule.setConformer(conformer);
-    QCOMPARE(molecule.center(), chemkit::Point3(2, 0, 0));
-
-    molecule.setConformer(originalConformer);
-    QCOMPARE(molecule.center(), chemkit::Point3(0, 0, 0));
-}
-
-void MoleculeTest::conformers()
-{
-    chemkit::Molecule molecule;
-    chemkit::Atom *C1 = molecule.addAtom("C");
-    chemkit::Atom *C2 = molecule.addAtom("C");
-    QCOMPARE(molecule.conformerCount(), 1);
-    QCOMPARE(molecule.conformers().size(), size_t(1));
-    QVERIFY(molecule.conformer() != 0);
-
-    chemkit::Conformer *conformer = molecule.addConformer();
-    QCOMPARE(molecule.conformerCount(), 2);
-    conformer->setPosition(C1, chemkit::Point3(1, 2, 3));
-    conformer->setPosition(C2, chemkit::Point3(2, 4, 6));
-
-    QCOMPARE(C1->position(), chemkit::Point3(0, 0, 0));
-    QCOMPARE(C2->position(), chemkit::Point3(0, 0, 0));
-
-    molecule.setConformer(conformer);
-    QCOMPARE(C1->position(), chemkit::Point3(1, 2, 3));
-    QCOMPARE(C2->position(), chemkit::Point3(2, 4, 6));
 }
 
 QTEST_APPLESS_MAIN(MoleculeTest)

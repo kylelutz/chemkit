@@ -66,8 +66,6 @@ class MoleculeTest : public QObject
         void isFragmented();
         void removeFragment();
         void rotate();
-        void addConformer();
-        void conformers();
 };
 
 #endif // MOLECULETEST_H

@@ -98,57 +98,57 @@ void MoleculeAlignerTest::ubiquitin()
 
     chemkit::Molecule *molecule = polymer;
     QCOMPARE(molecule->atomCount(), 1231);
-    QCOMPARE(molecule->conformerCount(), 10);
+    QCOMPARE(molecule->coordinateSetCount(), size_t(10));
 
     chemkit::MoleculeAligner aligner(molecule, molecule);
     QVERIFY(aligner.mapping().size() == 1231);
 
     // verify rmsd values for each conformer
-    aligner.setTargetConformer(molecule->conformers()[1]);
+    aligner.setTargetCoordinateSet(molecule->coordinateSet(1));
     COMPARE_DOUBLES(aligner.deviation(), 2.29165);
-    aligner.setTargetConformer(molecule->conformers()[2]);
+    aligner.setTargetCoordinateSet(molecule->coordinateSet(2));
     COMPARE_DOUBLES(aligner.deviation(), 1.51009);
-    aligner.setTargetConformer(molecule->conformers()[3]);
+    aligner.setTargetCoordinateSet(molecule->coordinateSet(3));
     COMPARE_DOUBLES(aligner.deviation(), 1.98526);
-    aligner.setTargetConformer(molecule->conformers()[4]);
+    aligner.setTargetCoordinateSet(molecule->coordinateSet(4));
     COMPARE_DOUBLES(aligner.deviation(), 1.87933);
-    aligner.setTargetConformer(molecule->conformers()[5]);
+    aligner.setTargetCoordinateSet(molecule->coordinateSet(5));
     COMPARE_DOUBLES(aligner.deviation(), 2.27420);
-    aligner.setTargetConformer(molecule->conformers()[6]);
+    aligner.setTargetCoordinateSet(molecule->coordinateSet(6));
     COMPARE_DOUBLES(aligner.deviation(), 2.61271);
-    aligner.setTargetConformer(molecule->conformers()[7]);
+    aligner.setTargetCoordinateSet(molecule->coordinateSet(7));
     COMPARE_DOUBLES(aligner.deviation(), 2.78852);
-    aligner.setTargetConformer(molecule->conformers()[8]);
+    aligner.setTargetCoordinateSet(molecule->coordinateSet(8));
     COMPARE_DOUBLES(aligner.deviation(), 2.59195);
-    aligner.setTargetConformer(molecule->conformers()[9]);
+    aligner.setTargetCoordinateSet(molecule->coordinateSet(9));
     COMPARE_DOUBLES(aligner.deviation(), 2.26074);
 
     // align molecule to each conformer and verified minimized rmsd values
-    aligner.setTargetConformer(molecule->conformers()[1]);
+    aligner.setTargetCoordinateSet(molecule->coordinateSet(1));
     aligner.align(molecule);
     COMPARE_DOUBLES(aligner.deviation(), 1.05756);
-    aligner.setTargetConformer(molecule->conformers()[2]);
+    aligner.setTargetCoordinateSet(molecule->coordinateSet(2));
     aligner.align(molecule);
     COMPARE_DOUBLES(aligner.deviation(), 1.32468);
-    aligner.setTargetConformer(molecule->conformers()[3]);
+    aligner.setTargetCoordinateSet(molecule->coordinateSet(3));
     aligner.align(molecule);
     COMPARE_DOUBLES(aligner.deviation(), 1.41645);
-    aligner.setTargetConformer(molecule->conformers()[4]);
+    aligner.setTargetCoordinateSet(molecule->coordinateSet(4));
     aligner.align(molecule);
     COMPARE_DOUBLES(aligner.deviation(), 1.39656);
-    aligner.setTargetConformer(molecule->conformers()[5]);
+    aligner.setTargetCoordinateSet(molecule->coordinateSet(5));
     aligner.align(molecule);
     COMPARE_DOUBLES(aligner.deviation(), 1.81463);
-    aligner.setTargetConformer(molecule->conformers()[6]);
+    aligner.setTargetCoordinateSet(molecule->coordinateSet(6));
     aligner.align(molecule);
     COMPARE_DOUBLES(aligner.deviation(), 1.78510);
-    aligner.setTargetConformer(molecule->conformers()[7]);
+    aligner.setTargetCoordinateSet(molecule->coordinateSet(7));
     aligner.align(molecule);
     COMPARE_DOUBLES(aligner.deviation(), 2.04545);
-    aligner.setTargetConformer(molecule->conformers()[8]);
+    aligner.setTargetCoordinateSet(molecule->coordinateSet(8));
     aligner.align(molecule);
     COMPARE_DOUBLES(aligner.deviation(), 1.39502);
-    aligner.setTargetConformer(molecule->conformers()[9]);
+    aligner.setTargetCoordinateSet(molecule->coordinateSet(9));
     aligner.align(molecule);
     COMPARE_DOUBLES(aligner.deviation(), 1.26402);
 }

@@ -81,7 +81,7 @@ bool FhzFileFormat::read(QIODevice *iodev, chemkit::MoleculeFile *file)
     int atomCount = lineItems[0].toInt();
 
     chemkit::Molecule *molecule = new chemkit::Molecule;
-    chemkit::InternalCoordinates coordinates(atomCount);
+    chemkit::InternalCoordinates *coordinates = new chemkit::InternalCoordinates(atomCount);
 
     for(int i = 0; i < atomCount; i++){
         // read atom line
@@ -120,11 +120,11 @@ bool FhzFileFormat::read(QIODevice *iodev, chemkit::MoleculeFile *file)
         }
 
         // set coordinates
-        coordinates.setCoordinates(i, r, theta, phi);
-        coordinates.setConnections(i, a - 1, b - 1, c - 1);
+        coordinates->setCoordinates(i, r, theta, phi);
+        coordinates->setConnections(i, a - 1, b - 1, c - 1);
     }
 
-    molecule->setCoordinates(&coordinates);
+    molecule->addCoordinateSet(coordinates);
 
     file->addMolecule(molecule);
 

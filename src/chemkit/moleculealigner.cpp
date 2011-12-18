@@ -40,8 +40,8 @@
 #include "vector3.h"
 #include "geometry.h"
 #include "molecule.h"
-#include "conformer.h"
 #include "cartesiancoordinates.h"
+#include "coordinateset.h"
 
 namespace chemkit {
 
@@ -52,8 +52,8 @@ public:
     std::map<Atom *, Atom *> mapping;
     const Molecule *sourceMolecule;
     const Molecule *targetMolecule;
-    const Conformer *sourceConformer;
-    const Conformer *targetConformer;
+    const CoordinateSet *sourceCoordinates;
+    const CoordinateSet *targetCoordinates;
 };
 
 // === MoleculeAligner ===================================================== //
@@ -69,8 +69,8 @@ MoleculeAligner::MoleculeAligner(const std::map<Atom *, Atom *> &mapping)
 {
     setMapping(mapping);
 
-    d->sourceConformer = 0;
-    d->targetConformer = 0;
+    d->sourceCoordinates = 0;
+    d->targetCoordinates = 0;
 }
 
 /// Create a new molecule aligner object using a mapping between the
@@ -80,8 +80,8 @@ MoleculeAligner::MoleculeAligner(const Molecule *source, const Molecule *target)
 {
     d->sourceMolecule = source;
     d->targetMolecule = target;
-    d->sourceConformer = 0;
-    d->targetConformer = 0;
+    d->sourceCoordinates = 0;
+    d->targetCoordinates = 0;
 
     int size = std::min(source->size(), target->size());
 
@@ -129,34 +129,28 @@ std::map<Atom *, Atom *> MoleculeAligner::mapping() const
     return d->mapping;
 }
 
-/// Sets the conformer to use for the source molecule.
-void MoleculeAligner::setSourceConformer(const Conformer *conformer)
+/// Sets the coordinate set to use for the source molecule.
+void MoleculeAligner::setSourceCoordinateSet(const CoordinateSet *coordinates)
 {
-    if(conformer->molecule() != sourceMolecule())
-        return;
-
-    d->sourceConformer = conformer;
+    d->sourceCoordinates = coordinates;
 }
 
-/// Returns the conformer for the source molecule.
-const Conformer* MoleculeAligner::sourceConformer() const
+/// Returns the coordinate set for the source molecule.
+const CoordinateSet* MoleculeAligner::sourceCoordinateSet() const
 {
-    return d->sourceConformer;
+    return d->sourceCoordinates;
 }
 
-/// Sets the conformer for the target molecule.
-void MoleculeAligner::setTargetConformer(const Conformer *conformer)
+/// Sets the coordinate set for the target molecule.
+void MoleculeAligner::setTargetCoordinateSet(const CoordinateSet *coordinates)
 {
-    if(conformer->molecule() != targetMolecule())
-        return;
-
-    d->targetConformer = conformer;
+    d->targetCoordinates = coordinates;
 }
 
 /// Returns the conformer used for the target molecule.
-const Conformer* MoleculeAligner::targetConformer() const
+const CoordinateSet* MoleculeAligner::targetCoordinateSet() const
 {
-    return d->targetConformer;
+    return d->targetCoordinates;
 }
 
 // --- Geometry ------------------------------------------------------------ //
@@ -254,8 +248,8 @@ Real MoleculeAligner::rmsd(const CartesianCoordinates *a, const CartesianCoordin
 // --- Internal Methods ---------------------------------------------------- //
 CartesianCoordinates* MoleculeAligner::sourceCoordinates() const
 {
-    if(d->sourceConformer){
-        return new CartesianCoordinates(d->sourceConformer);
+    if(d->sourceCoordinates){
+        return new CartesianCoordinates(*d->sourceCoordinates->cartesianCoordinates());
     }
     else{
         return new CartesianCoordinates(sourceMolecule());
@@ -264,8 +258,8 @@ CartesianCoordinates* MoleculeAligner::sourceCoordinates() const
 
 CartesianCoordinates* MoleculeAligner::targetCoordinates() const
 {
-    if(d->targetConformer){
-        return new CartesianCoordinates(d->targetConformer);
+    if(d->targetCoordinates){
+        return new CartesianCoordinates(*d->targetCoordinates->cartesianCoordinates());
     }
     else{
         return new CartesianCoordinates(targetMolecule());

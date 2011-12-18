@@ -55,13 +55,14 @@
 #include "vector3.h"
 #include "fragment.h"
 #include "geometry.h"
-#include "conformer.h"
 #include "constants.h"
 #include "lineformat.h"
 #include "quaternion.h"
+#include "coordinateset.h"
 #include "moleculargraph.h"
 #include "moleculeprivate.h"
 #include "moleculewatcher.h"
+#include "diagramcoordinates.h"
 #include "internalcoordinates.h"
 #include "moleculardescriptor.h"
 #include "cartesiancoordinates.h"
@@ -71,7 +72,6 @@ namespace chemkit {
 // === MoleculePrivate ===================================================== //
 MoleculePrivate::MoleculePrivate()
 {
-    conformer = 0;
     fragmentsPerceived = false;
     ringsPerceived = false;
 }
@@ -109,8 +109,8 @@ MoleculePrivate::MoleculePrivate()
 /// MoleculeFile class.
 ///
 /// Molecule objects take ownership of all the Atom, Bond, Ring,
-/// Fragment, and Conformer objects that they contain. Deleting the
-/// molecule will also delete all of the objects that it contains.
+/// Fragment, and CoordinateSet objects that they contain. Deleting
+/// the molecule will also delete all of the objects that it contains.
 
 /// \enum Molecule::CompareFlag
 /// Option flags for molecule comparisons.
@@ -123,6 +123,7 @@ MoleculePrivate::MoleculePrivate()
 Molecule::Molecule()
     : d(new MoleculePrivate)
 {
+    m_coordinates = 0;
     m_stereochemistry = 0;
 }
 
@@ -138,6 +139,7 @@ Molecule::Molecule()
 Molecule::Molecule(const std::string &formula, const std::string &format)
     : d(new MoleculePrivate)
 {
+    m_coordinates = 0;
     m_stereochemistry = 0;
 
     boost::scoped_ptr<LineFormat> lineFormat(LineFormat::create(format));
@@ -152,6 +154,7 @@ Molecule::Molecule(const std::string &formula, const std::string &format)
 Molecule::Molecule(const Molecule &molecule)
     : d(new MoleculePrivate)
 {
+    m_coordinates = 0;
     m_stereochemistry = 0;
 
     d->name = molecule.name();
@@ -181,8 +184,22 @@ Molecule::~Molecule()
         delete ring;
     foreach(Fragment *fragment, d->fragments)
         delete fragment;
-    foreach(Conformer *conformer, d->conformers)
-        delete conformer;
+
+    // delete coordinates and all coordinate sets
+    bool deletedCoordinates = false;
+
+    foreach(CoordinateSet *coordinateSet, d->coordinateSets){
+        if(coordinateSet->type() == CoordinateSet::Cartesian &&
+           coordinateSet->cartesianCoordinates() == m_coordinates){
+            deletedCoordinates = true;
+        }
+
+        delete coordinateSet;
+    }
+
+    if(!deletedCoordinates){
+        delete m_coordinates;
+    }
 
     delete m_stereochemistry;
 
@@ -341,8 +358,12 @@ Atom* Molecule::addAtom(const Element &element)
     // add atom properties
     m_elements.push_back(element);
     d->atomBonds.push_back(std::vector<Bond *>());
-    d->positions.push_back(Point3(0, 0, 0));
     d->partialCharges.push_back(0);
+
+    // set atom position
+    if(m_coordinates){
+        m_coordinates->append(0, 0, 0);
+    }
 
     setFragmentsPerceived(false);
     notifyWatchers(atom, AtomAdded);
@@ -386,9 +407,12 @@ void Molecule::removeAtom(Atom *atom)
     // remove atom properties
     m_elements.erase(m_elements.begin() + atom->index());
     d->isotopes.erase(atom);
-    d->positions.erase(d->positions.begin() + atom->index());
     d->atomBonds.erase(d->atomBonds.begin() + atom->index());
     d->partialCharges.erase(d->partialCharges.begin() + atom->index());
+
+    if(m_coordinates){
+        m_coordinates->remove(atom->index());
+    }
 
     // subtract one from the index of all atoms after this one
     for(unsigned int i = atom->m_index; i < m_atoms.size(); i++){
@@ -907,38 +931,18 @@ void Molecule::perceiveFragments() const
 }
 
 // --- Geometry ------------------------------------------------------------ //
-/// Sets the coordinates for the atoms in the molecule to
-/// \p coordinates.
-void Molecule::setCoordinates(const CartesianCoordinates *coordinates)
-{
-    int size = std::min(this->size(), coordinates->size());
-
-    for(int i = 0; i < size; i++){
-        m_atoms[i]->setPosition(coordinates->position(i));
-    }
-}
-
-/// Sets the coordinates for the atoms in the molecule to
-/// \p coordinates.
-void Molecule::setCoordinates(const InternalCoordinates *coordinates)
-{
-    CartesianCoordinates *cartesianCoordinates = coordinates->toCartesianCoordinates();
-    setCoordinates(cartesianCoordinates);
-    delete cartesianCoordinates;
-}
-
 /// Returns the distance between atoms \p a and \p b. The returned
 /// distance is in Angstroms.
 Real Molecule::distance(const Atom *a, const Atom *b) const
 {
-    return chemkit::geometry::distance(a->position(), b->position());
+    return coordinates()->distance(a->index(), b->index());
 }
 
 /// Returns the angle between atoms \p a, \p b, and \p c. The
 /// returned angle is in degrees.
 Real Molecule::bondAngle(const Atom *a, const Atom *b, const Atom *c) const
 {
-    return chemkit::geometry::angle(a->position(), b->position(), c->position());
+    return coordinates()->angle(a->index(), b->index(), c->index());
 }
 
 /// Returns the torsion angle (also known as the dihedral angle)
@@ -946,7 +950,7 @@ Real Molecule::bondAngle(const Atom *a, const Atom *b, const Atom *c) const
 /// in degrees.
 Real Molecule::torsionAngle(const Atom *a, const Atom *b, const Atom *c, const Atom *d) const
 {
-    return chemkit::geometry::torsionAngle(a->position(), b->position(), c->position(), d->position());
+    return coordinates()->torsionAngle(a->index(), b->index(), c->index(), d->index());
 }
 
 /// Returns the wilson angle between the plane made by atoms \p a,
@@ -954,7 +958,7 @@ Real Molecule::torsionAngle(const Atom *a, const Atom *b, const Atom *c, const A
 /// is in degrees.
 Real Molecule::wilsonAngle(const Atom *a, const Atom *b, const Atom *c, const Atom *d) const
 {
-    return chemkit::geometry::wilsonAngle(a->position(), b->position(), c->position(), d->position());
+    return coordinates()->wilsonAngle(a->index(), b->index(), c->index(), d->index());
 }
 
 /// Moves all of the atoms in the molecule so that the center point
@@ -978,54 +982,27 @@ void Molecule::setCenter(Real x, Real y, Real z)
 /// \see centerOfMass()
 Point3 Molecule::center() const
 {
-    if(isEmpty()){
+    if(!m_coordinates){
         return Point3(0, 0, 0);
     }
 
-    // sums for each component
-    Real sx = 0;
-    Real sy = 0;
-    Real sz = 0;
-
-    foreach(const Atom *atom, m_atoms){
-        sx += atom->x();
-        sy += atom->y();
-        sz += atom->z();
-    }
-
-    int n = atomCount();
-
-    return Point3(sx/n, sy/n, sz/n);
+    return m_coordinates->center();
 }
 
 /// Returns the center of mass for the molecule.
 Point3 Molecule::centerOfMass() const
 {
-    if(isEmpty()){
-        return Point3();
+    if(!m_coordinates){
+        return Point3(0, 0, 0);
     }
 
-    // sums for each component
-    Real sx = 0;
-    Real sy = 0;
-    Real sz = 0;
-
-    // sum of weights
-    Real sw = 0;
+    std::vector<Real> weights;
 
     foreach(const Atom *atom, m_atoms){
-        Real w = atom->mass();
-
-        sx += w * atom->x();
-        sy += w * atom->y();
-        sz += w * atom->z();
-
-        sw += w;
+        weights.push_back(atom->mass());
     }
 
-    int n = sw * size();
-
-    return Point3(sx/n, sy/n, sz/n);
+    return m_coordinates->weightedCenter(weights);
 }
 
 /// Moves all the atoms in the molecule by \p vector.
@@ -1065,90 +1042,121 @@ void Molecule::rotate(const Vector3 &axis, Real angle)
     }
 }
 
-// --- Conformers ---------------------------------------------------------- //
-/// Adds a new conformer to the molecule and returns it.
-Conformer* Molecule::addConformer()
+// --- Coordinates --------------------------------------------------------- //
+/// Returns the coordinates for the molecule.
+CartesianCoordinates* Molecule::coordinates() const
 {
-    if(!d->conformer)
-        conformers();
+    if(!m_coordinates){
+        if(d->coordinateSets.empty() ||
+           d->coordinateSets.front()->type() == CoordinateSet::None){
+            // create a new, empty cartesian coordinate set
+            m_coordinates = new CartesianCoordinates(atomCount());
+            d->coordinateSets.push_back(new CoordinateSet(m_coordinates));
+        }
+        else{
+            CoordinateSet *coordinateSet = d->coordinateSets.front();
 
-    Conformer *conformer = new Conformer(this);
-    d->conformers.push_back(conformer);
-    return conformer;
+            switch(coordinateSet->type()){
+                case CoordinateSet::Cartesian:
+                    m_coordinates = coordinateSet->cartesianCoordinates();
+                    break;
+                case CoordinateSet::Internal:
+                    m_coordinates = coordinateSet->internalCoordinates()->toCartesianCoordinates();
+                    break;
+                case CoordinateSet::Diagram:
+                    m_coordinates = coordinateSet->diagramCoordinates()->toCartesianCoordinates();
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    return m_coordinates;
 }
 
-/// Removes \p conformer from the molecule. The currently active
-/// conformer cannot be removed.
-void Molecule::removeConformer(Conformer *conformer)
+/// Add \p coordinates to the molecule. The ownership of
+/// \p coordinates is passed to the molecule.
+void Molecule::addCoordinateSet(CoordinateSet *coordinates)
 {
-    // forbid removal of the currently active conformer
-    if(conformer == d->conformer){
-        return;
-    }
-
-    std::vector<Conformer *>::iterator location = std::find(d->conformers.begin(), d->conformers.end(), conformer);
-    if(location == d->conformers.end()){
-        return;
-    }
-
-    d->conformers.erase(location);
-
-    delete conformer;
+    d->coordinateSets.push_back(coordinates);
 }
 
-/// Sets the active conformer for the molecule.
-void Molecule::setConformer(Conformer *conformer)
+/// Add a new coordinate set containing \p coordinates.
+void Molecule::addCoordinateSet(CartesianCoordinates *coordinates)
 {
-    if(conformer == d->conformer){
-        return;
-    }
-    else if(conformer->molecule() != this){
-        return;
-    }
-
-    foreach(Atom *atom, m_atoms){
-        atom->setPosition(conformer->position(atom));
-    }
-
-    d->conformer = conformer;
+    addCoordinateSet(new CoordinateSet(coordinates));
 }
 
-/// Returns the active conformer for the molecule.
-Conformer* Molecule::conformer() const
+/// Add a new coordinate set containing \p coordinates.
+void Molecule::addCoordinateSet(InternalCoordinates *coordinates)
 {
-    if(!d->conformer){
-        d->conformer = conformers()[0];
-    }
-
-    return d->conformer;
+    addCoordinateSet(new CoordinateSet(coordinates));
 }
 
-/// Returns the conformer at \p index.
+/// Add a new coordinate set containing \p coordinates.
+void Molecule::addCoordinateSet(DiagramCoordinates *coordinates)
+{
+    addCoordinateSet(new CoordinateSet(coordinates));
+}
+
+/// Removes \p coordinates from the molecule. Returns \c true if
+/// successful. The ownership of \p coordinates is passed to the
+/// caller.
+bool Molecule::removeCoordinateSet(CoordinateSet *coordinates)
+{
+    std::vector<CoordinateSet *>::iterator iter = std::find(d->coordinateSets.begin(),
+                                                            d->coordinateSets.end(),
+                                                            coordinates);
+    if(iter != d->coordinateSets.end()){
+        d->coordinateSets.erase(iter);
+        return true;
+    }
+
+    return false;
+}
+
+/// Removes and deletes \p coordinates if they are contained in the
+/// molecule. Returns \c true if successful.
+bool Molecule::deleteCoordinateSet(CoordinateSet *coordinates)
+{
+    bool found = removeCoordinateSet(coordinates);
+
+    if(found){
+        delete coordinates;
+    }
+
+    return found;
+}
+
+/// Returns the coordinate set at \p index in the molecule.
 ///
 /// Equivalent to:
 /// \code
-/// molelcule.conformers()[index];
+/// molecule.coordinateSets()[index];
 /// \endcode
-Conformer* Molecule::conformer(int index) const
+CoordinateSet* Molecule::coordinateSet(size_t index) const
 {
-    return conformers()[index];
+    assert(index < d->coordinateSets.size());
+
+    return d->coordinateSets[index];
 }
 
-/// Returns a list of all conformers in the molecule.
-std::vector<Conformer *> Molecule::conformers() const
+/// Returns the coordinate sets that the molecule contains.
+std::vector<CoordinateSet *> Molecule::coordinateSets() const
 {
-    if(d->conformers.empty()){
-        d->conformer = new Conformer(this);
-        d->conformers.push_back(d->conformer);
-    }
-
-    return d->conformers;
+    return d->coordinateSets;
 }
 
-/// Returns the number of conformers in the molecule.
-int Molecule::conformerCount() const
+/// Returns the number of coordinate sets stored in the molecule.
+///
+/// Equivalent to:
+/// \code
+/// molecule.coordinateSets().size();
+/// \endcode
+size_t Molecule::coordinateSetCount() const
 {
-    return conformers().size();
+    return d->coordinateSets.size();
 }
 
 // --- Operators ----------------------------------------------------------- //

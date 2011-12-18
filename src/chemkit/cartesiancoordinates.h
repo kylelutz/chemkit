@@ -50,7 +50,6 @@ namespace chemkit {
 
 class Atom;
 class Molecule;
-class Conformer;
 
 class CHEMKIT_EXPORT CartesianCoordinates
 {
@@ -59,7 +58,6 @@ public:
     CartesianCoordinates();
     CartesianCoordinates(int size);
     CartesianCoordinates(const Molecule *molecule);
-    CartesianCoordinates(const Conformer *conformer);
     CartesianCoordinates(const std::vector<Atom *> &atoms);
     CartesianCoordinates(const std::vector<Point3> &points);
     CartesianCoordinates(const CartesianCoordinates &coordinates);

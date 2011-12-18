@@ -39,6 +39,7 @@
 
 #include <chemkit/molecule.h>
 #include <chemkit/moleculefile.h>
+#include <chemkit/coordinateset.h>
 #include <chemkit/internalcoordinates.h>
 
 MopinFileFormat::MopinFileFormat()
@@ -102,20 +103,20 @@ bool MopinFileFormat::read(QIODevice *iodev, chemkit::MoleculeFile *file)
         connectionValues.append(lineItems[9].toInt());
     }
 
-    chemkit::InternalCoordinates coordinates(molecule->size());
+    chemkit::InternalCoordinates *coordinates = new chemkit::InternalCoordinates(molecule->size());
 
     for(int i = 0; i < molecule->size(); i++){
-        coordinates.setCoordinates(i, coordinateValues[i*3+0],
-                                      coordinateValues[i*3+1],
-                                      coordinateValues[i*3+2]);
+        coordinates->setCoordinates(i, coordinateValues[i*3+0],
+                                       coordinateValues[i*3+1],
+                                       coordinateValues[i*3+2]);
 
-        coordinates.setConnections(i, connectionValues[i*3+0] - 1,
-                                      connectionValues[i*3+1] - 1,
-                                      connectionValues[i*3+2] - 1);
+        coordinates->setConnections(i, connectionValues[i*3+0] - 1,
+                                       connectionValues[i*3+1] - 1,
+                                       connectionValues[i*3+2] - 1);
     }
 
     // set molecule coordinates
-    molecule->setCoordinates(&coordinates);
+    molecule->addCoordinateSet(coordinates);
 
     file->addMolecule(molecule);
 

@@ -46,6 +46,7 @@
 #include "geometry.h"
 #include "molecule.h"
 #include "moleculeprivate.h"
+#include "cartesiancoordinates.h"
 
 namespace chemkit {
 
@@ -463,8 +464,9 @@ bool Atom::isAromatic() const
 /// Sets the coordinates of the atom.
 void Atom::setPosition(const Point3 &position)
 {
-    m_molecule->d->positions[m_index] = position;
-    molecule()->notifyWatchers(this, Molecule::AtomPositionChanged);
+    m_molecule->coordinates()->setPosition(m_index, position);
+
+    m_molecule->notifyWatchers(this, Molecule::AtomPositionChanged);
 }
 
 /// Sets the coordinates of the atom to (x, y, z). Equivalent to
@@ -477,7 +479,11 @@ void Atom::setPosition(Real x, Real y, Real z)
 /// Returns the atom's coordinates.
 Point3 Atom::position() const
 {
-    return m_molecule->d->positions[m_index];
+    if(!m_molecule->m_coordinates){
+        return Point3(0, 0, 0);
+    }
+
+    return m_molecule->m_coordinates->position(m_index);
 }
 
 /// Returns the atom's x coordinate. Equivalent to position().x().
