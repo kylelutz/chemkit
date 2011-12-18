@@ -45,6 +45,9 @@ namespace chemkit {
 class CHEMKIT_EXPORT Isotope
 {
 public:
+    // typedefs
+    typedef Element::AtomicNumberType AtomicNumberType;
+
     // construction and destruction
     Isotope();
     Isotope(const Element &element);
@@ -57,6 +60,8 @@ public:
     size_t protonCount() const;
     void setNeutronCount(size_t count);
     size_t neutronCount() const;
+    void setAtomicNumber(AtomicNumberType number);
+    AtomicNumberType atomicNumber() const;
     void setMassNumber(size_t number);
     size_t massNumber() const;
 

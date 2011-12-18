@@ -101,6 +101,18 @@ size_t Isotope::neutronCount() const
     return m_neutronCount;
 }
 
+/// Sets the atomic number for the isotop to \p number.
+void Isotope::setAtomicNumber(AtomicNumberType number)
+{
+    m_element.setAtomicNumber(number);
+}
+
+/// Returns the atomic number for the isotope.
+Isotope::AtomicNumberType Isotope::atomicNumber() const
+{
+    return m_element.atomicNumber();
+}
+
 /// Sets the mass number of the isotope to \p number.
 void Isotope::setMassNumber(size_t number)
 {
