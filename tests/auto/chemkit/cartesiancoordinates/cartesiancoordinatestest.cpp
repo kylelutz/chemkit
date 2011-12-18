@@ -54,14 +54,14 @@ void CartesianCoordinatesTest::setPosition()
 void CartesianCoordinatesTest::append()
 {
     chemkit::CartesianCoordinates matrix;
-    QCOMPARE(matrix.size(), 0);
+    QCOMPARE(matrix.size(), size_t(0));
 
     matrix.append(1, 2, 3);
-    QCOMPARE(matrix.size(), 1);
+    QCOMPARE(matrix.size(), size_t(1));
     QCOMPARE(matrix.position(0), chemkit::Point3(1, 2, 3));
 
     matrix.append(4, 5, 6);
-    QCOMPARE(matrix.size(), 2);
+    QCOMPARE(matrix.size(), size_t(2));
     QCOMPARE(matrix.position(0), chemkit::Point3(1, 2, 3));
     QCOMPARE(matrix.position(1), chemkit::Point3(4, 5, 6));
 }
@@ -74,12 +74,12 @@ void CartesianCoordinatesTest::insert()
     matrix.setPosition(2, 7.0, 8.0, 9.0);
 
     matrix.insert(3, -1.0, -2.0, -3.0);
-    QCOMPARE(matrix.size(), 4);
+    QCOMPARE(matrix.size(), size_t(4));
     QCOMPARE(matrix.position(3), chemkit::Point3(-1.0, -2.0, -3.0));
     QCOMPARE(matrix.position(2), chemkit::Point3(7.0, 8.0, 9.0));
 
     matrix.insert(1, 0.5, 1.5, 2.5);
-    QCOMPARE(matrix.size(), 5);
+    QCOMPARE(matrix.size(), size_t(5));
     QCOMPARE(matrix.position(0), chemkit::Point3(1.0, 2.0, 3.0));
     QCOMPARE(matrix.position(1), chemkit::Point3(0.5, 1.5, 2.5));
     QCOMPARE(matrix.position(2), chemkit::Point3(4.0, 5.0, 6.0));
@@ -94,16 +94,16 @@ void CartesianCoordinatesTest::remove()
     matrix.setPosition(2, 7.0, 8.0, 9.0);
 
     matrix.remove(0);
-    QCOMPARE(matrix.size(), 2);
+    QCOMPARE(matrix.size(), size_t(2));
     QCOMPARE(matrix.position(0), chemkit::Point3(4.0, 5.0, 6.0));
     QCOMPARE(matrix.position(1), chemkit::Point3(7.0, 8.0, 9.0));
 
     matrix.remove(1);
-    QCOMPARE(matrix.size(), 1);
+    QCOMPARE(matrix.size(), size_t(1));
     QCOMPARE(matrix.position(0), chemkit::Point3(4.0, 5.0, 6.0));
 
     matrix.remove(0);
-    QCOMPARE(matrix.size(), 0);
+    QCOMPARE(matrix.size(), size_t(0));
 }
 
 void CartesianCoordinatesTest::center()

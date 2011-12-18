@@ -99,7 +99,7 @@ void CmlTest::glucose()
 
     chemkit::CartesianCoordinates *cartesianCoordinates = molecule->coordinateSet(0)->cartesianCoordinates();
     QVERIFY(cartesianCoordinates != 0);
-    QCOMPARE(cartesianCoordinates->size(), 24);
+    QCOMPARE(cartesianCoordinates->size(), size_t(24));
 
     chemkit::DiagramCoordinates *diagramCoordinates = molecule->coordinateSet(1)->diagramCoordinates();
     QVERIFY(diagramCoordinates != 0);

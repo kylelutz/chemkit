@@ -58,7 +58,7 @@ CartesianCoordinates::CartesianCoordinates()
 
 /// Creates a new, empty coordinate matrix with space for \p size
 /// points.
-CartesianCoordinates::CartesianCoordinates(int size)
+CartesianCoordinates::CartesianCoordinates(size_t size)
     : m_matrix(size, 3)
 {
     m_matrix.setZero();
@@ -68,7 +68,7 @@ CartesianCoordinates::CartesianCoordinates(int size)
 CartesianCoordinates::CartesianCoordinates(const std::vector<Point3> &points)
     : m_matrix(points.size(), 3)
 {
-    for(unsigned int i = 0; i < points.size(); i++){
+    for(size_t i = 0; i < points.size(); i++){
         Point3 position = points[i];
         m_matrix(i, 0) = position.x();
         m_matrix(i, 1) = position.y();
@@ -89,13 +89,13 @@ CartesianCoordinates::~CartesianCoordinates()
 
 // --- Properties ---------------------------------------------------------- //
 /// Sets the size of the matrix to \p size.
-void CartesianCoordinates::setSize(int size)
+void CartesianCoordinates::setSize(size_t size)
 {
     m_matrix.conservativeResize(size, Eigen::NoChange);
 }
 
 /// Returns the number of coordinates in the matrix.
-int CartesianCoordinates::size() const
+size_t CartesianCoordinates::size() const
 {
     return m_matrix.rows();
 }
@@ -114,7 +114,7 @@ Matrix CartesianCoordinates::toMatrix() const
 
 // --- Coordinates --------------------------------------------------------- //
 /// Sets the position at \p index to \p position.
-void CartesianCoordinates::setPosition(int index, const Point3 &position)
+void CartesianCoordinates::setPosition(size_t index, const Point3 &position)
 {
     m_matrix(index, 0) = position.x();
     m_matrix(index, 1) = position.y();
@@ -122,13 +122,13 @@ void CartesianCoordinates::setPosition(int index, const Point3 &position)
 }
 
 /// Sets the position at \p index to (\p x, \p y, \p z).
-void CartesianCoordinates::setPosition(int index, Real x, Real y, Real z)
+void CartesianCoordinates::setPosition(size_t index, Real x, Real y, Real z)
 {
     setPosition(index, Point3(x, y, z));
 }
 
 /// Returns the coordinates at \p index.
-Point3 CartesianCoordinates::position(int index) const
+Point3 CartesianCoordinates::position(size_t index) const
 {
     return Point3(m_matrix(index, 0),
                   m_matrix(index, 1),
@@ -136,13 +136,13 @@ Point3 CartesianCoordinates::position(int index) const
 }
 
 /// Sets the value at \p row and \p column to \p value.
-void CartesianCoordinates::setValue(int row, int column, Real value)
+void CartesianCoordinates::setValue(size_t row, size_t column, Real value)
 {
     m_matrix(row, column) = value;
 }
 
 /// Returns the value at \p row and \p column;
-Real CartesianCoordinates::value(int row, int column) const
+Real CartesianCoordinates::value(size_t row, size_t column) const
 {
     return m_matrix(row, column);
 }
@@ -160,7 +160,7 @@ void CartesianCoordinates::append(Real x, Real y, Real z)
 }
 
 /// Inserts \p position at \p index.
-void CartesianCoordinates::insert(int index, const Point3 &position)
+void CartesianCoordinates::insert(size_t index, const Point3 &position)
 {
     // resize to make space for the new position
     if(index >= size()){
@@ -171,7 +171,7 @@ void CartesianCoordinates::insert(int index, const Point3 &position)
     }
 
     // copy old positions
-    for(int i = size() - 1; i > index; i--){
+    for(size_t i = size() - 1; i > index; i--){
         setPosition(i, this->position(i - 1));
     }
 
@@ -180,15 +180,15 @@ void CartesianCoordinates::insert(int index, const Point3 &position)
 }
 
 /// Inserts the point (\p x, \p y, \p z) at \p index.
-void CartesianCoordinates::insert(int index, Real x, Real y, Real z)
+void CartesianCoordinates::insert(size_t index, Real x, Real y, Real z)
 {
     insert(index, Point3(x, y, z));
 }
 
 /// Removes the position at \p index.
-void CartesianCoordinates::remove(int index)
+void CartesianCoordinates::remove(size_t index)
 {
-    for(int i = index + 1; i < size(); i++){
+    for(size_t i = index + 1; i < size(); i++){
         setPosition(i - 1, position(i));
     }
 
@@ -198,49 +198,49 @@ void CartesianCoordinates::remove(int index)
 // --- Geometry ------------------------------------------------------------ //
 /// Returns the distance between the points at \p i and \p j. The
 /// returned distance is in Angstroms.
-Real CartesianCoordinates::distance(int i, int j) const
+Real CartesianCoordinates::distance(size_t i, size_t j) const
 {
     return chemkit::geometry::distance(position(i), position(j));
 }
 
 /// Returns the bond angle between the points at \p i, \p j, and
 /// \p k. The returned angle is in degrees.
-Real CartesianCoordinates::angle(int i, int j, int k) const
+Real CartesianCoordinates::angle(size_t i, size_t j, size_t k) const
 {
     return chemkit::geometry::angle(position(i), position(j), position(k));
 }
 
 /// Returns the bond angle between the points at \p i, \p j, and
 /// \p k. The returned angle is in radians.
-Real CartesianCoordinates::angleRadians(int i, int j, int k) const
+Real CartesianCoordinates::angleRadians(size_t i, size_t j, size_t k) const
 {
     return chemkit::geometry::angleRadians(position(i), position(j), position(k));
 }
 
 /// Returns the torsion angle between the points at \p i, \p j, \p k,
 /// and \p l. The returned angle is in degrees.
-Real CartesianCoordinates::torsionAngle(int i, int j, int k, int l) const
+Real CartesianCoordinates::torsionAngle(size_t i, size_t j, size_t k, size_t l) const
 {
     return chemkit::geometry::torsionAngle(position(i), position(j), position(k), position(l));
 }
 
 /// Returns the torsion angle between the points at \p i, \p j, \p k,
 /// and \p l. The returned angle is in radians.
-Real CartesianCoordinates::torsionAngleRadians(int i, int j, int k, int l) const
+Real CartesianCoordinates::torsionAngleRadians(size_t i, size_t j, size_t k, size_t l) const
 {
     return chemkit::geometry::torsionAngleRadians(position(i), position(j), position(k), position(l));
 }
 
 /// Returns the wilson angle between the points at \p i, \p j, \p k
 /// and \p l. The returned angle is in degrees.
-Real CartesianCoordinates::wilsonAngle(int i, int j, int k, int l) const
+Real CartesianCoordinates::wilsonAngle(size_t i, size_t j, size_t k, size_t l) const
 {
     return chemkit::geometry::wilsonAngle(position(i), position(j), position(k), position(l));
 }
 
 /// Returns the wilson angle between the points at \p i, \p j, \p k
 /// and \p l. The returned angle is in radians.
-Real CartesianCoordinates::wilsonAngleRadians(int i, int j, int k, int l) const
+Real CartesianCoordinates::wilsonAngleRadians(size_t i, size_t j, size_t k, size_t l) const
 {
     return chemkit::geometry::wilsonAngleRadians(position(i), position(j), position(k), position(l));
 }
@@ -258,13 +258,13 @@ Point3 CartesianCoordinates::center() const
     Real sy = 0;
     Real sz = 0;
 
-    for(int i = 0; i < size(); i++){
+    for(size_t i = 0; i < size(); i++){
         sx += m_matrix(i, 0);
         sy += m_matrix(i, 1);
         sz += m_matrix(i, 2);
     }
 
-    int n = size();
+    size_t n = size();
 
     return Point3(sx/n, sy/n, sz/n);
 }
@@ -287,7 +287,7 @@ Point3 CartesianCoordinates::weightedCenter(const std::vector<Real> &weights) co
     // sum of weights
     Real sw = 0;
 
-    for(int i = 0; i < size(); i++){
+    for(size_t i = 0; i < size(); i++){
         Real weight = weights[i];
 
         sx += weight * m_matrix(i, 0);
@@ -297,7 +297,7 @@ Point3 CartesianCoordinates::weightedCenter(const std::vector<Real> &weights) co
         sw += weight;
     }
 
-    int n = sw * size();
+    size_t n = sw * size();
 
     return Point3(sx/n, sy/n, sz/n);
 }
@@ -305,7 +305,7 @@ Point3 CartesianCoordinates::weightedCenter(const std::vector<Real> &weights) co
 /// Moves all of the coordinates by \p vector.
 void CartesianCoordinates::moveBy(const Vector3 &vector)
 {
-    for(int i = 0; i < size(); i++){
+    for(size_t i = 0; i < size(); i++){
         m_matrix(i, 0) += vector.x();
         m_matrix(i, 1) += vector.y();
         m_matrix(i, 2) += vector.z();
@@ -324,11 +324,11 @@ Matrix CartesianCoordinates::distanceMatrix() const
 {
     Matrix matrix(size(), size());
 
-    for(int i = 0; i < size(); i++){
+    for(size_t i = 0; i < size(); i++){
         // set diagonal entries to zero
         matrix(i, i) = 0;
 
-        for(int j = i + 1; j < size(); j++){
+        for(size_t j = i + 1; j < size(); j++){
             Real d = distance(i, j);
 
             matrix(i, j) = d;
@@ -344,11 +344,11 @@ Matrix CartesianCoordinates::distanceMatrix() const
 /// the coordinates with \p coordinates.
 CartesianCoordinates CartesianCoordinates::add(const CartesianCoordinates &coordinates) const
 {
-    int size = std::min(this->size(), coordinates.size());
+    size_t size = std::min(this->size(), coordinates.size());
 
     CartesianCoordinates result(size);
 
-    for(int i = 0; i < size; i++){
+    for(size_t i = 0; i < size; i++){
         const Point3 &a = position(i);
         const Point3 &b = coordinates.position(i);
 
@@ -362,11 +362,11 @@ CartesianCoordinates CartesianCoordinates::add(const CartesianCoordinates &coord
 /// subtracting the coordinates with \p coordinates.
 CartesianCoordinates CartesianCoordinates::subtract(const CartesianCoordinates &coordinates) const
 {
-    int size = std::min(this->size(), coordinates.size());
+    size_t size = std::min(this->size(), coordinates.size());
 
     CartesianCoordinates result(size);
 
-    for(int i = 0; i < size; i++){
+    for(size_t i = 0; i < size; i++){
         const Point3 &a = position(i);
         const Point3 &b = coordinates.position(i);
 

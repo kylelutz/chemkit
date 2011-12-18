@@ -39,6 +39,7 @@
 #include "chemkit.h"
 
 #include <vector>
+#include <cstddef>
 
 #include <Eigen/Core>
 
@@ -53,37 +54,37 @@ class CHEMKIT_EXPORT CartesianCoordinates
 public:
     // construction and destruction
     CartesianCoordinates();
-    CartesianCoordinates(int size);
+    CartesianCoordinates(size_t size);
     CartesianCoordinates(const std::vector<Point3> &points);
     CartesianCoordinates(const CartesianCoordinates &coordinates);
     ~CartesianCoordinates();
 
     // properties
-    void setSize(int size);
-    int size() const;
+    void setSize(size_t size);
+    size_t size() const;
     bool isEmpty() const;
     Matrix toMatrix() const;
 
     // coordinates
-    void setPosition(int index, const Point3 &position);
-    void setPosition(int index, Real x, Real y, Real z);
-    Point3 position(int index) const;
-    void setValue(int row, int column, Real value);
-    Real value(int row, int column) const;
+    void setPosition(size_t index, const Point3 &position);
+    void setPosition(size_t index, Real x, Real y, Real z);
+    Point3 position(size_t index) const;
+    void setValue(size_t row, size_t column, Real value);
+    Real value(size_t row, size_t column) const;
     void append(const Point3 &position);
     void append(Real x, Real y, Real z);
-    void insert(int index, const Point3 &position);
-    void insert(int index, Real x, Real y, Real z);
-    void remove(int index);
+    void insert(size_t index, const Point3 &position);
+    void insert(size_t index, Real x, Real y, Real z);
+    void remove(size_t index);
 
     // geometry
-    Real distance(int i, int j) const;
-    Real angle(int i, int j, int k) const;
-    Real angleRadians(int i, int j, int k) const;
-    Real torsionAngle(int i, int j, int k, int l) const;
-    Real torsionAngleRadians(int i, int j, int k, int l) const;
-    Real wilsonAngle(int i, int j, int k, int l) const;
-    Real wilsonAngleRadians(int i, int j, int k, int l) const;
+    Real distance(size_t i, size_t j) const;
+    Real angle(size_t i, size_t j, size_t k) const;
+    Real angleRadians(size_t i, size_t j, size_t k) const;
+    Real torsionAngle(size_t i, size_t j, size_t k, size_t l) const;
+    Real torsionAngleRadians(size_t i, size_t j, size_t k, size_t l) const;
+    Real wilsonAngle(size_t i, size_t j, size_t k, size_t l) const;
+    Real wilsonAngleRadians(size_t i, size_t j, size_t k, size_t l) const;
     Point3 center() const;
     Point3 weightedCenter(const std::vector<Real> &weights) const;
     void moveBy(const Vector3 &vector);

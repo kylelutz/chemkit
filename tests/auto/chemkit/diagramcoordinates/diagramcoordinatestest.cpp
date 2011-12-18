@@ -66,7 +66,7 @@ void DiagramCoordinatesTest::toCartesianCoordinates()
     QCOMPARE(coordinates.size(), size_t(3));
 
     chemkit::CartesianCoordinates *cartesianCoordinates = coordinates.toCartesianCoordinates();
-    QCOMPARE(cartesianCoordinates->size(), 3);
+    QCOMPARE(cartesianCoordinates->size(), size_t(3));
     QCOMPARE(cartesianCoordinates->position(0), chemkit::Point3(1, 2, 0));
     QCOMPARE(cartesianCoordinates->position(1), chemkit::Point3(3, 4, 0));
     QCOMPARE(cartesianCoordinates->position(2), chemkit::Point3(5, 6, 0));
