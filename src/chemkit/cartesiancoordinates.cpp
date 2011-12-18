@@ -64,36 +64,6 @@ CartesianCoordinates::CartesianCoordinates(int size)
     m_matrix.setZero();
 }
 
-/// Creates a new coordinate matrix with the coordinates from
-/// \p molecule.
-CartesianCoordinates::CartesianCoordinates(const Molecule *molecule)
-    : m_matrix(molecule->size(), 3)
-{
-    int size = molecule->size();
-
-    for(int i = 0; i < size; i++){
-        Point3 position = molecule->atom(i)->position();
-        m_matrix(i, 0) = position.x();
-        m_matrix(i, 1) = position.y();
-        m_matrix(i, 2) = position.z();
-    }
-}
-
-/// Creates a new coordinate matrix with the coordinates from
-/// \p atoms.
-CartesianCoordinates::CartesianCoordinates(const std::vector<Atom *> &atoms)
-    : m_matrix(atoms.size(), 3)
-{
-    unsigned int size = atoms.size();
-
-    for(unsigned int i = 0; i < size; i++){
-        Point3 position = atoms[i]->position();
-        m_matrix(i, 0) = position.x();
-        m_matrix(i, 1) = position.y();
-        m_matrix(i, 2) = position.z();
-    }
-}
-
 /// Creates a new coordinate matrix that contains \p points.
 CartesianCoordinates::CartesianCoordinates(const std::vector<Point3> &points)
     : m_matrix(points.size(), 3)

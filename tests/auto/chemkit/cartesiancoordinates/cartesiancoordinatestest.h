@@ -43,7 +43,6 @@ class CartesianCoordinatesTest : public QObject
     Q_OBJECT
 
     private slots:
-        void basic();
         void setPosition();
         void append();
         void insert();

@@ -252,7 +252,7 @@ CartesianCoordinates* MoleculeAligner::sourceCoordinates() const
         return new CartesianCoordinates(*d->sourceCoordinates->cartesianCoordinates());
     }
     else{
-        return new CartesianCoordinates(sourceMolecule());
+        return new CartesianCoordinates(*d->sourceMolecule->coordinates());
     }
 }
 
@@ -262,7 +262,7 @@ CartesianCoordinates* MoleculeAligner::targetCoordinates() const
         return new CartesianCoordinates(*d->targetCoordinates->cartesianCoordinates());
     }
     else{
-        return new CartesianCoordinates(targetMolecule());
+        return new CartesianCoordinates(*d->targetMolecule->coordinates());
     }
 }
 

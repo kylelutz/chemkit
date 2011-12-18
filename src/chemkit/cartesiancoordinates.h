@@ -48,17 +48,12 @@
 
 namespace chemkit {
 
-class Atom;
-class Molecule;
-
 class CHEMKIT_EXPORT CartesianCoordinates
 {
 public:
     // construction and destruction
     CartesianCoordinates();
     CartesianCoordinates(int size);
-    CartesianCoordinates(const Molecule *molecule);
-    CartesianCoordinates(const std::vector<Atom *> &atoms);
     CartesianCoordinates(const std::vector<Point3> &points);
     CartesianCoordinates(const CartesianCoordinates &coordinates);
     ~CartesianCoordinates();

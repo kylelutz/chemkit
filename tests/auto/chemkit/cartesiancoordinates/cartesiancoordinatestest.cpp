@@ -39,27 +39,6 @@
 #include <chemkit/molecule.h>
 #include <chemkit/cartesiancoordinates.h>
 
-void CartesianCoordinatesTest::basic()
-{
-    chemkit::Molecule molecule;
-    chemkit::CartesianCoordinates matrix(&molecule);
-    QCOMPARE(matrix.size(), 0);
-    QCOMPARE(matrix.isEmpty(), true);
-
-    chemkit::Atom *C1 = molecule.addAtom("C");
-    chemkit::Atom *C2 = molecule.addAtom("C");
-    chemkit::Atom *C3 = molecule.addAtom("C");
-    C1->setPosition(2, 1, 0);
-    C2->setPosition(3, -2, -4);
-    C3->setPosition(0, 0, 0);
-    matrix = chemkit::CartesianCoordinates(&molecule);
-    QCOMPARE(matrix.size(), 3);
-    QCOMPARE(matrix.isEmpty(), false);
-    QCOMPARE(matrix.position(0), chemkit::Point3(2, 1, 0));
-    QCOMPARE(matrix.position(1), chemkit::Point3(3, -2, -4));
-    QCOMPARE(matrix.position(2), chemkit::Point3(0, 0, 0));
-}
-
 void CartesianCoordinatesTest::setPosition()
 {
     chemkit::CartesianCoordinates matrix(5);
