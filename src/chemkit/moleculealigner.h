@@ -71,7 +71,7 @@ public:
     const CoordinateSet* targetCoordinateSet() const;
 
     // geometry
-    Real deviation() const;
+    Real rmsd() const;
     Eigen::Matrix<Real, 3, 3> rotationMatrix() const;
     Vector3 displacementVector() const;
     void align(Molecule *molecule);

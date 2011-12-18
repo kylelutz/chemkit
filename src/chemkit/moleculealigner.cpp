@@ -156,7 +156,7 @@ const CoordinateSet* MoleculeAligner::targetCoordinateSet() const
 // --- Geometry ------------------------------------------------------------ //
 /// Returns the root mean square deviation between the coordinates
 /// of the source and target molecules.
-Real MoleculeAligner::deviation() const
+Real MoleculeAligner::rmsd() const
 {
     CartesianCoordinates *sourceMatrix = sourceCoordinates();
     CartesianCoordinates *targetMatrix = targetCoordinates();
