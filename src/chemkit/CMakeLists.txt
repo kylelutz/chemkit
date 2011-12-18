@@ -30,6 +30,7 @@ set(HEADERS
   config.h
   conformer.h
   constants.h
+  coordinateset.h
   delaunaytriangulation.h
   diagramcoordinates.h
   dynamiclibrary.h
@@ -86,6 +87,7 @@ set(SOURCES
   cartesiancoordinates.cpp
   chemkit.cpp
   conformer.cpp
+  coordinateset.cpp
   delaunaytriangulation.cpp
   diagramcoordinates.cpp
   dynamiclibrary.cpp
