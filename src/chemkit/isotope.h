@@ -44,25 +44,25 @@ namespace chemkit {
 
 class CHEMKIT_EXPORT Isotope
 {
-    public:
-        // construction and destruction
-        Isotope();
-        Isotope(const Element &element);
-        Isotope(const Element &element, size_t massNumber);
+public:
+    // construction and destruction
+    Isotope();
+    Isotope(const Element &element);
+    Isotope(const Element &element, size_t massNumber);
 
-        // properties
-        void setElement(const Element &element);
-        Element element() const;
-        void setProtonCount(size_t count);
-        size_t protonCount() const;
-        void setNeutronCount(size_t count);
-        size_t neutronCount() const;
-        void setMassNumber(size_t number);
-        size_t massNumber() const;
+    // properties
+    void setElement(const Element &element);
+    Element element() const;
+    void setProtonCount(size_t count);
+    size_t protonCount() const;
+    void setNeutronCount(size_t count);
+    size_t neutronCount() const;
+    void setMassNumber(size_t number);
+    size_t massNumber() const;
 
-    private:
-        Element m_element;
-        unsigned char m_neutronCount;
+private:
+    Element m_element;
+    unsigned char m_neutronCount;
 };
 
 } // end chemkit namespace
