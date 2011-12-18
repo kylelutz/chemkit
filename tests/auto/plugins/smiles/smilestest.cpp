@@ -1256,7 +1256,7 @@ void SmilesTest::quadrupleBond()
     QVERIFY(molecule);
     QCOMPARE(molecule->formula(), std::string("C2"));
     QCOMPARE(molecule->bondCount(), 1);
-    QCOMPARE(molecule->bonds()[0]->order(), 4);
+    QCOMPARE(molecule->bonds()[0]->order(), chemkit::Bond::BondOrderType(4));
 
     delete molecule;
     delete format;

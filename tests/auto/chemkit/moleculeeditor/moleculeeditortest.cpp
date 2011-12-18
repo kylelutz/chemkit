@@ -153,7 +153,7 @@ void MoleculeEditorTest::addBond()
     QCOMPARE(molecule.bondCount(), 1);
 
     chemkit::Bond *C2_C3 = editor.addBond(C2, C3, chemkit::Bond::Double);
-    QCOMPARE(C2_C3->order(), 2);
+    QCOMPARE(C2_C3->order(), chemkit::Bond::BondOrderType(2));
     QCOMPARE(molecule.bondCount(), 2);
 
     editor.removeBond(C1_C2);
@@ -170,7 +170,7 @@ void MoleculeEditorTest::addBond()
 
     editor.undo();
     QCOMPARE(molecule.bondCount(), 1);
-    QCOMPARE(molecule.bonds()[0]->order(), 2);
+    QCOMPARE(molecule.bonds()[0]->order(), chemkit::Bond::BondOrderType(2));
 }
 
 void MoleculeEditorTest::removeBond()
@@ -202,26 +202,26 @@ void MoleculeEditorTest::setBondOrder()
     chemkit::Atom *C1 = molecule.addAtom("C");
     chemkit::Atom *C2 = molecule.addAtom("C");
     chemkit::Bond *bond = molecule.addBond(C1, C2);
-    QCOMPARE(bond->order(), 1);
+    QCOMPARE(bond->order(), chemkit::Bond::BondOrderType(1));
 
     editor.setBondOrder(bond, 2);
-    QCOMPARE(bond->order(), 2);
+    QCOMPARE(bond->order(), chemkit::Bond::BondOrderType(2));
 
     editor.undo();
-    QCOMPARE(bond->order(), 1);
+    QCOMPARE(bond->order(), chemkit::Bond::BondOrderType(1));
 
     editor.redo();
-    QCOMPARE(bond->order(), 2);
+    QCOMPARE(bond->order(), chemkit::Bond::BondOrderType(2));
 
     editor.setBondOrder(bond, 3);
     editor.setBondOrder(bond, 2);
-    QCOMPARE(bond->order(), 2);
+    QCOMPARE(bond->order(), chemkit::Bond::BondOrderType(2));
 
     editor.undo();
-    QCOMPARE(bond->order(), 3);
+    QCOMPARE(bond->order(), chemkit::Bond::BondOrderType(3));
 
     editor.undo();
-    QCOMPARE(bond->order(), 2);
+    QCOMPARE(bond->order(), chemkit::Bond::BondOrderType(2));
 }
 
 void MoleculeEditorTest::copy()

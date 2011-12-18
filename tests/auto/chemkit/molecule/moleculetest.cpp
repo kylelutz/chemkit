@@ -147,7 +147,7 @@ void MoleculeTest::addBond()
     chemkit::Bond *H1_H2 = molecule.addBond(H1, H2);
     QVERIFY(H1_H2->contains(H1));
     QVERIFY(H1_H2->contains(H2));
-    QCOMPARE(H1_H2->order(), 1);
+    QCOMPARE(H1_H2->order(), chemkit::Bond::BondOrderType(1));
     QCOMPARE(molecule.bondCount(), 1);
     QVERIFY(molecule.bonds()[0] == H1_H2);
 

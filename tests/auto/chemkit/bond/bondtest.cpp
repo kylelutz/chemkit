@@ -70,16 +70,16 @@ void BondTest::order()
     chemkit::Atom *H1 = molecule.addAtom("H");
     chemkit::Atom *H2 = molecule.addAtom("H");
     chemkit::Bond *bond = molecule.addBond(H1, H2);
-    QCOMPARE(bond->order(), 1);
+    QCOMPARE(bond->order(), chemkit::Bond::BondOrderType(1));
 
     bond->setOrder(chemkit::Bond::Double);
-    QCOMPARE(bond->order(), 2);
+    QCOMPARE(bond->order(), chemkit::Bond::BondOrderType(2));
 
     bond->setOrder(chemkit::Bond::Triple);
-    QCOMPARE(bond->order(), 3);
+    QCOMPARE(bond->order(), chemkit::Bond::BondOrderType(3));
 
     bond->setOrder(chemkit::Bond::Single);
-    QCOMPARE(bond->order(), 1);
+    QCOMPARE(bond->order(), chemkit::Bond::BondOrderType(1));
 }
 
 void BondTest::molecule()

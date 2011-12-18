@@ -54,6 +54,9 @@ class Molecule;
 class CHEMKIT_EXPORT Bond
 {
 public:
+    // typedefs
+    typedef unsigned char BondOrderType;
+
     // enumerations
     enum BondType{
         Single = 1,
@@ -68,8 +71,8 @@ public:
     Atom* atom2() const;
     std::vector<Atom *> atoms() const;
     Atom* otherAtom(const Atom *atom) const;
-    void setOrder(int order);
-    int order() const;
+    void setOrder(BondOrderType order);
+    BondOrderType order() const;
     Real polarity() const;
     Vector3 dipoleMoment() const;
     inline Molecule* molecule() const;

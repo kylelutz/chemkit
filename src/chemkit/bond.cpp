@@ -112,7 +112,7 @@ Atom* Bond::otherAtom(const Atom *atom) const
 }
 
 /// Sets the bond order for the bond to \p order.
-void Bond::setOrder(int order)
+void Bond::setOrder(BondOrderType order)
 {
     m_molecule->d->bondOrders[m_index] = order;
 
@@ -120,7 +120,7 @@ void Bond::setOrder(int order)
 }
 
 /// Returns the bond order.
-int Bond::order() const
+Bond::BondOrderType Bond::order() const
 {
     return m_molecule->d->bondOrders[m_index];
 }

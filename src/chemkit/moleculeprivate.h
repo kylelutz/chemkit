@@ -42,6 +42,7 @@
 #include <string>
 #include <vector>
 
+#include "bond.h"
 #include "point3.h"
 #include "isotope.h"
 
@@ -71,7 +72,7 @@ public:
     std::vector<Real> partialCharges;
     std::vector<std::pair<Atom*, Atom*> > bondAtoms;
     std::vector<std::vector<Bond *> > atomBonds;
-    std::vector<unsigned char> bondOrders;
+    std::vector<Bond::BondOrderType> bondOrders;
     std::vector<CoordinateSet *> coordinateSets;
 };
 
