@@ -105,6 +105,20 @@ void MoleculeEditorTest::addAtom()
 
 void MoleculeEditorTest::removeAtom()
 {
+    chemkit::Molecule molecule;
+    chemkit::Atom *C1 = molecule.addAtom(chemkit::Atom::Carbon);
+    chemkit::Atom *O2 = molecule.addAtom(chemkit::Atom::Oxygen);
+    QCOMPARE(molecule.formula(), std::string("CO"));
+
+    chemkit::MoleculeEditor editor(&molecule);
+    editor.removeAtom(C1);
+    QCOMPARE(molecule.formula(), std::string("O"));
+
+    editor.undo();
+    QCOMPARE(molecule.formula(), std::string("CO"));
+
+    editor.redo();
+    QCOMPARE(molecule.formula(), std::string("O"));
 }
 
 void MoleculeEditorTest::setAtomElement()
