@@ -41,6 +41,7 @@
 #include <chemkit/bond.h>
 #include <chemkit/molecule.h>
 #include <chemkit/moleculefile.h>
+#include <chemkit/diagramcoordinates.h>
 
 namespace {
 
@@ -56,13 +57,15 @@ public:
 private:
     chemkit::MoleculeFile *m_file;
     chemkit::Molecule *m_molecule;
+    chemkit::DiagramCoordinates *m_diagramCoordinates;
     QHash<QString, chemkit::Atom *> m_atomIds;
 };
 
 CmlHandler::CmlHandler(chemkit::MoleculeFile *file)
     : QXmlDefaultHandler(),
       m_file(file),
-      m_molecule(0)
+      m_molecule(0),
+      m_diagramCoordinates(0)
 {
 }
 
@@ -92,10 +95,22 @@ bool CmlHandler::startElement(const QString &namespaceURI, const QString &localN
             if(!id.isEmpty())
                 m_atomIds[id] = atom;
 
-            chemkit::Real x = atts.value("x3").toDouble();
-            chemkit::Real y = atts.value("y3").toDouble();
-            chemkit::Real z = atts.value("z3").toDouble();
-            atom->setPosition(x, y, z);
+            chemkit::Real x3 = atts.value("x3").toDouble();
+            chemkit::Real y3 = atts.value("y3").toDouble();
+            chemkit::Real z3 = atts.value("z3").toDouble();
+            atom->setPosition(x3, y3, z3);
+
+            QString x2 = atts.value("x2");
+            QString y2 = atts.value("y2");
+
+            if(!x2.isEmpty()){
+                if(!m_diagramCoordinates){
+                    m_diagramCoordinates = new chemkit::DiagramCoordinates;
+                }
+
+                m_diagramCoordinates->append(chemkit::Point2f(x2.toFloat(),
+                                                              y2.toFloat()));
+            }
         }
     }
     else if(qName == "bond" && m_molecule){
@@ -152,6 +167,11 @@ bool CmlHandler::endElement(const QString &namespaceURI, const QString &localNam
     CHEMKIT_UNUSED(localName);
 
     if(qName == "molecule"){
+        if(m_diagramCoordinates){
+            m_molecule->addCoordinateSet(m_diagramCoordinates);
+            m_diagramCoordinates = 0;
+        }
+
         m_file->addMolecule(m_molecule);
         m_molecule = 0;
         m_atomIds.clear();

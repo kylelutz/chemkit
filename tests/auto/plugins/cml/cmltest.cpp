@@ -39,7 +39,10 @@
 
 #include <chemkit/molecule.h>
 #include <chemkit/moleculefile.h>
+#include <chemkit/coordinateset.h>
+#include <chemkit/diagramcoordinates.h>
 #include <chemkit/moleculefileformat.h>
+#include <chemkit/cartesiancoordinates.h>
 
 const std::string dataPath = "../../../data/";
 
@@ -75,6 +78,32 @@ void CmlTest::read()
     chemkit::Molecule *molecule = file.molecule();
     QVERIFY(molecule != 0);
     QCOMPARE(molecule->formula(), formula.toStdString());
+}
+
+void CmlTest::glucose()
+{
+    chemkit::MoleculeFile file(dataPath + "glucose.cml");
+    bool ok = file.read();
+    if(!ok)
+        qDebug() << file.errorString().c_str();
+    QVERIFY(ok);
+
+    QCOMPARE(file.moleculeCount(), 1);
+    chemkit::Molecule *molecule = file.molecule();
+    QVERIFY(molecule != 0);
+    QCOMPARE(molecule->formula(), std::string("C6H12O6"));
+
+    QCOMPARE(molecule->coordinateSetCount(), size_t(2));
+    QVERIFY(molecule->coordinateSet(0)->type() == chemkit::CoordinateSet::Cartesian);
+    QVERIFY(molecule->coordinateSet(1)->type() == chemkit::CoordinateSet::Diagram);
+
+    chemkit::CartesianCoordinates *cartesianCoordinates = molecule->coordinateSet(0)->cartesianCoordinates();
+    QVERIFY(cartesianCoordinates != 0);
+    QCOMPARE(cartesianCoordinates->size(), 24);
+
+    chemkit::DiagramCoordinates *diagramCoordinates = molecule->coordinateSet(1)->diagramCoordinates();
+    QVERIFY(diagramCoordinates != 0);
+    QCOMPARE(diagramCoordinates->size(), size_t(24));
 }
 
 QTEST_APPLESS_MAIN(CmlTest)

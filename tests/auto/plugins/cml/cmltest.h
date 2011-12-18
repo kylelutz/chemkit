@@ -46,6 +46,7 @@ class CmlTest : public QObject
         void initTestCase();
         void read_data();
         void read();
+        void glucose();
 };
 
 #endif // CMLTEST_H
