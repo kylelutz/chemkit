@@ -576,7 +576,7 @@ void SmilesTest::heavyWater()
 
     foreach(const chemkit::Atom *atom, molecule.atoms()){
         if(atom->is(chemkit::Atom::Hydrogen)){
-            QCOMPARE(atom->massNumber(), 2);
+            QCOMPARE(atom->massNumber(), chemkit::Atom::MassNumberType(2));
         }
     }
 
@@ -1215,7 +1215,7 @@ void SmilesTest::isotope()
 
     foreach(const chemkit::Atom *atom, molecule->atoms()){
         if(atom->is(chemkit::Atom::Carbon)){
-            QCOMPARE(atom->massNumber(), 14);
+            QCOMPARE(atom->massNumber(), chemkit::Atom::MassNumberType(14));
         }
     }
 
@@ -1224,7 +1224,7 @@ void SmilesTest::isotope()
     molecule = format->read("[238U]");
     QVERIFY(molecule);
     QCOMPARE(molecule->formula(), std::string("U"));
-    QCOMPARE(molecule->atom(0)->massNumber(), 238);
+    QCOMPARE(molecule->atom(0)->massNumber(), chemkit::Atom::MassNumberType(238));
 
     delete molecule;
     delete format;

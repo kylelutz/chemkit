@@ -136,13 +136,13 @@ Isotope Atom::isotope() const
 /// Sets the mass number for the atom. This is the number of protons
 /// plus the number of neutrons and identifies what isotope the atom
 /// is.
-void Atom::setMassNumber(int massNumber)
+void Atom::setMassNumber(MassNumberType massNumber)
 {
     setIsotope(Isotope(element(), massNumber));
 }
 
 /// Returns the mass number of the atom.
-int Atom::massNumber() const
+Atom::MassNumberType Atom::massNumber() const
 {
     return isotope().massNumber();
 }
