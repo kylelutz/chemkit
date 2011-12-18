@@ -114,16 +114,16 @@ Isotope::AtomicNumberType Isotope::atomicNumber() const
 }
 
 /// Sets the mass number of the isotope to \p number.
-void Isotope::setMassNumber(size_t number)
+void Isotope::setMassNumber(MassNumberType number)
 {
-    m_neutronCount = number - protonCount();
+    m_neutronCount = static_cast<unsigned char>(number - protonCount());
 }
 
 /// Return the mass number for the isotope. This is equal to the
 /// number of protons plus the number of neutrons.
-size_t Isotope::massNumber() const
+Isotope::MassNumberType Isotope::massNumber() const
 {
-    return protonCount() + neutronCount();
+    return static_cast<MassNumberType>(protonCount() + neutronCount());
 }
 
 } // end chemkit namespace

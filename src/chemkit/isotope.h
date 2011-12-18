@@ -47,6 +47,7 @@ class CHEMKIT_EXPORT Isotope
 public:
     // typedefs
     typedef Element::AtomicNumberType AtomicNumberType;
+    typedef unsigned short MassNumberType;
 
     // construction and destruction
     Isotope();
@@ -62,8 +63,8 @@ public:
     size_t neutronCount() const;
     void setAtomicNumber(AtomicNumberType number);
     AtomicNumberType atomicNumber() const;
-    void setMassNumber(size_t number);
-    size_t massNumber() const;
+    void setMassNumber(MassNumberType number);
+    MassNumberType massNumber() const;
 
 private:
     Element m_element;
