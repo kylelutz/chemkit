@@ -109,7 +109,7 @@ void MoleculeTest::addAtom()
     chemkit::Atom *atom2;
 
     atom1 = molecule.addAtom(chemkit::Atom::Carbon);
-    QCOMPARE(atom1->atomicNumber(), 6);
+    QCOMPARE(atom1->atomicNumber(), chemkit::Atom::AtomicNumberType(6));
 
     atom2 = molecule.addAtom(chemkit::Element());
     QCOMPARE(atom2->element().isValid(), false);

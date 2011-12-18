@@ -113,25 +113,25 @@ void MoleculeEditorTest::setAtomElement()
     chemkit::Atom *atom = molecule.addAtom(6);
     chemkit::MoleculeEditor editor(&molecule);
     editor.setAtomElement(atom, 1);
-    QCOMPARE(atom->atomicNumber(), 1);
+    QCOMPARE(atom->atomicNumber(), chemkit::Atom::AtomicNumberType(1));
 
     editor.undo();
-    QCOMPARE(atom->atomicNumber(), 6);
+    QCOMPARE(atom->atomicNumber(), chemkit::Atom::AtomicNumberType(6));
 
     editor.redo();
-    QCOMPARE(atom->atomicNumber(), 1);
+    QCOMPARE(atom->atomicNumber(), chemkit::Atom::AtomicNumberType(1));
 
     editor.setAtomElement(atom, 2);
-    QCOMPARE(atom->atomicNumber(), 2);
+    QCOMPARE(atom->atomicNumber(), chemkit::Atom::AtomicNumberType(2));
 
     editor.setAtomElement(atom, 3);
-    QCOMPARE(atom->atomicNumber(), 3);
+    QCOMPARE(atom->atomicNumber(), chemkit::Atom::AtomicNumberType(3));
 
     editor.undo();
-    QCOMPARE(atom->atomicNumber(), 2);
+    QCOMPARE(atom->atomicNumber(), chemkit::Atom::AtomicNumberType(2));
 
     editor.undo();
-    QCOMPARE(atom->atomicNumber(), 1);
+    QCOMPARE(atom->atomicNumber(), chemkit::Atom::AtomicNumberType(1));
 }
 
 void MoleculeEditorTest::setAtomPosition()

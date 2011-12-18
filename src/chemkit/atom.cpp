@@ -90,7 +90,7 @@ void Atom::setElement(const Element &element)
 /// Sets the atomic number for the atom. This is the number of
 /// protons the atom has and identifies what element the atom is
 // (e.g. Hydrogen, Carbon, or Oxygen).
-void Atom::setAtomicNumber(int atomicNumber)
+void Atom::setAtomicNumber(AtomicNumberType atomicNumber)
 {
     if(atomicNumber == element().atomicNumber()){
         return;
@@ -105,7 +105,7 @@ void Atom::setAtomicNumber(int atomicNumber)
 }
 
 /// Returns the atomic number of the atom.
-int Atom::atomicNumber() const
+Atom::AtomicNumberType Atom::atomicNumber() const
 {
     return element().atomicNumber();
 }

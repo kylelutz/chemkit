@@ -43,19 +43,19 @@ void AtomTest::atomicNumber()
 {
     chemkit::Molecule molecule;
     chemkit::Atom *atom = molecule.addAtom("H");
-    QCOMPARE(atom->atomicNumber(), 1);
+    QCOMPARE(atom->atomicNumber(), chemkit::Atom::AtomicNumberType(1));
 
     atom->setAtomicNumber(6);
-    QCOMPARE(atom->atomicNumber(), 6);
+    QCOMPARE(atom->atomicNumber(), chemkit::Atom::AtomicNumberType(6));
 
     atom->setAtomicNumber(6);
-    QCOMPARE(atom->atomicNumber(), 6);
+    QCOMPARE(atom->atomicNumber(), chemkit::Atom::AtomicNumberType(6));
 
     atom->setAtomicNumber(0);
-    QCOMPARE(atom->atomicNumber(), 6);
+    QCOMPARE(atom->atomicNumber(), chemkit::Atom::AtomicNumberType(6));
 
-    atom->setAtomicNumber(500);
-    QCOMPARE(atom->atomicNumber(), 6);
+    atom->setAtomicNumber(200);
+    QCOMPARE(atom->atomicNumber(), chemkit::Atom::AtomicNumberType(6));
 }
 
 void AtomTest::index()

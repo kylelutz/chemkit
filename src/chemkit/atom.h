@@ -61,6 +61,7 @@ class CHEMKIT_EXPORT Atom
 {
 public:
     // typedefs
+    typedef Element::AtomicNumberType AtomicNumberType;
     typedef boost::iterator_range<std::vector<Bond *>::const_iterator> BondRange;
     typedef boost::iterator_range<
                 boost::transform_iterator<
@@ -70,8 +71,8 @@ public:
     // properties
     void setElement(const Element &element);
     inline Element element() const;
-    void setAtomicNumber(int atomicNumber);
-    int atomicNumber() const;
+    void setAtomicNumber(AtomicNumberType atomicNumber);
+    AtomicNumberType atomicNumber() const;
     void setIsotope(const Isotope &isotope);
     Isotope isotope() const;
     void setMassNumber(int massNumber);
