@@ -99,7 +99,7 @@ public:
     std::vector<Vector3> gradient() const;
     std::vector<Vector3> numericalGradient() const;
     Real largestGradient() const;
-    Real rootMeanSquareGradient() const;
+    Real rmsg() const;
 
     // coordinates
     void readCoordinates(const Molecule *molecule);

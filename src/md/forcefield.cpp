@@ -432,7 +432,7 @@ Real ForceField::largestGradient() const
 }
 
 /// Returns the root mean square gradient.
-Real ForceField::rootMeanSquareGradient() const
+Real ForceField::rmsg() const
 {
     if(!size()){
         return 0;
@@ -559,7 +559,7 @@ bool ForceField::minimizationStep(Real converganceValue)
     }
 
     // check for convergance
-    return rootMeanSquareGradient() < converganceValue;
+    return rmsg() < converganceValue;
 }
 
 // --- Geometry ------------------------------------------------------------ //
