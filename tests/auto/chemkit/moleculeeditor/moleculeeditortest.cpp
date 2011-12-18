@@ -237,6 +237,36 @@ void MoleculeEditorTest::setBondOrder()
     QCOMPARE(bond->order(), chemkit::Bond::BondOrderType(2));
 }
 
+void MoleculeEditorTest::cut()
+{
+    chemkit::Molecule molecule;
+    chemkit::Atom *C1 = molecule.addAtom("C");
+    chemkit::Atom *C2 = molecule.addAtom("C");
+    chemkit::Atom *O3 = molecule.addAtom("O");
+    molecule.addBond(C1, C2);
+    molecule.addBond(C2, O3, 2);
+    QCOMPARE(molecule.formula(), std::string("C2O"));
+    QCOMPARE(molecule.bondCount(), 2);
+
+    chemkit::MoleculeEditor editor(&molecule);
+    editor.cut(molecule.atoms());
+    QCOMPARE(editor.copyBuffer().size(), size_t(3));
+    QCOMPARE(molecule.formula(), std::string(""));
+    QCOMPARE(molecule.bondCount(), 0);
+
+    editor.paste();
+    QCOMPARE(molecule.formula(), std::string("C2O"));
+    QCOMPARE(molecule.bondCount(), 2);
+
+    editor.undo();
+    QCOMPARE(molecule.formula(), std::string(""));
+    QCOMPARE(molecule.bondCount(), 0);
+
+    editor.redo();
+    QCOMPARE(molecule.formula(), std::string("C2O"));
+    QCOMPARE(molecule.bondCount(), 2);
+}
+
 void MoleculeEditorTest::copy()
 {
     chemkit::Molecule molecule;

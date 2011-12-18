@@ -52,6 +52,7 @@ class MoleculeEditorTest : public QObject
         void addBond();
         void removeBond();
         void setBondOrder();
+        void cut();
         void copy();
         void clearCopyBuffer();
 };
