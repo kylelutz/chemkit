@@ -136,6 +136,19 @@ void MoleculeEditorTest::setAtomElement()
 
 void MoleculeEditorTest::setAtomPosition()
 {
+    chemkit::Molecule molecule;
+    chemkit::Atom *atom = molecule.addAtom(chemkit::Atom::Carbon);
+    QVERIFY(atom->position() == chemkit::Point3(0, 0, 0));
+
+    chemkit::MoleculeEditor editor(&molecule);
+    editor.setAtomPosition(atom, chemkit::Point3(1, 2, 3));
+    QVERIFY(atom->position() == chemkit::Point3(1, 2, 3));
+
+    editor.undo();
+    QVERIFY(atom->position() == chemkit::Point3(0, 0, 0));
+
+    editor.redo();
+    QVERIFY(atom->position() == chemkit::Point3(1, 2, 3));
 }
 
 void MoleculeEditorTest::addBond()
