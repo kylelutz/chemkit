@@ -43,6 +43,7 @@
 #include <chemkit/atomtyper.h>
 #include <chemkit/forcefield.h>
 #include <chemkit/moleculefile.h>
+#include <chemkit/aromaticitymodel.h>
 #include <chemkit/moleculardescriptor.h>
 #include <chemkit/partialchargepredictor.h>
 
@@ -58,6 +59,9 @@ void MmffTest::initTestCase()
 
     std::vector<std::string> forceFields = chemkit::ForceField::forceFields();
     QVERIFY(std::find(forceFields.begin(), forceFields.end(), "mmff") != forceFields.end());
+
+    std::vector<std::string> aromaticityModels = chemkit::AromaticityModel::models();
+    QVERIFY(std::find(aromaticityModels.begin(), aromaticityModels.end(), "mmff") != aromaticityModels.end());
 
     std::vector<std::string> descriptors = chemkit::MolecularDescriptor::descriptors();
     QVERIFY(std::find(descriptors.begin(), descriptors.end(), "mmff-energy") != descriptors.end());

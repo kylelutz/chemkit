@@ -42,6 +42,7 @@
 #include <chemkit/molecule.h>
 #include <chemkit/lineformat.h>
 #include <chemkit/moleculefile.h>
+#include <chemkit/aromaticitymodel.h>
 #include <chemkit/moleculefileformat.h>
 
 const std::string dataPath = "../../../data/";
@@ -50,6 +51,9 @@ void SmilesTest::initTestCase()
 {
     std::vector<std::string> lineFormats = chemkit::LineFormat::formats();
     QVERIFY(std::find(lineFormats.begin(), lineFormats.end(), "smiles") != lineFormats.end());
+
+    std::vector<std::string> aromaticityModels = chemkit::AromaticityModel::models();
+    QVERIFY(std::find(aromaticityModels.begin(), aromaticityModels.end(), "smiles") != aromaticityModels.end());
 
     std::vector<std::string> fileFormats = chemkit::MoleculeFileFormat::formats();
     QVERIFY(std::find(fileFormats.begin(), fileFormats.end(), "smi") != fileFormats.end());

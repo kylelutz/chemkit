@@ -33,36 +33,25 @@
 **
 ******************************************************************************/
 
-#ifndef MMFFFORCEFIELD_H
-#define MMFFFORCEFIELD_H
+#include "smilesaromaticitymodel.h"
 
-#include <QtCore>
+#include "smiles.h"
 
-#include <chemkit/molecule.h>
-#include <chemkit/forcefield.h>
-
-#include "mmffcalculation.h"
-
-class MmffAtom;
-class MmffParameters;
-
-class MmffForceField : public chemkit::ForceField
+SmilesAromaticityModel::SmilesAromaticityModel()
+    : chemkit::AromaticityModel("smiles")
 {
-public:
-    // construction and destruction
-    MmffForceField();
-    ~MmffForceField();
+}
 
-    // atoms
-    MmffAtom* atom(const chemkit::Atom *atom);
-    const MmffAtom* atom(const chemkit::Atom *atom) const;
+SmilesAromaticityModel::~SmilesAromaticityModel()
+{
+}
 
-    // parameterization
-    virtual bool setup();
-    const MmffParameters* parameters() const;
+bool SmilesAromaticityModel::isAromaticAtom(const chemkit::Atom *atom) const
+{
+    return ::isAromaticAtom(atom);
+}
 
-private:
-    MmffParameters *m_parameters;
-};
-
-#endif // MMFFFORCEFIELD_H
+bool SmilesAromaticityModel::isAromaticRing(const chemkit::Ring *ring) const
+{
+    return ::isAromaticRing(ring);
+}

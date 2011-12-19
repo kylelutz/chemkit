@@ -38,6 +38,7 @@
 
 #include <chemkit/plugin.h>
 #include <chemkit/lineformat.h>
+#include <chemkit/aromaticitymodel.h>
 
 #ifdef CHEMKIT_WITH_IO
 #include <chemkit/moleculefileformat.h>
@@ -50,6 +51,7 @@ public:
     ~SmilesPlugin();
 
     static chemkit::LineFormat* createSmilesFormat();
+    static chemkit::AromaticityModel* createSmilesAromaticityModel();
 
 #ifdef CHEMKIT_WITH_IO
     static chemkit::MoleculeFileFormat* createSmiFormat();

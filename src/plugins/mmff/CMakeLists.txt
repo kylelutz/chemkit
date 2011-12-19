@@ -6,6 +6,7 @@ set(QT_DONT_USE_QTGUI TRUE)
 include(${QT_USE_FILE})
 
 set(SOURCES
+  mmffaromaticitymodel.cpp
   mmffatom.cpp
   mmffatomtyper.cpp
   mmffcalculation.cpp

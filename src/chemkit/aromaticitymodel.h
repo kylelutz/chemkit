@@ -33,36 +33,58 @@
 **
 ******************************************************************************/
 
-#ifndef MMFFFORCEFIELD_H
-#define MMFFFORCEFIELD_H
+#ifndef CHEMKIT_AROMATICITYMODEL_H
+#define CHEMKIT_AROMATICITYMODEL_H
 
-#include <QtCore>
+#include "chemkit.h"
 
-#include <chemkit/molecule.h>
-#include <chemkit/forcefield.h>
+#include <string>
+#include <vector>
 
-#include "mmffcalculation.h"
+namespace chemkit {
 
-class MmffAtom;
-class MmffParameters;
+class Atom;
+class Bond;
+class Ring;
+class Molecule;
+class AromaticityModelPrivate;
 
-class MmffForceField : public chemkit::ForceField
+class CHEMKIT_EXPORT AromaticityModel
 {
 public:
+    // typedefs
+    typedef AromaticityModel* (*CreateFunction)();
+
     // construction and destruction
-    MmffForceField();
-    ~MmffForceField();
+    AromaticityModel();
+    virtual ~AromaticityModel();
 
-    // atoms
-    MmffAtom* atom(const chemkit::Atom *atom);
-    const MmffAtom* atom(const chemkit::Atom *atom) const;
+    // properties
+    std::string name() const;
+    void setMolecule(const Molecule *molecule);
+    const Molecule* molecule() const;
 
-    // parameterization
-    virtual bool setup();
-    const MmffParameters* parameters() const;
+    // aromaticity
+    bool isAromatic(const Atom *atom) const;
+    bool isAromatic(const Bond *bond) const;
+    bool isAromatic(const Ring *ring) const;
+
+    // static methods
+    static AromaticityModel* create(const std::string &name);
+    static std::vector<std::string> models();
+
+protected:
+    AromaticityModel(const std::string &name);
+
+    // aromaticity
+    virtual bool isAromaticAtom(const Atom *atom) const;
+    virtual bool isAromaticBond(const Bond *bond) const;
+    virtual bool isAromaticRing(const Ring *ring) const;
 
 private:
-    MmffParameters *m_parameters;
+    AromaticityModelPrivate* const d;
 };
 
-#endif // MMFFFORCEFIELD_H
+} // end chemkit namespace
+
+#endif // CHEMKIT_AROMATICITYMODEL_H

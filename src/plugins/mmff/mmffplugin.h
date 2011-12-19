@@ -41,6 +41,7 @@
 #include <chemkit/plugin.h>
 #include <chemkit/atomtyper.h>
 #include <chemkit/forcefield.h>
+#include <chemkit/aromaticitymodel.h>
 #include <chemkit/moleculardescriptor.h>
 #include <chemkit/partialchargepredictor.h>
 
@@ -57,6 +58,7 @@ public:
 
     static chemkit::AtomTyper* createMmffAtomTyper();
     static chemkit::ForceField* createMmffForceField();
+    static chemkit::AromaticityModel* createMmffAromaticityModel();
     static chemkit::MolecularDescriptor* createMmffEnergyDescriptor();
     static chemkit::PartialChargePredictor* createMmffPartialChargePredictor();
 

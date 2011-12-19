@@ -33,36 +33,53 @@
 **
 ******************************************************************************/
 
-#ifndef MMFFFORCEFIELD_H
-#define MMFFFORCEFIELD_H
+#include "aromaticitymodeltest.h"
 
-#include <QtCore>
-
+#include <chemkit/ring.h>
 #include <chemkit/molecule.h>
-#include <chemkit/forcefield.h>
 
-#include "mmffcalculation.h"
+#include "mockaromaticitymodel.h"
 
-class MmffAtom;
-class MmffParameters;
-
-class MmffForceField : public chemkit::ForceField
+void AromaticityModelTest::name()
 {
-public:
-    // construction and destruction
-    MmffForceField();
-    ~MmffForceField();
+    MockAromaticityModel model;
+    QCOMPARE(model.name(), std::string("mock"));
+}
 
-    // atoms
-    MmffAtom* atom(const chemkit::Atom *atom);
-    const MmffAtom* atom(const chemkit::Atom *atom) const;
+void AromaticityModelTest::setMolecule()
+{
+    MockAromaticityModel model;
+    QVERIFY(model.molecule() == 0);
 
-    // parameterization
-    virtual bool setup();
-    const MmffParameters* parameters() const;
+    chemkit::Molecule molecule;
+    model.setMolecule(&molecule);
+    QVERIFY(model.molecule() == &molecule);
 
-private:
-    MmffParameters *m_parameters;
-};
+    model.setMolecule(0);
+    QVERIFY(model.molecule() == 0);
+}
 
-#endif // MMFFFORCEFIELD_H
+void AromaticityModelTest::isAromatic()
+{
+    MockAromaticityModel model;
+
+    chemkit::Molecule furan("c1ccoc1", "smiles");
+    QCOMPARE(furan.formula(), std::string("C4H4O"));
+    QCOMPARE(furan.ringCount(), 1);
+    chemkit::Ring *ring = furan.ring(0);
+    QCOMPARE(ring->size(), 5);
+    QCOMPARE(model.isAromatic(ring), true);
+    QCOMPARE(model.isAromatic(ring->atom(0)), true);
+    QCOMPARE(model.isAromatic(ring->bond(0)), true);
+
+    chemkit::Molecule cyclohexane("C1CCCCC1", "smiles");
+    QCOMPARE(cyclohexane.formula(), std::string("C6H12"));
+    QCOMPARE(cyclohexane.ringCount(), 1);
+    ring = cyclohexane.ring(0);
+    QCOMPARE(ring->size(), 6);
+    QCOMPARE(model.isAromatic(ring), false);
+    QCOMPARE(model.isAromatic(ring->atom(0)), false);
+    QCOMPARE(model.isAromatic(ring->bond(0)), false);
+}
+
+QTEST_APPLESS_MAIN(AromaticityModelTest)

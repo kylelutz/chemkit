@@ -50,6 +50,7 @@
 
 #include <chemkit/foreach.h>
 
+#include "smiles.h"
 #include "kekulizer.h"
 #include "smilesgraph.h"
 

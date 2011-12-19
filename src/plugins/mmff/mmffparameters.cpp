@@ -701,7 +701,7 @@ int MmffParameters::calculateBondType(const chemkit::Bond *bond, int typeA, int 
         return 0;
     }
 
-    if(bond->order() == chemkit::Bond::Single && !MmffForceField::isAromatic(bond)){
+    if(bond->order() == chemkit::Bond::Single && !m_aromaticityModel.isAromatic(bond)){
         if(pa->sbmb && pb->sbmb){
             return 1;
         }
@@ -853,7 +853,7 @@ int MmffParameters::calculateTorsionType(const MmffAtom *a, const MmffAtom *b, c
     foreach(const chemkit::Ring *ring, a->atom()->rings()){
         if(ring->size() == 5){
             if(ring->contains(b->atom()) && ring->contains(c->atom()) && ring->contains(d->atom())){
-                if(!MmffForceField::isAromatic(ring)){
+                if(!m_aromaticityModel.isAromatic(ring)){
                     inFiveMemberedRing = true;
                     break;
                 }

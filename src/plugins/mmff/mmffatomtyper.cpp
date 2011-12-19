@@ -39,6 +39,7 @@
 #include <chemkit/molecule.h>
 
 #include "mmffforcefield.h"
+#include "mmffaromaticitymodel.h"
 
 namespace {
 
@@ -435,6 +436,9 @@ void MmffAtomTyper::assignTypes(const chemkit::Molecule *molecule)
     m_types.resize(molecule->atomCount());
     m_formalCharges.resize(molecule->atomCount());
 
+    MmffAromaticityModel aromaticityModel;
+    aromaticityModel.setMolecule(molecule);
+
     QList<const chemkit::Atom *> terminalHydrogens;
 
     // assign types to heavy atoms
@@ -453,10 +457,10 @@ void MmffAtomTyper::assignTypes(const chemkit::Molecule *molecule)
     QList<const chemkit::Ring *> sixMemberedAromaticRings;
     QList<const chemkit::Ring *> fiveMemberedAromaticRings;
     foreach(const chemkit::Ring *ring, molecule->rings()){
-        if(ring->size() == 5 && MmffForceField::isAromatic(ring)){
+        if(ring->size() == 5 && aromaticityModel.isAromatic(ring)){
             fiveMemberedAromaticRings.append(ring);
         }
-        else if(ring->size() == 6 && MmffForceField::isAromatic(ring)){
+        else if(ring->size() == 6 && aromaticityModel.isAromatic(ring)){
             sixMemberedAromaticRings.append(ring);
         }
     }

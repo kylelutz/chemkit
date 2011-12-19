@@ -33,36 +33,19 @@
 **
 ******************************************************************************/
 
-#ifndef MMFFFORCEFIELD_H
-#define MMFFFORCEFIELD_H
+#ifndef AROMATICITYMODELTEST_H
+#define AROMATICITYMODELTEST_H
 
-#include <QtCore>
+#include <QtTest>
 
-#include <chemkit/molecule.h>
-#include <chemkit/forcefield.h>
-
-#include "mmffcalculation.h"
-
-class MmffAtom;
-class MmffParameters;
-
-class MmffForceField : public chemkit::ForceField
+class AromaticityModelTest : public QObject
 {
-public:
-    // construction and destruction
-    MmffForceField();
-    ~MmffForceField();
+    Q_OBJECT
 
-    // atoms
-    MmffAtom* atom(const chemkit::Atom *atom);
-    const MmffAtom* atom(const chemkit::Atom *atom) const;
-
-    // parameterization
-    virtual bool setup();
-    const MmffParameters* parameters() const;
-
-private:
-    MmffParameters *m_parameters;
+    private slots:
+        void name();
+        void setMolecule();
+        void isAromatic();
 };
 
-#endif // MMFFFORCEFIELD_H
+#endif // AROMATICITYMODELTEST_H

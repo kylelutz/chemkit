@@ -33,36 +33,22 @@
 **
 ******************************************************************************/
 
-#ifndef MMFFFORCEFIELD_H
-#define MMFFFORCEFIELD_H
+#ifndef MMFFAROMATICITYMODEL_H
+#define MMFFAROMATICITYMODEL_H
 
-#include <QtCore>
+#include <chemkit/aromaticitymodel.h>
 
-#include <chemkit/molecule.h>
-#include <chemkit/forcefield.h>
-
-#include "mmffcalculation.h"
-
-class MmffAtom;
-class MmffParameters;
-
-class MmffForceField : public chemkit::ForceField
+class MmffAromaticityModel : public chemkit::AromaticityModel
 {
 public:
-    // construction and destruction
-    MmffForceField();
-    ~MmffForceField();
+    MmffAromaticityModel();
+    virtual ~MmffAromaticityModel();
 
-    // atoms
-    MmffAtom* atom(const chemkit::Atom *atom);
-    const MmffAtom* atom(const chemkit::Atom *atom) const;
-
-    // parameterization
-    virtual bool setup();
-    const MmffParameters* parameters() const;
+protected:
+    virtual bool isAromaticRing(const chemkit::Ring *ring) const;
 
 private:
-    MmffParameters *m_parameters;
+    int piElectronCount(const chemkit::Ring *ring) const;
 };
 
-#endif // MMFFFORCEFIELD_H
+#endif // MMFFAROMATICITYMODEL_H

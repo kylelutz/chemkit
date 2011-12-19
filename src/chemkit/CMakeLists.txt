@@ -18,6 +18,7 @@ find_package(Boost COMPONENTS system filesystem REQUIRED)
 set(HEADERS
   alphashape.h
   aminoacid.h
+  aromaticitymodel.h
   atom.h
   atom-inline.h
   atomtyper.h
@@ -79,6 +80,7 @@ set(HEADERS
 set(SOURCES
   alphashape.cpp
   aminoacid.cpp
+  aromaticitymodel.cpp
   atom.cpp
   atomtyper.cpp
   bond.cpp

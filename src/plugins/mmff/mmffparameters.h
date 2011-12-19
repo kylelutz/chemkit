@@ -41,6 +41,7 @@
 #include <string>
 
 #include "mmffatom.h"
+#include "mmffaromaticitymodel.h"
 
 class MmffParametersData;
 
@@ -172,6 +173,7 @@ private:
     std::string m_fileName;
     QString m_errorString;
     MmffParametersData *d;
+    MmffAromaticityModel m_aromaticityModel;
 };
 
 #endif // MMFFPARAMETERS_H

@@ -40,11 +40,13 @@
 #endif
 
 #include "smileslineformat.h"
+#include "smilesaromaticitymodel.h"
 
 SmilesPlugin::SmilesPlugin()
     : chemkit::Plugin("smiles")
 {
     registerPluginClass<chemkit::LineFormat>("smiles", createSmilesFormat);
+    registerPluginClass<chemkit::AromaticityModel>("smiles", createSmilesAromaticityModel);
 
 #ifdef CHEMKIT_WITH_IO
     registerPluginClass<chemkit::MoleculeFileFormat>("smi", createSmiFormat);
@@ -54,6 +56,7 @@ SmilesPlugin::SmilesPlugin()
 SmilesPlugin::~SmilesPlugin()
 {
     unregisterPluginClass<chemkit::LineFormat>("smiles");
+    unregisterPluginClass<chemkit::AromaticityModel>("smiles");
 
 #ifdef CHEMKIT_WITH_IO
     unregisterPluginClass<chemkit::MoleculeFileFormat>("smi");
@@ -63,6 +66,11 @@ SmilesPlugin::~SmilesPlugin()
 chemkit::LineFormat* SmilesPlugin::createSmilesFormat()
 {
     return new SmilesLineFormat;
+}
+
+chemkit::AromaticityModel* SmilesPlugin::createSmilesAromaticityModel()
+{
+    return new SmilesAromaticityModel;
 }
 
 #ifdef CHEMKIT_WITH_IO
