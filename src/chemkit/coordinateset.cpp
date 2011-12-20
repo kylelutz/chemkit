@@ -109,10 +109,10 @@ CoordinateSet::Type CoordinateSet::type() const
 size_t CoordinateSet::size() const
 {
     switch(m_type){
-        case None: return 0;
         case Cartesian: return m_cartesianCordinates->size();
         case Internal: return m_internalCoordinates->size();
         case Diagram: return m_diagramCoordinates->size();
+        default: return 0;
     }
 }
 
