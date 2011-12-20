@@ -41,8 +41,6 @@
 #include <vector>
 #include <cstddef>
 
-#include <Eigen/Core>
-
 #include "matrix.h"
 #include "point3.h"
 #include "vector3.h"
@@ -102,7 +100,7 @@ public:
     CartesianCoordinates& operator=(const CartesianCoordinates &coordinates);
 
 private:
-    Matrix m_matrix;
+    std::vector<Point3> m_coordinates;
 };
 
 } // end chemkit namespace

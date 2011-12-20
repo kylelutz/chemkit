@@ -38,6 +38,7 @@
 #include <cassert>
 
 #include "vector3.h"
+#include "foreach.h"
 #include "geometry.h"
 
 namespace chemkit {
@@ -50,33 +51,26 @@ namespace chemkit {
 // --- Construction and Destruction ---------------------------------------- //
 /// Creates a new, empty coordinate matrix.
 CartesianCoordinates::CartesianCoordinates()
-    : m_matrix(0, 3)
 {
 }
 
 /// Creates a new, empty coordinate matrix with space for \p size
 /// points.
 CartesianCoordinates::CartesianCoordinates(size_t size)
-    : m_matrix(size, 3)
+    : m_coordinates(size)
 {
-    m_matrix.setZero();
+    std::fill(m_coordinates.begin(), m_coordinates.end(), Point3(0, 0, 0));
 }
 
 /// Creates a new coordinate matrix that contains \p points.
 CartesianCoordinates::CartesianCoordinates(const std::vector<Point3> &points)
-    : m_matrix(points.size(), 3)
+    : m_coordinates(points)
 {
-    for(size_t i = 0; i < points.size(); i++){
-        Point3 position = points[i];
-        m_matrix(i, 0) = position.x();
-        m_matrix(i, 1) = position.y();
-        m_matrix(i, 2) = position.z();
-    }
 }
 
 /// Creates a new coordinate matrix that is a copy of \p coordinates.
 CartesianCoordinates::CartesianCoordinates(const CartesianCoordinates &coordinates)
-    : m_matrix(coordinates.m_matrix)
+    : m_coordinates(coordinates.m_coordinates)
 {
 }
 
@@ -89,34 +83,44 @@ CartesianCoordinates::~CartesianCoordinates()
 /// Sets the size of the matrix to \p size.
 void CartesianCoordinates::setSize(size_t size)
 {
-    m_matrix.conservativeResize(size, Eigen::NoChange);
+    m_coordinates.resize(size);
 }
 
 /// Returns the number of coordinates in the matrix.
 size_t CartesianCoordinates::size() const
 {
-    return m_matrix.rows();
+    return m_coordinates.size();
 }
 
 /// Returns \c true if the matrix is empty.
 bool CartesianCoordinates::isEmpty() const
 {
-    return size() == 0;
+    return m_coordinates.empty();
 }
 
 /// Returns a matrix containing the data in the coordinate matrix.
 Matrix CartesianCoordinates::toMatrix() const
 {
-    return m_matrix;
+    Matrix matrix(size(), 3);
+
+    for(size_t i = 0; i < m_coordinates.size(); i++){
+        const Point3 &point = m_coordinates[i];
+
+        matrix(i, 0) = point.x();
+        matrix(i, 1) = point.y();
+        matrix(i, 2) = point.z();
+    }
+
+    return matrix;
 }
 
 // --- Coordinates --------------------------------------------------------- //
 /// Sets the position at \p index to \p position.
 void CartesianCoordinates::setPosition(size_t index, const Point3 &position)
 {
-    m_matrix(index, 0) = position.x();
-    m_matrix(index, 1) = position.y();
-    m_matrix(index, 2) = position.z();
+    assert(index < size());
+
+    m_coordinates[index] = position;
 }
 
 /// Sets the position at \p index to (\p x, \p y, \p z).
@@ -128,27 +132,33 @@ void CartesianCoordinates::setPosition(size_t index, Real x, Real y, Real z)
 /// Returns the coordinates at \p index.
 Point3 CartesianCoordinates::position(size_t index) const
 {
-    return Point3(m_matrix(index, 0),
-                  m_matrix(index, 1),
-                  m_matrix(index, 2));
+    assert(index < size());
+
+    return m_coordinates[index];
 }
 
 /// Sets the value at \p row and \p column to \p value.
 void CartesianCoordinates::setValue(size_t row, size_t column, Real value)
 {
-    m_matrix(row, column) = value;
+    assert(row < size());
+    assert(column < 3);
+
+    m_coordinates[row][column] = value;
 }
 
 /// Returns the value at \p row and \p column;
 Real CartesianCoordinates::value(size_t row, size_t column) const
 {
-    return m_matrix(row, column);
+    assert(row < size());
+    assert(column < 3);
+
+    return m_coordinates[row][column];
 }
 
 /// Appends \p position to the coordinates.
 void CartesianCoordinates::append(const Point3 &position)
 {
-    insert(size(), position);
+    m_coordinates.push_back(position);
 }
 
 /// Appends the point (\p x, \p y, \p z) to the coordinates.
@@ -160,21 +170,7 @@ void CartesianCoordinates::append(Real x, Real y, Real z)
 /// Inserts \p position at \p index.
 void CartesianCoordinates::insert(size_t index, const Point3 &position)
 {
-    // resize to make space for the new position
-    if(index >= size()){
-        setSize(index + 1);
-    }
-    else{
-        setSize(size() + 1);
-    }
-
-    // copy old positions
-    for(size_t i = size() - 1; i > index; i--){
-        setPosition(i, this->position(i - 1));
-    }
-
-    // set the new position
-    setPosition(index, position);
+    m_coordinates.insert(m_coordinates.begin() + index, position);
 }
 
 /// Inserts the point (\p x, \p y, \p z) at \p index.
@@ -186,11 +182,7 @@ void CartesianCoordinates::insert(size_t index, Real x, Real y, Real z)
 /// Removes the position at \p index.
 void CartesianCoordinates::remove(size_t index)
 {
-    for(size_t i = index + 1; i < size(); i++){
-        setPosition(i - 1, position(i));
-    }
-
-    setSize(size() - 1);
+    m_coordinates.erase(m_coordinates.begin() + index);
 }
 
 // --- Geometry ------------------------------------------------------------ //
@@ -251,62 +243,44 @@ Point3 CartesianCoordinates::center() const
         return Point3(0, 0, 0);
     }
 
-    // sums for each component
-    Real sx = 0;
-    Real sy = 0;
-    Real sz = 0;
+    Point3 sum(0, 0, 0);
 
     for(size_t i = 0; i < size(); i++){
-        sx += m_matrix(i, 0);
-        sy += m_matrix(i, 1);
-        sz += m_matrix(i, 2);
+        sum += m_coordinates[i];
     }
 
-    size_t n = size();
-
-    return Point3(sx/n, sy/n, sz/n);
+    return (1.0 / size()) * sum;
 }
 
 /// Returns the center of the coordinates after weighting each
 /// position with \p weights.
 Point3 CartesianCoordinates::weightedCenter(const std::vector<Real> &weights) const
 {
-    assert(static_cast<unsigned long>(size()) == weights.size());
+    assert(weights.size() == size());
 
     if(isEmpty()){
         return Point3();
     }
 
     // sums for each component
-    Real sx = 0;
-    Real sy = 0;
-    Real sz = 0;
+    Point3 sum(0, 0, 0);
 
     // sum of weights
     Real sw = 0;
 
     for(size_t i = 0; i < size(); i++){
-        Real weight = weights[i];
-
-        sx += weight * m_matrix(i, 0);
-        sy += weight * m_matrix(i, 1);
-        sz += weight * m_matrix(i, 2);
-
-        sw += weight;
+        sum += weights[i] * m_coordinates[i];
+        sw += weights[i];
     }
 
-    size_t n = sw * size();
-
-    return Point3(sx/n, sy/n, sz/n);
+    return (1.0 / (sw * size())) * sum;
 }
 
 /// Moves all of the coordinates by \p vector.
 void CartesianCoordinates::moveBy(const Vector3 &vector)
 {
-    for(size_t i = 0; i < size(); i++){
-        m_matrix(i, 0) += vector.x();
-        m_matrix(i, 1) += vector.y();
-        m_matrix(i, 2) += vector.z();
+    foreach(Point3 &point, m_coordinates){
+        point += vector;
     }
 }
 
@@ -378,7 +352,9 @@ CartesianCoordinates CartesianCoordinates::subtract(const CartesianCoordinates &
 /// and \p coordinates.
 Eigen::Matrix<Real, 3, 3> CartesianCoordinates::multiply(const CartesianCoordinates *coordinates) const
 {
-    return m_matrix.transpose() * coordinates->m_matrix;
+    assert(coordinates->size() == this->size());
+
+    return toMatrix().transpose() * coordinates->toMatrix();
 }
 
 // --- Operators ----------------------------------------------------------- //
@@ -394,7 +370,9 @@ CartesianCoordinates CartesianCoordinates::operator-(const CartesianCoordinates 
 
 CartesianCoordinates& CartesianCoordinates::operator=(const CartesianCoordinates &coordinates)
 {
-    m_matrix = coordinates.m_matrix;
+    if(this != &coordinates){
+        m_coordinates = coordinates.m_coordinates;
+    }
 
     return *this;
 }
