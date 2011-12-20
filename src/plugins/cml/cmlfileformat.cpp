@@ -35,152 +35,18 @@
 
 #include "cmlfileformat.h"
 
-#include <QtXml>
+#include "../../3rdparty/rapidxml/rapidxml.hpp"
+
+#include <cstdio>
+#include <iostream>
 
 #include <chemkit/atom.h>
 #include <chemkit/bond.h>
+#include <chemkit/foreach.h>
 #include <chemkit/molecule.h>
 #include <chemkit/moleculefile.h>
 #include <chemkit/diagramcoordinates.h>
-
-namespace {
-
-class CmlHandler : public QXmlDefaultHandler
-{
-public:
-    CmlHandler(chemkit::MoleculeFile *file);
-    ~CmlHandler();
-
-    bool startElement(const QString &namespaceURI, const QString &localName, const QString &qName, const QXmlAttributes &atts);
-    bool endElement(const QString &namespaceURI, const QString &localName, const QString &qName);
-
-private:
-    chemkit::MoleculeFile *m_file;
-    chemkit::Molecule *m_molecule;
-    chemkit::DiagramCoordinates *m_diagramCoordinates;
-    QHash<QString, chemkit::Atom *> m_atomIds;
-};
-
-CmlHandler::CmlHandler(chemkit::MoleculeFile *file)
-    : QXmlDefaultHandler(),
-      m_file(file),
-      m_molecule(0),
-      m_diagramCoordinates(0)
-{
-}
-
-CmlHandler::~CmlHandler()
-{
-}
-
-bool CmlHandler::startElement(const QString &namespaceURI, const QString &localName, const QString &qName, const QXmlAttributes &atts)
-{
-    CHEMKIT_UNUSED(namespaceURI);
-    CHEMKIT_UNUSED(localName);
-
-    if(qName == "molecule"){
-        m_molecule = new chemkit::Molecule();
-    }
-    else if(qName == "atom" && m_molecule){
-        QString symbol = atts.value("elementType");
-
-        if(!symbol.isEmpty()){
-            chemkit::Atom *atom = m_molecule->addAtom(symbol.toStdString());
-            if(!atom){
-                qDebug() << "invalid atom symbol: " << symbol;
-                return true;
-            }
-
-            QString id = atts.value("id");
-            if(!id.isEmpty())
-                m_atomIds[id] = atom;
-
-            chemkit::Real x3 = atts.value("x3").toDouble();
-            chemkit::Real y3 = atts.value("y3").toDouble();
-            chemkit::Real z3 = atts.value("z3").toDouble();
-            atom->setPosition(x3, y3, z3);
-
-            QString x2 = atts.value("x2");
-            QString y2 = atts.value("y2");
-
-            if(!x2.isEmpty()){
-                if(!m_diagramCoordinates){
-                    m_diagramCoordinates = new chemkit::DiagramCoordinates;
-                }
-
-                m_diagramCoordinates->append(chemkit::Point2f(x2.toFloat(),
-                                                              y2.toFloat()));
-            }
-        }
-    }
-    else if(qName == "bond" && m_molecule){
-        QString atomRefs = atts.value("atomRefs2");
-        if(!atomRefs.isEmpty()){
-            QStringList atomsIds = atomRefs.split(' ', QString::SkipEmptyParts);
-            if(atomsIds.size() != 2){
-                qDebug() << "atomRefs size != 2";
-                return true;
-            }
-
-            chemkit::Atom *atom1 = m_atomIds[atomsIds[0]];
-            chemkit::Atom *atom2 = m_atomIds[atomsIds[1]];
-
-            if(!atom1){
-                qDebug() << "invalid atom ref: " << atomsIds[0];
-                return true;
-            }
-            if(!atom2){
-                qDebug() << "invalid atom ref: " << atomsIds[1];
-                return true;
-            }
-
-            int bondOrder;
-            QString order = atts.value("order");
-            if(order.isEmpty()){
-                bondOrder = chemkit::Bond::Single;
-            }
-            else{
-                bondOrder = order.toInt();
-
-                if(bondOrder == 0){
-                    if(order == "S")
-                        bondOrder = chemkit::Bond::Single;
-                    else if(order == "D")
-                        bondOrder = chemkit::Bond::Double;
-                    else if(order == "T")
-                        bondOrder = chemkit::Bond::Triple;
-                    else if(order == "A")
-                        bondOrder = chemkit::Bond::Single;
-                }
-            }
-
-            m_molecule->addBond(atom1, atom2, bondOrder);
-        }
-    }
-
-    return true;
-}
-
-bool CmlHandler::endElement(const QString &namespaceURI, const QString &localName, const QString &qName)
-{
-    CHEMKIT_UNUSED(namespaceURI);
-    CHEMKIT_UNUSED(localName);
-
-    if(qName == "molecule"){
-        if(m_diagramCoordinates){
-            m_molecule->addCoordinateSet(m_diagramCoordinates);
-            m_diagramCoordinates = 0;
-        }
-
-        m_file->addMolecule(m_molecule);
-        m_molecule = 0;
-        m_atomIds.clear();
-    }
-
-    return true;
-}
-
-} // end anonymous namespace
+#include <chemkit/cartesiancoordinates.h>
 
 CmlFileFormat::CmlFileFormat()
     : chemkit::MoleculeFileFormat("cml")
@@ -193,72 +59,179 @@ CmlFileFormat::~CmlFileFormat()
 
 bool CmlFileFormat::read(std::istream &input, chemkit::MoleculeFile *file)
 {
-    QByteArray data;
-    while(!input.eof()){
-        data += input.get();
+    // read file data into a string
+    std::string data((std::istreambuf_iterator<char>(input)),
+                      std::istreambuf_iterator<char>());
+
+    // parse document
+    rapidxml::xml_document<> doc;
+    doc.parse<0>(const_cast<char *>(data.c_str()));
+
+    // parse molecules
+    chemkit::Molecule *molecule = 0;
+    rapidxml::xml_node<> *moleculeNode = doc.first_node("molecule");
+    while(moleculeNode){
+        molecule = new chemkit::Molecule;
+
+        chemkit::DiagramCoordinates *diagramCoordinates = 0;
+        chemkit::CartesianCoordinates *cartesianCoordinates = 0;
+
+        // parse name
+        rapidxml::xml_node<> *nameNode = moleculeNode->first_node("name");
+        if(nameNode && nameNode->value()){
+            molecule->setName(nameNode->value());
+        }
+
+        // parse atoms
+        rapidxml::xml_node<> *atomArrayNode = moleculeNode->first_node("atomArray");
+        if(atomArrayNode){
+            rapidxml::xml_node<> *atomNode = atomArrayNode->first_node("atom");
+
+            while(atomNode){
+                chemkit::Point2f point2(0, 0);
+                chemkit::Point3 point3(0, 0, 0);
+
+                rapidxml::xml_attribute<> *attr = atomNode->first_attribute();
+                while(attr){
+                    if(strcmp(attr->name(), "elementType") == 0){
+                        molecule->addAtom(attr->value());
+                    }
+                    else if(strcmp(attr->name(), "x2") == 0){
+                        point2[0] = strtof(attr->value(), 0);
+                    }
+                    else if(strcmp(attr->name(), "y2") == 0){
+                        point2[1] = strtof(attr->value(), 0);
+                    }
+                    else if(strcmp(attr->name(), "x3") == 0){
+                        point3[0] = strtod(attr->value(), 0);
+                    }
+                    else if(strcmp(attr->name(), "y3") == 0){
+                        point3[1] = strtod(attr->value(), 0);
+                    }
+                    else if(strcmp(attr->name(), "z3") == 0){
+                        point3[2] = strtod(attr->value(), 0);
+                    }
+
+                    attr = attr->next_attribute();
+                }
+
+                if(cartesianCoordinates){
+                    cartesianCoordinates->append(point3);
+                }
+                else if(!point3.isZero()){
+                    cartesianCoordinates = new chemkit::CartesianCoordinates(molecule->size() - 1);
+                    cartesianCoordinates->append(point3);
+                }
+
+                if(diagramCoordinates){
+                    diagramCoordinates->append(point2);
+                }
+                else if(!point2.isZero()){
+                    diagramCoordinates = new chemkit::DiagramCoordinates(molecule->size() - 1);
+                    diagramCoordinates->append(point2);
+                }
+
+                atomNode = atomNode->next_sibling("atom");
+            }
+        }
+
+        // parse bonds
+        rapidxml::xml_node<> *bondArrayNode = moleculeNode->first_node("bondArray");
+        if(bondArrayNode){
+            rapidxml::xml_node<> *bondNode = bondArrayNode->first_node("bond");
+            while(bondNode){
+                rapidxml::xml_attribute<> *atomRefs2Attr = bondNode->first_attribute("atomRefs2");
+                if(atomRefs2Attr && atomRefs2Attr->value()){
+                    char unused;
+                    unsigned int atom1;
+                    unsigned int atom2;
+                    int count = sscanf(atomRefs2Attr->value(), "%c%u %c%u", &unused, &atom1, &unused, &atom2);
+                    if(count == 4){
+                        rapidxml::xml_attribute<> *orderAttr = bondNode->first_attribute("order");
+                        chemkit::Bond::BondOrderType bondOrder = chemkit::Bond::Single;
+
+                        if(orderAttr && orderAttr->value()){
+                            bondOrder = strtol(orderAttr->value(), 0, 10);
+                        }
+
+                        molecule->addBond(molecule->atom(atom1 - 1),
+                                          molecule->atom(atom2 - 1),
+                                          bondOrder);
+                    }
+                }
+
+                bondNode = bondNode->next_sibling("bond");
+            }
+        }
+
+        // add coordinate sets
+        if(cartesianCoordinates){
+            molecule->addCoordinateSet(cartesianCoordinates);
+            cartesianCoordinates = 0;
+        }
+
+        if(diagramCoordinates){
+            molecule->addCoordinateSet(diagramCoordinates);
+            diagramCoordinates = 0;
+        }
+
+        // add molecule to file
+        file->addMolecule(molecule);
+        molecule = 0;
+
+        // move to next molecule
+        moleculeNode = moleculeNode->next_sibling("molecule");
     }
-    data.chop(1);
 
-    QBuffer buffer;
-    buffer.setData(data);
-    buffer.open(QBuffer::ReadOnly);
-
-    QXmlSimpleReader xml;
-    QXmlInputSource source(&buffer);
-    CmlHandler handler(file);
-    xml.setContentHandler(&handler);
-    xml.setErrorHandler(&handler);
-
-    bool ok = xml.parse(source);
-    if(!ok)
-        setErrorString(QString("XML Parsing failed: %1").arg(handler.errorString()).toStdString());
-
-    return ok;
+    return true;
 }
 
 bool CmlFileFormat::write(const chemkit::MoleculeFile *file, std::ostream &output)
 {
-    QBuffer buffer;
-    buffer.open(QBuffer::WriteOnly);
+    output << "<?xml version=\"1.0\"?>\n";
 
-    QXmlStreamWriter stream(&buffer);
-    stream.setAutoFormatting(true);
-
-    stream.writeStartDocument();
-
+    // write each molecule
     foreach(const chemkit::Molecule *molecule, file->molecules()){
-        stream.writeStartElement("molecule");
+        output << "<molecule>\n";
 
-        stream.writeTextElement("name", molecule->name().c_str());
-
-        stream.writeStartElement("atomArray");
-        foreach(const chemkit::Atom *atom, molecule->atoms()){
-            stream.writeStartElement("atom");
-            stream.writeAttribute("id", QString("a%1").arg(atom->index()+1));
-            stream.writeAttribute("elementType", atom->symbol().c_str());
-            stream.writeAttribute("x3", QString::number(atom->x()));
-            stream.writeAttribute("y3", QString::number(atom->y()));
-            stream.writeAttribute("z3", QString::number(atom->z()));
-            stream.writeEndElement();
+        // write molecule name
+        if(!molecule->name().empty()){
+            output << "  <name>" << molecule->name() << "</name>\n";
         }
-        stream.writeEndElement();
 
-        stream.writeStartElement("bondArray");
-        foreach(const chemkit::Bond *bond, molecule->bonds()){
-            stream.writeStartElement("bond");
-            stream.writeAttribute("atomRefs2", QString("a%1 a%2").arg(bond->atom1()->index()+1).arg(bond->atom2()->index()+1));
-            stream.writeAttribute("order", QString::number(bond->order()));
-            stream.writeEndElement();
+        // write atom array
+        if(molecule->atomCount() != 0){
+            output << "  <atomArray>\n";
+
+            foreach(const chemkit::Atom *atom, molecule->atoms()){
+                output << "    <atom id=\"a" << atom->index() + 1 << "\""
+                       << " elementType=\"" << atom->symbol() << "\""
+                       << " x3=\"" << atom->x() << "\""
+                       << " y3=\"" << atom->y() << "\""
+                       << " z3=\"" << atom->z() << "\""
+                       << "/>\n";
+            }
+
+            output << "  </atomArray>\n";
         }
-        stream.writeEndElement();
 
-        stream.writeEndElement();
+        // write bond array
+        if(molecule->bondCount() != 0){
+            output << "  <bondArray>\n";
+
+            foreach(const chemkit::Bond *bond, molecule->bonds()){
+                output << "    <bond atomRefs2=\""
+                       << "a" << bond->atom1()->index() + 1 << " "
+                       << "a" << bond->atom2()->index() + 1 << "\""
+                       << " order=\"" << static_cast<int>(bond->order())
+                       << "\"/>\n";
+            }
+
+            output << "  </bondArray>\n";
+        }
+
+        output << "</molecule>\n";
     }
-
-    stream.writeEndDocument();
-
-    QByteArray data = buffer.data();
-    output.write(data.constData(), data.size());
 
     return true;
 }

@@ -78,6 +78,8 @@ void CmlTest::read()
     chemkit::Molecule *molecule = file.molecule();
     QVERIFY(molecule != 0);
     QCOMPARE(molecule->formula(), formula.toStdString());
+    QCOMPARE(molecule->coordinateSetCount(), size_t(1));
+    QVERIFY(molecule->coordinateSet(0)->type() == chemkit::CoordinateSet::Cartesian);
 }
 
 void CmlTest::glucose()
