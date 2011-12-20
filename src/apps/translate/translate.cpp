@@ -38,6 +38,7 @@
 #include <boost/scoped_ptr.hpp>
 #include <boost/program_options.hpp>
 
+#include <chemkit/molecule.h>
 #include <chemkit/lineformat.h>
 
 int main(int argc, char *argv[])

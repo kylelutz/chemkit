@@ -42,10 +42,10 @@
 #include <vector>
 
 #include "variant.h"
-#include "molecule.h"
 
 namespace chemkit {
 
+class Molecule;
 class LineFormatPrivate;
 
 class CHEMKIT_EXPORT LineFormat

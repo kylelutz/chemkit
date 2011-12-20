@@ -41,6 +41,7 @@
 #include <boost/scoped_ptr.hpp>
 #include <boost/algorithm/string.hpp>
 
+#include "molecule.h"
 #include "pluginmanager.h"
 
 namespace chemkit {

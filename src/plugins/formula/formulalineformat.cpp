@@ -35,6 +35,8 @@
 
 #include "formulalineformat.h"
 
+#include <chemkit/molecule.h>
+
 FormulaLineFormat::FormulaLineFormat()
     : chemkit::LineFormat("formula")
 {
