@@ -194,6 +194,15 @@ bool MdlFileFormat::readAtomBlock(std::istream &input, chemkit::Molecule *molecu
         sscanf(&line[0], "%10lf%10lf%10lf%3s", &x, &y, &z, symbol);
 
         chemkit::Atom *atom = molecule->addAtom(symbol);
+        if(!atom->element().isValid()){
+            if(strcmp(symbol, "D") == 0){
+                atom->setIsotope(chemkit::Isotope(chemkit::Atom::Hydrogen, 2));
+            }
+            else if(strcmp(symbol, "T") == 0){
+                atom->setIsotope(chemkit::Isotope(chemkit::Atom::Hydrogen, 3));
+            }
+        }
+
         atom->setPosition(x, y, z);
     }
 
