@@ -479,11 +479,7 @@ void Atom::setPosition(Real x, Real y, Real z)
 /// Returns the atom's coordinates.
 Point3 Atom::position() const
 {
-    if(!m_molecule->m_coordinates){
-        return Point3(0, 0, 0);
-    }
-
-    return m_molecule->m_coordinates->position(m_index);
+    return m_molecule->coordinates()->position(m_index);
 }
 
 /// Returns the atom's x coordinate. Equivalent to position().x().
