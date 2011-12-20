@@ -108,6 +108,13 @@ size_t InternalCoordinates::size() const
     return d->size;
 }
 
+/// Returns \c true if the internal coordinates object contains
+/// no coordinates (i.e. size() == \c 0).
+bool InternalCoordinates::isEmpty() const
+{
+    return size() == 0;
+}
+
 // --- Coordinates --------------------------------------------------------- //
 /// Sets the distance, angle, and torsion at \p row to \p r,
 /// \p theta and \p phi respectively. The angles are in degrees.

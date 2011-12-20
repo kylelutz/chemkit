@@ -59,6 +59,7 @@ public:
 
     // properties
     size_t size() const;
+    bool isEmpty() const;
 
     // coordinates
     void setCoordinates(size_t row, Real r, Real theta = 0, Real phi = 0);
