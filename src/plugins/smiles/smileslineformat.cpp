@@ -91,6 +91,10 @@ int readAromaticSymbol(const char **p)
         (*p)++;
         return chemkit::Atom::Selenium;
     }
+    else if(first == 't' && second == 'e'){
+        (*p)++;
+        return chemkit::Atom::Tellurium;
+    }
     else{
         int atomicNumber = chemkit::Element::atomicNumber(toupper(first));
         if(!atomicNumber){
