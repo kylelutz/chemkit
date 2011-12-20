@@ -395,6 +395,7 @@ int Element::atomicNumber(char symbol)
         case 'S': return 16;
         case 'K': return 19;
         case 'V': return 23;
+        case 'Y': return 39;
         case 'I': return 53;
         case 'W': return 74;
         case 'U': return 92;
