@@ -39,6 +39,7 @@
 #include "chemkit.h"
 
 #include <vector>
+#include <cstddef>
 
 #include "point3.h"
 
@@ -52,20 +53,20 @@ class CHEMKIT_EXPORT InternalCoordinates
 public:
     // construction and destruction
     InternalCoordinates();
-    InternalCoordinates(int size);
+    InternalCoordinates(size_t size);
     InternalCoordinates(const InternalCoordinates &coordinates);
     ~InternalCoordinates();
 
     // properties
-    int size() const;
+    size_t size() const;
 
     // coordinates
-    void setCoordinates(int row, Real r, Real theta = 0, Real phi = 0);
-    void setCoordinatesRadians(int row, Real r, Real theta = 0, Real phi = 0);
-    std::vector<Real> coordinates(int row) const;
-    std::vector<Real> coordinatesRadians(int row) const;
-    void setConnections(int row, int a, int b = 0, int c = 0);
-    std::vector<int> connections(int row) const;
+    void setCoordinates(size_t row, Real r, Real theta = 0, Real phi = 0);
+    void setCoordinatesRadians(size_t row, Real r, Real theta = 0, Real phi = 0);
+    std::vector<Real> coordinates(size_t row) const;
+    std::vector<Real> coordinatesRadians(size_t row) const;
+    void setConnections(size_t row, size_t a, size_t b = 0, size_t c = 0);
+    std::vector<size_t> connections(size_t row) const;
 
     // conversions
     CartesianCoordinates* toCartesianCoordinates() const;

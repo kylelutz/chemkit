@@ -47,8 +47,8 @@ namespace chemkit {
 class InternalCoordinatesPrivate
 {
 public:
-    int size;
-    int *connections;
+    size_t size;
+    size_t *connections;
     Real *coordinates;
 };
 
@@ -71,11 +71,11 @@ InternalCoordinates::InternalCoordinates()
 }
 
 /// Creates a new internal coordinate set with \p size rows.
-InternalCoordinates::InternalCoordinates(int size)
+InternalCoordinates::InternalCoordinates(size_t size)
     : d(new InternalCoordinatesPrivate)
 {
     d->size = size;
-    d->connections = new int[3 * size];
+    d->connections = new size_t[3 * size];
     d->coordinates = new Real[3 * size];
 }
 
@@ -85,11 +85,11 @@ InternalCoordinates::InternalCoordinates(const InternalCoordinates &coordinates)
     : d(new InternalCoordinatesPrivate)
 {
     d->size = coordinates.d->size;
-    d->connections = new int[3 * coordinates.d->size];
+    d->connections = new size_t[3 * coordinates.d->size];
     d->coordinates = new Real[3 * coordinates.d->size];
 
-    memcpy(d->connections, coordinates.d->connections, 3 * coordinates.d->size * sizeof(int));
-    memcpy(d->coordinates, coordinates.d->coordinates, 3 * coordinates.d->size * sizeof(int));
+    memcpy(d->connections, coordinates.d->connections, 3 * coordinates.d->size * sizeof(size_t));
+    memcpy(d->coordinates, coordinates.d->coordinates, 3 * coordinates.d->size * sizeof(size_t));
 }
 
 /// Destroys the internal coordinates object.
@@ -103,7 +103,7 @@ InternalCoordinates::~InternalCoordinates()
 
 // --- Properties ---------------------------------------------------------- //
 /// Returns the number of rows of coordinates.
-int InternalCoordinates::size() const
+size_t InternalCoordinates::size() const
 {
     return d->size;
 }
@@ -111,7 +111,7 @@ int InternalCoordinates::size() const
 // --- Coordinates --------------------------------------------------------- //
 /// Sets the distance, angle, and torsion at \p row to \p r,
 /// \p theta and \p phi respectively. The angles are in degrees.
-void InternalCoordinates::setCoordinates(int row, Real r, Real theta, Real phi)
+void InternalCoordinates::setCoordinates(size_t row, Real r, Real theta, Real phi)
 {
     assert(row < d->size);
 
@@ -122,7 +122,7 @@ void InternalCoordinates::setCoordinates(int row, Real r, Real theta, Real phi)
 
 /// Sets the distance, angle, and torsion at \p row to \p r,
 /// \p theta and \p phi respectively. The angles are in radians.
-void InternalCoordinates::setCoordinatesRadians(int row, Real r, Real theta, Real phi)
+void InternalCoordinates::setCoordinatesRadians(size_t row, Real r, Real theta, Real phi)
 {
     assert(row < d->size);
 
@@ -133,7 +133,7 @@ void InternalCoordinates::setCoordinatesRadians(int row, Real r, Real theta, Rea
 
 /// Returns the distance, angle, and torsion coordinates at \p row.
 /// The returned angles are in degrees.
-std::vector<Real> InternalCoordinates::coordinates(int row) const
+std::vector<Real> InternalCoordinates::coordinates(size_t row) const
 {
     assert(row < d->size);
 
@@ -148,13 +148,13 @@ std::vector<Real> InternalCoordinates::coordinates(int row) const
 
 /// Returns the distance, angle, and torsion coordinates at \p row.
 /// The returned angles are in radians.
-std::vector<Real> InternalCoordinates::coordinatesRadians(int row) const
+std::vector<Real> InternalCoordinates::coordinatesRadians(size_t row) const
 {
     assert(row < d->size);
 
     std::vector<Real> coordinates = this->coordinates(row);
 
-    for(int i = 0; i < 3; i++){
+    for(size_t i = 0; i < 3; i++){
         coordinates[i] *= chemkit::constants::DegreesToRadians;
     }
 
@@ -163,7 +163,7 @@ std::vector<Real> InternalCoordinates::coordinatesRadians(int row) const
 
 /// Sets the connections for the coordinates at \p row to \p a, \p b
 /// and \p c.
-void InternalCoordinates::setConnections(int row, int a, int b, int c)
+void InternalCoordinates::setConnections(size_t row, size_t a, size_t b, size_t c)
 {
     assert(row < d->size);
 
@@ -173,11 +173,11 @@ void InternalCoordinates::setConnections(int row, int a, int b, int c)
 }
 
 /// Returns the connections for the coordinates at \p row.
-std::vector<int> InternalCoordinates::connections(int row) const
+std::vector<size_t> InternalCoordinates::connections(size_t row) const
 {
     assert(row < d->size);
 
-    std::vector<int> connections(3);
+    std::vector<size_t> connections(3);
 
     connections[0] = d->connections[row * 3 + 0];
     connections[1] = d->connections[row * 3 + 1];
@@ -201,14 +201,14 @@ CartesianCoordinates* InternalCoordinates::toCartesianCoordinates() const
     CartesianCoordinates *cartesianCoordinates = new CartesianCoordinates(d->size);
 
     // set positions for the first three atoms
-    if(d->size >= 0){
+    if(d->size > 0){
         cartesianCoordinates->setPosition(0, Point3(0, 0, 0));
 
-        if(d->size >= 1){
+        if(d->size > 1){
             Real r1 = coordinates(1)[0];
             cartesianCoordinates->setPosition(1, Point3(r1, 0, 0));
 
-            if(d->size >= 2){
+            if(d->size > 2){
                 Real r2 = coordinates(2)[0];
                 Real theta = coordinates(2)[1];
 
@@ -221,7 +221,7 @@ CartesianCoordinates* InternalCoordinates::toCartesianCoordinates() const
     }
 
     // set positions for the rest of the atoms
-    for(int i = 3; i < d->size; i++){
+    for(size_t i = 3; i < d->size; i++){
         std::vector<Real> coordinates = this->coordinates(i);
         Real r = coordinates[0];
         Real theta = coordinates[1];
@@ -236,7 +236,7 @@ CartesianCoordinates* InternalCoordinates::toCartesianCoordinates() const
         Real y = r * cosPhi * sinTheta;
         Real z = r * sinPhi * sinTheta;
 
-        std::vector<int> connections = this->connections(i);
+        std::vector<size_t> connections = this->connections(i);
 
         const Point3 &a = cartesianCoordinates->position(connections[2]);
         const Point3 &b = cartesianCoordinates->position(connections[1]);
@@ -270,11 +270,11 @@ InternalCoordinates& InternalCoordinates::operator=(const InternalCoordinates &c
     delete [] d->coordinates;
 
     d->size = coordinates.d->size;
-    d->connections = new int[3 * coordinates.d->size];
+    d->connections = new size_t[3 * coordinates.d->size];
     d->coordinates = new Real[3 * coordinates.d->size];
 
-    memcpy(d->connections, coordinates.d->connections, 3 * coordinates.d->size * sizeof(int));
-    memcpy(d->coordinates, coordinates.d->coordinates, 3 * coordinates.d->size * sizeof(int));
+    memcpy(d->connections, coordinates.d->connections, 3 * coordinates.d->size * sizeof(size_t));
+    memcpy(d->coordinates, coordinates.d->coordinates, 3 * coordinates.d->size * sizeof(size_t));
 
     return *this;
 }

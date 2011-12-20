@@ -43,16 +43,16 @@
 void InternalCoordinatesTest::size()
 {
     chemkit::InternalCoordinates coordinates(1);
-    QCOMPARE(coordinates.size(),1);
+    QCOMPARE(coordinates.size(), size_t(1));
 
     chemkit::InternalCoordinates newCoordinates(coordinates);
-    QCOMPARE(newCoordinates.size(),1);
+    QCOMPARE(newCoordinates.size(), size_t(1));
 }
 
 void InternalCoordinatesTest::coordinates()
 {
     chemkit::InternalCoordinates newCoordinates(1);
-    QCOMPARE(newCoordinates.size(),1);
+    QCOMPARE(newCoordinates.size(), size_t(1));
 
     chemkit::Real r = 0.0;
     chemkit::Real theta = 1.0;
@@ -68,7 +68,7 @@ void InternalCoordinatesTest::coordinates()
 void InternalCoordinatesTest::coordinatesRadians()
 {
     chemkit::InternalCoordinates newCoordinates(1);
-    QCOMPARE(newCoordinates.size(),1);
+    QCOMPARE(newCoordinates.size(), size_t(1));
 
     chemkit::Real r = 0.0;
     chemkit::Real theta = 1.0;
@@ -87,14 +87,14 @@ void InternalCoordinatesTest::coordinatesRadians()
 void InternalCoordinatesTest::connections()
 {
     chemkit::InternalCoordinates newCoordinates(1);
-    QCOMPARE(newCoordinates.size(),1);
+    QCOMPARE(newCoordinates.size(), size_t(1));
 
     newCoordinates.setConnections(0, 1, 2, 3);
-    std::vector<int> connections = newCoordinates.connections(0);
+    std::vector<size_t> connections = newCoordinates.connections(0);
 
-    QCOMPARE(connections[0], 1);
-    QCOMPARE(connections[1], 2);
-    QCOMPARE(connections[2], 3);
+    QCOMPARE(connections[0], size_t(1));
+    QCOMPARE(connections[1], size_t(2));
+    QCOMPARE(connections[2], size_t(3));
 }
 
 QTEST_APPLESS_MAIN(InternalCoordinatesTest)
