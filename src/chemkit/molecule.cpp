@@ -45,9 +45,11 @@
 #include <Eigen/Core>
 #include <Eigen/Geometry>
 
+#include "vf2.h"
 #include "atom.h"
 #include "bond.h"
 #include "ring.h"
+#include "graph.h"
 #include "bitset.h"
 #include "point3.h"
 #include "rppath.h"
@@ -60,7 +62,6 @@
 #include "lineformat.h"
 #include "quaternion.h"
 #include "coordinateset.h"
-#include "moleculargraph.h"
 #include "moleculeprivate.h"
 #include "moleculewatcher.h"
 #include "diagramcoordinates.h"
@@ -659,49 +660,145 @@ bool Molecule::isSubstructureOf(const Molecule *molecule, int flags) const
     return molecule->contains(this, flags);
 }
 
+namespace {
+
+struct AtomComparator
+{
+    AtomComparator(const std::vector<Atom *> &sourceAtoms, const std::vector<Atom *> &targetAtoms)
+        : m_sourceAtoms(sourceAtoms),
+          m_targetAtoms(targetAtoms)
+    {
+    }
+
+    AtomComparator(const AtomComparator &other)
+        : m_sourceAtoms(other.m_sourceAtoms),
+          m_targetAtoms(other.m_targetAtoms)
+    {
+    }
+
+    bool operator()(size_t a, size_t b) const
+    {
+        return m_sourceAtoms[a]->atomicNumber() == m_targetAtoms[b]->atomicNumber();
+    }
+
+    const std::vector<Atom *> &m_sourceAtoms;
+    const std::vector<Atom *> &m_targetAtoms;
+};
+
+struct BondComparator
+{
+    BondComparator(const std::vector<Atom *> &sourceAtoms, const std::vector<Atom *> &targetAtoms, int flags)
+        : m_sourceAtoms(sourceAtoms),
+          m_targetAtoms(targetAtoms),
+          m_flags(flags)
+    {
+    }
+
+    BondComparator(const BondComparator &other)
+        : m_sourceAtoms(other.m_sourceAtoms),
+          m_targetAtoms(other.m_targetAtoms),
+          m_flags(other.m_flags)
+    {
+    }
+
+    bool operator()(size_t a1, size_t a2, size_t b1, size_t b2) const
+    {
+        const Bond *bondA = m_sourceAtoms[a1]->bondTo(m_sourceAtoms[a2]);
+        const Bond *bondB = m_targetAtoms[b1]->bondTo(m_targetAtoms[b2]);
+
+        if(!bondA || !bondB){
+            return false;
+        }
+
+        if(m_flags & Molecule::CompareAromaticity){
+            return (bondA->order() == bondB->order()) ||
+                   (bondA->isAromatic() && bondB->isAromatic());
+        }
+        else{
+            return bondA->order() == bondB->order();
+        }
+    }
+
+    const std::vector<Atom *> &m_sourceAtoms;
+    const std::vector<Atom *> &m_targetAtoms;
+    int m_flags;
+};
+
+} // end anonymous namespace
+
 /// Returns a mapping (also known as an isomorphism) between the atoms
 /// in the molecule and the atoms in \p molecule.
 std::map<Atom *, Atom *> Molecule::mapping(const Molecule *molecule, int flags) const
 {
-    MolecularGraph *source;
-    MolecularGraph *target;
+    Graph<size_t> source;
+    Graph<size_t> target;
+
+    std::vector<Atom *> sourceAtoms;
+    std::vector<Atom *> targetAtoms;
 
     if(flags & CompareHydrogens){
-        source = new MolecularGraph(this);
-        target = new MolecularGraph(molecule);
+        source.resize(this->size());
+        foreach(const Bond *bond, this->bonds()){
+            source.addEdge(bond->atom1()->index(), bond->atom2()->index());
+        }
+        sourceAtoms = m_atoms;
+
+        target.resize(molecule->size());
+        foreach(const Bond *bond, molecule->bonds()){
+            target.addEdge(bond->atom1()->index(), bond->atom2()->index());
+        }
+        targetAtoms = molecule->atoms();
     }
     else{
-        source = MolecularGraph::hydrogenDepletedGraph(this);
-        target = MolecularGraph::hydrogenDepletedGraph(molecule);
-    }
-
-    // label for aroamtic bonds
-    const int aromaticBondLabel = 10;
-
-    if(flags & CompareAromaticity){
-        for(unsigned int i = 0; i < source->bondCount(); i++){
-            const Bond *bond = source->bond(i);
-
-            if(bond->isAromatic()){
-                source->setBondLabel(i, aromaticBondLabel);
+        foreach(Atom *atom, m_atoms){
+            if(!atom->isTerminalHydrogen()){
+                sourceAtoms.push_back(atom);
             }
         }
 
-        for(unsigned int i = 0; i < target->bondCount(); i++){
-            const Bond *bond = target->bond(i);
+        foreach(Atom *atom, molecule->atoms()){
+            if(!atom->isTerminalHydrogen()){
+                targetAtoms.push_back(atom);
+            }
+        }
 
-            if(bond->isAromatic()){
-                target->setBondLabel(i, aromaticBondLabel);
+        source.resize(sourceAtoms.size());
+        target.resize(targetAtoms.size());
+
+        for(size_t i = 0; i < sourceAtoms.size(); i++){
+            for(size_t j = i + 1; j < sourceAtoms.size(); j++){
+                if(sourceAtoms[i]->isBondedTo(sourceAtoms[j])){
+                    source.addEdge(i, j);
+                }
+            }
+        }
+
+        for(size_t i = 0; i < targetAtoms.size(); i++){
+            for(size_t j = i + 1; j < targetAtoms.size(); j++){
+                if(targetAtoms[i]->isBondedTo(targetAtoms[j])){
+                    target.addEdge(i, j);
+                }
             }
         }
     }
 
-    std::map<Atom *, Atom *> mapping = MolecularGraph::isomorphism(source, target);
+    AtomComparator atomComparator(sourceAtoms, targetAtoms);
+    BondComparator bondComparator(sourceAtoms, targetAtoms, flags);
 
-    delete source;
-    delete target;
+    // run vf2 isomorphism algorithm
+    std::map<size_t, size_t> mapping = chemkit::algorithm::vf2(source,
+                                                               target,
+                                                               atomComparator,
+                                                               bondComparator);
 
-    return mapping;
+    // convert index mapping to an atom mapping
+    std::map<Atom *, Atom *> atomMapping;
+
+    for(std::map<size_t, size_t>::iterator i = mapping.begin(); i != mapping.end(); ++i){
+        atomMapping[sourceAtoms[i->first]] = targetAtoms[i->second];
+    }
+
+    return atomMapping;
 }
 
 /// Searches the molecule for an occurrence of \p moiety and returns
