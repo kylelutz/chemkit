@@ -33,64 +33,20 @@
 **
 ******************************************************************************/
 
-#include "pubchemtest.h"
+#ifndef PUBCHEMWEBTEST_H
+#define PUBCHEMWEBTEST_H
 
-#include <chemkit/pubchem.h>
-#include <chemkit/molecule.h>
-#include <chemkit/moleculefile.h>
+#include <QtTest>
 
-void PubChemTest::downloadFile()
+class PubChemWebTest : public QObject
 {
-    chemkit::PubChem pubchem;
+	Q_OBJECT
 
-    // CID 5950 is alanine
-    chemkit::MoleculeFile *file = pubchem.downloadFile("5950");
-    QVERIFY(file != 0);
+	private slots:
+        void downloadFile();
+        void downloadMultiFile();
+        void search();
+        void standardizeFormula();
+};
 
-    QCOMPARE(file->moleculeCount(), 1);
-    chemkit::Molecule *molecule = file->molecule();
-    QCOMPARE(molecule->formula(), std::string("C3H7NO2"));
-
-    delete file;
-}
-
-void PubChemTest::downloadMultiFile()
-{
-    chemkit::PubChem pubchem;
-
-    QStringList ids;
-    ids << "1" << "4" << "92" << "8" << "109" << "12";
-
-    chemkit::MoleculeFile *file = pubchem.downloadFile(ids);
-    QVERIFY(file != 0);
-
-    QCOMPARE(file->moleculeCount(), 6);
-
-    for(int i = 0; i < ids.size(); i++){
-        chemkit::Molecule *molecule = file->molecule(i);
-        QVERIFY(molecule != 0);
-        QCOMPARE(molecule->name(), ids[i].toStdString());
-    }
-
-    delete file;
-}
-
-void PubChemTest::search()
-{
-    chemkit::PubChem pubchem;
-
-    // search for caffeine from is CAS number
-    QStringList results = pubchem.search("58-08-2");
-    QCOMPARE(results.size(), 1);
-    QCOMPARE(results[0], QString("2519"));
-}
-
-void PubChemTest::standardizeFormula()
-{
-    chemkit::PubChem pubchem;
-
-    std::string formula = pubchem.standardizeFormula("c3cccOc3", "smiles");
-    QCOMPARE(formula, std::string("C1C=CC=CO1"));
-}
-
-QTEST_MAIN(PubChemTest)
+#endif // PUBCHEMWEBTEST_H
