@@ -100,7 +100,6 @@ private:
     CHEMKIT_DISABLE_COPY(Ring)
 
     friend class Molecule;
-    friend class MolecularGraph;
 
 private:
     std::vector<Atom *> m_atoms;

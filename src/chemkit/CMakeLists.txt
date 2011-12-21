@@ -49,7 +49,6 @@ set(HEADERS
   matrix.h
   moiety.h
   moleculardescriptor.h
-  moleculargraph.h
   molecularsurface.h
   molecule.h
   molecule-inline.h
@@ -102,9 +101,6 @@ set(SOURCES
   matrix.cpp
   moiety.cpp
   moleculardescriptor.cpp
-  moleculargraph.cpp
-  moleculargraph_rppath.cpp
-  moleculargraph_vf2.cpp
   molecularsurface.cpp
   molecule.cpp
   moleculealigner.cpp
