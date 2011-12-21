@@ -81,7 +81,7 @@ CartesianCoordinates::~CartesianCoordinates()
 
 // --- Properties ---------------------------------------------------------- //
 /// Sets the size of the matrix to \p size.
-void CartesianCoordinates::setSize(size_t size)
+void CartesianCoordinates::resize(size_t size)
 {
     m_coordinates.resize(size);
 }

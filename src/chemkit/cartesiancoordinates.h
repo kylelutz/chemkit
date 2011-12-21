@@ -58,7 +58,7 @@ public:
     ~CartesianCoordinates();
 
     // properties
-    void setSize(size_t size);
+    void resize(size_t size);
     size_t size() const;
     bool isEmpty() const;
     Matrix toMatrix() const;
