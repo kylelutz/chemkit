@@ -43,10 +43,10 @@ void DiagramCoordinatesTest::size()
     chemkit::DiagramCoordinates coordinates(10);
     QCOMPARE(coordinates.size(), size_t(10));
 
-    coordinates.setSize(100);
+    coordinates.resize(100);
     QCOMPARE(coordinates.size(), size_t(100));
 
-    coordinates.setSize(0);
+    coordinates.resize(0);
     QCOMPARE(coordinates.size(), size_t(0));
 }
 

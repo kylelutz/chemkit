@@ -60,7 +60,7 @@ DiagramCoordinates::~DiagramCoordinates()
 
 // --- Properties ---------------------------------------------------------- //
 /// Sets the number of points in the coordinates to \p size.
-void DiagramCoordinates::setSize(size_t size)
+void DiagramCoordinates::resize(size_t size)
 {
     m_coordinates.resize(size);
 }
