@@ -442,7 +442,7 @@ void MmffAtomTyper::assignTypes(const chemkit::Molecule *molecule)
     QList<const chemkit::Atom *> terminalHydrogens;
 
     // assign types to heavy atoms
-    for(int i = 0; i < molecule->atomCount(); i++){
+    for(size_t i = 0; i < molecule->atomCount(); i++){
         const chemkit::Atom *atom = molecule->atom(i);
 
         if(atom->isTerminalHydrogen()){

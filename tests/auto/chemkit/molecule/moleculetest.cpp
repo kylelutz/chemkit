@@ -142,22 +142,22 @@ void MoleculeTest::addBond()
     chemkit::Molecule molecule;
     chemkit::Atom *H1 = molecule.addAtom("H");
     chemkit::Atom *H2 = molecule.addAtom("H");
-    QCOMPARE(molecule.bondCount(), 0);
+    QCOMPARE(molecule.bondCount(), size_t(0));
 
     chemkit::Bond *H1_H2 = molecule.addBond(H1, H2);
     QVERIFY(H1_H2->contains(H1));
     QVERIFY(H1_H2->contains(H2));
     QCOMPARE(H1_H2->order(), chemkit::Bond::BondOrderType(1));
-    QCOMPARE(molecule.bondCount(), 1);
+    QCOMPARE(molecule.bondCount(), size_t(1));
     QVERIFY(molecule.bonds()[0] == H1_H2);
 
     chemkit::Bond *H1_H2_again = molecule.addBond(H1, H2);
     QVERIFY(H1_H2_again == H1_H2);
-    QCOMPARE(molecule.bondCount(), 1);
+    QCOMPARE(molecule.bondCount(), size_t(1));
 
     chemkit::Bond *H1_H1 = molecule.addBond(H1, H1);
     QVERIFY(H1_H1 == 0);
-    QCOMPARE(molecule.bondCount(), 1);
+    QCOMPARE(molecule.bondCount(), size_t(1));
 }
 
 void MoleculeTest::bond()
@@ -209,22 +209,22 @@ void MoleculeTest::bond()
 void MoleculeTest::size()
 {
     chemkit::Molecule molecule;
-    QCOMPARE(molecule.size(), 0);
+    QCOMPARE(molecule.size(), size_t(0));
 
     molecule.addAtom("C");
-    QCOMPARE(molecule.size(), 1);
+    QCOMPARE(molecule.size(), size_t(1));
 
     molecule.addAtom("C");
-    QCOMPARE(molecule.size(), 2);
+    QCOMPARE(molecule.size(), size_t(2));
 
     molecule.addAtom("C");
-    QCOMPARE(molecule.size(), 3);
+    QCOMPARE(molecule.size(), size_t(3));
 
     molecule.removeAtom(molecule.atoms()[0]);
-    QCOMPARE(molecule.size(), 2);
+    QCOMPARE(molecule.size(), size_t(2));
 
     molecule.clear();
-    QCOMPARE(molecule.size(), 0);
+    QCOMPARE(molecule.size(), size_t(0));
 }
 
 void MoleculeTest::isEmpty()
@@ -354,7 +354,7 @@ void MoleculeTest::find()
     carboxyl.addBond(carboxyl_C1, carboxyl_O3);
 
     chemkit::Moiety carboxylMoiety = alanine.find(&carboxyl);
-    QCOMPARE(carboxylMoiety.atomCount(), 3);
+    QCOMPARE(carboxylMoiety.atomCount(), size_t(3));
     QVERIFY(carboxylMoiety.atom(0) == alanine_C2);
     QVERIFY(carboxylMoiety.atom(1) == alanine_O5);
     QVERIFY(carboxylMoiety.atom(2) == alanine_O6);
@@ -365,7 +365,7 @@ void MoleculeTest::find()
     carbonyl.addBond(carbonyl_C1, carbonyl_O2, chemkit::Bond::Double);
 
     chemkit::Moiety carbonylMoiety = carboxyl.find(&carbonyl);
-    QCOMPARE(carbonylMoiety.atomCount(), 2);
+    QCOMPARE(carbonylMoiety.atomCount(), size_t(2));
     QVERIFY(carbonylMoiety.atom(0) == carboxyl_C1);
     QVERIFY(carbonylMoiety.atom(1) == carboxyl_O2);
 
@@ -377,27 +377,27 @@ void MoleculeTest::rings()
 {
     chemkit::Molecule empty;
     QCOMPARE(empty.rings().size(), size_t(0));
-    QCOMPARE(empty.ringCount(), 0);
+    QCOMPARE(empty.ringCount(), size_t(0));
 
     chemkit::Molecule cyclopropane;
     chemkit::Atom *cyclopropane_C1 = cyclopropane.addAtom("C");
     chemkit::Atom *cyclopropane_C2 = cyclopropane.addAtom("C");
     chemkit::Atom *cyclopropane_C3 = cyclopropane.addAtom("C");
     QCOMPARE(cyclopropane.rings().size(), size_t(0));
-    QCOMPARE(cyclopropane.ringCount(), 0);
+    QCOMPARE(cyclopropane.ringCount(), size_t(0));
 
     cyclopropane.addBond(cyclopropane_C1, cyclopropane_C2);
     cyclopropane.addBond(cyclopropane_C2, cyclopropane_C3);
     QCOMPARE(cyclopropane.rings().size(), size_t(0));
-    QCOMPARE(cyclopropane.ringCount(), 0);
+    QCOMPARE(cyclopropane.ringCount(), size_t(0));
 
     cyclopropane.addBond(cyclopropane_C1, cyclopropane_C3);
     QCOMPARE(cyclopropane.rings().size(), size_t(1));
-    QCOMPARE(cyclopropane.ringCount(), 1);
+    QCOMPARE(cyclopropane.ringCount(), size_t(1));
 
     cyclopropane.removeAtom(cyclopropane_C2);
     QCOMPARE(cyclopropane.rings().size(), size_t(0));
-    QCOMPARE(cyclopropane.ringCount(), 0);
+    QCOMPARE(cyclopropane.ringCount(), size_t(0));
 }
 
 void MoleculeTest::distance()
@@ -515,15 +515,15 @@ void MoleculeTest::removeFragment()
     molecule.addBond(O3, H4);
     molecule.addBond(O3, H5);
     QCOMPARE(molecule.formula(), std::string("H4O2"));
-    QCOMPARE(molecule.fragmentCount(), 2);
+    QCOMPARE(molecule.fragmentCount(), size_t(2));
 
     molecule.removeFragment(O3->fragment());
     QCOMPARE(molecule.formula(), std::string("H2O"));
-    QCOMPARE(molecule.fragmentCount(), 1);
+    QCOMPARE(molecule.fragmentCount(), size_t(1));
 
     molecule.removeFragment(H1->fragment());
     QCOMPARE(molecule.formula(), std::string());
-    QCOMPARE(molecule.fragmentCount(), 0);
+    QCOMPARE(molecule.fragmentCount(), size_t(0));
 }
 
 void MoleculeTest::rotate()

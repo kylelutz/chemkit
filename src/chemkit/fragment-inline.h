@@ -45,7 +45,7 @@ namespace chemkit {
 
 // --- Properties ---------------------------------------------------------- //
 /// Returns the number of atoms in the fragment.
-inline int Fragment::size() const
+inline size_t Fragment::size() const
 {
     return atomCount();
 }
@@ -58,7 +58,7 @@ inline Molecule* Fragment::molecule() const
 
 // --- Structure ----------------------------------------------------------- //
 /// Returns the atom at \p index in the fragment.
-inline Atom* Fragment::atom(int index) const
+inline Atom* Fragment::atom(size_t index) const
 {
     size_t position = m_bitset.find_first();
 
@@ -88,7 +88,7 @@ inline std::vector<Atom *> Fragment::atoms() const
 }
 
 /// Returns the number of atoms in the fragment.
-inline int Fragment::atomCount() const
+inline size_t Fragment::atomCount() const
 {
     return m_bitset.count();
 }

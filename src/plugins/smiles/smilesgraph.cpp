@@ -223,7 +223,7 @@ SmilesGraph::SmilesGraph(const chemkit::Molecule *molecule)
 
     // neighbor count for each atom without implicit hydrogens
     std::vector<int> neighborCounts(molecule->size());
-    for(int i = 0; i < molecule->size(); i++){
+    for(size_t i = 0; i < molecule->size(); i++){
         const chemkit::Atom *atom = molecule->atom(i);
 
         int neighborCount = 0;

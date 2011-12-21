@@ -53,7 +53,7 @@ void FragmentTest::basic()
     waters.addBond(O1, H3);
     waters.addBond(O4, H5);
     waters.addBond(O4, H6);
-    QCOMPARE(waters.fragmentCount(), 2);
+    QCOMPARE(waters.fragmentCount(), size_t(2));
 }
 
 void FragmentTest::molecule()
@@ -73,7 +73,7 @@ void FragmentTest::atoms()
     molecule.addBond(C1, C2);
 
     const std::vector<chemkit::Atom *> C1_atoms = C1->fragment()->atoms();
-    QCOMPARE(C1->fragment()->atomCount(), 2);
+    QCOMPARE(C1->fragment()->atomCount(), size_t(2));
     QCOMPARE(C1_atoms.size(), size_t(2));
     QVERIFY(std::find(C1_atoms.begin(), C1_atoms.end(), C1) != C1_atoms.end());
     QVERIFY(std::find(C1_atoms.begin(), C1_atoms.end(), C2) != C1_atoms.end());
@@ -84,7 +84,7 @@ void FragmentTest::atoms()
     }
 
     const std::vector<chemkit::Atom *> C3_atoms = C3->fragment()->atoms();
-    QCOMPARE(C3->fragment()->atomCount(), 1);
+    QCOMPARE(C3->fragment()->atomCount(), size_t(1));
     QCOMPARE(C3_atoms.size(), size_t(1));
     QVERIFY(std::find(C3_atoms.begin(), C3_atoms.end(), C1) == C3_atoms.end());
     QVERIFY(std::find(C3_atoms.begin(), C3_atoms.end(), C2) == C3_atoms.end());
@@ -121,13 +121,13 @@ void FragmentTest::bonds()
     chemkit::Atom *C2 = molecule.addAtom("C");
     chemkit::Atom *C3 = molecule.addAtom("C");
     chemkit::Bond *C1_C2 = molecule.addBond(C1, C2);
-    QCOMPARE(C1->fragment()->bondCount(), 1);
+    QCOMPARE(C1->fragment()->bondCount(), size_t(1));
 
     const std::vector<chemkit::Bond *> &C1_bonds = C1->fragment()->bonds();
     QVERIFY(std::find(C1_bonds.begin(), C1_bonds.end(), C1_C2) != C1_bonds.end());
 
     chemkit::Bond *C2_C3 = molecule.addBond(C2, C3);
-    QCOMPARE(C2->fragment()->bondCount(), 2);
+    QCOMPARE(C2->fragment()->bondCount(), size_t(2));
 
     const std::vector<chemkit::Bond *> &C2_bonds = C2->fragment()->bonds();
     QVERIFY(std::find(C2_bonds.begin(), C2_bonds.end(), C2_C3) != C2_bonds.end());

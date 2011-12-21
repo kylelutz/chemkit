@@ -92,18 +92,18 @@ public:
     bool isHeteroatom() const;
     inline Molecule* molecule() const;
     Fragment* fragment() const;
-    inline int index() const;
+    inline size_t index() const;
 
     // structure
     std::vector<Bond *> bonds() const;
-    int bondCount() const;
+    size_t bondCount() const;
     BondRange bondRange() const;
     int valence() const;
     Bond* bondTo(const Atom *atom) const;
-    Atom* neighbor(int index) const;
+    Atom* neighbor(size_t index) const;
     std::vector<Atom *> neighbors() const;
-    int neighborCount() const;
-    int neighborCount(const Element &element) const;
+    size_t neighborCount() const;
+    size_t neighborCount(const Element &element) const;
     NeighborRange neighborRange() const;
     bool isBondedTo(const Atom *atom) const;
     bool isBondedTo(const Element &element) const;
@@ -114,9 +114,9 @@ public:
 
     // ring perception
     std::vector<Ring *> rings() const;
-    int ringCount() const;
+    size_t ringCount() const;
     bool isInRing() const;
-    bool isInRing(int size) const;
+    bool isInRing(size_t size) const;
     Ring* smallestRing() const;
     bool isAromatic() const;
 
@@ -251,7 +251,7 @@ public:
     };
 
 private:
-    Atom(Molecule *molecule, int index);
+    Atom(Molecule *molecule, size_t index);
     ~Atom();
 
     CHEMKIT_DISABLE_COPY(Atom)
@@ -260,7 +260,7 @@ private:
 
 private:
     Molecule *m_molecule;
-    int m_index;
+    size_t m_index;
 };
 
 } // end chemkit namespace

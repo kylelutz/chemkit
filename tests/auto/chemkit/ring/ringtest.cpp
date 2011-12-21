@@ -47,25 +47,25 @@ void RingTest::initTestCase()
     // benzene
     benzene = inchi->read("InChI=1/C6H6/c1-2-4-6-5-3-1/h1-6H");
     QVERIFY(benzene != 0);
-    QCOMPARE(benzene->ringCount(), 1);
+    QCOMPARE(benzene->ringCount(), size_t(1));
     benzeneRing = benzene->rings()[0];
 
     // furan
     furan = inchi->read("InChI=1/C4H4O/c1-2-4-5-3-1/h1-4H");
     QVERIFY(furan != 0);
-    QCOMPARE(furan->ringCount(), 1);
+    QCOMPARE(furan->ringCount(), size_t(1));
     furanRing = furan->rings()[0];
 
     // cyclohexane
     cyclohexane = inchi->read("InChI=1S/C6H12/c1-2-4-6-5-3-1/h1-6H2");
     QVERIFY(cyclohexane != 0);
-    QCOMPARE(cyclohexane->ringCount(), 1);
+    QCOMPARE(cyclohexane->ringCount(), size_t(1));
     cyclohexaneRing = cyclohexane->rings()[0];
 
     // cyclopropane
     cyclopropane = inchi->read("InChI=1/C3H6/c1-2-3-1/h1-3H2");
     QVERIFY(cyclopropane != 0);
-    QCOMPARE(cyclopropane->ringCount(), 1);
+    QCOMPARE(cyclopropane->ringCount(), size_t(1));
     cyclopropaneRing = cyclopropane->rings()[0];
 
     delete inchi;
@@ -90,25 +90,25 @@ void RingTest::atoms()
 
 void RingTest::atomCount()
 {
-    QCOMPARE(benzeneRing->atomCount(), 6);
-    QCOMPARE(furanRing->atomCount(), 5);
-    QCOMPARE(cyclohexaneRing->atomCount(), 6);
-    QCOMPARE(cyclopropaneRing->atomCount(), 3);
+    QCOMPARE(benzeneRing->atomCount(), size_t(6));
+    QCOMPARE(furanRing->atomCount(), size_t(5));
+    QCOMPARE(cyclohexaneRing->atomCount(), size_t(6));
+    QCOMPARE(cyclopropaneRing->atomCount(), size_t(3));
 
-    QCOMPARE(benzeneRing->atomCount(chemkit::Atom::Carbon), 6);
-    QCOMPARE(benzeneRing->atomCount(chemkit::Atom::Hydrogen), 0);
-    QCOMPARE(benzeneRing->atomCount(chemkit::Atom::Oxygen), 0);
-    QCOMPARE(furanRing->atomCount(chemkit::Atom::Carbon), 4);
-    QCOMPARE(furanRing->atomCount(chemkit::Atom::Hydrogen), 0);
-    QCOMPARE(furanRing->atomCount(chemkit::Atom::Oxygen), 1);
+    QCOMPARE(benzeneRing->atomCount(chemkit::Atom::Carbon), size_t(6));
+    QCOMPARE(benzeneRing->atomCount(chemkit::Atom::Hydrogen), size_t(0));
+    QCOMPARE(benzeneRing->atomCount(chemkit::Atom::Oxygen), size_t(0));
+    QCOMPARE(furanRing->atomCount(chemkit::Atom::Carbon), size_t(4));
+    QCOMPARE(furanRing->atomCount(chemkit::Atom::Hydrogen), size_t(0));
+    QCOMPARE(furanRing->atomCount(chemkit::Atom::Oxygen), size_t(1));
 }
 
 void RingTest::size()
 {
-    QCOMPARE(benzeneRing->size(), 6);
-    QCOMPARE(furanRing->size(), 5);
-    QCOMPARE(cyclohexaneRing->size(), 6);
-    QCOMPARE(cyclopropaneRing->size(), 3);
+    QCOMPARE(benzeneRing->size(), size_t(6));
+    QCOMPARE(furanRing->size(), size_t(5));
+    QCOMPARE(cyclohexaneRing->size(), size_t(6));
+    QCOMPARE(cyclopropaneRing->size(), size_t(3));
 }
 
 void RingTest::bonds()
@@ -125,10 +125,10 @@ void RingTest::bonds()
 
 void RingTest::bondCount()
 {
-    QCOMPARE(benzeneRing->bondCount(), 6);
-    QCOMPARE(furanRing->bondCount(), 5);
-    QCOMPARE(cyclohexaneRing->bondCount(), 6);
-    QCOMPARE(cyclopropaneRing->bondCount(), 3);
+    QCOMPARE(benzeneRing->bondCount(), size_t(6));
+    QCOMPARE(furanRing->bondCount(), size_t(5));
+    QCOMPARE(cyclohexaneRing->bondCount(), size_t(6));
+    QCOMPARE(cyclopropaneRing->bondCount(), size_t(3));
 }
 
 void RingTest::root()
@@ -189,8 +189,8 @@ void RingTest::contains()
 
 void RingTest::heteroatomCount()
 {
-    QCOMPARE(benzeneRing->heteroatomCount(), 0);
-    QCOMPARE(furanRing->heteroatomCount(), 1);
+    QCOMPARE(benzeneRing->heteroatomCount(), size_t(0));
+    QCOMPARE(furanRing->heteroatomCount(), size_t(1));
 }
 
 void RingTest::isHeterocycle()

@@ -70,9 +70,9 @@ Ring::~Ring()
 
 // --- Structure ----------------------------------------------------------- //
 /// Returns the number of atoms in the ring with \p element.
-int Ring::atomCount(const Element &element) const
+size_t Ring::atomCount(const Element &element) const
 {
-    int count = 0;
+    size_t count = 0;
 
     foreach(const Atom *atom, m_atoms){
         if(atom->is(element)){
@@ -84,7 +84,7 @@ int Ring::atomCount(const Element &element) const
 }
 
 /// Returns the bond at \p index in the ring.
-Bond* Ring::bond(int index) const
+Bond* Ring::bond(size_t index) const
 {
     return bonds()[index];
 }
@@ -94,7 +94,7 @@ std::vector<Bond *> Ring::bonds() const
 {
     std::vector<Bond *> bonds;
 
-    for(int i = 0; i < size()-1; i++){
+    for(size_t i = 0; i < size()-1; i++){
         bonds.push_back(m_atoms[i]->bondTo(m_atoms[i+1]));
     }
 
@@ -104,7 +104,7 @@ std::vector<Bond *> Ring::bonds() const
 }
 
 /// Returns the number of bonds in the ring.
-int Ring::bondCount() const
+size_t Ring::bondCount() const
 {
     // number of bonds equals the number of atoms
     return m_atoms.size();
@@ -133,15 +133,15 @@ std::vector<Bond *> Ring::exocyclicBonds() const
 }
 
 /// Returns the number of exocyclic bonds.
-int Ring::exocyclicBondCount() const
+size_t Ring::exocyclicBondCount() const
 {
     return exocyclicBonds().size();
 }
 
 /// Returns the number of heteroatoms (non-carbon atoms) in the ring.
-int Ring::heteroatomCount() const
+size_t Ring::heteroatomCount() const
 {
-    int count = 0;
+    size_t count = 0;
 
     foreach(const Atom *atom, m_atoms){
         if(!atom->is(Atom::Carbon)){
@@ -185,7 +185,7 @@ Atom* Ring::root() const
     }
 
     Atom *root = 0;
-    int highestNeighborCount = 0;
+    size_t highestNeighborCount = 0;
 
     foreach(Atom *atom, candidates){
         if(atom->neighborCount() > highestNeighborCount){
@@ -253,9 +253,9 @@ bool Ring::isAromatic() const
     }
 
     // count number of pi electrons
-    int piCount = 0;
+    size_t piCount = 0;
 
-    for(int i = 0; i < size(); i++){
+    for(size_t i = 0; i < size(); i++){
         const Atom *atom = m_atoms[i];
         const Bond *nextBond = this->nextBond(atom);
 
@@ -308,7 +308,7 @@ bool Ring::isValid() const
     if(size() < 3)
         return false;
 
-    for(int i = 0; i < size(); i++){
+    for(size_t i = 0; i < size(); i++){
         if(!m_atoms[i]->isBondedTo(m_atoms[(i+1) % size()])){
             return false;
         }
@@ -319,14 +319,14 @@ bool Ring::isValid() const
 
 const Atom* Ring::nextAtom(const Atom *atom) const
 {
-    int index = std::distance(m_atoms.begin(), std::find(m_atoms.begin(), m_atoms.end(), atom));
+    size_t index = std::distance(m_atoms.begin(), std::find(m_atoms.begin(), m_atoms.end(), atom));
 
     return m_atoms[(index+1) % size()];
 }
 
 const Atom* Ring::previousAtom(const Atom *atom) const
 {
-    int index = std::distance(m_atoms.begin(), std::find(m_atoms.begin(), m_atoms.end(), atom));
+    size_t index = std::distance(m_atoms.begin(), std::find(m_atoms.begin(), m_atoms.end(), atom));
 
     if(index == 0)
         index = size()-1;
@@ -363,11 +363,11 @@ bool Ring::isPlanar() const
     return true;
 }
 
-int Ring::piElectronCount() const
+size_t Ring::piElectronCount() const
 {
-    int count = 0;
+    size_t count = 0;
 
-    for(int i = 0; i < size(); i++){
+    for(size_t i = 0; i < size(); i++){
         const Atom *atom = m_atoms[i];
         const Bond *nextBond = this->nextBond(atom);
         const Bond *previousBond = this->previousBond(atom);

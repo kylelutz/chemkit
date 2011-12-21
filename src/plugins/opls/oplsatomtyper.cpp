@@ -71,7 +71,7 @@ void OplsAtomTyper::assignTypes(const chemkit::Molecule *molecule)
 
     m_typeNumbers = std::vector<int>(molecule->atomCount());
 
-    for(int index = 0; index < molecule->atomCount(); index++){
+    for(size_t index = 0; index < molecule->atomCount(); index++){
         const chemkit::Atom *atom = molecule->atom(index);
 
         // hydrogen

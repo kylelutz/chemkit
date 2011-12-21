@@ -144,12 +144,12 @@ void BondTest::rings()
 {
     chemkit::Molecule benzene("InChI=1/C6H6/c1-2-4-6-5-3-1/h1-6H", "inchi");
     QCOMPARE(benzene.formula(), std::string("C6H6"));
-    QCOMPARE(benzene.ringCount(), 1);
+    QCOMPARE(benzene.ringCount(), size_t(1));
     chemkit::Ring *benzeneRing = benzene.rings()[0];
 
     foreach(chemkit::Bond *bond, benzene.bonds()){
         if(bond->contains(chemkit::Atom::Hydrogen)){
-            QCOMPARE(bond->ringCount(), 0);
+            QCOMPARE(bond->ringCount(), size_t(0));
             QCOMPARE(bond->isInRing(), false);
             QCOMPARE(bond->isInRing(6), false);
             QCOMPARE(bond->isInRing(5), false);
@@ -157,7 +157,7 @@ void BondTest::rings()
             QVERIFY(bond->smallestRing() == 0);
         }
         else{
-            QCOMPARE(bond->ringCount(), 1);
+            QCOMPARE(bond->ringCount(), size_t(1));
             QCOMPARE(bond->isInRing(), true);
             QCOMPARE(bond->isInRing(6), true);
             QCOMPARE(bond->isInRing(5), false);

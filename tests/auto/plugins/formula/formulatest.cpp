@@ -59,26 +59,26 @@ void FormulaTest::read()
 
     // hexane
     chemkit::Molecule *hexane = formulaFormat->read("C6H14");
-    QCOMPARE(hexane->atomCount(), 20);
-    QCOMPARE(hexane->atomCount(chemkit::Atom::Carbon), 6);
-    QCOMPARE(hexane->atomCount(chemkit::Atom::Hydrogen), 14);
+    QCOMPARE(hexane->atomCount(), size_t(20));
+    QCOMPARE(hexane->atomCount(chemkit::Atom::Carbon), size_t(6));
+    QCOMPARE(hexane->atomCount(chemkit::Atom::Hydrogen), size_t(14));
     delete hexane;
 
     // water
     chemkit::Molecule *water = formulaFormat->read("H2O");
-    QCOMPARE(water->atomCount(), 3);
-    QCOMPARE(water->atomCount(chemkit::Atom::Hydrogen), 2);
-    QCOMPARE(water->atomCount(chemkit::Atom::Oxygen), 1);
+    QCOMPARE(water->atomCount(), size_t(3));
+    QCOMPARE(water->atomCount(chemkit::Atom::Hydrogen), size_t(2));
+    QCOMPARE(water->atomCount(chemkit::Atom::Oxygen), size_t(1));
     delete water;
 
     // atp
     chemkit::Molecule *atp = formulaFormat->read("C10H16N5O13P3");
-    QCOMPARE(atp->atomCount(), 47);
-    QCOMPARE(atp->atomCount(chemkit::Atom::Carbon), 10);
-    QCOMPARE(atp->atomCount(chemkit::Atom::Hydrogen), 16);
-    QCOMPARE(atp->atomCount(chemkit::Atom::Nitrogen), 5);
-    QCOMPARE(atp->atomCount(chemkit::Atom::Oxygen), 13);
-    QCOMPARE(atp->atomCount(chemkit::Atom::Phosphorus), 3);
+    QCOMPARE(atp->atomCount(), size_t(47));
+    QCOMPARE(atp->atomCount(chemkit::Atom::Carbon), size_t(10));
+    QCOMPARE(atp->atomCount(chemkit::Atom::Hydrogen), size_t(16));
+    QCOMPARE(atp->atomCount(chemkit::Atom::Nitrogen), size_t(5));
+    QCOMPARE(atp->atomCount(chemkit::Atom::Oxygen), size_t(13));
+    QCOMPARE(atp->atomCount(chemkit::Atom::Phosphorus), size_t(3));
     delete atp;
 
     delete formulaFormat;

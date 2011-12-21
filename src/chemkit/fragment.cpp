@@ -84,7 +84,7 @@ std::vector<Bond *> Fragment::bonds() const
 }
 
 /// Returns the number of bonds in the fragment.
-int Fragment::bondCount() const
+size_t Fragment::bondCount() const
 {
     return bonds().size();
 }

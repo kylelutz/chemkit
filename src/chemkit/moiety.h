@@ -55,14 +55,14 @@ public:
     ~Moiety();
 
     // properties
-    int size() const;
+    size_t size() const;
     bool isEmpty() const;
     Molecule* molecule() const;
 
     // structure
-    Atom* atom(int index) const;
+    Atom* atom(size_t index) const;
     std::vector<Atom *> atoms() const;
-    int atomCount() const;
+    size_t atomCount() const;
 
     // operators
     Moiety& operator=(const Moiety &moeity);

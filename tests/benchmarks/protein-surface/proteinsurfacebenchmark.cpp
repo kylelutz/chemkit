@@ -56,7 +56,7 @@ void ProteinSurfaceBenchmark::benchmark()
 
     chemkit::Polymer *protein = file.polymer();
     QVERIFY(protein);
-    QCOMPARE(protein->size(), 2201);
+    QCOMPARE(protein->size(), size_t(2201));
 
     QBENCHMARK {
         chemkit::MolecularSurface surface(protein);

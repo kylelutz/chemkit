@@ -41,19 +41,16 @@
 
 void MoietyTest::size()
 {
-    chemkit::Molecule* molecule = new chemkit::Molecule;
-    chemkit::Atom* atomH = molecule->addAtom("H");
-    chemkit::Atom* atomC = molecule->addAtom("C");
-    std::vector<chemkit::Atom*> moietyAtoms;
+    chemkit::Molecule molecule;
+    chemkit::Atom* atomH = molecule.addAtom("H");
+    chemkit::Atom* atomC = molecule.addAtom("C");
+    std::vector<chemkit::Atom *> moietyAtoms;
     moietyAtoms.push_back(atomH);
     moietyAtoms.push_back(atomC);
     chemkit::Moiety moiety(moietyAtoms);
-    int size = moiety.size();
-    QCOMPARE(size, 2);
+    QCOMPARE(moiety.size(), size_t(2));
 
-    QCOMPARE(chemkit::Moiety().size(),0);
-
-    delete molecule;
+    QCOMPARE(chemkit::Moiety().size(), size_t(0));
 }
 
 void MoietyTest::isEmpty()
@@ -81,9 +78,9 @@ void MoietyTest::atomCount()
     moietyAtoms.push_back(atomH);
     moietyAtoms.push_back(atomC);
     chemkit::Moiety moiety(moietyAtoms);
-    QCOMPARE(moiety.atomCount(), 2);
+    QCOMPARE(moiety.atomCount(), size_t(2));
 
-    QCOMPARE(chemkit::Moiety().atomCount(),0);
+    QCOMPARE(chemkit::Moiety().atomCount(), size_t(0));
 
     delete molecule;
 }

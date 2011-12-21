@@ -65,18 +65,18 @@ void AromaticityModelTest::isAromatic()
 
     chemkit::Molecule furan("c1ccoc1", "smiles");
     QCOMPARE(furan.formula(), std::string("C4H4O"));
-    QCOMPARE(furan.ringCount(), 1);
+    QCOMPARE(furan.ringCount(), size_t(1));
     chemkit::Ring *ring = furan.ring(0);
-    QCOMPARE(ring->size(), 5);
+    QCOMPARE(ring->size(), size_t(5));
     QCOMPARE(model.isAromatic(ring), true);
     QCOMPARE(model.isAromatic(ring->atom(0)), true);
     QCOMPARE(model.isAromatic(ring->bond(0)), true);
 
     chemkit::Molecule cyclohexane("C1CCCCC1", "smiles");
     QCOMPARE(cyclohexane.formula(), std::string("C6H12"));
-    QCOMPARE(cyclohexane.ringCount(), 1);
+    QCOMPARE(cyclohexane.ringCount(), size_t(1));
     ring = cyclohexane.ring(0);
-    QCOMPARE(ring->size(), 6);
+    QCOMPARE(ring->size(), size_t(6));
     QCOMPARE(model.isAromatic(ring), false);
     QCOMPARE(model.isAromatic(ring->atom(0)), false);
     QCOMPARE(model.isAromatic(ring->bond(0)), false);

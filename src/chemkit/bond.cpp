@@ -62,7 +62,7 @@ namespace chemkit {
 
 // --- Construction and Destruction ---------------------------------------- //
 /// Creates a new bond object for \p molecule at \p index.
-Bond::Bond(Molecule *molecule, int index)
+Bond::Bond(Molecule *molecule, size_t index)
     : m_molecule(molecule),
       m_index(index)
 {
@@ -76,7 +76,7 @@ Bond::~Bond()
 // --- Properties ---------------------------------------------------------- //
 /// Returns the atom at \p index in the bond. Index must be either
 /// \c 0 or \c 1.
-Atom* Bond::atom(int index) const
+Atom* Bond::atom(size_t index) const
 {
     return index == 0 ? atom1() : atom2();
 }
@@ -212,7 +212,7 @@ std::vector<Ring *> Bond::rings() const
 }
 
 /// Returns the number of rings the bond is a member of.
-int Bond::ringCount() const
+size_t Bond::ringCount() const
 {
     return rings().size();
 }
@@ -231,7 +231,7 @@ bool Bond::isInRing() const
 }
 
 /// Returns \c true if the bond is in a ring of given size.
-bool Bond::isInRing(int size) const
+bool Bond::isInRing(size_t size) const
 {
     foreach(const Ring *ring, molecule()->rings()){
         if(ring->size() == size && ring->contains(this)){

@@ -41,6 +41,7 @@
 #include <map>
 #include <string>
 #include <vector>
+#include <cstddef>
 
 #include <boost/range/iterator_range.hpp>
 
@@ -104,7 +105,7 @@ public:
     std::string formula() const;
     std::string formula(const std::string &format) const;
     Variant descriptor(const std::string &name) const;
-    inline int size() const;
+    inline size_t size() const;
     inline bool isEmpty() const;
     Real mass() const;
     void setData(const std::string &name, const Variant &value);
@@ -114,23 +115,23 @@ public:
     Atom* addAtom(const Element &element);
     Atom* addAtomCopy(const Atom *atom);
     void removeAtom(Atom *atom);
-    Atom* atom(int index) const;
+    Atom* atom(size_t index) const;
     inline std::vector<Atom *> atoms() const;
-    inline int atomCount() const;
-    int atomCount(const Element &element) const;
+    inline size_t atomCount() const;
+    size_t atomCount(const Element &element) const;
     inline AtomRange atomRange() const;
     bool contains(const Atom *atom) const;
     bool contains(const Element &element) const;
     Bond* addBond(Atom *a, Atom *b, int order = 1);
-    Bond* addBond(int a, int b, int order = 1);
+    Bond* addBond(size_t a, size_t b, int order = 1);
     void removeBond(Bond *bond);
     void removeBond(Atom *a, Atom *b);
-    void removeBond(int a, int b);
-    Bond* bond(int index) const;
+    void removeBond(size_t a, size_t b);
+    Bond* bond(size_t index) const;
     Bond* bond(const Atom *a, const Atom *b) const;
-    Bond* bond(int a, int b) const;
+    Bond* bond(size_t a, size_t b) const;
     std::vector<Bond *> bonds() const;
-    int bondCount() const;
+    size_t bondCount() const;
     BondRange bondRange() const;
     bool contains(const Bond *bond) const;
     void clear();
@@ -143,14 +144,14 @@ public:
     Moiety find(const Molecule *moiety, int flags = 0) const;
 
     // ring perception
-    Ring* ring(int index) const;
+    Ring* ring(size_t index) const;
     std::vector<Ring *> rings() const;
-    int ringCount() const;
+    size_t ringCount() const;
 
     // fragment perception
-    Fragment* fragment(int index) const;
+    Fragment* fragment(size_t index) const;
     std::vector<Fragment *> fragments() const;
-    int fragmentCount() const;
+    size_t fragmentCount() const;
     bool isFragmented() const;
     void removeFragment(Fragment *fragment);
 

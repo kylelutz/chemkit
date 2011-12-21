@@ -276,6 +276,9 @@ inline int Variant::value() const
     if(m_type == Int){
         return m_value._int;
     }
+    else if(m_type == Long){
+        return static_cast<int>(m_value._long);
+    }
     else if(m_type == Bool){
         return static_cast<int>(m_value._bool);
     }

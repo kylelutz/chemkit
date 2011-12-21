@@ -66,7 +66,7 @@ public:
     };
 
     // properties
-    Atom* atom(int index) const;
+    Atom* atom(size_t index) const;
     Atom* atom1() const;
     Atom* atom2() const;
     std::vector<Atom *> atoms() const;
@@ -77,7 +77,7 @@ public:
     Vector3 dipoleMoment() const;
     inline Molecule* molecule() const;
     Fragment* fragment() const;
-    inline int index() const;
+    inline size_t index() const;
 
     // structure
     bool contains(const Atom *atom) const;
@@ -88,9 +88,9 @@ public:
 
     // ring perception
     std::vector<Ring *> rings() const;
-    int ringCount() const;
+    size_t ringCount() const;
     bool isInRing() const;
-    bool isInRing(int size) const;
+    bool isInRing(size_t size) const;
     Ring* smallestRing() const;
     bool isAromatic() const;
 
@@ -99,7 +99,7 @@ public:
     Real length() const;
 
 private:
-    Bond(Molecule *molecule, int index);
+    Bond(Molecule *molecule, size_t index);
     ~Bond();
 
     CHEMKIT_DISABLE_COPY(Bond)
@@ -108,7 +108,7 @@ private:
 
 private:
     Molecule *m_molecule;
-    int m_index;
+    size_t m_index;
 };
 
 } // end chemkit namespace

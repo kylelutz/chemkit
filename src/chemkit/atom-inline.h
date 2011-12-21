@@ -56,7 +56,7 @@ inline Molecule* Atom::molecule() const
 }
 
 /// Returns the atom's index.
-inline int Atom::index() const
+inline size_t Atom::index() const
 {
     return m_index;
 }

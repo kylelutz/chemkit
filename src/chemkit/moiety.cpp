@@ -73,7 +73,7 @@ Moiety::~Moiety()
 
 // --- Properties ---------------------------------------------------------- //
 /// Returns the number of atoms in the moiety.
-int Moiety::size() const
+size_t Moiety::size() const
 {
     return atomCount();
 }
@@ -97,7 +97,7 @@ Molecule* Moiety::molecule() const
 
 // --- Structure ----------------------------------------------------------- //
 /// Returns the atom at \p index.
-Atom* Moiety::atom(int index) const
+Atom* Moiety::atom(size_t index) const
 {
     return d->atoms[index];
 }
@@ -109,7 +109,7 @@ std::vector<Atom *> Moiety::atoms() const
 }
 
 /// Returns the number of atoms in the moiety.
-int Moiety::atomCount() const
+size_t Moiety::atomCount() const
 {
     return d->atoms.size();
 }

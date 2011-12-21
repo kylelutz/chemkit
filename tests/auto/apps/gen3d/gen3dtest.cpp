@@ -70,7 +70,7 @@ void Gen3dTest::benzene()
     QCOMPARE(molecule->formula(), std::string("C6H6"));
 
     // ensure the molecule has one ring
-    QCOMPARE(molecule->ringCount(), 1);
+    QCOMPARE(molecule->ringCount(), size_t(1));
 
     // ensure center point is at (0, 0, 0)
     QVERIFY(molecule->center().isZero(0.01));

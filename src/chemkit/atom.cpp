@@ -69,7 +69,7 @@ namespace chemkit {
 
 // --- Construction and Destruction ---------------------------------------- //
 /// Create a new atom object.
-Atom::Atom(Molecule *molecule, int index)
+Atom::Atom(Molecule *molecule, size_t index)
     : m_molecule(molecule),
       m_index(index)
 {
@@ -236,7 +236,7 @@ std::vector<Bond *> Atom::bonds() const
 
 /// Returns the number of bonds that this atom is a member of.
 /// Equivalent to bonds().size().
-int Atom::bondCount() const
+size_t Atom::bondCount() const
 {
     return bondRange().size();
 }
@@ -278,7 +278,7 @@ Bond* Atom::bondTo(const Atom *atom) const
 }
 
 /// Returns the bonded neighbor at \p index.
-Atom* Atom::neighbor(int index) const
+Atom* Atom::neighbor(size_t index) const
 {
     return neighbors()[index];
 }
@@ -296,15 +296,15 @@ std::vector<Atom *> Atom::neighbors() const
 }
 
 /// Returns the number of neighboring (directly bonded) atoms.
-int Atom::neighborCount() const
+size_t Atom::neighborCount() const
 {
     return bondCount();
 }
 
 /// Returns the number of neighboring atoms of the given \p element.
-int Atom::neighborCount(const Element &element) const
+size_t Atom::neighborCount(const Element &element) const
 {
-    int count = 0;
+    size_t count = 0;
 
     foreach(const Bond *bond, bondRange()){
         if(bond->otherAtom(this)->is(element)){
@@ -403,7 +403,7 @@ std::vector<Ring *> Atom::rings() const
 }
 
 /// Returns the number of rings the atom is a member of.
-int Atom::ringCount() const
+size_t Atom::ringCount() const
 {
     return rings().size();
 }
@@ -422,7 +422,7 @@ bool Atom::isInRing() const
 }
 
 /// Returns \c true if the atom is a member of a ring of given size.
-bool Atom::isInRing(int size) const
+bool Atom::isInRing(size_t size) const
 {
     foreach(const Ring *ring, m_molecule->rings()){
         if(ring->size() == size && ring->contains(this)){

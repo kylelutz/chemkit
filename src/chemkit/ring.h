@@ -57,25 +57,25 @@ public:
     typedef boost::iterator_range<std::vector<Atom *>::const_iterator> AtomRange;
 
     // properties
-    inline int size() const;
+    inline size_t size() const;
     inline Molecule* molecule() const;
     inline Fragment* fragment() const;
 
     // structure
-    inline Atom* atom(int index) const;
+    inline Atom* atom(size_t index) const;
     inline std::vector<Atom *> atoms() const;
-    inline int atomCount() const;
-    int atomCount(const Element &element) const;
+    inline size_t atomCount() const;
+    size_t atomCount(const Element &element) const;
     inline AtomRange atomRange() const;
-    Bond* bond(int index) const;
+    Bond* bond(size_t index) const;
     std::vector<Bond *> bonds() const;
-    int bondCount() const;
+    size_t bondCount() const;
     std::vector<Bond *> exocyclicBonds() const;
-    int exocyclicBondCount() const;
+    size_t exocyclicBondCount() const;
     inline bool contains(const Atom *atom) const;
     inline bool contains(const Bond *bond) const;
     inline bool contains(const Element &element) const;
-    int heteroatomCount() const;
+    size_t heteroatomCount() const;
     bool isHeterocycle() const;
     Atom* root() const;
     int position(const Atom *atom, const Atom *root = 0) const;
@@ -95,7 +95,7 @@ private:
     const Bond *nextBond(const Atom *atom) const;
     const Bond *previousBond(const Atom *atom) const;
     bool isPlanar() const;
-    int piElectronCount() const;
+    size_t piElectronCount() const;
 
     CHEMKIT_DISABLE_COPY(Ring)
 

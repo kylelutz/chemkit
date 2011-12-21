@@ -73,7 +73,7 @@ void PdbmlTest::read_1UBQ()
                                                   "KESTLHLVLRLRGG"));
 
     // molecule
-    QCOMPARE(protein->atomCount(), 660);
+    QCOMPARE(protein->atomCount(), size_t(660));
 }
 
 void PdbmlTest::read_2DHB()

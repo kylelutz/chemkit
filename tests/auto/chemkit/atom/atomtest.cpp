@@ -62,27 +62,27 @@ void AtomTest::index()
 {
     chemkit::Molecule molecule;
     chemkit::Atom *C1 = molecule.addAtom("C");
-    QCOMPARE(C1->index(), 0);
+    QCOMPARE(C1->index(), size_t(0));
 
     chemkit::Atom *C2 = molecule.addAtom("C");
-    QCOMPARE(C2->index(), 1);
+    QCOMPARE(C2->index(), size_t(1));
 
     chemkit::Atom *C3 = molecule.addAtom("C");
-    QCOMPARE(C3->index(), 2);
+    QCOMPARE(C3->index(), size_t(2));
 
     chemkit::Atom *C4 = molecule.addAtom("C");
 
     molecule.removeAtom(C2);
-    QCOMPARE(C1->index(), 0);
-    QCOMPARE(C3->index(), 1);
-    QCOMPARE(C4->index(), 2);
+    QCOMPARE(C1->index(), size_t(0));
+    QCOMPARE(C3->index(), size_t(1));
+    QCOMPARE(C4->index(), size_t(2));
 
     molecule.removeAtom(C1);
-    QCOMPARE(C3->index(), 0);
-    QCOMPARE(C4->index(), 1);
+    QCOMPARE(C3->index(), size_t(0));
+    QCOMPARE(C4->index(), size_t(1));
 
     molecule.removeAtom(C3);
-    QCOMPARE(C4->index(), 0);
+    QCOMPARE(C4->index(), size_t(0));
 }
 
 void AtomTest::formalCharge()
@@ -190,12 +190,12 @@ void AtomTest::rings()
 {
     chemkit::Molecule benzene("InChI=1/C6H6/c1-2-4-6-5-3-1/h1-6H", "inchi");
     QCOMPARE(benzene.formula(), std::string("C6H6"));
-    QCOMPARE(benzene.ringCount(), 1);
+    QCOMPARE(benzene.ringCount(), size_t(1));
     chemkit::Ring *benzeneRing = benzene.rings()[0];
 
     foreach(chemkit::Atom *atom, benzene.atoms()){
         if(atom->is(chemkit::Atom::Hydrogen)){
-            QCOMPARE(atom->ringCount(), 0);
+            QCOMPARE(atom->ringCount(), size_t(0));
             QCOMPARE(atom->isInRing(), false);
             QCOMPARE(atom->isInRing(6), false);
             QCOMPARE(atom->isInRing(5), false);
@@ -203,7 +203,7 @@ void AtomTest::rings()
             QVERIFY(atom->smallestRing() == 0);
         }
         else{
-            QCOMPARE(atom->ringCount(), 1);
+            QCOMPARE(atom->ringCount(), size_t(1));
             QCOMPARE(atom->isInRing(), true);
             QCOMPARE(atom->isInRing(6), true);
             QCOMPARE(atom->isInRing(5), false);

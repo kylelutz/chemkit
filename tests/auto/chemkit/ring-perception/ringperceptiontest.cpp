@@ -101,15 +101,15 @@ void RingPerceptionTest::anthracene()
     addHydrogens(&molecule);
     QCOMPARE(molecule.formula(), std::string("C14H10"));
 
-    QCOMPARE(molecule.ringCount(), 3);
+    QCOMPARE(molecule.ringCount(), size_t(3));
     chemkit::Ring *R1 = C1->smallestRing();
-    QCOMPARE(R1->size(), 6);
+    QCOMPARE(R1->size(), size_t(6));
     QCOMPARE(R1->isAromatic(), true);
     chemkit::Ring *R2 = C7->smallestRing();
-    QCOMPARE(R2->size(), 6);
+    QCOMPARE(R2->size(), size_t(6));
     QCOMPARE(R2->isAromatic(), true);
     chemkit::Ring *R3 = C11->smallestRing();
-    QCOMPARE(R3->size(), 6);
+    QCOMPARE(R3->size(), size_t(6));
     QCOMPARE(R3->isAromatic(), true);
 
     QCOMPARE(C1->isInRing(), true);
@@ -231,15 +231,15 @@ void RingPerceptionTest::anthraquinone()
     addHydrogens(&molecule);
     QCOMPARE(molecule.formula(), std::string("C14H8O2"));
 
-    QCOMPARE(molecule.ringCount(), 3);
+    QCOMPARE(molecule.ringCount(), size_t(3));
     chemkit::Ring *R1 = C1->smallestRing();
-    QCOMPARE(R1->size(), 6);
+    QCOMPARE(R1->size(), size_t(6));
     QCOMPARE(R1->isAromatic(), true);
     chemkit::Ring *R2 = C7->smallestRing();
-    QCOMPARE(R2->size(), 6);
+    QCOMPARE(R2->size(), size_t(6));
     QCOMPARE(R2->isAromatic(), true);
     chemkit::Ring *R3 = C11->smallestRing();
-    QCOMPARE(R3->size(), 6);
+    QCOMPARE(R3->size(), size_t(6));
     QCOMPARE(R3->isAromatic(), true);
 
     QCOMPARE(C1->isInRing(), true);
@@ -339,9 +339,9 @@ void RingPerceptionTest::arsole()
     addHydrogens(&molecule);
     QCOMPARE(molecule.formula(), std::string("C4H5As"));
 
-    QCOMPARE(molecule.ringCount(), 1);
+    QCOMPARE(molecule.ringCount(), size_t(1));
     chemkit::Ring *R1 = molecule.rings()[0];
-    QCOMPARE(R1->size(), 5);
+    QCOMPARE(R1->size(), size_t(5));
     QCOMPARE(R1->isAromatic(), true);
 
     QCOMPARE(As1->isInRing(), true);
@@ -397,9 +397,9 @@ void RingPerceptionTest::benzene()
     addHydrogens(&molecule);
     QCOMPARE(molecule.formula(), std::string("C6H6"));
 
-    QCOMPARE(molecule.ringCount(), 1);
+    QCOMPARE(molecule.ringCount(), size_t(1));
     chemkit::Ring *R1 = C1->smallestRing();
-    QCOMPARE(R1->size(), 6);
+    QCOMPARE(R1->size(), size_t(6));
     QCOMPARE(R1->isAromatic(), true);
 
     QCOMPARE(C1->isInRing(), true);
@@ -466,12 +466,12 @@ void RingPerceptionTest::benzimidazole()
     addHydrogens(&molecule);
     QCOMPARE(molecule.formula(), std::string("C7H6N2"));
 
-    QCOMPARE(molecule.ringCount(), 2);
+    QCOMPARE(molecule.ringCount(), size_t(2));
     chemkit::Ring *R1 = C1->smallestRing();
-    QCOMPARE(R1->size(), 6);
+    QCOMPARE(R1->size(), size_t(6));
     QCOMPARE(R1->isAromatic(), true);
     chemkit::Ring *R2 = N7->smallestRing();
-    QCOMPARE(R2->size(), 5);
+    QCOMPARE(R2->size(), size_t(5));
     QCOMPARE(R2->isAromatic(), true);
 
     QCOMPARE(C1->isInRing(), true);
@@ -559,10 +559,10 @@ void RingPerceptionTest::benzobicyclooctane()
     addHydrogens(&molecule);
     QCOMPARE(molecule.formula(), std::string("C12H14"));
 
-    QCOMPARE(molecule.ringCount(), 3);
+    QCOMPARE(molecule.ringCount(), size_t(3));
     chemkit::Ring *R3 = C10->smallestRing();
     QVERIFY(R3 != 0);
-    QCOMPARE(R3->size(), 6);
+    QCOMPARE(R3->size(), size_t(6));
     QCOMPARE(R3->isAromatic(), true);
 
     QCOMPARE(C1->isInRing(), true);
@@ -662,15 +662,15 @@ void RingPerceptionTest::benzonorborene()
     addHydrogens(&molecule);
     QCOMPARE(molecule.formula(), std::string("C11H12"));
 
-    QCOMPARE(molecule.ringCount(), 3);
+    QCOMPARE(molecule.ringCount(), size_t(3));
     chemkit::Ring *R1 = C1->smallestRing();
-    QCOMPARE(R1->size(), 5);
+    QCOMPARE(R1->size(), size_t(5));
     QCOMPARE(R1->isAromatic(), false);
     chemkit::Ring *R2 = C5->smallestRing();
-    QCOMPARE(R2->size(), 5);
+    QCOMPARE(R2->size(), size_t(5));
     QCOMPARE(R2->isAromatic(), false);
     chemkit::Ring *R3 = C8->smallestRing();
-    QCOMPARE(R3->size(), 6);
+    QCOMPARE(R3->size(), size_t(6));
     QCOMPARE(R3->isAromatic(), true);
 
     QCOMPARE(C1->isInRing(), true);
@@ -759,12 +759,12 @@ void RingPerceptionTest::bicyclooctane()
     addHydrogens(&molecule);
     QCOMPARE(molecule.formula(), std::string("C8H14"));
 
-    QCOMPARE(molecule.ringCount(), 2);
+    QCOMPARE(molecule.ringCount(), size_t(2));
     chemkit::Ring *R1 = C1->smallestRing();
-    QCOMPARE(R1->size(), 6);
+    QCOMPARE(R1->size(), size_t(6));
     QCOMPARE(R1->isAromatic(), false);
     chemkit::Ring *R2 = C3->smallestRing();
-    QCOMPARE(R2->size(), 6);
+    QCOMPARE(R2->size(), size_t(6));
     QCOMPARE(R2->isAromatic(), false);
 
     QCOMPARE(C1->isInRing(), true);
@@ -861,12 +861,12 @@ void RingPerceptionTest::biotin()
     addHydrogens(&molecule);
     QCOMPARE(molecule.formula(), std::string("C10H16N2O3S"));
 
-    QCOMPARE(molecule.ringCount(), 2);
+    QCOMPARE(molecule.ringCount(), size_t(2));
     chemkit::Ring *R1 = C2->smallestRing();
-    QCOMPARE(R1->size(), 5);
+    QCOMPARE(R1->size(), size_t(5));
     QCOMPARE(R1->isAromatic(), false);
     chemkit::Ring *R2 = S6->smallestRing();
-    QCOMPARE(R2->size(), 5);
+    QCOMPARE(R2->size(), size_t(5));
     QCOMPARE(R2->isAromatic(), false);
 
     QCOMPARE(O1->isInRing(), false);
@@ -982,15 +982,15 @@ void RingPerceptionTest::biphenylene()
     addHydrogens(&molecule);
     QCOMPARE(molecule.formula(), std::string("C12H8"));
 
-    QCOMPARE(molecule.ringCount(), 3);
+    QCOMPARE(molecule.ringCount(), size_t(3));
     chemkit::Ring *R1 = C1->smallestRing();
-    QCOMPARE(R1->size(), 6);
+    QCOMPARE(R1->size(), size_t(6));
     QCOMPARE(R1->isAromatic(), true);
     chemkit::Ring *R2 = C2->smallestRing();
-    QCOMPARE(R2->size(), 4);
+    QCOMPARE(R2->size(), size_t(4));
     QCOMPARE(R2->isAromatic(), false);
     chemkit::Ring *R3 = C9->smallestRing();
-    QCOMPARE(R3->size(), 6);
+    QCOMPARE(R3->size(), size_t(6));
     QCOMPARE(R3->isAromatic(), true);
 
     QCOMPARE(C1->isInRing(), true);
@@ -1086,7 +1086,7 @@ void RingPerceptionTest::cubane()
     addHydrogens(&molecule);
     QCOMPARE(molecule.formula(), std::string("C8H8"));
 
-    QCOMPARE(molecule.ringCount(), 5);
+    QCOMPARE(molecule.ringCount(), size_t(5));
 
     QCOMPARE(C1->isInRing(), true);
     QCOMPARE(C2->isInRing(), true);
@@ -1153,9 +1153,9 @@ void RingPerceptionTest::cyclobutane()
     addHydrogens(&molecule);
     QCOMPARE(molecule.formula(), std::string("C4H8"));
 
-    QCOMPARE(molecule.ringCount(), 1);
+    QCOMPARE(molecule.ringCount(), size_t(1));
     chemkit::Ring *R1 = molecule.rings()[0];
-    QCOMPARE(R1->size(), 4);
+    QCOMPARE(R1->size(), size_t(4));
     QCOMPARE(R1->isAromatic(), false);
 
     QCOMPARE(C1->isInRing(), true);
@@ -1215,9 +1215,9 @@ void RingPerceptionTest::cyclodecane()
     addHydrogens(&molecule);
     QCOMPARE(molecule.formula(), std::string("C10H20"));
 
-    QCOMPARE(molecule.ringCount(), 1);
+    QCOMPARE(molecule.ringCount(), size_t(1));
     chemkit::Ring *R1 = molecule.rings()[0];
-    QCOMPARE(R1->size(), 10);
+    QCOMPARE(R1->size(), size_t(10));
     QCOMPARE(R1->isAromatic(), false);
 
     QCOMPARE(C1->isInRing(), true);
@@ -1295,9 +1295,9 @@ void RingPerceptionTest::cycloheptane()
     addHydrogens(&molecule);
     QCOMPARE(molecule.formula(), std::string("C7H14"));
 
-    QCOMPARE(molecule.ringCount(), 1);
+    QCOMPARE(molecule.ringCount(), size_t(1));
     chemkit::Ring *R1 = molecule.rings()[0];
-    QCOMPARE(R1->size(), 7);
+    QCOMPARE(R1->size(), size_t(7));
     QCOMPARE(R1->isAromatic(), false);
 
     QCOMPARE(C1->isInRing(), true);
@@ -1361,9 +1361,9 @@ void RingPerceptionTest::cyclohexane()
     addHydrogens(&molecule);
     QCOMPARE(molecule.formula(), std::string("C6H12"));
 
-    QCOMPARE(molecule.ringCount(), 1);
+    QCOMPARE(molecule.ringCount(), size_t(1));
     chemkit::Ring *R1 = molecule.rings()[0];
-    QCOMPARE(R1->size(), 6);
+    QCOMPARE(R1->size(), size_t(6));
     QCOMPARE(R1->isAromatic(), false);
 
     QCOMPARE(C1->isInRing(), true);
@@ -1431,9 +1431,9 @@ void RingPerceptionTest::cyclononane()
     addHydrogens(&molecule);
     QCOMPARE(molecule.formula(), std::string("C9H18"));
 
-    QCOMPARE(molecule.ringCount(), 1);
+    QCOMPARE(molecule.ringCount(), size_t(1));
     chemkit::Ring *R1 = molecule.rings()[0];
-    QCOMPARE(R1->size(), 9);
+    QCOMPARE(R1->size(), size_t(9));
     QCOMPARE(R1->isAromatic(), false);
 
     QCOMPARE(C1->isInRing(), true);
@@ -1509,9 +1509,9 @@ void RingPerceptionTest::cyclooctane()
     addHydrogens(&molecule);
     QCOMPARE(molecule.formula(), std::string("C8H16"));
 
-    QCOMPARE(molecule.ringCount(), 1);
+    QCOMPARE(molecule.ringCount(), size_t(1));
     chemkit::Ring *R1 = molecule.rings()[0];
-    QCOMPARE(R1->size(), 8);
+    QCOMPARE(R1->size(), size_t(8));
     QCOMPARE(R1->isAromatic(), false);
 
     QCOMPARE(C1->isInRing(), true);
@@ -1583,9 +1583,9 @@ void RingPerceptionTest::cyclooctatetraene()
     addHydrogens(&molecule);
     QCOMPARE(molecule.formula(), std::string("C8H8"));
 
-    QCOMPARE(molecule.ringCount(), 1);
+    QCOMPARE(molecule.ringCount(), size_t(1));
     chemkit::Ring *R1 = molecule.rings()[0];
-    QCOMPARE(R1->size(), 8);
+    QCOMPARE(R1->size(), size_t(8));
     QCOMPARE(R1->isAromatic(), false);
 
     QCOMPARE(C1->isInRing(), true);
@@ -1649,9 +1649,9 @@ void RingPerceptionTest::cyclopentane()
     addHydrogens(&molecule);
     QCOMPARE(molecule.formula(), std::string("C5H10"));
 
-    QCOMPARE(molecule.ringCount(), 1);
+    QCOMPARE(molecule.ringCount(), size_t(1));
     chemkit::Ring *R1 = molecule.rings()[0];
-    QCOMPARE(R1->size(), 5);
+    QCOMPARE(R1->size(), size_t(5));
     QCOMPARE(R1->isAromatic(), false);
 
     QCOMPARE(C1->isInRing(), true);
@@ -1697,9 +1697,9 @@ void RingPerceptionTest::cyclopropane()
     addHydrogens(&molecule);
     QCOMPARE(molecule.formula(), std::string("C3H6"));
 
-    QCOMPARE(molecule.ringCount(), 1);
+    QCOMPARE(molecule.ringCount(), size_t(1));
     chemkit::Ring *R1 = molecule.rings()[0];
-    QCOMPARE(R1->size(), 3);
+    QCOMPARE(R1->size(), size_t(3));
     QCOMPARE(R1->isAromatic(), false);
 
     QCOMPARE(C1->isInRing(), true);
@@ -1756,12 +1756,12 @@ void RingPerceptionTest::decalin()
     addHydrogens(&molecule);
     QCOMPARE(molecule.formula(), std::string("C10H18"));
 
-    QCOMPARE(molecule.ringCount(), 2);
+    QCOMPARE(molecule.ringCount(), size_t(2));
     chemkit::Ring *R1 = C1->smallestRing();
-    QCOMPARE(R1->size(), 6);
+    QCOMPARE(R1->size(), size_t(6));
     QCOMPARE(R1->isAromatic(), false);
     chemkit::Ring *R2 = C7->smallestRing();
-    QCOMPARE(R2->size(), 6);
+    QCOMPARE(R2->size(), size_t(6));
     QCOMPARE(R2->isAromatic(), false);
 
     QCOMPARE(C1->isInRing(), true);
@@ -1835,9 +1835,9 @@ void RingPerceptionTest::furan()
     addHydrogens(&molecule);
     QCOMPARE(molecule.formula(), std::string("C4H4O"));
 
-    QCOMPARE(molecule.ringCount(), 1);
+    QCOMPARE(molecule.ringCount(), size_t(1));
     chemkit::Ring *R1 = molecule.rings()[0];
-    QCOMPARE(R1->size(), 5);
+    QCOMPARE(R1->size(), size_t(5));
     QCOMPARE(R1->isAromatic(), true);
 
     QCOMPARE(O1->isInRing(), true);
@@ -1900,12 +1900,12 @@ void RingPerceptionTest::indole()
     addHydrogens(&molecule);
     QCOMPARE(molecule.formula(), std::string("C8H7N"));
 
-    QCOMPARE(molecule.ringCount(), 2);
+    QCOMPARE(molecule.ringCount(), size_t(2));
     chemkit::Ring *R1 = N1->smallestRing();
-    QCOMPARE(R1->size(), 5);
+    QCOMPARE(R1->size(), size_t(5));
     QCOMPARE(R1->isAromatic(), true);
     chemkit::Ring *R2 = C6->smallestRing();
-    QCOMPARE(R2->size(), 6);
+    QCOMPARE(R2->size(), size_t(6));
     QCOMPARE(R2->isAromatic(), true);
 
     QCOMPARE(N1->isInRing(), true);
@@ -1975,9 +1975,9 @@ void RingPerceptionTest::imidazole()
     addHydrogens(&molecule);
     QCOMPARE(molecule.formula(), std::string("C3H4N2"));
 
-    QCOMPARE(molecule.ringCount(), 1);
+    QCOMPARE(molecule.ringCount(), size_t(1));
     chemkit::Ring *R1 = molecule.rings()[0];
-    QCOMPARE(R1->size(), 5);
+    QCOMPARE(R1->size(), size_t(5));
     QCOMPARE(R1->isAromatic(), true);
 
     QCOMPARE(N1->isInRing(), true);
@@ -2045,9 +2045,9 @@ void RingPerceptionTest::ladderane()
     addHydrogens(&molecule);
     QCOMPARE(molecule.formula(), std::string("C12H16"));
 
-    QCOMPARE(molecule.ringCount(), 5);
+    QCOMPARE(molecule.ringCount(), size_t(5));
     foreach(const chemkit::Ring *ring, molecule.rings())
-        QCOMPARE(ring->size(), 4);
+        QCOMPARE(ring->size(), size_t(4));
 
     QCOMPARE(C1->isInRing(), true);
     QCOMPARE(C2->isInRing(), true);
@@ -2143,12 +2143,12 @@ void RingPerceptionTest::naphthalene()
     addHydrogens(&molecule);
     QCOMPARE(molecule.formula(), std::string("C10H8"));
 
-    QCOMPARE(molecule.ringCount(), 2);
+    QCOMPARE(molecule.ringCount(), size_t(2));
     chemkit::Ring *R1 = C1->smallestRing();
-    QCOMPARE(R1->size(), 6);
+    QCOMPARE(R1->size(), size_t(6));
     QCOMPARE(R1->isAromatic(), true);
     chemkit::Ring *R2 = C7->smallestRing();
-    QCOMPARE(R2->size(), 6);
+    QCOMPARE(R2->size(), size_t(6));
     QCOMPARE(R2->isAromatic(), true);
 
     QCOMPARE(C1->isInRing(), true);
@@ -2227,12 +2227,12 @@ void RingPerceptionTest::norbornane()
     addHydrogens(&molecule);
     QCOMPARE(molecule.formula(), std::string("C7H12"));
 
-    QCOMPARE(molecule.ringCount(), 2);
+    QCOMPARE(molecule.ringCount(), size_t(2));
     chemkit::Ring *R1 = C1->smallestRing();
-    QCOMPARE(R1->size(), 5);
+    QCOMPARE(R1->size(), size_t(5));
     QCOMPARE(R1->isAromatic(), false);
     chemkit::Ring *R2 = C4->smallestRing();
-    QCOMPARE(R2->size(), 5);
+    QCOMPARE(R2->size(), size_t(5));
     QCOMPARE(R2->isAromatic(), false);
 
     QCOMPARE(C1->isInRing(), true);
@@ -2296,9 +2296,9 @@ void RingPerceptionTest::oxazole()
     addHydrogens(&molecule);
     QCOMPARE(molecule.formula(), std::string("C3H3NO"));
 
-    QCOMPARE(molecule.ringCount(), 1);
+    QCOMPARE(molecule.ringCount(), size_t(1));
     chemkit::Ring *R1 = molecule.rings()[0];
-    QCOMPARE(R1->size(), 5);
+    QCOMPARE(R1->size(), size_t(5));
     QCOMPARE(R1->isAromatic(), true);
 
     QCOMPARE(O1->isInRing(), true);
@@ -2344,9 +2344,9 @@ void RingPerceptionTest::oxirane()
     addHydrogens(&molecule);
     QCOMPARE(molecule.formula(), std::string("C2H4O"));
 
-    QCOMPARE(molecule.ringCount(), 1);
+    QCOMPARE(molecule.ringCount(), size_t(1));
     chemkit::Ring *R1 = molecule.rings()[0];
-    QCOMPARE(R1->size(), 3);
+    QCOMPARE(R1->size(), size_t(3));
     QCOMPARE(R1->isAromatic(), false);
 
     QCOMPARE(O1->isInRing(), true);
@@ -2441,19 +2441,19 @@ void RingPerceptionTest::porphin()
     QCOMPARE(molecule.formula(), std::string("C20H14N4"));
 
     chemkit::Ring *R1 = C1->smallestRing();
-    QCOMPARE(R1->size(), 5);
+    QCOMPARE(R1->size(), size_t(5));
     QCOMPARE(R1->isAromatic(), true);
     chemkit::Ring *R2 = C3->smallestRing();
-    QCOMPARE(R2->size(), 16);
+    QCOMPARE(R2->size(), size_t(16));
     QCOMPARE(R2->isAromatic(), true);
     chemkit::Ring *R3 = C4->smallestRing();
-    QCOMPARE(R3->size(), 5);
+    QCOMPARE(R3->size(), size_t(5));
     QCOMPARE(R3->isAromatic(), true);
     chemkit::Ring *R4 = C10->smallestRing();
-    QCOMPARE(R4->size(), 5);
+    QCOMPARE(R4->size(), size_t(5));
     QCOMPARE(R4->isAromatic(), true);
     chemkit::Ring *R5 = C16->smallestRing();
-    QCOMPARE(R5->size(), 5);
+    QCOMPARE(R5->size(), size_t(5));
     QCOMPARE(R5->isAromatic(), true);
 
     QCOMPARE(C1->isInRing(), true);
@@ -2588,9 +2588,9 @@ void RingPerceptionTest::pyrazole()
     addHydrogens(&molecule);
     QCOMPARE(molecule.formula(), std::string("C3H4N2"));
 
-    QCOMPARE(molecule.ringCount(), 1);
+    QCOMPARE(molecule.ringCount(), size_t(1));
     chemkit::Ring *R1 = molecule.rings()[0];
-    QCOMPARE(R1->size(), 5);
+    QCOMPARE(R1->size(), size_t(5));
     QCOMPARE(R1->isAromatic(), true);
 
     QCOMPARE(N1->isInRing(), true);
@@ -2671,18 +2671,18 @@ void RingPerceptionTest::pyrene()
     addHydrogens(&molecule);
     QCOMPARE(molecule.formula(), std::string("C16H10"));
 
-    QCOMPARE(molecule.ringCount(), 4);
+    QCOMPARE(molecule.ringCount(), size_t(4));
     chemkit::Ring *R1 = C1->smallestRing();
-    QCOMPARE(R1->size(), 6);
+    QCOMPARE(R1->size(), size_t(6));
     QCOMPARE(R1->isAromatic(), true);
     chemkit::Ring *R2 = C7->smallestRing();
-    QCOMPARE(R2->size(), 6);
+    QCOMPARE(R2->size(), size_t(6));
     QCOMPARE(R2->isAromatic(), true);
     chemkit::Ring *R3 = C13->smallestRing();
-    QCOMPARE(R3->size(), 6);
+    QCOMPARE(R3->size(), size_t(6));
     QCOMPARE(R3->isAromatic(), true);
     chemkit::Ring *R4 = C14->smallestRing();
-    QCOMPARE(R4->size(), 6);
+    QCOMPARE(R4->size(), size_t(6));
     QCOMPARE(R4->isAromatic(), true);
 
     QCOMPARE(C1->isInRing(), true);
@@ -2788,9 +2788,9 @@ void RingPerceptionTest::pyridine()
     addHydrogens(&molecule);
     QCOMPARE(molecule.formula(), std::string("C5H5N"));
 
-    QCOMPARE(molecule.ringCount(), 1);
+    QCOMPARE(molecule.ringCount(), size_t(1));
     chemkit::Ring *R1 = molecule.rings()[0];
-    QCOMPARE(R1->size(), 6);
+    QCOMPARE(R1->size(), size_t(6));
     QCOMPARE(R1->isAromatic(), true);
 
     QCOMPARE(N1->isInRing(), true);
@@ -2846,9 +2846,9 @@ void RingPerceptionTest::pyrrole()
     addHydrogens(&molecule);
     QCOMPARE(molecule.formula(), std::string("C4H5N"));
 
-    QCOMPARE(molecule.ringCount(), 1);
+    QCOMPARE(molecule.ringCount(), size_t(1));
     chemkit::Ring *R1 = molecule.rings()[0];
-    QCOMPARE(R1->size(), 5);
+    QCOMPARE(R1->size(), size_t(5));
     QCOMPARE(R1->isAromatic(), true);
 
     QCOMPARE(N1->isInRing(), true);
@@ -2913,12 +2913,12 @@ void RingPerceptionTest::quinoxaline()
     addHydrogens(&molecule);
     QCOMPARE(molecule.formula(), std::string("C8H6N2"));
 
-    QCOMPARE(molecule.ringCount(), 2);
+    QCOMPARE(molecule.ringCount(), size_t(2));
     chemkit::Ring *R1 = N1->smallestRing();
-    QCOMPARE(R1->size(), 6);
+    QCOMPARE(R1->size(), size_t(6));
     QCOMPARE(R1->isAromatic(), true);
     chemkit::Ring *R2 = C7->smallestRing();
-    QCOMPARE(R2->size(), 6);
+    QCOMPARE(R2->size(), size_t(6));
     QCOMPARE(R2->isAromatic(), true);
 
     QCOMPARE(N1->isInRing(), true);
@@ -3005,12 +3005,12 @@ void RingPerceptionTest::tetralin()
     addHydrogens(&molecule);
     QCOMPARE(molecule.formula(), std::string("C10H12"));
 
-    QCOMPARE(molecule.ringCount(), 2);
+    QCOMPARE(molecule.ringCount(), size_t(2));
     chemkit::Ring *R1 = C1->smallestRing();
-    QCOMPARE(R1->size(), 6);
+    QCOMPARE(R1->size(), size_t(6));
     QCOMPARE(R1->isAromatic(), true);
     chemkit::Ring *R2 = C7->smallestRing();
-    QCOMPARE(R2->size(), 6);
+    QCOMPARE(R2->size(), size_t(6));
     QCOMPARE(R2->isAromatic(), false);
 
     QCOMPARE(C1->isInRing(), true);
@@ -3084,9 +3084,9 @@ void RingPerceptionTest::thiophene()
     addHydrogens(&molecule);
     QCOMPARE(molecule.formula(), std::string("C4H4S"));
 
-    QCOMPARE(molecule.ringCount(), 1);
+    QCOMPARE(molecule.ringCount(), size_t(1));
     chemkit::Ring *R1 = molecule.rings()[0];
-    QCOMPARE(R1->size(), 5);
+    QCOMPARE(R1->size(), size_t(5));
     QCOMPARE(R1->isAromatic(), true);
 
     QCOMPARE(S1->isInRing(), true);
@@ -3142,15 +3142,15 @@ void RingPerceptionTest::tricyclohexane()
     addHydrogens(&molecule);
     QCOMPARE(molecule.formula(), std::string("C6H8"));
 
-    QCOMPARE(molecule.ringCount(), 3);
+    QCOMPARE(molecule.ringCount(), size_t(3));
     chemkit::Ring *R1 = C1->smallestRing();
-    QCOMPARE(R1->size(), 3);
+    QCOMPARE(R1->size(), size_t(3));
     QCOMPARE(R1->isAromatic(), false);
     chemkit::Ring *R2 = C3->smallestRing();
-    QCOMPARE(R2->size(), 3);
+    QCOMPARE(R2->size(), size_t(3));
     QCOMPARE(R2->isAromatic(), false);
     chemkit::Ring *R3 = C5->smallestRing();
-    QCOMPARE(R3->size(), 5);
+    QCOMPARE(R3->size(), size_t(5));
     QCOMPARE(R3->isAromatic(), false);
 
     QCOMPARE(C1->isInRing(), true);
@@ -3229,15 +3229,15 @@ void RingPerceptionTest::tricyclooctane()
     addHydrogens(&molecule);
     QCOMPARE(molecule.formula(), std::string("C8H12"));
 
-    QCOMPARE(molecule.ringCount(), 3);
+    QCOMPARE(molecule.ringCount(), size_t(3));
     chemkit::Ring *R1 = C1->smallestRing();
-    QCOMPARE(R1->size(), 5);
+    QCOMPARE(R1->size(), size_t(5));
     QCOMPARE(R1->isAromatic(), false);
     chemkit::Ring *R2 = C2->smallestRing();
-    QCOMPARE(R2->size(), 4);
+    QCOMPARE(R2->size(), size_t(4));
     QCOMPARE(R2->isAromatic(), false);
     chemkit::Ring *R3 = C4->smallestRing();
-    QCOMPARE(R3->size(), 5);
+    QCOMPARE(R3->size(), size_t(5));
     QCOMPARE(R3->isAromatic(), false);
 
     QCOMPARE(C1->isInRing(), true);
@@ -3315,9 +3315,9 @@ void RingPerceptionTest::uracil()
     addHydrogens(&molecule);
     QCOMPARE(molecule.formula(), std::string("C4H4N2O2"));
 
-    QCOMPARE(molecule.ringCount(), 1);
+    QCOMPARE(molecule.ringCount(), size_t(1));
     chemkit::Ring *R1 = C1->smallestRing();
-    QCOMPARE(R1->size(), 6);
+    QCOMPARE(R1->size(), size_t(6));
     QCOMPARE(R1->isAromatic(), true);
 
     QCOMPARE(C1->isInRing(), true);
@@ -3405,17 +3405,17 @@ void RingPerceptionTest::vigtua()
     addHydrogens(&molecule);
     QCOMPARE(molecule.formula(), std::string("C12H8N2"));
 
-    QCOMPARE(molecule.ringCount(), 5);
+    QCOMPARE(molecule.ringCount(), size_t(5));
     chemkit::Ring *R1 = C5->smallestRing();
-    QCOMPARE(R1->size(), 3);
+    QCOMPARE(R1->size(), size_t(3));
     chemkit::Ring *R2 = C3->smallestRing();
-    QCOMPARE(R2->size(), 3);
+    QCOMPARE(R2->size(), size_t(3));
     chemkit::Ring *R3 = C6->smallestRing();
-    QCOMPARE(R3->size(), 5);
+    QCOMPARE(R3->size(), size_t(5));
     chemkit::Ring *R4 = N1->smallestRing();
-    QCOMPARE(R4->size(), 6);
+    QCOMPARE(R4->size(), size_t(6));
     chemkit::Ring *R5 = C8->smallestRing();
-    QCOMPARE(R5->size(), 6);
+    QCOMPARE(R5->size(), size_t(6));
 
     QCOMPARE(N1->isInRing(), true);
     QCOMPARE(N2->isInRing(), true);

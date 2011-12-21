@@ -47,7 +47,7 @@ namespace chemkit {
 
 // --- Properties ---------------------------------------------------------- //
 /// Returns the number of atoms in the ring.
-inline int Ring::size() const
+inline size_t Ring::size() const
 {
     return atomCount();
 }
@@ -66,7 +66,7 @@ inline Fragment* Ring::fragment() const
 
 // --- Structure ----------------------------------------------------------- //
 /// Returns the atom at \p index in the ring.
-inline Atom* Ring::atom(int index) const
+inline Atom* Ring::atom(size_t index) const
 {
     return m_atoms[index];
 }
@@ -78,7 +78,7 @@ inline std::vector<Atom *> Ring::atoms() const
 }
 
 /// Returns the number of atoms in the ring.
-inline int Ring::atomCount() const
+inline size_t Ring::atomCount() const
 {
     return atoms().size();
 }

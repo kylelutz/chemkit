@@ -177,26 +177,26 @@ void MoleculeEditorTest::addBond()
     QCOMPARE(molecule.formula(), std::string("C3"));
 
     chemkit::Bond *C1_C2 = editor.addBond(C1, C2);
-    QCOMPARE(molecule.bondCount(), 1);
+    QCOMPARE(molecule.bondCount(), size_t(1));
 
     chemkit::Bond *C2_C3 = editor.addBond(C2, C3, chemkit::Bond::Double);
     QCOMPARE(C2_C3->order(), chemkit::Bond::BondOrderType(2));
-    QCOMPARE(molecule.bondCount(), 2);
+    QCOMPARE(molecule.bondCount(), size_t(2));
 
     editor.removeBond(C1_C2);
-    QCOMPARE(molecule.bondCount(), 1);
+    QCOMPARE(molecule.bondCount(), size_t(1));
 
     editor.undo();
-    QCOMPARE(molecule.bondCount(), 2);
+    QCOMPARE(molecule.bondCount(), size_t(2));
 
     editor.redo();
-    QCOMPARE(molecule.bondCount(), 1);
+    QCOMPARE(molecule.bondCount(), size_t(1));
 
     editor.removeBond(C2_C3);
-    QCOMPARE(molecule.bondCount(), 0);
+    QCOMPARE(molecule.bondCount(), size_t(0));
 
     editor.undo();
-    QCOMPARE(molecule.bondCount(), 1);
+    QCOMPARE(molecule.bondCount(), size_t(1));
     QCOMPARE(molecule.bonds()[0]->order(), chemkit::Bond::BondOrderType(2));
 }
 
@@ -207,18 +207,18 @@ void MoleculeEditorTest::removeBond()
     chemkit::Atom *C1 = molecule.addAtom("C");
     chemkit::Atom *C2 = molecule.addAtom("C");
     chemkit::Bond *bond = molecule.addBond(C1, C2);
-    QCOMPARE(molecule.bondCount(), 1);
+    QCOMPARE(molecule.bondCount(), size_t(1));
 
     editor.removeBond(bond);
-    QCOMPARE(molecule.bondCount(), 0);
+    QCOMPARE(molecule.bondCount(), size_t(0));
     QCOMPARE(C1->isBondedTo(C2), false);
 
     editor.undo();
-    QCOMPARE(molecule.bondCount(), 1);
+    QCOMPARE(molecule.bondCount(), size_t(1));
     QCOMPARE(C1->isBondedTo(C2), true);
 
     editor.redo();
-    QCOMPARE(molecule.bondCount(), 0);
+    QCOMPARE(molecule.bondCount(), size_t(0));
     QCOMPARE(C1->isBondedTo(C2), false);
 }
 
@@ -260,25 +260,25 @@ void MoleculeEditorTest::cut()
     molecule.addBond(C1, C2);
     molecule.addBond(C2, O3, 2);
     QCOMPARE(molecule.formula(), std::string("C2O"));
-    QCOMPARE(molecule.bondCount(), 2);
+    QCOMPARE(molecule.bondCount(), size_t(2));
 
     chemkit::MoleculeEditor editor(&molecule);
     editor.cut(molecule.atoms());
     QCOMPARE(editor.copyBuffer().size(), size_t(3));
     QCOMPARE(molecule.formula(), std::string(""));
-    QCOMPARE(molecule.bondCount(), 0);
+    QCOMPARE(molecule.bondCount(), size_t(0));
 
     editor.paste();
     QCOMPARE(molecule.formula(), std::string("C2O"));
-    QCOMPARE(molecule.bondCount(), 2);
+    QCOMPARE(molecule.bondCount(), size_t(2));
 
     editor.undo();
     QCOMPARE(molecule.formula(), std::string(""));
-    QCOMPARE(molecule.bondCount(), 0);
+    QCOMPARE(molecule.bondCount(), size_t(0));
 
     editor.redo();
     QCOMPARE(molecule.formula(), std::string("C2O"));
-    QCOMPARE(molecule.bondCount(), 2);
+    QCOMPARE(molecule.bondCount(), size_t(2));
 }
 
 void MoleculeEditorTest::copy()
@@ -290,7 +290,7 @@ void MoleculeEditorTest::copy()
     molecule.addBond(C1, C2);
     molecule.addBond(C2, O3, 2);
     QCOMPARE(molecule.formula(), std::string("C2O"));
-    QCOMPARE(molecule.bondCount(), 2);
+    QCOMPARE(molecule.bondCount(), size_t(2));
 
     chemkit::MoleculeEditor editor(&molecule);
     editor.copy(molecule.atoms());
@@ -298,7 +298,7 @@ void MoleculeEditorTest::copy()
 
     editor.paste();
     QCOMPARE(molecule.formula(), std::string("C4O2"));
-    QCOMPARE(molecule.bondCount(), 4);
+    QCOMPARE(molecule.bondCount(), size_t(4));
     foreach(chemkit::Atom *atom, molecule.atoms()){
         if(atom->is(chemkit::Atom::Oxygen)){
             QCOMPARE(atom->isBondedTo(chemkit::Atom::Carbon, chemkit::Bond::Double), true);
@@ -310,11 +310,11 @@ void MoleculeEditorTest::copy()
 
     editor.undo();
     QCOMPARE(molecule.formula(), std::string("C2O"));
-    QCOMPARE(molecule.bondCount(), 2);
+    QCOMPARE(molecule.bondCount(), size_t(2));
 
     editor.redo();
     QCOMPARE(molecule.formula(), std::string("C4O2"));
-    QCOMPARE(molecule.bondCount(), 4);
+    QCOMPARE(molecule.bondCount(), size_t(4));
 
     std::vector<chemkit::Atom *> oxygens;
     foreach(chemkit::Atom *atom, molecule.atoms()){
@@ -331,7 +331,7 @@ void MoleculeEditorTest::copy()
         QCOMPARE(atom->is(chemkit::Atom::Oxygen), true);
     }
     QCOMPARE(molecule.formula(), std::string("C4O4"));
-    QCOMPARE(molecule.bondCount(), 4);
+    QCOMPARE(molecule.bondCount(), size_t(4));
 }
 
 void MoleculeEditorTest::clearCopyBuffer()

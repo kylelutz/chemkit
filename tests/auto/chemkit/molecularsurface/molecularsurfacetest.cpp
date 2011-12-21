@@ -129,7 +129,7 @@ void MolecularSurfaceTest::serine()
 
     chemkit::Molecule *molecule = file.molecule();
     QVERIFY(molecule);
-    QCOMPARE(molecule->size(), 14);
+    QCOMPARE(molecule->size(), size_t(14));
 
     // van der waals surface
     chemkit::MolecularSurface surface(molecule);
@@ -153,7 +153,7 @@ void MolecularSurfaceTest::guanine()
 
     chemkit::Molecule *molecule = file.molecule();
     QVERIFY(molecule);
-    QCOMPARE(molecule->size(), 16);
+    QCOMPARE(molecule->size(), size_t(16));
 
     // van der waals surface
     chemkit::MolecularSurface surface(molecule);
@@ -177,7 +177,7 @@ void MolecularSurfaceTest::methane()
 
     chemkit::Molecule *molecule = file.molecule();
     QVERIFY(molecule);
-    QCOMPARE(molecule->size(), 5);
+    QCOMPARE(molecule->size(), size_t(5));
 
     // van der waals surface
     chemkit::MolecularSurface surface(molecule);
@@ -201,7 +201,7 @@ void MolecularSurfaceTest::ethanol()
 
     chemkit::Molecule *molecule = file.molecule();
     QVERIFY(molecule);
-    QCOMPARE(molecule->size(), 9);
+    QCOMPARE(molecule->size(), size_t(9));
 
     // van der waals surface
     chemkit::MolecularSurface surface(molecule);
@@ -225,7 +225,7 @@ void MolecularSurfaceTest::adenosine()
 
     chemkit::Molecule *molecule = file.molecule();
     QVERIFY(molecule);
-    QCOMPARE(molecule->size(), 32);
+    QCOMPARE(molecule->size(), size_t(32));
 
     // van der waals surface
     chemkit::MolecularSurface surface(molecule);
@@ -255,7 +255,7 @@ void MolecularSurfaceTest::lysozyme()
 
     chemkit::Polymer *protein = file.polymer();
     QVERIFY(protein);
-    QCOMPARE(protein->size(), 1001);
+    QCOMPARE(protein->size(), size_t(1001));
 
     // van der waals surface
     chemkit::MolecularSurface surface(protein);
@@ -279,7 +279,7 @@ void MolecularSurfaceTest::cytochrome()
 
     chemkit::Polymer *protein = file.polymer();
     QVERIFY(protein);
-    QCOMPARE(protein->size(), 1600);
+    QCOMPARE(protein->size(), size_t(1600));
 
     // van der waals surface
     chemkit::MolecularSurface surface(protein);
@@ -303,7 +303,7 @@ void MolecularSurfaceTest::toxin()
 
     chemkit::Polymer *protein = file.polymer();
     QVERIFY(protein);
-    QCOMPARE(protein->size(), 948);
+    QCOMPARE(protein->size(), size_t(948));
 
     // van der waals surface
     chemkit::MolecularSurface surface(protein);
@@ -327,7 +327,7 @@ void MolecularSurfaceTest::hydrolase()
 
     chemkit::Polymer *protein = file.polymer();
     QVERIFY(protein);
-    QCOMPARE(protein->size(), 2003);
+    QCOMPARE(protein->size(), size_t(2003));
 
     // van der waals surface
     chemkit::MolecularSurface surface(protein);
@@ -351,7 +351,7 @@ void MolecularSurfaceTest::hemoglobin()
 
     chemkit::Polymer *protein = file.polymer();
     QVERIFY(protein);
-    QCOMPARE(protein->size(), 2201);
+    QCOMPARE(protein->size(), size_t(2201));
 
     // van der waals surface
     chemkit::MolecularSurface surface(protein);
@@ -375,7 +375,7 @@ void MolecularSurfaceTest::dna()
 
     chemkit::Polymer *nucleicAcid = file.polymer();
     QVERIFY(nucleicAcid);
-    QCOMPARE(nucleicAcid->size(), 486);
+    QCOMPARE(nucleicAcid->size(), size_t(486));
 
     // van der waals surface
     chemkit::MolecularSurface surface(nucleicAcid);
@@ -399,7 +399,7 @@ void MolecularSurfaceTest::ribozyme()
 
     chemkit::Polymer *protein = file.polymer();
     QVERIFY(protein);
-    QCOMPARE(protein->size(), 1746);
+    QCOMPARE(protein->size(), size_t(1746));
 
     // van der waals surface
     chemkit::MolecularSurface surface(protein);
@@ -423,7 +423,7 @@ void MolecularSurfaceTest::ubiqutin()
 
     chemkit::Polymer *protein = file.polymer();
     QVERIFY(protein);
-    QCOMPARE(protein->size(), 602);
+    QCOMPARE(protein->size(), size_t(602));
 
     // van der waals surface
     chemkit::MolecularSurface surface(protein);

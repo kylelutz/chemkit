@@ -297,8 +297,8 @@ void MdlFileFormat::writeMolFile(const chemkit::Molecule *molecule, std::ostream
 
     // counts line
     char countsLine[41];
-    sprintf(countsLine, "%3d%3d  0  0  0  0  0  0  0  0999 V2000\n", molecule->atomCount(),
-                                                                     molecule->bondCount());
+    sprintf(countsLine, "%3d%3d  0  0  0  0  0  0  0  0999 V2000\n", static_cast<int>(molecule->atomCount()),
+                                                                     static_cast<int>(molecule->bondCount()));
     output.write(countsLine, sizeof(countsLine) - 1);
 
     // atoms
@@ -335,9 +335,9 @@ void MdlFileFormat::writeBondBlock(const chemkit::Molecule *molecule, std::ostre
 {
     foreach(const chemkit::Bond *bond, molecule->bonds()){
         char line[23];
-        sprintf(line, "%3d%3d%3d  0  0  0  0\n", bond->atom1()->index() + 1,
-                                                 bond->atom2()->index() + 1,
-                                                 bond->order());
+        sprintf(line, "%3d%3d%3d  0  0  0  0\n", static_cast<int>(bond->atom1()->index()) + 1,
+                                                 static_cast<int>(bond->atom2()->index()) + 1,
+                                                 static_cast<int>(bond->order()));
         output.write(line, sizeof(line) - 1);
     }
 }

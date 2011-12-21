@@ -63,11 +63,11 @@ MolecularGraph::MolecularGraph(const Molecule *molecule)
       m_bonds(molecule->bondCount()),
       m_adjacencyList(molecule->atomCount())
 {
-    for(int i = 0; i < molecule->atomCount(); i++){
+    for(size_t i = 0; i < molecule->atomCount(); i++){
         m_atoms[i] = molecule->atom(i);
     }
 
-    for(int i = 0; i < molecule->bondCount(); i++){
+    for(size_t i = 0; i < molecule->bondCount(); i++){
         Bond *bond = molecule->bond(i);
         m_bonds[i] = bond;
         addBond(bond->atom1()->index(), bond->atom2()->index());
@@ -84,7 +84,7 @@ MolecularGraph::MolecularGraph(const Fragment *fragment)
 {
     const std::vector<Atom *> &atoms = fragment->atoms();
 
-    for(int i = 0; i < fragment->bondCount(); i++){
+    for(size_t i = 0; i < fragment->bondCount(); i++){
         Bond *bond = fragment->bonds()[i];
         m_bonds[i] = bond;
         addBond(std::distance(atoms.begin(), std::find(atoms.begin(), atoms.end(), bond->atom1())),

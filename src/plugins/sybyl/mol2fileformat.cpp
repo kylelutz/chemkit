@@ -212,7 +212,11 @@ bool Mol2FileFormat::write(const chemkit::MoleculeFile *file, QIODevice *iodev)
         iodev->write("@<TRIPOS>MOLECULE\n");
         iodev->write((molecule->name() + "\n").c_str());
         QString countsLine;
-        countsLine.sprintf("%4u%4u%3u%3u%3u\n", molecule->atomCount(), molecule->bondCount(), 0, 0, 0);
+        countsLine.sprintf("%4u%4u%3u%3u%3u\n", static_cast<int>(molecule->atomCount()),
+                                                static_cast<int>(molecule->bondCount()),
+                                                0,
+                                                0,
+                                                0);
         iodev->write(countsLine.toAscii());
         iodev->write("SMALL\n");
         iodev->write("GASTEIGER\n");
@@ -251,8 +255,8 @@ bool Mol2FileFormat::write(const chemkit::MoleculeFile *file, QIODevice *iodev)
         foreach(chemkit::Bond *bond, molecule->bonds()){
             QString line;
             line.sprintf("%6u%6u%6u%6u\n", bondNumber,
-                                           bond->atom1()->index()+1,
-                                           bond->atom2()->index()+1,
+                                           static_cast<int>(bond->atom1()->index()) + 1,
+                                           static_cast<int>(bond->atom2()->index()) + 1,
                                            bond->order());
             iodev->write(line.toAscii());
             bondNumber++;

@@ -240,7 +240,7 @@ void UffAtomTyper::assignTypes(const chemkit::Molecule *molecule)
 
     m_types = std::vector<std::string>(molecule->atomCount());
 
-    for(int index = 0; index < molecule->size(); index++){
+    for(size_t index = 0; index < molecule->size(); index++){
         const chemkit::Atom *atom = molecule->atom(index);
 
         m_types[index] = atomType(atom);

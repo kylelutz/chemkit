@@ -110,7 +110,7 @@ void MmffPartialChargePredictor::assignPartialCharges(const chemkit::Molecule *m
     m_partialCharges.fill(0);
 
     // assign partial charges for each atom
-    for(int i = 0; i < molecule->size(); i++){
+    for(size_t i = 0; i < molecule->size(); i++){
         const chemkit::Atom *atom = molecule->atom(i);
         int atomType = typer->typeNumber(atom);
 

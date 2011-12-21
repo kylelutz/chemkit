@@ -42,7 +42,7 @@ namespace chemkit {
 
 // --- Properties ---------------------------------------------------------- //
 /// Returns the number of atoms in the molecule.
-inline int Molecule::size() const
+inline size_t Molecule::size() const
 {
     return atomCount();
 }
@@ -62,7 +62,7 @@ inline std::vector<Atom *> Molecule::atoms() const
 }
 
 /// Returns the number of atoms in the molecule.
-inline int Molecule::atomCount() const
+inline size_t Molecule::atomCount() const
 {
     return m_atoms.size();
 }
@@ -77,7 +77,7 @@ inline Molecule::AtomRange Molecule::atomRange() const
 }
 
 /// Returns the atom at \p index.
-inline Atom* Molecule::atom(int index) const
+inline Atom* Molecule::atom(size_t index) const
 {
     return m_atoms[index];
 }

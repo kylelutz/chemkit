@@ -225,7 +225,7 @@ std::string Molecule::name() const
 std::string Molecule::formula() const
 {
     // a map of atomic symbols to their quantity
-    std::map<std::string, int> composition;
+    std::map<std::string, size_t> composition;
     foreach(const Atom *atom, m_atoms){
         composition[atom->symbol()]++;
     }
@@ -248,7 +248,7 @@ std::string Molecule::formula() const
         composition.erase("H");
     }
 
-    std::map<std::string, int>::iterator iter;
+    std::map<std::string, size_t>::iterator iter;
     for(iter = composition.begin(); iter != composition.end(); ++iter){
         formula << iter->first;
 
@@ -415,7 +415,7 @@ void Molecule::removeAtom(Atom *atom)
     }
 
     // subtract one from the index of all atoms after this one
-    for(unsigned int i = atom->m_index; i < m_atoms.size(); i++){
+    for(size_t i = atom->m_index; i < m_atoms.size(); i++){
         m_atoms[i]->m_index--;
     }
 
@@ -427,9 +427,9 @@ void Molecule::removeAtom(Atom *atom)
 
 /// Returns the number of atoms in the molecule of the given
 /// \p element.
-int Molecule::atomCount(const Element &element) const
+size_t Molecule::atomCount(const Element &element) const
 {
-    int count = 0;
+    size_t count = 0;
 
     foreach(const Atom *atom, m_atoms){
         if(atom->is(element)){
@@ -496,7 +496,7 @@ Bond* Molecule::addBond(Atom *a, Atom *b, int order)
 }
 
 /// Adds a new bond between atoms with indicies \p a and \p b.
-Bond* Molecule::addBond(int a, int b, int order)
+Bond* Molecule::addBond(size_t a, size_t b, int order)
 {
     return addBond(atom(a), atom(b), order);
 }
@@ -520,7 +520,7 @@ void Molecule::removeBond(Bond *bond)
     d->bondOrders.erase(d->bondOrders.begin() + bond->index());
 
     // subtract one from the index of all bonds after this one
-    for(unsigned int i = bond->index(); i < d->bonds.size(); i++){
+    for(size_t i = bond->index(); i < d->bonds.size(); i++){
         d->bonds[i]->m_index--;
     }
 
@@ -544,7 +544,7 @@ void Molecule::removeBond(Atom *a, Atom *b)
 }
 
 /// Removes the bond between atoms with indicies \p a and \p b.
-void Molecule::removeBond(int a, int b)
+void Molecule::removeBond(size_t a, size_t b)
 {
     removeBond(bond(a, b));
 }
@@ -556,7 +556,7 @@ std::vector<Bond *> Molecule::bonds() const
 }
 
 /// Returns the number of bonds in the molecule.
-int Molecule::bondCount() const
+size_t Molecule::bondCount() const
 {
     return d->bonds.size();
 }
@@ -571,7 +571,7 @@ Molecule::BondRange Molecule::bondRange() const
 }
 
 /// Returns the bond at index.
-Bond* Molecule::bond(int index) const
+Bond* Molecule::bond(size_t index) const
 {
     return d->bonds[index];
 }
@@ -586,7 +586,7 @@ Bond* Molecule::bond(const Atom *a, const Atom *b) const
 }
 
 /// Returns the bond between the atoms with indicies \p a and \p b.
-Bond* Molecule::bond(int a, int b) const
+Bond* Molecule::bond(size_t a, size_t b) const
 {
     return bond(atom(a), atom(b));
 }
@@ -741,7 +741,7 @@ Moiety Molecule::find(const Molecule *moiety, int flags) const
 /// \code
 /// molecule.rings()[index];
 /// \endcode
-Ring* Molecule::ring(int index) const
+Ring* Molecule::ring(size_t index) const
 {
     return rings()[index];
 }
@@ -768,7 +768,7 @@ std::vector<Ring *> Molecule::rings() const
 }
 
 /// Returns the number of rings in the molecule.
-int Molecule::ringCount() const
+size_t Molecule::ringCount() const
 {
     return rings().size();
 }
@@ -802,7 +802,7 @@ bool Molecule::ringsPerceived() const
 /// \code
 /// molecule.fragments()[index];
 /// \endcode
-Fragment* Molecule::fragment(int index) const
+Fragment* Molecule::fragment(size_t index) const
 {
     return fragments()[index];
 }
@@ -826,7 +826,7 @@ std::vector<Fragment *> Molecule::fragments() const
 }
 
 /// Returns the number of fragments in the molecule.
-int Molecule::fragmentCount() const
+size_t Molecule::fragmentCount() const
 {
     return fragments().size();
 }

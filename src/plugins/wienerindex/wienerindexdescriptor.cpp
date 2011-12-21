@@ -99,13 +99,13 @@ chemkit::Variant WienerIndexDescriptor::value(const chemkit::Molecule *molecule)
 {
     int index = 0;
 
-    for(int i = 0; i < molecule->atomCount(); i++){
+    for(size_t i = 0; i < molecule->atomCount(); i++){
         const chemkit::Atom *a = molecule->atom(i);
         if(a->isTerminalHydrogen()){
             continue;
         }
 
-        for(int j = i + 1; j < molecule->atomCount(); j++){
+        for(size_t j = i + 1; j < molecule->atomCount(); j++){
             const chemkit::Atom *b = molecule->atom(j);
             if(b->isTerminalHydrogen()){
                 continue;

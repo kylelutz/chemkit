@@ -48,7 +48,7 @@ inline Molecule* Bond::molecule() const
 }
 
 /// Returns the bond's index in the molecule.
-inline int Bond::index() const
+inline size_t Bond::index() const
 {
     return m_index;
 }

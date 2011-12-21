@@ -90,8 +90,8 @@ void MdlTest::read_guanine()
     chemkit::Molecule *guanine = file.molecule();
     QCOMPARE(guanine->formula(), std::string("C5H5N5O"));
     QCOMPARE(guanine->name(), std::string("Guanine"));
-    QCOMPARE(guanine->atomCount(), 16);
-    QCOMPARE(guanine->bondCount(), 17);
+    QCOMPARE(guanine->atomCount(), size_t(16));
+    QCOMPARE(guanine->bondCount(), size_t(17));
 }
 
 void MdlTest::read_benzenes()

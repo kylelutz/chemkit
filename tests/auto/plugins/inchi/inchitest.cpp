@@ -65,26 +65,26 @@ void InchiTest::read()
     // methane
     chemkit::Molecule *methane = inchi->read("InChI=1S/CH4/h1H4");
     QVERIFY(methane != 0);
-    QCOMPARE(methane->atomCount(), 5);
-    QCOMPARE(methane->bondCount(), 4);
+    QCOMPARE(methane->atomCount(), size_t(5));
+    QCOMPARE(methane->bondCount(), size_t(4));
     QCOMPARE(methane->formula(), std::string("CH4"));
     delete methane;
 
     // ethanol
     chemkit::Molecule *ethanol = inchi->read("InChI=1S/C2H6O/c1-2-3/h3H,2H2,1H3");
     QVERIFY(ethanol != 0);
-    QCOMPARE(ethanol->atomCount(), 9);
-    QCOMPARE(ethanol->bondCount(), 8);
+    QCOMPARE(ethanol->atomCount(), size_t(9));
+    QCOMPARE(ethanol->bondCount(), size_t(8));
     QCOMPARE(ethanol->formula(), std::string("C2H6O"));
     delete ethanol;
 
     // benzene
     chemkit::Molecule *benzene = inchi->read("InChI=1S/C6H6/c1-2-4-6-5-3-1/h1-6H");
     QVERIFY(benzene != 0);
-    QCOMPARE(benzene->atomCount(), 12);
-    QCOMPARE(benzene->bondCount(), 12);
+    QCOMPARE(benzene->atomCount(), size_t(12));
+    QCOMPARE(benzene->bondCount(), size_t(12));
     QCOMPARE(benzene->formula(), std::string("C6H6"));
-    QCOMPARE(benzene->ringCount(), 1);
+    QCOMPARE(benzene->ringCount(), size_t(1));
     chemkit::Ring *benzeneRing = benzene->rings()[0];
     QCOMPARE(benzeneRing->isAromatic(), true);
     delete benzene;

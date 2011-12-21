@@ -52,7 +52,7 @@ void BondPredictorTest::predictBonds()
 
     // predict bonds and verify the hydrogens are bonded
     chemkit::BondPredictor::predictBonds(&hydrogenMolecule);
-    QCOMPARE(hydrogenMolecule.bondCount(), 1);
+    QCOMPARE(hydrogenMolecule.bondCount(), size_t(1));
     QCOMPARE(h1->isBondedTo(h2), true);
 
     // remove bond, move 100 angstroms apart
@@ -61,7 +61,7 @@ void BondPredictorTest::predictBonds()
 
     // predict bonds and verify the hydrogens are not bonded
     chemkit::BondPredictor::predictBonds(&hydrogenMolecule);
-    QCOMPARE(hydrogenMolecule.bondCount(), 0);
+    QCOMPARE(hydrogenMolecule.bondCount(), size_t(0));
     QCOMPARE(h1->isBondedTo(h2), false);
 }
 

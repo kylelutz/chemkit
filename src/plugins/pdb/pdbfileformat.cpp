@@ -490,7 +490,7 @@ void PdbFile::writePolymerFile(chemkit::PolymerFile *file)
     foreach(const PdbConformer *pdbConformer, m_conformers){
         chemkit::CartesianCoordinates *coordinates = new chemkit::CartesianCoordinates(polymer->size());
 
-        for(int i = 0; i < polymer->size(); i++){
+        for(size_t i = 0; i < polymer->size(); i++){
             coordinates->setPosition(i, pdbConformer->position(i));
         }
 

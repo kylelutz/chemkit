@@ -59,7 +59,7 @@ void PqrTest::read()
 
     chemkit::Molecule *molecule = file.molecule();
     QVERIFY(molecule != 0);
-    QCOMPARE(molecule->atomCount(), 1961);
+    QCOMPARE(molecule->atomCount(), size_t(1961));
 }
 
 QTEST_APPLESS_MAIN(PqrTest)

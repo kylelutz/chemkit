@@ -149,7 +149,7 @@ void MolecularSurface::setMolecule(const Molecule *molecule)
         d->points.resize(molecule->size());
         d->radii.resize(molecule->size());
 
-        for(int i = 0; i < molecule->size(); i++){
+        for(size_t i = 0; i < molecule->size(); i++){
             const Atom *atom = molecule->atom(i);
 
             d->points[i] = atom->position();

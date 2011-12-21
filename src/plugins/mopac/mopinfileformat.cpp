@@ -105,7 +105,7 @@ bool MopinFileFormat::read(QIODevice *iodev, chemkit::MoleculeFile *file)
 
     chemkit::InternalCoordinates *coordinates = new chemkit::InternalCoordinates(molecule->size());
 
-    for(int i = 0; i < molecule->size(); i++){
+    for(size_t i = 0; i < molecule->size(); i++){
         coordinates->setCoordinates(i, coordinateValues[i*3+0],
                                        coordinateValues[i*3+1],
                                        coordinateValues[i*3+2]);

@@ -237,7 +237,7 @@ void SubstructureSearchTest::protein()
     // load and verify the protein molecule
     chemkit::Molecule *molecule = file.molecule();
     QVERIFY(molecule != 0);
-    QCOMPARE(molecule->atomCount(), 324);
+    QCOMPARE(molecule->atomCount(), size_t(324));
 
     // indole in tryptophan
     chemkit::Molecule indole("InChI=1/C8H7N/c1-2-4-8-7(3-1)5-6-9-8/h1-6,9H", "inchi");

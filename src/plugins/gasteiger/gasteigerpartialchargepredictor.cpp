@@ -88,7 +88,7 @@ void GasteigerPartialChargePredictor::assignPartialCharges(const chemkit::Molecu
     m_parameters.resize(molecule->atomCount());
 
     // initialize charges, electronegativities and parameters
-    for(int i = 0; i < molecule->atomCount(); i++){
+    for(size_t i = 0; i < molecule->atomCount(); i++){
         const chemkit::Atom *atom = molecule->atom(i);
 
         const GasteigerParameters *parameters = atomParameters(atom);
@@ -105,7 +105,7 @@ void GasteigerPartialChargePredictor::assignPartialCharges(const chemkit::Molecu
     for(int iteration = 1; iteration <= 6; iteration++){
 
         // calculate charges
-        for(int i = 0; i < molecule->atomCount(); i++){
+        for(size_t i = 0; i < molecule->atomCount(); i++){
             const chemkit::Atom *atom = molecule->atom(i);
 
             chemkit::Real qi = 0;
@@ -142,7 +142,7 @@ void GasteigerPartialChargePredictor::assignPartialCharges(const chemkit::Molecu
         }
 
         // calculate electronegativities
-        for(int i = 0; i < molecule->atomCount(); i++){
+        for(size_t i = 0; i < molecule->atomCount(); i++){
             const GasteigerParameters *pi = m_parameters[i];
             chemkit::Real Qi = m_charges[i];
 

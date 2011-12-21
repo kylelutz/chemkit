@@ -86,9 +86,9 @@ void McdlTest::read()
     QVERIFY(ok);
 
     QCOMPARE(molecule.formula(), formula.toStdString());
-    QCOMPARE(molecule.atomCount(), atomCount);
-    QCOMPARE(molecule.bondCount(), bondCount);
-    QCOMPARE(molecule.ringCount(), ringCount);
+    QCOMPARE(molecule.atomCount(), size_t(atomCount));
+    QCOMPARE(molecule.bondCount(), size_t(bondCount));
+    QCOMPARE(molecule.ringCount(), size_t(ringCount));
 
     delete mcdlFormat;
 }

@@ -217,7 +217,7 @@ void SybylAtomTyper::assignTypes(const chemkit::Molecule *molecule)
 
     m_types = std::vector<std::string>(molecule->atomCount());
 
-    for(int i = 0; i < molecule->atomCount(); i++){
+    for(size_t i = 0; i < molecule->atomCount(); i++){
         m_types[i] = atomType(molecule->atom(i));
     }
 }
