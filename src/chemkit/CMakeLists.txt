@@ -41,6 +41,8 @@ set(HEADERS
   fragment-inline.h
   geometry.h
   geometry-inline.h
+  graph.h
+  graph-inline.h
   internalcoordinates.h
   isotope.h
   lineformat.h
