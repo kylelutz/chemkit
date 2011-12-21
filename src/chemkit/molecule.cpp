@@ -50,6 +50,7 @@
 #include "ring.h"
 #include "bitset.h"
 #include "point3.h"
+#include "rppath.h"
 #include "element.h"
 #include "foreach.h"
 #include "vector3.h"
@@ -758,7 +759,9 @@ std::vector<Ring *> Molecule::rings() const
     // only run ring perception if neccessary
     if(!ringsPerceived()){
         // find rings
-        d->rings = MolecularGraph::sssr(this);
+        foreach(const std::vector<Atom *> &ring, chemkit::algorithm::rppath(this)){
+            d->rings.push_back(new Ring(ring));
+        }
 
         // set perceived to true
         setRingsPerceived(true);
