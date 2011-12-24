@@ -63,10 +63,9 @@ public:
 
     // structure
     inline Atom* atom(size_t index) const;
-    inline std::vector<Atom *> atoms() const;
+    inline AtomRange atoms() const;
     inline size_t atomCount() const;
     size_t atomCount(const Element &element) const;
-    inline AtomRange atomRange() const;
     Bond* bond(size_t index) const;
     std::vector<Bond *> bonds() const;
     size_t bondCount() const;

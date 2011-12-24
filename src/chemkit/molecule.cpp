@@ -399,7 +399,7 @@ void Molecule::removeAtom(Atom *atom)
     }
 
     // remove all bonds to/from the atom first
-    std::vector<Bond *> bonds = atom->bonds();
+    std::vector<Bond *> bonds(atom->bonds().begin(), atom->bonds().end());
     foreach(Bond *bond, bonds){
         removeBond(bond);
     }
@@ -551,25 +551,16 @@ void Molecule::removeBond(size_t a, size_t b)
     removeBond(bond(a, b));
 }
 
-/// Returns a list of all the bonds in the molecule.
-std::vector<Bond *> Molecule::bonds() const
+/// Returns a range containing all of the bonds in the molecule.
+Molecule::BondRange Molecule::bonds() const
 {
-    return d->bonds;
+    return boost::make_iterator_range(d->bonds.begin(), d->bonds.end());
 }
 
 /// Returns the number of bonds in the molecule.
 size_t Molecule::bondCount() const
 {
     return d->bonds.size();
-}
-
-/// Returns an iterator range containing the bonds in the
-/// molecule.
-///
-/// \internal
-Molecule::BondRange Molecule::bondRange() const
-{
-    return boost::make_iterator_range(d->bonds.begin(), d->bonds.end());
 }
 
 /// Returns the bond at index.
@@ -747,7 +738,7 @@ std::map<Atom *, Atom *> Molecule::mapping(const Molecule *molecule, int flags) 
         foreach(const Bond *bond, molecule->bonds()){
             target.addEdge(bond->atom1()->index(), bond->atom2()->index());
         }
-        targetAtoms = molecule->atoms();
+        targetAtoms = std::vector<Atom *>(molecule->atoms().begin(), molecule->atoms().end());
     }
     else{
         foreach(Atom *atom, m_atoms){
@@ -844,14 +835,14 @@ Ring* Molecule::ring(size_t index) const
     return rings()[index];
 }
 
-/// Returns a list of all rings in the molecule.
+/// Returns a range containing all of the rings in the molecule.
 ///
-/// \warning The list of rings returned from this method is only
+/// \warning The range of rings returned from this method is only
 ///          valid as long as the molecule's structure remains
 ///          unchanged. If any atoms or bonds in the molecule are
 ///          added or removed the old results must be discarded and
 ///          this method must be called again.
-std::vector<Ring *> Molecule::rings() const
+Molecule::RingRange Molecule::rings() const
 {
     // only run ring perception if neccessary
     if(!ringsPerceived()){
@@ -864,7 +855,7 @@ std::vector<Ring *> Molecule::rings() const
         setRingsPerceived(true);
     }
 
-    return d->rings;
+    return boost::make_iterator_range(d->rings.begin(), d->rings.end());
 }
 
 /// Returns the number of rings in the molecule.
@@ -907,14 +898,14 @@ Fragment* Molecule::fragment(size_t index) const
     return fragments()[index];
 }
 
-/// Returns a list of fragments in the molecule.
+/// Returns a range containing all of the fragments in the molecule.
 ///
-/// \warning The list of fragments returned from this method is only
+/// \warning The range of fragments returned from this method is only
 ///          valid as long as the molecule's structure remains
 ///          unchanged. If any atoms or bonds in the molecule are
 ///          added or removed the old results must be discarded and
 ///          this method must be called again.
-std::vector<Fragment *> Molecule::fragments() const
+Molecule::FragmentRange Molecule::fragments() const
 {
     if(!fragmentsPerceived()){
         perceiveFragments();
@@ -922,7 +913,8 @@ std::vector<Fragment *> Molecule::fragments() const
         setFragmentsPerceived(true);
     }
 
-    return d->fragments;
+    return boost::make_iterator_range(d->fragments.begin(),
+                                      d->fragments.end());
 }
 
 /// Returns the number of fragments in the molecule.
@@ -1130,10 +1122,12 @@ CoordinateSet* Molecule::coordinateSet(size_t index) const
     return d->coordinateSets[index];
 }
 
-/// Returns the coordinate sets that the molecule contains.
-std::vector<CoordinateSet *> Molecule::coordinateSets() const
+/// Returns a range containing all of the coordinate sets that the
+/// molecule contains.
+Molecule::CoordinateSetRange Molecule::coordinateSets() const
 {
-    return d->coordinateSets;
+    return boost::make_iterator_range(d->coordinateSets.begin(),
+                                      d->coordinateSets.end());
 }
 
 /// Returns the number of coordinate sets stored in the molecule.
@@ -1323,7 +1317,7 @@ bool Molecule::isSubsetOf(const Molecule *molecule, int flags) const
 {
     CHEMKIT_UNUSED(flags);
 
-    std::vector<Atom *> otherAtoms = molecule->atoms();
+    std::vector<Atom *> otherAtoms(molecule->atoms().begin(), molecule->atoms().end());
 
     foreach(const Atom *atom, m_atoms){
         bool found = false;

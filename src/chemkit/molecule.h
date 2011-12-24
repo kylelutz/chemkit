@@ -92,6 +92,9 @@ public:
     // typedefs
     typedef boost::iterator_range<std::vector<Atom *>::const_iterator> AtomRange;
     typedef boost::iterator_range<std::vector<Bond *>::const_iterator> BondRange;
+    typedef boost::iterator_range<std::vector<Ring *>::const_iterator> RingRange;
+    typedef boost::iterator_range<std::vector<Fragment *>::const_iterator> FragmentRange;
+    typedef boost::iterator_range<std::vector<CoordinateSet *>::const_iterator> CoordinateSetRange;
 
     // construction and destruction
     Molecule();
@@ -116,10 +119,9 @@ public:
     Atom* addAtomCopy(const Atom *atom);
     void removeAtom(Atom *atom);
     Atom* atom(size_t index) const;
-    inline std::vector<Atom *> atoms() const;
+    inline AtomRange atoms() const;
     inline size_t atomCount() const;
     size_t atomCount(const Element &element) const;
-    inline AtomRange atomRange() const;
     bool contains(const Atom *atom) const;
     bool contains(const Element &element) const;
     Bond* addBond(Atom *a, Atom *b, int order = 1);
@@ -130,9 +132,8 @@ public:
     Bond* bond(size_t index) const;
     Bond* bond(const Atom *a, const Atom *b) const;
     Bond* bond(size_t a, size_t b) const;
-    std::vector<Bond *> bonds() const;
+    BondRange bonds() const;
     size_t bondCount() const;
-    BondRange bondRange() const;
     bool contains(const Bond *bond) const;
     void clear();
 
@@ -145,12 +146,12 @@ public:
 
     // ring perception
     Ring* ring(size_t index) const;
-    std::vector<Ring *> rings() const;
+    RingRange rings() const;
     size_t ringCount() const;
 
     // fragment perception
     Fragment* fragment(size_t index) const;
-    std::vector<Fragment *> fragments() const;
+    FragmentRange fragments() const;
     size_t fragmentCount() const;
     bool isFragmented() const;
     void removeFragment(Fragment *fragment);
@@ -164,7 +165,7 @@ public:
     bool removeCoordinateSet(CoordinateSet *coordinates);
     bool deleteCoordinateSet(CoordinateSet *coordinates);
     CoordinateSet* coordinateSet(size_t index) const;
-    std::vector<CoordinateSet *> coordinateSets() const;
+    CoordinateSetRange coordinateSets() const;
     size_t coordinateSetCount() const;
 
     // geometry

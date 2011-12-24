@@ -778,7 +778,8 @@ void MoleculeEditor::cut(const std::vector<Atom *> &atoms)
         endEdit();
     }
 
-    d->copyBuffer = d->cutMolecule->atoms();
+    d->copyBuffer = std::vector<Atom *>(d->cutMolecule->atoms().begin(),
+                                        d->cutMolecule->atoms().end());
 
     canPasteChanged(true);
 }

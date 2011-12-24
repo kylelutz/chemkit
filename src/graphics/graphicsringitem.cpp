@@ -111,7 +111,8 @@ void GraphicsRingItem::paint(GraphicsPainter *painter)
     painter->setColor(color);
 
     Point3f center = ringCenter(d->ring);
-    const std::vector<Atom *> &atoms = d->ring->atoms();
+    std::vector<Atom *> atoms(d->ring->atoms().begin(),
+                              d->ring->atoms().end());
 
     for(unsigned int i = 0; i < atoms.size(); i++){
         const Atom *a = atoms[i];

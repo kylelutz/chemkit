@@ -228,28 +228,20 @@ Fragment* Atom::fragment() const
 }
 
 // --- Structure ----------------------------------------------------------- //
-/// Returns a list of bonds that this atom is a member of.
-std::vector<Bond *> Atom::bonds() const
+/// Returns a range containing all of the bonds that the atom is a
+/// member of.
+Atom::BondRange Atom::bonds() const
 {
-    return m_molecule->d->atomBonds[m_index];
+    const std::vector<Bond *> &bonds = m_molecule->d->atomBonds[m_index];
+
+    return boost::make_iterator_range(bonds.begin(), bonds.end());
 }
 
 /// Returns the number of bonds that this atom is a member of.
 /// Equivalent to bonds().size().
 size_t Atom::bondCount() const
 {
-    return bondRange().size();
-}
-
-/// Returns an iterator range containing the bonds that the
-/// atom is a member of.
-///
-/// \internal
-Atom::BondRange Atom::bondRange() const
-{
-    const std::vector<Bond *> &bonds = m_molecule->d->atomBonds[m_index];
-
-    return boost::make_iterator_range(bonds.begin(), bonds.end());
+    return bonds().size();
 }
 
 /// Returns the number of bonds to the atom.
@@ -257,7 +249,7 @@ int Atom::valence() const
 {
     int valence = 0;
 
-    foreach(const Bond *bond, bondRange()){
+    foreach(const Bond *bond, bonds()){
         valence += bond->order();
     }
 
@@ -267,7 +259,7 @@ int Atom::valence() const
 /// Returns the bond between the atom and the other atom.
 Bond* Atom::bondTo(const Atom *atom) const
 {
-    foreach(Bond *bond, bondRange()){
+    foreach(Bond *bond, bonds()){
         if(bond->otherAtom(this) == atom){
             return bond;
         }
@@ -283,16 +275,17 @@ Atom* Atom::neighbor(size_t index) const
     return neighbors()[index];
 }
 
-/// Returns a list of atoms that are directly bonded to the atom.
-std::vector<Atom *> Atom::neighbors() const
+/// Returns a range containing all of the atoms that are directly
+/// bonded to the atom.
+Atom::NeighborRange Atom::neighbors() const
 {
-    std::vector<Atom *> neighbors;
+    const std::vector<Bond *> &bonds = m_molecule->d->atomBonds[m_index];
 
-    foreach(Bond *bond, bondRange()){
-        neighbors.push_back(bond->otherAtom(this));
-    }
-
-    return neighbors;
+    return boost::make_iterator_range(
+                boost::make_transform_iterator(
+                    bonds.begin(), boost::bind(&Bond::otherAtom, _1, this)),
+                boost::make_transform_iterator(
+                    bonds.end(), boost::bind(&Bond::otherAtom, _1, this)));
 }
 
 /// Returns the number of neighboring (directly bonded) atoms.
@@ -306,28 +299,13 @@ size_t Atom::neighborCount(const Element &element) const
 {
     size_t count = 0;
 
-    foreach(const Bond *bond, bondRange()){
+    foreach(const Bond *bond, bonds()){
         if(bond->otherAtom(this)->is(element)){
             count++;
         }
     }
 
     return count;
-}
-
-/// Returns an iterator range containing the atoms that are
-/// bonded to the atom.
-///
-/// \internal
-Atom::NeighborRange Atom::neighborRange() const
-{
-    const std::vector<Bond *> &bonds = m_molecule->d->atomBonds[m_index];
-
-    return boost::make_iterator_range(
-                boost::make_transform_iterator(
-                    bonds.begin(), boost::bind(&Bond::otherAtom, _1, this)),
-                boost::make_transform_iterator(
-                    bonds.end(), boost::bind(&Bond::otherAtom, _1, this)));
 }
 
 /// Returns \c true if the atom is bonded to the other atom.
@@ -340,7 +318,7 @@ bool Atom::isBondedTo(const Atom *atom) const
 /// \p element.
 bool Atom::isBondedTo(const Element &element) const
 {
-    foreach(const Bond *bond, bondRange()){
+    foreach(const Bond *bond, bonds()){
         if(bond->otherAtom(this)->is(element)){
             return true;
         }
@@ -353,7 +331,7 @@ bool Atom::isBondedTo(const Element &element) const
 /// \p element via a bond with \p bondOrder.
 bool Atom::isBondedTo(const Element &element, int bondOrder) const
 {
-    foreach(const Bond *bond, bondRange()){
+    foreach(const Bond *bond, bonds()){
         if(bond->otherAtom(this)->is(element) && bond->order() == bondOrder){
             return true;
         }
@@ -385,6 +363,25 @@ bool Atom::isTerminalHydrogen() const
     return isTerminal() && is(Hydrogen);
 }
 
+namespace {
+
+struct RingContains
+{
+    RingContains(const Atom *atom)
+    {
+        m_atom = atom;
+    }
+
+    bool operator()(const Ring *ring) const
+    {
+        return ring->contains(m_atom);
+    }
+
+    const Atom *m_atom;
+};
+
+}
+
 // --- Ring Perception ----------------------------------------------------- //
 /// Returns a list of rings the atom is a member of.
 ///
@@ -393,7 +390,7 @@ std::vector<Ring *> Atom::rings() const
 {
     std::vector<Ring *> rings;
 
-    foreach(Ring *ring, molecule()->rings()){
+    foreach(Ring *ring, m_molecule->rings()){
         if(ring->contains(this)){
             rings.push_back(ring);
         }

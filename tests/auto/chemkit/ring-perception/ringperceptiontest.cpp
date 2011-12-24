@@ -48,7 +48,10 @@
 
 void RingPerceptionTest::addHydrogens(chemkit::Molecule *molecule)
 {
-    foreach(chemkit::Atom *atom, molecule->atoms()){
+    std::vector<chemkit::Atom *> atoms(molecule->atoms().begin(),
+                                       molecule->atoms().end());
+
+    foreach(chemkit::Atom *atom, atoms){
         while(atom->valence() < atom->expectedValence()){
             molecule->addBond(atom, molecule->addAtom("H"));
         }

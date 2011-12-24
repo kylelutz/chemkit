@@ -119,7 +119,8 @@ bool UffForceField::setup()
                                               atom->is(chemkit::Atom::Arsenic) ||
                                               atom->is(chemkit::Atom::Antimony) ||
                                               atom->is(chemkit::Atom::Bismuth))){
-                const std::vector<chemkit::Atom *> &neighbors = atom->neighbors();
+                std::vector<chemkit::Atom *> neighbors(atom->neighbors().begin(),
+                                                       atom->neighbors().end());
 
                 addCalculation(new UffInversionCalculation(atoms[neighbors[0]],
                                                            atoms[atom],

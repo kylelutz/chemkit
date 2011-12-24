@@ -157,7 +157,9 @@ bool MmffForceField::setup()
         // out of plane bending calculation (for each trigonal center)
         foreach(const chemkit::Atom *atom, molecule->atoms()){
             if(atom->neighborCount() == 3){
-                const std::vector<chemkit::Atom *> &neighbors = atom->neighbors();
+                std::vector<chemkit::Atom *> neighbors(atom->neighbors().begin(),
+                                                       atom->neighbors().end());
+
                 const MmffAtom *a = this->atom(neighbors[0]);
                 const MmffAtom *b = this->atom(atom);
                 const MmffAtom *c = this->atom(neighbors[1]);

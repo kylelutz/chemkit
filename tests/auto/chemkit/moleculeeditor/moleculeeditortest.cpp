@@ -263,7 +263,8 @@ void MoleculeEditorTest::cut()
     QCOMPARE(molecule.bondCount(), size_t(2));
 
     chemkit::MoleculeEditor editor(&molecule);
-    editor.cut(molecule.atoms());
+    editor.cut(std::vector<chemkit::Atom *>(molecule.atoms().begin(),
+                                            molecule.atoms().end()));
     QCOMPARE(editor.copyBuffer().size(), size_t(3));
     QCOMPARE(molecule.formula(), std::string(""));
     QCOMPARE(molecule.bondCount(), size_t(0));
@@ -293,7 +294,8 @@ void MoleculeEditorTest::copy()
     QCOMPARE(molecule.bondCount(), size_t(2));
 
     chemkit::MoleculeEditor editor(&molecule);
-    editor.copy(molecule.atoms());
+    editor.copy(std::vector<chemkit::Atom *>(molecule.atoms().begin(),
+                                             molecule.atoms().end()));
     QCOMPARE(editor.copyBuffer().size(), size_t(3));
 
     editor.paste();
@@ -345,7 +347,8 @@ void MoleculeEditorTest::clearCopyBuffer()
     molecule.addAtom("H");
     molecule.addAtom("H");
     editor.setMolecule(&molecule);
-    editor.copy(molecule.atoms());
+    editor.copy(std::vector<chemkit::Atom *>(molecule.atoms().begin(),
+                                             molecule.atoms().end()));
     QCOMPARE(editor.copyBuffer().size(), size_t(2));
     editor.clearCopyBuffer();
     QCOMPARE(editor.copyBuffer().size(), size_t(0));

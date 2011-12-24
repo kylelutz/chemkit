@@ -42,6 +42,7 @@
 
 #include <boost/function.hpp>
 #include <boost/range/iterator_range.hpp>
+#include <boost/iterator/filter_iterator.hpp>
 #include <boost/iterator/transform_iterator.hpp>
 
 #include "point3.h"
@@ -95,16 +96,14 @@ public:
     inline size_t index() const;
 
     // structure
-    std::vector<Bond *> bonds() const;
+    BondRange bonds() const;
     size_t bondCount() const;
-    BondRange bondRange() const;
     int valence() const;
     Bond* bondTo(const Atom *atom) const;
     Atom* neighbor(size_t index) const;
-    std::vector<Atom *> neighbors() const;
+    NeighborRange neighbors() const;
     size_t neighborCount() const;
     size_t neighborCount(const Element &element) const;
-    NeighborRange neighborRange() const;
     bool isBondedTo(const Atom *atom) const;
     bool isBondedTo(const Element &element) const;
     bool isBondedTo(const Element &element, int bondOrder) const;

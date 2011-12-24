@@ -71,24 +71,16 @@ inline Atom* Ring::atom(size_t index) const
     return m_atoms[index];
 }
 
-/// Returns the atoms in the ring.
-inline std::vector<Atom *> Ring::atoms() const
+/// Returns a range containing all of the atoms in the ring.
+inline Ring::AtomRange Ring::atoms() const
 {
-    return m_atoms;
+    return boost::make_iterator_range(m_atoms.begin(), m_atoms.end());
 }
 
 /// Returns the number of atoms in the ring.
 inline size_t Ring::atomCount() const
 {
     return atoms().size();
-}
-
-/// Returns an iterator range for the atoms in the ring.
-///
-/// \internal
-inline Ring::AtomRange Ring::atomRange() const
-{
-    return boost::make_iterator_range(m_atoms.begin(), m_atoms.end());
 }
 
 /// Returns \c true if the ring contains atom.

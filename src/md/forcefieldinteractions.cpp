@@ -109,7 +109,9 @@ std::vector<std::vector<const ForceFieldAtom *> > ForceFieldInteractions::angleG
 
     foreach(const Atom *atom, d->molecule->atoms()){
         if(!atom->isTerminal()){
-            const std::vector<Atom *> &neighbors = atom->neighbors();
+            std::vector<Atom *> neighbors(atom->neighbors().begin(),
+                                          atom->neighbors().end());
+
             for(unsigned int i = 0; i < neighbors.size(); i++){
                 for(unsigned int j = i + 1; j < neighbors.size(); j++){
                     std::vector<const ForceFieldAtom *> angleGroup(3);
@@ -173,7 +175,7 @@ std::vector<std::pair<const ForceFieldAtom *, const ForceFieldAtom *> > ForceFie
 {
     std::vector<std::pair<const ForceFieldAtom *, const ForceFieldAtom *> > nonbondedPairs;
 
-    const std::vector<Atom *> &atoms = d->molecule->atoms();
+    std::vector<Atom *> atoms(d->molecule->atoms().begin(), d->molecule->atoms().end());
     for(unsigned int i = 0; i < atoms.size(); i++){
         for(unsigned int j = i + 1; j < atoms.size(); j++){
             if(!atomsWithinTwoBonds(atoms[i], atoms[j])){

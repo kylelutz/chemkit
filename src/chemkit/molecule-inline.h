@@ -55,25 +55,16 @@ inline bool Molecule::isEmpty() const
 }
 
 // --- Structure ----------------------------------------------------------- //
-/// Returns a list of all the atoms in the molecule.
-inline std::vector<Atom *> Molecule::atoms() const
+/// Returns a range containing all of the atoms in the molecule.
+inline Molecule::AtomRange Molecule::atoms() const
 {
-    return m_atoms;
+    return boost::make_iterator_range(m_atoms.begin(), m_atoms.end());
 }
 
 /// Returns the number of atoms in the molecule.
 inline size_t Molecule::atomCount() const
 {
     return m_atoms.size();
-}
-
-/// Returns an iterator range containing the atoms in the
-/// molecule.
-///
-/// \internal
-inline Molecule::AtomRange Molecule::atomRange() const
-{
-    return boost::make_iterator_range(m_atoms.begin(), m_atoms.end());
 }
 
 /// Returns the atom at \p index.
