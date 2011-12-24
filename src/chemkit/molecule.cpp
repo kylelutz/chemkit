@@ -452,13 +452,7 @@ bool Molecule::contains(const Atom *atom) const
 /// \p element.
 bool Molecule::contains(const Element &element) const
 {
-    foreach(const Atom *atom, m_atoms){
-        if(atom->is(element)){
-            return true;
-        }
-    }
-
-    return false;
+    return std::find(m_elements.begin(), m_elements.end(), element) != m_elements.end();
 }
 
 /// Adds a new bond between atoms \p a and \p b and returns it. If
