@@ -431,15 +431,7 @@ void Molecule::removeAtom(Atom *atom)
 /// \p element.
 size_t Molecule::atomCount(const Element &element) const
 {
-    size_t count = 0;
-
-    foreach(const Atom *atom, m_atoms){
-        if(atom->is(element)){
-            count++;
-        }
-    }
-
-    return count;
+    return std::count(m_elements.begin(), m_elements.end(), element);
 }
 
 /// Returns \c true if the molecule contains atom.
