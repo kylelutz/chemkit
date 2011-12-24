@@ -93,15 +93,6 @@ Atom* Bond::atom2() const
     return m_molecule->d->bondAtoms[m_index].second;
 }
 
-/// Returns a list containing both atoms in the bond.
-std::vector<Atom *> Bond::atoms() const
-{
-    std::vector<Atom *> atoms(2);
-    atoms[0] = atom1();
-    atoms[1] = atom2();
-    return atoms;
-}
-
 /// Returns the other atom in the bond. The given atom must be a
 /// part of the bond.
 Atom* Bond::otherAtom(const Atom *atom) const

@@ -69,7 +69,6 @@ public:
     Atom* atom(size_t index) const;
     Atom* atom1() const;
     Atom* atom2() const;
-    std::vector<Atom *> atoms() const;
     Atom* otherAtom(const Atom *atom) const;
     void setOrder(BondOrderType order);
     BondOrderType order() const;
