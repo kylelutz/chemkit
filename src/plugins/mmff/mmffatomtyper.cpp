@@ -87,7 +87,6 @@ bool isPositiveAromaticNitrogenRing(const chemkit::Ring *ring)
 
     int nitrogenCount = 0;
     const chemkit::Atom *positiveNitrogen = 0;
-    const chemkit::Atom *neutralNitrogen = 0;
 
     foreach(const chemkit::Atom *atom, ring->atoms()){
         if(atom->is(chemkit::Atom::Nitrogen)){
@@ -96,10 +95,6 @@ bool isPositiveAromaticNitrogenRing(const chemkit::Ring *ring)
             if(atom->formalCharge() == 1 &&
                atom->neighborCount() == 3){
                 positiveNitrogen = atom;
-            }
-            else if(atom->formalCharge() == 0 &&
-                    atom->neighborCount() == 2){
-                neutralNitrogen = atom;
             }
         }
     }
