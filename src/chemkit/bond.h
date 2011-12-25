@@ -40,6 +40,10 @@
 
 #include <vector>
 
+#include <boost/function.hpp>
+#include <boost/range/iterator_range.hpp>
+#include <boost/iterator/filter_iterator.hpp>
+
 #include "point3.h"
 #include "vector3.h"
 
@@ -56,6 +60,11 @@ class CHEMKIT_EXPORT Bond
 public:
     // typedefs
     typedef unsigned char BondOrderType;
+    typedef boost::iterator_range<
+                boost::filter_iterator<
+                    boost::function<bool (const Ring *)>,
+                    boost::iterator_range<
+                        std::vector<Ring *>::const_iterator>::const_iterator> > RingRange;
 
     // enumerations
     enum BondType{
@@ -86,7 +95,7 @@ public:
     bool isTerminal() const;
 
     // ring perception
-    std::vector<Ring *> rings() const;
+    RingRange rings() const;
     size_t ringCount() const;
     bool isInRing() const;
     bool isInRing(size_t size) const;

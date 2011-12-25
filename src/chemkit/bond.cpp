@@ -35,6 +35,8 @@
 
 #include "bond.h"
 
+#include <boost/bind.hpp>
+
 #include "atom.h"
 #include "ring.h"
 #include "foreach.h"
@@ -188,24 +190,42 @@ bool Bond::isTerminal() const
 }
 
 // --- Ring Perception ----------------------------------------------------- //
-/// Returns a list of rings the bond is a member of.
-std::vector<Ring *> Bond::rings() const
+/// Returns a range containing all of the rings that contain the
+/// bond.
+///
+/// \see Molecule::rings()
+Bond::RingRange Bond::rings() const
 {
-    std::vector<Ring *> rings;
+    // range of all rings in the molecule
+    const Molecule::RingRange moleculeRings = m_molecule->rings();
 
-    foreach(Ring *ring, molecule()->rings()){
+    // predicate function to check if a ring contains this bond
+    boost::function<bool (const Ring *)> ringContainsThisBond =
+        boost::bind(static_cast<bool (Ring::*)(const Bond *) const>(&Ring::contains), _1, this);
+
+    return boost::make_iterator_range(
+               boost::make_filter_iterator<
+                   boost::function<bool (const Ring *)> >(ringContainsThisBond,
+                                                          moleculeRings.begin(),
+                                                          moleculeRings.end()),
+               boost::make_filter_iterator<
+                    boost::function<bool (const Ring *)> >(ringContainsThisBond,
+                                                           moleculeRings.end(),
+                                                           moleculeRings.end()));
+}
+
+/// Returns the number of rings that contain the bond.
+size_t Bond::ringCount() const
+{
+    size_t count = 0;
+
+    foreach(const Ring *ring, m_molecule->rings()){
         if(ring->contains(this)){
-            rings.push_back(ring);
+            count++;
         }
     }
 
-    return rings;
-}
-
-/// Returns the number of rings the bond is a member of.
-size_t Bond::ringCount() const
-{
-    return rings().size();
+    return count;
 }
 
 /// Returns \c true if the bond is a member of at least one ring.
