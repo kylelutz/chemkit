@@ -363,46 +363,43 @@ bool Atom::isTerminalHydrogen() const
     return isTerminal() && is(Hydrogen);
 }
 
-namespace {
-
-struct RingContains
-{
-    RingContains(const Atom *atom)
-    {
-        m_atom = atom;
-    }
-
-    bool operator()(const Ring *ring) const
-    {
-        return ring->contains(m_atom);
-    }
-
-    const Atom *m_atom;
-};
-
-}
-
 // --- Ring Perception ----------------------------------------------------- //
-/// Returns a list of rings the atom is a member of.
+/// Returns a range containing all of the rings that contain the
+/// atom.
 ///
 /// \see Molecule::rings()
-std::vector<Ring *> Atom::rings() const
+Atom::RingRange Atom::rings() const
 {
-    std::vector<Ring *> rings;
+    // range of all rings in the molecule
+    const Molecule::RingRange moleculeRings = m_molecule->rings();
 
-    foreach(Ring *ring, m_molecule->rings()){
+    // predicate function to check if a ring contains this atom
+    boost::function<bool (const Ring *)> ringContainsThisAtom =
+        boost::bind(static_cast<bool (Ring::*)(const Atom *) const>(&Ring::contains), _1, this);
+
+    return boost::make_iterator_range(
+               boost::make_filter_iterator<
+                   boost::function<bool (const Ring *)> >(ringContainsThisAtom,
+                                                          moleculeRings.begin(),
+                                                          moleculeRings.end()),
+               boost::make_filter_iterator<
+                    boost::function<bool (const Ring *)> >(ringContainsThisAtom,
+                                                           moleculeRings.end(),
+                                                           moleculeRings.end()));
+}
+
+/// Returns the number of rings that contain the atom.
+size_t Atom::ringCount() const
+{
+    size_t count = 0;
+
+    foreach(const Ring *ring, m_molecule->rings()){
         if(ring->contains(this)){
-            rings.push_back(ring);
+            count++;
         }
     }
 
-    return rings;
-}
-
-/// Returns the number of rings the atom is a member of.
-size_t Atom::ringCount() const
-{
-    return rings().size();
+    return count;
 }
 
 /// Returns \c true if the atom is a member of at least one ring

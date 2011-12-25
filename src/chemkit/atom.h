@@ -69,6 +69,11 @@ public:
                 boost::transform_iterator<
                     boost::function<Atom* (Bond *)>,
                     std::vector<Bond *>::const_iterator> > NeighborRange;
+    typedef boost::iterator_range<
+                boost::filter_iterator<
+                    boost::function<bool (const Ring *)>,
+                    boost::iterator_range<
+                        std::vector<Ring *>::const_iterator>::const_iterator> > RingRange;
 
     // properties
     void setElement(const Element &element);
@@ -112,7 +117,7 @@ public:
     bool isTerminalHydrogen() const;
 
     // ring perception
-    std::vector<Ring *> rings() const;
+    RingRange rings() const;
     size_t ringCount() const;
     bool isInRing() const;
     bool isInRing(size_t size) const;
