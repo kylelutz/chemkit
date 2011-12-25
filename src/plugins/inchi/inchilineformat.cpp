@@ -230,17 +230,17 @@ std::string InchiLineFormat::write(const chemkit::Molecule *molecule)
 
     // setup generator object
     INCHIGEN_DATA generatorData;
-    int ret = STDINCHIGEN_Setup(generator, &generatorData, &input);
+    STDINCHIGEN_Setup(generator, &generatorData, &input);
 
     // perform structure normalization
-    ret = STDINCHIGEN_DoNormalization(generator, &generatorData);
+    STDINCHIGEN_DoNormalization(generator, &generatorData);
 
     // perform structure canonicalization
-    ret = STDINCHIGEN_DoCanonicalization(generator, &generatorData);
+    STDINCHIGEN_DoCanonicalization(generator, &generatorData);
 
     // write inchi output structure
     inchi_Output output;
-    ret = STDINCHIGEN_DoSerialization(generator, &generatorData, &output);
+    STDINCHIGEN_DoSerialization(generator, &generatorData, &output);
 
     // get inchi string from output
     std::string inchiString;
