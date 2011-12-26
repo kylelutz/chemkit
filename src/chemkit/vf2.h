@@ -55,8 +55,8 @@ template<typename T>
 class SharedState
 {
 public:
-//    const static T NullIndex = T(-1); // represents an invalid vertex index
-    enum { NullIndex = T(-1) };
+    typedef T SizeType;
+    enum { NullIndex = SizeType(-1) }; // represents an invalid vertex index
 
     SharedState(T sourceSize, T targetSize);
 
@@ -82,8 +82,7 @@ class State
 {
 public:
     typedef T SizeType;
-    enum { NullIndex = T(-1) };
-//    static const T NullIndex = T(-1); // represents an invalid vertex index
+    enum { NullIndex = SizeType(-1) }; // represents an invalid vertex index
 
     State(const Graph<T> &source, const Graph<T> &target, VertexComparator compareVerticies, EdgeComparator compareEdges);
     State(const State *state);
@@ -99,7 +98,7 @@ public:
     bool isFeasible(const std::pair<T, T> &candidate);
     void backTrack();
 
-    static const std::pair<T, T> nullCandidate() { return std::make_pair(NullIndex, NullIndex); }
+    static const std::pair<T, T> nullCandidate() { return std::make_pair(SizeType(-1), SizeType(-1)); }
 
 private:
     SizeType m_size;
@@ -228,7 +227,7 @@ inline std::pair<T, T> State<T, VertexComparator, EdgeComparator>::nextCandidate
         return std::make_pair(lastSourceAtom, lastTargetAtom);
     }
 
-    return std::make_pair(NullIndex, NullIndex);
+    return nullCandidate();
 }
 
 // Adds the candidate pair (sourceAtom, targetAtom) to the state. The candidate
