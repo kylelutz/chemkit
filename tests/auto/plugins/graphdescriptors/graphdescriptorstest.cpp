@@ -50,4 +50,43 @@ void GraphDescriptorsTest::initTestCase()
     QVERIFY(std::find(descriptors.begin(), descriptors.end(), "graph-size") != descriptors.end());
 }
 
+void GraphDescriptorsTest::test_data()
+{
+    QTest::addColumn<QString>("smiles");
+    QTest::addColumn<QString>("formula");
+    QTest::addColumn<double>("graphDensity");
+    QTest::addColumn<int>("graphDiameter");
+    QTest::addColumn<int>("graphOrder");
+    QTest::addColumn<int>("graphRadius");
+    QTest::addColumn<int>("graphSize");
+
+    QTest::newRow("ethane") << "CC" << "C2H6" << 0.25 << 3 << 8 << 2 << 7;
+    QTest::newRow("ethanol") << "CCO" << "C2H6O" << 0.222222 << 4 << 9 << 2 << 8;
+    QTest::newRow("butane") << "CCC" << "C3H8" << 0.181818 << 4 << 11 << 2 << 10;
+    QTest::newRow("cyclohexane") << "C1CCCCC1" << "C6H12" << 0.117647 << 5 << 18 << 4 << 18;
+    QTest::newRow("toluene") << "Cc1ccccc1" << "C7H8" << 0.142857 << 6 << 15 << 4 << 15;
+    QTest::newRow("naphthalene") << "c1ccc2ccccc2c1" << "C10H8" << 0.124183 << 7 << 18 << 4 << 19;
+    QTest::newRow("biotin") << "OC(=O)CCCC[C@@H]1SC[C@@H]2NC(=O)N[C@H]12" << "C10H16N2O3S" << 0.0665323 << 11 << 32 << 6 << 33;
+    QTest::newRow("adenosine") << "Nc1ncnc2n(cnc12)[C@@H]1O[C@H](CO)[C@@H](O)[C@H]1O" << "C10H13N5O4" << 0.0685484 << 11 << 32 << 6 << 34;
+}
+
+void GraphDescriptorsTest::test()
+{
+    QFETCH(QString, smiles);
+    QFETCH(QString, formula);
+    QFETCH(double, graphDensity);
+    QFETCH(int, graphDiameter);
+    QFETCH(int, graphOrder);
+    QFETCH(int, graphRadius);
+    QFETCH(int, graphSize);
+
+    chemkit::Molecule molecule(smiles.toStdString(), "smiles");
+    QCOMPARE(molecule.formula(), formula.toStdString());
+    QCOMPARE(qRound(molecule.descriptor("graph-density").toDouble() * 100.0), qRound(graphDensity * 100.0));
+    QCOMPARE(molecule.descriptor("graph-diameter").toInt(), graphDiameter);
+    QCOMPARE(molecule.descriptor("graph-order").toInt(), graphOrder);
+    QCOMPARE(molecule.descriptor("graph-radius").toInt(), graphRadius);
+    QCOMPARE(molecule.descriptor("graph-size").toInt(), graphSize);
+}
+
 QTEST_APPLESS_MAIN(GraphDescriptorsTest)

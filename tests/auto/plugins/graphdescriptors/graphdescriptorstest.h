@@ -44,6 +44,8 @@ class GraphDescriptorsTest : public QObject
 
     private slots:
         void initTestCase();
+        void test_data();
+        void test();
 };
 
 #endif // GRAPHDESCRIPTORSTEST_H

@@ -113,7 +113,7 @@ chemkit::Variant GraphDiameterDescriptor::value(const chemkit::Molecule *molecul
     for(size_t i = 0; i < molecule->size(); i++){
         const chemkit::Atom *a = molecule->atom(i);
 
-        for(size_t j = i + 1; j < molecule->size(); i++){
+        for(size_t j = i + 1; j < molecule->size(); j++){
             const chemkit::Atom *b = molecule->atom(j);
 
             int distance = distanceBetween(a, b);
@@ -153,7 +153,7 @@ chemkit::Variant GraphRadiusDescriptor::value(const chemkit::Molecule *molecule)
 
         int eccentricity = 0;
 
-        for(size_t j = i + 1; j < molecule->size(); i++){
+        for(size_t j = 0; j < molecule->size(); j++){
             const chemkit::Atom *b = molecule->atom(j);
 
             int distance = distanceBetween(a, b);
