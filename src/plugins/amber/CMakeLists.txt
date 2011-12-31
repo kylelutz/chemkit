@@ -2,6 +2,7 @@ find_package(Chemkit COMPONENTS md REQUIRED)
 include_directories(${CHEMKIT_INCLUDE_DIRS})
 
 set(SOURCES
+  amberatomtyper.cpp
   ambercalculation.cpp
   amberforcefield.cpp
   amberparameters.cpp

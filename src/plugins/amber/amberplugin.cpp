@@ -37,24 +37,32 @@
 
 #include <chemkit/forcefieldenergydescriptor.h>
 
+#include "amberatomtyper.h"
 #include "amberforcefield.h"
 
 AmberPlugin::AmberPlugin()
     : chemkit::Plugin("amber")
 {
     registerPluginClass<chemkit::ForceField>("amber", createAmberForceField);
+    registerPluginClass<chemkit::AtomTyper>("amber", createAmberAtomTyper);
     registerPluginClass<chemkit::MolecularDescriptor>("amber-energy", createAmberEnergyDescriptor);
 }
 
 AmberPlugin::~AmberPlugin()
 {
     unregisterPluginClass<chemkit::ForceField>("amber");
+    unregisterPluginClass<chemkit::AtomTyper>("amber");
     unregisterPluginClass<chemkit::MolecularDescriptor>("amber-energy");
 }
 
 chemkit::ForceField* AmberPlugin::createAmberForceField()
 {
     return new AmberForceField;
+}
+
+chemkit::AtomTyper* AmberPlugin::createAmberAtomTyper()
+{
+    return new AmberAtomTyper;
 }
 
 chemkit::MolecularDescriptor* AmberPlugin::createAmberEnergyDescriptor()

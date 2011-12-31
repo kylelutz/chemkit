@@ -33,26 +33,30 @@
 **
 ******************************************************************************/
 
-#ifndef AMBERFORCEFIELD_H
-#define AMBERFORCEFIELD_H
+#ifndef AMBERATOMTYPER_H
+#define AMBERATOMTYPER_H
 
-#include <chemkit/forcefield.h>
+#include <chemkit/atomtyper.h>
 
-class AmberParameters;
-
-class AmberForceField : public chemkit::ForceField
+class AmberAtomTyper : public chemkit::AtomTyper
 {
 public:
     // construction and destruction
-    AmberForceField();
-    ~AmberForceField();
+    AmberAtomTyper();
+    virtual ~AmberAtomTyper();
 
-    // setup
-    virtual bool setup();
-    const AmberParameters* parameters() const;
+    // types
+    virtual chemkit::Variant type(int index) const;
+    virtual chemkit::Variant type(const chemkit::Atom *atom) const;
+    virtual std::string typeString(int index) const;
+    virtual std::string typeString(const chemkit::Atom *atom) const;
+
+protected:
+    std::string assignType(const chemkit::Atom *atom) const;
+    virtual void assignTypes(const chemkit::Molecule *molecule);
 
 private:
-    AmberParameters *m_parameters;
+    std::vector<std::string> m_types;
 };
 
-#endif // AMBERFORCEFIELD_H
+#endif // AMBERATOMTYPER_H

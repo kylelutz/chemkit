@@ -39,6 +39,7 @@
 
 #include <chemkit/atom.h>
 #include <chemkit/molecule.h>
+#include <chemkit/atomtyper.h>
 #include <chemkit/forcefield.h>
 #include <chemkit/moleculefile.h>
 #include <chemkit/forcefieldatom.h>
@@ -50,6 +51,9 @@ void AmberTest::initTestCase()
 {
     std::vector<std::string> forceFields = chemkit::ForceField::forceFields();
     QVERIFY(std::find(forceFields.begin(), forceFields.end(), "amber") != forceFields.end());
+
+    std::vector<std::string> typers = chemkit::AtomTyper::typers();
+    QVERIFY(std::find(typers.begin(), typers.end(), "amber") != typers.end());
 
     std::vector<std::string> descriptors = chemkit::MolecularDescriptor::descriptors();
     QVERIFY(std::find(descriptors.begin(), descriptors.end(), "opls-energy") != descriptors.end());
