@@ -48,45 +48,45 @@ class CartesianCoordinates;
 
 class CHEMKIT_EXPORT CoordinateSet
 {
-    public:
-        // enumerations
-        enum Type {
-            None,
-            Cartesian,
-            Internal,
-            Diagram
-        };
+public:
+    // enumerations
+    enum Type {
+        None,
+        Cartesian,
+        Internal,
+        Diagram
+    };
 
-        // construction and destruction
-        CoordinateSet();
-        explicit CoordinateSet(CartesianCoordinates *coordinates);
-        explicit CoordinateSet(InternalCoordinates *coordinates);
-        explicit CoordinateSet(DiagramCoordinates *coordinates);
-        CoordinateSet(const CoordinateSet &other);
-        ~CoordinateSet();
+    // construction and destruction
+    CoordinateSet();
+    explicit CoordinateSet(CartesianCoordinates *coordinates);
+    explicit CoordinateSet(InternalCoordinates *coordinates);
+    explicit CoordinateSet(DiagramCoordinates *coordinates);
+    CoordinateSet(const CoordinateSet &other);
+    ~CoordinateSet();
 
-        // properties
-        Type type() const;
-        size_t size() const;
-        bool isEmpty() const;
-        void setCoordinates(CartesianCoordinates *coordinates);
-        void setCoordinates(InternalCoordinates *coordinates);
-        void setCoordinates(DiagramCoordinates *coordinates);
-        CartesianCoordinates* cartesianCoordinates() const;
-        InternalCoordinates* internalCoordinates() const;
-        DiagramCoordinates* diagramCoordinates() const;
-        void clear();
+    // properties
+    Type type() const;
+    size_t size() const;
+    bool isEmpty() const;
+    void setCoordinates(CartesianCoordinates *coordinates);
+    void setCoordinates(InternalCoordinates *coordinates);
+    void setCoordinates(DiagramCoordinates *coordinates);
+    CartesianCoordinates* cartesianCoordinates() const;
+    InternalCoordinates* internalCoordinates() const;
+    DiagramCoordinates* diagramCoordinates() const;
+    void clear();
 
-        // operators
-        CoordinateSet& operator=(const CoordinateSet &other);
+    // operators
+    CoordinateSet& operator=(const CoordinateSet &other);
 
-    private:
-        Type m_type;
-        union {
-            CartesianCoordinates *m_cartesianCordinates;
-            InternalCoordinates *m_internalCoordinates;
-            DiagramCoordinates *m_diagramCoordinates;
-        };
+private:
+    Type m_type;
+    union {
+        CartesianCoordinates *m_cartesianCordinates;
+        InternalCoordinates *m_internalCoordinates;
+        DiagramCoordinates *m_diagramCoordinates;
+    };
 };
 
 } // end chemkit namespace
