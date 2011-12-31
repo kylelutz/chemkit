@@ -44,66 +44,66 @@ namespace chemkit {
 
 class CHEMKIT_EXPORT Variant
 {
-    public:
-        // enumerations
-        enum Type {
-            Null,
-            Bool,
-            Int,
-            Long,
-            Float,
-            Double,
-            Pointer,
-            String
-        };
+public:
+    // enumerations
+    enum Type {
+        Null,
+        Bool,
+        Int,
+        Long,
+        Float,
+        Double,
+        Pointer,
+        String
+    };
 
-        // construction and destruction
-        inline Variant();
-        template<typename T> Variant(T value);
-        inline Variant(const Variant &variant);
-        inline ~Variant();
+    // construction and destruction
+    inline Variant();
+    template<typename T> Variant(T value);
+    inline Variant(const Variant &variant);
+    inline ~Variant();
 
-        // properties
-        inline Type type() const;
-        inline bool isNull() const;
+    // properties
+    inline Type type() const;
+    inline bool isNull() const;
 
-        // value
-        template<typename T> bool setValue(T value);
-        template<typename T> T value() const;
-        inline void clear();
+    // value
+    template<typename T> bool setValue(T value);
+    template<typename T> T value() const;
+    inline void clear();
 
-        // conversions
-        inline bool toBool() const;
-        inline char toChar() const;
-        inline unsigned char toUChar() const;
-        inline short toShort() const;
-        inline unsigned short toUShort() const;
-        inline int toInt() const;
-        inline unsigned int toUInt() const;
-        inline long toLong() const;
-        inline unsigned long toULong() const;
-        inline size_t toSizeT() const;
-        inline float toFloat() const;
-        inline double toDouble() const;
-        inline Real toReal() const;
-        inline void* toPointer() const;
-        inline std::string toString() const;
+    // conversions
+    inline bool toBool() const;
+    inline char toChar() const;
+    inline unsigned char toUChar() const;
+    inline short toShort() const;
+    inline unsigned short toUShort() const;
+    inline int toInt() const;
+    inline unsigned int toUInt() const;
+    inline long toLong() const;
+    inline unsigned long toULong() const;
+    inline size_t toSizeT() const;
+    inline float toFloat() const;
+    inline double toDouble() const;
+    inline Real toReal() const;
+    inline void* toPointer() const;
+    inline std::string toString() const;
 
-        // operators
-        inline Variant& operator=(const Variant &variant);
+    // operators
+    inline Variant& operator=(const Variant &variant);
 
-    private:
-        Type m_type;
-        union {
-            bool _bool;
-            char _char;
-            int _int;
-            long _long;
-            float _float;
-            double _double;
-            void *pointer;
-            std::string *string;
-        } m_value;
+private:
+    Type m_type;
+    union {
+        bool _bool;
+        char _char;
+        int _int;
+        long _long;
+        float _float;
+        double _double;
+        void *pointer;
+        std::string *string;
+    } m_value;
 };
 
 } // end chemkit namespace
