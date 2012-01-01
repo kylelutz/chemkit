@@ -561,7 +561,7 @@ Bond* Molecule::bond(size_t index) const
 /// To create a new bond between the atoms use Molecule::addBond().
 Bond* Molecule::bond(const Atom *a, const Atom *b) const
 {
-    return const_cast<Atom *>(a)->bondTo(b);
+    return a->bondTo(b);
 }
 
 /// Returns the bond between the atoms with indicies \p a and \p b.
