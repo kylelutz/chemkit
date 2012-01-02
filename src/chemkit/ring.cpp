@@ -39,6 +39,8 @@
 #include <cassert>
 #include <algorithm>
 
+#include <boost/bind.hpp>
+
 #include "atom.h"
 #include "bond.h"
 #include "foreach.h"
@@ -86,21 +88,19 @@ size_t Ring::atomCount(const Element &element) const
 /// Returns the bond at \p index in the ring.
 Bond* Ring::bond(size_t index) const
 {
-    return bonds()[index];
+    return m_atoms[index]->bondTo(m_atoms[(index + 1) % size()]);
 }
 
-/// Returns the bonds in the ring.
-std::vector<Bond *> Ring::bonds() const
+/// Returns a range containing all of the bonds in the ring.
+Ring::BondRange Ring::bonds() const
 {
-    std::vector<Bond *> bonds;
-
-    for(size_t i = 0; i < size()-1; i++){
-        bonds.push_back(m_atoms[i]->bondTo(m_atoms[i+1]));
-    }
-
-    bonds.push_back(m_atoms.front()->bondTo(m_atoms.back()));
-
-    return bonds;
+    return boost::make_iterator_range(
+                boost::make_transform_iterator(
+                    boost::make_counting_iterator(size_t(0)),
+                    boost::bind(&Ring::bond, this, _1)),
+                boost::make_transform_iterator(
+                    boost::make_counting_iterator(size()),
+                    boost::bind(&Ring::bond, this, _1)));
 }
 
 /// Returns the number of bonds in the ring.

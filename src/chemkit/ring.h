@@ -40,7 +40,10 @@
 
 #include <vector>
 
+#include <boost/function.hpp>
 #include <boost/range/iterator_range.hpp>
+#include <boost/iterator/counting_iterator.hpp>
+#include <boost/iterator/transform_iterator.hpp>
 
 namespace chemkit {
 
@@ -55,6 +58,10 @@ class CHEMKIT_EXPORT Ring
 public:
     // typedefs
     typedef boost::iterator_range<std::vector<Atom *>::const_iterator> AtomRange;
+    typedef boost::iterator_range<
+                boost::transform_iterator<
+                    boost::function<Bond* (size_t)>,
+                    boost::counting_iterator<size_t> > > BondRange;
 
     // properties
     inline size_t size() const;
@@ -67,7 +74,7 @@ public:
     inline size_t atomCount() const;
     size_t atomCount(const Element &element) const;
     Bond* bond(size_t index) const;
-    std::vector<Bond *> bonds() const;
+    BondRange bonds() const;
     size_t bondCount() const;
     std::vector<Bond *> exocyclicBonds() const;
     size_t exocyclicBondCount() const;
