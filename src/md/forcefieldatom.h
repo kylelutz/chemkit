@@ -66,7 +66,6 @@ public:
 
     // calculations
     Real energy() const;
-    Vector3 gradient() const;
 
     // structure
     bool isOneFour(const ForceFieldAtom *atom) const;

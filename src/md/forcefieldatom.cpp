@@ -153,12 +153,6 @@ Real ForceFieldAtom::energy() const
     return energy;
 }
 
-/// Returns the energy gradient for the atom.
-Vector3 ForceFieldAtom::gradient() const
-{
-    return forceField()->gradient()[index()];
-}
-
 // --- Structure ----------------------------------------------------------- //
 /// Returns \c true if the atom is in a one-four relationship with
 /// the other atom.
