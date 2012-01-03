@@ -533,42 +533,6 @@ bool ForceField::minimizationStep(Real converganceValue)
     return rmsg() < converganceValue;
 }
 
-// --- Geometry ------------------------------------------------------------ //
-Real ForceField::distance(const ForceFieldAtom *a, const ForceFieldAtom *b) const
-{
-    return chemkit::geometry::distance(a->position(), b->position());
-}
-
-Real ForceField::bondAngle(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c) const
-{
-    return bondAngleRadians(a, b, c) * chemkit::constants::RadiansToDegrees;
-}
-
-Real ForceField::bondAngleRadians(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c) const
-{
-    return chemkit::geometry::angleRadians(a->position(), b->position(), c->position());
-}
-
-Real ForceField::torsionAngle(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c, const ForceFieldAtom *d) const
-{
-    return torsionAngleRadians(a, b, c, d) * chemkit::constants::RadiansToDegrees;
-}
-
-Real ForceField::torsionAngleRadians(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c, const ForceFieldAtom *d) const
-{
-    return chemkit::geometry::torsionAngleRadians(a->position(), b->position(), c->position(), d->position());
-}
-
-Real ForceField::wilsonAngle(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c, const ForceFieldAtom *d) const
-{
-    return wilsonAngleRadians(a, b, c, d) * chemkit::constants::RadiansToDegrees;
-}
-
-Real ForceField::wilsonAngleRadians(const ForceFieldAtom *a, const ForceFieldAtom *b, const ForceFieldAtom *c, const ForceFieldAtom *d) const
-{
-    return chemkit::geometry::wilsonAngleRadians(a->position(), b->position(), c->position(), d->position());
-}
-
 // --- Error Handling ------------------------------------------------------ //
 /// Sets a string that describes the last error that occured.
 void ForceField::setErrorString(const std::string &errorString)
