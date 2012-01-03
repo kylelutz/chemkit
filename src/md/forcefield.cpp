@@ -402,27 +402,6 @@ std::vector<Vector3> ForceField::numericalGradient() const
     return gradient;
 }
 
-/// Returns the magnitude of the largest gradient.
-Real ForceField::largestGradient() const
-{
-    if(!size()){
-        return 0;
-    }
-
-    Real largest = 0;
-
-    std::vector<Vector3> gradient = this->gradient();
-
-    for(unsigned int i = 0; i < gradient.size(); i++){
-        Real length = gradient[i].norm();
-
-        if(length > largest)
-            largest = length;
-    }
-
-    return largest;
-}
-
 /// Returns the root mean square gradient.
 Real ForceField::rmsg() const
 {

@@ -96,7 +96,6 @@ public:
     virtual Real energy() const;
     std::vector<Vector3> gradient() const;
     std::vector<Vector3> numericalGradient() const;
-    Real largestGradient() const;
     Real rmsg() const;
 
     // coordinates
