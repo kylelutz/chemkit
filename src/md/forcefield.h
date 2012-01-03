@@ -99,8 +99,6 @@ public:
     Real rmsg() const;
 
     // coordinates
-    void readCoordinates(const Molecule *molecule);
-    void readCoordinates(const Atom *atom);
     void writeCoordinates(Molecule *molecule) const;
     void writeCoordinates(Atom *atom) const;
 

@@ -421,24 +421,6 @@ Real ForceField::rmsg() const
 }
 
 // --- Coordinates --------------------------------------------------------- //
-/// Updates the coordinates of molecule in the force field.
-void ForceField::readCoordinates(const Molecule *molecule)
-{
-    foreach(const Atom *atom, molecule->atoms()){
-        readCoordinates(atom);
-    }
-}
-
-/// Updates the coordinates of atom in the force field.
-void ForceField::readCoordinates(const Atom *atom)
-{
-    ForceFieldAtom *forceFieldAtom = this->atom(atom);
-
-    if(forceFieldAtom){
-        forceFieldAtom->setPosition(atom->position());
-    }
-}
-
 /// Writes the coordinates to molecule from the force field.
 void ForceField::writeCoordinates(Molecule *molecule) const
 {
