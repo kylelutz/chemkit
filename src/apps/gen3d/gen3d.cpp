@@ -74,7 +74,7 @@ void optimizeGeometry(chemkit::Molecule *molecule)
         return;
     }
 
-    forceField->addMolecule(molecule);
+    forceField->setMolecule(molecule);
 
     bool ok = forceField->setup();
     if(!ok){

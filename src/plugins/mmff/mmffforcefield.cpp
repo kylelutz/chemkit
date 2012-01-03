@@ -112,85 +112,88 @@ bool MmffForceField::setup()
         }
     }
 
-    foreach(const chemkit::Molecule *molecule, molecules()){
-        MmffAtomTyper typer(molecule);
+    const chemkit::Molecule *molecule = this->molecule();
+    if(!molecule){
+        return false;
+    }
 
-        // add atoms
-        foreach(const chemkit::Atom *atom, molecule->atoms()){
-            MmffAtom *mmffAtom = new MmffAtom(this, atom);
-            addAtom(mmffAtom);
-            mmffAtom->setType(typer.typeNumber(atom), typer.formalCharge(atom));
+    MmffAtomTyper typer(molecule);
+
+    // add atoms
+    foreach(const chemkit::Atom *atom, molecule->atoms()){
+        MmffAtom *mmffAtom = new MmffAtom(this, atom);
+        addAtom(mmffAtom);
+        mmffAtom->setType(typer.typeNumber(atom), typer.formalCharge(atom));
+    }
+
+    // setup atom charges
+    MmffPartialChargePredictor partialCharges;
+    partialCharges.setAtomTyper(&typer);
+    partialCharges.setMolecule(molecule);
+
+    foreach(chemkit::ForceFieldAtom *atom, atoms()){
+        atom->setCharge(partialCharges.partialCharge(atom->atom()));
+    }
+
+    // add calculations
+    chemkit::ForceFieldInteractions interactions(molecule, this);
+
+    // bond strech calculations
+    std::pair<const chemkit::ForceFieldAtom *, const chemkit::ForceFieldAtom *> bondedPair;
+    foreach(bondedPair, interactions.bondedPairs()){
+        const MmffAtom *a = static_cast<const MmffAtom *>(bondedPair.first);
+        const MmffAtom *b = static_cast<const MmffAtom *>(bondedPair.second);
+
+        addCalculation(new MmffBondStrechCalculation(a, b));
+    }
+
+    // angle bend and strech bend calculations
+    std::vector<const chemkit::ForceFieldAtom *> angleGroup;
+    foreach(angleGroup, interactions.angleGroups()){
+        const MmffAtom *a = static_cast<const MmffAtom *>(angleGroup[0]);
+        const MmffAtom *b = static_cast<const MmffAtom *>(angleGroup[1]);
+        const MmffAtom *c = static_cast<const MmffAtom *>(angleGroup[2]);
+
+        addCalculation(new MmffAngleBendCalculation(a, b, c));
+        addCalculation(new MmffStrechBendCalculation(a, b, c));
+    }
+
+    // out of plane bending calculation (for each trigonal center)
+    foreach(const chemkit::Atom *atom, molecule->atoms()){
+        if(atom->neighborCount() == 3){
+            std::vector<chemkit::Atom *> neighbors(atom->neighbors().begin(),
+                                                   atom->neighbors().end());
+
+            const MmffAtom *a = this->atom(neighbors[0]);
+            const MmffAtom *b = this->atom(atom);
+            const MmffAtom *c = this->atom(neighbors[1]);
+            const MmffAtom *d = this->atom(neighbors[2]);
+
+            addCalculation(new MmffOutOfPlaneBendingCalculation(a, b, c, d));
+            addCalculation(new MmffOutOfPlaneBendingCalculation(a, b, d, c));
+            addCalculation(new MmffOutOfPlaneBendingCalculation(c, b, d, a));
         }
+    }
 
-        // setup atom charges
-        MmffPartialChargePredictor partialCharges;
-        partialCharges.setAtomTyper(&typer);
-        partialCharges.setMolecule(molecule);
+    // torsion calculations (for each dihedral)
+    std::vector<const chemkit::ForceFieldAtom *> torsionGroup;
+    foreach(torsionGroup, interactions.torsionGroups()){
+        const MmffAtom *a = static_cast<const MmffAtom *>(torsionGroup[0]);
+        const MmffAtom *b = static_cast<const MmffAtom *>(torsionGroup[1]);
+        const MmffAtom *c = static_cast<const MmffAtom *>(torsionGroup[2]);
+        const MmffAtom *d = static_cast<const MmffAtom *>(torsionGroup[3]);
 
-        foreach(chemkit::ForceFieldAtom *atom, atoms()){
-            atom->setCharge(partialCharges.partialCharge(atom->atom()));
-        }
+        addCalculation(new MmffTorsionCalculation(a, b, c, d));
+    }
 
-        // add calculations
-        chemkit::ForceFieldInteractions interactions(molecule, this);
+    // van der waals and electrostatic calculations
+    std::pair<const chemkit::ForceFieldAtom *, const chemkit::ForceFieldAtom *> nonbondedPair;
+    foreach(nonbondedPair, interactions.nonbondedPairs()){
+        const MmffAtom *a = static_cast<const MmffAtom *>(nonbondedPair.first);
+        const MmffAtom *b = static_cast<const MmffAtom *>(nonbondedPair.second);
 
-        // bond strech calculations
-        std::pair<const chemkit::ForceFieldAtom *, const chemkit::ForceFieldAtom *> bondedPair;
-        foreach(bondedPair, interactions.bondedPairs()){
-            const MmffAtom *a = static_cast<const MmffAtom *>(bondedPair.first);
-            const MmffAtom *b = static_cast<const MmffAtom *>(bondedPair.second);
-
-            addCalculation(new MmffBondStrechCalculation(a, b));
-        }
-
-        // angle bend and strech bend calculations
-        std::vector<const chemkit::ForceFieldAtom *> angleGroup;
-        foreach(angleGroup, interactions.angleGroups()){
-            const MmffAtom *a = static_cast<const MmffAtom *>(angleGroup[0]);
-            const MmffAtom *b = static_cast<const MmffAtom *>(angleGroup[1]);
-            const MmffAtom *c = static_cast<const MmffAtom *>(angleGroup[2]);
-
-            addCalculation(new MmffAngleBendCalculation(a, b, c));
-            addCalculation(new MmffStrechBendCalculation(a, b, c));
-        }
-
-        // out of plane bending calculation (for each trigonal center)
-        foreach(const chemkit::Atom *atom, molecule->atoms()){
-            if(atom->neighborCount() == 3){
-                std::vector<chemkit::Atom *> neighbors(atom->neighbors().begin(),
-                                                       atom->neighbors().end());
-
-                const MmffAtom *a = this->atom(neighbors[0]);
-                const MmffAtom *b = this->atom(atom);
-                const MmffAtom *c = this->atom(neighbors[1]);
-                const MmffAtom *d = this->atom(neighbors[2]);
-
-                addCalculation(new MmffOutOfPlaneBendingCalculation(a, b, c, d));
-                addCalculation(new MmffOutOfPlaneBendingCalculation(a, b, d, c));
-                addCalculation(new MmffOutOfPlaneBendingCalculation(c, b, d, a));
-            }
-        }
-
-        // torsion calculations (for each dihedral)
-        std::vector<const chemkit::ForceFieldAtom *> torsionGroup;
-        foreach(torsionGroup, interactions.torsionGroups()){
-            const MmffAtom *a = static_cast<const MmffAtom *>(torsionGroup[0]);
-            const MmffAtom *b = static_cast<const MmffAtom *>(torsionGroup[1]);
-            const MmffAtom *c = static_cast<const MmffAtom *>(torsionGroup[2]);
-            const MmffAtom *d = static_cast<const MmffAtom *>(torsionGroup[3]);
-
-            addCalculation(new MmffTorsionCalculation(a, b, c, d));
-        }
-
-        // van der waals and electrostatic calculations
-        std::pair<const chemkit::ForceFieldAtom *, const chemkit::ForceFieldAtom *> nonbondedPair;
-        foreach(nonbondedPair, interactions.nonbondedPairs()){
-            const MmffAtom *a = static_cast<const MmffAtom *>(nonbondedPair.first);
-            const MmffAtom *b = static_cast<const MmffAtom *>(nonbondedPair.second);
-
-            addCalculation(new MmffVanDerWaalsCalculation(a, b));
-            addCalculation(new MmffElectrostaticCalculation(a, b));
-        }
+        addCalculation(new MmffVanDerWaalsCalculation(a, b));
+        addCalculation(new MmffElectrostaticCalculation(a, b));
     }
 
     bool ok = true;

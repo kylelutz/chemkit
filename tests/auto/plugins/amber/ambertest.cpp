@@ -74,7 +74,7 @@ void AmberTest::adenosine()
     chemkit::ForceField *forceField = chemkit::ForceField::create("amber");
     QVERIFY(forceField != 0);
 
-    forceField->addMolecule(molecule);
+    forceField->setMolecule(molecule);
     forceField->setup();
     QVERIFY(forceField->isSetup());
 
@@ -137,7 +137,7 @@ void AmberTest::serine()
     chemkit::ForceField *forceField = chemkit::ForceField::create("amber");
     QVERIFY(forceField != 0);
 
-    forceField->addMolecule(molecule);
+    forceField->setMolecule(molecule);
     forceField->setup();
     QVERIFY(forceField->isSetup());
 
@@ -182,7 +182,7 @@ void AmberTest::water()
     chemkit::ForceField *forceField = chemkit::ForceField::create("amber");
     QVERIFY(forceField != 0);
 
-    forceField->addMolecule(&water);
+    forceField->setMolecule(&water);
     forceField->setup();
     QVERIFY(forceField->isSetup());
 

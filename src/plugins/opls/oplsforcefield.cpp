@@ -69,10 +69,13 @@ bool OplsForceField::setup()
 {
     bool failed = false;
 
-    foreach(const chemkit::Molecule *molecule, molecules()){
-        if(!setupMolecule(molecule)){
-            failed = true;
-        }
+    const chemkit::Molecule *molecule = this->molecule();
+    if(!molecule){
+        return false;
+    }
+
+    if(!setupMolecule(molecule)){
+        failed = true;
     }
 
     if(!m_parameters){

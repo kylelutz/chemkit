@@ -57,7 +57,7 @@ public:
     int flags;
     std::vector<ForceFieldAtom *> atoms;
     std::vector<ForceFieldCalculation *> calculations;
-    std::vector<const Molecule *> molecules;
+    const Molecule *molecule;
     std::string parameterSet;
     std::string parameterFile;
     std::map<std::string, std::string> parameterSets;
@@ -98,6 +98,7 @@ ForceField::ForceField(const std::string &name)
     : d(new ForceFieldPrivate)
 {
     d->name = name;
+    d->molecule = 0;
     d->flags = 0;
 }
 
@@ -173,28 +174,26 @@ ForceFieldAtom* ForceField::atom(const Atom *atom) const
 }
 
 // --- Setup --------------------------------------------------------------- //
-/// Adds a molecule to the force field.
-void ForceField::addMolecule(const Molecule *molecule)
+/// Sets the molecule for the force field to \p molecule.
+void ForceField::setMolecule(const Molecule *molecule)
 {
-    d->molecules.push_back(molecule);
+    d->molecule = molecule;
+
+    foreach(ForceFieldAtom *atom, d->atoms){
+        delete atom;
+    }
+    d->atoms.clear();
+
+    foreach(ForceFieldCalculation *calculation, d->calculations){
+        delete calculation;
+    }
+    d->calculations.clear();
 }
 
-/// Removes a molecule from the force field.
-void ForceField::removeMolecule(const Molecule *molecule)
+/// Returns the molecule for the force field.
+const Molecule* ForceField::molecule() const
 {
-    d->molecules.erase(std::remove(d->molecules.begin(), d->molecules.end(), molecule));
-}
-
-/// Returns a list of all the molecules in the force field.
-std::vector<const Molecule *> ForceField::molecules() const
-{
-    return d->molecules;
-}
-
-/// Returns the number of molecules in the force field.
-int ForceField::moleculeCount() const
-{
-    return d->molecules.size();
+    return d->molecule;
 }
 
 void ForceField::addAtom(ForceFieldAtom *atom)
@@ -210,14 +209,7 @@ void ForceField::removeAtom(ForceFieldAtom *atom)
 /// Removes all of the molecules in the force field.
 void ForceField::clear()
 {
-    while(!d->molecules.empty()){
-        removeMolecule(d->molecules.front());
-    }
-
-    foreach(ForceFieldCalculation *calculation, d->calculations){
-        delete calculation;
-    }
-    d->calculations.clear();
+    setMolecule(0);
 }
 
 /// Sets up the force field. Returns false if the setup failed.

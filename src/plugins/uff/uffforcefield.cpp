@@ -73,76 +73,79 @@ const UffParameters* UffForceField::parameters() const
 // --- Setup --------------------------------------------------------------- //
 bool UffForceField::setup()
 {
-    foreach(const chemkit::Molecule *molecule, molecules()){
-        std::map<const chemkit::Atom *, chemkit::ForceFieldAtom *> atoms;
+    const chemkit::Molecule *molecule = this->molecule();
+    if(!molecule){
+        return false;
+    }
 
-        UffAtomTyper typer(molecule);
+    std::map<const chemkit::Atom *, chemkit::ForceFieldAtom *> atoms;
 
-        foreach(const chemkit::Atom *atom, molecule->atoms()){
-            chemkit::ForceFieldAtom *forceFieldAtom = new chemkit::ForceFieldAtom(this, atom);
-            atoms[atom] = forceFieldAtom;
-            addAtom(forceFieldAtom);
-            forceFieldAtom->setType(typer.typeString(atom).c_str());
+    UffAtomTyper typer(molecule);
+
+    foreach(const chemkit::Atom *atom, molecule->atoms()){
+        chemkit::ForceFieldAtom *forceFieldAtom = new chemkit::ForceFieldAtom(this, atom);
+        atoms[atom] = forceFieldAtom;
+        addAtom(forceFieldAtom);
+        forceFieldAtom->setType(typer.typeString(atom).c_str());
+    }
+
+    chemkit::ForceFieldInteractions interactions(molecule, this);
+
+    // bond strech
+    std::pair<const chemkit::ForceFieldAtom *, const chemkit::ForceFieldAtom *> bondedPair;
+    foreach(bondedPair, interactions.bondedPairs()){
+        addCalculation(new UffBondStrechCalculation(bondedPair.first,
+                                                    bondedPair.second));
+    }
+
+    // angle bend
+    std::vector<const chemkit::ForceFieldAtom *> angleGroup;
+    foreach(angleGroup, interactions.angleGroups()){
+        addCalculation(new UffAngleBendCalculation(angleGroup[0],
+                                                   angleGroup[1],
+                                                   angleGroup[2]));
+    }
+
+    // torsion
+    std::vector<const chemkit::ForceFieldAtom *> torsionGroup;
+    foreach(torsionGroup, interactions.torsionGroups()){
+        addCalculation(new UffTorsionCalculation(torsionGroup[0],
+                                                 torsionGroup[1],
+                                                 torsionGroup[2],
+                                                 torsionGroup[3]));
+    }
+
+    // inversion
+    foreach(const chemkit::Atom *atom, molecule->atoms()){
+        if(atom->neighborCount() == 3 && (atom->is(chemkit::Atom::Carbon) ||
+                                          atom->is(chemkit::Atom::Nitrogen) ||
+                                          atom->is(chemkit::Atom::Phosphorus) ||
+                                          atom->is(chemkit::Atom::Arsenic) ||
+                                          atom->is(chemkit::Atom::Antimony) ||
+                                          atom->is(chemkit::Atom::Bismuth))){
+            std::vector<chemkit::Atom *> neighbors(atom->neighbors().begin(),
+                                                   atom->neighbors().end());
+
+            addCalculation(new UffInversionCalculation(atoms[neighbors[0]],
+                                                       atoms[atom],
+                                                       atoms[neighbors[1]],
+                                                       atoms[neighbors[2]]));
+            addCalculation(new UffInversionCalculation(atoms[neighbors[0]],
+                                                       atoms[atom],
+                                                       atoms[neighbors[2]],
+                                                       atoms[neighbors[1]]));
+            addCalculation(new UffInversionCalculation(atoms[neighbors[1]],
+                                                       atoms[atom],
+                                                       atoms[neighbors[2]],
+                                                       atoms[neighbors[0]]));
         }
+    }
 
-        chemkit::ForceFieldInteractions interactions(molecule, this);
-
-        // bond strech
-        std::pair<const chemkit::ForceFieldAtom *, const chemkit::ForceFieldAtom *> bondedPair;
-        foreach(bondedPair, interactions.bondedPairs()){
-            addCalculation(new UffBondStrechCalculation(bondedPair.first,
-                                                        bondedPair.second));
-        }
-
-        // angle bend
-        std::vector<const chemkit::ForceFieldAtom *> angleGroup;
-        foreach(angleGroup, interactions.angleGroups()){
-            addCalculation(new UffAngleBendCalculation(angleGroup[0],
-                                                       angleGroup[1],
-                                                       angleGroup[2]));
-        }
-
-        // torsion
-        std::vector<const chemkit::ForceFieldAtom *> torsionGroup;
-        foreach(torsionGroup, interactions.torsionGroups()){
-            addCalculation(new UffTorsionCalculation(torsionGroup[0],
-                                                     torsionGroup[1],
-                                                     torsionGroup[2],
-                                                     torsionGroup[3]));
-        }
-
-        // inversion
-        foreach(const chemkit::Atom *atom, molecule->atoms()){
-            if(atom->neighborCount() == 3 && (atom->is(chemkit::Atom::Carbon) ||
-                                              atom->is(chemkit::Atom::Nitrogen) ||
-                                              atom->is(chemkit::Atom::Phosphorus) ||
-                                              atom->is(chemkit::Atom::Arsenic) ||
-                                              atom->is(chemkit::Atom::Antimony) ||
-                                              atom->is(chemkit::Atom::Bismuth))){
-                std::vector<chemkit::Atom *> neighbors(atom->neighbors().begin(),
-                                                       atom->neighbors().end());
-
-                addCalculation(new UffInversionCalculation(atoms[neighbors[0]],
-                                                           atoms[atom],
-                                                           atoms[neighbors[1]],
-                                                           atoms[neighbors[2]]));
-                addCalculation(new UffInversionCalculation(atoms[neighbors[0]],
-                                                           atoms[atom],
-                                                           atoms[neighbors[2]],
-                                                           atoms[neighbors[1]]));
-                addCalculation(new UffInversionCalculation(atoms[neighbors[1]],
-                                                           atoms[atom],
-                                                           atoms[neighbors[2]],
-                                                           atoms[neighbors[0]]));
-            }
-        }
-
-        // van der waals
-        std::pair<const chemkit::ForceFieldAtom *, const chemkit::ForceFieldAtom *> nonbondedPair;
-        foreach(nonbondedPair, interactions.nonbondedPairs()){
-            addCalculation(new UffVanDerWaalsCalculation(nonbondedPair.first,
-                                                         nonbondedPair.second));
-        }
+    // van der waals
+    std::pair<const chemkit::ForceFieldAtom *, const chemkit::ForceFieldAtom *> nonbondedPair;
+    foreach(nonbondedPair, interactions.nonbondedPairs()){
+        addCalculation(new UffVanDerWaalsCalculation(nonbondedPair.first,
+                                                     nonbondedPair.second));
     }
 
     bool ok = true;

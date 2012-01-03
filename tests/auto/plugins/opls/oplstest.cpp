@@ -86,7 +86,7 @@ void OplsTest::energy()
     chemkit::ForceField *opls = chemkit::ForceField::create("opls");
     QVERIFY(opls != 0);
 
-    opls->addMolecule(molecule);
+    opls->setMolecule(molecule);
     bool setup = opls->setup();
     QVERIFY(setup == true);
 

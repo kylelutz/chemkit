@@ -106,7 +106,7 @@ void MmffTest::validate()
         QVERIFY(forceField);
 
         // add molecule and setup force field
-        forceField->addMolecule(molecule);
+        forceField->setMolecule(molecule);
         bool setup = forceField->setup();
         if(!setup){
             //failed = true;
@@ -165,7 +165,7 @@ void MmffTest::validate()
         actualFile.write("<molecules>\n");
 
         foreach(chemkit::ForceField *forceField, failedMolecules){
-            const chemkit::Molecule *molecule = forceField->molecules()[0];
+            const chemkit::Molecule *molecule = forceField->molecule();
 
             actualFile.write(QString("  <molecule name=\"%1\" energy=\"%2\" atomCount=\"%3\">\n")
                                 .arg(molecule->name().c_str())

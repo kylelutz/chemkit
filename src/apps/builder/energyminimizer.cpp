@@ -137,7 +137,7 @@ void EnergyMinimizer::start()
 
         setState(SettingUp);
 
-        m_forceField->addMolecule(m_molecule);
+        m_forceField->setMolecule(m_molecule);
         m_forceField->setup();
 
         if(!m_forceField->isSetup()){

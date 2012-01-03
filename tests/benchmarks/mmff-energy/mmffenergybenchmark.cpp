@@ -62,7 +62,7 @@ void MmffEnergyBenchmark::benchmark()
             chemkit::ForceField *forceField = chemkit::ForceField::create("mmff");
             QVERIFY(forceField);
 
-            forceField->addMolecule(molecule);
+            forceField->setMolecule(molecule);
             forceField->setup();
             //QVERIFY(forceField->isSetup());
 

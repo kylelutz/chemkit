@@ -49,7 +49,7 @@ void UridineMinimizationBenchmark::benchmark()
     chemkit::ForceField *forceField = chemkit::ForceField::create("uff");
     QVERIFY(forceField != 0);
 
-    forceField->addMolecule(molecule);
+    forceField->setMolecule(molecule);
     bool ok = forceField->setup();
     QVERIFY(ok);
 

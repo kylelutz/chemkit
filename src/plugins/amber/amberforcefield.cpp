@@ -65,50 +65,53 @@ AmberForceField::~AmberForceField()
 // --- Setup --------------------------------------------------------------- //
 bool AmberForceField::setup()
 {
-    foreach(const chemkit::Molecule *molecule, molecules()){
-        // assign atom types
-        AmberAtomTyper typer;
-        typer.setMolecule(molecule);
+    const chemkit::Molecule *molecule = this->molecule();
+    if(!molecule){
+        return false;
+    }
 
-        // add atoms
-        foreach(const chemkit::Atom *atom, molecule->atoms()){
-            chemkit::ForceFieldAtom *forceFieldAtom = new chemkit::ForceFieldAtom(this, atom);
-            forceFieldAtom->setType(typer.typeString(atom));
-            addAtom(forceFieldAtom);
-        }
+    // assign atom types
+    AmberAtomTyper typer;
+    typer.setMolecule(molecule);
 
-        chemkit::ForceFieldInteractions interactions(molecule, this);
+    // add atoms
+    foreach(const chemkit::Atom *atom, molecule->atoms()){
+        chemkit::ForceFieldAtom *forceFieldAtom = new chemkit::ForceFieldAtom(this, atom);
+        forceFieldAtom->setType(typer.typeString(atom));
+        addAtom(forceFieldAtom);
+    }
 
-        // add bond calculations
-        std::pair<const chemkit::ForceFieldAtom *, const chemkit::ForceFieldAtom *> bondedPair;
-        foreach(bondedPair, interactions.bondedPairs()){
-            addCalculation(new AmberBondCalculation(bondedPair.first,
-                                                    bondedPair.second));
-        }
+    chemkit::ForceFieldInteractions interactions(molecule, this);
 
-        // add angle calculations
-        std::vector<const chemkit::ForceFieldAtom *> angleGroup;
-        foreach(angleGroup, interactions.angleGroups()){
-            addCalculation(new AmberAngleCalculation(angleGroup[0],
-                                                     angleGroup[1],
-                                                     angleGroup[2]));
-        }
+    // add bond calculations
+    std::pair<const chemkit::ForceFieldAtom *, const chemkit::ForceFieldAtom *> bondedPair;
+    foreach(bondedPair, interactions.bondedPairs()){
+        addCalculation(new AmberBondCalculation(bondedPair.first,
+                                                bondedPair.second));
+    }
 
-        // add torsion calculations
-        std::vector<const chemkit::ForceFieldAtom *> torsionGroup;
-        foreach(torsionGroup, interactions.torsionGroups()){
-            addCalculation(new AmberTorsionCalculation(torsionGroup[0],
-                                                       torsionGroup[1],
-                                                       torsionGroup[2],
-                                                       torsionGroup[3]));
-        }
+    // add angle calculations
+    std::vector<const chemkit::ForceFieldAtom *> angleGroup;
+    foreach(angleGroup, interactions.angleGroups()){
+        addCalculation(new AmberAngleCalculation(angleGroup[0],
+                                                 angleGroup[1],
+                                                 angleGroup[2]));
+    }
 
-        // add nonbonded calculations
-        std::pair<const chemkit::ForceFieldAtom *, const chemkit::ForceFieldAtom *> nonbondedPair;
-        foreach(nonbondedPair, interactions.nonbondedPairs()){
-            addCalculation(new AmberNonbondedCalculation(nonbondedPair.first,
-                                                         nonbondedPair.second));
-        }
+    // add torsion calculations
+    std::vector<const chemkit::ForceFieldAtom *> torsionGroup;
+    foreach(torsionGroup, interactions.torsionGroups()){
+        addCalculation(new AmberTorsionCalculation(torsionGroup[0],
+                                                   torsionGroup[1],
+                                                   torsionGroup[2],
+                                                   torsionGroup[3]));
+    }
+
+    // add nonbonded calculations
+    std::pair<const chemkit::ForceFieldAtom *, const chemkit::ForceFieldAtom *> nonbondedPair;
+    foreach(nonbondedPair, interactions.nonbondedPairs()){
+        addCalculation(new AmberNonbondedCalculation(nonbondedPair.first,
+                                                     nonbondedPair.second));
     }
 
     bool ok = true;

@@ -70,7 +70,7 @@ int main(int argc, char *argv[])
         return -1;
     }
 
-    uff->addMolecule(molecule);
+    uff->setMolecule(molecule);
     uff->setup();
 
     if(!uff->isSetup()){

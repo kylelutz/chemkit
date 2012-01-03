@@ -77,10 +77,8 @@ public:
     ForceFieldAtom* atom(const Atom *atom) const;
 
     // setup
-    void addMolecule(const Molecule *molecule);
-    void removeMolecule(const Molecule *molecule);
-    std::vector<const Molecule *> molecules() const;
-    int moleculeCount() const;
+    void setMolecule(const Molecule *molecule);
+    const Molecule* molecule() const;
     virtual bool setup();
     bool isSetup() const;
     virtual void clear();
