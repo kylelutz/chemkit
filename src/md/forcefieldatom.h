@@ -61,7 +61,6 @@ public:
     virtual std::string type() const;
     void setCharge(Real charge);
     Real charge() const;
-    bool isSetup() const;
     ForceField* forceField() const;
 
     // calculations

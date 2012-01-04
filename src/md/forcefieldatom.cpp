@@ -54,7 +54,6 @@ public:
     std::string type;
     Real charge;
     Point3 position;
-    bool setup;
     ForceField *forceField;
 };
 
@@ -75,7 +74,6 @@ ForceFieldAtom::ForceFieldAtom(ForceField *forceField, const Atom *atom)
     d->atom = atom;
     d->position = atom->position();
     d->charge = 0;
-    d->setup = false;
 }
 
 /// Destroys the force field atom object.
@@ -123,12 +121,6 @@ void ForceFieldAtom::setCharge(Real charge)
 Real ForceFieldAtom::charge() const
 {
     return d->charge;
-}
-
-/// Returns \c true if the atom is setup.
-bool ForceFieldAtom::isSetup() const
-{
-    return d->setup;
 }
 
 /// Returns the force field the atom is a part of.
