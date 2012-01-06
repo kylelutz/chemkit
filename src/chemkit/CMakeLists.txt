@@ -71,6 +71,7 @@ set(HEADERS
   ring-inline.h
   scalarfield.h
   stereochemistry.h
+  substructurequery.h
   unitcell.h
   variant.h
   variant-inline.h
@@ -116,6 +117,7 @@ set(SOURCES
   ring.cpp
   scalarfield.cpp
   stereochemistry.cpp
+  substructurequery.cpp
   unitcell.cpp
 )
 

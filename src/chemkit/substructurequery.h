@@ -33,36 +33,53 @@
 **
 ******************************************************************************/
 
-#ifndef MOLECULETEST_H
-#define MOLECULETEST_H
+#ifndef CHEMKIT_SUBSTRUCTUREQUERY_H
+#define CHEMKIT_SUBSTRUCTUREQUERY_H
 
-#include <QtTest>
+#include "chemkit.h"
 
-class MoleculeTest : public QObject
+#include <map>
+#include <vector>
+
+#include "moiety.h"
+
+namespace chemkit {
+
+class Atom;
+class Molecule;
+class SubstructureQueryPrivate;
+
+class CHEMKIT_EXPORT SubstructureQuery
 {
-    Q_OBJECT
+public:
+    // enumerations
+    enum Flag {
+        CompareAtomsOnly = 0x00,
+        CompareHydrogens = 0x01,
+        CompareAromaticity = 0x02,
+        CompareExact = 0x04
+    };
 
-    private slots:
-        void name();
-        void formula();
-        void mass();
-        void data();
-        void addAtom();
-        void addAtomCopy();
-        void addBond();
-        void bond();
-        void size();
-        void isEmpty();
-        void rings();
-        void distance();
-        void center();
-        void bondAngle();
-        void torsionAngle();
-        void wilsonAngle();
-        void fragments();
-        void isFragmented();
-        void removeFragment();
-        void rotate();
+    // construction and destruction
+    SubstructureQuery(const Molecule *molecule = 0);
+    ~SubstructureQuery();
+
+    // properties
+    void setMolecule(const Molecule *molecule);
+    const Molecule* molecule() const;
+    void setFlags(int flags);
+    int flags() const;
+
+    // queries
+    bool matches(const Molecule *molecule) const;
+    std::map<Atom *, Atom *> mapping(const Molecule *molecule) const;
+    std::vector<Molecule *> filter(const std::vector<Molecule *> &molecules) const;
+    Moiety find(const Molecule *molecule) const;
+
+private:
+    SubstructureQueryPrivate* const d;
 };
 
-#endif // MOLECULETEST_H
+} // end chemkit namespace
+
+#endif // CHEMKIT_SUBSTRUCTUREQUERY_H

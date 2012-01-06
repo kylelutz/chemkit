@@ -45,7 +45,6 @@
 
 #include <boost/range/iterator_range.hpp>
 
-#include "moiety.h"
 #include "point3.h"
 #include "element.h"
 #include "variant.h"
@@ -81,12 +80,6 @@ public:
         BondRemoved,
         BondOrderChanged,
         NameChanged
-    };
-
-    enum CompareFlag {
-        CompareAtomsOnly = 0x00,
-        CompareHydrogens = 0x01,
-        CompareAromaticity = 0x02
     };
 
     // typedefs
@@ -136,13 +129,6 @@ public:
     size_t bondCount() const;
     bool contains(const Bond *bond) const;
     void clear();
-
-    // comparison
-    bool equals(const Molecule *molecule, int flags = 0) const;
-    bool contains(const Molecule *molecule, int flags = 0) const;
-    bool isSubstructureOf(const Molecule *molecule, int flags = 0) const;
-    std::map<Atom *, Atom *> mapping(const Molecule *molecule, int flags = 0) const;
-    Moiety find(const Molecule *moiety, int flags = 0) const;
 
     // ring perception
     Ring* ring(size_t index) const;
@@ -197,7 +183,6 @@ private:
     void notifyWatchers(const Bond *bond, ChangeType type);
     void addWatcher(MoleculeWatcher *watcher) const;
     void removeWatcher(MoleculeWatcher *watcher) const;
-    bool isSubsetOf(const Molecule *molecule, int flags) const;
     Stereochemistry* stereochemistry();
 
     friend class Atom;

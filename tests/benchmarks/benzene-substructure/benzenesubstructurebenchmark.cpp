@@ -42,6 +42,7 @@
 
 #include <chemkit/molecule.h>
 #include <chemkit/moleculefile.h>
+#include <chemkit/substructurequery.h>
 
 const std::string dataPath = "../../data/";
 
@@ -56,13 +57,14 @@ void BenzeneSubstructureBenchmark::benchmark()
 
     // create benzene molecule
     chemkit::Molecule benzene("1/C6H6/c1-2-4-6-5-3-1/h1-6H", "inchi");
+    chemkit::SubstructureQuery query(&benzene);
 
     QBENCHMARK {
         // number of substructure matches
         int count = 0;
 
         foreach(const chemkit::Molecule *molecule, file.molecules()){
-            if(benzene.isSubstructureOf(molecule)){
+            if(query.matches(molecule)){
                 count++;
             }
         }

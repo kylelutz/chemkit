@@ -87,7 +87,6 @@ void ConvertTest::convertEthanol()
     // verify the output molecule
     chemkit::Molecule *outputEthanol = outputFile.molecule();
     QCOMPARE(outputEthanol->name(), inputEthanol->name());
-    QCOMPARE(outputEthanol->equals(inputEthanol), true);
 }
 
 void ConvertTest::convertBenzenes()
@@ -131,7 +130,6 @@ void ConvertTest::convertBenzenes()
         chemkit::Molecule *outputMolecule = outputFile.molecule(i);
 
         QCOMPARE(inputMolecule->name(), outputMolecule->name());
-        QCOMPARE(inputMolecule->equals(outputMolecule, chemkit::Molecule::CompareAromaticity | chemkit::Molecule::CompareHydrogens), true);
     }
 }
 

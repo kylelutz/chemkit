@@ -33,7 +33,7 @@
 **
 ******************************************************************************/
 
-// The substructure-search test checks the Molecule::isSubstructureOf() method
+// The substructure-search test checks the SubstructureQuery::matches() method
 // against a variety of small molecules. Each one is tested against every other
 // to ensure that substructure mappings are correctly detected.
 
@@ -41,6 +41,7 @@
 
 #include <chemkit/molecule.h>
 #include <chemkit/moleculefile.h>
+#include <chemkit/substructurequery.h>
 
 void SubstructureSearchTest::initTestCase()
 {
@@ -82,142 +83,152 @@ void SubstructureSearchTest::cleanupTestCase()
 
 void SubstructureSearchTest::benzene()
 {
-    QCOMPARE(m_benzene->isSubstructureOf(m_benzene), true);
-    QCOMPARE(m_benzene->isSubstructureOf(m_butane), false);
-    QCOMPARE(m_benzene->isSubstructureOf(m_cyclopropane), false);
-    QCOMPARE(m_benzene->isSubstructureOf(m_ethane), false);
-    QCOMPARE(m_benzene->isSubstructureOf(m_ethanol), false);
-    QCOMPARE(m_benzene->isSubstructureOf(m_indole), true);
-    QCOMPARE(m_benzene->isSubstructureOf(m_methane), false);
-    QCOMPARE(m_benzene->isSubstructureOf(m_methanol), false);
-    QCOMPARE(m_benzene->isSubstructureOf(m_phenol), true);
-    QCOMPARE(m_benzene->isSubstructureOf(m_propane), false);
+    chemkit::SubstructureQuery query(m_benzene);
+    QCOMPARE(query.matches(m_benzene), true);
+    QCOMPARE(query.matches(m_butane), false);
+    QCOMPARE(query.matches(m_cyclopropane), false);
+    QCOMPARE(query.matches(m_ethane), false);
+    QCOMPARE(query.matches(m_ethanol), false);
+    QCOMPARE(query.matches(m_indole), true);
+    QCOMPARE(query.matches(m_methane), false);
+    QCOMPARE(query.matches(m_methanol), false);
+    QCOMPARE(query.matches(m_phenol), true);
+    QCOMPARE(query.matches(m_propane), false);
 }
 
 void SubstructureSearchTest::butane()
 {
-    QCOMPARE(m_butane->isSubstructureOf(m_benzene), false);
-    QCOMPARE(m_butane->isSubstructureOf(m_butane), true);
-    QCOMPARE(m_butane->isSubstructureOf(m_cyclopropane), false);
-    QCOMPARE(m_butane->isSubstructureOf(m_ethane), false);
-    QCOMPARE(m_butane->isSubstructureOf(m_ethanol), false);
-    QCOMPARE(m_butane->isSubstructureOf(m_indole), false);
-    QCOMPARE(m_butane->isSubstructureOf(m_methane), false);
-    QCOMPARE(m_butane->isSubstructureOf(m_methanol), false);
-    QCOMPARE(m_butane->isSubstructureOf(m_phenol), false);
-    QCOMPARE(m_butane->isSubstructureOf(m_propane), false);
+    chemkit::SubstructureQuery query(m_butane);
+    QCOMPARE(query.matches(m_benzene), false);
+    QCOMPARE(query.matches(m_butane), true);
+    QCOMPARE(query.matches(m_cyclopropane), false);
+    QCOMPARE(query.matches(m_ethane), false);
+    QCOMPARE(query.matches(m_ethanol), false);
+    QCOMPARE(query.matches(m_indole), false);
+    QCOMPARE(query.matches(m_methane), false);
+    QCOMPARE(query.matches(m_methanol), false);
+    QCOMPARE(query.matches(m_phenol), false);
+    QCOMPARE(query.matches(m_propane), false);
 }
 
 void SubstructureSearchTest::cyclopropane()
 {
-    QCOMPARE(m_cyclopropane->isSubstructureOf(m_benzene), false);
-    QCOMPARE(m_cyclopropane->isSubstructureOf(m_butane), false);
-    QCOMPARE(m_cyclopropane->isSubstructureOf(m_cyclopropane), true);
-    QCOMPARE(m_cyclopropane->isSubstructureOf(m_ethane), false);
-    QCOMPARE(m_cyclopropane->isSubstructureOf(m_ethanol), false);
-    QCOMPARE(m_cyclopropane->isSubstructureOf(m_indole), false);
-    QCOMPARE(m_cyclopropane->isSubstructureOf(m_methane), false);
-    QCOMPARE(m_cyclopropane->isSubstructureOf(m_methanol), false);
-    QCOMPARE(m_cyclopropane->isSubstructureOf(m_phenol), false);
-    QCOMPARE(m_cyclopropane->isSubstructureOf(m_propane), false);
+    chemkit::SubstructureQuery query(m_cyclopropane);
+    QCOMPARE(query.matches(m_benzene), false);
+    QCOMPARE(query.matches(m_butane), false);
+    QCOMPARE(query.matches(m_cyclopropane), true);
+    QCOMPARE(query.matches(m_ethane), false);
+    QCOMPARE(query.matches(m_ethanol), false);
+    QCOMPARE(query.matches(m_indole), false);
+    QCOMPARE(query.matches(m_methane), false);
+    QCOMPARE(query.matches(m_methanol), false);
+    QCOMPARE(query.matches(m_phenol), false);
+    QCOMPARE(query.matches(m_propane), false);
 }
 
 void SubstructureSearchTest::ethane()
 {
-    QCOMPARE(m_ethane->isSubstructureOf(m_benzene), true);
-    QCOMPARE(m_ethane->isSubstructureOf(m_butane), true);
-    QCOMPARE(m_ethane->isSubstructureOf(m_cyclopropane), true);
-    QCOMPARE(m_ethane->isSubstructureOf(m_ethane), true);
-    QCOMPARE(m_ethane->isSubstructureOf(m_ethanol), true);
-    QCOMPARE(m_ethane->isSubstructureOf(m_indole), true);
-    QCOMPARE(m_ethane->isSubstructureOf(m_methane), false);
-    QCOMPARE(m_ethane->isSubstructureOf(m_methanol), false);
-    QCOMPARE(m_ethane->isSubstructureOf(m_phenol), true);
-    QCOMPARE(m_ethane->isSubstructureOf(m_propane), true);
+    chemkit::SubstructureQuery query(m_ethane);
+    QCOMPARE(query.matches(m_benzene), true);
+    QCOMPARE(query.matches(m_butane), true);
+    QCOMPARE(query.matches(m_cyclopropane), true);
+    QCOMPARE(query.matches(m_ethane), true);
+    QCOMPARE(query.matches(m_ethanol), true);
+    QCOMPARE(query.matches(m_indole), true);
+    QCOMPARE(query.matches(m_methane), false);
+    QCOMPARE(query.matches(m_methanol), false);
+    QCOMPARE(query.matches(m_phenol), true);
+    QCOMPARE(query.matches(m_propane), true);
 }
 
 void SubstructureSearchTest::ethanol()
 {
-    QCOMPARE(m_ethanol->isSubstructureOf(m_benzene), false);
-    QCOMPARE(m_ethanol->isSubstructureOf(m_butane), false);
-    QCOMPARE(m_ethanol->isSubstructureOf(m_cyclopropane), false);
-    QCOMPARE(m_ethanol->isSubstructureOf(m_ethane), false);
-    QCOMPARE(m_ethanol->isSubstructureOf(m_ethanol), true);
-    QCOMPARE(m_ethanol->isSubstructureOf(m_indole), false);
-    QCOMPARE(m_ethanol->isSubstructureOf(m_methane), false);
-    QCOMPARE(m_ethanol->isSubstructureOf(m_methanol), false);
-    QCOMPARE(m_ethanol->isSubstructureOf(m_phenol), true);
-    QCOMPARE(m_ethanol->isSubstructureOf(m_propane), false);
+    chemkit::SubstructureQuery query(m_ethanol);
+    QCOMPARE(query.matches(m_benzene), false);
+    QCOMPARE(query.matches(m_butane), false);
+    QCOMPARE(query.matches(m_cyclopropane), false);
+    QCOMPARE(query.matches(m_ethane), false);
+    QCOMPARE(query.matches(m_ethanol), true);
+    QCOMPARE(query.matches(m_indole), false);
+    QCOMPARE(query.matches(m_methane), false);
+    QCOMPARE(query.matches(m_methanol), false);
+    QCOMPARE(query.matches(m_phenol), true);
+    QCOMPARE(query.matches(m_propane), false);
 }
 
 void SubstructureSearchTest::indole()
 {
-    QCOMPARE(m_indole->isSubstructureOf(m_benzene), false);
-    QCOMPARE(m_indole->isSubstructureOf(m_butane), false);
-    QCOMPARE(m_indole->isSubstructureOf(m_cyclopropane), false);
-    QCOMPARE(m_indole->isSubstructureOf(m_ethane), false);
-    QCOMPARE(m_indole->isSubstructureOf(m_ethanol), false);
-    QCOMPARE(m_indole->isSubstructureOf(m_indole), true);
-    QCOMPARE(m_indole->isSubstructureOf(m_methane), false);
-    QCOMPARE(m_indole->isSubstructureOf(m_methanol), false);
-    QCOMPARE(m_indole->isSubstructureOf(m_phenol), false);
-    QCOMPARE(m_indole->isSubstructureOf(m_propane), false);
+    chemkit::SubstructureQuery query(m_indole);
+    QCOMPARE(query.matches(m_benzene), false);
+    QCOMPARE(query.matches(m_butane), false);
+    QCOMPARE(query.matches(m_cyclopropane), false);
+    QCOMPARE(query.matches(m_ethane), false);
+    QCOMPARE(query.matches(m_ethanol), false);
+    QCOMPARE(query.matches(m_indole), true);
+    QCOMPARE(query.matches(m_methane), false);
+    QCOMPARE(query.matches(m_methanol), false);
+    QCOMPARE(query.matches(m_phenol), false);
+    QCOMPARE(query.matches(m_propane), false);
 }
 
 void SubstructureSearchTest::methane()
 {
-    QCOMPARE(m_methane->isSubstructureOf(m_benzene), true);
-    QCOMPARE(m_methane->isSubstructureOf(m_butane), true);
-    QCOMPARE(m_methane->isSubstructureOf(m_cyclopropane), true);
-    QCOMPARE(m_methane->isSubstructureOf(m_ethane), true);
-    QCOMPARE(m_methane->isSubstructureOf(m_ethanol), true);
-    QCOMPARE(m_methane->isSubstructureOf(m_indole), true);
-    QCOMPARE(m_methane->isSubstructureOf(m_methane), true);
-    QCOMPARE(m_methane->isSubstructureOf(m_methanol), true);
-    QCOMPARE(m_methane->isSubstructureOf(m_phenol), true);
-    QCOMPARE(m_methane->isSubstructureOf(m_propane), true);
+    chemkit::SubstructureQuery query(m_methane);
+    QCOMPARE(query.matches(m_benzene), true);
+    QCOMPARE(query.matches(m_butane), true);
+    QCOMPARE(query.matches(m_cyclopropane), true);
+    QCOMPARE(query.matches(m_ethane), true);
+    QCOMPARE(query.matches(m_ethanol), true);
+    QCOMPARE(query.matches(m_indole), true);
+    QCOMPARE(query.matches(m_methane), true);
+    QCOMPARE(query.matches(m_methanol), true);
+    QCOMPARE(query.matches(m_phenol), true);
+    QCOMPARE(query.matches(m_propane), true);
 }
 
 void SubstructureSearchTest::methanol()
 {
-    QCOMPARE(m_methanol->isSubstructureOf(m_benzene), false);
-    QCOMPARE(m_methanol->isSubstructureOf(m_butane), false);
-    QCOMPARE(m_methanol->isSubstructureOf(m_cyclopropane), false);
-    QCOMPARE(m_methanol->isSubstructureOf(m_ethane), false);
-    QCOMPARE(m_methanol->isSubstructureOf(m_ethanol), true);
-    QCOMPARE(m_methanol->isSubstructureOf(m_indole), false);
-    QCOMPARE(m_methanol->isSubstructureOf(m_methane), false);
-    QCOMPARE(m_methanol->isSubstructureOf(m_methanol), true);
-    QCOMPARE(m_methanol->isSubstructureOf(m_phenol), true);
-    QCOMPARE(m_methanol->isSubstructureOf(m_propane), false);
+    chemkit::SubstructureQuery query(m_methanol);
+    QCOMPARE(query.matches(m_benzene), false);
+    QCOMPARE(query.matches(m_butane), false);
+    QCOMPARE(query.matches(m_cyclopropane), false);
+    QCOMPARE(query.matches(m_ethane), false);
+    QCOMPARE(query.matches(m_ethanol), true);
+    QCOMPARE(query.matches(m_indole), false);
+    QCOMPARE(query.matches(m_methane), false);
+    QCOMPARE(query.matches(m_methanol), true);
+    QCOMPARE(query.matches(m_phenol), true);
+    QCOMPARE(query.matches(m_propane), false);
 }
 
 void SubstructureSearchTest::phenol()
 {
-    QCOMPARE(m_phenol->isSubstructureOf(m_benzene), false);
-    QCOMPARE(m_phenol->isSubstructureOf(m_butane), false);
-    QCOMPARE(m_phenol->isSubstructureOf(m_cyclopropane), false);
-    QCOMPARE(m_phenol->isSubstructureOf(m_ethane), false);
-    QCOMPARE(m_phenol->isSubstructureOf(m_ethanol), false);
-    QCOMPARE(m_phenol->isSubstructureOf(m_indole), false);
-    QCOMPARE(m_phenol->isSubstructureOf(m_methane), false);
-    QCOMPARE(m_phenol->isSubstructureOf(m_methanol), false);
-    QCOMPARE(m_phenol->isSubstructureOf(m_phenol), true);
-    QCOMPARE(m_phenol->isSubstructureOf(m_propane), false);
+    chemkit::SubstructureQuery query(m_phenol);
+    QCOMPARE(query.matches(m_benzene), false);
+    QCOMPARE(query.matches(m_butane), false);
+    QCOMPARE(query.matches(m_cyclopropane), false);
+    QCOMPARE(query.matches(m_ethane), false);
+    QCOMPARE(query.matches(m_ethanol), false);
+    QCOMPARE(query.matches(m_indole), false);
+    QCOMPARE(query.matches(m_methane), false);
+    QCOMPARE(query.matches(m_methanol), false);
+    QCOMPARE(query.matches(m_phenol), true);
+    QCOMPARE(query.matches(m_propane), false);
 }
 
 void SubstructureSearchTest::propane()
 {
-    QCOMPARE(m_propane->isSubstructureOf(m_benzene), false);
-    QCOMPARE(m_propane->isSubstructureOf(m_butane), true);
-    QCOMPARE(m_propane->isSubstructureOf(m_cyclopropane), true);
-    QCOMPARE(m_propane->isSubstructureOf(m_ethane), false);
-    QCOMPARE(m_propane->isSubstructureOf(m_ethanol), false);
-    QCOMPARE(m_propane->isSubstructureOf(m_indole), true);
-    QCOMPARE(m_propane->isSubstructureOf(m_methane), false);
-    QCOMPARE(m_propane->isSubstructureOf(m_methanol), false);
-    QCOMPARE(m_propane->isSubstructureOf(m_phenol), false);
-    QCOMPARE(m_propane->isSubstructureOf(m_propane), true);
+    chemkit::SubstructureQuery query(m_propane);
+    QCOMPARE(query.matches(m_benzene), false);
+    QCOMPARE(query.matches(m_butane), true);
+    QCOMPARE(query.matches(m_cyclopropane), true);
+    QCOMPARE(query.matches(m_ethane), false);
+    QCOMPARE(query.matches(m_ethanol), false);
+    QCOMPARE(query.matches(m_indole), true);
+    QCOMPARE(query.matches(m_methane), false);
+    QCOMPARE(query.matches(m_methanol), false);
+    QCOMPARE(query.matches(m_phenol), false);
+    QCOMPARE(query.matches(m_propane), true);
 }
 
 // This test utilizes a protein molecule from the 'alphabet.mol2' file. The
@@ -239,37 +250,49 @@ void SubstructureSearchTest::protein()
     QVERIFY(molecule != 0);
     QCOMPARE(molecule->atomCount(), size_t(324));
 
+    // create query object
+    chemkit::SubstructureQuery query;
+    query.setFlags(chemkit::SubstructureQuery::CompareAromaticity);
+
     // indole in tryptophan
     chemkit::Molecule indole("InChI=1/C8H7N/c1-2-4-8-7(3-1)5-6-9-8/h1-6,9H", "inchi");
-    QCOMPARE(indole.isSubstructureOf(molecule, chemkit::Molecule::CompareAromaticity), true);
+    query.setMolecule(&indole);
+    QCOMPARE(query.matches(molecule), true);
 
     // phenol ring in tyrosine
     chemkit::Molecule phenol("InChI=1/C6H6O/c7-6-4-2-1-3-5-6/h1-5,7H", "inchi");
-    QCOMPARE(phenol.isSubstructureOf(molecule, chemkit::Molecule::CompareAromaticity), true);
+    query.setMolecule(&phenol);
+    QCOMPARE(query.matches(molecule), true);
 
     // proline ring
     chemkit::Molecule prolineRing("InChI=1/C4H9N/c1-2-4-5-3-1/h5H,1-4H2", "inchi");
-    QCOMPARE(prolineRing.isSubstructureOf(molecule), true);
+    query.setMolecule(&prolineRing);
+    QCOMPARE(query.matches(molecule), true);
 
     // guanidine in arginine
     chemkit::Molecule guanidine("InChI=1/CH5N3/c2-1(3)4/h(H5,2,3,4)/f/h2H,3-4H2", "inchi");
-    QCOMPARE(guanidine.isSubstructureOf(molecule), true);
+    query.setMolecule(&guanidine);
+    QCOMPARE(query.matches(molecule), true);
 
     // lysine chain
     chemkit::Molecule lysineChain("InChI=1/C5H13N/c1-2-3-4-5-6/h2-6H2,1H3", "inchi");
-    QCOMPARE(lysineChain.isSubstructureOf(molecule), true);
+    query.setMolecule(&lysineChain);
+    QCOMPARE(query.matches(molecule), true);
 
     // isoleucine residue
     chemkit::Molecule isoleucine("InChI=1/C6H13NO/c1-3-5(2)6(7)4-8/h4-6H,3,7H2,1-2H3", "inchi");
-    QCOMPARE(isoleucine.isSubstructureOf(molecule), true);
+    query.setMolecule(&isoleucine);
+    QCOMPARE(query.matches(molecule), true);
 
     // cysteine side chain
     chemkit::Molecule cysteineChain("InChI=1/C2H6S/c1-2-3/h3H,2H2,1H3", "inchi");
-    QCOMPARE(cysteineChain.isSubstructureOf(molecule), true);
+    query.setMolecule(&cysteineChain);
+    QCOMPARE(query.matches(molecule), true);
 
     // methionine chain
     chemkit::Molecule methionineChain("InChI=1/C4H10S/c1-3-4-5-2/h3-4H2,1-2H3", "inchi");
-    QCOMPARE(methionineChain.isSubstructureOf(molecule), true);
+    query.setMolecule(&methionineChain);
+    QCOMPARE(query.matches(molecule), true);
 }
 
 QTEST_APPLESS_MAIN(SubstructureSearchTest)

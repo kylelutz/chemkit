@@ -33,36 +33,20 @@
 **
 ******************************************************************************/
 
-#ifndef MOLECULETEST_H
-#define MOLECULETEST_H
+#ifndef SUBSTRUCTUREQUERYTEST_H
+#define SUBSTRUCTUREQUERYTEST_H
 
 #include <QtTest>
 
-class MoleculeTest : public QObject
+class SubstructureQueryTest : public QObject
 {
     Q_OBJECT
 
     private slots:
-        void name();
-        void formula();
-        void mass();
-        void data();
-        void addAtom();
-        void addAtomCopy();
-        void addBond();
-        void bond();
-        void size();
-        void isEmpty();
-        void rings();
-        void distance();
-        void center();
-        void bondAngle();
-        void torsionAngle();
-        void wilsonAngle();
-        void fragments();
-        void isFragmented();
-        void removeFragment();
-        void rotate();
+        void molecule();
+        void mapping();
+        void matches();
+        void find();
 };
 
-#endif // MOLECULETEST_H
+#endif // SUBSTRUCTUREQUERYTEST_H

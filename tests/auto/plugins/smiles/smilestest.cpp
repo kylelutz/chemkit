@@ -43,6 +43,7 @@
 #include <chemkit/lineformat.h>
 #include <chemkit/moleculefile.h>
 #include <chemkit/aromaticitymodel.h>
+#include <chemkit/substructurequery.h>
 #include <chemkit/moleculefileformat.h>
 
 const std::string dataPath = "../../../data/";
@@ -63,7 +64,10 @@ void SmilesTest::COMPARE_SMILES(const chemkit::Molecule *molecule, const std::st
 {
     chemkit::Molecule moleculeFromSmiles(smiles, "smiles");
 
-    bool equal = molecule->equals(&moleculeFromSmiles, chemkit::Molecule::CompareAromaticity);
+    chemkit::SubstructureQuery query(molecule);
+    query.setFlags(chemkit::SubstructureQuery::CompareAromaticity |
+                   chemkit::SubstructureQuery::CompareExact);
+    bool equal = query.matches(&moleculeFromSmiles);
     if(!equal){
         qDebug() << "Actual SMILES: " << molecule->formula("smiles").c_str();
         qDebug() << "Actual formula: " << moleculeFromSmiles.formula().c_str();
