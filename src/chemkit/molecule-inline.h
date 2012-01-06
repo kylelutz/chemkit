@@ -38,6 +38,8 @@
 
 #include "molecule.h"
 
+#include <boost/foreach.hpp>
+
 namespace chemkit {
 
 // --- Properties ---------------------------------------------------------- //
@@ -55,6 +57,24 @@ inline bool Molecule::isEmpty() const
 }
 
 // --- Structure ----------------------------------------------------------- //
+/// Removes each atom from the molecule which for which \p predicate
+/// returns \c true.
+template<typename Predicate>
+inline void Molecule::removeAtomIf(Predicate predicate)
+{
+    std::vector<Atom *> atomsToRemove;
+
+    BOOST_FOREACH(Atom *atom, m_atoms){
+        if(predicate(atom)){
+            atomsToRemove.push_back(atom);
+        }
+    }
+
+    BOOST_FOREACH(Atom *atom, atomsToRemove){
+        removeAtom(atom);
+    }
+}
+
 /// Returns a range containing all of the atoms in the molecule.
 inline Molecule::AtomRange Molecule::atoms() const
 {

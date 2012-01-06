@@ -35,6 +35,8 @@
 
 #include "moleculetest.h"
 
+#include <boost/bind.hpp>
+
 #include <chemkit/atom.h>
 #include <chemkit/bond.h>
 #include <chemkit/chemkit.h>
@@ -135,6 +137,18 @@ void MoleculeTest::addAtom()
 
 void MoleculeTest::addAtomCopy()
 {
+}
+
+void MoleculeTest::removeAtomIf()
+{
+    chemkit::Molecule ethanol("CCO", "smiles");
+    QCOMPARE(ethanol.formula(), std::string("C2H6O"));
+
+    ethanol.removeAtomIf(boost::bind(&chemkit::Atom::isTerminalHydrogen, _1));
+    QCOMPARE(ethanol.formula(), std::string("C2O"));
+
+    ethanol.removeAtomIf(boost::bind(&chemkit::Atom::is, _1, chemkit::Atom::Carbon));
+    QCOMPARE(ethanol.formula(), std::string("O"));
 }
 
 void MoleculeTest::addBond()

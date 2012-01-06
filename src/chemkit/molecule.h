@@ -111,6 +111,7 @@ public:
     Atom* addAtom(const Element &element);
     Atom* addAtomCopy(const Atom *atom);
     void removeAtom(Atom *atom);
+    template<typename Predicate> void removeAtomIf(Predicate predicate);
     Atom* atom(size_t index) const;
     inline AtomRange atoms() const;
     inline size_t atomCount() const;
