@@ -205,10 +205,10 @@ std::string InchiLineFormat::write(const chemkit::Molecule *molecule)
             stereo->type = INCHI_StereoType_Tetrahedral;
 
             if(atom->chirality() == chemkit::Stereochemistry::R){
-                stereo->parity = INCHI_PARITY_EVEN;
+                stereo->parity = INCHI_PARITY_ODD;
             }
             else if(atom->chirality() == chemkit::Stereochemistry::S){
-                stereo->parity = INCHI_PARITY_ODD;
+                stereo->parity = INCHI_PARITY_EVEN;
             }
             else if(atom->chirality() == chemkit::Stereochemistry::Unspecified){
                 stereo->parity = INCHI_PARITY_UNDEFINED;

@@ -176,10 +176,10 @@ void InchiTest::stereochemistry()
     QCOMPARE(inchi->option("stereochemistry").toBool(), true);
 
     C1->setChirality(chemkit::Stereochemistry::R);
-    QCOMPARE(inchi->write(&bromochlorofluoromethane), std::string("InChI=1S/CHBrClF/c2-1(3)4/h1H/t1-/m0/s1"));
+    QCOMPARE(inchi->write(&bromochlorofluoromethane), std::string("InChI=1S/CHBrClF/c2-1(3)4/h1H/t1-/m1/s1"));
 
     C1->setChirality(chemkit::Stereochemistry::S);
-    QCOMPARE(inchi->write(&bromochlorofluoromethane), std::string("InChI=1S/CHBrClF/c2-1(3)4/h1H/t1-/m1/s1"));
+    QCOMPARE(inchi->write(&bromochlorofluoromethane), std::string("InChI=1S/CHBrClF/c2-1(3)4/h1H/t1-/m0/s1"));
 
     C1->setChirality(chemkit::Stereochemistry::None);
     QCOMPARE(inchi->write(&bromochlorofluoromethane), std::string("InChI=1S/CHBrClF/c2-1(3)4/h1H"));
