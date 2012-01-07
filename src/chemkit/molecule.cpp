@@ -1080,7 +1080,6 @@ void Molecule::removeWatcher(MoleculeWatcher *watcher) const
     d->watchers.erase(std::remove(d->watchers.begin(), d->watchers.end(), watcher));
 }
 
-
 Stereochemistry* Molecule::stereochemistry()
 {
     if(!m_stereochemistry){
