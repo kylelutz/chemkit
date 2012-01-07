@@ -35,7 +35,7 @@
 
 #include "moleculewatcher.h"
 
-#include <chemkit/molecule.h>
+#include "molecule.h"
 
 namespace chemkit {
 
@@ -129,10 +129,10 @@ const Molecule* MoleculeWatcher::molecule() const
 /// This signal is emitted when the molecule's name changes.
 
 // --- Events ---------------------------------------------------- //
-void MoleculeWatcher::moleculeChanged(const Molecule *molecule, Molecule::ChangeType changeType)
+void MoleculeWatcher::moleculeChanged(const Molecule *molecule, ChangeType changeType)
 {
     switch(changeType){
-        case Molecule::NameChanged:
+        case NameChanged:
             nameChanged(molecule);
             break;
         default:
@@ -140,19 +140,19 @@ void MoleculeWatcher::moleculeChanged(const Molecule *molecule, Molecule::Change
     }
 }
 
-void MoleculeWatcher::atomChanged(const Atom *atom, Molecule::ChangeType changeType)
+void MoleculeWatcher::atomChanged(const Atom *atom, ChangeType changeType)
 {
     switch(changeType){
-        case Molecule::AtomAdded:
+        case AtomAdded:
             atomAdded(atom);
             break;
-        case Molecule::AtomRemoved:
+        case AtomRemoved:
             atomRemoved(atom);
             break;
-        case Molecule::AtomElementChanged:
+        case AtomElementChanged:
             atomElementChanged(atom);
             break;
-        case Molecule::AtomPositionChanged:
+        case AtomPositionChanged:
             atomPositionChanged(atom);
             break;
         default:
@@ -160,16 +160,16 @@ void MoleculeWatcher::atomChanged(const Atom *atom, Molecule::ChangeType changeT
     }
 }
 
-void MoleculeWatcher::bondChanged(const Bond *bond, Molecule::ChangeType changeType)
+void MoleculeWatcher::bondChanged(const Bond *bond, ChangeType changeType)
 {
     switch(changeType){
-        case Molecule::BondAdded:
+        case BondAdded:
             bondAdded(bond);
             break;
-        case Molecule::BondRemoved:
+        case BondRemoved:
             bondRemoved(bond);
             break;
-        case Molecule::BondOrderChanged:
+        case BondOrderChanged:
             bondOrderChanged(bond);
         default:
             break;

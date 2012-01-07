@@ -213,7 +213,7 @@ Molecule::~Molecule()
 void Molecule::setName(const std::string &name)
 {
     d->name = name;
-    notifyWatchers(NameChanged);
+    notifyWatchers(MoleculeWatcher::NameChanged);
 }
 
 /// Returns the name of the molecule.
@@ -368,7 +368,7 @@ Atom* Molecule::addAtom(const Element &element)
     }
 
     setFragmentsPerceived(false);
-    notifyWatchers(atom, AtomAdded);
+    notifyWatchers(atom, MoleculeWatcher::AtomAdded);
 
     return atom;
 }
@@ -422,7 +422,7 @@ void Molecule::removeAtom(Atom *atom)
     }
 
     atom->m_molecule = 0;
-    notifyWatchers(atom, AtomRemoved);
+    notifyWatchers(atom, MoleculeWatcher::AtomRemoved);
 
     delete atom;
 }
@@ -478,7 +478,7 @@ Bond* Molecule::addBond(Atom *a, Atom *b, int order)
     setRingsPerceived(false);
     setFragmentsPerceived(false);
 
-    notifyWatchers(bond, BondAdded);
+    notifyWatchers(bond, MoleculeWatcher::BondAdded);
 
     return bond;
 }
@@ -515,7 +515,7 @@ void Molecule::removeBond(Bond *bond)
     setRingsPerceived(false);
     setFragmentsPerceived(false);
 
-    notifyWatchers(bond, BondRemoved);
+    notifyWatchers(bond, MoleculeWatcher::BondRemoved);
 
     delete bond;
 }
@@ -1049,21 +1049,21 @@ Molecule& Molecule::operator=(const Molecule &molecule)
 }
 
 // --- Internal Methods ---------------------------------------------------- //
-void Molecule::notifyWatchers(ChangeType type)
+void Molecule::notifyWatchers(MoleculeWatcher::ChangeType type)
 {
     foreach(MoleculeWatcher *watcher, d->watchers){
         watcher->moleculeChanged(this, type);
     }
 }
 
-void Molecule::notifyWatchers(const Atom *atom, ChangeType type)
+void Molecule::notifyWatchers(const Atom *atom, MoleculeWatcher::ChangeType type)
 {
     foreach(MoleculeWatcher *watcher, d->watchers){
         watcher->atomChanged(atom, type);
     }
 }
 
-void Molecule::notifyWatchers(const Bond *bond, ChangeType type)
+void Molecule::notifyWatchers(const Bond *bond, MoleculeWatcher::ChangeType type)
 {
     foreach(MoleculeWatcher *watcher, d->watchers){
         watcher->bondChanged(bond, type);

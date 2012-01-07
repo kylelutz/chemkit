@@ -49,6 +49,7 @@
 #include "element.h"
 #include "variant.h"
 #include "vector3.h"
+#include "moleculewatcher.h"
 
 namespace chemkit {
 
@@ -67,21 +68,6 @@ class CartesianCoordinates;
 class CHEMKIT_EXPORT Molecule
 {
 public:
-    // enumerations
-    enum ChangeType {
-        AtomAdded,
-        AtomRemoved,
-        AtomElementChanged,
-        AtomMassNumberChanged,
-        AtomPartialChargeChanged,
-        AtomPositionChanged,
-        AtomChiralityChanged,
-        BondAdded,
-        BondRemoved,
-        BondOrderChanged,
-        NameChanged
-    };
-
     // typedefs
     typedef boost::iterator_range<std::vector<Atom *>::const_iterator> AtomRange;
     typedef boost::iterator_range<std::vector<Bond *>::const_iterator> BondRange;
@@ -179,9 +165,9 @@ private:
     bool fragmentsPerceived() const;
     void perceiveFragments() const;
     Fragment* fragment(const Atom *atom) const;
-    void notifyWatchers(ChangeType type);
-    void notifyWatchers(const Atom *atom, ChangeType type);
-    void notifyWatchers(const Bond *bond, ChangeType type);
+    void notifyWatchers(MoleculeWatcher::ChangeType type);
+    void notifyWatchers(const Atom *atom, MoleculeWatcher::ChangeType type);
+    void notifyWatchers(const Bond *bond, MoleculeWatcher::ChangeType type);
     void addWatcher(MoleculeWatcher *watcher) const;
     void removeWatcher(MoleculeWatcher *watcher) const;
     Stereochemistry* stereochemistry();
