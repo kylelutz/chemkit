@@ -70,11 +70,8 @@ public:
 /// \brief The ForceField class provides a generic interface to
 ///        molecular mechanics force fields.
 ///
-/// The following force fields are supported in chemkit:
-///     - \c amber
-///     - \c mmff
-///     - \c opls
-///     - \c uff
+/// A list of supported force fields is available at:
+/// http://wiki.chemkit.org/Features#Force_Fields
 ///
 /// The following example shows how to calculate the energy of a
 /// molecule using the uff force field.

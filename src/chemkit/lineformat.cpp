@@ -61,12 +61,8 @@ public:
 /// \brief The LineFormat class provides a generic interface for
 ///        chemical line formats.
 ///
-/// The following line formats are supported in chemkit:
-///   - \c inchi
-///   - \c inchikey
-///   - \c mcdl
-///   - \c formula
-///   - \c smiles
+/// A list of supported line formats is available at:
+/// http://wiki.chemkit.org/Features#Line_Formats
 
 // --- Construction and Destruction ---------------------------------------- //
 LineFormat::LineFormat(const std::string &name)

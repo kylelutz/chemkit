@@ -57,17 +57,8 @@ public:
 /// Molecule files object can be used to both read and write molecule
 /// data contained in files.
 ///
-/// The following molecule file formats are supported in chemkit:
-///     - \c cml
-///     - \c inchi
-///     - \c mdl
-///     - \c mol
-///     - \c mol2
-///     - \c sd
-///     - \c sdf
-///     - \c smi
-///     - \c txyz
-///     - \c xyz
+/// A list of supported molecule file formats is available at:
+/// http://wiki.chemkit.org/Features#Molecule_File_Formats
 ///
 /// The following example shows how to read a molecule from a file:
 /// \code

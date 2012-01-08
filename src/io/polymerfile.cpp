@@ -52,6 +52,9 @@ public:
 /// \ingroup chemkit-io
 /// \brief The PolymerFile class contains polymers.
 ///
+/// A list of supported polymer file formats is available at:
+/// http://wiki.chemkit.org/Features#Polymer_File_Formats
+///
 /// \see Polymer
 
 // --- Construction and Destruction ---------------------------------------- //

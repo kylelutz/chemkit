@@ -64,6 +64,9 @@ public:
 /// file format. To access the molecules contained in a file use the
 /// MoleculeFile class.
 ///
+/// A list of supported molecule file formats is available at:
+/// http://wiki.chemkit.org/Features#Molecule_File_Formats
+///
 /// \see MoleculeFile, PolymerFileFormat
 
 // --- Construction and Destruction ---------------------------------------- //

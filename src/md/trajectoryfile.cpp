@@ -51,8 +51,8 @@ public:
 /// \ingroup chemkit-md
 /// \brief The TrajectoryFile class contains a trajectory.
 ///
-/// The following trajectory file formats are supported in chemkit:
-///     - \c xtc
+/// A list of supported trajectory file formats is available at:
+/// http://wiki.chemkit.org/Features#Trajectory_File_Formats
 ///
 /// \see Trajectory, TrajectoryFileFormat
 

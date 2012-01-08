@@ -54,6 +54,9 @@ public:
 /// \ingroup chemkit-io
 /// \brief The PolymerFileFormat class represents a polymer file
 ///        format.
+///
+/// A list of supported polymer file formats is available at:
+/// http://wiki.chemkit.org/Features#Polymer_File_Formats
 
 // --- Construction and Destruction ---------------------------------------- //
 /// Creates a new polymer file format with \p name.

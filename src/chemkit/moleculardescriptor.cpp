@@ -56,12 +56,8 @@ public:
 /// \brief The MolecularDescriptor class provides a generic interface
 ///        for the calculation of molecular descriptors.
 ///
-/// The following molecular descriptors are supported in chemkit:
-///     - \c randic-index
-///     - \c wiener-index
-///     - \c rotatable-bonds
-///     - \c hydrogen-bond-donors
-///     - \c hydrogen-bond-acceptors
+/// A list of supported molecular descriptors is available at:
+/// http://wiki.chemkit.org/Features#Molecular_Descriptors
 ///
 /// For example, to calcuate the wiener index of a molecule:
 /// \code

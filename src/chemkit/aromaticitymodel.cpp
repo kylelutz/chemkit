@@ -57,11 +57,8 @@ public:
 /// \brief The AromaticityModel class represents a model of
 ///        aromaticity.
 ///
-/// In addition to the default chemkit aromaticity model
-/// (i.e. Ring::isAromatic()), the following aromaticity models are
-/// supported:
-///   - \c mmff
-///   - \c smiles
+/// A list of supported aromaticity models is available at:
+/// http://wiki.chemkit.org/Features#Aromaticity_Models
 
 // --- Construction and Destruction ---------------------------------------- //
 /// Creates a new aromaticity model.

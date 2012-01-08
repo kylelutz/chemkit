@@ -54,6 +54,9 @@ public:
 /// \ingroup chemkit-md
 /// \brief The TrajectoryFileFormat class represents a trajectory
 ///        file format.
+///
+/// A list of supported trajectory file formats is available at:
+/// http://wiki.chemkit.org/Features#Trajectory_File_Formats
 
 // --- Construction and Destruction ---------------------------------------- //
 TrajectoryFileFormat::TrajectoryFileFormat(const std::string &name)

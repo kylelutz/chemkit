@@ -55,6 +55,9 @@ public:
 /// \ingroup chemkit
 /// \brief The PartialChargePredictor class provides a generic
 ///        interface to partial charge prediction algorithms.
+///
+/// A list of supported partial charge predictors is available at:
+/// http://wiki.chemkit.org/Features#Partial_Charge_Predictors
 
 // --- Construction and Destruction ---------------------------------------- //
 PartialChargePredictor::PartialChargePredictor(const std::string &name)
