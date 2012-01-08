@@ -169,6 +169,19 @@ Molecule* MoleculeFile::molecule(int index) const
     return d->molecules[index];
 }
 
+/// Returns the molecule in the file with \p name. Returns \c 0 if
+/// no molecule with \p name is found.
+Molecule* MoleculeFile::molecule(const std::string &name) const
+{
+    foreach(Molecule *molecule, d->molecules){
+        if(molecule->name() == name){
+            return molecule;
+        }
+    }
+
+    return 0;
+}
+
 /// Returns \c true if the file contains \p molecule.
 bool MoleculeFile::contains(const Molecule *molecule) const
 {

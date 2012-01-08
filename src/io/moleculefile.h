@@ -73,6 +73,7 @@ public:
     MoleculeRange molecules() const;
     int moleculeCount() const;
     Molecule* molecule(int index = 0) const;
+    Molecule* molecule(const std::string &name) const;
     bool contains(const Molecule *molecule) const;
     void clear();
 
