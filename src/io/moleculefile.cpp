@@ -150,26 +150,17 @@ bool MoleculeFile::deleteMolecule(Molecule *molecule)
     return found;
 }
 
-/// Returns a list of all the molecules in the file.
-std::vector<Molecule *> MoleculeFile::molecules() const
+/// Returns a range containing all of the molecules in the file.
+MoleculeFile::MoleculeRange MoleculeFile::molecules() const
 {
-    return d->molecules;
+    return boost::make_iterator_range(d->molecules.begin(),
+                                      d->molecules.end());
 }
 
 /// Returns the number of molecules in the file.
 int MoleculeFile::moleculeCount() const
 {
     return d->molecules.size();
-}
-
-/// Returns an iterator range containing the molecules in the
-/// file.
-///
-/// \internal
-MoleculeFile::MoleculeRange MoleculeFile::moleculeRange() const
-{
-    return boost::make_iterator_range(d->molecules.begin(),
-                                      d->molecules.end());
 }
 
 /// Returns the molecule at \p index in the file.

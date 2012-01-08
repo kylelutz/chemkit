@@ -160,13 +160,19 @@ int main(int argc, char *argv[])
 
     chemkit::MoleculeFile outputFile;
 
+    std::vector<chemkit::Molecule *> matchingMolecules;
+
     foreach(chemkit::Molecule *molecule, inputFile.molecules()){
         bool match = query.matches(molecule);
 
         if((match && !invertMatch) || (!match && invertMatch)){
-            inputFile.removeMolecule(molecule);
-            outputFile.addMolecule(molecule);
+            matchingMolecules.push_back(molecule);
         }
+    }
+
+    foreach(chemkit::Molecule *molecule, matchingMolecules){
+        inputFile.removeMolecule(molecule);
+        outputFile.addMolecule(molecule);
     }
 
     if(namesOnly){

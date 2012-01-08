@@ -70,9 +70,8 @@ public:
     void addMolecule(Molecule *molecule);
     bool removeMolecule(Molecule *molecule);
     bool deleteMolecule(Molecule *molecule);
-    std::vector<Molecule *> molecules() const;
+    MoleculeRange molecules() const;
     int moleculeCount() const;
-    MoleculeRange moleculeRange() const;
     Molecule* molecule(int index = 0) const;
     bool contains(const Molecule *molecule) const;
     void clear();
