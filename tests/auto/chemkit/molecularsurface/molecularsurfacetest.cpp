@@ -245,6 +245,25 @@ void MolecularSurfaceTest::adenosine()
     QCOMPARE(qRound(surface.surfaceArea()), 397);
 }
 
+void MolecularSurfaceTest::dablib()
+{
+    chemkit::MoleculeFile file(dataPath + "MMFF94_hypervalent.mol2");
+    bool ok = file.read();
+    if(!ok)
+        qDebug() << file.errorString().c_str();
+    QVERIFY(ok);
+
+    chemkit::Molecule *molecule = file.molecule("DABLIB");
+    QVERIFY(molecule != 0);
+    QCOMPARE(molecule->size(), size_t(20));
+
+    // van der waals surface
+    chemkit::MolecularSurface surface(molecule);
+    surface.setSurfaceType(chemkit::MolecularSurface::VanDerWaals);
+    QCOMPARE(qRound(surface.volume()), 138);
+    QCOMPARE(qRound(surface.surfaceArea()), 179);
+}
+
 void MolecularSurfaceTest::lysozyme()
 {
     chemkit::PolymerFile file(dataPath + "2LYZ.pdb");

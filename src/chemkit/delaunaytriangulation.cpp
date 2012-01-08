@@ -661,7 +661,9 @@ int DelaunayTriangulation::location(const Point3 &point) const
         break;
     }
 
-    for(;;){
+    // walk through the delaunay structure and try to find a
+    // tetrahedron that contains the point.
+    for(size_t iteration = 0; iteration < d->tetrahedra.size(); iteration++){
         const Tetrahedron &tetrahedron = d->tetrahedra[tetrahedronIndex];
         const Point3 &a = position(tetrahedron.verticies[0]);
         const Point3 &b = position(tetrahedron.verticies[1]);
@@ -682,11 +684,34 @@ int DelaunayTriangulation::location(const Point3 &point) const
         }
         else{
             // we found the tetrahedron that contains the point
-            break;
+            return tetrahedronIndex;
         }
     }
 
-    return tetrahedronIndex;
+    // for some reason we were not able to locate the tetrahedron after
+    // walking through the structure. now try to find it by looking at
+    // every single tetrahedron.
+    for(size_t i = 0; i < d->tetrahedra.size(); i++){
+        const Tetrahedron &tetrahedron = d->tetrahedra[i];
+        if(!tetrahedron.valid){
+            continue;
+        }
+
+        const Point3 &a = position(tetrahedron.verticies[0]);
+        const Point3 &b = position(tetrahedron.verticies[1]);
+        const Point3 &c = position(tetrahedron.verticies[2]);
+        const Point3 &d = position(tetrahedron.verticies[3]);
+
+        if(chemkit::geometry::planeOrientation(a, b, c, point) < 0 &&
+           chemkit::geometry::planeOrientation(a, d, b, point) < 0 &&
+           chemkit::geometry::planeOrientation(a, c, d, point) < 0 &&
+           chemkit::geometry::planeOrientation(b, d, c, point) < 0){
+            return i;
+        }
+    }
+
+    // should not get here
+    return -1;
 }
 
 /// Returns a list of tetrahedra that contain the vertex in their
