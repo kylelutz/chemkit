@@ -245,6 +245,25 @@ void MolecularSurfaceTest::adenosine()
     QCOMPARE(qRound(surface.surfaceArea()), 397);
 }
 
+void MolecularSurfaceTest::buckminsterfullerene()
+{
+    chemkit::MoleculeFile file(dataPath + "buckminsterfullerene.cml");
+    bool ok = file.read();
+    if(!ok)
+        qDebug() << file.errorString().c_str();
+    QVERIFY(ok);
+
+    chemkit::Molecule *molecule = file.molecule();
+    QVERIFY(molecule);
+    QCOMPARE(molecule->size(), size_t(60));
+
+    // van der waals surface
+    chemkit::MolecularSurface surface(molecule);
+    surface.setSurfaceType(chemkit::MolecularSurface::VanDerWaals);
+    QCOMPARE(qRound(surface.volume()), 518);
+    QCOMPARE(qRound(surface.surfaceArea()), 432);
+}
+
 void MolecularSurfaceTest::dablib()
 {
     chemkit::MoleculeFile file(dataPath + "MMFF94_hypervalent.mol2");
