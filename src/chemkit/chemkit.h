@@ -36,6 +36,8 @@
 #ifndef CHEMKIT_CHEMKIT_H
 #define CHEMKIT_CHEMKIT_H
 
+#include <cstddef>
+
 #include "config.h"
 
 #if defined(CHEMKIT_OS_UNIX)

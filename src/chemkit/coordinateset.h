@@ -38,8 +38,6 @@
 
 #include "chemkit.h"
 
-#include <cstddef>
-
 #include "point3.h"
 
 namespace chemkit {

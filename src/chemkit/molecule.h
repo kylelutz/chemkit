@@ -41,7 +41,6 @@
 #include <map>
 #include <string>
 #include <vector>
-#include <cstddef>
 
 #include <boost/range/iterator_range.hpp>
 

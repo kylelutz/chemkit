@@ -39,7 +39,6 @@
 #include "chemkit.h"
 
 #include <vector>
-#include <cstddef>
 
 namespace chemkit {
 
