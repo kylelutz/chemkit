@@ -35,6 +35,8 @@
 
 #include "coordinateset.h"
 
+#include <boost/scoped_ptr.hpp>
+
 #include "diagramcoordinates.h"
 #include "internalcoordinates.h"
 #include "cartesiancoordinates.h"
@@ -205,6 +207,28 @@ void CoordinateSet::clear()
     }
 
     m_type = None;
+}
+
+// --- Position ------------------------------------------------------------ //
+/// Returns the 3D cartesian position of the point at \p index.
+Point3 CoordinateSet::position(size_t index) const
+{
+    if(m_type == Cartesian){
+        return m_cartesianCordinates->position(index);
+    }
+    else if(m_type == Internal){
+        boost::scoped_ptr<CartesianCoordinates>
+            coordinates(m_internalCoordinates->toCartesianCoordinates());
+
+        return coordinates->position(index);
+    }
+    else if(m_type == Diagram){
+        Point2f point2 = m_diagramCoordinates->position(index);
+
+        return Point3(point2.x(), point2.y(), 0);
+    }
+
+    return Point3();
 }
 
 // --- Operators ----------------------------------------------------------- //

@@ -91,4 +91,24 @@ void CoordinateSetTest::diagramCoordinates()
     QVERIFY(coordinates.diagramCoordinates() == 0);
 }
 
+void CoordinateSetTest::position()
+{
+    chemkit::CoordinateSet coordinates;
+    coordinates.setCoordinates(new chemkit::CartesianCoordinates(3));
+    coordinates.cartesianCoordinates()->setPosition(0, chemkit::Point3(1, 2, 3));
+    coordinates.cartesianCoordinates()->setPosition(1, chemkit::Point3(4, 5, 6));
+    coordinates.cartesianCoordinates()->setPosition(2, chemkit::Point3(7, 8, 9));
+    QCOMPARE(coordinates.position(0), chemkit::Point3(1, 2, 3));
+    QCOMPARE(coordinates.position(1), chemkit::Point3(4, 5, 6));
+    QCOMPARE(coordinates.position(2), chemkit::Point3(7, 8, 9));
+
+    coordinates.setCoordinates(new chemkit::DiagramCoordinates(3));
+    coordinates.diagramCoordinates()->setPosition(0, chemkit::Point2f(10, 15));
+    coordinates.diagramCoordinates()->setPosition(1, chemkit::Point2f(30, 45));
+    coordinates.diagramCoordinates()->setPosition(2, chemkit::Point2f(60, 75));
+    QCOMPARE(coordinates.position(0), chemkit::Point3(10, 15, 0));
+    QCOMPARE(coordinates.position(1), chemkit::Point3(30, 45, 0));
+    QCOMPARE(coordinates.position(2), chemkit::Point3(60, 75, 0));
+}
+
 QTEST_APPLESS_MAIN(CoordinateSetTest)

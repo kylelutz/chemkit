@@ -49,6 +49,7 @@ class CoordinateSetTest : public QObject
         void cartesianCoordinates();
         void internalCoordinates();
         void diagramCoordinates();
+        void position();
 };
 
 #endif // COORDINATESETTEST_H
