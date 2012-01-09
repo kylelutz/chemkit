@@ -39,7 +39,7 @@
 
 void Vector3Test::constructor()
 {
-    chemkit::Vector3 empty;
+    chemkit::Vector3 empty(0, 0, 0);
     QCOMPARE(qRound(empty.x()), 0);
     QCOMPARE(qRound(empty.y()), 0);
     QCOMPARE(qRound(empty.z()), 0);
