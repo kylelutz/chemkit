@@ -101,7 +101,7 @@ Molecule* PubChem::downloadMolecule(const QString &id) const
     }
 
     Molecule *molecule = file->molecule();
-    file->removeMolecule(molecule);
+    file->takeMolecule(molecule);
 
     return molecule;
 }

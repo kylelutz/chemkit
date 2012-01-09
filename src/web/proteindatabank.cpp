@@ -103,7 +103,7 @@ Polymer* ProteinDataBank::downloadPolymer(const QString &id) const
     }
 
     Polymer *polymer = file->polymer();
-    file->removePolymer(polymer);
+    file->takePolymer(polymer);
 
     return polymer;
 }
@@ -136,7 +136,7 @@ Molecule* ProteinDataBank::downloadLigand(const QString &name) const
     }
 
     Molecule *molecule = file.molecule();
-    file.removeMolecule(molecule);
+    file.takeMolecule(molecule);
 
     return molecule;
 }

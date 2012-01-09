@@ -171,7 +171,7 @@ int main(int argc, char *argv[])
     }
 
     foreach(chemkit::Molecule *molecule, matchingMolecules){
-        inputFile.removeMolecule(molecule);
+        inputFile.takeMolecule(molecule);
         outputFile.addMolecule(molecule);
     }
 

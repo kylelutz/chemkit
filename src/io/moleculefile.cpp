@@ -121,11 +121,24 @@ void MoleculeFile::addMolecule(Molecule *molecule)
     d->molecules.push_back(molecule);
 }
 
+/// Removes the molecule from the file and deletes it. Returns
+/// \c true if \p molecule is found and deleted successfully.
+bool MoleculeFile::removeMolecule(Molecule *molecule)
+{
+    bool found = takeMolecule(molecule);
+
+    if(found){
+        delete molecule;
+    }
+
+    return found;
+}
+
 /// Removes the molecule from the file. Returns \c true if
 /// \p molecule is found and removed successfully.
 ///
 /// The ownership of \p molecule is passed to the caller.
-bool MoleculeFile::removeMolecule(Molecule *molecule)
+bool MoleculeFile::takeMolecule(Molecule *molecule)
 {
     std::vector<Molecule *>::iterator location = std::find(d->molecules.begin(), d->molecules.end(), molecule);
     if(location == d->molecules.end()){
@@ -135,19 +148,6 @@ bool MoleculeFile::removeMolecule(Molecule *molecule)
     d->molecules.erase(location);
 
     return true;
-}
-
-/// Removes the molecule from the file and deletes it. Returns
-/// \c true if \p molecule is found and deleted successfully.
-bool MoleculeFile::deleteMolecule(Molecule *molecule)
-{
-    bool found = removeMolecule(molecule);
-
-    if(found){
-        delete molecule;
-    }
-
-    return found;
 }
 
 /// Returns a range containing all of the molecules in the file.
@@ -215,9 +215,9 @@ Molecule* MoleculeFile::quickRead(const std::string &fileName)
 
     Molecule *molecule = file.molecule();
 
-    // remove the molecule from the file so that it does
+    // take the molecule from the file so that it does
     // not get deleted when this function returns
-    file.removeMolecule(molecule);
+    file.takeMolecule(molecule);
 
     return molecule;
 }
@@ -232,9 +232,9 @@ void MoleculeFile::quickWrite(const Molecule *molecule, const std::string &fileN
     file.addMolecule(const_cast<Molecule *>(molecule));
     file.write(fileName);
 
-    // remove the molecule from the file so that it does
+    // take the molecule from the file so that it does
     // not get deleted when this function returns
-    file.removeMolecule(const_cast<Molecule *>(molecule));
+    file.takeMolecule(const_cast<Molecule *>(molecule));
 }
 
 } // end chemkit namespace

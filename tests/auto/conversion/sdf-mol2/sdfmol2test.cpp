@@ -56,7 +56,7 @@ void SdfMol2Test::ethanol()
 
     std::stringstream buffer;
     sdfFile.write(buffer, "mol2");
-    sdfFile.removeMolecule(&molecule);
+    sdfFile.takeMolecule(&molecule);
 
     chemkit::MoleculeFile mol2File;
     mol2File.read(buffer, "mol2");

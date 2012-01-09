@@ -59,7 +59,7 @@ void SmilesSdfTest::ethanol()
 
     std::stringstream buffer;
     file.write(buffer, "sdf");
-    file.removeMolecule(&molecule);
+    file.takeMolecule(&molecule);
 
     file.read(buffer, "sdf");
     QCOMPARE(file.moleculeCount(), 1);

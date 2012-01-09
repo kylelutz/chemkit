@@ -124,7 +124,7 @@ void CubeViewerExample::openFile(const QString &fileName)
     chemkit::Molecule *molecule = file.molecule();
     chemkit::BondPredictor::predictBonds(molecule);
     m_moleculeItem->setMolecule(molecule);
-    file.removeMolecule(molecule);
+    file.takeMolecule(molecule);
 
     // setup scalar fields and isosurface items
     m_positiveScalarField = readVolumeData(fileName);

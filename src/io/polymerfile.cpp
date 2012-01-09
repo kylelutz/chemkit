@@ -102,10 +102,22 @@ void PolymerFile::addPolymer(Polymer *polymer)
     d->polymers.push_back(polymer);
 }
 
+/// Removes a polymer from the file and deletes it.
+bool PolymerFile::removePolymer(Polymer *polymer)
+{
+    bool found = takePolymer(polymer);
+
+    if(found){
+        delete polymer;
+    }
+
+    return found;
+}
+
 /// Removes a polymer from the file.
 ///
 /// The ownership of the polymer is passed to the caller.
-bool PolymerFile::removePolymer(Polymer *polymer)
+bool PolymerFile::takePolymer(Polymer *polymer)
 {
     std::vector<Polymer *>::iterator location = std::find(d->polymers.begin(), d->polymers.end(), polymer);
     if(location == d->polymers.end()){
@@ -115,18 +127,6 @@ bool PolymerFile::removePolymer(Polymer *polymer)
     d->polymers.erase(location);
 
     return true;
-}
-
-/// Removes a polymer from the file and deletes it.
-bool PolymerFile::deletePolymer(Polymer *polymer)
-{
-    bool found = removePolymer(polymer);
-
-    if(found){
-        delete polymer;
-    }
-
-    return found;
 }
 
 /// Returns the polymer at \p index in the file.

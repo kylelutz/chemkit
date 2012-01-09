@@ -56,7 +56,7 @@ void SdfCmlTest::ethanol()
 
     std::stringstream buffer;
     sdfFile.write(buffer, "cml");
-    sdfFile.removeMolecule(&molecule);
+    sdfFile.takeMolecule(&molecule);
 
     chemkit::MoleculeFile cmlFile;
     cmlFile.read(buffer, "cml");

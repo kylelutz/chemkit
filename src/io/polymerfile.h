@@ -64,7 +64,7 @@ public:
     // file contents
     void addPolymer(Polymer *polymer);
     bool removePolymer(Polymer *polymer);
-    bool deletePolymer(Polymer *polymer);
+    bool takePolymer(Polymer *polymer);
     Polymer* polymer(int index = 0) const;
     std::vector<Polymer *> polymers() const;
     int polymerCount() const;

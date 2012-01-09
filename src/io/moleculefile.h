@@ -69,7 +69,7 @@ public:
     // file contents
     void addMolecule(Molecule *molecule);
     bool removeMolecule(Molecule *molecule);
-    bool deleteMolecule(Molecule *molecule);
+    bool takeMolecule(Molecule *molecule);
     MoleculeRange molecules() const;
     int moleculeCount() const;
     Molecule* molecule(int index = 0) const;

@@ -64,7 +64,7 @@ public:
     void setTrajectory(Trajectory *trajectory);
     Trajectory* trajectory() const;
     bool removeTrajectory();
-    bool deleteTrajectory();
+    bool takeTrajectory();
 
 private:
     TrajectoryFilePrivate* const d;

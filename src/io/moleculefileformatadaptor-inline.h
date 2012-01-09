@@ -140,8 +140,8 @@ inline bool MoleculeFileFormatAdaptor<PolymerFileFormat>::read(std::istream &inp
     std::vector<Polymer *> polymers = polymerFile.polymers();
     
     BOOST_FOREACH(Polymer *polymer, polymers){
-        // remove polymer from the polymer file
-        polymerFile.removePolymer(polymer);
+        // take polymer from the polymer file
+        polymerFile.takePolymer(polymer);
 
         // add polymer to the molecule file
         file->addMolecule(polymer);

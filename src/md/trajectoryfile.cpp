@@ -91,7 +91,7 @@ bool TrajectoryFile::isEmpty() const
 void TrajectoryFile::setTrajectory(Trajectory *trajectory)
 {
     // delete current trajectory
-    deleteTrajectory();
+    removeTrajectory();
 
     d->trajectory = trajectory;
 }
@@ -102,25 +102,27 @@ Trajectory* TrajectoryFile::trajectory() const
     return d->trajectory;
 }
 
-/// Removes the trajectory from the file.
+/// Remove the trajectory from the file and deletes it.
 bool TrajectoryFile::removeTrajectory()
 {
     if(!d->trajectory){
         return false;
     }
 
+    delete d->trajectory;
     d->trajectory = 0;
     return true;
 }
 
-/// Remove the trajectory from the file and deletes it.
-bool TrajectoryFile::deleteTrajectory()
+/// Removes the trajectory from the file.
+///
+/// The ownership of the trajectory is passed to the caller.
+bool TrajectoryFile::takeTrajectory()
 {
     if(!d->trajectory){
         return false;
     }
 
-    delete d->trajectory;
     d->trajectory = 0;
     return true;
 }

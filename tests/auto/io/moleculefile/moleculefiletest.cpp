@@ -77,7 +77,7 @@ void MoleculeFileTest::contains()
     file.addMolecule(anotherMolecule);
     QCOMPARE(file.contains(anotherMolecule), true);
 
-    file.removeMolecule(molecule);
+    file.takeMolecule(molecule);
     QCOMPARE(file.contains(molecule), false);
 
     file.addMolecule(molecule);
