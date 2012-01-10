@@ -49,7 +49,7 @@ void ProteinDataBankTest::downloadFile()
     chemkit::PolymerFile *file = pdb.downloadFile("2LYZ");
     QVERIFY(file != 0);
 
-    QCOMPARE(file->polymerCount(), 1);
+    QCOMPARE(file->polymerCount(), size_t(1));
     chemkit::Polymer *protein = file->polymer();
     QCOMPARE(protein->chainCount(), 1);
     QCOMPARE(protein->chain(0)->residueCount(), 129);

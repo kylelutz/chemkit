@@ -89,7 +89,7 @@ void MoleculeAlignerTest::ubiquitin()
         qDebug() << file.errorString().c_str();
     QVERIFY(ok);
 
-    QCOMPARE(file.polymerCount(), 1);
+    QCOMPARE(file.polymerCount(), size_t(1));
     chemkit::Polymer *polymer = file.polymer();
 
     QCOMPARE(polymer->chainCount(), 1);

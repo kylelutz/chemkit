@@ -82,7 +82,7 @@ PolymerFile::~PolymerFile()
 
 // --- Properties ---------------------------------------------------------- //
 /// Returns the number of polymers in the file.
-int PolymerFile::size() const
+size_t PolymerFile::size() const
 {
     return polymerCount();
 }
@@ -130,7 +130,7 @@ bool PolymerFile::takePolymer(Polymer *polymer)
 }
 
 /// Returns the polymer at \p index in the file.
-Polymer* PolymerFile::polymer(int index) const
+Polymer* PolymerFile::polymer(size_t index) const
 {
     return d->polymers[index];
 }
@@ -142,7 +142,7 @@ std::vector<Polymer *> PolymerFile::polymers() const
 }
 
 /// Returns the number of polymers in the file.
-int PolymerFile::polymerCount() const
+size_t PolymerFile::polymerCount() const
 {
     return d->polymers.size();
 }

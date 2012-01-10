@@ -58,16 +58,16 @@ public:
     virtual ~PolymerFile();
 
     // properties
-    int size() const;
+    size_t size() const;
     bool isEmpty() const;
 
     // file contents
     void addPolymer(Polymer *polymer);
     bool removePolymer(Polymer *polymer);
     bool takePolymer(Polymer *polymer);
-    Polymer* polymer(int index = 0) const;
+    Polymer* polymer(size_t index = 0) const;
     std::vector<Polymer *> polymers() const;
-    int polymerCount() const;
+    size_t polymerCount() const;
     bool contains(const Polymer *polymer) const;
     void clear();
 

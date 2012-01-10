@@ -58,7 +58,7 @@ void PdbmlTest::read_1UBQ()
     if(!ok)
         qDebug() << file.errorString().c_str();
     QVERIFY(ok);
-    QCOMPARE(file.polymerCount(), 1);
+    QCOMPARE(file.polymerCount(), size_t(1));
 
     // protein
     chemkit::Polymer *protein = file.polymer();
@@ -84,7 +84,7 @@ void PdbmlTest::read_2DHB()
     if(!ok)
         qDebug() << file.errorString().c_str();
     QVERIFY(ok);
-    QCOMPARE(file.polymerCount(), 1);
+    QCOMPARE(file.polymerCount(), size_t(1));
 
     // protein
     chemkit::Polymer *protein = file.polymer();
