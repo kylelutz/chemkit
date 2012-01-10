@@ -63,7 +63,7 @@ public:
     void prependResidue(Residue *residue);
     void insertResidue(size_t index, Residue *residue);
     bool removeResidue(Residue *residue);
-    bool deleteResidue(Residue *residue);
+    bool takeResidue(Residue *residue);
     Residue* residue(size_t index) const;
     std::vector<Residue *> residues() const;
     size_t residueCount() const;
