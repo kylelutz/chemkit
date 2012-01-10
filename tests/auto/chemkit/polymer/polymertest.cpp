@@ -41,18 +41,18 @@ void PolymerTest::chains()
 {
     chemkit::Polymer polymer;
     chemkit::PolymerChain *chain1 = polymer.addChain();
-    QCOMPARE(polymer.chainCount(), 1);
+    QCOMPARE(polymer.chainCount(), size_t(1));
     QVERIFY(polymer.chain(0) == chain1);
     QVERIFY(polymer.chains()[0] == chain1);
 
     chemkit::PolymerChain *chain2 = polymer.addChain();
-    QCOMPARE(polymer.chainCount(), 2);
+    QCOMPARE(polymer.chainCount(), size_t(2));
     QVERIFY(polymer.chain(1) == chain2);
     QVERIFY(polymer.chains()[0] == chain1);
     QVERIFY(polymer.chains()[1] == chain2);
 
     polymer.removeChain(chain1);
-    QCOMPARE(polymer.chainCount(), 1);
+    QCOMPARE(polymer.chainCount(), size_t(1));
     QVERIFY(polymer.chain(0) == chain2);
 }
 

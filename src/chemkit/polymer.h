@@ -57,9 +57,9 @@ public:
     // structure
     PolymerChain* addChain();
     void removeChain(PolymerChain *chain);
-    PolymerChain* chain(int index = 0) const;
+    PolymerChain* chain(size_t index = 0) const;
     std::vector<PolymerChain *> chains() const;
-    int chainCount() const;
+    size_t chainCount() const;
 
 private:
     PolymerPrivate* const d;

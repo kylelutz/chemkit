@@ -65,7 +65,7 @@ void PdbTest::read_1BNA()
     QCOMPARE(file.polymerCount(), size_t(1));
     chemkit::Polymer *polymer = file.polymer();
     QVERIFY(polymer != 0);
-    QCOMPARE(polymer->chainCount(), 2);
+    QCOMPARE(polymer->chainCount(), size_t(2));
 
     // check chains
     chemkit::PolymerChain *chainA = polymer->chain(0);
@@ -92,7 +92,7 @@ void PdbTest::read_1UBQ()
     QCOMPARE(file.polymerCount(), size_t(1));
     chemkit::Polymer *polymer = file.polymer();
     QVERIFY(polymer != 0);
-    QCOMPARE(polymer->chainCount(), 1);
+    QCOMPARE(polymer->chainCount(), size_t(1));
 
     // check chain
     chemkit::PolymerChain *chain = polymer->chain(0);
@@ -122,7 +122,7 @@ void PdbTest::read_2DHB()
     QCOMPARE(file.polymerCount(), size_t(1));
     chemkit::Polymer *polymer = file.polymer();
     QVERIFY(polymer != 0);
-    QCOMPARE(polymer->chainCount(), 2);
+    QCOMPARE(polymer->chainCount(), size_t(2));
 
     // chain A
     chemkit::PolymerChain *chainA = polymer->chain(0);
@@ -158,7 +158,7 @@ void PdbTest::read_alphabet()
     QCOMPARE(file.polymerCount(), size_t(1));
     chemkit::Polymer *polymer = file.polymer();
     QVERIFY(polymer != 0);
-    QCOMPARE(polymer->chainCount(), 1);
+    QCOMPARE(polymer->chainCount(), size_t(1));
 
     chemkit::PolymerChain *chain = polymer->chain(0);
     QCOMPARE(chain->residueCount(), 20);

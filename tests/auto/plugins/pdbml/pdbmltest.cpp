@@ -62,7 +62,7 @@ void PdbmlTest::read_1UBQ()
 
     // protein
     chemkit::Polymer *protein = file.polymer();
-    QCOMPARE(protein->chainCount(), 1);
+    QCOMPARE(protein->chainCount(), size_t(1));
 
     // chain
     chemkit::PolymerChain *chain = protein->chain(0);
@@ -88,7 +88,7 @@ void PdbmlTest::read_2DHB()
 
     // protein
     chemkit::Polymer *protein = file.polymer();
-    QCOMPARE(protein->chainCount(), 2);
+    QCOMPARE(protein->chainCount(), size_t(2));
 
     // chain A
     chemkit::PolymerChain *chainA = protein->chain(0);

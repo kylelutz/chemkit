@@ -51,7 +51,7 @@ void ProteinDataBankTest::downloadFile()
 
     QCOMPARE(file->polymerCount(), size_t(1));
     chemkit::Polymer *protein = file->polymer();
-    QCOMPARE(protein->chainCount(), 1);
+    QCOMPARE(protein->chainCount(), size_t(1));
     QCOMPARE(protein->chain(0)->residueCount(), 129);
 
     delete file;

@@ -93,7 +93,7 @@ void Polymer::removeChain(PolymerChain *chain)
 }
 
 /// Returns the chain at \p index.
-PolymerChain* Polymer::chain(int index) const
+PolymerChain* Polymer::chain(size_t index) const
 {
     return d->chains[index];
 }
@@ -105,7 +105,7 @@ std::vector<PolymerChain *> Polymer::chains() const
 }
 
 /// Returns the number of chains in the polymer.
-int Polymer::chainCount() const
+size_t Polymer::chainCount() const
 {
     return d->chains.size();
 }
