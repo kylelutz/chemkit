@@ -69,11 +69,11 @@ void PdbTest::read_1BNA()
 
     // check chains
     chemkit::PolymerChain *chainA = polymer->chain(0);
-    QCOMPARE(chainA->residueCount(), 12);
+    QCOMPARE(chainA->residueCount(), size_t(12));
     QCOMPARE(chainA->sequenceString(), std::string("CGCGAATTCGCG"));
 
     chemkit::PolymerChain *chainB = polymer->chain(1);
-    QCOMPARE(chainB->residueCount(), 12);
+    QCOMPARE(chainB->residueCount(), size_t(12));
     QCOMPARE(chainB->sequenceString(), std::string("CGCGAATTCGCG"));
 }
 
@@ -99,7 +99,7 @@ void PdbTest::read_1UBQ()
     QVERIFY(chain != 0);
 
     // check residues
-    QCOMPARE(chain->residueCount(), 76);
+    QCOMPARE(chain->residueCount(), size_t(76));
 
     // check sequence
     QCOMPARE(chain->sequenceString(), std::string("MQIFVKTLTGKTITLEVEPSDTIENVKAKIQ"
@@ -126,7 +126,7 @@ void PdbTest::read_2DHB()
 
     // chain A
     chemkit::PolymerChain *chainA = polymer->chain(0);
-    QCOMPARE(chainA->residueCount(), 141);
+    QCOMPARE(chainA->residueCount(), size_t(141));
     QCOMPARE(chainA->sequenceString(), std::string("VLSAADKTNVKAAWSKVGGHAGEYGAEALE"
                                                    "RMFLGFPTTKTYFPHFDLSHGSAQVKAHGK"
                                                    "KVADGLTLAVGHLDDLPGALSDLSNLHAHK"
@@ -135,7 +135,7 @@ void PdbTest::read_2DHB()
 
     // chain B
     chemkit::PolymerChain *chainB = polymer->chain(1);
-    QCOMPARE(chainB->residueCount(), 146);
+    QCOMPARE(chainB->residueCount(), size_t(146));
     QCOMPARE(chainB->sequenceString(), std::string("VQLSGEEKAAVLALWDKVNEEEVGGEALGR"
                                                    "LLVVYPWTQRFFDSFGDLSNPGAVMGNPKV"
                                                    "KAHGKKVLHSFGEGVHHLDNLKGTFAALSE"
@@ -161,7 +161,7 @@ void PdbTest::read_alphabet()
     QCOMPARE(polymer->chainCount(), size_t(1));
 
     chemkit::PolymerChain *chain = polymer->chain(0);
-    QCOMPARE(chain->residueCount(), 20);
+    QCOMPARE(chain->residueCount(), size_t(20));
     QCOMPARE(chain->sequenceString(), std::string("ADNRCEQGHILKMFPSTWYV"));
 }
 

@@ -67,7 +67,7 @@ void PdbmlTest::read_1UBQ()
     // chain
     chemkit::PolymerChain *chain = protein->chain(0);
     QVERIFY(chain != 0);
-    QCOMPARE(chain->residueCount(), 76);
+    QCOMPARE(chain->residueCount(), size_t(76));
     QCOMPARE(chain->sequenceString(), std::string("MQIFVKTLTGKTITLEVEPSDTIENVKAKIQ"
                                                   "DKEGIPPDQQRLIFAGKQLEDGRTLSDYNIQ"
                                                   "KESTLHLVLRLRGG"));
@@ -92,7 +92,7 @@ void PdbmlTest::read_2DHB()
 
     // chain A
     chemkit::PolymerChain *chainA = protein->chain(0);
-    QCOMPARE(chainA->residueCount(), 141);
+    QCOMPARE(chainA->residueCount(), size_t(141));
     QCOMPARE(chainA->sequenceString(), std::string("VLSAADKTNVKAAWSKVGGHAGEYGAEALE"
                                                    "RMFLGFPTTKTYFPHFDLSHGSAQVKAHGK"
                                                    "KVADGLTLAVGHLDDLPGALSDLSNLHAHK"
@@ -101,7 +101,7 @@ void PdbmlTest::read_2DHB()
 
     // chain B
     chemkit::PolymerChain *chainB = protein->chain(1);
-    QCOMPARE(chainB->residueCount(), 146);
+    QCOMPARE(chainB->residueCount(), size_t(146));
     QCOMPARE(chainB->sequenceString(), std::string("VQLSGEEKAAVLALWDKVNEEEVGGEALGR"
                                                    "LLVVYPWTQRFFDSFGDLSNPGAVMGNPKV"
                                                    "KAHGKKVLHSFGEGVHHLDNLKGTFAALSE"

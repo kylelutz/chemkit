@@ -94,7 +94,7 @@ void MoleculeAlignerTest::ubiquitin()
 
     QCOMPARE(polymer->chainCount(), size_t(1));
     chemkit::PolymerChain *chain = polymer->chain(0);
-    QCOMPARE(chain->residueCount(), 76);
+    QCOMPARE(chain->residueCount(), size_t(76));
 
     chemkit::Molecule *molecule = polymer;
     QCOMPARE(molecule->atomCount(), size_t(1231));

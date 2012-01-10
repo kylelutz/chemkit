@@ -53,7 +53,7 @@ public:
     // properties
     void setName(const std::string &name);
     std::string name() const;
-    int size() const;
+    size_t size() const;
     bool isEmpty() const;
     Polymer* polymer() const;
 
@@ -61,12 +61,12 @@ public:
     void addResidue(Residue *residue);
     void appendResidue(Residue *residue);
     void prependResidue(Residue *residue);
-    void insertResidue(int index, Residue *residue);
+    void insertResidue(size_t index, Residue *residue);
     bool removeResidue(Residue *residue);
     bool deleteResidue(Residue *residue);
-    Residue* residue(int index) const;
+    Residue* residue(size_t index) const;
     std::vector<Residue *> residues() const;
-    int residueCount() const;
+    size_t residueCount() const;
     int indexOf(const Residue *residue) const;
     std::string sequenceString() const;
     int sequenceNumber(const Residue *residue) const;
