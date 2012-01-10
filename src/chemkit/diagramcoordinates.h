@@ -60,6 +60,7 @@ public:
 
     // positions
     void setPosition(size_t index, const Point2f &position);
+    void setPosition(size_t index, float x, float y);
     Point2f position(size_t index) const;
     void append(const Point2f &position);
     void insert(size_t index, const Point2f &position);

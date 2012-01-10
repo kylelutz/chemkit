@@ -86,6 +86,12 @@ void DiagramCoordinates::setPosition(size_t index, const Point2f &position)
     m_coordinates[index] = position;
 }
 
+/// Sets the position at \p index to (\p x, \p y).
+void DiagramCoordinates::setPosition(size_t index, float x, float y)
+{
+    setPosition(index, Point2f(x, y));
+}
+
 /// Returns the position at \p index.
 Point2f DiagramCoordinates::position(size_t index) const
 {
