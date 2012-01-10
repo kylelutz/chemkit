@@ -42,6 +42,7 @@
 #include <boost/algorithm/string.hpp>
 
 #include "molecule.h"
+#include "variantmap.h"
 #include "pluginmanager.h"
 
 namespace chemkit {
@@ -52,7 +53,7 @@ class LineFormatPrivate
 public:
     std::string name;
     std::string errorString;
-    std::map<std::string, Variant> options;
+    VariantMap options;
 };
 
 // === LineFormat ========================================================== //
@@ -94,7 +95,7 @@ void LineFormat::setOption(const std::string &name, const Variant &value)
 /// Returns the value of an option for the line format.
 Variant LineFormat::option(const std::string &name) const
 {
-    std::map<std::string, Variant>::const_iterator location = d->options.find(name);
+    VariantMap::const_iterator location = d->options.find(name);
     if(location != d->options.end()){
         return location->second;
     }

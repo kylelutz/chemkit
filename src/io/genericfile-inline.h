@@ -417,7 +417,7 @@ inline void GenericFile<File, Format>::setData(const std::string &name, const Va
 template<typename File, typename Format>
 inline Variant GenericFile<File, Format>::data(const std::string &name) const
 {
-    std::map<std::string, Variant>::const_iterator iter = m_data.find(name);
+    VariantMap::const_iterator iter = m_data.find(name);
     if(iter != m_data.end()){
         return iter->second;
     }

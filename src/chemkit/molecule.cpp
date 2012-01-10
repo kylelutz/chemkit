@@ -61,6 +61,7 @@
 #include "constants.h"
 #include "lineformat.h"
 #include "quaternion.h"
+#include "variantmap.h"
 #include "coordinateset.h"
 #include "moleculeprivate.h"
 #include "moleculewatcher.h"
@@ -322,7 +323,7 @@ void Molecule::setData(const std::string &name, const Variant &value)
 /// Returns the data for the molecule with \p name.
 Variant Molecule::data(const std::string &name) const
 {
-    std::map<std::string, Variant>::const_iterator iter = d->data.find(name);
+    VariantMap::const_iterator iter = d->data.find(name);
     if(iter != d->data.end()){
         return iter->second;
     }

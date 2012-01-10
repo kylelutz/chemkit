@@ -37,6 +37,7 @@
 
 #include <chemkit/foreach.h>
 #include <chemkit/molecule.h>
+#include <chemkit/variantmap.h>
 
 namespace chemkit {
 
@@ -45,7 +46,7 @@ class MoleculeFilePrivate
 {
 public:
     std::vector<Molecule *> molecules;
-    std::map<std::string, Variant> fileData;
+    VariantMap fileData;
 };
 
 // === MoleculeFile ======================================================== //

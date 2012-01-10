@@ -33,50 +33,22 @@
 **
 ******************************************************************************/
 
-#ifndef CHEMKIT_MOLECULEPRIVATE_H
-#define CHEMKIT_MOLECULEPRIVATE_H
+#ifndef CHEMKIT_VARIANTMAP_H
+#define CHEMKIT_VARIANTMAP_H
 
 #include "chemkit.h"
 
 #include <map>
 #include <string>
-#include <vector>
 
-#include "bond.h"
-#include "point3.h"
-#include "isotope.h"
-#include "variantmap.h"
+#include "variant.h"
 
 namespace chemkit {
 
-class Atom;
-class Bond;
-class Ring;
-class Fragment;
-class CoordinateSet;
-class MoleculeWatcher;
-
-class MoleculePrivate
-{
-public:
-    MoleculePrivate();
-
-    std::string name;
-    std::vector<Bond *> bonds;
-    bool ringsPerceived;
-    std::vector<Ring *> rings;
-    bool fragmentsPerceived;
-    std::vector<Fragment *> fragments;
-    std::vector<MoleculeWatcher *> watchers;
-    VariantMap data;
-    std::map<const Atom *, Isotope> isotopes;
-    std::vector<Real> partialCharges;
-    std::vector<std::pair<Atom*, Atom*> > bondAtoms;
-    std::vector<std::vector<Bond *> > atomBonds;
-    std::vector<Bond::BondOrderType> bondOrders;
-    std::vector<CoordinateSet *> coordinateSets;
-};
+/// Typedef for a map between string's (containing names) and
+/// variant's (containing values).
+typedef std::map<std::string, Variant> VariantMap;
 
 } // end chemkit namespace
 
-#endif // CHEMKIT_MOLECULEPRIVATE_H
+#endif // CHEMKIT_VARIANTMAP_H

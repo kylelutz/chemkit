@@ -45,6 +45,7 @@
 #include <ostream>
 
 #include <chemkit/variant.h>
+#include <chemkit/variantmap.h>
 
 namespace chemkit {
 
@@ -102,7 +103,7 @@ private:
     std::string m_fileName;
     std::string m_errorString;
     std::string m_compressionFormat;
-    std::map<std::string, Variant> m_data;
+    VariantMap m_data;
 };
 
 } // end chemkit namespace

@@ -40,6 +40,7 @@
 #include <boost/format.hpp>
 #include <boost/algorithm/string.hpp>
 
+#include <chemkit/variantmap.h>
 #include <chemkit/pluginmanager.h>
 
 namespace chemkit {
@@ -50,7 +51,7 @@ class MoleculeFileFormatPrivate
 public:
     std::string name;
     std::string errorString;
-    std::map<std::string, Variant> options;
+    VariantMap options;
 };
 
 // === MoleculeFileFormat ================================================== //
@@ -100,7 +101,7 @@ void MoleculeFileFormat::setOption(const std::string &name, const Variant &value
 /// Returns the option for the format.
 Variant MoleculeFileFormat::option(const std::string &name) const
 {
-    std::map<std::string, Variant>::iterator element = d->options.find(name);
+    VariantMap::iterator element = d->options.find(name);
     if(element != d->options.end()){
         return element->second;
     }
