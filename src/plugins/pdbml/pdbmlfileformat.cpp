@@ -35,8 +35,7 @@
 
 #include "pdbmlfileformat.h"
 
-#include <QtXml>
-#include <QtCore>
+#include "../../3rdparty/rapidxml/rapidxml.hpp"
 
 #include <chemkit/atom.h>
 #include <chemkit/polymer.h>
@@ -55,108 +54,111 @@ PdbmlFileFormat::~PdbmlFileFormat()
 
 bool PdbmlFileFormat::read(std::istream &input, chemkit::PolymerFile *file)
 {
-    QByteArray data;
-    while(!input.eof()){
-        data += input.get();
-    }
-    data.chop(1);
+    // read file data into a string
+    std::string data((std::istreambuf_iterator<char>(input)),
+                     std::istreambuf_iterator<char>());
 
-    QBuffer buffer;
-    buffer.setData(data);
-    buffer.open(QBuffer::ReadOnly);
+    // parse document
+    rapidxml::xml_document<> doc;
+    doc.parse<0>(const_cast<char *>(data.c_str()));
 
-    QDomDocument doc;
-    bool ok = doc.setContent(&buffer, true);
-    if(!ok){
-        setErrorString("PDBML parsing failed.");
-        return false;
-    }
-
-    QDomElement datablockElement = doc.documentElement();
-
+    // parse polymers
     chemkit::Polymer *polymer = new chemkit::Polymer;
     chemkit::PolymerChain *chain = 0;
-    QHash<QString, chemkit::PolymerChain *> chainNameToChain;
+    std::map<std::string, chemkit::PolymerChain *> nameToChain;
 
-    QString name = datablockElement.attribute("datablockName");
-    if(!name.isEmpty()){
-        polymer->setName(name.toStdString());
+    rapidxml::xml_node<> *datablockNode = doc.first_node("PDBx:datablock");
+    rapidxml::xml_attribute<> *nameAttribute = datablockNode->first_attribute("datablockName");
+    if(nameAttribute && nameAttribute->value()){
+        polymer->setName(nameAttribute->value());
     }
 
-    QDomElement element = datablockElement.firstChildElement();
-    while(!element.isNull()){
+    rapidxml::xml_node<> *node = datablockNode->first_node();
+    while(node){
         // atoms
-        if(element.tagName() == "atom_siteCategory"){
-            QDomElement atomElement = element.firstChildElement();
+        if(strcmp(node->name(), "PDBx:atom_siteCategory") == 0){
+            rapidxml::xml_node<> *atomNode = node->first_node("PDBx:atom_site");
 
             // residue and chain data
             chemkit::AminoAcid *residue = 0;
             int currentSequenceNumber = -1;
-            QString currentChainName;
+            std::string currentChainName;
 
-            while(!atomElement.isNull()){
-                QString id = atomElement.attribute("id");
+            while(atomNode){
+                rapidxml::xml_attribute<> *atomIdAttribute = atomNode->first_attribute("id");
+
+                // read id
+                std::string id;
+                if(atomIdAttribute && atomIdAttribute->value()){
+                    id = atomIdAttribute->value();
+                }
                 CHEMKIT_UNUSED(id);
 
                 // read atom data
-                QString symbol;
-                QString group;
-                QString x, y, z;
-                QString chainName;
+                std::string symbol;
+                std::string group;
+                std::string x, y, z;
+                std::string chainName;
                 int sequenceNumber = 0;
-                QString atomType;
-                QString residueSymbol;
+                std::string atomType;
+                std::string residueSymbol;
 
-                QDomElement atomDataElement = atomElement.firstChildElement();
-                while(!atomDataElement.isNull()){
-                    if(atomDataElement.tagName() == "type_symbol"){
-                        symbol = atomDataElement.text();
+                rapidxml::xml_node<> *atomDataNode = atomNode->first_node();
+                while(atomDataNode){
+                    if(strcmp(atomDataNode->name(), "PDBx:type_symbol") == 0){
+                        symbol = atomDataNode->value();
                     }
-                    else if(atomDataElement.tagName() == "Cartn_x"){
-                        x = atomDataElement.text();
+                    else if(strcmp(atomDataNode->name(), "PDBx:Cartn_x") == 0){
+                        x = atomDataNode->value();
                     }
-                    else if(atomDataElement.tagName() == "Cartn_y"){
-                        y = atomDataElement.text();
+                    else if(strcmp(atomDataNode->name(), "PDBx:Cartn_y") == 0){
+                        y = atomDataNode->value();
                     }
-                    else if(atomDataElement.tagName() == "Cartn_z"){
-                        z = atomDataElement.text();
+                    else if(strcmp(atomDataNode->name(), "PDBx:Cartn_z") == 0){
+                        z = atomDataNode->value();
                     }
-                    else if(atomDataElement.tagName() == "label_asym_id"){
-                        chainName = atomDataElement.text();
+                    else if(strcmp(atomDataNode->name(), "PDBx:label_asym_id") == 0){
+                        chainName = atomDataNode->value();
                     }
-                    else if(atomDataElement.tagName() == "label_seq_id"){
-                        sequenceNumber = atomDataElement.text().toInt();
+                    else if(strcmp(atomDataNode->name(), "PDBx:label_seq_id") == 0){
+                        if(atomDataNode->value() && atomDataNode->value_size()){
+                            sequenceNumber = boost::lexical_cast<int>(atomDataNode->value());
+                        }
                     }
-                    else if(atomDataElement.tagName() == "label_atom_id"){
-                        atomType = atomDataElement.text();
+                    else if(strcmp(atomDataNode->name(), "PDBx:label_atom_id") == 0){
+                        atomType = atomDataNode->value();
                     }
-                    else if(atomDataElement.tagName() == "label_comp_id"){
-                        residueSymbol = atomDataElement.text();
+                    else if(strcmp(atomDataNode->name(), "PDBx:label_comp_id") == 0){
+                        residueSymbol = atomDataNode->value();
                     }
-                    else if(atomDataElement.tagName() == "group_PDB"){
-                        group = atomDataElement.text();
+                    else if(strcmp(atomDataNode->name(), "PDBx:group_PDB") == 0){
+                        group = atomDataNode->value();
                     }
 
-                    atomDataElement = atomDataElement.nextSiblingElement();
+                    atomDataNode = atomDataNode->next_sibling();
                 }
 
                 // add atom and set its data
-                chemkit::Atom *atom = polymer->addAtom(symbol.toStdString());
+                chemkit::Atom *atom = polymer->addAtom(symbol);
                 if(atom){
                     // atomic coordinates
-                    atom->setPosition(x.toDouble(), y.toDouble(), z.toDouble());
+                    if(!x.empty() && !y.empty() && !z.empty()){
+                        atom->setPosition(boost::lexical_cast<chemkit::Real>(x),
+                                          boost::lexical_cast<chemkit::Real>(y),
+                                          boost::lexical_cast<chemkit::Real>(z));
+                    }
 
                     if(group == "ATOM"){
                         // set residue
                         if(chainName != currentChainName){
                             chain = polymer->addChain();
                             currentChainName = chainName;
-                            chainNameToChain[chainName] = chain;
+                            nameToChain[chainName] = chain;
                         }
 
                         if(sequenceNumber != currentSequenceNumber){
                             residue = new chemkit::AminoAcid(polymer);
-                            residue->setType(residueSymbol.toStdString());
+                            residue->setType(residueSymbol);
                             chain->addResidue(residue);
                             currentSequenceNumber = sequenceNumber;
                         }
@@ -173,38 +175,46 @@ bool PdbmlFileFormat::read(std::istream &input, chemkit::PolymerFile *file)
                         else if(atomType == "N"){
                             residue->setAminoNitrogen(atom);
                         }
-                        residue->setAtomType(atom, atomType.toStdString());
+                        residue->setAtomType(atom, atomType);
                     }
                 }
 
-                // go to next atom
-                atomElement = atomElement.nextSiblingElement();
+                // go to next atom node
+                atomNode = atomNode->next_sibling("PDBx:atom_site");
             }
         }
 
         // secondary structure
-        else if(element.tagName() == "struct_confCategory"){
-            QDomElement structElement = element.firstChildElement();
+        else if(strcmp(node->name(), "PDBx:struct_confCategory") == 0){
+            rapidxml::xml_node<> *structNode = node->first_node();
 
-            while(!structElement.isNull()){
-                QString chainName;
+            while(structNode){
+                std::string chainName;
                 int firstResidue = 0;
                 int lastResidue = 0;
                 chemkit::AminoAcid::Conformation conformation = chemkit::AminoAcid::Coil;
 
-                QDomElement structDataElement = structElement.firstChildElement();
-                while(!structDataElement.isNull()){
-                    if(structDataElement.tagName() == "beg_label_seq_id"){
-                        firstResidue = structDataElement.text().toInt();
+                rapidxml::xml_node<> *structDataNode = structNode->first_node();
+                while(structDataNode){
+                    if(strcmp(structDataNode->name(), "PDBx:beg_label_seq_id") == 0){
+                        if(structDataNode->value()){
+                            firstResidue = boost::lexical_cast<int>(structDataNode->value());
+                        }
                     }
-                    else if(structDataElement.tagName() == "end_label_seq_id"){
-                        lastResidue = structDataElement.text().toInt();
+                    else if(strcmp(structDataNode->name(), "PDBx:end_label_seq_id") == 0){
+                        if(structDataNode->value()){
+                            lastResidue = boost::lexical_cast<int>(structDataNode->value());
+                        }
                     }
-                    else if(structDataElement.tagName() == "beg_label_asym_id"){
-                        chainName = structDataElement.text();
+                    else if(strcmp(structDataNode->name(), "PDBx:beg_label_asym_id") == 0){
+                        chainName = structDataNode->value();
                     }
-                    else if(structDataElement.tagName() == "conf_type_id"){
-                        QString type = structDataElement.text();
+                    else if(strcmp(structDataNode->name(), "PDBx:conf_type_id") == 0){
+                        std::string type;
+
+                        if(structDataNode->value()){
+                            type = structDataNode->value();
+                        }
 
                         if(type == "HELX_P"){
                             conformation = chemkit::AminoAcid::AlphaHelix;
@@ -214,22 +224,24 @@ bool PdbmlFileFormat::read(std::istream &input, chemkit::PolymerFile *file)
                         }
                     }
 
-                    structDataElement = structDataElement.nextSiblingElement();
+                    structDataNode = structDataNode->next_sibling();
                 }
 
-                chemkit::PolymerChain *chain = chainNameToChain.value(chainName, 0);
-                if(chain){
+                std::map<std::string, chemkit::PolymerChain *>::const_iterator iter = nameToChain.find(chainName);
+                if(iter != nameToChain.end()){
+                    chemkit::PolymerChain *chain = iter->second;
+
                     for(int i = firstResidue; i < lastResidue; i++){
                         chemkit::AminoAcid *aminoAcid = static_cast<chemkit::AminoAcid *>(chain->residue(i - 1));
                         aminoAcid->setConformation(conformation);
                     }
                 }
 
-                structElement = structElement.nextSiblingElement();
+                structNode = structNode->next_sibling();
             }
         }
 
-        element = element.nextSiblingElement();
+        node = node->next_sibling();
     }
 
     file->addPolymer(polymer);
