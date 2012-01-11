@@ -79,7 +79,7 @@ bool InchiLineFormat::read(const std::string &formula, chemkit::Molecule *molecu
     // build molecule from inchi output
     std::vector<chemkit::Atom *> atoms(output.num_atoms);
 
-    bool addHydrogens = option("add-hydrogens").toBool();
+    bool addHydrogens = option("add-implicit-hydrogens").toBool();
 
     // add atoms
     for(int i = 0; i < output.num_atoms; i++){
@@ -262,7 +262,7 @@ chemkit::Variant InchiLineFormat::defaultOption(const std::string &name) const
 {
     if(name == "stereochemistry")
         return true;
-    else if(name == "add-hydrogens")
+    else if(name == "add-implicit-hydrogens")
         return true;
     else
         return chemkit::Variant();

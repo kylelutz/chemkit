@@ -1199,12 +1199,12 @@ void SmilesTest::addHydrogens()
     QVERIFY(format);
 
     // default is true
-    QCOMPARE(format->option("add-hydrogens").toBool(), true);
+    QCOMPARE(format->option("add-implicit-hydrogens").toBool(), true);
     chemkit::Molecule *molecule = format->read("C");
     QCOMPARE(molecule->formula(), std::string("CH4"));
     delete molecule;
 
-    format->setOption("add-hydrogens", false);
+    format->setOption("add-implicit-hydrogens", false);
     molecule = format->read("C");
     QCOMPARE(molecule->formula(), std::string("C"));
     delete molecule;

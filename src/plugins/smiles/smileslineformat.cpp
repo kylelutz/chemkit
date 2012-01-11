@@ -194,7 +194,7 @@ chemkit::Variant SmilesLineFormat::defaultOption(const std::string &name) const
 {
     if(name == "stereochemistry")
         return true;
-    else if(name == "add-hydrogens")
+    else if(name == "add-implicit-hydrogens")
         return true;
     else if(name == "kekulize")
         return false;
@@ -555,8 +555,8 @@ done:
         Kekulizer::kekulize(aromaticBonds);
     }
 
-    // add hydrogens (if enabled)
-    if(option("add-hydrogens").toBool()){
+    // add implicit hydrogens (if enabled)
+    if(option("add-implicit-hydrogens").toBool()){
         foreach(chemkit::Atom *atom, organicAtoms){
             while(atom->formalCharge() < 0){
                 chemkit::Atom *hydrogen = molecule->addAtom(chemkit::Atom::Hydrogen);
