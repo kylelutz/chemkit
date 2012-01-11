@@ -52,7 +52,7 @@ void Vector3Test::constructor()
 
 void Vector3Test::value()
 {
-    chemkit::Vector3 vector;
+    chemkit::Vector3 vector(0, 0, 0);
     QCOMPARE(qRound(vector[0]), 0);
     QCOMPARE(qRound(vector[1]), 0);
     QCOMPARE(qRound(vector[2]), 0);
@@ -72,7 +72,7 @@ void Vector3Test::value()
 
 void Vector3Test::norm()
 {
-    chemkit::Vector3 vector;
+    chemkit::Vector3 vector(0, 0, 0);
     QCOMPARE(qRound(vector.norm()), 0);
 
     vector = chemkit::Vector3(1, 0, 0);
