@@ -220,4 +220,24 @@ void InchiTest::addHydrogens()
     delete octane;
 }
 
+void InchiTest::readWrite_data()
+{
+    QTest::addColumn<QString>("inchi");
+
+    QTest::newRow("ethanol") << "InChI=1S/C2H6O/c1-2-3/h3H,2H2,1H3";
+    QTest::newRow("acetone") << "InChI=1S/C3H6O/c1-3(2)4/h1-2H3";
+    QTest::newRow("phenol") << "InChI=1S/C6H6O/c7-6-4-2-1-3-5-6/h1-5,7H";
+    QTest::newRow("caffeine") << "InChI=1S/C8H10N4O2/c1-10-4-9-6-5(10)7(13)12(3)8(14)11(6)2/h4H,1-3H3";
+    QTest::newRow("diazepam") << "InChI=1S/C16H13ClN2O/c1-19-14-8-7-12(17)9-13(14)16(18-10-15(19)20)11-5-3-2-4-6-11/h2-9H,10H2,1H3";
+}
+
+void InchiTest::readWrite()
+{
+    QFETCH(QString, inchi);
+
+    chemkit::Molecule molecule(inchi.toStdString(), "inchi");
+    QVERIFY(!molecule.isEmpty());
+    QCOMPARE(molecule.formula("inchi"), inchi.toStdString());
+}
+
 QTEST_APPLESS_MAIN(InchiTest)

@@ -48,6 +48,8 @@ class InchiTest : public QObject
         void write();
         void stereochemistry();
         void addHydrogens();
+        void readWrite_data();
+        void readWrite();
 };
 
 #endif // INCHITEST_H
