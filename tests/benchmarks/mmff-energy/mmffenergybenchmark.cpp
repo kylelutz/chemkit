@@ -50,16 +50,13 @@ void MmffEnergyBenchmark::benchmark()
         qDebug() << file.errorString().c_str();
     QVERIFY(ok);
 
-    chemkit::ForceField *mmff = chemkit::ForceField::create("mmff");
-    mmff->setup();
-    delete mmff;
-
     // total energy of all 753 molecules
     double totalEnergy = 0;
 
     QBENCHMARK_ONCE {
+        chemkit::ForceField *forceField = chemkit::ForceField::create("mmff");
+
         foreach(const chemkit::Molecule *molecule, file.molecules()){
-            chemkit::ForceField *forceField = chemkit::ForceField::create("mmff");
             QVERIFY(forceField);
 
             forceField->setMolecule(molecule);
@@ -68,6 +65,8 @@ void MmffEnergyBenchmark::benchmark()
 
             totalEnergy += forceField->energy();
         }
+
+        delete forceField;
     }
 
     // expected total energy = 5228.05954
