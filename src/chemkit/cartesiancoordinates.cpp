@@ -311,6 +311,72 @@ Matrix CartesianCoordinates::distanceMatrix() const
     return matrix;
 }
 
+// --- Derivatives --------------------------------------------------------- //
+/// Returns the gradient of the distance between the points at \p i
+/// and \p j.
+boost::array<Vector3, 2> CartesianCoordinates::distanceGradient(size_t i, size_t j) const
+{
+    return chemkit::geometry::distanceGradient(position(i), position(j));
+}
+
+/// Returns the gradient of the angle between the points at \p i,
+/// \p j and \p k.
+boost::array<Vector3, 3> CartesianCoordinates::angleGradient(size_t i, size_t j, size_t k) const
+{
+    return chemkit::geometry::angleGradient(position(i),
+                                            position(j),
+                                            position(k));
+}
+
+/// Returns the gradient of the angle between the points at \p i,
+/// \p j and \p k.
+boost::array<Vector3, 3> CartesianCoordinates::angleGradientRadians(size_t i, size_t j, size_t k) const
+{
+    return chemkit::geometry::angleGradientRadians(position(i),
+                                                   position(j),
+                                                   position(k));
+}
+
+/// Returns the gradient of the torsion angle between the points
+/// at \p i, \p j, \p k, and \p l.
+boost::array<Vector3, 4> CartesianCoordinates::torsionAngleGradient(size_t i, size_t j, size_t k, size_t l) const
+{
+    return chemkit::geometry::torsionAngleGradient(position(i),
+                                                   position(j),
+                                                   position(k),
+                                                   position(l));
+}
+
+/// Returns the gradient of the torsion angle between the points at
+/// \p i, \p j, \p k, and \p l.
+boost::array<Vector3, 4> CartesianCoordinates::torsionAngleGradientRadians(size_t i, size_t j, size_t k, size_t l) const
+{
+    return chemkit::geometry::torsionAngleGradientRadians(position(i),
+                                                          position(j),
+                                                          position(k),
+                                                          position(l));
+}
+
+/// Returns the gradient of the wilson angle between the points at
+/// \p i, \p j, \p k, and \p l.
+boost::array<Vector3, 4> CartesianCoordinates::wilsonAngleGradient(size_t i, size_t j, size_t k, size_t l) const
+{
+    return chemkit::geometry::wilsonAngleGradient(position(i),
+                                                  position(j),
+                                                  position(k),
+                                                  position(l));
+}
+
+/// Returns the gradient of the wilson angle between the points at
+/// \p i, \p j, \p k, and \p l.
+boost::array<Vector3, 4> CartesianCoordinates::wilsonAngleGradientRadians(size_t i, size_t j, size_t k, size_t l) const
+{
+    return chemkit::geometry::wilsonAngleGradientRadians(position(i),
+                                                         position(j),
+                                                         position(k),
+                                                         position(l));
+}
+
 // --- Math ---------------------------------------------------------------- //
 /// Returns a new coordinate matrix containing the result of adding
 /// the coordinates with \p coordinates.
