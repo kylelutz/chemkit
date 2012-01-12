@@ -50,6 +50,7 @@ add_subdirectory(surfacedescriptors)
 add_subdirectory(sybyl)
 add_subdirectory(txyz)
 add_subdirectory(uff)
+add_subdirectory(vabc)
 add_subdirectory(wienerindex)
 
 # only compile xtc plugin on *nix where we have XDR
