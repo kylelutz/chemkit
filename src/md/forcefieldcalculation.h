@@ -107,10 +107,6 @@ protected:
 
 private:
     void setSetup(bool setup);
-    inline boost::array<Vector3, 2> distanceGradient(const Point3 &a, const Point3 &b) const;
-    inline boost::array<Vector3, 3> bondAngleGradientRadians(const Point3 &a, const Point3 &b, const Point3 &c) const;
-    inline boost::array<Vector3, 4> torsionAngleGradientRadians(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d) const;
-    inline boost::array<Vector3, 4> wilsonAngleGradientRadians(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d) const;
 
     friend class ForceField;
 

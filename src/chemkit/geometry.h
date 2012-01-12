@@ -38,6 +38,8 @@
 
 #include "chemkit.h"
 
+#include <boost/array.hpp>
+
 #include "point3.h"
 #include "vector3.h"
 
@@ -72,6 +74,15 @@ CHEMKIT_EXPORT Real orthoradius(const Point3 &a, const Point3 &b, const Point3 &
 CHEMKIT_EXPORT Real triangleArea(const Point3 &a, const Point3 &b, const Point3 &c);
 CHEMKIT_EXPORT Real tetrahedronVolume(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d);
 CHEMKIT_EXPORT Vector3 planeNormal(const Point3 &a, const Point3 &b, const Point3 &c);
+
+// derivatives
+inline boost::array<Vector3, 2> distanceGradient(const Point3 &a, const Point3 &b);
+inline boost::array<Vector3, 3> angleGradient(const Point3 &a, const Point3 &b, const Point3 &c);
+inline boost::array<Vector3, 3> angleGradientRadians(const Point3 &a, const Point3 &b, const Point3 &c);
+inline boost::array<Vector3, 4> torsionAngleGradient(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d);
+inline boost::array<Vector3, 4> torsionAngleGradientRadians(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d);
+inline boost::array<Vector3, 4> wilsonAngleGradient(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d);
+inline boost::array<Vector3, 4> wilsonAngleGradientRadians(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d);
 
 // predicates
 CHEMKIT_EXPORT Real planeOrientation(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &p);
