@@ -36,6 +36,7 @@ set(HEADERS
   dynamiclibrary.h
   element.h
   element-inline.h
+  fingerprint.h
   foreach.h
   fragment.h
   fragment-inline.h
@@ -94,6 +95,7 @@ set(SOURCES
   diagramcoordinates.cpp
   dynamiclibrary.cpp
   element.cpp
+  fingerprint.cpp
   fragment.cpp
   geometry.cpp
   internalcoordinates.cpp

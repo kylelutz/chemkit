@@ -62,6 +62,7 @@
 #include "lineformat.h"
 #include "quaternion.h"
 #include "variantmap.h"
+#include "fingerprint.h"
 #include "coordinateset.h"
 #include "moleculeprivate.h"
 #include "moleculewatcher.h"
@@ -301,6 +302,19 @@ Variant Molecule::descriptor(const std::string &name) const
     }
 
     return descriptor->value(this);
+}
+
+/// Returns the binary fingerprint for \p name.
+///
+/// \see Fingerprint
+Bitset Molecule::fingerprint(const std::string &name) const
+{
+    boost::scoped_ptr<Fingerprint> fingerprint(Fingerprint::create(name));
+    if(!fingerprint){
+        return Bitset();
+    }
+
+    return fingerprint->value(this);
 }
 
 /// Returns the total molar mass of the molecule. Mass is in g/mol.

@@ -44,6 +44,7 @@
 
 #include <boost/range/iterator_range.hpp>
 
+#include "bitset.h"
 #include "point3.h"
 #include "element.h"
 #include "variant.h"
@@ -86,6 +87,7 @@ public:
     std::string formula() const;
     std::string formula(const std::string &format) const;
     Variant descriptor(const std::string &name) const;
+    Bitset fingerprint(const std::string &name) const;
     inline size_t size() const;
     inline bool isEmpty() const;
     Real mass() const;
