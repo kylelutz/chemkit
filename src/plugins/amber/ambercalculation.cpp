@@ -96,12 +96,12 @@ std::vector<chemkit::Vector3> AmberBondCalculation::gradient() const
     // dE/dr
     chemkit::Real de_dr = 2.0 * kb * (r - r0);
 
-    std::vector<chemkit::Vector3> gradient = distanceGradient(a, b);
+    boost::array<chemkit::Vector3, 2> gradient = distanceGradient(a, b);
 
     gradient[0] *= de_dr;
     gradient[1] *= de_dr;
 
-    return gradient;
+    return std::vector<chemkit::Vector3>(gradient.begin(), gradient.end());
 }
 
 // === AmberAngleCalculation =============================================== //
@@ -159,13 +159,13 @@ std::vector<chemkit::Vector3> AmberAngleCalculation::gradient() const
     // dE/dtheta
     chemkit::Real de_dtheta = 2.0 * ka * (theta - theta0);
 
-    std::vector<chemkit::Vector3> gradient = bondAngleGradient(a, b, c);
+    boost::array<chemkit::Vector3, 3> gradient = bondAngleGradient(a, b, c);
 
     gradient[0] *= de_dtheta;
     gradient[1] *= de_dtheta;
     gradient[2] *= de_dtheta;
 
-    return gradient;
+    return std::vector<chemkit::Vector3>(gradient.begin(), gradient.end());
 }
 
 // === AmberTorsionCalculation ============================================= //
@@ -258,14 +258,14 @@ std::vector<chemkit::Vector3> AmberTorsionCalculation::gradient() const
     de_dphi += V4 * (-sin((4.0 * phi - gamma4) * chemkit::constants::DegreesToRadians) * 4.0);
     de_dphi *= chemkit::constants::DegreesToRadians;
 
-    std::vector<chemkit::Vector3> gradient = torsionAngleGradient(a, b, c, d);
+    boost::array<chemkit::Vector3, 4> gradient = torsionAngleGradient(a, b, c, d);
 
     gradient[0] *= de_dphi;
     gradient[1] *= de_dphi;
     gradient[2] *= de_dphi;
     gradient[3] *= de_dphi;
 
-    return gradient;
+    return std::vector<chemkit::Vector3>(gradient.begin(), gradient.end());
 }
 
 // === AmberNonbondedCalculation =========================================== //
@@ -331,10 +331,10 @@ std::vector<chemkit::Vector3> AmberNonbondedCalculation::gradient() const
     // dE/dr
     chemkit::Real de_dr = (-12 * epsilon * sigma / pow(r, 2) * (pow(sr, 11) - pow(sr, 5))) - ((qa * qb) / (4.0 * pi * e0 * pow(r, 2)));
 
-    std::vector<chemkit::Vector3> gradient = distanceGradient(a, b);
+    boost::array<chemkit::Vector3, 2> gradient = distanceGradient(a, b);
 
     gradient[0] *= de_dr;
     gradient[1] *= de_dr;
 
-    return gradient;
+    return std::vector<chemkit::Vector3>(gradient.begin(), gradient.end());
 }

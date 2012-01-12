@@ -141,12 +141,12 @@ std::vector<chemkit::Vector3> UffBondStrechCalculation::gradient() const
     // dE/dr
     chemkit::Real de_dr = kb * (r - r0);
 
-    std::vector<chemkit::Vector3> gradient = distanceGradient(a, b);
+    boost::array<chemkit::Vector3, 2> gradient = distanceGradient(a, b);
 
     gradient[0] *= de_dr;
     gradient[1] *= de_dr;
 
-    return gradient;
+    return std::vector<chemkit::Vector3>(gradient.begin(), gradient.end());
 }
 
 // === UffAngleBendCalculation ============================================= //
@@ -234,13 +234,13 @@ std::vector<chemkit::Vector3> UffAngleBendCalculation::gradient() const
     // dE/dtheta
     chemkit::Real de_dtheta = -ka * (c1 * sin(theta) + 2 * c2 * sin(2 * theta));
 
-    std::vector<chemkit::Vector3> gradient = bondAngleGradientRadians(a, b, c);
+    boost::array<chemkit::Vector3, 3> gradient = bondAngleGradientRadians(a, b, c);
 
     gradient[0] *= de_dtheta;
     gradient[1] *= de_dtheta;
     gradient[2] *= de_dtheta;
 
-    return gradient;
+    return std::vector<chemkit::Vector3>(gradient.begin(), gradient.end());
 }
 
 // === UffTorsionCalculation =============================================== //
@@ -373,14 +373,14 @@ std::vector<chemkit::Vector3> UffTorsionCalculation::gradient() const
     // dE/dphi
     chemkit::Real de_dphi = 0.5 * V * n * cos(n * phi0) * sin(n * phi);
 
-    std::vector<chemkit::Vector3> gradient = torsionAngleGradientRadians(a, b, c, d);
+    boost::array<chemkit::Vector3, 4> gradient = torsionAngleGradientRadians(a, b, c, d);
 
     gradient[0] *= de_dphi;
     gradient[1] *= de_dphi;
     gradient[2] *= de_dphi;
     gradient[3] *= de_dphi;
 
-    return gradient;
+    return std::vector<chemkit::Vector3>(gradient.begin(), gradient.end());
 }
 
 // === UffInversionCalculation ============================================= //
@@ -469,14 +469,14 @@ std::vector<chemkit::Vector3> UffInversionCalculation::gradient() const
     // dE/dw
     chemkit::Real de_dw = k * (c1 * cos(y) - 2 * c2 * sin(2 * y));
 
-    std::vector<chemkit::Vector3> gradient = wilsonAngleGradientRadians(a, b, c, d);
+    boost::array<chemkit::Vector3, 4> gradient = wilsonAngleGradientRadians(a, b, c, d);
 
     gradient[0] *= de_dw;
     gradient[1] *= de_dw;
     gradient[2] *= de_dw;
     gradient[3] *= de_dw;
 
-    return gradient;
+    return std::vector<chemkit::Vector3>(gradient.begin(), gradient.end());
 }
 
 // === UffVanDerWaalsCalculation =========================================== //
@@ -536,12 +536,12 @@ std::vector<chemkit::Vector3> UffVanDerWaalsCalculation::gradient() const
     // dE/dr
     chemkit::Real de_dr = -12 * d * x / pow(r, 2) * (pow(x/r, 11) - pow(x/r, 5));
 
-    std::vector<chemkit::Vector3> gradient = distanceGradient(a, b);
+    boost::array<chemkit::Vector3, 2> gradient = distanceGradient(a, b);
 
     gradient[0] *= de_dr;
     gradient[1] *= de_dr;
 
-    return gradient;
+    return std::vector<chemkit::Vector3>(gradient.begin(), gradient.end());
 }
 
 // === UffElectrostaticCalculation ========================================= //

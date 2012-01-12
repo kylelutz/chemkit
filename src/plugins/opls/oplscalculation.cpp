@@ -93,7 +93,7 @@ std::vector<chemkit::Vector3> OplsBondStrechCalculation::gradient() const
 
     chemkit::Real r = distance(a, b);
 
-    std::vector<chemkit::Vector3> gradient = distanceGradient(a, b);
+    boost::array<chemkit::Vector3, 2> gradient = distanceGradient(a, b);
 
     // dE/dr
     chemkit::Real de_dr = 2.0 * kb * (r - r0);
@@ -101,7 +101,7 @@ std::vector<chemkit::Vector3> OplsBondStrechCalculation::gradient() const
     gradient[0] *= de_dr;
     gradient[1] *= de_dr;
 
-    return gradient;
+    return std::vector<chemkit::Vector3>(gradient.begin(), gradient.end());
 }
 
 // === OplsAngleBendCalculation ============================================ //
@@ -159,7 +159,7 @@ std::vector<chemkit::Vector3> OplsAngleBendCalculation::gradient() const
 
     chemkit::Real theta = bondAngleRadians(a, b, c);
 
-    std::vector<chemkit::Vector3> gradient = bondAngleGradientRadians(a, b, c);
+    boost::array<chemkit::Vector3, 3> gradient = bondAngleGradientRadians(a, b, c);
 
     // dE/dtheta
     chemkit::Real de_dtheta = (2.0 * ka * (theta - theta0));
@@ -168,7 +168,7 @@ std::vector<chemkit::Vector3> OplsAngleBendCalculation::gradient() const
     gradient[1] *= de_dtheta;
     gradient[2] *= de_dtheta;
 
-    return gradient;
+    return std::vector<chemkit::Vector3>(gradient.begin(), gradient.end());
 }
 
 // === OplsTorsionCalculation ============================================== //
@@ -237,14 +237,14 @@ std::vector<chemkit::Vector3> OplsTorsionCalculation::gradient() const
     // dE/dphi
     chemkit::Real de_dphi = (1.0/2.0) * (-v1 * sin(phi) + 2.0 * v2 * sin(2.0 * phi) - 3.0 * v3 * sin(3.0 * phi));
 
-    std::vector<chemkit::Vector3> gradient = torsionAngleGradientRadians(a, b, c, d);
+    boost::array<chemkit::Vector3, 4> gradient = torsionAngleGradientRadians(a, b, c, d);
 
     gradient[0] *= de_dphi;
     gradient[1] *= de_dphi;
     gradient[2] *= de_dphi;
     gradient[3] *= de_dphi;
 
-    return gradient;
+    return std::vector<chemkit::Vector3>(gradient.begin(), gradient.end());
 }
 
 // === OplsNonbondedCalculation ============================================ //

@@ -108,12 +108,12 @@ std::vector<chemkit::Vector3> MmffBondStrechCalculation::gradient() const
     // dE/dr
     chemkit::Real de_dr = 143.9325 * kb * dr * (1 + cs * dr + (7.0/12.0 * (cs*cs) * (dr*dr)) + 0.5 * dr * (cs + (14.0/12.0 * (cs*cs) * dr)));
 
-    std::vector<chemkit::Vector3> gradient = distanceGradient(a, b);
+    boost::array<chemkit::Vector3, 2> gradient = distanceGradient(a, b);
 
     gradient[0] *= de_dr;
     gradient[1] *= de_dr;
 
-    return gradient;
+    return std::vector<chemkit::Vector3>(gradient.begin(), gradient.end());
 }
 
 // === MmffAngleBendCalculation ============================================ //
@@ -176,13 +176,13 @@ std::vector<chemkit::Vector3> MmffAngleBendCalculation::gradient() const
     // dE/dt
     chemkit::Real de_dt = 0.043844 * ka * dt * (1 + cb * dt + 0.5 * cb * dt);
 
-    std::vector<chemkit::Vector3> gradient = bondAngleGradient(a, b, c);
+    boost::array<chemkit::Vector3, 3> gradient = bondAngleGradient(a, b, c);
 
     gradient[0] *= de_dt;
     gradient[1] *= de_dt;
     gradient[2] *= de_dt;
 
-    return gradient;
+    return std::vector<chemkit::Vector3>(gradient.begin(), gradient.end());
 }
 
 // === MmffStrechBendCalculation =========================================== //
@@ -286,9 +286,9 @@ std::vector<chemkit::Vector3> MmffStrechBendCalculation::gradient() const
 
     std::vector<chemkit::Vector3> gradient(3);
 
-    std::vector<chemkit::Vector3> distanceGradientAB = distanceGradient(a, b);
-    std::vector<chemkit::Vector3> distanceGradientBC = distanceGradient(b, c);
-    std::vector<chemkit::Vector3> bondAngleGradientABC = bondAngleGradient(a, b, c);
+    boost::array<chemkit::Vector3, 2> distanceGradientAB = distanceGradient(a, b);
+    boost::array<chemkit::Vector3, 2> distanceGradientBC = distanceGradient(b, c);
+    boost::array<chemkit::Vector3, 3> bondAngleGradientABC = bondAngleGradient(a, b, c);
 
     gradient[0] = (distanceGradientAB[0] * kba_ijk * dt + bondAngleGradientABC[0] * (kba_ijk * dr_ab + kba_kji * dr_bc)) * 2.51210;
     gradient[1] = ((distanceGradientAB[1] * kba_ijk + distanceGradientBC[0] * kba_kji) * dt + bondAngleGradientABC[1] * (kba_ijk * dr_ab + kba_kji * dr_bc)) * 2.51210;
@@ -353,14 +353,14 @@ std::vector<chemkit::Vector3> MmffOutOfPlaneBendingCalculation::gradient() const
     // dE/dw
     chemkit::Real de_dw = 0.043844 * koop * angle;
 
-    std::vector<chemkit::Vector3> gradient = wilsonAngleGradient(a, b, c, d);
+    boost::array<chemkit::Vector3, 4> gradient = wilsonAngleGradient(a, b, c, d);
 
     gradient[0] *= de_dw;
     gradient[1] *= de_dw;
     gradient[2] *= de_dw;
     gradient[3] *= de_dw;
 
-    return gradient;
+    return std::vector<chemkit::Vector3>(gradient.begin(), gradient.end());
 }
 
 // === MmffTorsionCalculation ============================================== //
@@ -426,14 +426,14 @@ std::vector<chemkit::Vector3> MmffTorsionCalculation::gradient() const
     // dE/dphi
     chemkit::Real de_dphi = 0.5 * (-V1 * sin(phi) + 2 * V2 * sin(2 * phi) - 3 * V3 * sin(3 * phi));
 
-    std::vector<chemkit::Vector3> gradient = torsionAngleGradientRadians(a, b, c, d);
+    boost::array<chemkit::Vector3, 4> gradient = torsionAngleGradientRadians(a, b, c, d);
 
     gradient[0] *= de_dphi;
     gradient[1] *= de_dphi;
     gradient[2] *= de_dphi;
     gradient[3] *= de_dphi;
 
-    return gradient;
+    return std::vector<chemkit::Vector3>(gradient.begin(), gradient.end());
 }
 
 // === MmffVanDerWaalsCalculation ========================================== //
@@ -525,12 +525,12 @@ std::vector<chemkit::Vector3> MmffVanDerWaalsCalculation::gradient() const
                            ((-1.07 * rs / pow(r + 0.07 * rs, 2)) * (1.12 * pow(rs, 7) / (pow(r, 7) + 0.12 * pow(rs, 7)) - 2) +
                            (-1.12 * pow(rs, 7) * pow(r, 6) / pow(pow(r, 7) + 0.12 * pow(rs, 7), 2)) * (1.07 * rs / (r + 0.07 * rs)));
 
-    std::vector<chemkit::Vector3> gradient = distanceGradient(a, b);
+    boost::array<chemkit::Vector3, 2> gradient = distanceGradient(a, b);
 
     gradient[0] *= de_dr;
     gradient[1] *= de_dr;
 
-    return gradient;
+    return std::vector<chemkit::Vector3>(gradient.begin(), gradient.end());
 }
 
 // === MmffElectrostaticCalculation ======================================== //
@@ -597,10 +597,10 @@ std::vector<chemkit::Vector3> MmffElectrostaticCalculation::gradient() const
 
     chemkit::Real de_dr = 332.0716 * qa * qb * oneFourScaling * (-1.0 / (e * pow(r + d, 2)));
 
-    std::vector<chemkit::Vector3> gradient = distanceGradient(a, b);
+    boost::array<chemkit::Vector3, 2> gradient = distanceGradient(a, b);
 
     gradient[0] *= de_dr;
     gradient[1] *= de_dr;
 
-    return gradient;
+    return std::vector<chemkit::Vector3>(gradient.begin(), gradient.end());
 }
