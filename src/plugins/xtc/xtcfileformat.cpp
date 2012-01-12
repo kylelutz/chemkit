@@ -40,6 +40,7 @@
 #include <boost/make_shared.hpp>
 
 #include <rpc/xdr.h>
+#include <rpc/types.h>
 #include <chemkit/vector3.h>
 #include <chemkit/unitcell.h>
 #include <chemkit/trajectory.h>

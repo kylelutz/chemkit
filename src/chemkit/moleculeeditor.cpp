@@ -38,9 +38,9 @@
 #include <stack>
 #include <cassert>
 
-#include <chemkit/atom.h>
-#include <chemkit/bond.h>
-#include <chemkit/foreach.h>
+#include "atom.h"
+#include "bond.h"
+#include "foreach.h"
 
 namespace chemkit {
 

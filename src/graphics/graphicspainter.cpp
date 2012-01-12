@@ -44,6 +44,12 @@
 #include <chemkit/constants.h>
 #include <chemkit/quaternion.h>
 
+#if defined(Q_WS_MAC)
+#include <OpenGL/glu.h>
+#else
+#include <GL/glu.h>
+#endif
+
 namespace {
 
 void nurbsErrorCallback(GLenum errorCode)

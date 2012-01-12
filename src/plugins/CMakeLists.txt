@@ -57,7 +57,9 @@ add_subdirectory(wienerindex)
 
 # only compile xtc plugin on *nix where we have XDR
 if(${UNIX})
+  if(!${APPLE})
     add_subdirectory(xtc)
+  endif()
 endif()
 
 add_subdirectory(xyz)

@@ -223,11 +223,13 @@ std::string DynamicLibrary::errorString() const
 bool DynamicLibrary::isLibrary(const std::string &fileName)
 {
 #if defined(CHEMKIT_OS_UNIX)
+ #if defined(CHEMKIT_OS_MAC)
+    return boost::algorithm::ends_with(fileName, ".dylib");
+ #else
     return boost::algorithm::ends_with(fileName, ".so");
-
+ #endif
 #elif defined(CHEMKIT_OS_WIN32)
     return boost::algorithm::ends_with(fileName, ".dll");
-
 #else
     return false;
 #endif

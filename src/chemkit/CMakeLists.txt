@@ -2,10 +2,11 @@
 # set a variable for the operating system
 if(UNIX)
   set(CHEMKIT_OS_UNIX TRUE)
+  if(APPLE)
+    set(CHEMKIT_OS_MAC TRUE)
+  endif()
 elseif(WIN32)
   set(CHEMKIT_OS_WIN32 TRUE)
-elseif(APPLE)
-  set(CHEMKIT_OS_MAC TRUE)
 endif()
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config.h.in ${CMAKE_CURRENT_SOURCE_DIR}/config.h)

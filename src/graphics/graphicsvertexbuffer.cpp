@@ -37,12 +37,15 @@
 
 #include <QtOpenGL>
 
-#ifdef Q_OS_WIN32
-#include "../3rdparty/khronos/GL/glext.h"
-#else
-#include <GL/glext.h>
+#if !defined(Q_WS_MAC)
+ #if defined(Q_WS_WIN)
+   #include "../3rdparty/khronos/GL/glext.h"
+ #else
+  #include <GL/glext.h>
+ #endif
 #endif
 
+#if !defined(Q_WS_MAC)
 namespace {
 
 PFNGLGENBUFFERSPROC glGenBuffers = 0;
@@ -114,6 +117,7 @@ void setupGlFunctions()
 }
 
 } // end anonymous namespace
+#endif // !Q_WS_MAC
 
 namespace chemkit {
 
@@ -146,7 +150,9 @@ GraphicsVertexBuffer::GraphicsVertexBuffer()
 {
     d->readyToDraw = false;
 
+#if !defined(Q_WS_MAC)
     setupGlFunctions();
+#endif
 
     glGenBuffers(1, &d->vertexBuffer);
 }
@@ -158,7 +164,9 @@ GraphicsVertexBuffer::GraphicsVertexBuffer(const QVector<Point3f> &verticies)
     d->readyToDraw = false;
     d->verticies = verticies;
 
+#if !defined(Q_WS_MAC)
     setupGlFunctions();
+#endif
     glGenBuffers(1, &d->vertexBuffer);
 }
 

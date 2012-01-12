@@ -6,3 +6,6 @@ build/
 
 # qt generated files
 CMakeLists.txt.user
+
+# os x
+.DS_Store
