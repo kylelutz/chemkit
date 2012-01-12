@@ -35,7 +35,7 @@
 
 #include "mdltest.h"
 
-#include <algorithm>
+#include <boost/range/algorithm.hpp>
 
 #include <chemkit/molecule.h>
 #include <chemkit/moleculefile.h>
@@ -45,11 +45,11 @@ const std::string dataPath = "../../../data/";
 
 void MdlTest::initTestCase()
 {
-    std::vector<std::string> formats = chemkit::MoleculeFileFormat::formats();
-    QVERIFY(std::find(formats.begin(), formats.end(), "mol") != formats.end());
-    QVERIFY(std::find(formats.begin(), formats.end(), "mdl") != formats.end());
-    QVERIFY(std::find(formats.begin(), formats.end(), "sdf") != formats.end());
-    QVERIFY(std::find(formats.begin(), formats.end(), "sd") != formats.end());
+    // verify that the mdl plugin registered itself correctly
+    QVERIFY(boost::count(chemkit::MoleculeFileFormat::formats(), "mol") == 1);
+    QVERIFY(boost::count(chemkit::MoleculeFileFormat::formats(), "mdl") == 1);
+    QVERIFY(boost::count(chemkit::MoleculeFileFormat::formats(), "sdf") == 1);
+    QVERIFY(boost::count(chemkit::MoleculeFileFormat::formats(), "sd") == 1);
 }
 
 void MdlTest::read_methanol()

@@ -35,18 +35,18 @@
 
 #include "countdescriptorstest.h"
 
-#include <algorithm>
+#include <boost/range/algorithm.hpp>
 
 #include <chemkit/molecule.h>
 #include <chemkit/moleculardescriptor.h>
 
 void CountDescriptorsTest::initTestCase()
 {
-    std::vector<std::string> descriptors = chemkit::MolecularDescriptor::descriptors();
-    QVERIFY(std::find(descriptors.begin(), descriptors.end(), "atom-count") != descriptors.end());
-    QVERIFY(std::find(descriptors.begin(), descriptors.end(), "heavy-atom-count") != descriptors.end());
-    QVERIFY(std::find(descriptors.begin(), descriptors.end(), "bond-count") != descriptors.end());
-    QVERIFY(std::find(descriptors.begin(), descriptors.end(), "ring-count") != descriptors.end());
+    // verify that the countdescriptors plugin registered itself correctly
+    QVERIFY(boost::count(chemkit::MolecularDescriptor::descriptors(), "atom-count") == 1);
+    QVERIFY(boost::count(chemkit::MolecularDescriptor::descriptors(), "heavy-atom-count") == 1);
+    QVERIFY(boost::count(chemkit::MolecularDescriptor::descriptors(), "bond-count") == 1);
+    QVERIFY(boost::count(chemkit::MolecularDescriptor::descriptors(), "ring-count") == 1);
 }
 
 void CountDescriptorsTest::test_data()

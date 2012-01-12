@@ -35,7 +35,7 @@
 
 #include "surfacedescriptorstest.h"
 
-#include <algorithm>
+#include <boost/range/algorithm.hpp>
 
 #include <chemkit/molecule.h>
 #include <chemkit/moleculefile.h>
@@ -45,11 +45,11 @@ const std::string dataPath = "../../../data/";
 
 void SurfaceDescriptorsTest::initTestCase()
 {
-    std::vector<std::string> descriptors = chemkit::MolecularDescriptor::descriptors();
-    QVERIFY(std::find(descriptors.begin(), descriptors.end(), "vdw-area") != descriptors.end());
-    QVERIFY(std::find(descriptors.begin(), descriptors.end(), "vdw-volume") != descriptors.end());
-    QVERIFY(std::find(descriptors.begin(), descriptors.end(), "sas-area") != descriptors.end());
-    QVERIFY(std::find(descriptors.begin(), descriptors.end(), "sas-volume") != descriptors.end());
+    // verify that the surfacedescriptors plugin registered itself correctly
+    QVERIFY(boost::count(chemkit::MolecularDescriptor::descriptors(), "vdw-area") == 1);
+    QVERIFY(boost::count(chemkit::MolecularDescriptor::descriptors(), "vdw-volume") == 1);
+    QVERIFY(boost::count(chemkit::MolecularDescriptor::descriptors(), "sas-area") == 1);
+    QVERIFY(boost::count(chemkit::MolecularDescriptor::descriptors(), "sas-volume") == 1);
 }
 
 void SurfaceDescriptorsTest::test_data()

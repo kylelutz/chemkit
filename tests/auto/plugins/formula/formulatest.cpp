@@ -35,7 +35,7 @@
 
 #include "formulatest.h"
 
-#include <algorithm>
+#include <boost/range/algorithm.hpp>
 
 #include <chemkit/atom.h>
 #include <chemkit/molecule.h>
@@ -43,8 +43,8 @@
 
 void FormulaTest::initTestCase()
 {
-    std::vector<std::string> formats = chemkit::LineFormat::formats();
-    QVERIFY(std::find(formats.begin(), formats.end(), "formula") != formats.end());
+    // verify that the formula plugin registered itself correctly
+    QVERIFY(boost::count(chemkit::LineFormat::formats(), "formula") == 1);
 }
 
 void FormulaTest::read()

@@ -35,15 +35,15 @@
 
 #include "mcdltest.h"
 
-#include <algorithm>
+#include <boost/range/algorithm.hpp>
 
 #include <chemkit/molecule.h>
 #include <chemkit/lineformat.h>
 
 void McdlTest::initTestCase()
 {
-    std::vector<std::string> formats = chemkit::LineFormat::formats();
-    QVERIFY(std::find(formats.begin(), formats.end(), "mcdl") != formats.end());
+    // verify that the mcdl plugin registered itself correctly
+    QVERIFY(boost::count(chemkit::LineFormat::formats(), "mcdl") == 1);
 }
 
 void McdlTest::read_data()

@@ -35,15 +35,15 @@
 
 #include "gasteigertest.h"
 
-#include <algorithm>
+#include <boost/range/algorithm.hpp>
 
 #include <chemkit/molecule.h>
 #include <chemkit/partialchargepredictor.h>
 
 void GasteigerTest::initTestCase()
 {
-    std::vector<std::string> predictors = chemkit::PartialChargePredictor::predictors();
-    QVERIFY(std::find(predictors.begin(), predictors.end(), "gasteiger") != predictors.end());
+    // verify that the gasteiger plugin registered itself correctly
+    QVERIFY(boost::count(chemkit::PartialChargePredictor::predictors(), "gasteiger") == 1);
 }
 
 void GasteigerTest::name()

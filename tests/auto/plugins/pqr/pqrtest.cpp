@@ -35,7 +35,7 @@
 
 #include "pqrtest.h"
 
-#include <algorithm>
+#include <boost/range/algorithm.hpp>
 
 #include <chemkit/molecule.h>
 #include <chemkit/moleculefile.h>
@@ -45,8 +45,8 @@ const std::string dataPath = "../../../data/";
 
 void PqrTest::initTestCase()
 {
-    std::vector<std::string> formats = chemkit::MoleculeFileFormat::formats();
-    QVERIFY(std::find(formats.begin(), formats.end(), "pqr") != formats.end());
+    // verify that the pqr plugin registered itself correctly
+    QVERIFY(boost::count(chemkit::MoleculeFileFormat::formats(), "pqr") == 1);
 }
 
 void PqrTest::read()

@@ -35,7 +35,7 @@
 
 #include "ambertest.h"
 
-#include <algorithm>
+#include <boost/range/algorithm.hpp>
 
 #include <chemkit/atom.h>
 #include <chemkit/molecule.h>
@@ -49,14 +49,10 @@ const std::string dataPath = "../../../data/";
 
 void AmberTest::initTestCase()
 {
-    std::vector<std::string> forceFields = chemkit::ForceField::forceFields();
-    QVERIFY(std::find(forceFields.begin(), forceFields.end(), "amber") != forceFields.end());
-
-    std::vector<std::string> typers = chemkit::AtomTyper::typers();
-    QVERIFY(std::find(typers.begin(), typers.end(), "amber") != typers.end());
-
-    std::vector<std::string> descriptors = chemkit::MolecularDescriptor::descriptors();
-    QVERIFY(std::find(descriptors.begin(), descriptors.end(), "opls-energy") != descriptors.end());
+    // verify that the amber plugin registered itself correctly
+    QVERIFY(boost::count(chemkit::ForceField::forceFields(), "amber") == 1);
+    QVERIFY(boost::count(chemkit::AtomTyper::typers(), "amber") == 1);
+    QVERIFY(boost::count(chemkit::MolecularDescriptor::descriptors(), "amber-energy") == 1);
 }
 
 void AmberTest::adenosine()

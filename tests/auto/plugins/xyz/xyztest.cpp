@@ -35,7 +35,7 @@
 
 #include "xyztest.h"
 
-#include <algorithm>
+#include <boost/range/algorithm.hpp>
 
 #include <chemkit/molecule.h>
 #include <chemkit/moleculefile.h>
@@ -45,8 +45,8 @@ const std::string dataPath = "../../../data/";
 
 void XyzTest::initTestCase()
 {
-    std::vector<std::string> formats = chemkit::MoleculeFileFormat::formats();
-    QVERIFY(std::find(formats.begin(), formats.end(), "xyz") != formats.end());
+    // verify that the xyz plugin registered itself correctly
+    QVERIFY(boost::count(chemkit::MoleculeFileFormat::formats(), "xyz") == 1);
 }
 
 void XyzTest::read_data()

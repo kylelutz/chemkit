@@ -35,7 +35,7 @@
 
 #include "pdbtest.h"
 
-#include <algorithm>
+#include <boost/range/algorithm.hpp>
 
 #include <chemkit/polymer.h>
 #include <chemkit/polymerfile.h>
@@ -46,8 +46,8 @@ const std::string dataPath = "../../../data/";
 
 void PdbTest::initTestCase()
 {
-    std::vector<std::string> formats = chemkit::PolymerFileFormat::formats();
-    QVERIFY(std::find(formats.begin(), formats.end(), "pdb") != formats.end());
+    // verify that the pdb plugin registered itself correctly
+    QVERIFY(boost::count(chemkit::PolymerFileFormat::formats(), "pdb") == 1);
 }
 
 void PdbTest::read_1BNA()

@@ -35,15 +35,15 @@
 
 #include "randicindextest.h"
 
-#include <algorithm>
+#include <boost/range/algorithm.hpp>
 
 #include <chemkit/molecule.h>
 #include <chemkit/moleculardescriptor.h>
 
 void RandicIndexTest::initTestCase()
 {
-    std::vector<std::string> descriptors = chemkit::MolecularDescriptor::descriptors();
-    QVERIFY(std::find(descriptors.begin(), descriptors.end(), "randic-index") != descriptors.end());
+    // verify that the randicindex plugin registered itself correctly
+    QVERIFY(boost::count(chemkit::MolecularDescriptor::descriptors(), "randic-index") == 1);
 }
 
 void RandicIndexTest::ethane()

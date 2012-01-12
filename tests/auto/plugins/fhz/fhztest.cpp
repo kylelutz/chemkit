@@ -35,7 +35,7 @@
 
 #include "fhztest.h"
 
-#include <algorithm>
+#include <boost/range/algorithm.hpp>
 
 #include <chemkit/molecule.h>
 #include <chemkit/moleculefile.h>
@@ -45,9 +45,8 @@ const std::string dataPath = "../../../data/";
 
 void FhzTest::initTestCase()
 {
-    std::vector<std::string> formats = chemkit::MoleculeFileFormat::formats();
-    QVERIFY(std::find(formats.begin(), formats.end(), "fh") != formats.end());
-    QVERIFY(std::find(formats.begin(), formats.end(), "fhz") != formats.end());
+    // verify that the fhz plugin registered itself correctly
+    QVERIFY(boost::count(chemkit::MoleculeFileFormat::formats(), "fhz") == 1);
 }
 
 void FhzTest::read_data()

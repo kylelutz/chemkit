@@ -35,19 +35,19 @@
 
 #include "graphdescriptorstest.h"
 
-#include <algorithm>
+#include <boost/range/algorithm.hpp>
 
 #include <chemkit/molecule.h>
 #include <chemkit/moleculardescriptor.h>
 
 void GraphDescriptorsTest::initTestCase()
 {
-    std::vector<std::string> descriptors = chemkit::MolecularDescriptor::descriptors();
-    QVERIFY(std::find(descriptors.begin(), descriptors.end(), "graph-density") != descriptors.end());
-    QVERIFY(std::find(descriptors.begin(), descriptors.end(), "graph-diameter") != descriptors.end());
-    QVERIFY(std::find(descriptors.begin(), descriptors.end(), "graph-order") != descriptors.end());
-    QVERIFY(std::find(descriptors.begin(), descriptors.end(), "graph-radius") != descriptors.end());
-    QVERIFY(std::find(descriptors.begin(), descriptors.end(), "graph-size") != descriptors.end());
+    // verify that the graphdescriptors plugin registered itself correctly
+    QVERIFY(boost::count(chemkit::MolecularDescriptor::descriptors(), "graph-density") == 1);
+    QVERIFY(boost::count(chemkit::MolecularDescriptor::descriptors(), "graph-diameter") == 1);
+    QVERIFY(boost::count(chemkit::MolecularDescriptor::descriptors(), "graph-order") == 1);
+    QVERIFY(boost::count(chemkit::MolecularDescriptor::descriptors(), "graph-radius") == 1);
+    QVERIFY(boost::count(chemkit::MolecularDescriptor::descriptors(), "graph-size") == 1);
 }
 
 void GraphDescriptorsTest::test_data()

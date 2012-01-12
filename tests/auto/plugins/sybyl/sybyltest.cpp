@@ -35,7 +35,7 @@
 
 #include "sybyltest.h"
 
-#include <algorithm>
+#include <boost/range/algorithm.hpp>
 
 #include <chemkit/molecule.h>
 #include <chemkit/atomtyper.h>
@@ -46,11 +46,9 @@ const std::string dataPath = "../../../data/";
 
 void SybylTest::initTestCase()
 {
-    std::vector<std::string> typers = chemkit::AtomTyper::typers();
-    QVERIFY(std::find(typers.begin(), typers.end(), "sybyl") != typers.end());
-
-    std::vector<std::string> fileFormats = chemkit::MoleculeFileFormat::formats();
-    QVERIFY(std::find(fileFormats.begin(), fileFormats.end(), "mol2") != fileFormats.end());
+    // verify that the sybyl plugin registered itself correctly
+    QVERIFY(boost::count(chemkit::AtomTyper::typers(), "sybyl") == 1);
+    QVERIFY(boost::count(chemkit::MoleculeFileFormat::formats(), "mol2") == 1);
 }
 
 void SybylTest::readMol2_data()

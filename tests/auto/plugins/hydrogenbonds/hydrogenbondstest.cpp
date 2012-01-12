@@ -35,16 +35,16 @@
 
 #include "hydrogenbondstest.h"
 
-#include <algorithm>
+#include <boost/range/algorithm.hpp>
 
 #include <chemkit/molecule.h>
 #include <chemkit/moleculardescriptor.h>
 
 void HydrogenBondsTest::initTestCase()
 {
-    std::vector<std::string> descriptors = chemkit::MolecularDescriptor::descriptors();
-    QVERIFY(std::find(descriptors.begin(), descriptors.end(), "hydrogen-bond-donors") != descriptors.end());
-    QVERIFY(std::find(descriptors.begin(), descriptors.end(), "hydrogen-bond-acceptors") != descriptors.end());
+    // verify that the hydrogenbonds plugin registered itself correctly
+    QVERIFY(boost::count(chemkit::MolecularDescriptor::descriptors(), "hydrogen-bond-donors") == 1);
+    QVERIFY(boost::count(chemkit::MolecularDescriptor::descriptors(), "hydrogen-bond-acceptors") == 1);
 }
 
 void HydrogenBondsTest::ethanol()

@@ -35,7 +35,7 @@
 
 #include "ufftest.h"
 
-#include <algorithm>
+#include <boost/range/algorithm.hpp>
 
 #include <chemkit/molecule.h>
 #include <chemkit/atomtyper.h>
@@ -45,14 +45,10 @@
 
 void UffTest::initTestCase()
 {
-    std::vector<std::string> typers = chemkit::AtomTyper::typers();
-    QVERIFY(std::find(typers.begin(), typers.end(), "uff") != typers.end());
-
-    std::vector<std::string> forceFields = chemkit::ForceField::forceFields();
-    QVERIFY(std::find(forceFields.begin(), forceFields.end(), "uff") != forceFields.end());
-
-    std::vector<std::string> descriptors = chemkit::MolecularDescriptor::descriptors();
-    QVERIFY(std::find(descriptors.begin(), descriptors.end(), "uff-energy") != descriptors.end());
+    // verify that the uff plugin registered itself correctly
+    QVERIFY(boost::count(chemkit::AtomTyper::typers(), "uff") == 1);
+    QVERIFY(boost::count(chemkit::ForceField::forceFields(), "uff") == 1);
+    QVERIFY(boost::count(chemkit::MolecularDescriptor::descriptors(), "uff-energy") == 1);
 }
 
 QTEST_APPLESS_MAIN(UffTest)

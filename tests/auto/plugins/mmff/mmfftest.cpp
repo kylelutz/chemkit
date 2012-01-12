@@ -37,7 +37,7 @@
 
 #include <QtXml>
 
-#include <algorithm>
+#include <boost/range/algorithm.hpp>
 
 #include <chemkit/molecule.h>
 #include <chemkit/atomtyper.h>
@@ -51,20 +51,12 @@ const std::string dataPath = "../../../data/";
 
 void MmffTest::initTestCase()
 {
-    std::vector<std::string> typers = chemkit::AtomTyper::typers();
-    QVERIFY(std::find(typers.begin(), typers.end(), "mmff") != typers.end());
-
-    std::vector<std::string> predictors = chemkit::PartialChargePredictor::predictors();
-    QVERIFY(std::find(predictors.begin(), predictors.end(), "mmff") != predictors.end());
-
-    std::vector<std::string> forceFields = chemkit::ForceField::forceFields();
-    QVERIFY(std::find(forceFields.begin(), forceFields.end(), "mmff") != forceFields.end());
-
-    std::vector<std::string> aromaticityModels = chemkit::AromaticityModel::models();
-    QVERIFY(std::find(aromaticityModels.begin(), aromaticityModels.end(), "mmff") != aromaticityModels.end());
-
-    std::vector<std::string> descriptors = chemkit::MolecularDescriptor::descriptors();
-    QVERIFY(std::find(descriptors.begin(), descriptors.end(), "mmff-energy") != descriptors.end());
+    // verify that the mmff plugin registered itself correctly
+    QVERIFY(boost::count(chemkit::AtomTyper::typers(), "mmff") == 1);
+    QVERIFY(boost::count(chemkit::ForceField::forceFields(), "mmff") == 1);
+    QVERIFY(boost::count(chemkit::PartialChargePredictor::predictors(), "mmff") == 1);
+    QVERIFY(boost::count(chemkit::AromaticityModel::models(), "mmff") == 1);
+    QVERIFY(boost::count(chemkit::MolecularDescriptor::descriptors(), "mmff-energy") == 1);
 }
 
 // The validate() method validates the MMFF force field using the MMFF94

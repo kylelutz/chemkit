@@ -35,15 +35,15 @@
 
 #include "wienerindextest.h"
 
-#include <algorithm>
+#include <boost/range/algorithm.hpp>
 
 #include <chemkit/molecule.h>
 #include <chemkit/moleculardescriptor.h>
 
 void WienerIndexTest::initTestCase()
 {
-    std::vector<std::string> descriptors = chemkit::MolecularDescriptor::descriptors();
-    QVERIFY(std::find(descriptors.begin(), descriptors.end(), "wiener-index") != descriptors.end());
+    // verify that the wienerindex plugin registered itself correctly
+    QVERIFY(boost::count(chemkit::MolecularDescriptor::descriptors(), "wiener-index") == 1);
 }
 
 void WienerIndexTest::test_data()

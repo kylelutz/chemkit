@@ -35,15 +35,15 @@
 
 #include "massdescriptorstest.h"
 
-#include <algorithm>
+#include <boost/range/algorithm.hpp>
 
 #include <chemkit/molecule.h>
 #include <chemkit/moleculardescriptor.h>
 
 void MassDescriptorsTest::initTestCase()
 {
-    std::vector<std::string> descriptors = chemkit::MolecularDescriptor::descriptors();
-    QVERIFY(std::find(descriptors.begin(), descriptors.end(), "molecular-mass") != descriptors.end());
+    // verify that the massdescriptors plugin registered itself correctly
+    QVERIFY(boost::count(chemkit::MolecularDescriptor::descriptors(), "molecular-mass") == 1);
 }
 
 void MassDescriptorsTest::test_data()

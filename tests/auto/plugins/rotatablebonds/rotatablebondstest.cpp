@@ -35,15 +35,15 @@
 
 #include "rotatablebondstest.h"
 
-#include <algorithm>
+#include <boost/range/algorithm.hpp>
 
 #include <chemkit/molecule.h>
 #include <chemkit/moleculardescriptor.h>
 
 void RotatableBondsTest::initTestCase()
 {
-    std::vector<std::string> descriptors = chemkit::MolecularDescriptor::descriptors();
-    QVERIFY(std::find(descriptors.begin(), descriptors.end(), "rotatable-bonds") != descriptors.end());
+    // verify that the rotatablebonds plugin registered itself correctly
+    QVERIFY(boost::count(chemkit::MolecularDescriptor::descriptors(), "rotatable-bonds") == 1);
 }
 
 void RotatableBondsTest::test_data()

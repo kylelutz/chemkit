@@ -35,7 +35,7 @@
 
 #include "cmltest.h" 
 
-#include <algorithm>
+#include <boost/range/algorithm.hpp>
 
 #include <chemkit/molecule.h>
 #include <chemkit/moleculefile.h>
@@ -48,8 +48,8 @@ const std::string dataPath = "../../../data/";
 
 void CmlTest::initTestCase()
 {
-    std::vector<std::string> formats = chemkit::MoleculeFileFormat::formats();
-    QVERIFY(std::find(formats.begin(), formats.end(), "cml") != formats.end());
+    // verify that the cml plugin registered itself correctly
+    QVERIFY(boost::count(chemkit::MoleculeFileFormat::formats(), "cml") == 1);
 }
 
 void CmlTest::read_data()

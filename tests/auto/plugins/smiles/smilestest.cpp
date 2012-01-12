@@ -35,7 +35,7 @@
 
 #include "smilestest.h"
 
-#include <algorithm>
+#include <boost/range/algorithm.hpp>
 
 #include <chemkit/atom.h>
 #include <chemkit/ring.h>
@@ -50,14 +50,10 @@ const std::string dataPath = "../../../data/";
 
 void SmilesTest::initTestCase()
 {
-    std::vector<std::string> lineFormats = chemkit::LineFormat::formats();
-    QVERIFY(std::find(lineFormats.begin(), lineFormats.end(), "smiles") != lineFormats.end());
-
-    std::vector<std::string> aromaticityModels = chemkit::AromaticityModel::models();
-    QVERIFY(std::find(aromaticityModels.begin(), aromaticityModels.end(), "smiles") != aromaticityModels.end());
-
-    std::vector<std::string> fileFormats = chemkit::MoleculeFileFormat::formats();
-    QVERIFY(std::find(fileFormats.begin(), fileFormats.end(), "smi") != fileFormats.end());
+    // verify that the smiles plugin registered itself correctly
+    QVERIFY(boost::count(chemkit::LineFormat::formats(), "smiles") == 1);
+    QVERIFY(boost::count(chemkit::AromaticityModel::models(), "smiles") == 1);
+    QVERIFY(boost::count(chemkit::MoleculeFileFormat::formats(), "smi") == 1);
 }
 
 void SmilesTest::COMPARE_SMILES(const chemkit::Molecule *molecule, const std::string &smiles)

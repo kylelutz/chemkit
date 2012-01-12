@@ -35,7 +35,7 @@
 
 #include "mopactest.h"
 
-#include <algorithm>
+#include <boost/range/algorithm.hpp>
 
 #include <chemkit/molecule.h>
 #include <chemkit/moleculefile.h>
@@ -45,9 +45,9 @@ const std::string dataPath = "../../../data/";
 
 void MopacTest::initTestCase()
 {
-    std::vector<std::string> formats = chemkit::MoleculeFileFormat::formats();
-    QVERIFY(std::find(formats.begin(), formats.end(), "mopin") != formats.end());
-    QVERIFY(std::find(formats.begin(), formats.end(), "mopcrt") != formats.end());
+    // verify that the mopac plugin registered itself correctly
+    QVERIFY(boost::count(chemkit::MoleculeFileFormat::formats(), "mopin") == 1);
+    QVERIFY(boost::count(chemkit::MoleculeFileFormat::formats(), "mopcrt") == 1);
 }
 
 void MopacTest::ethanol()

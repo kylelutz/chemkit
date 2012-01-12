@@ -35,7 +35,7 @@
 
 #include "inchitest.h"
 
-#include <algorithm>
+#include <boost/range/algorithm.hpp>
 
 #include <chemkit/ring.h>
 #include <chemkit/chemkit.h>
@@ -45,12 +45,10 @@
 
 void InchiTest::initTestCase()
 {
-    std::vector<std::string> lineFormats = chemkit::LineFormat::formats();
-    QVERIFY(std::find(lineFormats.begin(), lineFormats.end(), "inchi") != lineFormats.end());
-    QVERIFY(std::find(lineFormats.begin(), lineFormats.end(), "inchikey") != lineFormats.end());
-
-    std::vector<std::string> fileFormats = chemkit::MoleculeFileFormat::formats();
-    QVERIFY(std::find(fileFormats.begin(), fileFormats.end(), "inchi") != fileFormats.end());
+    // verify that the inchi plugin registered itself correctly
+    QVERIFY(boost::count(chemkit::LineFormat::formats(), "inchi") == 1);
+    QVERIFY(boost::count(chemkit::LineFormat::formats(), "inchikey") == 1);
+    QVERIFY(boost::count(chemkit::MoleculeFileFormat::formats(), "inchi") == 1);
 }
 
 void InchiTest::read()

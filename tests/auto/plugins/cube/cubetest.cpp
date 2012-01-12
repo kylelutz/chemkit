@@ -35,7 +35,7 @@
 
 #include "cubetest.h"
 
-#include <algorithm>
+#include <boost/range/algorithm.hpp>
 
 #include <chemkit/molecule.h>
 #include <chemkit/moleculefile.h>
@@ -45,8 +45,8 @@ const std::string dataPath = "../../../data/";
 
 void CubeTest::initTestCase()
 {
-    std::vector<std::string> formats = chemkit::MoleculeFileFormat::formats();
-    QVERIFY(std::find(formats.begin(), formats.end(), "cube") != formats.end());
+    // verify that the cube plugin registered itself correctly
+    QVERIFY(boost::count(chemkit::MoleculeFileFormat::formats(), "cube") == 1);
 }
 
 void CubeTest::readBenzene()

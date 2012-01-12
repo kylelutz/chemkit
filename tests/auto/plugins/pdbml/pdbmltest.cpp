@@ -35,7 +35,7 @@
 
 #include "pdbmltest.h"
 
-#include <algorithm>
+#include <boost/range/algorithm.hpp>
 
 #include <chemkit/polymer.h>
 #include <chemkit/polymerfile.h>
@@ -46,8 +46,8 @@ const std::string dataPath = "../../../data/";
 
 void PdbmlTest::initTestCase()
 {
-    std::vector<std::string> formats = chemkit::PolymerFileFormat::formats();
-    QVERIFY(std::find(formats.begin(), formats.end(), "pdbml") != formats.end());
+    // verify that the pdbml plugin registered itself correctly
+    QVERIFY(boost::count(chemkit::PolymerFileFormat::formats(), "pdbml") == 1);
 }
 
 void PdbmlTest::read_1UBQ()
