@@ -449,6 +449,26 @@ size_t Molecule::atomCount(const Element &element) const
     return std::count(m_elements.begin(), m_elements.end(), element);
 }
 
+/// Requests that the atom capacity for the molecule be increased to
+/// \p capacity.
+///
+/// \internal
+void Molecule::setAtomCapacity(size_t capacity)
+{
+    m_atoms.reserve(capacity);
+    m_elements.reserve(capacity);
+    d->atomBonds.reserve(capacity);
+    d->partialCharges.reserve(capacity);
+}
+
+/// Returns the atom capacity for the molecule.
+///
+/// \internal
+size_t Molecule::atomCapacity() const
+{
+    return m_atoms.capacity();
+}
+
 /// Returns \c true if the molecule contains atom.
 bool Molecule::contains(const Atom *atom) const
 {
@@ -583,6 +603,25 @@ Bond* Molecule::bond(const Atom *a, const Atom *b) const
 Bond* Molecule::bond(size_t a, size_t b) const
 {
     return bond(atom(a), atom(b));
+}
+
+/// Requests that the bond capacity for the molecule be increased to
+/// \p capacity.
+///
+/// \internal
+void Molecule::setBondCapacity(size_t capacity)
+{
+    d->bonds.reserve(capacity);
+    d->bondOrders.reserve(capacity);
+    d->bondAtoms.reserve(capacity);
+}
+
+/// Returns the bond capacity for the molecule.
+///
+/// \internal
+size_t Molecule::bondCapacity() const
+{
+    return d->bonds.capacity();
 }
 
 /// Returns \c true if the molecule contains bond.

@@ -103,6 +103,8 @@ public:
     inline AtomRange atoms() const;
     inline size_t atomCount() const;
     size_t atomCount(const Element &element) const;
+    void setAtomCapacity(size_t capacity);
+    size_t atomCapacity() const;
     bool contains(const Atom *atom) const;
     bool contains(const Element &element) const;
     Bond* addBond(Atom *a, Atom *b, int order = 1);
@@ -115,6 +117,8 @@ public:
     Bond* bond(size_t a, size_t b) const;
     BondRange bonds() const;
     size_t bondCount() const;
+    void setBondCapacity(size_t capacity);
+    size_t bondCapacity() const;
     bool contains(const Bond *bond) const;
     void clear();
 
