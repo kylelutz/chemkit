@@ -897,7 +897,8 @@ void MoleculeEditor::removeAtom(Atom *atom)
         beginEdit();
     }
 
-    foreach(Bond *bond, atom->bonds()){
+    Atom::BondRange bonds = atom->bonds();
+    foreach(Bond *bond, std::vector<Bond *>(bonds.begin(), bonds.end())){
         removeBond(bond);
     }
 
