@@ -442,6 +442,14 @@ void Molecule::removeAtom(Atom *atom)
     delete atom;
 }
 
+/// Removes each atom in \p atoms from the molecule.
+void Molecule::removeAtoms(const std::vector<Atom *> &atoms)
+{
+    BOOST_REVERSE_FOREACH(Atom *atom, atoms){
+        removeAtom(atom);
+    }
+}
+
 /// Returns the number of atoms in the molecule of the given
 /// \p element.
 size_t Molecule::atomCount(const Element &element) const
@@ -638,10 +646,7 @@ void Molecule::clear()
         removeBond(bond);
     }
 
-    std::vector<Atom *> atoms = m_atoms;
-    foreach(Atom *atom, atoms){
-        removeAtom(atom);
-    }
+    removeAtoms(m_atoms);
 }
 
 // --- Ring Perception ----------------------------------------------------- //
@@ -755,9 +760,7 @@ bool Molecule::isFragmented() const
 /// the molecule.
 void Molecule::removeFragment(Fragment *fragment)
 {
-    foreach(Atom *atom, fragment->atoms()){
-        removeAtom(atom);
-    }
+    removeAtoms(fragment->atoms());
 }
 
 Fragment* Molecule::fragment(const Atom *atom) const

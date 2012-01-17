@@ -70,9 +70,14 @@ inline void Molecule::removeAtomIf(Predicate predicate)
         }
     }
 
-    BOOST_FOREACH(Atom *atom, atomsToRemove){
-        removeAtom(atom);
-    }
+    removeAtoms(atomsToRemove);
+}
+
+/// Removes each atom in \p range from the molecule.
+template<typename Range>
+inline void Molecule::removeAtoms(Range range)
+{
+    removeAtoms(std::vector<Atom *>(range.begin(), range.end()));
 }
 
 /// Returns a range containing all of the atoms in the molecule.

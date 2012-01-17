@@ -99,6 +99,8 @@ public:
     Atom* addAtomCopy(const Atom *atom);
     void removeAtom(Atom *atom);
     template<typename Predicate> void removeAtomIf(Predicate predicate);
+    void removeAtoms(const std::vector<Atom *> &atoms);
+    template<typename Range> void removeAtoms(Range range);
     Atom* atom(size_t index) const;
     inline AtomRange atoms() const;
     inline size_t atomCount() const;
