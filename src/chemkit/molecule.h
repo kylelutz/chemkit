@@ -114,6 +114,7 @@ public:
     void removeBond(Bond *bond);
     void removeBond(Atom *a, Atom *b);
     void removeBond(size_t a, size_t b);
+    template<typename Predicate> void removeBondIf(Predicate predicate);
     void removeBonds(const std::vector<Bond *> &bonds);
     template<typename Range> void removeBonds(Range range);
     Bond* bond(size_t index) const;

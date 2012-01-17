@@ -98,6 +98,22 @@ inline Atom* Molecule::atom(size_t index) const
     return m_atoms[index];
 }
 
+/// Removes each bond from the molecule for which \p predicate
+/// returns \c true.
+template<typename Predicate>
+inline void Molecule::removeBondIf(Predicate predicate)
+{
+    std::vector<Bond *> bondsToRemove;
+
+    BOOST_FOREACH(Bond *bond, bonds()){
+        if(predicate(bond)){
+            bondsToRemove.push_back(bond);
+        }
+    }
+
+    removeBonds(bondsToRemove);
+}
+
 /// Removes each bond in \p range from the molecule.
 template<typename Range>
 inline void Molecule::removeBonds(Range range)
