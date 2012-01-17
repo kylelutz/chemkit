@@ -94,4 +94,27 @@ void MoleculeFileTest::data()
     QCOMPARE(file.data("number").toInt(), 4);
 }
 
+void MoleculeFileTest::molecule()
+{
+    chemkit::MoleculeFile file;
+
+    chemkit::Molecule *a = new chemkit::Molecule;
+    chemkit::Molecule *b = new chemkit::Molecule;
+    chemkit::Molecule *c = new chemkit::Molecule;
+    file.addMolecule(a);
+    file.addMolecule(b);
+    file.addMolecule(c);
+    QVERIFY(file.molecule(0) == a);
+    QVERIFY(file.molecule(1) == b);
+    QVERIFY(file.molecule(2) == c);
+
+    a->setName("foo");
+    b->setName("bar");
+    c->setName("baz");
+    QVERIFY(file.molecule("foo") == a);
+    QVERIFY(file.molecule("bar") == b);
+    QVERIFY(file.molecule("baz") == c);
+    QVERIFY(file.molecule("invalid-name") == 0);
+}
+
 QTEST_APPLESS_MAIN(MoleculeFileTest)
