@@ -54,7 +54,6 @@ public:
     // construction and destruction
     CartesianCoordinates();
     CartesianCoordinates(size_t size);
-    CartesianCoordinates(const std::vector<Point3> &points);
     CartesianCoordinates(const CartesianCoordinates &coordinates);
     ~CartesianCoordinates();
 

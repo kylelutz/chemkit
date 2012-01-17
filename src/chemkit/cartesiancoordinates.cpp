@@ -62,12 +62,6 @@ CartesianCoordinates::CartesianCoordinates(size_t size)
     std::fill(m_coordinates.begin(), m_coordinates.end(), Point3(0, 0, 0));
 }
 
-/// Creates a new coordinate matrix that contains \p points.
-CartesianCoordinates::CartesianCoordinates(const std::vector<Point3> &points)
-    : m_coordinates(points)
-{
-}
-
 /// Creates a new coordinate matrix that is a copy of \p coordinates.
 CartesianCoordinates::CartesianCoordinates(const CartesianCoordinates &coordinates)
     : m_coordinates(coordinates.m_coordinates)
