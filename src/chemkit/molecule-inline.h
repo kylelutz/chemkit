@@ -98,6 +98,13 @@ inline Atom* Molecule::atom(size_t index) const
     return m_atoms[index];
 }
 
+/// Removes each bond in \p range from the molecule.
+template<typename Range>
+inline void Molecule::removeBonds(Range range)
+{
+    removeBonds(std::vector<Bond *>(range.begin(), range.end()));
+}
+
 } // end chemkit namespace
 
 #endif // CHEMKIT_MOLECULE_INLINE_H

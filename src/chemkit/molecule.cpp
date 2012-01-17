@@ -414,10 +414,7 @@ void Molecule::removeAtom(Atom *atom)
     }
 
     // remove all bonds to/from the atom first
-    std::vector<Bond *> bonds(atom->bonds().begin(), atom->bonds().end());
-    foreach(Bond *bond, bonds){
-        removeBond(bond);
-    }
+    removeBonds(atom->bonds());
 
     m_atoms.erase(std::remove(m_atoms.begin(), m_atoms.end(), atom), m_atoms.end());
 
@@ -580,6 +577,14 @@ void Molecule::removeBond(size_t a, size_t b)
     removeBond(bond(a, b));
 }
 
+/// Removes each bond in \p bonds from the molecule.
+void Molecule::removeBonds(const std::vector<Bond *> &bonds)
+{
+    BOOST_REVERSE_FOREACH(Bond *bond, bonds){
+        removeBond(bond);
+    }
+}
+
 /// Returns a range containing all of the bonds in the molecule.
 Molecule::BondRange Molecule::bonds() const
 {
@@ -641,11 +646,7 @@ bool Molecule::contains(const Bond *bond) const
 /// Removes all atoms and bonds from the molecule.
 void Molecule::clear()
 {
-    std::vector<Bond *> bonds = d->bonds;
-    foreach(Bond *bond, bonds){
-        removeBond(bond);
-    }
-
+    removeBonds(d->bonds);
     removeAtoms(m_atoms);
 }
 
