@@ -42,7 +42,6 @@ class PdbmlPlugin : public chemkit::Plugin
 {
 public:
     PdbmlPlugin();
-    ~PdbmlPlugin();
 };
 
 #endif // PDBMLPLUGIN_H

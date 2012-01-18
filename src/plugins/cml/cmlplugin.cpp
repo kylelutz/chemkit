@@ -43,9 +43,4 @@ CmlPlugin::CmlPlugin()
     CHEMKIT_REGISTER_MOLECULE_FILE_FORMAT("cml", CmlFileFormat);
 }
 
-CmlPlugin::~CmlPlugin()
-{
-    unregisterPluginClass<chemkit::MoleculeFileFormat>("cml");
-}
-
 CHEMKIT_EXPORT_PLUGIN(cml, CmlPlugin)

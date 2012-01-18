@@ -48,13 +48,6 @@ AmberPlugin::AmberPlugin()
     registerPluginClass<chemkit::MolecularDescriptor>("amber-energy", createAmberEnergyDescriptor);
 }
 
-AmberPlugin::~AmberPlugin()
-{
-    unregisterPluginClass<chemkit::ForceField>("amber");
-    unregisterPluginClass<chemkit::AtomTyper>("amber");
-    unregisterPluginClass<chemkit::MolecularDescriptor>("amber-energy");
-}
-
 chemkit::MolecularDescriptor* AmberPlugin::createAmberEnergyDescriptor()
 {
     return new chemkit::ForceFieldEnergyDescriptor<AmberForceField>("amber-energy");

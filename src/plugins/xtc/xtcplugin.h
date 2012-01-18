@@ -42,7 +42,6 @@ class XtcPlugin : public chemkit::Plugin
 {
 public:
     XtcPlugin();
-    ~XtcPlugin();
 };
 
 #endif // XTCPLUGIN_H

@@ -43,7 +43,6 @@ class OplsPlugin : public chemkit::Plugin
 {
 public:
     OplsPlugin();
-    ~OplsPlugin();
 
     static chemkit::MolecularDescriptor* createOplsEnergyDescriptor();
 };

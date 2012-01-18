@@ -46,14 +46,6 @@ MdlPlugin::MdlPlugin()
     registerPluginClass<chemkit::MoleculeFileFormat>("sd", createSdFormat);
 }
 
-MdlPlugin::~MdlPlugin()
-{
-    unregisterPluginClass<chemkit::MoleculeFileFormat>("mdl");
-    unregisterPluginClass<chemkit::MoleculeFileFormat>("mol");
-    unregisterPluginClass<chemkit::MoleculeFileFormat>("sdf");
-    unregisterPluginClass<chemkit::MoleculeFileFormat>("sd");
-}
-
 chemkit::MoleculeFileFormat* MdlPlugin::createMdlFormat()
 {
     return new MdlFileFormat("mdl");

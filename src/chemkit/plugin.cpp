@@ -37,6 +37,7 @@
 
 #include <boost/filesystem.hpp>
 
+#include "foreach.h"
 #include "dynamiclibrary.h"
 
 namespace chemkit {
@@ -47,6 +48,7 @@ class PluginPrivate
 public:
     std::string name;
     DynamicLibrary *library;
+    std::vector<std::pair<std::string, std::string> > pluginClasses;
 };
 
 // === Plugin ============================================================== //
@@ -67,6 +69,13 @@ Plugin::Plugin(const std::string &name)
 
 Plugin::~Plugin()
 {
+    // unregister plugin classes
+    std::pair<std::string, std::string> pluginClass;
+    foreach(pluginClass, d->pluginClasses){
+        PluginManager::instance()->unregisterPluginClass(pluginClass.second,
+                                                         pluginClass.first);
+    }
+
     delete d;
 }
 
@@ -106,6 +115,21 @@ void Plugin::setLibrary(DynamicLibrary *library)
 DynamicLibrary* Plugin::library() const
 {
     return d->library;
+}
+
+void Plugin::addClassRegistration(const std::string &name, const std::string &className)
+{
+    d->pluginClasses.push_back(std::make_pair(name, className));
+}
+
+void Plugin::removeClassRegistration(const std::string &name, const std::string &className)
+{
+    std::pair<std::string, std::string> value(name, className);
+
+    d->pluginClasses.erase(std::remove(d->pluginClasses.begin(),
+                                       d->pluginClasses.end(),
+                                       value),
+                           d->pluginClasses.end());
 }
 
 } // end chemkit namespace

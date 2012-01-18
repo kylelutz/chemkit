@@ -43,9 +43,4 @@ RandicIndexPlugin::RandicIndexPlugin()
     CHEMKIT_REGISTER_MOLECULAR_DESCRIPTOR("randic-index", RandicIndexDescriptor);
 }
 
-RandicIndexPlugin::~RandicIndexPlugin()
-{
-    unregisterPluginClass<chemkit::MolecularDescriptor>("randic-index");
-}
-
 CHEMKIT_EXPORT_PLUGIN(randicindex, RandicIndexPlugin)

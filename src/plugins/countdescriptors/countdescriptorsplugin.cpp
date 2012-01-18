@@ -46,12 +46,4 @@ CountDescriptorsPlugin::CountDescriptorsPlugin()
     CHEMKIT_REGISTER_MOLECULAR_DESCRIPTOR("ring-count", RingCountDescriptor);
 }
 
-CountDescriptorsPlugin::~CountDescriptorsPlugin()
-{
-    unregisterPluginClass<chemkit::MolecularDescriptor>("atom-count");
-    unregisterPluginClass<chemkit::MolecularDescriptor>("heavy-atom-count");
-    unregisterPluginClass<chemkit::MolecularDescriptor>("bond-count");
-    unregisterPluginClass<chemkit::MolecularDescriptor>("ring-count");
-}
-
 CHEMKIT_EXPORT_PLUGIN(countdescriptors, CountDescriptorsPlugin)

@@ -46,12 +46,6 @@ PdbPlugin::PdbPlugin()
     registerPluginClass<chemkit::MoleculeFileFormat>("pdb", createPdbMoleculeFormat);
 }
 
-PdbPlugin::~PdbPlugin()
-{
-    unregisterPluginClass<chemkit::PolymerFileFormat>("pdb");
-    unregisterPluginClass<chemkit::MoleculeFileFormat>("pdb");
-}
-
 chemkit::MoleculeFileFormat* PdbPlugin::createPdbMoleculeFormat()
 {
     return new chemkit::MoleculeFileFormatAdaptor<chemkit::PolymerFileFormat>(new PdbFileFormat);

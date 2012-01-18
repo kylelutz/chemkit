@@ -43,9 +43,4 @@ CubePlugin::CubePlugin()
     CHEMKIT_REGISTER_MOLECULE_FILE_FORMAT("cube", CubeFileFormat);
 }
 
-CubePlugin::~CubePlugin()
-{
-    unregisterPluginClass<chemkit::MoleculeFileFormat>("cube");
-}
-
 CHEMKIT_EXPORT_PLUGIN(cube, CubePlugin)

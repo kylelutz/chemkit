@@ -42,7 +42,6 @@ class GasteigerPlugin : public chemkit::Plugin
 {
 public:
     GasteigerPlugin();
-    ~GasteigerPlugin();
 };
 
 #endif // GASTEIGERPLUGIN_H

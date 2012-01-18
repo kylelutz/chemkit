@@ -42,7 +42,6 @@ class MopacPlugin : public chemkit::Plugin
 {
 public:
     MopacPlugin();
-    ~MopacPlugin();
 };
 
 #endif // MOPACPLUGIN_H

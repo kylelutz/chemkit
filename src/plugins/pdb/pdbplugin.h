@@ -43,7 +43,6 @@ class PdbPlugin : public chemkit::Plugin
 {
 public:
     PdbPlugin();
-    ~PdbPlugin();
 
     static chemkit::MoleculeFileFormat* createPdbMoleculeFormat();
 };

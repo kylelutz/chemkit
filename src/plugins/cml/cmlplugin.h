@@ -42,7 +42,6 @@ class CmlPlugin : public chemkit::Plugin
 {
 public:
     CmlPlugin();
-    ~CmlPlugin();
 };
 
 #endif // CMLPLUGIN_H

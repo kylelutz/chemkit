@@ -51,13 +51,4 @@ SybylPlugin::SybylPlugin()
 #endif
 }
 
-SybylPlugin::~SybylPlugin()
-{
-    unregisterPluginClass<chemkit::AtomTyper>("sybyl");
-
-#ifdef CHEMKIT_WITH_IO
-    unregisterPluginClass<chemkit::MoleculeFileFormat>("mol2");
-#endif
-}
-
 CHEMKIT_EXPORT_PLUGIN(sybyl, SybylPlugin)

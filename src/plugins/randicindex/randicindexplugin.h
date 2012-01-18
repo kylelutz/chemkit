@@ -42,7 +42,6 @@ class RandicIndexPlugin : public chemkit::Plugin
 {
 public:
     RandicIndexPlugin();
-    ~RandicIndexPlugin();
 };
 
 #endif // RANDICINDEXPLUGIN_H

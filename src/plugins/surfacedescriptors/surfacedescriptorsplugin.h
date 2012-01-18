@@ -42,7 +42,6 @@ class SurfaceDescriptorsPlugin : public chemkit::Plugin
 {
 public:
     SurfaceDescriptorsPlugin();
-    ~SurfaceDescriptorsPlugin();
 };
 
 #endif // SURFACEDESCRIPTORSPLUGIN_H

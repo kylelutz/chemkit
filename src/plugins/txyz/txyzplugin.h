@@ -42,7 +42,6 @@ class TxyzPlugin : public chemkit::Plugin
 {
 public:
     TxyzPlugin();
-    ~TxyzPlugin();
 };
 
 #endif // TXYZPLUGIN_H

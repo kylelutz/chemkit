@@ -46,7 +46,6 @@ class SmilesPlugin : public chemkit::Plugin
 {
 public:
     SmilesPlugin();
-    ~SmilesPlugin();
 
 #ifdef CHEMKIT_WITH_IO
     static chemkit::MoleculeFileFormat* createSmiFormat();

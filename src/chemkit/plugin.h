@@ -67,6 +67,8 @@ protected:
 private:
     void setLibrary(DynamicLibrary *library);
     DynamicLibrary* library() const;
+    void addClassRegistration(const std::string &name, const std::string &className);
+    void removeClassRegistration(const std::string &name, const std::string &className);
 
     friend class PluginManager;
 

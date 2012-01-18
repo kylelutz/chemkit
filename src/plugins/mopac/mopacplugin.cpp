@@ -45,10 +45,4 @@ MopacPlugin::MopacPlugin()
     CHEMKIT_REGISTER_MOLECULE_FILE_FORMAT("mopcrt", MopcrtFileFormat);
 }
 
-MopacPlugin::~MopacPlugin()
-{
-    unregisterPluginClass<chemkit::MoleculeFileFormat>("mopin");
-    unregisterPluginClass<chemkit::MoleculeFileFormat>("mopcrt");
-}
-
 CHEMKIT_EXPORT_PLUGIN(mopac, MopacPlugin)

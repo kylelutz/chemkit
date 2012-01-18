@@ -43,9 +43,4 @@ PubChemPlugin::PubChemPlugin()
     CHEMKIT_REGISTER_FINGERPRINT("pubchem", PubChemFingerprint);
 }
 
-PubChemPlugin::~PubChemPlugin()
-{
-    unregisterPluginClass<chemkit::Fingerprint>("pubchem");
-}
-
 CHEMKIT_EXPORT_PLUGIN(pubchem, PubChemPlugin)

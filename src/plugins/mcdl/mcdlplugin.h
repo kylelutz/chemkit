@@ -42,7 +42,6 @@ class McdlPlugin : public chemkit::Plugin
 {
 public:
     McdlPlugin();
-    ~McdlPlugin();
 };
 
 #endif // MCDLPLUGIN_H

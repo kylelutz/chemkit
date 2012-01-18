@@ -42,7 +42,6 @@ class PubChemPlugin : public chemkit::Plugin
 {
 public:
     PubChemPlugin();
-    ~PubChemPlugin();
 };
 
 #endif // PUBCHEMPLUGIN_H

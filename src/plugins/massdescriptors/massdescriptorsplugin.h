@@ -42,7 +42,6 @@ class MassDescriptorsPlugin : public chemkit::Plugin
 {
 public:
     MassDescriptorsPlugin();
-    ~MassDescriptorsPlugin();
 };
 
 #endif // MASSDESCRIPTORSPLUGIN_H

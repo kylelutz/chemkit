@@ -46,7 +46,6 @@ class InchiPlugin : public chemkit::Plugin
 {
 public:
     InchiPlugin();
-    ~InchiPlugin();
 
 #ifdef CHEMKIT_WITH_IO
     static chemkit::MoleculeFileFormat* createInchiFileFormat();

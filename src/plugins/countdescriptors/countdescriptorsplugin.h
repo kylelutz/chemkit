@@ -42,7 +42,6 @@ class CountDescriptorsPlugin : public chemkit::Plugin
 {
 public:
     CountDescriptorsPlugin();
-    ~CountDescriptorsPlugin();
 };
 
 #endif // COUNTDESCRIPTORSPLUGIN_H

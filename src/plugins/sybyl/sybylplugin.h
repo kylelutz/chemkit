@@ -42,7 +42,6 @@ class SybylPlugin : public chemkit::Plugin
 {
 public:
     SybylPlugin();
-    ~SybylPlugin();
 };
 
 #endif // SYBYLPLUGIN_H

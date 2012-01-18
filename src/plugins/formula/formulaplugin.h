@@ -42,7 +42,6 @@ class FormulaPlugin : public chemkit::Plugin
 {
 public:
     FormulaPlugin();
-    ~FormulaPlugin();
 };
 
 #endif // FORMULAPLUGIN_H

@@ -42,7 +42,6 @@ class FhzPlugin : public chemkit::Plugin
 {
 public:
     FhzPlugin();
-    ~FhzPlugin();
 };
 
 #endif // FHZPLUGIN_H

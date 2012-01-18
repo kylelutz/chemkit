@@ -43,9 +43,4 @@ XtcPlugin::XtcPlugin()
     CHEMKIT_REGISTER_TRAJECTORY_FILE_FORMAT("xtc", XtcFileFormat);
 }
 
-XtcPlugin::~XtcPlugin()
-{
-    unregisterPluginClass<chemkit::TrajectoryFileFormat>("xtc");
-}
-
 CHEMKIT_EXPORT_PLUGIN(xtc, XtcPlugin)

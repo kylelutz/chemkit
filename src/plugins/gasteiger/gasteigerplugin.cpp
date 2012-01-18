@@ -43,9 +43,4 @@ GasteigerPlugin::GasteigerPlugin()
     CHEMKIT_REGISTER_PARTIAL_CHARGE_PREDICTOR("gasteiger", GasteigerPartialChargePredictor);
 }
 
-GasteigerPlugin::~GasteigerPlugin()
-{
-    unregisterPluginClass<chemkit::PartialChargePredictor>("gasteiger");
-}
-
 CHEMKIT_EXPORT_PLUGIN(gasteiger, GasteigerPlugin)

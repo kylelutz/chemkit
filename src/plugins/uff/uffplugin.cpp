@@ -48,13 +48,6 @@ UffPlugin::UffPlugin()
     registerPluginClass<chemkit::MolecularDescriptor>("uff-energy", createUffEnergyDescriptor);
 }
 
-UffPlugin::~UffPlugin()
-{
-    unregisterPluginClass<chemkit::AtomTyper>("uff");
-    unregisterPluginClass<chemkit::ForceField>("uff");
-    unregisterPluginClass<chemkit::MolecularDescriptor>("uff-energy");
-}
-
 chemkit::MolecularDescriptor* UffPlugin::createUffEnergyDescriptor()
 {
     return new chemkit::ForceFieldEnergyDescriptor<UffForceField>("uff-energy");

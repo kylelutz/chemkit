@@ -43,9 +43,4 @@ XyzPlugin::XyzPlugin()
     CHEMKIT_REGISTER_MOLECULE_FILE_FORMAT("xyz", XyzFileFormat);
 }
 
-XyzPlugin::~XyzPlugin()
-{
-    unregisterPluginClass<chemkit::MoleculeFileFormat>("xyz");
-}
-
 CHEMKIT_EXPORT_PLUGIN(xyz, XyzPlugin)

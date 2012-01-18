@@ -47,13 +47,4 @@ GraphDescriptorsPlugin::GraphDescriptorsPlugin()
     CHEMKIT_REGISTER_MOLECULAR_DESCRIPTOR("graph-size", GraphSizeDescriptor);
 }
 
-GraphDescriptorsPlugin::~GraphDescriptorsPlugin()
-{
-    unregisterPluginClass<chemkit::MolecularDescriptor>("graph-density");
-    unregisterPluginClass<chemkit::MolecularDescriptor>("graph-diameter");
-    unregisterPluginClass<chemkit::MolecularDescriptor>("graph-order");
-    unregisterPluginClass<chemkit::MolecularDescriptor>("graph-radius");
-    unregisterPluginClass<chemkit::MolecularDescriptor>("graph-size");
-}
-
 CHEMKIT_EXPORT_PLUGIN(graphdescriptors, GraphDescriptorsPlugin)

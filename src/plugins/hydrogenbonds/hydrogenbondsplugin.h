@@ -42,7 +42,6 @@ class HydrogenBondsPlugin : public chemkit::Plugin
 {
 public:
     HydrogenBondsPlugin();
-    ~HydrogenBondsPlugin();
 };
 
 #endif // HYDROGENBONDSPLUGIN_H

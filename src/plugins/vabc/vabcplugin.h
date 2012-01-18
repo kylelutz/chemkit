@@ -42,7 +42,6 @@ class VabcPlugin : public chemkit::Plugin
 {
 public:
     VabcPlugin();
-    ~VabcPlugin();
 };
 
 #endif // VABCPLUGIN_H

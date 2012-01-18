@@ -42,7 +42,6 @@ class GraphDescriptorsPlugin : public chemkit::Plugin
 {
 public:
     GraphDescriptorsPlugin();
-    ~GraphDescriptorsPlugin();
 };
 
 #endif // GRAPHDESCRIPTORSPLUGIN_H

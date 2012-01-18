@@ -43,7 +43,6 @@ class UffPlugin : public chemkit::Plugin
 {
 public:
     UffPlugin();
-    ~UffPlugin();
 
     static chemkit::MolecularDescriptor* createUffEnergyDescriptor();
 };

@@ -45,10 +45,4 @@ HydrogenBondsPlugin::HydrogenBondsPlugin()
     CHEMKIT_REGISTER_MOLECULAR_DESCRIPTOR("hydrogen-bond-acceptors", HydrogenBondAcceptorsDescriptor);
 }
 
-HydrogenBondsPlugin::~HydrogenBondsPlugin()
-{
-    unregisterPluginClass<chemkit::MolecularDescriptor>("hydrogen-bond-donors");
-    unregisterPluginClass<chemkit::MolecularDescriptor>("hydrogen-bond-acceptors");
-}
-
 CHEMKIT_EXPORT_PLUGIN(hydrogenbonds, HydrogenBondsPlugin)

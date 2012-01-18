@@ -43,9 +43,4 @@ PdbmlPlugin::PdbmlPlugin()
     CHEMKIT_REGISTER_POLYMER_FILE_FORMAT("pdbml", PdbmlFileFormat);
 }
 
-PdbmlPlugin::~PdbmlPlugin()
-{
-    unregisterPluginClass<chemkit::PolymerFileFormat>("pdbml");
-}
-
 CHEMKIT_EXPORT_PLUGIN(pdbml, PdbmlPlugin)

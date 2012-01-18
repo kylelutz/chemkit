@@ -43,9 +43,4 @@ MassDescriptorsPlugin::MassDescriptorsPlugin()
     CHEMKIT_REGISTER_MOLECULAR_DESCRIPTOR("molecular-mass", MolecularMassDescriptor);
 }
 
-MassDescriptorsPlugin::~MassDescriptorsPlugin()
-{
-    unregisterPluginClass<chemkit::MolecularDescriptor>("molecular-mass");
-}
-
 CHEMKIT_EXPORT_PLUGIN(massdescriptors, MassDescriptorsPlugin)

@@ -48,16 +48,32 @@ namespace chemkit {
 template<class T>
 inline bool Plugin::registerPluginClass(const std::string &name, boost::function<T* ()> function)
 {
-    return PluginManager::instance()->registerPluginClass(typeid(T).name(),
-                                                          name,
-                                                          PluginManager::Function(function));
+    std::string className = typeid(T).name();
+
+    bool ok = PluginManager::instance()->registerPluginClass(className,
+                                                             name,
+                                                             PluginManager::Function(function));
+
+    if(ok){
+        addClassRegistration(name, className);
+    }
+
+    return ok;
 }
 
 /// Unregisters the plugin class with \p name.
 template<class T>
 inline bool Plugin::unregisterPluginClass(const std::string &name)
 {
-    return PluginManager::instance()->unregisterPluginClass(typeid(T).name(), name);
+    std::string className = typeid(T).name();
+
+    bool ok = PluginManager::instance()->unregisterPluginClass(className, name);
+
+    if(ok){
+        removeClassRegistration(name, className);
+    }
+
+    return ok;
 }
 
 } // end chemkit namespace

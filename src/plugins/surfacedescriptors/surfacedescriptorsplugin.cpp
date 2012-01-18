@@ -46,12 +46,4 @@ SurfaceDescriptorsPlugin::SurfaceDescriptorsPlugin()
     CHEMKIT_REGISTER_MOLECULAR_DESCRIPTOR("sas-volume", SolventAccessibleVolumeDescriptor);
 }
 
-SurfaceDescriptorsPlugin::~SurfaceDescriptorsPlugin()
-{
-    unregisterPluginClass<chemkit::MolecularDescriptor>("vdw-area");
-    unregisterPluginClass<chemkit::MolecularDescriptor>("vdw-volume");
-    unregisterPluginClass<chemkit::MolecularDescriptor>("sas-area");
-    unregisterPluginClass<chemkit::MolecularDescriptor>("sas-volume");
-}
-
 CHEMKIT_EXPORT_PLUGIN(surfacedescriptors, SurfaceDescriptorsPlugin)

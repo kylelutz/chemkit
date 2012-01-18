@@ -43,7 +43,6 @@ class AmberPlugin : public chemkit::Plugin
 {
 public:
     AmberPlugin();
-    ~AmberPlugin();
 
     static chemkit::MolecularDescriptor* createAmberEnergyDescriptor();
 };

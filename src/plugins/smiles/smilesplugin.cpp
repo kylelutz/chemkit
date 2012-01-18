@@ -53,16 +53,6 @@ SmilesPlugin::SmilesPlugin()
 #endif
 }
 
-SmilesPlugin::~SmilesPlugin()
-{
-    unregisterPluginClass<chemkit::LineFormat>("smiles");
-    unregisterPluginClass<chemkit::AromaticityModel>("smiles");
-
-#ifdef CHEMKIT_WITH_IO
-    unregisterPluginClass<chemkit::MoleculeFileFormat>("smi");
-#endif
-}
-
 #ifdef CHEMKIT_WITH_IO
 chemkit::MoleculeFileFormat* SmilesPlugin::createSmiFormat()
 {

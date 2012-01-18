@@ -58,11 +58,6 @@ MmffPlugin::~MmffPlugin()
     foreach(MmffParametersData *parameters, m_parametersCache.values()){
         parameters->deref();
     }
-
-    unregisterPluginClass<chemkit::AtomTyper>("mmff");
-    unregisterPluginClass<chemkit::ForceField>("mmff");
-    unregisterPluginClass<chemkit::AromaticityModel>("mmff");
-    unregisterPluginClass<chemkit::PartialChargePredictor>("mmff");
 }
 
 void MmffPlugin::storeParameters(const QString &name, MmffParametersData *parameters)

@@ -42,7 +42,6 @@ class CubePlugin : public chemkit::Plugin
 {
 public:
     CubePlugin();
-    ~CubePlugin();
 };
 
 #endif // CUBEPLUGIN_H

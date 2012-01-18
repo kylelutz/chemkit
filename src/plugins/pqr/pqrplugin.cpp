@@ -43,9 +43,4 @@ PqrPlugin::PqrPlugin()
     CHEMKIT_REGISTER_MOLECULE_FILE_FORMAT("pqr", PqrFileFormat);
 }
 
-PqrPlugin::~PqrPlugin()
-{
-    unregisterPluginClass<chemkit::MoleculeFileFormat>("pqr");
-}
-
 CHEMKIT_EXPORT_PLUGIN(pqr, PqrPlugin)

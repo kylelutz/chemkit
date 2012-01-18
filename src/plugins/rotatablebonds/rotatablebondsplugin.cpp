@@ -43,9 +43,4 @@ RotatableBondsPlugin::RotatableBondsPlugin()
     CHEMKIT_REGISTER_MOLECULAR_DESCRIPTOR("rotatable-bonds", RotatableBondsDescriptor);
 }
 
-RotatableBondsPlugin::~RotatableBondsPlugin()
-{
-    unregisterPluginClass<chemkit::MolecularDescriptor>("rotatable-bonds");
-}
-
 CHEMKIT_EXPORT_PLUGIN(rotatablebonds, RotatableBondsPlugin)

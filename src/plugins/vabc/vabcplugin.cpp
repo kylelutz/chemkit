@@ -43,9 +43,4 @@ VabcPlugin::VabcPlugin()
     CHEMKIT_REGISTER_MOLECULAR_DESCRIPTOR("vabc", VabcDescriptor);
 }
 
-VabcPlugin::~VabcPlugin()
-{
-    unregisterPluginClass<chemkit::MolecularDescriptor>("vabc");
-}
-
 CHEMKIT_EXPORT_PLUGIN(vabc, VabcPlugin)

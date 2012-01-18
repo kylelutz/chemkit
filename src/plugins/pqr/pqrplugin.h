@@ -42,7 +42,6 @@ class PqrPlugin : public chemkit::Plugin
 {
 public:
     PqrPlugin();
-    ~PqrPlugin();
 };
 
 #endif // PQRPLUGIN_H
