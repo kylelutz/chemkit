@@ -41,6 +41,8 @@
 #include <string>
 #include <vector>
 
+#include <boost/function.hpp>
+
 namespace chemkit {
 
 class Plugin;
@@ -50,7 +52,7 @@ class CHEMKIT_EXPORT PluginManager
 {
 public:
     // enumerations
-    typedef void (*Function)();
+    typedef boost::function<void* ()> Function;
 
     // properties
     Plugin* plugin(const std::string &name) const;

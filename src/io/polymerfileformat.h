@@ -51,9 +51,6 @@ class PolymerFileFormatPrivate;
 class CHEMKIT_IO_EXPORT PolymerFileFormat
 {
 public:
-    // typedefs
-    typedef PolymerFileFormat* (*CreateFunction)();
-
     // construction and destruction
     virtual ~PolymerFileFormat();
 

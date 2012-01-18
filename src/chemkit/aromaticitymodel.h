@@ -52,9 +52,6 @@ class AromaticityModelPrivate;
 class CHEMKIT_EXPORT AromaticityModel
 {
 public:
-    // typedefs
-    typedef AromaticityModel* (*CreateFunction)();
-
     // construction and destruction
     AromaticityModel();
     virtual ~AromaticityModel();

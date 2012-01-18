@@ -51,9 +51,6 @@ class LineFormatPrivate;
 class CHEMKIT_EXPORT LineFormat
 {
 public:
-    // typedefs
-    typedef LineFormat* (*CreateFunction)();
-
     // construction and destruction
     virtual ~LineFormat();
 

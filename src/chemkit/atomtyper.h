@@ -52,9 +52,6 @@ class AtomTyperPrivate;
 class CHEMKIT_EXPORT AtomTyper
 {
 public:
-    // typedefs
-    typedef AtomTyper* (*CreateFunction)();
-
     // construction and destruction
     virtual ~AtomTyper();
 

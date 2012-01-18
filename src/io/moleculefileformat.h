@@ -53,9 +53,6 @@ class MoleculeFileFormatPrivate;
 class CHEMKIT_IO_EXPORT MoleculeFileFormat
 {
 public:
-    // typedefs
-    typedef MoleculeFileFormat* (*CreateFunction)();
-
     // construction and destruction
     virtual ~MoleculeFileFormat();
 

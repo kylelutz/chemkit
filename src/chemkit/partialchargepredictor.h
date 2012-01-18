@@ -50,9 +50,6 @@ class PartialChargePredictorPrivate;
 class CHEMKIT_EXPORT PartialChargePredictor
 {
 public:
-    // typedefs
-    typedef PartialChargePredictor* (*CreateFunction)();
-
     // construction and destruction
     virtual ~PartialChargePredictor();
 

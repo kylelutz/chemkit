@@ -50,10 +50,10 @@ namespace chemkit {
 template<class T>
 inline T* PluginManager::createPluginClass(const std::string &pluginName) const
 {
-    typename T::CreateFunction function = reinterpret_cast<typename T::CreateFunction>(pluginClassFunction(typeid(T).name(), pluginName));
+    Function function = pluginClassFunction(typeid(T).name(), pluginName);
 
     if(function){
-        return function();
+        return static_cast<T*>(function());
     }
 
     return 0;

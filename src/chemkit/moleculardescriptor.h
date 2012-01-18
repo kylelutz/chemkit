@@ -51,9 +51,6 @@ class MolecularDescriptorPrivate;
 class CHEMKIT_EXPORT MolecularDescriptor
 {
 public:
-    // typedefs
-    typedef MolecularDescriptor* (*CreateFunction)();
-
     // construction and destruction
     virtual ~MolecularDescriptor();
 

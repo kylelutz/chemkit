@@ -50,9 +50,6 @@ class Molecule;
 class CHEMKIT_EXPORT Fingerprint
 {
 public:
-    // typedefs
-    typedef Fingerprint* (*CreateFunction)();
-
     // construction and destruction
     virtual ~Fingerprint();
 

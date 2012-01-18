@@ -51,9 +51,6 @@ class TrajectoryFileFormatPrivate;
 class CHEMKIT_MD_EXPORT TrajectoryFileFormat
 {
 public:
-    // typedefs
-    typedef TrajectoryFileFormat* (*CreateFunction)();
-
     // construction and destruction
     virtual ~TrajectoryFileFormat();
 

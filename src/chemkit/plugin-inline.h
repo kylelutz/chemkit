@@ -46,9 +46,11 @@ namespace chemkit {
 
 /// Registers a new plugin class with \p name and \p function.
 template<class T>
-inline bool Plugin::registerPluginClass(const std::string &name, typename T::CreateFunction function)
+inline bool Plugin::registerPluginClass(const std::string &name, boost::function<T* ()> function)
 {
-    return PluginManager::instance()->registerPluginClass(typeid(T).name(), name, reinterpret_cast<PluginManager::Function>(function));
+    return PluginManager::instance()->registerPluginClass(typeid(T).name(),
+                                                          name,
+                                                          PluginManager::Function(function));
 }
 
 /// Unregisters the plugin class with \p name.

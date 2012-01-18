@@ -38,8 +38,7 @@
 
 class MockClass
 {
-    public:
-        typedef MockClass* (*CreateFunction)();
+public:
 };
 
 #endif // MOCKCLASS_H

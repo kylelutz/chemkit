@@ -61,9 +61,6 @@ public:
         AnalyticalGradient = 0x01
     };
 
-    // typedefs
-    typedef ForceField* (*CreateFunction)();
-
     // construction and destruction
     virtual ~ForceField();
 
