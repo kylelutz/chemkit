@@ -37,16 +37,12 @@
 #define HYDROGENBONDSPLUGIN_H
 
 #include <chemkit/plugin.h>
-#include <chemkit/moleculardescriptor.h>
 
 class HydrogenBondsPlugin : public chemkit::Plugin
 {
 public:
     HydrogenBondsPlugin();
     ~HydrogenBondsPlugin();
-
-    static chemkit::MolecularDescriptor* createDonorsDescriptor();
-    static chemkit::MolecularDescriptor* createAcceptorsDescriptor();
 };
 
 #endif // HYDROGENBONDSPLUGIN_H

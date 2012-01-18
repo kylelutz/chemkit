@@ -37,15 +37,12 @@
 #define XTCPLUGIN_H
 
 #include <chemkit/plugin.h>
-#include <chemkit/trajectoryfileformat.h>
 
 class XtcPlugin : public chemkit::Plugin
 {
 public:
     XtcPlugin();
     ~XtcPlugin();
-
-    static chemkit::TrajectoryFileFormat* createXtcFormat();
 };
 
 #endif // XTCPLUGIN_H

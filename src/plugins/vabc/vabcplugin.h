@@ -37,15 +37,12 @@
 #define VABCPLUGIN_H
 
 #include <chemkit/plugin.h>
-#include <chemkit/moleculardescriptor.h>
 
 class VabcPlugin : public chemkit::Plugin
 {
 public:
     VabcPlugin();
     ~VabcPlugin();
-
-    static chemkit::MolecularDescriptor* createVabcDescriptor();
 };
 
 #endif // VABCPLUGIN_H

@@ -37,19 +37,12 @@
 #define GRAPHDESCRIPTORSPLUGIN_H
 
 #include <chemkit/plugin.h>
-#include <chemkit/moleculardescriptor.h>
 
 class GraphDescriptorsPlugin : public chemkit::Plugin
 {
 public:
     GraphDescriptorsPlugin();
     ~GraphDescriptorsPlugin();
-
-    static chemkit::MolecularDescriptor* createGraphDensityDescriptor();
-    static chemkit::MolecularDescriptor* createGraphDiameterDescriptor();
-    static chemkit::MolecularDescriptor* createGraphOrderDescriptor();
-    static chemkit::MolecularDescriptor* createGraphRadiusDescriptor();
-    static chemkit::MolecularDescriptor* createGraphSizeDescriptor();
 };
 
 #endif // GRAPHDESCRIPTORSPLUGIN_H

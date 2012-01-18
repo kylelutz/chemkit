@@ -41,6 +41,7 @@
 #include <string>
 #include <vector>
 
+#include "plugin.h"
 #include "variant.h"
 
 namespace chemkit {
@@ -72,5 +73,9 @@ private:
 };
 
 } // end chemkit namespace
+
+/// Registers a molecular descriptor with \p name.
+#define CHEMKIT_REGISTER_MOLECULAR_DESCRIPTOR(name, className) \
+    CHEMKIT_REGISTER_PLUGIN_CLASS(name, chemkit::MolecularDescriptor, className)
 
 #endif // CHEMKIT_MOLECULARDESCRIPTOR_H

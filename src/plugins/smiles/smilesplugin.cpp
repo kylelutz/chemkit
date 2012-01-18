@@ -45,8 +45,8 @@
 SmilesPlugin::SmilesPlugin()
     : chemkit::Plugin("smiles")
 {
-    registerPluginClass<chemkit::LineFormat>("smiles", createSmilesFormat);
-    registerPluginClass<chemkit::AromaticityModel>("smiles", createSmilesAromaticityModel);
+    CHEMKIT_REGISTER_LINE_FORMAT("smiles", SmilesLineFormat);
+    CHEMKIT_REGISTER_AROMATICITY_MODEL("smiles", SmilesAromaticityModel);
 
 #ifdef CHEMKIT_WITH_IO
     registerPluginClass<chemkit::MoleculeFileFormat>("smi", createSmiFormat);
@@ -61,16 +61,6 @@ SmilesPlugin::~SmilesPlugin()
 #ifdef CHEMKIT_WITH_IO
     unregisterPluginClass<chemkit::MoleculeFileFormat>("smi");
 #endif
-}
-
-chemkit::LineFormat* SmilesPlugin::createSmilesFormat()
-{
-    return new SmilesLineFormat;
-}
-
-chemkit::AromaticityModel* SmilesPlugin::createSmilesAromaticityModel()
-{
-    return new SmilesAromaticityModel;
 }
 
 #ifdef CHEMKIT_WITH_IO

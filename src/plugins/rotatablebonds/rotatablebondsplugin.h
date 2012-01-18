@@ -37,15 +37,12 @@
 #define ROTATABLEBONDSPLUGIN_H
 
 #include <chemkit/plugin.h>
-#include <chemkit/moleculardescriptor.h>
 
 class RotatableBondsPlugin : public chemkit::Plugin
 {
 public:
     RotatableBondsPlugin();
     ~RotatableBondsPlugin();
-
-    static chemkit::MolecularDescriptor* createRotableBondsDescriptor();
 };
 
 #endif // ROTATABLEBONDSPLUGIN_H

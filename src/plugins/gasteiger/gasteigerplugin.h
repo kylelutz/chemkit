@@ -37,15 +37,12 @@
 #define GASTEIGERPLUGIN_H
 
 #include <chemkit/plugin.h>
-#include <chemkit/partialchargepredictor.h>
 
 class GasteigerPlugin : public chemkit::Plugin
 {
 public:
     GasteigerPlugin();
     ~GasteigerPlugin();
-
-    static chemkit::PartialChargePredictor* createGasteigerPredictor();
 };
 
 #endif // GASTEIGERPLUGIN_H

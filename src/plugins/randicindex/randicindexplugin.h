@@ -38,15 +38,11 @@
 
 #include <chemkit/plugin.h>
 
-#include "randicindexdescriptor.h"
-
 class RandicIndexPlugin : public chemkit::Plugin
 {
 public:
     RandicIndexPlugin();
     ~RandicIndexPlugin();
-
-    static chemkit::MolecularDescriptor* createRandicIndexDescriptor();
 };
 
 #endif // RANDICINDEXPLUGIN_H

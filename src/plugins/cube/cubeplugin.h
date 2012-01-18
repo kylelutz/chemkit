@@ -37,15 +37,12 @@
 #define CUBEPLUGIN_H
 
 #include <chemkit/plugin.h>
-#include <chemkit/moleculefileformat.h>
 
 class CubePlugin : public chemkit::Plugin
 {
 public:
     CubePlugin();
     ~CubePlugin();
-
-    static chemkit::MoleculeFileFormat* createCubeFormat();
 };
 
 #endif // CUBEPLUGIN_H

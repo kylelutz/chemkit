@@ -40,11 +40,11 @@
 GraphDescriptorsPlugin::GraphDescriptorsPlugin()
     : chemkit::Plugin("graphdescriptors")
 {
-    registerPluginClass<chemkit::MolecularDescriptor>("graph-density", createGraphDensityDescriptor);
-    registerPluginClass<chemkit::MolecularDescriptor>("graph-diameter", createGraphDiameterDescriptor);
-    registerPluginClass<chemkit::MolecularDescriptor>("graph-order", createGraphOrderDescriptor);
-    registerPluginClass<chemkit::MolecularDescriptor>("graph-radius", createGraphRadiusDescriptor);
-    registerPluginClass<chemkit::MolecularDescriptor>("graph-size", createGraphSizeDescriptor);
+    CHEMKIT_REGISTER_MOLECULAR_DESCRIPTOR("graph-density", GraphDensityDescriptor);
+    CHEMKIT_REGISTER_MOLECULAR_DESCRIPTOR("graph-diameter", GraphDiameterDescriptor);
+    CHEMKIT_REGISTER_MOLECULAR_DESCRIPTOR("graph-order", GraphOrderDescriptor);
+    CHEMKIT_REGISTER_MOLECULAR_DESCRIPTOR("graph-radius", GraphRadiusDescriptor);
+    CHEMKIT_REGISTER_MOLECULAR_DESCRIPTOR("graph-size", GraphSizeDescriptor);
 }
 
 GraphDescriptorsPlugin::~GraphDescriptorsPlugin()
@@ -54,31 +54,6 @@ GraphDescriptorsPlugin::~GraphDescriptorsPlugin()
     unregisterPluginClass<chemkit::MolecularDescriptor>("graph-order");
     unregisterPluginClass<chemkit::MolecularDescriptor>("graph-radius");
     unregisterPluginClass<chemkit::MolecularDescriptor>("graph-size");
-}
-
-chemkit::MolecularDescriptor* GraphDescriptorsPlugin::createGraphDensityDescriptor()
-{
-    return new GraphDensityDescriptor;
-}
-
-chemkit::MolecularDescriptor* GraphDescriptorsPlugin::createGraphDiameterDescriptor()
-{
-    return new GraphDiameterDescriptor;
-}
-
-chemkit::MolecularDescriptor* GraphDescriptorsPlugin::createGraphOrderDescriptor()
-{
-    return new GraphOrderDescriptor;
-}
-
-chemkit::MolecularDescriptor* GraphDescriptorsPlugin::createGraphRadiusDescriptor()
-{
-    return new GraphRadiusDescriptor;
-}
-
-chemkit::MolecularDescriptor* GraphDescriptorsPlugin::createGraphSizeDescriptor()
-{
-    return new GraphSizeDescriptor;
 }
 
 CHEMKIT_EXPORT_PLUGIN(graphdescriptors, GraphDescriptorsPlugin)

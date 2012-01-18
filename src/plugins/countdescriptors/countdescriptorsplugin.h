@@ -37,18 +37,12 @@
 #define COUNTDESCRIPTORSPLUGIN_H
 
 #include <chemkit/plugin.h>
-#include <chemkit/moleculardescriptor.h>
 
 class CountDescriptorsPlugin : public chemkit::Plugin
 {
 public:
     CountDescriptorsPlugin();
     ~CountDescriptorsPlugin();
-
-    static chemkit::MolecularDescriptor* createAtomCountDescriptor();
-    static chemkit::MolecularDescriptor* createHeavyAtomCountDescriptor();
-    static chemkit::MolecularDescriptor* createBondCountDescriptor();
-    static chemkit::MolecularDescriptor* createRingCountDescriptor();
 };
 
 #endif // COUNTDESCRIPTORSPLUGIN_H

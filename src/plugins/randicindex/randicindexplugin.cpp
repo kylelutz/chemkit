@@ -35,22 +35,17 @@
 
 #include "randicindexplugin.h"
 
-#include <chemkit/moleculardescriptor.h>
+#include "randicindexdescriptor.h"
 
 RandicIndexPlugin::RandicIndexPlugin()
     : chemkit::Plugin("randicindex")
 {
-    registerPluginClass<chemkit::MolecularDescriptor>("randic-index", createRandicIndexDescriptor);
+    CHEMKIT_REGISTER_MOLECULAR_DESCRIPTOR("randic-index", RandicIndexDescriptor);
 }
 
 RandicIndexPlugin::~RandicIndexPlugin()
 {
     unregisterPluginClass<chemkit::MolecularDescriptor>("randic-index");
-}
-
-chemkit::MolecularDescriptor* RandicIndexPlugin::createRandicIndexDescriptor()
-{
-    return new RandicIndexDescriptor;
 }
 
 CHEMKIT_EXPORT_PLUGIN(randicindex, RandicIndexPlugin)

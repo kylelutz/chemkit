@@ -41,6 +41,7 @@
 #include <string>
 #include <vector>
 
+#include <chemkit/plugin.h>
 #include <chemkit/point3.h>
 #include <chemkit/vector3.h>
 
@@ -126,5 +127,9 @@ private:
 };
 
 } // end chemkit namespace
+
+/// Registers a force field with \p name.
+#define CHEMKIT_REGISTER_FORCE_FIELD(name, className) \
+    CHEMKIT_REGISTER_PLUGIN_CLASS(name, chemkit::ForceField, className)
 
 #endif // CHEMKIT_FORCEFIELD_H

@@ -41,6 +41,8 @@
 #include <string>
 #include <vector>
 
+#include "plugin.h"
+
 namespace chemkit {
 
 class Atom;
@@ -76,5 +78,9 @@ private:
 };
 
 } // end chemkit namespace
+
+/// Registers a partial charge predictor with \p name.
+#define CHEMKIT_REGISTER_PARTIAL_CHARGE_PREDICTOR(name, className) \
+    CHEMKIT_REGISTER_PLUGIN_CLASS(name, chemkit::PartialChargePredictor, className)
 
 #endif // CHEMKIT_PARTIALCHARGEPREDICTOR_H

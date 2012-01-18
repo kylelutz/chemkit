@@ -40,10 +40,10 @@
 CountDescriptorsPlugin::CountDescriptorsPlugin()
     : chemkit::Plugin("countdescriptors")
 {
-    registerPluginClass<chemkit::MolecularDescriptor>("atom-count", createAtomCountDescriptor);
-    registerPluginClass<chemkit::MolecularDescriptor>("heavy-atom-count", createHeavyAtomCountDescriptor);
-    registerPluginClass<chemkit::MolecularDescriptor>("bond-count", createBondCountDescriptor);
-    registerPluginClass<chemkit::MolecularDescriptor>("ring-count", createRingCountDescriptor);
+    CHEMKIT_REGISTER_MOLECULAR_DESCRIPTOR("atom-count", AtomCountDescriptor);
+    CHEMKIT_REGISTER_MOLECULAR_DESCRIPTOR("heavy-atom-count", HeavyAtomCountDescriptor);
+    CHEMKIT_REGISTER_MOLECULAR_DESCRIPTOR("bond-count", BondCountDescriptor);
+    CHEMKIT_REGISTER_MOLECULAR_DESCRIPTOR("ring-count", RingCountDescriptor);
 }
 
 CountDescriptorsPlugin::~CountDescriptorsPlugin()
@@ -52,26 +52,6 @@ CountDescriptorsPlugin::~CountDescriptorsPlugin()
     unregisterPluginClass<chemkit::MolecularDescriptor>("heavy-atom-count");
     unregisterPluginClass<chemkit::MolecularDescriptor>("bond-count");
     unregisterPluginClass<chemkit::MolecularDescriptor>("ring-count");
-}
-
-chemkit::MolecularDescriptor* CountDescriptorsPlugin::createAtomCountDescriptor()
-{
-    return new AtomCountDescriptor;
-}
-
-chemkit::MolecularDescriptor* CountDescriptorsPlugin::createHeavyAtomCountDescriptor()
-{
-    return new HeavyAtomCountDescriptor;
-}
-
-chemkit::MolecularDescriptor* CountDescriptorsPlugin::createBondCountDescriptor()
-{
-    return new BondCountDescriptor;
-}
-
-chemkit::MolecularDescriptor* CountDescriptorsPlugin::createRingCountDescriptor()
-{
-    return new RingCountDescriptor;
 }
 
 CHEMKIT_EXPORT_PLUGIN(countdescriptors, CountDescriptorsPlugin)

@@ -37,20 +37,12 @@
 #define SYBYLPLUGIN_H
 
 #include <chemkit/plugin.h>
-#include <chemkit/atomtyper.h>
-#include <chemkit/moleculefileformat.h>
 
 class SybylPlugin : public chemkit::Plugin
 {
 public:
     SybylPlugin();
     ~SybylPlugin();
-
-    static chemkit::AtomTyper* createSybylAtomTyper();
-
-#ifdef CHEMKIT_WITH_IO
-    static chemkit::MoleculeFileFormat* createMol2FileFormat();
-#endif
 };
 
 #endif // SYBYLPLUGIN_H

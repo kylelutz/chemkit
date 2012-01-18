@@ -41,6 +41,7 @@
 #include <string>
 #include <vector>
 
+#include "plugin.h"
 #include "variant.h"
 
 namespace chemkit {
@@ -86,5 +87,9 @@ private:
 };
 
 } // end chemkit namespace
+
+/// Registers a line format with \p name.
+#define CHEMKIT_REGISTER_LINE_FORMAT(name, className) \
+    CHEMKIT_REGISTER_PLUGIN_CLASS(name, chemkit::LineFormat, className)
 
 #endif // CHEMKIT_LINEFORMAT_H

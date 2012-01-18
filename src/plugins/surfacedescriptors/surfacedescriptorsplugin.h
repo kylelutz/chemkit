@@ -37,18 +37,12 @@
 #define SURFACEDESCRIPTORSPLUGIN_H
 
 #include <chemkit/plugin.h>
-#include <chemkit/moleculardescriptor.h>
 
 class SurfaceDescriptorsPlugin : public chemkit::Plugin
 {
 public:
     SurfaceDescriptorsPlugin();
     ~SurfaceDescriptorsPlugin();
-
-    static chemkit::MolecularDescriptor* createVanDerWaalsAreaDescriptor();
-    static chemkit::MolecularDescriptor* createVanDerWaalsVolumeDescriptor();
-    static chemkit::MolecularDescriptor* createSolventAccessibleAreaDescriptor();
-    static chemkit::MolecularDescriptor* createSolventAccessibleVolumeDescriptor();
 };
 
 #endif // SURFACEDESCRIPTORSPLUGIN_H

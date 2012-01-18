@@ -42,7 +42,7 @@
 PdbPlugin::PdbPlugin()
     : chemkit::Plugin("pdb")
 {
-    registerPluginClass<chemkit::PolymerFileFormat>("pdb", createPdbFormat);
+    CHEMKIT_REGISTER_POLYMER_FILE_FORMAT("pdb", PdbFileFormat);
     registerPluginClass<chemkit::MoleculeFileFormat>("pdb", createPdbMoleculeFormat);
 }
 
@@ -50,11 +50,6 @@ PdbPlugin::~PdbPlugin()
 {
     unregisterPluginClass<chemkit::PolymerFileFormat>("pdb");
     unregisterPluginClass<chemkit::MoleculeFileFormat>("pdb");
-}
-
-chemkit::PolymerFileFormat* PdbPlugin::createPdbFormat()
-{
-    return new PdbFileFormat;
 }
 
 chemkit::MoleculeFileFormat* PdbPlugin::createPdbMoleculeFormat()

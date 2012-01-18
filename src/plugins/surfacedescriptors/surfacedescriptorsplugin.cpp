@@ -40,10 +40,10 @@
 SurfaceDescriptorsPlugin::SurfaceDescriptorsPlugin()
     : chemkit::Plugin("surfacedescriptors")
 {
-    registerPluginClass<chemkit::MolecularDescriptor>("vdw-area", createVanDerWaalsAreaDescriptor);
-    registerPluginClass<chemkit::MolecularDescriptor>("vdw-volume", createVanDerWaalsVolumeDescriptor);
-    registerPluginClass<chemkit::MolecularDescriptor>("sas-area", createSolventAccessibleAreaDescriptor);
-    registerPluginClass<chemkit::MolecularDescriptor>("sas-volume", createSolventAccessibleVolumeDescriptor);
+    CHEMKIT_REGISTER_MOLECULAR_DESCRIPTOR("vdw-area", VanDerWallsAreaDescriptor);
+    CHEMKIT_REGISTER_MOLECULAR_DESCRIPTOR("vdw-volume", VanDerWallsVolumeDescriptor);
+    CHEMKIT_REGISTER_MOLECULAR_DESCRIPTOR("sas-area", SolventAccessibleAreaDescriptor);
+    CHEMKIT_REGISTER_MOLECULAR_DESCRIPTOR("sas-volume", SolventAccessibleVolumeDescriptor);
 }
 
 SurfaceDescriptorsPlugin::~SurfaceDescriptorsPlugin()
@@ -52,26 +52,6 @@ SurfaceDescriptorsPlugin::~SurfaceDescriptorsPlugin()
     unregisterPluginClass<chemkit::MolecularDescriptor>("vdw-volume");
     unregisterPluginClass<chemkit::MolecularDescriptor>("sas-area");
     unregisterPluginClass<chemkit::MolecularDescriptor>("sas-volume");
-}
-
-chemkit::MolecularDescriptor* SurfaceDescriptorsPlugin::createVanDerWaalsAreaDescriptor()
-{
-    return new VanDerWallsAreaDescriptor;
-}
-
-chemkit::MolecularDescriptor* SurfaceDescriptorsPlugin::createVanDerWaalsVolumeDescriptor()
-{
-    return new VanDerWallsVolumeDescriptor;
-}
-
-chemkit::MolecularDescriptor* SurfaceDescriptorsPlugin::createSolventAccessibleAreaDescriptor()
-{
-    return new SolventAccessibleAreaDescriptor;
-}
-
-chemkit::MolecularDescriptor* SurfaceDescriptorsPlugin::createSolventAccessibleVolumeDescriptor()
-{
-    return new SolventAccessibleVolumeDescriptor;
 }
 
 CHEMKIT_EXPORT_PLUGIN(surfacedescriptors, SurfaceDescriptorsPlugin)

@@ -41,6 +41,8 @@
 #include <string>
 #include <vector>
 
+#include "plugin.h"
+
 namespace chemkit {
 
 class Atom;
@@ -83,5 +85,9 @@ private:
 };
 
 } // end chemkit namespace
+
+/// Registers a aromaticity model with \p name.
+#define CHEMKIT_REGISTER_AROMATICITY_MODEL(name, className) \
+    CHEMKIT_REGISTER_PLUGIN_CLASS(name, chemkit::AromaticityModel, className)
 
 #endif // CHEMKIT_AROMATICITYMODEL_H

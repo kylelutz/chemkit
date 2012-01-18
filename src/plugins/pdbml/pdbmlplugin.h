@@ -37,15 +37,12 @@
 #define PDBMLPLUGIN_H
 
 #include <chemkit/plugin.h>
-#include <chemkit/polymerfileformat.h>
 
 class PdbmlPlugin : public chemkit::Plugin
 {
 public:
     PdbmlPlugin();
     ~PdbmlPlugin();
-
-    static chemkit::PolymerFileFormat* createPdbmlFormat();
 };
 
 #endif // PDBMLPLUGIN_H

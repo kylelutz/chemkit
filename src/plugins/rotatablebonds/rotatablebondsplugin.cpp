@@ -40,17 +40,12 @@
 RotatableBondsPlugin::RotatableBondsPlugin()
     : chemkit::Plugin("rotatablebonds")
 {
-    registerPluginClass<chemkit::MolecularDescriptor>("rotatable-bonds", createRotableBondsDescriptor);
+    CHEMKIT_REGISTER_MOLECULAR_DESCRIPTOR("rotatable-bonds", RotatableBondsDescriptor);
 }
 
 RotatableBondsPlugin::~RotatableBondsPlugin()
 {
     unregisterPluginClass<chemkit::MolecularDescriptor>("rotatable-bonds");
-}
-
-chemkit::MolecularDescriptor* RotatableBondsPlugin::createRotableBondsDescriptor()
-{
-    return new RotatableBondsDescriptor;
 }
 
 CHEMKIT_EXPORT_PLUGIN(rotatablebonds, RotatableBondsPlugin)

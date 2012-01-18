@@ -41,6 +41,7 @@
 #include <string>
 #include <vector>
 
+#include "plugin.h"
 #include "variant.h"
 
 namespace chemkit {
@@ -81,5 +82,9 @@ private:
 };
 
 } // end chemkit namespace
+
+/// Registers an atom typer with \p name.
+#define CHEMKIT_REGISTER_ATOM_TYPER(name, className) \
+    CHEMKIT_REGISTER_PLUGIN_CLASS(name, chemkit::AtomTyper, className)
 
 #endif // CHEMKIT_ATOMTYPER_H

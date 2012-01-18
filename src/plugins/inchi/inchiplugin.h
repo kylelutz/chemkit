@@ -37,7 +37,6 @@
 #define INCHIPLUGIN_H
 
 #include <chemkit/plugin.h>
-#include <chemkit/lineformat.h>
 
 #ifdef CHEMKIT_WITH_IO
 #include <chemkit/moleculefileformat.h>
@@ -48,9 +47,6 @@ class InchiPlugin : public chemkit::Plugin
 public:
     InchiPlugin();
     ~InchiPlugin();
-
-    static chemkit::LineFormat* createInchiFormat();
-    static chemkit::LineFormat* createInchiKeyFormat();
 
 #ifdef CHEMKIT_WITH_IO
     static chemkit::MoleculeFileFormat* createInchiFileFormat();

@@ -37,15 +37,12 @@
 #define WIENERINDEXPLUGIN_H
 
 #include <chemkit/plugin.h>
-#include <chemkit/moleculardescriptor.h>
 
 class WienerIndexPlugin : public chemkit::Plugin
 {
 public:
     WienerIndexPlugin();
     ~WienerIndexPlugin();
-
-    static chemkit::MolecularDescriptor* createWienerIndexDescriptor();
 };
 
 #endif // WIENERINDEXPLUGIN_H

@@ -37,8 +37,6 @@
 #define AMBERPLUGIN_H
 
 #include <chemkit/plugin.h>
-#include <chemkit/atomtyper.h>
-#include <chemkit/forcefield.h>
 #include <chemkit/moleculardescriptor.h>
 
 class AmberPlugin : public chemkit::Plugin
@@ -47,8 +45,6 @@ public:
     AmberPlugin();
     ~AmberPlugin();
 
-    static chemkit::ForceField* createAmberForceField();
-    static chemkit::AtomTyper* createAmberAtomTyper();
     static chemkit::MolecularDescriptor* createAmberEnergyDescriptor();
 };
 

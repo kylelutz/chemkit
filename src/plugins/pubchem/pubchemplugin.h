@@ -37,15 +37,12 @@
 #define PUBCHEMPLUGIN_H
 
 #include <chemkit/plugin.h>
-#include <chemkit/fingerprint.h>
 
 class PubChemPlugin : public chemkit::Plugin
 {
 public:
     PubChemPlugin();
     ~PubChemPlugin();
-
-    static chemkit::Fingerprint* createPubChemFingerprint();
 };
 
 #endif // PUBCHEMPLUGIN_H

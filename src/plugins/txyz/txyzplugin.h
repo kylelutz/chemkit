@@ -37,15 +37,12 @@
 #define TXYZPLUGIN_H
 
 #include <chemkit/plugin.h>
-#include <chemkit/moleculefileformat.h>
 
 class TxyzPlugin : public chemkit::Plugin
 {
 public:
     TxyzPlugin();
     ~TxyzPlugin();
-
-    static chemkit::MoleculeFileFormat* createTxyzFormat();
 };
 
 #endif // TXYZPLUGIN_H

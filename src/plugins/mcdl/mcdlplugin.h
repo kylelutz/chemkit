@@ -37,15 +37,12 @@
 #define MCDLPLUGIN_H
 
 #include <chemkit/plugin.h>
-#include <chemkit/lineformat.h>
 
 class McdlPlugin : public chemkit::Plugin
 {
 public:
     McdlPlugin();
     ~McdlPlugin();
-
-    static chemkit::LineFormat* createMcdlFormat();
 };
 
 #endif // MCDLPLUGIN_H

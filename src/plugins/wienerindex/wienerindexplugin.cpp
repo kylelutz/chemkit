@@ -40,17 +40,12 @@
 WienerIndexPlugin::WienerIndexPlugin()
     : chemkit::Plugin("wienerindex")
 {
-    registerPluginClass<chemkit::MolecularDescriptor>("wiener-index", createWienerIndexDescriptor);
+    CHEMKIT_REGISTER_MOLECULAR_DESCRIPTOR("wiener-index", WienerIndexDescriptor);
 }
 
 WienerIndexPlugin::~WienerIndexPlugin()
 {
     unregisterPluginClass<chemkit::MolecularDescriptor>("wiener-index");
-}
-
-chemkit::MolecularDescriptor* WienerIndexPlugin::createWienerIndexDescriptor()
-{
-    return new WienerIndexDescriptor;
 }
 
 CHEMKIT_EXPORT_PLUGIN(wienerindex, WienerIndexPlugin)

@@ -41,6 +41,7 @@
 #include <string>
 
 #include <boost/function.hpp>
+#include <boost/lambda/construct.hpp>
 
 namespace chemkit {
 
@@ -81,6 +82,13 @@ private:
     { \
         return new className; \
     }
+
+/// Registers a plugin class with \p name.
+///
+/// This method must be called within the constructor of a
+/// Plugin derived class.
+#define CHEMKIT_REGISTER_PLUGIN_CLASS(name, baseClass, pluginClass) \
+    registerPluginClass<baseClass>(name, boost::lambda::new_ptr<pluginClass>())
 
 #include "plugin-inline.h"
 

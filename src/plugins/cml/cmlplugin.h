@@ -37,15 +37,12 @@
 #define CMLPLUGIN_H
 
 #include <chemkit/plugin.h>
-#include <chemkit/moleculefileformat.h>
 
 class CmlPlugin : public chemkit::Plugin
 {
 public:
     CmlPlugin();
     ~CmlPlugin();
-
-    static chemkit::MoleculeFileFormat* createCmlFormat();
 };
 
 #endif // CMLPLUGIN_H

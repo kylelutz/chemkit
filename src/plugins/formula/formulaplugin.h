@@ -37,15 +37,12 @@
 #define FORMULAPLUGIN_H
 
 #include <chemkit/plugin.h>
-#include <chemkit/lineformat.h>
 
 class FormulaPlugin : public chemkit::Plugin
 {
 public:
     FormulaPlugin();
     ~FormulaPlugin();
-
-    static chemkit::LineFormat* createFormulaFormat();
 };
 
 #endif // FORMULAPLUGIN_H

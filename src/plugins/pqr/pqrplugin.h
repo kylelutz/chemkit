@@ -37,15 +37,12 @@
 #define PQRPLUGIN_H
 
 #include <chemkit/plugin.h>
-#include <chemkit/moleculefileformat.h>
 
 class PqrPlugin : public chemkit::Plugin
 {
 public:
     PqrPlugin();
     ~PqrPlugin();
-
-    static chemkit::MoleculeFileFormat* createPqrFormat();
 };
 
 #endif // PQRPLUGIN_H

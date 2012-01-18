@@ -43,6 +43,8 @@
 #include <istream>
 #include <ostream>
 
+#include <chemkit/plugin.h>
+
 namespace chemkit {
 
 class PolymerFile;
@@ -77,5 +79,9 @@ private:
 };
 
 } // end chemkit namespace
+
+/// Registers a polymer file format with \p name.
+#define CHEMKIT_REGISTER_POLYMER_FILE_FORMAT(name, className) \
+    CHEMKIT_REGISTER_PLUGIN_CLASS(name, chemkit::PolymerFileFormat, className)
 
 #endif // CHEMKIT_POLYMERFILEFORMAT_H

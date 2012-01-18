@@ -37,7 +37,6 @@
 #define PDBPLUGIN_H
 
 #include <chemkit/plugin.h>
-#include <chemkit/polymerfileformat.h>
 #include <chemkit/moleculefileformat.h>
 
 class PdbPlugin : public chemkit::Plugin
@@ -46,7 +45,6 @@ public:
     PdbPlugin();
     ~PdbPlugin();
 
-    static chemkit::PolymerFileFormat* createPdbFormat();
     static chemkit::MoleculeFileFormat* createPdbMoleculeFormat();
 };
 

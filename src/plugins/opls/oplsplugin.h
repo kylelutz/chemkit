@@ -37,8 +37,6 @@
 #define OPLSPLUGIN_H
 
 #include <chemkit/plugin.h>
-#include <chemkit/atomtyper.h>
-#include <chemkit/forcefield.h>
 #include <chemkit/moleculardescriptor.h>
 
 class OplsPlugin : public chemkit::Plugin
@@ -47,8 +45,6 @@ public:
     OplsPlugin();
     ~OplsPlugin();
 
-    static chemkit::AtomTyper* createOplsAtomTyper();
-    static chemkit::ForceField* createOplsForceField();
     static chemkit::MolecularDescriptor* createOplsEnergyDescriptor();
 };
 

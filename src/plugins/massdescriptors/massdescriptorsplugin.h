@@ -37,15 +37,12 @@
 #define MASSDESCRIPTORSPLUGIN_H
 
 #include <chemkit/plugin.h>
-#include <chemkit/moleculardescriptor.h>
 
 class MassDescriptorsPlugin : public chemkit::Plugin
 {
 public:
     MassDescriptorsPlugin();
     ~MassDescriptorsPlugin();
-
-    static chemkit::MolecularDescriptor* createMolecularMassDescriptor();
 };
 
 #endif // MASSDESCRIPTORSPLUGIN_H

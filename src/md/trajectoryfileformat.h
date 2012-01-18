@@ -43,6 +43,8 @@
 #include <istream>
 #include <ostream>
 
+#include <chemkit/plugin.h>
+
 namespace chemkit {
 
 class TrajectoryFile;
@@ -77,5 +79,9 @@ private:
 };
 
 } // end chemkit namespace
+
+/// Registers a trajectory file format with \p name.
+#define CHEMKIT_REGISTER_TRAJECTORY_FILE_FORMAT(name, className) \
+    CHEMKIT_REGISTER_PLUGIN_CLASS(name, chemkit::TrajectoryFileFormat, className)
 
 #endif // CHEMKIT_TRAJECTORYFILEFORMAT_H

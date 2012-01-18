@@ -46,11 +46,11 @@
 MmffPlugin::MmffPlugin()
     : chemkit::Plugin("mmff")
 {
-    registerPluginClass<chemkit::AtomTyper>("mmff", createMmffAtomTyper);
-    registerPluginClass<chemkit::ForceField>("mmff", createMmffForceField);
-    registerPluginClass<chemkit::AromaticityModel>("mmff", createMmffAromaticityModel);
+    CHEMKIT_REGISTER_ATOM_TYPER("mmff", MmffAtomTyper);
+    CHEMKIT_REGISTER_FORCE_FIELD("mmff", MmffForceField);
+    CHEMKIT_REGISTER_AROMATICITY_MODEL("mmff", MmffAromaticityModel);
+    CHEMKIT_REGISTER_PARTIAL_CHARGE_PREDICTOR("mmff", MmffPartialChargePredictor);
     registerPluginClass<chemkit::MolecularDescriptor>("mmff-energy", createMmffEnergyDescriptor);
-    registerPluginClass<chemkit::PartialChargePredictor>("mmff", createMmffPartialChargePredictor);
 }
 
 MmffPlugin::~MmffPlugin()
@@ -80,29 +80,9 @@ MmffParametersData* MmffPlugin::parameters(const QString &name) const
     return m_parametersCache.value(name, 0);
 }
 
-chemkit::AtomTyper* MmffPlugin::createMmffAtomTyper()
-{
-    return new MmffAtomTyper;
-}
-
-chemkit::ForceField* MmffPlugin::createMmffForceField()
-{
-    return new MmffForceField;
-}
-
-chemkit::AromaticityModel* MmffPlugin::createMmffAromaticityModel()
-{
-    return new MmffAromaticityModel;
-}
-
 chemkit::MolecularDescriptor* MmffPlugin::createMmffEnergyDescriptor()
 {
     return new chemkit::ForceFieldEnergyDescriptor<MmffForceField>("mmff-energy");
-}
-
-chemkit::PartialChargePredictor* MmffPlugin::createMmffPartialChargePredictor()
-{
-    return new MmffPartialChargePredictor;
 }
 
 CHEMKIT_EXPORT_PLUGIN(mmff, MmffPlugin)

@@ -43,8 +43,8 @@
 OplsPlugin::OplsPlugin()
     : chemkit::Plugin("opls")
 {
-    registerPluginClass<chemkit::AtomTyper>("opls", createOplsAtomTyper);
-    registerPluginClass<chemkit::ForceField>("opls", createOplsForceField);
+    CHEMKIT_REGISTER_ATOM_TYPER("opls", OplsAtomTyper);
+    CHEMKIT_REGISTER_FORCE_FIELD("opls", OplsForceField);
     registerPluginClass<chemkit::MolecularDescriptor>("opls-energy", createOplsEnergyDescriptor);
 }
 
@@ -53,16 +53,6 @@ OplsPlugin::~OplsPlugin()
     unregisterPluginClass<chemkit::AtomTyper>("opls");
     unregisterPluginClass<chemkit::ForceField>("opls");
     unregisterPluginClass<chemkit::MolecularDescriptor>("opls-energy");
-}
-
-chemkit::AtomTyper* OplsPlugin::createOplsAtomTyper()
-{
-    return new OplsAtomTyper;
-}
-
-chemkit::ForceField* OplsPlugin::createOplsForceField()
-{
-    return new OplsForceField;
 }
 
 chemkit::MolecularDescriptor* OplsPlugin::createOplsEnergyDescriptor()

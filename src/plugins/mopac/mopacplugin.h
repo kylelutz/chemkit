@@ -37,16 +37,12 @@
 #define MOPACPLUGIN_H
 
 #include <chemkit/plugin.h>
-#include <chemkit/moleculefileformat.h>
 
 class MopacPlugin : public chemkit::Plugin
 {
 public:
     MopacPlugin();
     ~MopacPlugin();
-
-    static chemkit::MoleculeFileFormat* createMopinFormat();
-    static chemkit::MoleculeFileFormat* createMopcrtFormat();
 };
 
 #endif // MOPACPLUGIN_H

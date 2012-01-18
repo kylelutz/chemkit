@@ -42,6 +42,7 @@
 #include <vector>
 
 #include "bitset.h"
+#include "plugin.h"
 
 namespace chemkit {
 
@@ -71,5 +72,9 @@ private:
 };
 
 } // end chemkit namespace
+
+/// Registers a fingerprint with \p name.
+#define CHEMKIT_REGISTER_FINGERPRINT(name, className) \
+    CHEMKIT_REGISTER_PLUGIN_CLASS(name, chemkit::Fingerprint, className)
 
 #endif // CHEMKIT_FINGERPRINT_H

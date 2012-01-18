@@ -43,6 +43,7 @@
 #include <istream>
 #include <ostream>
 
+#include <chemkit/plugin.h>
 #include <chemkit/variant.h>
 
 namespace chemkit {
@@ -83,5 +84,9 @@ private:
 };
 
 } // end chemkit namespace
+
+/// Registers a molecule file format with \p name.
+#define CHEMKIT_REGISTER_MOLECULE_FILE_FORMAT(name, className) \
+    CHEMKIT_REGISTER_PLUGIN_CLASS(name, chemkit::MoleculeFileFormat, className)
 
 #endif // CHEMKIT_MOLECULEFILEFORMAT_H
