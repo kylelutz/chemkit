@@ -40,8 +40,8 @@
 
 #include "graphicsitem.h"
 
+#include <chemkit/atomcolormap.h>
 #include <chemkit/molecularsurface.h>
-#include <chemkit/graphicsatomcolormap.h>
 
 namespace chemkit {
 
@@ -74,8 +74,8 @@ public:
     QColor color() const;
     void setColorMode(ColorMode mode);
     ColorMode colorMode() const;
-    void setAtomColorMap(GraphicsAtomColorMap *colorMap);
-    GraphicsAtomColorMap* colorMap() const;
+    void setAtomColorMap(AtomColorMap *colorMap);
+    AtomColorMap* colorMap() const;
 
 private:
     void itemChanged(ItemChange change);

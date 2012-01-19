@@ -33,7 +33,7 @@
 **
 ******************************************************************************/
 
-#include "graphicsatomcolormap.h"
+#include "atomcolormap.h"
 
 #include <QMap>
 
@@ -42,81 +42,81 @@
 
 namespace chemkit {
 
-// === GraphicsAtomColorMapPrivate ========================================= //
-class GraphicsAtomColorMapPrivate
+// === AtomColorMapPrivate ================================================= //
+class AtomColorMapPrivate
 {
 public:
     QMap<int, QColor> colorMap;
     QColor defaultColor;
 };
 
-// === GraphicsAtomColorMap ================================================ //
-/// \class GraphicsAtomColorMap graphicsatomcolormap.h chemkit/graphicsatomcolormap.h
+// === AtomColorMap ======================================================== //
+/// \class AtomColorMap atomcolormap.h chemkit/atomcolormap.h
 /// \ingroup chemkit-widgets
-/// \brief The GraphicsAtomColorMap class contains a mapping of atoms
-///        to colors.
+/// \brief The AtomColorMap class contains a mapping of elements to
+///        colors.
 
 // --- Construction and Destruction ---------------------------------------- //
 /// Creates a new atom color map.
-GraphicsAtomColorMap::GraphicsAtomColorMap()
-    : d(new GraphicsAtomColorMapPrivate)
+AtomColorMap::AtomColorMap()
+    : d(new AtomColorMapPrivate)
 {
 }
 
 /// Creates a new atom color map with \p scheme.
-GraphicsAtomColorMap::GraphicsAtomColorMap(ColorScheme scheme)
-    : d(new GraphicsAtomColorMapPrivate)
+AtomColorMap::AtomColorMap(ColorScheme scheme)
+    : d(new AtomColorMapPrivate)
 {
     setColorScheme(scheme);
 }
 
 /// Creates a new atom color map as a copy of \p colorMap.
-GraphicsAtomColorMap::GraphicsAtomColorMap(const GraphicsAtomColorMap &colorMap)
-    : d(new GraphicsAtomColorMapPrivate)
+AtomColorMap::AtomColorMap(const AtomColorMap &colorMap)
+    : d(new AtomColorMapPrivate)
 {
     d->colorMap = colorMap.d->colorMap;
     d->defaultColor = colorMap.d->defaultColor;
 }
 
 /// Destroys the atom color map object.
-GraphicsAtomColorMap::~GraphicsAtomColorMap()
+AtomColorMap::~AtomColorMap()
 {
     delete d;
 }
 
 // --- Colors -------------------------------------------------------------- //
 /// Sets the color for \p element to \p color.
-void GraphicsAtomColorMap::setColor(const Element &element, const QColor &color)
+void AtomColorMap::setColor(const Element &element, const QColor &color)
 {
     d->colorMap[element.atomicNumber()] = color;
 }
 
 /// Returns the color for \p element.
-QColor GraphicsAtomColorMap::color(const Element &element) const
+QColor AtomColorMap::color(const Element &element) const
 {
     return d->colorMap.value(element.atomicNumber(), defaultColor());
 }
 
 /// Returns the color for \p atom.
-QColor GraphicsAtomColorMap::color(const Atom *atom) const
+QColor AtomColorMap::color(const Atom *atom) const
 {
     return color(atom->element());
 }
 
 /// Sets the default color to \p color.
-void GraphicsAtomColorMap::setDefaultColor(const QColor &color)
+void AtomColorMap::setDefaultColor(const QColor &color)
 {
     d->defaultColor = color;
 }
 
 /// Returns the default color for the color map.
-QColor GraphicsAtomColorMap::defaultColor() const
+QColor AtomColorMap::defaultColor() const
 {
     return d->defaultColor;
 }
 
 /// Fills the atom color map with the colors according to \p scheme.
-void GraphicsAtomColorMap::setColorScheme(ColorScheme scheme)
+void AtomColorMap::setColorScheme(ColorScheme scheme)
 {
     // clear existing color map
     d->colorMap.clear();

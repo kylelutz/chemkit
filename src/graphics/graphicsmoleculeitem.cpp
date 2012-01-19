@@ -58,7 +58,7 @@ public:
     bool hydrogensVisible;
     bool bondOrderVisible;
     bool atomColoredBonds;
-    GraphicsAtomColorMap *colorMap;
+    AtomColorMap *colorMap;
     QList<GraphicsAtomItem *> atomItems;
     QList<GraphicsBondItem *> bondItems;
     QList<const Atom *> hiddenAtoms;
@@ -103,7 +103,7 @@ GraphicsMoleculeItem::GraphicsMoleculeItem(const Molecule *molecule)
     d->bondOrderVisible = true;
     d->atomColoredBonds = true;
     d->displayType = BallAndStick;
-    d->colorMap = new GraphicsAtomColorMap(GraphicsAtomColorMap::DefaultColorScheme);
+    d->colorMap = new AtomColorMap(AtomColorMap::DefaultColorScheme);
 
     d->watcher->atomAdded.connect(boost::bind(&GraphicsMoleculeItem::atomAdded, this, _1));
     d->watcher->atomRemoved.connect(boost::bind(&GraphicsMoleculeItem::atomRemoved, this, _1));
@@ -309,7 +309,7 @@ bool GraphicsMoleculeItem::atomVisible(const Atom *atom) const
 }
 
 /// Sets the color map for the molecule item to \p colorMap.
-void GraphicsMoleculeItem::setAtomColorMap(GraphicsAtomColorMap *colorMap)
+void GraphicsMoleculeItem::setAtomColorMap(AtomColorMap *colorMap)
 {
     delete d->colorMap;
 
@@ -317,7 +317,7 @@ void GraphicsMoleculeItem::setAtomColorMap(GraphicsAtomColorMap *colorMap)
 }
 
 /// Returns the color map for the molecule item.
-GraphicsAtomColorMap* GraphicsMoleculeItem::atomColorMap() const
+AtomColorMap* GraphicsMoleculeItem::atomColorMap() const
 {
     return d->colorMap;
 }

@@ -33,8 +33,8 @@
 **
 ******************************************************************************/
 
-#ifndef CHEMKIT_GRAPHICSATOMCOLORMAP_H
-#define CHEMKIT_GRAPHICSATOMCOLORMAP_H
+#ifndef CHEMKIT_ATOMCOLORMAP_H
+#define CHEMKIT_ATOMCOLORMAP_H
 
 #include "widgets.h"
 
@@ -44,9 +44,9 @@ namespace chemkit {
 
 class Atom;
 class Element;
-class GraphicsAtomColorMapPrivate;
+class AtomColorMapPrivate;
 
-class CHEMKIT_WIDGETS_EXPORT GraphicsAtomColorMap
+class CHEMKIT_WIDGETS_EXPORT AtomColorMap
 {
 public:
     // enumerations
@@ -58,10 +58,10 @@ public:
     };
 
     // construction and destruction
-    GraphicsAtomColorMap();
-    GraphicsAtomColorMap(ColorScheme scheme);
-    GraphicsAtomColorMap(const GraphicsAtomColorMap &colorMap);
-    virtual ~GraphicsAtomColorMap();
+    AtomColorMap();
+    AtomColorMap(ColorScheme scheme);
+    AtomColorMap(const AtomColorMap &colorMap);
+    virtual ~AtomColorMap();
 
     // colors
     void setColor(const Element &element, const QColor &color);
@@ -72,9 +72,9 @@ public:
     void setColorScheme(ColorScheme scheme);
 
 private:
-    GraphicsAtomColorMapPrivate* const d;
+    AtomColorMapPrivate* const d;
 };
 
 } // end chemkit namespace
 
-#endif // CHEMKIT_GRAPHICSATOMCOLORMAP_H
+#endif // CHEMKIT_ATOMCOLORMAP_H

@@ -255,7 +255,7 @@ class GraphicsMolecularSurfaceItemPrivate
 public:
     MolecularSurface *surface;
     QColor color;
-    GraphicsAtomColorMap *colorMap;
+    AtomColorMap *colorMap;
     GraphicsMolecularSurfaceItem::ColorMode colorMode;
     QList<ContactPatchItem *> contactPatches;
 };
@@ -286,7 +286,7 @@ GraphicsMolecularSurfaceItem::GraphicsMolecularSurfaceItem(const Molecule *molec
     d->surface = new MolecularSurface(molecule, MolecularSurface::SolventExcluded);
     d->color = Qt::red;
     d->colorMode = AtomColor;
-    d->colorMap = new GraphicsAtomColorMap(GraphicsAtomColorMap::DefaultColorScheme);
+    d->colorMap = new AtomColorMap(AtomColorMap::DefaultColorScheme);
 
     setMolecule(molecule);
 }
@@ -299,7 +299,7 @@ GraphicsMolecularSurfaceItem::GraphicsMolecularSurfaceItem(const MolecularSurfac
     d->surface = new MolecularSurface(surface->molecule(), MolecularSurface::SolventExcluded);
     d->color = Qt::red;
     d->colorMode = AtomColor;
-    d->colorMap = new GraphicsAtomColorMap(GraphicsAtomColorMap::DefaultColorScheme);
+    d->colorMap = new AtomColorMap(AtomColorMap::DefaultColorScheme);
 
     setSurface(surface);
 }
@@ -422,7 +422,7 @@ GraphicsMolecularSurfaceItem::ColorMode GraphicsMolecularSurfaceItem::colorMode(
 }
 
 /// Sets the color map for the surface item to \p colorMap.
-void GraphicsMolecularSurfaceItem::setAtomColorMap(GraphicsAtomColorMap *colorMap)
+void GraphicsMolecularSurfaceItem::setAtomColorMap(AtomColorMap *colorMap)
 {
     delete d->colorMap;
 
@@ -430,7 +430,7 @@ void GraphicsMolecularSurfaceItem::setAtomColorMap(GraphicsAtomColorMap *colorMa
 }
 
 /// Returns the color map for the surface item.
-GraphicsAtomColorMap* GraphicsMolecularSurfaceItem::colorMap() const
+AtomColorMap* GraphicsMolecularSurfaceItem::colorMap() const
 {
     return d->colorMap;
 }
