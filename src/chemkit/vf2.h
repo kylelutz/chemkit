@@ -1,6 +1,6 @@
 /******************************************************************************
 **
-** Copyright (C) 2009-2011 Kyle Lutz <kyle.r.lutz@gmail.com>
+** Copyright (C) 2009-2012 Kyle Lutz <kyle.r.lutz@gmail.com>
 ** All rights reserved.
 **
 ** This file is a part of the chemkit project. For more information
@@ -108,8 +108,8 @@ private:
     std::pair<T, T> m_lastAddition;
     SharedState<T> *m_sharedState;
     bool m_ownSharedState;
-    const VertexComparator &m_compareVerticies;
-    const EdgeComparator &m_compareEdges;
+    VertexComparator m_compareVerticies;
+    EdgeComparator m_compareEdges;
 };
 
 template<typename T, typename VertexComparator, typename EdgeComparator>
