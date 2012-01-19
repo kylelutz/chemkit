@@ -103,6 +103,7 @@ void PubChemTest::name()
     chemkit::Fingerprint *fingerprint = chemkit::Fingerprint::create("pubchem");
     QVERIFY(fingerprint != 0);
     QCOMPARE(fingerprint->name(), std::string("pubchem"));
+    delete fingerprint;
 }
 
 void PubChemTest::test_data()
