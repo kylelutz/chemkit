@@ -1,6 +1,6 @@
 /******************************************************************************
 **
-** Copyright (C) 2009-2011 Kyle Lutz <kyle.r.lutz@gmail.com>
+** Copyright (C) 2009-2012 Kyle Lutz <kyle.r.lutz@gmail.com>
 ** All rights reserved.
 **
 ** This file is a part of the chemkit project. For more information
@@ -33,7 +33,7 @@
 **
 ******************************************************************************/
 
-#include "smilesplugin.h"
+#include <chemkit/plugin.h>
 
 #ifdef CHEMKIT_WITH_IO
 #include <chemkit/moleculefileformatadaptor.h>
@@ -42,22 +42,26 @@
 #include "smileslineformat.h"
 #include "smilesaromaticitymodel.h"
 
-SmilesPlugin::SmilesPlugin()
-    : chemkit::Plugin("smiles")
+class SmilesPlugin : public chemkit::Plugin
 {
-    CHEMKIT_REGISTER_LINE_FORMAT("smiles", SmilesLineFormat);
-    CHEMKIT_REGISTER_AROMATICITY_MODEL("smiles", SmilesAromaticityModel);
+public:
+    SmilesPlugin()
+        : chemkit::Plugin("smiles")
+    {
+        CHEMKIT_REGISTER_LINE_FORMAT("smiles", SmilesLineFormat);
+        CHEMKIT_REGISTER_AROMATICITY_MODEL("smiles", SmilesAromaticityModel);
 
-#ifdef CHEMKIT_WITH_IO
-    registerPluginClass<chemkit::MoleculeFileFormat>("smi", createSmiFormat);
-#endif
-}
+        #ifdef CHEMKIT_WITH_IO
+        registerPluginClass<chemkit::MoleculeFileFormat>("smi", createSmiFormat);
+        #endif
+    }
 
-#ifdef CHEMKIT_WITH_IO
-chemkit::MoleculeFileFormat* SmilesPlugin::createSmiFormat()
-{
-    return new chemkit::MoleculeFileFormatAdaptor<chemkit::LineFormat>(new SmilesLineFormat, "smi");
-}
-#endif
+    #ifdef CHEMKIT_WITH_IO
+    static chemkit::MoleculeFileFormat* createSmiFormat()
+    {
+        return new chemkit::MoleculeFileFormatAdaptor<chemkit::LineFormat>(new SmilesLineFormat, "smi");
+    }
+    #endif
+};
 
 CHEMKIT_EXPORT_PLUGIN(smiles, SmilesPlugin)

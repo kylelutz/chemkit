@@ -1,6 +1,6 @@
 /******************************************************************************
 **
-** Copyright (C) 2009-2011 Kyle Lutz <kyle.r.lutz@gmail.com>
+** Copyright (C) 2009-2012 Kyle Lutz <kyle.r.lutz@gmail.com>
 ** All rights reserved.
 **
 ** This file is a part of the chemkit project. For more information
@@ -33,14 +33,18 @@
 **
 ******************************************************************************/
 
-#include "pdbmlplugin.h"
+#include <chemkit/plugin.h>
 
 #include "pdbmlfileformat.h"
 
-PdbmlPlugin::PdbmlPlugin()
-    : chemkit::Plugin("pdbml")
+class PdbmlPlugin : public chemkit::Plugin
 {
-    CHEMKIT_REGISTER_POLYMER_FILE_FORMAT("pdbml", PdbmlFileFormat);
-}
+public:
+    PdbmlPlugin()
+        : chemkit::Plugin("pdbml")
+    {
+        CHEMKIT_REGISTER_POLYMER_FILE_FORMAT("pdbml", PdbmlFileFormat);
+    }
+};
 
 CHEMKIT_EXPORT_PLUGIN(pdbml, PdbmlPlugin)

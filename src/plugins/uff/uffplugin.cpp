@@ -1,6 +1,6 @@
 /******************************************************************************
 **
-** Copyright (C) 2009-2011 Kyle Lutz <kyle.r.lutz@gmail.com>
+** Copyright (C) 2009-2012 Kyle Lutz <kyle.r.lutz@gmail.com>
 ** All rights reserved.
 **
 ** This file is a part of the chemkit project. For more information
@@ -33,24 +33,27 @@
 **
 ******************************************************************************/
 
-#include "uffplugin.h"
-
+#include <chemkit/plugin.h>
 #include <chemkit/forcefieldenergydescriptor.h>
 
 #include "uffatomtyper.h"
 #include "uffforcefield.h"
 
-UffPlugin::UffPlugin()
-    : chemkit::Plugin("uff")
+class UffPlugin : public chemkit::Plugin
 {
-    CHEMKIT_REGISTER_ATOM_TYPER("uff", UffAtomTyper);
-    CHEMKIT_REGISTER_FORCE_FIELD("uff", UffForceField);
-    registerPluginClass<chemkit::MolecularDescriptor>("uff-energy", createUffEnergyDescriptor);
-}
+public:
+    UffPlugin()
+        : chemkit::Plugin("uff")
+    {
+        CHEMKIT_REGISTER_ATOM_TYPER("uff", UffAtomTyper);
+        CHEMKIT_REGISTER_FORCE_FIELD("uff", UffForceField);
+        registerPluginClass<chemkit::MolecularDescriptor>("uff-energy", createUffEnergyDescriptor);
+    }
 
-chemkit::MolecularDescriptor* UffPlugin::createUffEnergyDescriptor()
-{
-    return new chemkit::ForceFieldEnergyDescriptor<UffForceField>("uff-energy");
-}
+    static chemkit::MolecularDescriptor* createUffEnergyDescriptor()
+    {
+        return new chemkit::ForceFieldEnergyDescriptor<UffForceField>("uff-energy");
+    }
+};
 
 CHEMKIT_EXPORT_PLUGIN(uff, UffPlugin)

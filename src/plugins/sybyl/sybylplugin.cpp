@@ -1,6 +1,6 @@
 /******************************************************************************
 **
-** Copyright (C) 2009-2011 Kyle Lutz <kyle.r.lutz@gmail.com>
+** Copyright (C) 2009-2012 Kyle Lutz <kyle.r.lutz@gmail.com>
 ** All rights reserved.
 **
 ** This file is a part of the chemkit project. For more information
@@ -33,7 +33,7 @@
 **
 ******************************************************************************/
 
-#include "sybylplugin.h"
+#include <chemkit/plugin.h>
 
 #include "sybylatomtyper.h"
 
@@ -41,14 +41,18 @@
 #include "mol2fileformat.h"
 #endif
 
-SybylPlugin::SybylPlugin()
-    : chemkit::Plugin("sybyl")
+class SybylPlugin : public chemkit::Plugin
 {
-    CHEMKIT_REGISTER_ATOM_TYPER("sybyl", SybylAtomTyper);
+public:
+    SybylPlugin()
+        : chemkit::Plugin("sybyl")
+    {
+        CHEMKIT_REGISTER_ATOM_TYPER("sybyl", SybylAtomTyper);
 
-#ifdef CHEMKIT_WITH_IO
-    CHEMKIT_REGISTER_MOLECULE_FILE_FORMAT("mol2", Mol2FileFormat);
-#endif
-}
+        #ifdef CHEMKIT_WITH_IO
+        CHEMKIT_REGISTER_MOLECULE_FILE_FORMAT("mol2", Mol2FileFormat);
+        #endif
+    }
+};
 
 CHEMKIT_EXPORT_PLUGIN(sybyl, SybylPlugin)

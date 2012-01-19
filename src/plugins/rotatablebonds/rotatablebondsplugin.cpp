@@ -1,6 +1,6 @@
 /******************************************************************************
 **
-** Copyright (C) 2009-2011 Kyle Lutz <kyle.r.lutz@gmail.com>
+** Copyright (C) 2009-2012 Kyle Lutz <kyle.r.lutz@gmail.com>
 ** All rights reserved.
 **
 ** This file is a part of the chemkit project. For more information
@@ -33,14 +33,18 @@
 **
 ******************************************************************************/
 
-#include "rotatablebondsplugin.h"
+#include <chemkit/plugin.h>
 
 #include "rotatablebondsdescriptor.h"
 
-RotatableBondsPlugin::RotatableBondsPlugin()
-    : chemkit::Plugin("rotatablebonds")
+class RotatableBondsPlugin : public chemkit::Plugin
 {
-    CHEMKIT_REGISTER_MOLECULAR_DESCRIPTOR("rotatable-bonds", RotatableBondsDescriptor);
-}
+public:
+    RotatableBondsPlugin()
+        : chemkit::Plugin("rotatablebonds")
+    {
+        CHEMKIT_REGISTER_MOLECULAR_DESCRIPTOR("rotatable-bonds", RotatableBondsDescriptor);
+    }
+};
 
 CHEMKIT_EXPORT_PLUGIN(rotatablebonds, RotatableBondsPlugin)

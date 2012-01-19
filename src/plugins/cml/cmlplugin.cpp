@@ -1,6 +1,6 @@
 /******************************************************************************
 **
-** Copyright (C) 2009-2011 Kyle Lutz <kyle.r.lutz@gmail.com>
+** Copyright (C) 2009-2012 Kyle Lutz <kyle.r.lutz@gmail.com>
 ** All rights reserved.
 **
 ** This file is a part of the chemkit project. For more information
@@ -33,14 +33,18 @@
 **
 ******************************************************************************/
 
-#include "cmlplugin.h"
+#include <chemkit/plugin.h>
 
 #include "cmlfileformat.h"
 
-CmlPlugin::CmlPlugin()
-    : chemkit::Plugin("cml")
+class CmlPlugin : public chemkit::Plugin
 {
-    CHEMKIT_REGISTER_MOLECULE_FILE_FORMAT("cml", CmlFileFormat);
-}
+public:
+    CmlPlugin()
+        : chemkit::Plugin("cml")
+    {
+        CHEMKIT_REGISTER_MOLECULE_FILE_FORMAT("cml", CmlFileFormat);
+    }
+};
 
 CHEMKIT_EXPORT_PLUGIN(cml, CmlPlugin)

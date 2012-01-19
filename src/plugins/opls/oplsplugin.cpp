@@ -1,6 +1,6 @@
 /******************************************************************************
 **
-** Copyright (C) 2009-2011 Kyle Lutz <kyle.r.lutz@gmail.com>
+** Copyright (C) 2009-2012 Kyle Lutz <kyle.r.lutz@gmail.com>
 ** All rights reserved.
 **
 ** This file is a part of the chemkit project. For more information
@@ -33,24 +33,27 @@
 **
 ******************************************************************************/
 
-#include "oplsplugin.h"
-
+#include <chemkit/plugin.h>
 #include <chemkit/forcefieldenergydescriptor.h>
 
 #include "oplsatomtyper.h"
 #include "oplsforcefield.h"
 
-OplsPlugin::OplsPlugin()
-    : chemkit::Plugin("opls")
+class OplsPlugin : public chemkit::Plugin
 {
-    CHEMKIT_REGISTER_ATOM_TYPER("opls", OplsAtomTyper);
-    CHEMKIT_REGISTER_FORCE_FIELD("opls", OplsForceField);
-    registerPluginClass<chemkit::MolecularDescriptor>("opls-energy", createOplsEnergyDescriptor);
-}
+public:
+    OplsPlugin()
+        : chemkit::Plugin("opls")
+    {
+        CHEMKIT_REGISTER_ATOM_TYPER("opls", OplsAtomTyper);
+        CHEMKIT_REGISTER_FORCE_FIELD("opls", OplsForceField);
+        registerPluginClass<chemkit::MolecularDescriptor>("opls-energy", createOplsEnergyDescriptor);
+    }
 
-chemkit::MolecularDescriptor* OplsPlugin::createOplsEnergyDescriptor()
-{
-    return new chemkit::ForceFieldEnergyDescriptor<OplsForceField>("opls-energy");
-}
+    static chemkit::MolecularDescriptor* createOplsEnergyDescriptor()
+    {
+        return new chemkit::ForceFieldEnergyDescriptor<OplsForceField>("opls-energy");
+    }
+};
 
 CHEMKIT_EXPORT_PLUGIN(opls, OplsPlugin)

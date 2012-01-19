@@ -1,6 +1,6 @@
 /******************************************************************************
 **
-** Copyright (C) 2009-2011 Kyle Lutz <kyle.r.lutz@gmail.com>
+** Copyright (C) 2009-2012 Kyle Lutz <kyle.r.lutz@gmail.com>
 ** All rights reserved.
 **
 ** This file is a part of the chemkit project. For more information
@@ -33,7 +33,7 @@
 **
 ******************************************************************************/
 
-#include "inchiplugin.h"
+#include <chemkit/plugin.h>
 
 #ifdef CHEMKIT_WITH_IO
 #include <chemkit/moleculefileformatadaptor.h>
@@ -42,22 +42,26 @@
 #include "inchilineformat.h"
 #include "inchikeylineformat.h"
 
-InchiPlugin::InchiPlugin()
-    : chemkit::Plugin("inchi")
+class InchiPlugin : public chemkit::Plugin
 {
-    CHEMKIT_REGISTER_LINE_FORMAT("inchi", InchiLineFormat);
-    CHEMKIT_REGISTER_LINE_FORMAT("inchikey", InchiKeyLineFormat);
+public:
+    InchiPlugin()
+        : chemkit::Plugin("inchi")
+    {
+        CHEMKIT_REGISTER_LINE_FORMAT("inchi", InchiLineFormat);
+        CHEMKIT_REGISTER_LINE_FORMAT("inchikey", InchiKeyLineFormat);
 
-#ifdef CHEMKIT_WITH_IO
-    registerPluginClass<chemkit::MoleculeFileFormat>("inchi", createInchiFileFormat);
-#endif
-}
+        #ifdef CHEMKIT_WITH_IO
+        registerPluginClass<chemkit::MoleculeFileFormat>("inchi", createInchiFileFormat);
+        #endif
+    }
 
-#ifdef CHEMKIT_WITH_IO
-chemkit::MoleculeFileFormat* InchiPlugin::createInchiFileFormat()
-{
-    return new chemkit::MoleculeFileFormatAdaptor<chemkit::LineFormat>(new InchiLineFormat);
-}
-#endif
+    #ifdef CHEMKIT_WITH_IO
+    static chemkit::MoleculeFileFormat* createInchiFileFormat()
+    {
+        return new chemkit::MoleculeFileFormatAdaptor<chemkit::LineFormat>(new InchiLineFormat);
+    }
+    #endif
+};
 
 CHEMKIT_EXPORT_PLUGIN(inchi, InchiPlugin)

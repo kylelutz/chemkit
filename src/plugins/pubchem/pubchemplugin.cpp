@@ -33,14 +33,18 @@
 **
 ******************************************************************************/
 
-#include "pubchemplugin.h"
+#include <chemkit/plugin.h>
 
 #include "pubchemfingerprint.h"
 
-PubChemPlugin::PubChemPlugin()
-    : chemkit::Plugin("pubchem")
+class PubChemPlugin : public chemkit::Plugin
 {
-    CHEMKIT_REGISTER_FINGERPRINT("pubchem", PubChemFingerprint);
-}
+public:
+    PubChemPlugin()
+        : chemkit::Plugin("pubchem")
+    {
+        CHEMKIT_REGISTER_FINGERPRINT("pubchem", PubChemFingerprint);
+    }
+};
 
 CHEMKIT_EXPORT_PLUGIN(pubchem, PubChemPlugin)

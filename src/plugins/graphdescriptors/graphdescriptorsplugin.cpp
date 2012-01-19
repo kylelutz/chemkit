@@ -1,6 +1,6 @@
 /******************************************************************************
 **
-** Copyright (C) 2009-2011 Kyle Lutz <kyle.r.lutz@gmail.com>
+** Copyright (C) 2009-2012 Kyle Lutz <kyle.r.lutz@gmail.com>
 ** All rights reserved.
 **
 ** This file is a part of the chemkit project. For more information
@@ -33,18 +33,22 @@
 **
 ******************************************************************************/
 
-#include "graphdescriptorsplugin.h"
+#include <chemkit/plugin.h>
 
 #include "graphdescriptors.h"
 
-GraphDescriptorsPlugin::GraphDescriptorsPlugin()
-    : chemkit::Plugin("graphdescriptors")
+class GraphDescriptorsPlugin : public chemkit::Plugin
 {
-    CHEMKIT_REGISTER_MOLECULAR_DESCRIPTOR("graph-density", GraphDensityDescriptor);
-    CHEMKIT_REGISTER_MOLECULAR_DESCRIPTOR("graph-diameter", GraphDiameterDescriptor);
-    CHEMKIT_REGISTER_MOLECULAR_DESCRIPTOR("graph-order", GraphOrderDescriptor);
-    CHEMKIT_REGISTER_MOLECULAR_DESCRIPTOR("graph-radius", GraphRadiusDescriptor);
-    CHEMKIT_REGISTER_MOLECULAR_DESCRIPTOR("graph-size", GraphSizeDescriptor);
-}
+public:
+    GraphDescriptorsPlugin()
+        : chemkit::Plugin("graphdescriptors")
+    {
+        CHEMKIT_REGISTER_MOLECULAR_DESCRIPTOR("graph-density", GraphDensityDescriptor);
+        CHEMKIT_REGISTER_MOLECULAR_DESCRIPTOR("graph-diameter", GraphDiameterDescriptor);
+        CHEMKIT_REGISTER_MOLECULAR_DESCRIPTOR("graph-order", GraphOrderDescriptor);
+        CHEMKIT_REGISTER_MOLECULAR_DESCRIPTOR("graph-radius", GraphRadiusDescriptor);
+        CHEMKIT_REGISTER_MOLECULAR_DESCRIPTOR("graph-size", GraphSizeDescriptor);
+    }
+};
 
 CHEMKIT_EXPORT_PLUGIN(graphdescriptors, GraphDescriptorsPlugin)

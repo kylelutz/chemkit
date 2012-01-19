@@ -1,6 +1,6 @@
 /******************************************************************************
 **
-** Copyright (C) 2009-2011 Kyle Lutz <kyle.r.lutz@gmail.com>
+** Copyright (C) 2009-2012 Kyle Lutz <kyle.r.lutz@gmail.com>
 ** All rights reserved.
 **
 ** This file is a part of the chemkit project. For more information
@@ -33,14 +33,18 @@
 **
 ******************************************************************************/
 
-#include "mcdlplugin.h"
+#include <chemkit/plugin.h>
 
 #include "mcdllineformat.h"
 
-McdlPlugin::McdlPlugin()
-    : chemkit::Plugin("mcdl")
+class McdlPlugin : public chemkit::Plugin
 {
-    CHEMKIT_REGISTER_LINE_FORMAT("mcdl", McdlLineFormat);
-}
+public:
+    McdlPlugin()
+        : chemkit::Plugin("mcdl")
+    {
+        CHEMKIT_REGISTER_LINE_FORMAT("mcdl", McdlLineFormat);
+    }
+};
 
 CHEMKIT_EXPORT_PLUGIN(mcdl, McdlPlugin)

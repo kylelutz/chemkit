@@ -1,6 +1,6 @@
 /******************************************************************************
 **
-** Copyright (C) 2009-2011 Kyle Lutz <kyle.r.lutz@gmail.com>
+** Copyright (C) 2009-2012 Kyle Lutz <kyle.r.lutz@gmail.com>
 ** All rights reserved.
 **
 ** This file is a part of the chemkit project. For more information
@@ -33,14 +33,18 @@
 **
 ******************************************************************************/
 
-#include "randicindexplugin.h"
+#include <chemkit/plugin.h>
 
 #include "randicindexdescriptor.h"
 
-RandicIndexPlugin::RandicIndexPlugin()
-    : chemkit::Plugin("randicindex")
+class RandicIndexPlugin : public chemkit::Plugin
 {
-    CHEMKIT_REGISTER_MOLECULAR_DESCRIPTOR("randic-index", RandicIndexDescriptor);
-}
+public:
+    RandicIndexPlugin()
+        : chemkit::Plugin("randicindex")
+    {
+        CHEMKIT_REGISTER_MOLECULAR_DESCRIPTOR("randic-index", RandicIndexDescriptor);
+    }
+};
 
 CHEMKIT_EXPORT_PLUGIN(randicindex, RandicIndexPlugin)

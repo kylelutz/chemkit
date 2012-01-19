@@ -1,6 +1,6 @@
 /******************************************************************************
 **
-** Copyright (C) 2009-2011 Kyle Lutz <kyle.r.lutz@gmail.com>
+** Copyright (C) 2009-2012 Kyle Lutz <kyle.r.lutz@gmail.com>
 ** All rights reserved.
 **
 ** This file is a part of the chemkit project. For more information
@@ -33,16 +33,20 @@
 **
 ******************************************************************************/
 
-#include "hydrogenbondsplugin.h"
+#include <chemkit/plugin.h>
 
 #include "hydrogenbonddonorsdescriptor.h"
 #include "hydrogenbondacceptorsdescriptor.h"
 
-HydrogenBondsPlugin::HydrogenBondsPlugin()
-    : chemkit::Plugin("hydrogenbonds")
+class HydrogenBondsPlugin : public chemkit::Plugin
 {
-    CHEMKIT_REGISTER_MOLECULAR_DESCRIPTOR("hydrogen-bond-donors", HydrogenBondDonorsDescriptor);
-    CHEMKIT_REGISTER_MOLECULAR_DESCRIPTOR("hydrogen-bond-acceptors", HydrogenBondAcceptorsDescriptor);
-}
+public:
+    HydrogenBondsPlugin()
+        : chemkit::Plugin("hydrogenbonds")
+    {
+        CHEMKIT_REGISTER_MOLECULAR_DESCRIPTOR("hydrogen-bond-donors", HydrogenBondDonorsDescriptor);
+        CHEMKIT_REGISTER_MOLECULAR_DESCRIPTOR("hydrogen-bond-acceptors", HydrogenBondAcceptorsDescriptor);
+    }
+};
 
 CHEMKIT_EXPORT_PLUGIN(hydrogenbonds, HydrogenBondsPlugin)

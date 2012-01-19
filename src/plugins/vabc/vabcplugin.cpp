@@ -33,14 +33,18 @@
 **
 ******************************************************************************/
 
-#include "vabcplugin.h"
+#include <chemkit/plugin.h>
 
 #include "vabcdescriptor.h"
 
-VabcPlugin::VabcPlugin()
-    : chemkit::Plugin("vabc")
+class VabcPlugin : public chemkit::Plugin
 {
-    CHEMKIT_REGISTER_MOLECULAR_DESCRIPTOR("vabc", VabcDescriptor);
-}
+public:
+    VabcPlugin()
+        : chemkit::Plugin("vabc")
+    {
+        CHEMKIT_REGISTER_MOLECULAR_DESCRIPTOR("vabc", VabcDescriptor);
+    }
+};
 
 CHEMKIT_EXPORT_PLUGIN(vabc, VabcPlugin)

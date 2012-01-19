@@ -1,6 +1,6 @@
 /******************************************************************************
 **
-** Copyright (C) 2009-2011 Kyle Lutz <kyle.r.lutz@gmail.com>
+** Copyright (C) 2009-2012 Kyle Lutz <kyle.r.lutz@gmail.com>
 ** All rights reserved.
 **
 ** This file is a part of the chemkit project. For more information
@@ -33,14 +33,18 @@
 **
 ******************************************************************************/
 
-#include "cubeplugin.h"
+#include <chemkit/plugin.h>
 
 #include "cubefileformat.h"
 
-CubePlugin::CubePlugin()
-    : chemkit::Plugin("cube")
+class CubePlugin : public chemkit::Plugin
 {
-    CHEMKIT_REGISTER_MOLECULE_FILE_FORMAT("cube", CubeFileFormat);
-}
+public:
+    CubePlugin()
+        : chemkit::Plugin("cube")
+    {
+        CHEMKIT_REGISTER_MOLECULE_FILE_FORMAT("cube", CubeFileFormat);
+    }
+};
 
 CHEMKIT_EXPORT_PLUGIN(cube, CubePlugin)

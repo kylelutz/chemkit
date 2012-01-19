@@ -1,6 +1,6 @@
 /******************************************************************************
 **
-** Copyright (C) 2009-2011 Kyle Lutz <kyle.r.lutz@gmail.com>
+** Copyright (C) 2009-2012 Kyle Lutz <kyle.r.lutz@gmail.com>
 ** All rights reserved.
 **
 ** This file is a part of the chemkit project. For more information
@@ -33,14 +33,18 @@
 **
 ******************************************************************************/
 
-#include "wienerindexplugin.h"
+#include <chemkit/plugin.h>
 
 #include "wienerindexdescriptor.h"
 
-WienerIndexPlugin::WienerIndexPlugin()
-    : chemkit::Plugin("wienerindex")
+class WienerIndexPlugin : public chemkit::Plugin
 {
-    CHEMKIT_REGISTER_MOLECULAR_DESCRIPTOR("wiener-index", WienerIndexDescriptor);
-}
+public:
+    WienerIndexPlugin()
+        : chemkit::Plugin("wienerindex")
+    {
+        CHEMKIT_REGISTER_MOLECULAR_DESCRIPTOR("wiener-index", WienerIndexDescriptor);
+    }
+};
 
 CHEMKIT_EXPORT_PLUGIN(wienerindex, WienerIndexPlugin)

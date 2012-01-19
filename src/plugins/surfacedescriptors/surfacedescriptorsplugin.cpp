@@ -1,6 +1,6 @@
 /******************************************************************************
 **
-** Copyright (C) 2009-2011 Kyle Lutz <kyle.r.lutz@gmail.com>
+** Copyright (C) 2009-2012 Kyle Lutz <kyle.r.lutz@gmail.com>
 ** All rights reserved.
 **
 ** This file is a part of the chemkit project. For more information
@@ -33,17 +33,21 @@
 **
 ******************************************************************************/
 
-#include "surfacedescriptorsplugin.h"
+#include <chemkit/plugin.h>
 
 #include "surfacedescriptors.h"
 
-SurfaceDescriptorsPlugin::SurfaceDescriptorsPlugin()
-    : chemkit::Plugin("surfacedescriptors")
+class SurfaceDescriptorsPlugin : public chemkit::Plugin
 {
-    CHEMKIT_REGISTER_MOLECULAR_DESCRIPTOR("vdw-area", VanDerWallsAreaDescriptor);
-    CHEMKIT_REGISTER_MOLECULAR_DESCRIPTOR("vdw-volume", VanDerWallsVolumeDescriptor);
-    CHEMKIT_REGISTER_MOLECULAR_DESCRIPTOR("sas-area", SolventAccessibleAreaDescriptor);
-    CHEMKIT_REGISTER_MOLECULAR_DESCRIPTOR("sas-volume", SolventAccessibleVolumeDescriptor);
-}
+public:
+    SurfaceDescriptorsPlugin()
+        : chemkit::Plugin("surfacedescriptors")
+    {
+        CHEMKIT_REGISTER_MOLECULAR_DESCRIPTOR("vdw-area", VanDerWallsAreaDescriptor);
+        CHEMKIT_REGISTER_MOLECULAR_DESCRIPTOR("vdw-volume", VanDerWallsVolumeDescriptor);
+        CHEMKIT_REGISTER_MOLECULAR_DESCRIPTOR("sas-area", SolventAccessibleAreaDescriptor);
+        CHEMKIT_REGISTER_MOLECULAR_DESCRIPTOR("sas-volume", SolventAccessibleVolumeDescriptor);
+    }
+};
 
 CHEMKIT_EXPORT_PLUGIN(surfacedescriptors, SurfaceDescriptorsPlugin)

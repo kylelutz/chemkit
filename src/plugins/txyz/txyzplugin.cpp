@@ -1,6 +1,6 @@
 /******************************************************************************
 **
-** Copyright (C) 2009-2011 Kyle Lutz <kyle.r.lutz@gmail.com>
+** Copyright (C) 2009-2012 Kyle Lutz <kyle.r.lutz@gmail.com>
 ** All rights reserved.
 **
 ** This file is a part of the chemkit project. For more information
@@ -33,14 +33,18 @@
 **
 ******************************************************************************/
 
-#include "txyzplugin.h"
+#include <chemkit/plugin.h>
 
 #include "txyzfileformat.h"
 
-TxyzPlugin::TxyzPlugin()
-    : chemkit::Plugin("txyz")
+class TxyzPlugin : public chemkit::Plugin
 {
-    CHEMKIT_REGISTER_MOLECULE_FILE_FORMAT("txyz", TxyzFileFormat);
-}
+public:
+    TxyzPlugin()
+        : chemkit::Plugin("txyz")
+    {
+        CHEMKIT_REGISTER_MOLECULE_FILE_FORMAT("txyz", TxyzFileFormat);
+    }
+};
 
 CHEMKIT_EXPORT_PLUGIN(txyz, TxyzPlugin)

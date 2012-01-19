@@ -1,6 +1,6 @@
 /******************************************************************************
 **
-** Copyright (C) 2009-2011 Kyle Lutz <kyle.r.lutz@gmail.com>
+** Copyright (C) 2009-2012 Kyle Lutz <kyle.r.lutz@gmail.com>
 ** All rights reserved.
 **
 ** This file is a part of the chemkit project. For more information
@@ -33,17 +33,21 @@
 **
 ******************************************************************************/
 
-#include "countdescriptorsplugin.h"
+#include <chemkit/plugin.h>
 
 #include "countdescriptors.h"
 
-CountDescriptorsPlugin::CountDescriptorsPlugin()
-    : chemkit::Plugin("countdescriptors")
+class CountDescriptorsPlugin: public chemkit::Plugin
 {
-    CHEMKIT_REGISTER_MOLECULAR_DESCRIPTOR("atom-count", AtomCountDescriptor);
-    CHEMKIT_REGISTER_MOLECULAR_DESCRIPTOR("heavy-atom-count", HeavyAtomCountDescriptor);
-    CHEMKIT_REGISTER_MOLECULAR_DESCRIPTOR("bond-count", BondCountDescriptor);
-    CHEMKIT_REGISTER_MOLECULAR_DESCRIPTOR("ring-count", RingCountDescriptor);
-}
+public:
+    CountDescriptorsPlugin()
+        : chemkit::Plugin("countdescriptors")
+    {
+        CHEMKIT_REGISTER_MOLECULAR_DESCRIPTOR("atom-count", AtomCountDescriptor);
+        CHEMKIT_REGISTER_MOLECULAR_DESCRIPTOR("heavy-atom-count", HeavyAtomCountDescriptor);
+        CHEMKIT_REGISTER_MOLECULAR_DESCRIPTOR("bond-count", BondCountDescriptor);
+        CHEMKIT_REGISTER_MOLECULAR_DESCRIPTOR("ring-count", RingCountDescriptor);
+    }
+};
 
 CHEMKIT_EXPORT_PLUGIN(countdescriptors, CountDescriptorsPlugin)
