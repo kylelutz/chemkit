@@ -190,6 +190,12 @@ bool Bond::isTerminal() const
 }
 
 // --- Ring Perception ----------------------------------------------------- //
+/// Returns the ring at \p index for the bond.
+Ring* Bond::ring(size_t index) const
+{
+    return rings().advance_begin(index).front();
+}
+
 /// Returns a range containing all of the rings that contain the
 /// bond.
 ///
