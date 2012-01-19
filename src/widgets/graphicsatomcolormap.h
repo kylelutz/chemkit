@@ -1,6 +1,6 @@
 /******************************************************************************
 **
-** Copyright (C) 2009-2011 Kyle Lutz <kyle.r.lutz@gmail.com>
+** Copyright (C) 2009-2012 Kyle Lutz <kyle.r.lutz@gmail.com>
 ** All rights reserved.
 **
 ** This file is a part of the chemkit project. For more information
@@ -36,7 +36,7 @@
 #ifndef CHEMKIT_GRAPHICSATOMCOLORMAP_H
 #define CHEMKIT_GRAPHICSATOMCOLORMAP_H
 
-#include "graphics.h"
+#include "widgets.h"
 
 #include <QColor>
 
@@ -46,7 +46,7 @@ class Atom;
 class Element;
 class GraphicsAtomColorMapPrivate;
 
-class CHEMKIT_GRAPHICS_EXPORT GraphicsAtomColorMap
+class CHEMKIT_WIDGETS_EXPORT GraphicsAtomColorMap
 {
 public:
     // enumerations

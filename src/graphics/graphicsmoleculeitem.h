@@ -40,11 +40,11 @@
 
 #include <chemkit/molecule.h>
 #include <chemkit/moleculewatcher.h>
+#include <chemkit/graphicsatomcolormap.h>
 
 #include "graphicsitem.h"
 #include "graphicsatomitem.h"
 #include "graphicsbonditem.h"
-#include "graphicsatomcolormap.h"
 
 namespace chemkit {
 

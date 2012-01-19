@@ -1,1 +1,1 @@
-#include "../../src/graphics/graphicsatomcolormap.h"
+#include "../../src/widgets/graphicsatomcolormap.h"

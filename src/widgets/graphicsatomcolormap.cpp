@@ -1,6 +1,6 @@
 /******************************************************************************
 **
-** Copyright (C) 2009-2011 Kyle Lutz <kyle.r.lutz@gmail.com>
+** Copyright (C) 2009-2012 Kyle Lutz <kyle.r.lutz@gmail.com>
 ** All rights reserved.
 **
 ** This file is a part of the chemkit project. For more information
@@ -52,7 +52,7 @@ public:
 
 // === GraphicsAtomColorMap ================================================ //
 /// \class GraphicsAtomColorMap graphicsatomcolormap.h chemkit/graphicsatomcolormap.h
-/// \ingroup chemkit-graphics
+/// \ingroup chemkit-widgets
 /// \brief The GraphicsAtomColorMap class contains a mapping of atoms
 ///        to colors.
 

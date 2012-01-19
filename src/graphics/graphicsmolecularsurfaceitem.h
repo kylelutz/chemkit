@@ -39,9 +39,9 @@
 #include "graphics.h"
 
 #include "graphicsitem.h"
-#include "graphicsatomcolormap.h"
 
 #include <chemkit/molecularsurface.h>
+#include <chemkit/graphicsatomcolormap.h>
 
 namespace chemkit {
 

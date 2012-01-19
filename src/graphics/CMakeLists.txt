@@ -12,7 +12,6 @@ include(${QT_USE_FILE})
 find_package(OpenGL REQUIRED)
 
 set(HEADERS
-  graphicsatomcolormap.h
   graphicsatomitem.h
   graphicsbonditem.h
   graphicscamera.h
@@ -45,7 +44,6 @@ set(HEADERS
 )
 
 set(SOURCES
-  graphicsatomcolormap.cpp
   graphicsatomitem.cpp
   graphicsbonditem.cpp
   graphicscamera.cpp
