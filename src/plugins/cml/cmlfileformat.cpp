@@ -97,10 +97,10 @@ bool CmlFileFormat::read(std::istream &input, chemkit::MoleculeFile *file)
                         molecule->addAtom(attr->value());
                     }
                     else if(strcmp(attr->name(), "x2") == 0){
-                        point2[0] = strtof(attr->value(), 0);
+                        point2[0] = static_cast<float>(strtod(attr->value(), 0));
                     }
                     else if(strcmp(attr->name(), "y2") == 0){
-                        point2[1] = strtof(attr->value(), 0);
+                        point2[1] = static_cast<float>(strtod(attr->value(), 0));
                     }
                     else if(strcmp(attr->name(), "x3") == 0){
                         point3[0] = strtod(attr->value(), 0);
