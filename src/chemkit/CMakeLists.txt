@@ -75,6 +75,7 @@ set(HEADERS
   substructurequery.h
   unitcell.h
   variant.h
+  variantmap.h
   variant-inline.h
   vector2.h
   vector3.h
