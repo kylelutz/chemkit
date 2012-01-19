@@ -370,6 +370,12 @@ bool Atom::isTerminalHydrogen() const
 }
 
 // --- Ring Perception ----------------------------------------------------- //
+/// Returns the ring at \p index for the atom.
+Ring* Atom::ring(size_t index) const
+{
+    return rings().advance_begin(index).front();
+}
+
 /// Returns a range containing all of the rings that contain the
 /// atom.
 ///

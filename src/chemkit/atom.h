@@ -118,6 +118,7 @@ public:
     bool isTerminalHydrogen() const;
 
     // ring perception
+    Ring* ring(size_t index) const;
     RingRange rings() const;
     size_t ringCount() const;
     bool isInRing() const;
