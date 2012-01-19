@@ -228,6 +228,12 @@ Fragment* Atom::fragment() const
 }
 
 // --- Structure ----------------------------------------------------------- //
+/// Returns the bond at \p index for the atom.
+Bond* Atom::bond(size_t index) const
+{
+    return bonds()[index];
+}
+
 /// Returns a range containing all of the bonds that the atom is a
 /// member of.
 Atom::BondRange Atom::bonds() const

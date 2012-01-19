@@ -101,6 +101,7 @@ public:
     inline size_t index() const;
 
     // structure
+    Bond* bond(size_t index) const;
     BondRange bonds() const;
     size_t bondCount() const;
     int valence() const;
