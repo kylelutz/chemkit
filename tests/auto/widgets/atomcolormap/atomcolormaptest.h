@@ -33,50 +33,19 @@
 **
 ******************************************************************************/
 
-#ifndef CHEMKIT_ATOMCOLORMAP_H
-#define CHEMKIT_ATOMCOLORMAP_H
+#ifndef ATOMCOLORMAPTEST_H
+#define ATOMCOLORMAPTEST_H
 
-#include "widgets.h"
+#include <QtTest>
 
-#include <QColor>
-
-#include <chemkit/element.h>
-
-namespace chemkit {
-
-class Atom;
-class Element;
-class AtomColorMapPrivate;
-
-class CHEMKIT_WIDGETS_EXPORT AtomColorMap
+class AtomColorMapTest : public QObject
 {
-public:
-    // enumerations
-    enum ColorScheme {
-        DefaultColorScheme,
-        RasmolColorScheme,
-        PymolColorScheme,
-        JmolColorScheme
-    };
+    Q_OBJECT
 
-    // construction and destruction
-    AtomColorMap();
-    AtomColorMap(ColorScheme scheme);
-    AtomColorMap(const AtomColorMap &colorMap);
-    virtual ~AtomColorMap();
-
-    // colors
-    void setColor(const Element &element, const QColor &color);
-    virtual QColor color(const Element &element) const;
-    virtual QColor color(const Atom *atom) const;
-    void setDefaultColor(const QColor &color);
-    QColor defaultColor() const;
-    void setColorScheme(ColorScheme scheme);
-
-private:
-    AtomColorMapPrivate* const d;
+    private slots:
+        void color();
+        void defaultColor();
+        void carbonColor();
 };
 
-} // end chemkit namespace
-
-#endif // CHEMKIT_ATOMCOLORMAP_H
+#endif // ATOMCOLORMAPTEST_H

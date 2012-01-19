@@ -33,50 +33,56 @@
 **
 ******************************************************************************/
 
-#ifndef CHEMKIT_ATOMCOLORMAP_H
-#define CHEMKIT_ATOMCOLORMAP_H
+#include "atomcolormaptest.h"
 
-#include "widgets.h"
+#include <chemkit/atomcolormap.h>
 
-#include <QColor>
-
-#include <chemkit/element.h>
-
-namespace chemkit {
-
-class Atom;
-class Element;
-class AtomColorMapPrivate;
-
-class CHEMKIT_WIDGETS_EXPORT AtomColorMap
+void AtomColorMapTest::color()
 {
-public:
-    // enumerations
-    enum ColorScheme {
-        DefaultColorScheme,
-        RasmolColorScheme,
-        PymolColorScheme,
-        JmolColorScheme
-    };
+    chemkit::AtomColorMap map;
+    QCOMPARE(map.color("C"), QColor());
 
-    // construction and destruction
-    AtomColorMap();
-    AtomColorMap(ColorScheme scheme);
-    AtomColorMap(const AtomColorMap &colorMap);
-    virtual ~AtomColorMap();
+    map.setColor("C", Qt::red);
+    QCOMPARE(map.color("C"), QColor(Qt::red));
+}
 
-    // colors
-    void setColor(const Element &element, const QColor &color);
-    virtual QColor color(const Element &element) const;
-    virtual QColor color(const Atom *atom) const;
-    void setDefaultColor(const QColor &color);
-    QColor defaultColor() const;
-    void setColorScheme(ColorScheme scheme);
+void AtomColorMapTest::defaultColor()
+{
+    chemkit::AtomColorMap colorMap;
+    QCOMPARE(colorMap.defaultColor(), QColor());
 
-private:
-    AtomColorMapPrivate* const d;
-};
+    colorMap.setDefaultColor(Qt::blue);
+    QCOMPARE(colorMap.defaultColor(), QColor(Qt::blue));
 
-} // end chemkit namespace
+    chemkit::AtomColorMap defaultColorMap(chemkit::AtomColorMap::DefaultColorScheme);
+    QCOMPARE(defaultColorMap.defaultColor(), QColor(255, 20, 147));
 
-#endif // CHEMKIT_ATOMCOLORMAP_H
+    chemkit::AtomColorMap rasmolColorMap(chemkit::AtomColorMap::RasmolColorScheme);
+    QCOMPARE(rasmolColorMap.defaultColor(), QColor(255, 20, 147));
+
+    chemkit::AtomColorMap pymolColorMap(chemkit::AtomColorMap::PymolColorScheme);
+    QCOMPARE(pymolColorMap.defaultColor(), QColor(255, 20, 147));
+
+    chemkit::AtomColorMap jmolColorMap(chemkit::AtomColorMap::JmolColorScheme);
+    QCOMPARE(jmolColorMap.defaultColor(), QColor(255, 20, 147));
+}
+
+void AtomColorMapTest::carbonColor()
+{
+    chemkit::AtomColorMap colorMap;
+    QCOMPARE(colorMap.color("C"), QColor());
+
+    chemkit::AtomColorMap defaultColorMap(chemkit::AtomColorMap::DefaultColorScheme);
+    QCOMPARE(defaultColorMap.color("C"), QColor(80, 80, 80));
+
+    chemkit::AtomColorMap rasmolColorMap(chemkit::AtomColorMap::RasmolColorScheme);
+    QCOMPARE(rasmolColorMap.color("C"), QColor(200, 200, 200));
+
+    chemkit::AtomColorMap pymolColorMap(chemkit::AtomColorMap::PymolColorScheme);
+    QCOMPARE(pymolColorMap.color("C"), QColor(51, 255, 51));
+
+    chemkit::AtomColorMap jmolColorMap(chemkit::AtomColorMap::JmolColorScheme);
+    QCOMPARE(jmolColorMap.color("C"), QColor(144, 144, 144));
+}
+
+QTEST_MAIN(AtomColorMapTest)

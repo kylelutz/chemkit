@@ -38,7 +38,6 @@
 #include <QMap>
 
 #include <chemkit/atom.h>
-#include <chemkit/element.h>
 
 namespace chemkit {
 
