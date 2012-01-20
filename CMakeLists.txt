@@ -56,6 +56,7 @@ option(CHEMKIT_BUILD_EXAMPLES "Build the chemkit examples." OFF)
 option(CHEMKIT_BUILD_TESTS "Build the chemkit tests." OFF)
 
 add_subdirectory(src)
+add_subdirectory(bindings)
 add_subdirectory(examples)
 
 enable_testing()
