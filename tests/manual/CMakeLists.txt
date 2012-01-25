@@ -1,3 +1,4 @@
+add_subdirectory(cas)
 add_subdirectory(periodictabledialog)
 add_subdirectory(proteindatabank)
 add_subdirectory(pubchemweb)
