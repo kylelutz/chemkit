@@ -36,7 +36,7 @@
 #ifndef CHEMKIT_PERIODICTABLEDIALOG_H
 #define CHEMKIT_PERIODICTABLEDIALOG_H
 
-#include "widgets.h"
+#include "gui.h"
 
 #include <QtGui>
 
@@ -46,7 +46,7 @@ namespace chemkit {
 
 class PeriodicTableDialogPrivate;
 
-class CHEMKIT_WIDGETS_EXPORT PeriodicTableDialog : public QDialog
+class CHEMKIT_GUI_EXPORT PeriodicTableDialog : public QDialog
 {
     Q_OBJECT
 

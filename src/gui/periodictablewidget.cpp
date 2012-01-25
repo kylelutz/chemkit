@@ -71,7 +71,7 @@ public:
 
 // === PeriodicTableWidget ================================================= //
 /// \class PeriodicTableWidget periodictablewidget.h chemkit/periodictablewidget.h
-/// \ingroup chemkit-widgets
+/// \ingroup chemkit-gui
 /// \brief The PeriodicTableWidget class displays the periodic table.
 
 // --- Construction and Destruction ---------------------------------------- //

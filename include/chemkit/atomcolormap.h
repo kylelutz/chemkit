@@ -1,1 +1,1 @@
-#include "../../src/widgets/atomcolormap.h"
+#include "../../src/gui/atomcolormap.h"

@@ -1,8 +1,8 @@
-if(NOT ${CHEMKIT_WITH_WIDGETS})
+if(NOT ${CHEMKIT_WITH_GUI})
   return()
 endif()
 
-find_package(Chemkit COMPONENTS widgets)
+find_package(Chemkit COMPONENTS gui)
 include_directories(${CHEMKIT_INCLUDE_DIRS})
 
 find_package(Qt4 4.6 COMPONENTS QtCore QtGui QtTest REQUIRED)

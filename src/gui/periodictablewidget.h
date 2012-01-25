@@ -1,6 +1,6 @@
 /******************************************************************************
 **
-** Copyright (C) 2009-2012 Kyle Lutz <kyle.r.lutz@gmail.com>
+** Copyright (C) 2009-2011 Kyle Lutz <kyle.r.lutz@gmail.com>
 ** All rights reserved.
 **
 ** This file is a part of the chemkit project. For more information
@@ -33,50 +33,38 @@
 **
 ******************************************************************************/
 
-#ifndef CHEMKIT_ATOMCOLORMAP_H
-#define CHEMKIT_ATOMCOLORMAP_H
+#ifndef CHEMKIT_PERIODICTABLEWIDGET_H
+#define CHEMKIT_PERIODICTABLEWIDGET_H
 
-#include "widgets.h"
+#include "gui.h"
 
-#include <QColor>
+#include <QtGui>
 
 #include <chemkit/element.h>
 
 namespace chemkit {
 
-class Atom;
-class Element;
-class AtomColorMapPrivate;
+class PeriodicTableWidgetPrivate;
 
-class CHEMKIT_WIDGETS_EXPORT AtomColorMap
+class CHEMKIT_GUI_EXPORT PeriodicTableWidget : public QWidget
 {
+    Q_OBJECT
+
 public:
-    // enumerations
-    enum ColorScheme {
-        DefaultColorScheme,
-        RasmolColorScheme,
-        PymolColorScheme,
-        JmolColorScheme
-    };
-
     // construction and destruction
-    AtomColorMap();
-    AtomColorMap(ColorScheme scheme);
-    AtomColorMap(const AtomColorMap &colorMap);
-    virtual ~AtomColorMap();
+    PeriodicTableWidget(QWidget *parent = 0);
+    ~PeriodicTableWidget();
 
-    // colors
-    void setColor(const Element &element, const QColor &color);
-    virtual QColor color(const Element &element) const;
-    virtual QColor color(const Atom *atom) const;
-    void setDefaultColor(const QColor &color);
-    QColor defaultColor() const;
-    void setColorScheme(ColorScheme scheme);
+signals:
+    void elementClicked(const chemkit::Element &element);
+
+private slots:
+    void buttonClicked(int atomicNumber);
 
 private:
-    AtomColorMapPrivate* const d;
+    PeriodicTableWidgetPrivate* const d;
 };
 
 } // end chemkit namespace
 
-#endif // CHEMKIT_ATOMCOLORMAP_H
+#endif // CHEMKIT_PERIODICTABLEWIDGET_H

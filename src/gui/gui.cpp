@@ -33,16 +33,10 @@
 **
 ******************************************************************************/
 
-#include "widgets.h"
+#include "gui.h"
 
-/// \defgroup chemkit-widgets chemkit-widgets
-/// \brief The chemkit-widgets module provides GUI widgets.
-///
-/// To use the widgets module add the following to your project
-/// (.pro) file.
-/// \code
-/// LIBS += -lchemkit-widgets
-/// \endcode
+/// \defgroup chemkit-gui chemkit-gui
+/// \brief The chemkit-gui module provides GUI widgets.
 
 namespace chemkit {
 

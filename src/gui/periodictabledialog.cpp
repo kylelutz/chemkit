@@ -51,7 +51,7 @@ public:
 
 // === PeriodicTableDialog ================================================= //
 /// \class PeriodicTableDialog periodictabledialog.h chemkit/periodictabledialog.h
-/// \ingroup chemkit-widgets
+/// \ingroup chemkit-gui
 /// \brief The PeriodicTableDialog class displays the periodic table
 ///        in a dialog.
 ///

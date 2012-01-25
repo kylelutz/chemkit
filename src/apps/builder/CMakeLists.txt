@@ -1,10 +1,10 @@
 if(NOT ${CHEMKIT_WITH_IO} OR
    NOT ${CHEMKIT_WITH_GRAPHICS} OR
-   NOT ${CHEMKIT_WITH_WIDGETS})
+   NOT ${CHEMKIT_WITH_GUI})
   return()
 endif()
 
-find_package(Chemkit COMPONENTS io md graphics widgets REQUIRED)
+find_package(Chemkit COMPONENTS io md graphics gui REQUIRED)
 include_directories(${CHEMKIT_INCLUDE_DIRS})
 
 find_package(Qt4 4.6 COMPONENTS QtCore QtGui QtOpenGL REQUIRED)

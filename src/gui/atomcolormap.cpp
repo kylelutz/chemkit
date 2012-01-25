@@ -51,7 +51,7 @@ public:
 
 // === AtomColorMap ======================================================== //
 /// \class AtomColorMap atomcolormap.h chemkit/atomcolormap.h
-/// \ingroup chemkit-widgets
+/// \ingroup chemkit-gui
 /// \brief The AtomColorMap class contains a mapping of elements to
 ///        colors.
 

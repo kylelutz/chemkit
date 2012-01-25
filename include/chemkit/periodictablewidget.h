@@ -1,1 +1,1 @@
-#include "../../src/widgets/periodictablewidget.h"
+#include "../../src/gui/periodictablewidget.h"

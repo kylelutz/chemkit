@@ -33,38 +33,19 @@
 **
 ******************************************************************************/
 
-#ifndef CHEMKIT_PERIODICTABLEWIDGET_H
-#define CHEMKIT_PERIODICTABLEWIDGET_H
+#ifndef CHEMKIT_GUI_H
+#define CHEMKIT_GUI_H
 
-#include "widgets.h"
+#include <chemkit/chemkit.h>
 
-#include <QtGui>
-
-#include <chemkit/element.h>
+#ifdef CHEMKIT_GUI_LIBRARY
+    #define CHEMKIT_GUI_EXPORT CHEMKIT_DECL_EXPORT
+#else
+    #define CHEMKIT_GUI_EXPORT CHEMKIT_DECL_IMPORT
+#endif
 
 namespace chemkit {
 
-class PeriodicTableWidgetPrivate;
-
-class CHEMKIT_WIDGETS_EXPORT PeriodicTableWidget : public QWidget
-{
-    Q_OBJECT
-
-public:
-    // construction and destruction
-    PeriodicTableWidget(QWidget *parent = 0);
-    ~PeriodicTableWidget();
-
-signals:
-    void elementClicked(const chemkit::Element &element);
-
-private slots:
-    void buttonClicked(int atomicNumber);
-
-private:
-    PeriodicTableWidgetPrivate* const d;
-};
-
 } // end chemkit namespace
 
-#endif // CHEMKIT_PERIODICTABLEWIDGET_H
+#endif // CHEMKIT_GUI_H
