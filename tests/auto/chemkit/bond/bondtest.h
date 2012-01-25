@@ -53,6 +53,7 @@ class BondTest : public QObject
         void rings();
         void polarity();
         void length();
+        void stereochemistry();
 };
 
 #endif // BONDTEST_H

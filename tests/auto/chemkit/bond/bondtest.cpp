@@ -202,4 +202,22 @@ void BondTest::length()
     QCOMPARE(bond->length(), chemkit::Real(4.0));
 }
 
+void BondTest::stereochemistry()
+{
+    chemkit::Molecule molecule;
+    chemkit::Atom *C1 = molecule.addAtom("C");
+    chemkit::Atom *C2 = molecule.addAtom("C");
+    chemkit::Bond *bond = molecule.addBond(C1, C2, chemkit::Bond::Double);
+    QCOMPARE(bond->stereochemistry(), chemkit::Stereochemistry::None);
+
+    bond->setStereochemistry(chemkit::Stereochemistry::Cis);
+    QCOMPARE(bond->stereochemistry(), chemkit::Stereochemistry::Cis);
+
+    bond->setStereochemistry(chemkit::Stereochemistry::Trans);
+    QCOMPARE(bond->stereochemistry(), chemkit::Stereochemistry::Trans);
+
+    bond->setStereochemistry(chemkit::Stereochemistry::None);
+    QCOMPARE(bond->stereochemistry(), chemkit::Stereochemistry::None);
+}
+
 QTEST_APPLESS_MAIN(BondTest)

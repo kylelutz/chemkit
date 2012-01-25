@@ -303,4 +303,22 @@ Real Bond::length() const
     return atom1()->distance(atom2());
 }
 
+// --- Stereochemistry ----------------------------------------------------- //
+/// Sets the stereochemistry for the bond.
+void Bond::setStereochemistry(Stereochemistry::Type stereochemistry)
+{
+    m_molecule->stereochemistry()->setStereochemistry(this, stereochemistry);
+}
+
+/// Returns the stereochemistry for the bond.
+Stereochemistry::Type Bond::stereochemistry() const
+{
+    if(!m_molecule->m_stereochemistry){
+        return Stereochemistry::None;
+    }
+    else{
+        return m_molecule->stereochemistry()->stereochemistry(this);
+    }
+}
+
 } // end chemkit namespace

@@ -46,6 +46,7 @@
 
 #include "point3.h"
 #include "vector3.h"
+#include "stereochemistry.h"
 
 namespace chemkit {
 
@@ -106,6 +107,10 @@ public:
     // geometry
     Point3 center() const;
     Real length() const;
+
+    // stereochemistry
+    void setStereochemistry(Stereochemistry::Type stereochemistry);
+    Stereochemistry::Type stereochemistry() const;
 
 private:
     Bond(Molecule *molecule, size_t index);
