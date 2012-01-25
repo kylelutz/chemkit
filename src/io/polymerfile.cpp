@@ -45,6 +45,7 @@ class PolymerFilePrivate
 {
 public:
     std::vector<Polymer *> polymers;
+    std::vector<Molecule *> ligands;
 };
 
 // === PolymerFile ========================================================= //
@@ -76,6 +77,9 @@ PolymerFile::~PolymerFile()
 {
     foreach(Polymer *polymer, d->polymers)
         delete polymer;
+
+    foreach(Molecule *ligand, d->ligands)
+        delete ligand;
 
     delete d;
 }
@@ -153,13 +157,94 @@ bool PolymerFile::contains(const Polymer *polymer) const
     return std::find(d->polymers.begin(), d->polymers.end(), polymer) != d->polymers.end();
 }
 
-/// Removes all the polymers from the file.
+/// Adds \p ligand to the file.
+void PolymerFile::addLigand(Molecule *ligand)
+{
+    d->ligands.push_back(ligand);
+}
+
+/// Removes \p ligand from the file and deletes it.
+bool PolymerFile::removeLigand(Molecule *ligand)
+{
+    bool found = takeLigand(ligand);
+
+    if(found){
+        delete ligand;
+    }
+
+    return found;
+}
+
+/// Removes \p ligand from the file.
+///
+/// The ownership of \p ligand is passed to the caller.
+bool PolymerFile::takeLigand(Molecule *ligand)
+{
+    std::vector<Molecule *>::iterator location = std::find(d->ligands.begin(),
+                                                           d->ligands.end(),
+                                                           ligand);
+    if(location == d->ligands.end()){
+        return false;
+    }
+
+    d->ligands.erase(location);
+
+    return true;
+}
+
+/// Returns the ligand at \p index in the file.
+Molecule* PolymerFile::ligand(size_t index)
+{
+    assert(index < d->ligands.size());
+
+    return d->ligands[index];
+}
+
+/// Returns the ligand in the file with \p name. Returns \c 0 if
+/// a ligand with \p name is not found.
+Molecule* PolymerFile::ligand(const std::string &name)
+{
+    foreach(Molecule *ligand, d->ligands){
+        if(ligand->name() == name){
+            return ligand;
+        }
+    }
+
+    return 0;
+}
+
+/// Returns a list of all the ligands in the file.
+std::vector<Molecule *> PolymerFile::ligands() const
+{
+    return d->ligands;
+}
+
+/// Returns the number of ligands in the file.
+size_t PolymerFile::ligandCount() const
+{
+    return d->ligands.size();
+}
+
+/// Returns \c true if the file contains \p ligand.
+bool PolymerFile::contains(const Molecule *ligand) const
+{
+    return std::find(d->ligands.begin(),
+                     d->ligands.end(),
+                     ligand) != d->ligands.end();
+}
+
+/// Removes all the polymers and ligands from the file.
 void PolymerFile::clear()
 {
     foreach(Polymer *polymer, d->polymers)
         delete polymer;
 
     d->polymers.clear();
+
+    foreach(Molecule *ligand, d->ligands)
+        delete ligand;
+
+    d->ligands.clear();
 }
 
 } // end chemkit namespace

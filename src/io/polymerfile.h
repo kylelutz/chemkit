@@ -47,6 +47,7 @@
 namespace chemkit {
 
 class Polymer;
+class Molecule;
 class PolymerFilePrivate;
 
 class CHEMKIT_IO_EXPORT PolymerFile : public GenericFile<PolymerFile, PolymerFileFormat>
@@ -69,6 +70,14 @@ public:
     std::vector<Polymer *> polymers() const;
     size_t polymerCount() const;
     bool contains(const Polymer *polymer) const;
+    void addLigand(Molecule *ligand);
+    bool removeLigand(Molecule *ligand);
+    bool takeLigand(Molecule *ligand);
+    Molecule* ligand(size_t index);
+    Molecule* ligand(const std::string &name);
+    std::vector<Molecule *> ligands() const;
+    size_t ligandCount() const;
+    bool contains(const Molecule *ligand) const;
     void clear();
 
 private:
