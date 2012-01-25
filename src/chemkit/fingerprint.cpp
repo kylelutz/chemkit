@@ -72,6 +72,15 @@ Bitset Fingerprint::value(const Molecule *molecule) const
     return Bitset();
 }
 
+// --- Similarity ---------------------------------------------------------- //
+/// Returns the tanimoto coefficent between \p a and \p b.
+Real Fingerprint::tanimotoCoefficient(const Bitset &a, const Bitset &b)
+{
+    size_t intersection = (a & b).count();
+
+    return Real(intersection) / Real(a.count() + b.count() - intersection);
+}
+
 // --- Static Methods ------------------------------------------------------ //
 /// Creates a new fingerprint object for \p name. Returns \c 0 if
 /// \p name is not supported.

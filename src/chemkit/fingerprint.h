@@ -60,6 +60,9 @@ public:
     // fingerprint
     virtual Bitset value(const Molecule *molecule) const;
 
+    // similarity
+    static Real tanimotoCoefficient(const Bitset &a, const Bitset &b);
+
     // static methods
     static Fingerprint* create(const std::string &name);
     static std::vector<std::string> fingerprints();
