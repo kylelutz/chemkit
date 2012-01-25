@@ -134,13 +134,13 @@ void MolecularSurfaceTest::serine()
     // van der waals surface
     chemkit::MolecularSurface surface(molecule);
     surface.setSurfaceType(chemkit::MolecularSurface::VanDerWaals);
-    QCOMPARE(qRound(surface.volume()), 93);
+    QCOMPARE(qRound(surface.volume()), 94);
     QCOMPARE(qRound(surface.surfaceArea()), 129);
 
     // solvent accessible surface
     surface.setSurfaceType(chemkit::MolecularSurface::SolventAccessible);
-    QCOMPARE(qRound(surface.volume()), 360);
-    QCOMPARE(qRound(surface.surfaceArea()), 262);
+    QCOMPARE(qRound(surface.volume()), 363);
+    QCOMPARE(qRound(surface.surfaceArea()), 264);
 }
 
 void MolecularSurfaceTest::guanine()
@@ -158,13 +158,13 @@ void MolecularSurfaceTest::guanine()
     // van der waals surface
     chemkit::MolecularSurface surface(molecule);
     surface.setSurfaceType(chemkit::MolecularSurface::VanDerWaals);
-    QCOMPARE(qRound(surface.volume()), 119);
-    QCOMPARE(qRound(surface.surfaceArea()), 153);
+    QCOMPARE(qRound(surface.volume()), 122);
+    QCOMPARE(qRound(surface.surfaceArea()), 155);
 
     // solvent accessible surface
     surface.setSurfaceType(chemkit::MolecularSurface::SolventAccessible);
-    QCOMPARE(qRound(surface.volume()), 437);
-    QCOMPARE(qRound(surface.surfaceArea()), 309);
+    QCOMPARE(qRound(surface.volume()), 443);
+    QCOMPARE(qRound(surface.surfaceArea()), 311);
 }
 
 void MolecularSurfaceTest::methane()
@@ -206,13 +206,13 @@ void MolecularSurfaceTest::ethanol()
     // van der waals surface
     chemkit::MolecularSurface surface(molecule);
     surface.setSurfaceType(chemkit::MolecularSurface::VanDerWaals);
-    QCOMPARE(qRound(surface.volume()), 53);
-    QCOMPARE(qRound(surface.surfaceArea()), 81);
+    QCOMPARE(qRound(surface.volume()), 54);
+    QCOMPARE(qRound(surface.surfaceArea()), 82);
 
     // solvent accessible surface
     surface.setSurfaceType(chemkit::MolecularSurface::SolventAccessible);
     QCOMPARE(qRound(surface.volume()), 245);
-    QCOMPARE(qRound(surface.surfaceArea()), 199);
+    QCOMPARE(qRound(surface.surfaceArea()), 200);
 }
 
 void MolecularSurfaceTest::adenosine()
@@ -230,19 +230,19 @@ void MolecularSurfaceTest::adenosine()
     // van der waals surface
     chemkit::MolecularSurface surface(molecule);
     surface.setSurfaceType(chemkit::MolecularSurface::VanDerWaals);
-    QCOMPARE(qRound(surface.volume()), 219);
-    QCOMPARE(qRound(surface.surfaceArea()), 273);
+    QCOMPARE(qRound(surface.volume()), 223);
+    QCOMPARE(qRound(surface.surfaceArea()), 275);
 
     // solvent accessible surface (probe radius = 1.4)
     surface.setSurfaceType(chemkit::MolecularSurface::SolventAccessible);
     surface.setProbeRadius(1.4);
-    QCOMPARE(qRound(surface.volume()), 723);
-    QCOMPARE(qRound(surface.surfaceArea()), 457);
+    QCOMPARE(qRound(surface.volume()), 729);
+    QCOMPARE(qRound(surface.surfaceArea()), 459);
 
     // solvent accessible surface (probe radius = 1.0)
     surface.setProbeRadius(1.0);
-    QCOMPARE(qRound(surface.volume()), 552);
-    QCOMPARE(qRound(surface.surfaceArea()), 397);
+    QCOMPARE(qRound(surface.volume()), 558);
+    QCOMPARE(qRound(surface.surfaceArea()), 399);
 }
 
 void MolecularSurfaceTest::buckminsterfullerene()
@@ -279,8 +279,8 @@ void MolecularSurfaceTest::dablib()
     // van der waals surface
     chemkit::MolecularSurface surface(molecule);
     surface.setSurfaceType(chemkit::MolecularSurface::VanDerWaals);
-    QCOMPARE(qRound(surface.volume()), 138);
-    QCOMPARE(qRound(surface.surfaceArea()), 179);
+    QCOMPARE(qRound(surface.volume()), 140);
+    QCOMPARE(qRound(surface.surfaceArea()), 180);
 }
 
 void MolecularSurfaceTest::lysozyme()
@@ -298,13 +298,13 @@ void MolecularSurfaceTest::lysozyme()
     // van der waals surface
     chemkit::MolecularSurface surface(protein);
     surface.setSurfaceType(chemkit::MolecularSurface::VanDerWaals);
-    QCOMPARE(qRound(surface.volume()), 10729);
-    QCOMPARE(qRound(surface.surfaceArea()), 12660);
+    QCOMPARE(qRound(surface.volume()), 10934);
+    QCOMPARE(qRound(surface.surfaceArea()), 12679);
 
     // solvent accessible surface
     surface.setSurfaceType(chemkit::MolecularSurface::SolventAccessible);
-    QCOMPARE(qRound(surface.volume()), 23737);
-    QCOMPARE(qRound(surface.surfaceArea()), 6696);
+    QCOMPARE(qRound(surface.volume()), 23885);
+    QCOMPARE(qRound(surface.surfaceArea()), 6706);
 }
 
 void MolecularSurfaceTest::cytochrome()
@@ -322,13 +322,13 @@ void MolecularSurfaceTest::cytochrome()
     // van der waals surface
     chemkit::MolecularSurface surface(protein);
     surface.setSurfaceType(chemkit::MolecularSurface::VanDerWaals);
-    QCOMPARE(qRound(surface.volume()), 17285);
-    QCOMPARE(qRound(surface.surfaceArea()), 20616);
+    QCOMPARE(qRound(surface.volume()), 17600);
+    QCOMPARE(qRound(surface.surfaceArea()), 20653);
 
     // solvent accessible surface
     surface.setSurfaceType(chemkit::MolecularSurface::SolventAccessible);
-    QCOMPARE(qRound(surface.volume()), 39079);
-    QCOMPARE(qRound(surface.surfaceArea()), 11533);
+    QCOMPARE(qRound(surface.volume()), 39292);
+    QCOMPARE(qRound(surface.surfaceArea()), 11527);
 }
 
 void MolecularSurfaceTest::toxin()
@@ -346,13 +346,13 @@ void MolecularSurfaceTest::toxin()
     // van der waals surface
     chemkit::MolecularSurface surface(protein);
     surface.setSurfaceType(chemkit::MolecularSurface::VanDerWaals);
-    QCOMPARE(qRound(surface.volume()), 6187);
-    QCOMPARE(qRound(surface.surfaceArea()), 7214);
+    QCOMPARE(qRound(surface.volume()), 6253);
+    QCOMPARE(qRound(surface.surfaceArea()), 7195);
 
     // solvent accessible surface
     surface.setSurfaceType(chemkit::MolecularSurface::SolventAccessible);
-    QCOMPARE(qRound(surface.volume()), 13396);
-    QCOMPARE(qRound(surface.surfaceArea()), 4383);
+    QCOMPARE(qRound(surface.volume()), 13654);
+    QCOMPARE(qRound(surface.surfaceArea()), 4637);
 }
 
 void MolecularSurfaceTest::hydrolase()
@@ -370,13 +370,13 @@ void MolecularSurfaceTest::hydrolase()
     // van der waals surface
     chemkit::MolecularSurface surface(protein);
     surface.setSurfaceType(chemkit::MolecularSurface::VanDerWaals);
-    QCOMPARE(qRound(surface.volume()), 21517);
-    QCOMPARE(qRound(surface.surfaceArea()), 25741);
+    QCOMPARE(qRound(surface.volume()), 21919);
+    QCOMPARE(qRound(surface.surfaceArea()), 25731);
 
     // solvent accessible surface
     surface.setSurfaceType(chemkit::MolecularSurface::SolventAccessible);
-    QCOMPARE(qRound(surface.volume()), 44795);
-    QCOMPARE(qRound(surface.surfaceArea()), 9852);
+    QCOMPARE(qRound(surface.volume()), 44998);
+    QCOMPARE(qRound(surface.surfaceArea()), 9848);
 }
 
 void MolecularSurfaceTest::hemoglobin()
@@ -394,12 +394,12 @@ void MolecularSurfaceTest::hemoglobin()
     // van der waals surface
     chemkit::MolecularSurface surface(protein);
     surface.setSurfaceType(chemkit::MolecularSurface::VanDerWaals);
-    QCOMPARE(qRound(surface.volume()), 24050);
-    QCOMPARE(qRound(surface.surfaceArea()), 28917);
+    QCOMPARE(qRound(surface.volume()), 24467);
+    QCOMPARE(qRound(surface.surfaceArea()), 28920);
 
     // solvent accessible surface
     surface.setSurfaceType(chemkit::MolecularSurface::SolventAccessible);
-    QCOMPARE(qRound(surface.volume()), 54214);
+    QCOMPARE(qRound(surface.volume()), 54471);
     QCOMPARE(qRound(surface.surfaceArea()), 14791);
 }
 
@@ -418,13 +418,13 @@ void MolecularSurfaceTest::dna()
     // van der waals surface
     chemkit::MolecularSurface surface(nucleicAcid);
     surface.setSurfaceType(chemkit::MolecularSurface::VanDerWaals);
-    QCOMPARE(qRound(surface.volume()), 4845);
-    QCOMPARE(qRound(surface.surfaceArea()), 5615);
+    QCOMPARE(qRound(surface.volume()), 4977);
+    QCOMPARE(qRound(surface.surfaceArea()), 5621);
 
     // solvent accessible surface
     surface.setSurfaceType(chemkit::MolecularSurface::SolventAccessible);
-    QCOMPARE(qRound(surface.volume()), 11545);
-    QCOMPARE(qRound(surface.surfaceArea()), 4660);
+    QCOMPARE(qRound(surface.volume()), 11652);
+    QCOMPARE(qRound(surface.surfaceArea()), 4671);
 }
 
 void MolecularSurfaceTest::ribozyme()
@@ -442,13 +442,13 @@ void MolecularSurfaceTest::ribozyme()
     // van der waals surface
     chemkit::MolecularSurface surface(protein);
     surface.setSurfaceType(chemkit::MolecularSurface::VanDerWaals);
-    QCOMPARE(qRound(surface.volume()), 17103);
-    QCOMPARE(qRound(surface.surfaceArea()), 19404);
+    QCOMPARE(qRound(surface.volume()), 17607);
+    QCOMPARE(qRound(surface.surfaceArea()), 19422);
 
     // solvent accessible surface
     surface.setSurfaceType(chemkit::MolecularSurface::SolventAccessible);
-    QCOMPARE(qRound(surface.volume()), 38918);
-    QCOMPARE(qRound(surface.surfaceArea()), 13523);
+    QCOMPARE(qRound(surface.volume()), 39288);
+    QCOMPARE(qRound(surface.surfaceArea()), 13502);
 }
 
 void MolecularSurfaceTest::ubiqutin()
@@ -466,13 +466,13 @@ void MolecularSurfaceTest::ubiqutin()
     // van der waals surface
     chemkit::MolecularSurface surface(protein);
     surface.setSurfaceType(chemkit::MolecularSurface::VanDerWaals);
-    QCOMPARE(qRound(surface.volume()), 6559);
-    QCOMPARE(qRound(surface.surfaceArea()), 7916);
+    QCOMPARE(qRound(surface.volume()), 6681);
+    QCOMPARE(qRound(surface.surfaceArea()), 7937);
 
     // solvent accessible surface
     surface.setSurfaceType(chemkit::MolecularSurface::SolventAccessible);
-    QCOMPARE(qRound(surface.volume()), 15414);
-    QCOMPARE(qRound(surface.surfaceArea()), 4871);
+    QCOMPARE(qRound(surface.volume()), 15516);
+    QCOMPARE(qRound(surface.surfaceArea()), 4881);
 }
 
 QTEST_APPLESS_MAIN(MolecularSurfaceTest)

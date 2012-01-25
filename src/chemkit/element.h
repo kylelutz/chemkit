@@ -60,9 +60,14 @@ public:
     std::string name() const;
     int period() const;
     Real mass() const;
+    Real exactMass() const;
+    Real ionizationEnergy() const;
+    Real electronAffinity() const;
     Real electronegativity() const;
     Real covalentRadius() const;
     Real vanDerWaalsRadius() const;
+    Real boilingPoint() const;
+    Real meltingPoint() const;
     int expectedValence() const;
     bool isValid() const;
     bool isMetal() const;

@@ -45,7 +45,6 @@ void ElementTest::symbol()
     QCOMPARE(chemkit::Element(200).symbol(), std::string());
     QCOMPARE(chemkit::Element(-1).symbol(), std::string());
     QCOMPARE(chemkit::Element(109).symbol(), std::string("Mt"));
-    QCOMPARE(chemkit::Element(110).symbol(), std::string());
 }
 
 void ElementTest::name()
@@ -56,7 +55,6 @@ void ElementTest::name()
     QCOMPARE(chemkit::Element(200).name(), std::string());
     QCOMPARE(chemkit::Element(-1).name(), std::string());
     QCOMPARE(chemkit::Element(109).name(), std::string("Meitnerium"));
-    QCOMPARE(chemkit::Element(110).name(), std::string());
 }
 
 void ElementTest::atomicNumber()
@@ -125,7 +123,6 @@ void ElementTest::isValidAtomicNumber()
     QCOMPARE(chemkit::Element::isValidAtomicNumber(200), false);
     QCOMPARE(chemkit::Element::isValidAtomicNumber(-1), false);
     QCOMPARE(chemkit::Element::isValidAtomicNumber(109), true);
-    QCOMPARE(chemkit::Element::isValidAtomicNumber(110), false);
 }
 
 void ElementTest::isValidSymbol()

@@ -61,8 +61,8 @@ void SurfaceDescriptorsTest::test_data()
     QTest::addColumn<int>("solventAccessibleArea");
     QTest::addColumn<int>("solventAccessibleVolume");
 
-    QTest::newRow("ethanol") << "ethanol.cml" << "C2H6O" << 81 << 53 << 199 << 245;
-    QTest::newRow("serine") << "serine.mol" << "C3H7NO3" << 129 << 93 << 262 << 360;
+    QTest::newRow("ethanol") << "ethanol.cml" << "C2H6O" << 82 << 54 << 200 << 245;
+    QTest::newRow("serine") << "serine.mol" << "C3H7NO3" << 129 << 94 << 264 << 363;
 }
 
 void SurfaceDescriptorsTest::test()
