@@ -274,7 +274,7 @@ bracket_atom:
         }
         bondOrder = chemkit::Bond::Single;
 
-        if(aromatic){
+        if(bond && aromatic){
             aromaticBonds.push_back(bond);
         }
     }
