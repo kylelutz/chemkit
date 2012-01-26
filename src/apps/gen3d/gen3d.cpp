@@ -142,7 +142,10 @@ int main(int argc, char *argv[])
     }
 
     // check input format
-    inputFormatName = "smiles";
+    if(inputFormatName.empty()){
+        // default to smiles if not format specified
+        inputFormatName = "smiles";
+    }
 
     // create input line format
     boost::scoped_ptr<chemkit::LineFormat> inputFormat(chemkit::LineFormat::create(inputFormatName));
