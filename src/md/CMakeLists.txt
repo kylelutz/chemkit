@@ -2,7 +2,7 @@ if(NOT ${CHEMKIT_WITH_MD})
   return()
 endif()
 
-find_package(Chemkit COMPONENTS io REQUIRED)
+find_package(Chemkit REQUIRED)
 include_directories(${CHEMKIT_INCLUDE_DIRS})
 
 set(HEADERS
@@ -27,19 +27,6 @@ set(SOURCES
   trajectory.cpp
   trajectoryframe.cpp
 )
-
-# add md io classes if building with io
-if(${CHEMKIT_WITH_IO})
-  set(HEADERS ${HEADERS}
-    trajectoryfile.h
-    trajectoryfileformat.h
-  )
-
-  set(SOURCES ${SOURCES}
-    trajectoryfile.cpp
-    trajectoryfileformat.cpp
-   )
-endif()
 
 add_definitions(
   -DCHEMKIT_MD_LIBRARY

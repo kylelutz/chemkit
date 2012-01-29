@@ -2,7 +2,7 @@ if(NOT ${CHEMKIT_WITH_MD} OR NOT ${CHEMKIT_WITH_MD})
   return()
 endif()
 
-find_package(Chemkit COMPONENTS io md REQUIRED)
+find_package(Chemkit COMPONENTS io md md-io REQUIRED)
 include_directories(${CHEMKIT_INCLUDE_DIRS})
 
 find_package(Qt4 4.6 COMPONENTS QtCore REQUIRED)

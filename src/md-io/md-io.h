@@ -1,6 +1,6 @@
 /******************************************************************************
 **
-** Copyright (C) 2009-2011 Kyle Lutz <kyle.r.lutz@gmail.com>
+** Copyright (C) 2009-2012 Kyle Lutz <kyle.r.lutz@gmail.com>
 ** All rights reserved.
 **
 ** This file is a part of the chemkit project. For more information
@@ -33,55 +33,15 @@
 **
 ******************************************************************************/
 
-#ifndef CHEMKIT_TRAJECTORYFILEFORMAT_H
-#define CHEMKIT_TRAJECTORYFILEFORMAT_H
+#ifndef CHEMKIT_MD_IO_H
+#define CHEMKIT_MD_IO_H
 
-#include "md.h"
+#include <chemkit/chemkit.h>
 
-#include <string>
-#include <vector>
-#include <istream>
-#include <ostream>
+#ifdef CHEMKIT_MD_IO_LIBRARY
+    #define CHEMKIT_MD_IO_EXPORT CHEMKIT_DECL_EXPORT
+#else
+    #define CHEMKIT_MD_IO_EXPORT CHEMKIT_DECL_IMPORT
+#endif
 
-#include <chemkit/plugin.h>
-
-namespace chemkit {
-
-class TrajectoryFile;
-class TrajectoryFileFormatPrivate;
-
-class CHEMKIT_MD_EXPORT TrajectoryFileFormat
-{
-public:
-    // construction and destruction
-    virtual ~TrajectoryFileFormat();
-
-    // properties
-    std::string name() const;
-
-    // input and output
-    virtual bool read(std::istream &input, TrajectoryFile *file);
-    virtual bool write(const TrajectoryFile *file, std::ostream &output);
-
-    // error handling
-    std::string errorString() const;
-
-    // static methods
-    static TrajectoryFileFormat* create(const std::string &name);
-    static std::vector<std::string> formats();
-
-protected:
-    TrajectoryFileFormat(const std::string &name);
-    void setErrorString(const std::string &errorString);
-
-private:
-    TrajectoryFileFormatPrivate* const d;
-};
-
-} // end chemkit namespace
-
-/// Registers a trajectory file format with \p name.
-#define CHEMKIT_REGISTER_TRAJECTORY_FILE_FORMAT(name, className) \
-    CHEMKIT_REGISTER_PLUGIN_CLASS(name, chemkit::TrajectoryFileFormat, className)
-
-#endif // CHEMKIT_TRAJECTORYFILEFORMAT_H
+#endif // CHEMKIT_MD_IO_H

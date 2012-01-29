@@ -36,7 +36,7 @@
 #ifndef CHEMKIT_TRAJECTORYFILE_H
 #define CHEMKIT_TRAJECTORYFILE_H
 
-#include "md.h"
+#include "md-io.h"
 
 #include <string>
 
@@ -49,7 +49,7 @@ namespace chemkit {
 class Trajectory;
 class TrajectoryFilePrivate;
 
-class CHEMKIT_MD_EXPORT TrajectoryFile : public GenericFile<TrajectoryFile, TrajectoryFileFormat>
+class CHEMKIT_MD_IO_EXPORT TrajectoryFile : public GenericFile<TrajectoryFile, TrajectoryFileFormat>
 {
 public:
     // construction and destruction
