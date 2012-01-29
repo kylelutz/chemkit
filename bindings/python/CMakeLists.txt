@@ -36,6 +36,7 @@ set(SOURCES
   ring.pxd
   ring.pxi
   string.pxd
+  variant.pxd
   vector3.pxd
   vector3.pxi
 )

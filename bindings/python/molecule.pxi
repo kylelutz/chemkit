@@ -37,6 +37,7 @@ import cython
 from libcpp cimport bool
 from libcpp.vector cimport vector
 
+from variant cimport _Variant
 from molecule cimport _Molecule
 
 cdef class Molecule:
@@ -84,6 +85,13 @@ cdef class Molecule:
             return self._molecule.formula(format).c_str()
         else:
             return self._molecule.formula().c_str()
+
+    def descriptor(self, char *name):
+        """Returns the value of the molecule descriptor given by name."""
+
+        cdef _Variant value = self._molecule.descriptor(name)
+        
+        return value.toDouble()
 
     def size(self):
         """Returns the number of atoms in the molecule."""

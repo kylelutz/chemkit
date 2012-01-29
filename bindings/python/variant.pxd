@@ -36,59 +36,27 @@
 from libcpp cimport bool
 from string cimport string
 
-cdef extern from "chemkit/atom.h" namespace "chemkit":
-    cdef cppclass _Atom "chemkit::Atom"
-
-cdef extern from "chemkit/bond.h" namespace "chemkit":
-    cdef cppclass _Bond "chemkit::Bond"
-
-cdef extern from "chemkit/element.h" namespace "chemkit":
-    cdef cppclass _Element "chemkit::Element"
-
-cdef extern from "chemkit/fragment.h" namespace "chemkit":
-    cdef cppclass _Fragment "chemkit::Fragment"
-
-cdef extern from "chemkit/ring.h" namespace "chemkit":
-    cdef cppclass _Ring "chemkit::Ring"
-
 cdef extern from "chemkit/variant.h" namespace "chemkit":
-    cdef cppclass _Variant "chemkit::Variant"
+   cdef cppclass _Variant "chemkit::Variant":
+       # construction and destruction
+       _Variant()
 
-cdef extern from "chemkit/molecule.h" namespace "chemkit":
-    cdef cppclass _Molecule "chemkit::Molecule":
-        # construction and destruction
-        _Molecule()
-        _Molecule(char* formula, char* format)
+       # properties
+       bool isNull()
 
-        # properties
-        void setName(char* name)
-        string name()
-        string formula()
-        string formula(char* format)
-        _Variant descriptor(char* name)
-        int size()
-        bool isEmpty()
-        double mass()
-
-        # structure
-        _Atom* addAtom(_Element element)
-        void removeAtom(_Atom *atom)
-        _Atom* atom(int index)
-        int atomCount()
-        bool contains(_Atom *atom)
-        bool contains(_Element element)
-        _Bond* addBond(_Atom *a, _Atom *b, int order)
-        void removeBond(_Bond *bond)
-        _Bond* bond(int index)
-        int bondCount()
-
-        # ring perception
-        _Ring* ring(int index)
-        int ringCount()
-
-        # fragment perception
-        _Fragment* fragment(int index)
-        int fragmentCount()
-        bool isFragmented()
-        void removeFragment(_Fragment *fragment)
+       # conversions
+       bool toBool()
+       char toChar()
+       unsigned char toUChar()
+       short toShort()
+       unsigned short toUShort()
+       int toInt()
+       unsigned int toUInt()
+       long toLong()
+       unsigned long toULong()
+       size_t toSizeT()
+       float toFloat()
+       double toDouble()
+       double toReal()
+       string toString()
 
