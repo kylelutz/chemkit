@@ -43,9 +43,6 @@
 /// chemkit library is free software and is licensed under the BSD
 /// license.
 ///
-/// Chemkit is still under active development and a stable release
-/// has not yet been made.
-///
 /// Click "Classes" at the top to see a list of all the classes in
 /// %chemkit and to view their documentation. If you are new to
 /// %chemkit, a good starting point is the \ref chemkit::Molecule
@@ -53,8 +50,9 @@
 ///
 /// For questions, comments, or bug reports, please use one of the
 /// following contact methods:
-/// - Email: kyle.r.lutz@gmail.com
+/// - Mailing List: chemkit-discuss@lists.sourceforge.net
 /// - IRC: \#%chemkit on irc.freenode.net
+/// - Bug Tracker: http://github.com/kylelutz/chemkit/issues
 ///
 /// Return to the %chemkit home page: http://www.chemkit.org
 
