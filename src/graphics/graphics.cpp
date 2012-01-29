@@ -41,13 +41,6 @@
 ///
 /// The central component of the chemkit-graphics library is the
 /// GraphicsView class.
-///
-/// To use the graphics module add the following to the project
-/// (.pro) file.
-/// \code
-/// QT += opengl
-/// LIBS += -lchemkit-graphics
-/// \endcode
 
 namespace chemkit {
 
