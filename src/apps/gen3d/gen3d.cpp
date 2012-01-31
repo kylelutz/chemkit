@@ -47,6 +47,7 @@
 #include <chemkit/forcefield.h>
 #include <chemkit/lineformat.h>
 #include <chemkit/moleculefile.h>
+#include <chemkit/coordinatepredictor.h>
 
 void printHelp(char *argv[], const boost::program_options::options_description &options)
 {
@@ -56,14 +57,6 @@ void printHelp(char *argv[], const boost::program_options::options_description &
     std::cout << "\n";
     std::cout << "Options:\n";
     std::cout << options << "\n";
-}
-
-// Generate initial 3D coordinates
-void gen3d(chemkit::Molecule *molecule)
-{
-    foreach(chemkit::Atom *atom, molecule->atoms()){
-        atom->setPosition(molecule->size() * chemkit::Point3::Random().normalized());
-    }
 }
 
 // Optimize the 3D coordinates using the uff force field
@@ -168,7 +161,7 @@ int main(int argc, char *argv[])
     }
 
     // generate 3d coordinates
-    gen3d(molecule);
+    chemkit::CoordinatePredictor::predictCoordinates(molecule);
 
     // optimize coordinates
     optimizeGeometry(molecule);

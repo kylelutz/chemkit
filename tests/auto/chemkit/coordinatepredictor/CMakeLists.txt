@@ -1,0 +1,4 @@
+qt4_wrap_cpp(MOC_SOURCES coordinatepredictortest.h)
+add_executable(coordinatepredictortest coordinatepredictortest.cpp ${MOC_SOURCES})
+target_link_libraries(coordinatepredictortest chemkit ${QT_LIBRARIES})
+add_chemkit_test(chemkit.CoordinatePredictor coordinatepredictortest)
