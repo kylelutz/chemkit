@@ -43,6 +43,37 @@ namespace chemkit {
 /// \class Fingerprint fingerprint.h chemkit/fingerprint.h
 /// \ingroup chemkit
 /// \brief The Fingerprint class represents a molecular fingerprint.
+///
+/// A list of supported fingerprints is available at:
+/// http://wiki.chemkit.org/Features#Fingerprints
+///
+/// The following example shows how to calculate the FP2 fingerprint
+/// for a uracil molecule:
+/// \code
+/// // create molecule from its SMILES
+/// Molecule uracil("O=C1NC=CC(=O)N1", "smiles");
+///
+/// // create FP2 fingerprint
+/// Fingerprint *fp2 = Fingerprint::create("fp2");
+///
+/// // calculate fingerprint for the molecule
+/// Bitset fingerprint = fp2->value(&uracil);
+///
+/// // cleanup memory
+/// delete fp2;
+/// \endcode
+///
+/// The above fingerprint can also be calculated using the
+/// Molecule::fingerprint() conveinence method:
+/// \code
+/// // create molecule from its SMILES
+/// Molecule uracil("O=C1NC=CC(=O)N1", "smiles");
+///
+/// // calculate fingerprint for the molecule
+/// Bitset fingerprint = uracil.fingerprint("fp2");
+/// \endcode
+///
+/// \see Bitset, Molecule::fingerprint()
 
 // --- Construction and Destruction ---------------------------------------- //
 /// Creates a new fingerprint with \p name.
