@@ -1,0 +1,4 @@
+qt4_wrap_cpp(MOC_SOURCES similaritydescriptortest.h)
+add_executable(similaritydescriptortest similaritydescriptortest.cpp ${MOC_SOURCES})
+target_link_libraries(similaritydescriptortest chemkit ${QT_LIBRARIES})
+add_chemkit_test(chemkit.SimilarityDescriptor similaritydescriptortest)
