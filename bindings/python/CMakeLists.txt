@@ -27,6 +27,8 @@ set(SOURCES
   fragment.pxi
   lineformat.pxd
   lineformat.pxi
+  moleculardescriptor.pxd
+  moleculardescriptor.pxi
   moleculefile.pxd
   moleculefile.pxi
   molecule.pxd

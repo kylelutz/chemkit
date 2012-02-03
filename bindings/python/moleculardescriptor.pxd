@@ -33,15 +33,24 @@
 ##
 ###############################################################################
 
-include "atom.pxi"
-include "bond.pxi"
-include "element.pxi"
-include "fragment.pxi"
-include "lineformat.pxi"
-include "moleculardescriptor.pxi"
-include "molecule.pxi"
-include "moleculefile.pxi"
-include "point3.pxi"
-include "ring.pxi"
-include "vector3.pxi"
+from string cimport string
+from libcpp.vector cimport vector
 
+cdef extern from "chemkit/molecule.h" namespace "chemkit":
+    cdef cppclass _Molecule "chemkit::Molecule"
+
+cdef extern from "chemkit/variant.h" namespace "chemkit":
+    cdef cppclass _Variant "chemkit::Variant"
+
+cdef extern from "chemkit/moleculardescriptor.h" namespace "chemkit":
+    cdef cppclass _MolecularDescriptor "chemkit::MolecularDescriptor":
+        # properties
+        string name()
+
+        # descriptor
+        _Variant value(_Molecule *molecule)
+
+# static methods
+cdef extern from "chemkit/moleculardescriptor.h" namespace "chemkit::MolecularDescriptor":
+    _MolecularDescriptor* create(char *name)
+    vector[string] descriptors()
