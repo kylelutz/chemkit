@@ -57,7 +57,7 @@ void CubeTest::readBenzene()
         qDebug() << file.errorString().c_str();
     QVERIFY(ok);
 
-    QCOMPARE(file.moleculeCount(), 1);
+    QCOMPARE(file.moleculeCount(), size_t(1));
     const boost::shared_ptr<chemkit::Molecule> &molecule = file.molecule();
     QVERIFY(molecule != 0);
     QCOMPARE(molecule->formula(), std::string("C6H6"));

@@ -64,15 +64,15 @@ public:
     virtual ~MoleculeFile();
 
     // properties
-    int size() const;
+    size_t size() const;
     bool isEmpty() const;
 
     // file contents
     void addMolecule(const boost::shared_ptr<Molecule> &molecule);
     bool removeMolecule(const boost::shared_ptr<Molecule> &molecule);
     MoleculeRange molecules() const;
-    int moleculeCount() const;
-    boost::shared_ptr<Molecule> molecule(int index = 0) const;
+    size_t moleculeCount() const;
+    boost::shared_ptr<Molecule> molecule(size_t index = 0) const;
     boost::shared_ptr<Molecule> molecule(const std::string &name) const;
     bool contains(const boost::shared_ptr<Molecule> &molecule) const;
     void clear();

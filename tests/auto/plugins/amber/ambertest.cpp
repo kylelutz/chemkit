@@ -63,7 +63,7 @@ void AmberTest::adenosine()
         qDebug() << file.errorString().c_str();
     QVERIFY(ok);
 
-    QCOMPARE(file.moleculeCount(), 1);
+    QCOMPARE(file.moleculeCount(), size_t(1));
     boost::shared_ptr<chemkit::Molecule> molecule = file.molecule();
     QCOMPARE(molecule->formula(), std::string("C10H13N5O4"));
 
@@ -126,7 +126,7 @@ void AmberTest::serine()
         qDebug() << file.errorString().c_str();
     QVERIFY(ok);
 
-    QCOMPARE(file.moleculeCount(), 1);
+    QCOMPARE(file.moleculeCount(), size_t(1));
     boost::shared_ptr<chemkit::Molecule> molecule = file.molecule();
     QCOMPARE(molecule->formula(), std::string("C3H7NO3"));
 

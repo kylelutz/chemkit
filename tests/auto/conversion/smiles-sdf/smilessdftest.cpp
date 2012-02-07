@@ -64,7 +64,7 @@ void SmilesSdfTest::ethanol()
 
     file.clear();
     file.read(buffer, "sdf");
-    QCOMPARE(file.moleculeCount(), 1);
+    QCOMPARE(file.moleculeCount(), size_t(1));
     QCOMPARE(molecule->formula("inchi"), file.molecule(0)->formula("inchi"));
 }
 

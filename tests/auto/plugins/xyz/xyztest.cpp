@@ -69,7 +69,7 @@ void XyzTest::read()
         qDebug() << file.errorString().c_str();
     QVERIFY(ok);
 
-    QCOMPARE(file.moleculeCount(), 1);
+    QCOMPARE(file.moleculeCount(), size_t(1));
     boost::shared_ptr<chemkit::Molecule> molecule = file.molecule();
     QVERIFY(molecule != 0);
     QCOMPARE(molecule->formula(), formula.toStdString());
@@ -97,7 +97,7 @@ void XyzTest::readWriteReadLoop()
     QVERIFY(ok);
 
     // check molecule
-    QCOMPARE(file.moleculeCount(), 1);
+    QCOMPARE(file.moleculeCount(), size_t(1));
     boost::shared_ptr<chemkit::Molecule> molecule = file.molecule();
     QVERIFY(molecule != 0);
     QCOMPARE(molecule->formula(), formula.toStdString());
@@ -119,7 +119,7 @@ void XyzTest::readWriteReadLoop()
     QVERIFY(ok);
 
     // check molecule
-    QCOMPARE(file.moleculeCount(), 1);
+    QCOMPARE(file.moleculeCount(), size_t(1));
     molecule = file.molecule();
     QVERIFY(molecule != 0);
     QCOMPARE(molecule->formula(), formula.toStdString());

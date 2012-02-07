@@ -57,7 +57,7 @@ void TxyzTest::uridine()
         qDebug() << file.errorString().c_str();
     QVERIFY(ok);
 
-    QCOMPARE(file.moleculeCount(), 1);
+    QCOMPARE(file.moleculeCount(), size_t(1));
 
     boost::shared_ptr<chemkit::Molecule> molecule = file.molecule();
     QCOMPARE(molecule->formula(), std::string("C9H13N2O9P"));

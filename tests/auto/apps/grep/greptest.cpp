@@ -64,7 +64,7 @@ void GrepTest::ironComposition()
         qDebug() << file.errorString().c_str();
     }
     QVERIFY(ok);
-    QCOMPARE(file.moleculeCount(), 2);
+    QCOMPARE(file.moleculeCount(), size_t(2));
     QCOMPARE(file.molecule(0)->name(), std::string("FE2PW3"));
     QCOMPARE(file.molecule(0)->formula(), std::string("FeH6O3"));
     QCOMPARE(file.molecule(1)->name(), std::string("FE3PW3"));

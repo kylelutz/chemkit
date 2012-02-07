@@ -71,7 +71,7 @@ void MmffTest::validate()
     if(!ok)
         qDebug() << dataFile.errorString().c_str();
     QVERIFY(ok);
-    QCOMPARE(dataFile.moleculeCount(), 753);
+    QCOMPARE(dataFile.moleculeCount(), size_t(753));
 
     // open expected results file
     QFile expectedFile("mmff94.expected");

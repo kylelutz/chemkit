@@ -49,7 +49,7 @@ void ParseSmilesBenchmark::benchmark()
             qDebug() << file.errorString().c_str();
         QVERIFY(ok);
 
-        QCOMPARE(file.moleculeCount(), 773);
+        QCOMPARE(file.moleculeCount(), size_t(773));
     }
 }
 

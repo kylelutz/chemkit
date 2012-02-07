@@ -61,7 +61,7 @@ void SdfCmlTest::ethanol()
 
     chemkit::MoleculeFile cmlFile;
     cmlFile.read(buffer, "cml");
-    QCOMPARE(cmlFile.moleculeCount(), 1);
+    QCOMPARE(cmlFile.moleculeCount(), size_t(1));
     QCOMPARE(molecule->formula("inchi"), cmlFile.molecule(0)->formula("inchi"));
 }
 

@@ -69,7 +69,7 @@ void MoleculeListDock::fileChanged(chemkit::MoleculeFile *file)
     if(file){
         ui->tableWidget->setRowCount(file->moleculeCount());
 
-        for(int i = 0; i < file->moleculeCount(); i++){
+        for(size_t i = 0; i < file->moleculeCount(); i++){
             chemkit::Molecule *molecule = file->molecule(i).get();
             QTableWidgetItem *item = new QTableWidgetItem(molecule->name().c_str());
             ui->tableWidget->setItem(i, 0, item);
@@ -158,7 +158,7 @@ boost::shared_ptr<chemkit::Molecule> MoleculeListDock::currentMolecule() const
         if(row == -1){
             return boost::shared_ptr<chemkit::Molecule>();
         }
-        else if(row < m_builder->file()->moleculeCount()){
+        else if(row < static_cast<int>(m_builder->file()->moleculeCount())){
             return m_builder->file()->molecule(row);
         }
     }

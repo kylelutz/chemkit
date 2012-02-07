@@ -1313,7 +1313,7 @@ void SmilesTest::herg()
         qDebug() << "Failed to read file: " << file.errorString().c_str();
     QVERIFY(ok);
 
-    QCOMPARE(file.moleculeCount(), 31);
+    QCOMPARE(file.moleculeCount(), size_t(31));
     QCOMPARE(file.molecule(0)->name(), std::string("Amitriptyline"));
     QCOMPARE(file.molecule(0)->formula(), std::string("C20H23N"));
     QCOMPARE(file.molecule(30)->name(), std::string ("Verapamil"));
@@ -1329,7 +1329,7 @@ void SmilesTest::cox2()
         qDebug() << "Failed to read file: " << file.errorString().c_str();
     QVERIFY(ok);
 
-    QCOMPARE(file.moleculeCount(), 128);
+    QCOMPARE(file.moleculeCount(), size_t(128));
     QCOMPARE(file.molecule(0)->formula(), std::string("C13H18N2O5S"));
     QCOMPARE(file.molecule(2)->formula(), std::string("C16H13F2NO3S2"));
     QCOMPARE(file.molecule(127)->formula(), std::string("C21H19NO5S"));

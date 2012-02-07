@@ -104,7 +104,7 @@ MoleculeFile::~MoleculeFile()
 
 // --- Properties ---------------------------------------------------------- //
 /// Returns the number of molecules in the file.
-int MoleculeFile::size() const
+size_t MoleculeFile::size() const
 {
     return moleculeCount();
 }
@@ -146,13 +146,13 @@ MoleculeFile::MoleculeRange MoleculeFile::molecules() const
 }
 
 /// Returns the number of molecules in the file.
-int MoleculeFile::moleculeCount() const
+size_t MoleculeFile::moleculeCount() const
 {
     return d->molecules.size();
 }
 
 /// Returns the molecule at \p index in the file.
-boost::shared_ptr<Molecule> MoleculeFile::molecule(int index) const
+boost::shared_ptr<Molecule> MoleculeFile::molecule(size_t index) const
 {
     return d->molecules[index];
 }

@@ -61,7 +61,7 @@ void SdfMol2Test::ethanol()
 
     chemkit::MoleculeFile mol2File;
     mol2File.read(buffer, "mol2");
-    QCOMPARE(mol2File.moleculeCount(), 1);
+    QCOMPARE(mol2File.moleculeCount(), size_t(1));
     QCOMPARE(molecule->formula("inchi"), mol2File.molecule(0)->formula("inchi"));
 }
 

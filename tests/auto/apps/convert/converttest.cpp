@@ -56,7 +56,7 @@ void ConvertTest::convertEthanol()
         qDebug() << inputFile.errorString().c_str();
     }
     QCOMPARE(ok, true);
-    QCOMPARE(inputFile.moleculeCount(), 1);
+    QCOMPARE(inputFile.moleculeCount(), size_t(1));
     boost::shared_ptr<chemkit::Molecule> inputEthanol = inputFile.molecule();
     QCOMPARE(inputEthanol->formula(), std::string("C2H6O"));
 
@@ -82,7 +82,7 @@ void ConvertTest::convertEthanol()
         qDebug() << outputFile.errorString().c_str();
     }
     QCOMPARE(ok, true);
-    QCOMPARE(outputFile.moleculeCount(), 1);
+    QCOMPARE(outputFile.moleculeCount(), size_t(1));
 
     // verify the output molecule
     boost::shared_ptr<chemkit::Molecule> outputEthanol = outputFile.molecule();
@@ -98,7 +98,7 @@ void ConvertTest::convertBenzenes()
         qDebug() << inputFile.errorString().c_str();
     }
     QCOMPARE(ok, true);
-    QCOMPARE(inputFile.moleculeCount(), 416);
+    QCOMPARE(inputFile.moleculeCount(), size_t(416));
 
     // setup output file
     QTemporaryFile tempFile("XXXXXX.mol2");
@@ -122,7 +122,7 @@ void ConvertTest::convertBenzenes()
         qDebug() << outputFile.errorString().c_str();
     }
     QCOMPARE(ok, true);
-    QCOMPARE(outputFile.moleculeCount(), 416);
+    QCOMPARE(outputFile.moleculeCount(), size_t(416));
 
     // verify the output molecules
     for(int i = 0; i < 416; i++){
