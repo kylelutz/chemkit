@@ -1,5 +1,5 @@
 # set compiler options
-if(CMAKE_COMPILER_IS_GNUCXX)
+if(CMAKE_COMPILER_IS_GNUCXX AND NOT WIN32)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fvisibility=hidden -fvisibility-inlines-hidden -ansi -pedantic -Wall -Wextra -Wno-long-long")
 endif()
 
