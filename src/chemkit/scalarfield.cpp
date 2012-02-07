@@ -58,6 +58,7 @@ public:
 ScalarField::ScalarField()
     : d(new ScalarFieldPrivate)
 {
+    d->origin = Point3(0, 0, 0);
     d->dimensions = std::vector<int>(3, 0);
     d->lengths = std::vector<Real>(3, 0);
 }
@@ -66,6 +67,7 @@ ScalarField::ScalarField()
 ScalarField::ScalarField(const std::vector<int> &dimensions, const std::vector<Real> &cellLengths, const std::vector<Real> &data)
     : d(new ScalarFieldPrivate)
 {
+    d->origin = Point3(0, 0, 0);
     d->dimensions = dimensions;
     d->lengths = cellLengths;
     d->data = data;
