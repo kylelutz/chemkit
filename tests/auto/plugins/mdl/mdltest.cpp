@@ -63,7 +63,7 @@ void MdlTest::read_methanol()
 
     // check molecule
     QCOMPARE(file.moleculeCount(), 1);
-    chemkit::Molecule *molecule = file.molecule();
+    const boost::shared_ptr<chemkit::Molecule> &molecule = file.molecule();
     QCOMPARE(molecule->formula(), std::string("CH4O"));
 
     // check data
@@ -87,7 +87,7 @@ void MdlTest::read_guanine()
 
     // check molecule
     QCOMPARE(file.moleculeCount(), 1);
-    chemkit::Molecule *guanine = file.molecule();
+    boost::shared_ptr<chemkit::Molecule> guanine = file.molecule();
     QCOMPARE(guanine->formula(), std::string("C5H5N5O"));
     QCOMPARE(guanine->name(), std::string("Guanine"));
     QCOMPARE(guanine->atomCount(), size_t(16));
@@ -111,7 +111,7 @@ void MdlTest::read_benzenes()
     QCOMPARE(file.moleculeCount(), 416);
 
     // check molecule data
-    foreach(const chemkit::Molecule *molecule, file.molecules()){
+    foreach(const boost::shared_ptr<chemkit::Molecule> &molecule, file.molecules()){
         QCOMPARE(molecule->name(), molecule->data("PUBCHEM_COMPOUND_CID").toString());
     }
 }
@@ -138,7 +138,7 @@ void MdlTest::read_serine()
     QCOMPARE(file.formatName(), std::string("mol"));
 
     // check molecule
-    chemkit::Molecule *molecule = file.molecule();
+    const boost::shared_ptr<chemkit::Molecule> &molecule = file.molecule();
     QVERIFY(molecule != 0);
     QCOMPARE(molecule->formula(), std::string("C3H7NO3"));
 }

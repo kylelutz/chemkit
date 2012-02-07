@@ -35,6 +35,7 @@
 
 from libcpp cimport bool
 from string cimport string
+from shared_ptr cimport shared_ptr
 from libcpp.vector cimport vector
 
 from moleculefile cimport _MoleculeFile
@@ -113,17 +114,19 @@ cdef class MoleculeFile:
     def addMolecule(self, Molecule molecule):
         """Adds molecule to the file."""
 
-        self._moleculeFile.addMolecule(molecule._molecule)
+        self._moleculeFile.addMolecule(cython.operator.dereference(molecule._moleculePointer))
 
     def removeMolecule(self, Molecule molecule):
         """Removes molecule from the file."""
 
-        return self._moleculeFile.removeMolecule(molecule._molecule)
+        return self._moleculeFile.removeMolecule(cython.operator.dereference(molecule._moleculePointer))
 
     def molecule(self, int index = 0):
         """Returns the molecule at index in the file."""
 
-        return Molecule_toPyObject(self._moleculeFile.molecule(index))
+        cdef shared_ptr[_Molecule] _molecule = self._moleculeFile.molecule(index)
+
+        return Molecule_fromSharedPointer(new shared_ptr[_Molecule](_molecule))
 
     def molecules(self):
         """Returns a list of the molecules in the file."""
@@ -142,7 +145,9 @@ cdef class MoleculeFile:
     def contains(self, Molecule molecule):
         """Returns True if the file contains molecule."""
 
-        return self._moleculeFile.contains(molecule._molecule)
+        cdef shared_ptr[_Molecule] *_molecule = molecule._moleculePointer
+
+        return self._moleculeFile.contains(cython.operator.dereference(_molecule))
 
     def clear(self):
         """Removes all of the molecules from the file."""
@@ -172,5 +177,6 @@ cdef class MoleculeFile:
     def quickRead(cls, char *fileName):
         """Reads and returns the molecule from fileName."""
 
-        return Molecule_toPyObject(_MoleculeFile_quickRead(<string>(fileName)))
+        cdef shared_ptr[_Molecule] _molecule = _MoleculeFile_quickRead(<string>(fileName))
 
+        return Molecule_fromSharedPointer(new shared_ptr[_Molecule](_molecule))

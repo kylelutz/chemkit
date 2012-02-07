@@ -127,12 +127,12 @@ void MolecularSurfaceTest::serine()
         qDebug() << file.errorString().c_str();
     QVERIFY(ok);
 
-    chemkit::Molecule *molecule = file.molecule();
+    const boost::shared_ptr<chemkit::Molecule> &molecule = file.molecule();
     QVERIFY(molecule);
     QCOMPARE(molecule->size(), size_t(14));
 
     // van der waals surface
-    chemkit::MolecularSurface surface(molecule);
+    chemkit::MolecularSurface surface(molecule.get());
     surface.setSurfaceType(chemkit::MolecularSurface::VanDerWaals);
     QCOMPARE(qRound(surface.volume()), 94);
     QCOMPARE(qRound(surface.surfaceArea()), 129);
@@ -151,12 +151,12 @@ void MolecularSurfaceTest::guanine()
         qDebug() << file.errorString().c_str();
     QVERIFY(ok);
 
-    chemkit::Molecule *molecule = file.molecule();
+    const boost::shared_ptr<chemkit::Molecule> molecule = file.molecule();
     QVERIFY(molecule);
     QCOMPARE(molecule->size(), size_t(16));
 
     // van der waals surface
-    chemkit::MolecularSurface surface(molecule);
+    chemkit::MolecularSurface surface(molecule.get());
     surface.setSurfaceType(chemkit::MolecularSurface::VanDerWaals);
     QCOMPARE(qRound(surface.volume()), 122);
     QCOMPARE(qRound(surface.surfaceArea()), 155);
@@ -175,12 +175,12 @@ void MolecularSurfaceTest::methane()
         qDebug() << file.errorString().c_str();
     QVERIFY(ok);
 
-    chemkit::Molecule *molecule = file.molecule();
+    const boost::shared_ptr<chemkit::Molecule> molecule = file.molecule();
     QVERIFY(molecule);
     QCOMPARE(molecule->size(), size_t(5));
 
     // van der waals surface
-    chemkit::MolecularSurface surface(molecule);
+    chemkit::MolecularSurface surface(molecule.get());
     surface.setSurfaceType(chemkit::MolecularSurface::VanDerWaals);
     QCOMPARE(qRound(surface.volume()), 28);
     QCOMPARE(qRound(surface.surfaceArea()), 48);
@@ -199,12 +199,12 @@ void MolecularSurfaceTest::ethanol()
         qDebug() << file.errorString().c_str();
     QVERIFY(ok);
 
-    chemkit::Molecule *molecule = file.molecule();
+    const boost::shared_ptr<chemkit::Molecule> molecule = file.molecule();
     QVERIFY(molecule);
     QCOMPARE(molecule->size(), size_t(9));
 
     // van der waals surface
-    chemkit::MolecularSurface surface(molecule);
+    chemkit::MolecularSurface surface(molecule.get());
     surface.setSurfaceType(chemkit::MolecularSurface::VanDerWaals);
     QCOMPARE(qRound(surface.volume()), 54);
     QCOMPARE(qRound(surface.surfaceArea()), 82);
@@ -223,12 +223,12 @@ void MolecularSurfaceTest::adenosine()
         qDebug() << file.errorString().c_str();
     QVERIFY(ok);
 
-    chemkit::Molecule *molecule = file.molecule();
+    const boost::shared_ptr<chemkit::Molecule> molecule = file.molecule();
     QVERIFY(molecule);
     QCOMPARE(molecule->size(), size_t(32));
 
     // van der waals surface
-    chemkit::MolecularSurface surface(molecule);
+    chemkit::MolecularSurface surface(molecule.get());
     surface.setSurfaceType(chemkit::MolecularSurface::VanDerWaals);
     QCOMPARE(qRound(surface.volume()), 223);
     QCOMPARE(qRound(surface.surfaceArea()), 275);
@@ -253,12 +253,12 @@ void MolecularSurfaceTest::buckminsterfullerene()
         qDebug() << file.errorString().c_str();
     QVERIFY(ok);
 
-    chemkit::Molecule *molecule = file.molecule();
+    const boost::shared_ptr<chemkit::Molecule> molecule = file.molecule();
     QVERIFY(molecule);
     QCOMPARE(molecule->size(), size_t(60));
 
     // van der waals surface
-    chemkit::MolecularSurface surface(molecule);
+    chemkit::MolecularSurface surface(molecule.get());
     surface.setSurfaceType(chemkit::MolecularSurface::VanDerWaals);
     QCOMPARE(qRound(surface.volume()), 518);
     QCOMPARE(qRound(surface.surfaceArea()), 432);
@@ -272,12 +272,12 @@ void MolecularSurfaceTest::dablib()
         qDebug() << file.errorString().c_str();
     QVERIFY(ok);
 
-    chemkit::Molecule *molecule = file.molecule("DABLIB");
+    boost::shared_ptr<chemkit::Molecule> molecule = file.molecule("DABLIB");
     QVERIFY(molecule != 0);
     QCOMPARE(molecule->size(), size_t(20));
 
     // van der waals surface
-    chemkit::MolecularSurface surface(molecule);
+    chemkit::MolecularSurface surface(molecule.get());
     surface.setSurfaceType(chemkit::MolecularSurface::VanDerWaals);
     QCOMPARE(qRound(surface.volume()), 140);
     QCOMPARE(qRound(surface.surfaceArea()), 180);
@@ -291,12 +291,12 @@ void MolecularSurfaceTest::lysozyme()
         qDebug() << file.errorString().c_str();
     QVERIFY(ok);
 
-    chemkit::Polymer *protein = file.polymer();
+    const boost::shared_ptr<chemkit::Polymer> &protein = file.polymer();
     QVERIFY(protein);
     QCOMPARE(protein->size(), size_t(1001));
 
     // van der waals surface
-    chemkit::MolecularSurface surface(protein);
+    chemkit::MolecularSurface surface(protein.get());
     surface.setSurfaceType(chemkit::MolecularSurface::VanDerWaals);
     QCOMPARE(qRound(surface.volume()), 10934);
     QCOMPARE(qRound(surface.surfaceArea()), 12679);
@@ -315,12 +315,12 @@ void MolecularSurfaceTest::cytochrome()
         qDebug() << file.errorString().c_str();
     QVERIFY(ok);
 
-    chemkit::Polymer *protein = file.polymer();
+    const boost::shared_ptr<chemkit::Polymer> &protein = file.polymer();
     QVERIFY(protein);
     QCOMPARE(protein->size(), size_t(1600));
 
     // van der waals surface
-    chemkit::MolecularSurface surface(protein);
+    chemkit::MolecularSurface surface(protein.get());
     surface.setSurfaceType(chemkit::MolecularSurface::VanDerWaals);
     QCOMPARE(qRound(surface.volume()), 17600);
     QCOMPARE(qRound(surface.surfaceArea()), 20653);
@@ -339,12 +339,12 @@ void MolecularSurfaceTest::toxin()
         qDebug() << file.errorString().c_str();
     QVERIFY(ok);
 
-    chemkit::Polymer *protein = file.polymer();
+    const boost::shared_ptr<chemkit::Polymer> &protein = file.polymer();
     QVERIFY(protein);
     QCOMPARE(protein->size(), size_t(948));
 
     // van der waals surface
-    chemkit::MolecularSurface surface(protein);
+    chemkit::MolecularSurface surface(protein.get());
     surface.setSurfaceType(chemkit::MolecularSurface::VanDerWaals);
     QCOMPARE(qRound(surface.volume()), 6253);
     QCOMPARE(qRound(surface.surfaceArea()), 7195);
@@ -363,12 +363,12 @@ void MolecularSurfaceTest::hydrolase()
         qDebug() << file.errorString().c_str();
     QVERIFY(ok);
 
-    chemkit::Polymer *protein = file.polymer();
+    const boost::shared_ptr<chemkit::Polymer> &protein = file.polymer();
     QVERIFY(protein);
     QCOMPARE(protein->size(), size_t(2003));
 
     // van der waals surface
-    chemkit::MolecularSurface surface(protein);
+    chemkit::MolecularSurface surface(protein.get());
     surface.setSurfaceType(chemkit::MolecularSurface::VanDerWaals);
     QCOMPARE(qRound(surface.volume()), 21919);
     QCOMPARE(qRound(surface.surfaceArea()), 25731);
@@ -387,12 +387,12 @@ void MolecularSurfaceTest::hemoglobin()
         qDebug() << file.errorString().c_str();
     QVERIFY(ok);
 
-    chemkit::Polymer *protein = file.polymer();
+    const boost::shared_ptr<chemkit::Polymer> &protein = file.polymer();
     QVERIFY(protein);
     QCOMPARE(protein->size(), size_t(2201));
 
     // van der waals surface
-    chemkit::MolecularSurface surface(protein);
+    chemkit::MolecularSurface surface(protein.get());
     surface.setSurfaceType(chemkit::MolecularSurface::VanDerWaals);
     QCOMPARE(qRound(surface.volume()), 24467);
     QCOMPARE(qRound(surface.surfaceArea()), 28920);
@@ -411,12 +411,12 @@ void MolecularSurfaceTest::dna()
         qDebug() << file.errorString().c_str();
     QVERIFY(ok);
 
-    chemkit::Polymer *nucleicAcid = file.polymer();
+    const boost::shared_ptr<chemkit::Polymer> &nucleicAcid = file.polymer();
     QVERIFY(nucleicAcid);
     QCOMPARE(nucleicAcid->size(), size_t(486));
 
     // van der waals surface
-    chemkit::MolecularSurface surface(nucleicAcid);
+    chemkit::MolecularSurface surface(nucleicAcid.get());
     surface.setSurfaceType(chemkit::MolecularSurface::VanDerWaals);
     QCOMPARE(qRound(surface.volume()), 4977);
     QCOMPARE(qRound(surface.surfaceArea()), 5621);
@@ -435,12 +435,12 @@ void MolecularSurfaceTest::ribozyme()
         qDebug() << file.errorString().c_str();
     QVERIFY(ok);
 
-    chemkit::Polymer *protein = file.polymer();
+    const boost::shared_ptr<chemkit::Polymer> &protein = file.polymer();
     QVERIFY(protein);
     QCOMPARE(protein->size(), size_t(1746));
 
     // van der waals surface
-    chemkit::MolecularSurface surface(protein);
+    chemkit::MolecularSurface surface(protein.get());
     surface.setSurfaceType(chemkit::MolecularSurface::VanDerWaals);
     QCOMPARE(qRound(surface.volume()), 17607);
     QCOMPARE(qRound(surface.surfaceArea()), 19422);
@@ -459,12 +459,12 @@ void MolecularSurfaceTest::ubiqutin()
         qDebug() << file.errorString().c_str();
     QVERIFY(ok);
 
-    chemkit::Polymer *protein = file.polymer();
+    const boost::shared_ptr<chemkit::Polymer> &protein = file.polymer();
     QVERIFY(protein);
     QCOMPARE(protein->size(), size_t(602));
 
     // van der waals surface
-    chemkit::MolecularSurface surface(protein);
+    chemkit::MolecularSurface surface(protein.get());
     surface.setSurfaceType(chemkit::MolecularSurface::VanDerWaals);
     QCOMPARE(qRound(surface.volume()), 6681);
     QCOMPARE(qRound(surface.surfaceArea()), 7937);

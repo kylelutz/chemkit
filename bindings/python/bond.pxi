@@ -66,17 +66,17 @@ cdef class Bond:
     def atom(self, int index):
         """Returns the atom atom index in the bond."""
 
-        return Atom_toPyObject(self._bond.atom(index))
+        return Atom_fromPointer(self._bond.atom(index))
 
     def atom1(self):
         """Returns the first atom in the bond."""
 
-        return Atom_toPyObject(self._bond.atom1())
+        return Atom_fromPointer(self._bond.atom1())
 
     def atom2(self):
         """Returns the second atom in the bond."""
 
-        return Atom_toPyObject(self._bond.atom2())
+        return Atom_fromPointer(self._bond.atom2())
 
     def atoms(self):
         """Returns a list containing both atoms in the bond."""
@@ -106,18 +106,18 @@ cdef class Bond:
     def fragment(self):
         """Returns the fragment that the bond is a part of."""
 
-        return Fragment_toPyObject(self._bond.fragment())
+        return Fragment_fromPointer(self._bond.fragment())
 
     def molecule(self):
         """Returns the molecule that the bond is a part of."""
 
-        return Molecule_toPyObject(self._bond.molecule())
+        return Molecule_fromPointer(self._bond.molecule())
 
     ### Ring Perception #######################################################
     def ring(self, index):
         """Returns the ring at index for the bond."""
 
-        return Ring_toPyObject(self._bond.ring(index))
+        return Ring_fromPointer(self._bond.ring(index))
 
     def rings(self):
         """Returns a list of rings that the bond is a part of."""
@@ -144,7 +144,7 @@ cdef class Bond:
     def smallestRing(self):
         """Returns the smallest ring that the bond is a part of."""
 
-        return Ring_toPyObject(self._bond.smallestRing())
+        return Ring_fromPointer(self._bond.smallestRing())
 
     def isAromatic(self):
         """Returns True if the bond is in an aromatic ring."""
@@ -157,11 +157,8 @@ cdef class Bond:
 
         return self._bond.length()
 
-cdef Bond Bond_toPyObject(_Bond *bond):
-    if bond is NULL:
-        return None
-
-    cdef Bond b = Bond.__new__(Bond)
-    b._bond = bond
-    return b
+cdef Bond Bond_fromPointer(_Bond *_bond):
+    cdef Bond bond = Bond.__new__(Bond)
+    bond._bond = _bond
+    return bond
 

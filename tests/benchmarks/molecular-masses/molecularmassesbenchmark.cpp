@@ -54,7 +54,7 @@ void MolecularMassesBenchmark::benchmark()
 
         double totalMass = 0;
 
-        foreach(const chemkit::Molecule *molecule, file.molecules()){
+        foreach(const boost::shared_ptr<chemkit::Molecule> &molecule, file.molecules()){
             totalMass += molecule->mass();
         }
 

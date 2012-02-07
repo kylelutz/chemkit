@@ -383,7 +383,7 @@ void PdbFile::writePolymerFile(chemkit::PolymerFile *file)
         return;
     }
 
-    chemkit::Polymer *polymer = new chemkit::Polymer;
+    boost::shared_ptr<chemkit::Polymer> polymer(new chemkit::Polymer);
 
     QHash<int, chemkit::Atom *> atomIds;
     PdbChain::Type chainType = PdbChain::Protein;
@@ -398,13 +398,13 @@ void PdbFile::writePolymerFile(chemkit::PolymerFile *file)
             chemkit::Residue *residue = 0;
 
             if(chainType == PdbChain::Protein){
-                aminoAcid = new chemkit::AminoAcid(polymer);
+                aminoAcid = new chemkit::AminoAcid(polymer.get());
                 residue = aminoAcid;
 
                 aminoAcid->setType(pdbResidue->name().toStdString());
             }
             else{
-                nucleotide = new chemkit::Nucleotide(polymer);
+                nucleotide = new chemkit::Nucleotide(polymer.get());
                 residue = nucleotide;
 
                 QChar symbol;

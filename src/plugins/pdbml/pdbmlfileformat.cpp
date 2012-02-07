@@ -63,7 +63,7 @@ bool PdbmlFileFormat::read(std::istream &input, chemkit::PolymerFile *file)
     doc.parse<0>(const_cast<char *>(data.c_str()));
 
     // parse polymers
-    chemkit::Polymer *polymer = new chemkit::Polymer;
+    boost::shared_ptr<chemkit::Polymer> polymer(new chemkit::Polymer);
     chemkit::PolymerChain *chain = 0;
     std::map<std::string, chemkit::PolymerChain *> nameToChain;
 
@@ -157,7 +157,7 @@ bool PdbmlFileFormat::read(std::istream &input, chemkit::PolymerFile *file)
                         }
 
                         if(sequenceNumber != currentSequenceNumber){
-                            residue = new chemkit::AminoAcid(polymer);
+                            residue = new chemkit::AminoAcid(polymer.get());
                             residue->setType(residueSymbol);
                             chain->addResidue(residue);
                             currentSequenceNumber = sequenceNumber;

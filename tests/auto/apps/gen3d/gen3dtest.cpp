@@ -65,7 +65,7 @@ void Gen3dTest::benzene()
     QVERIFY(ok);
 
     // check formula
-    chemkit::Molecule *molecule = file.molecule();
+    boost::shared_ptr<chemkit::Molecule> molecule = file.molecule();
     QVERIFY(molecule != 0);
     QCOMPARE(molecule->formula(), std::string("C6H6"));
 

@@ -67,7 +67,7 @@ cdef class LineFormat:
         if molecule:
             return self._lineFormat.read(formula, molecule._molecule)
         else:
-            return Molecule_toPyObject(self._lineFormat.read(formula))
+            return Molecule_fromPointer(self._lineFormat.read(formula))
 
     def write(self, Molecule molecule):
         """Returns the formula for the molecule."""

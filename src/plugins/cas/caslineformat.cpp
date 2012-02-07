@@ -62,7 +62,7 @@ bool CasLineFormat::read(const std::string &formula, chemkit::Molecule *molecule
     }
 
     // download molecule from its compound id
-    chemkit::Molecule *downloadedMolecule = pubchem.downloadMolecule(ids.first());
+    boost::shared_ptr<chemkit::Molecule> downloadedMolecule = pubchem.downloadMolecule(ids.first());
 
     if(!downloadedMolecule){
         setErrorString("Failed to download molecule");

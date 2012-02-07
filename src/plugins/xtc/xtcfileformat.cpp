@@ -37,6 +37,8 @@
 
 #include <QTemporaryFile>
 
+#include <boost/make_shared.hpp>
+
 #include <rpc/xdr.h>
 #include <chemkit/vector3.h>
 #include <chemkit/unitcell.h>
@@ -74,7 +76,7 @@ bool XtcFileFormat::read(std::istream &input, chemkit::TrajectoryFile *file)
     XDR xdrs;
     xdropen(&xdrs, dataFile.fileName().toAscii().constData(), "r");
 
-    chemkit::Trajectory *trajectory = new chemkit::Trajectory;
+    boost::shared_ptr<chemkit::Trajectory> trajectory = boost::make_shared<chemkit::Trajectory>();
 
     while(xdr_getpos(&xdrs) < dataSize){
         // read magic (should be '1995')
@@ -136,7 +138,6 @@ bool XtcFileFormat::read(std::istream &input, chemkit::TrajectoryFile *file)
     xdrclose(&xdrs);
 
     if(trajectory->isEmpty()){
-        delete trajectory;
         return false;
     }
 

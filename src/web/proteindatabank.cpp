@@ -61,7 +61,7 @@ public:
 // --- Construction and Destruction ---------------------------------------- //
 /// Creates a new protein data bank object.
 ProteinDataBank::ProteinDataBank()
-	: d(new ProteinDataBankPrivate)
+    : d(new ProteinDataBankPrivate)
 {
     d->url = "http://www.pdb.org/";
 }
@@ -69,7 +69,7 @@ ProteinDataBank::ProteinDataBank()
 /// Destroys the protein data bank object.
 ProteinDataBank::~ProteinDataBank()
 {
-	delete d;
+    delete d;
 }
 
 // --- Properties ---------------------------------------------------------- //
@@ -95,17 +95,14 @@ QUrl ProteinDataBank::url() const
 /// \code
 /// Polymer *lysozyme = pdb.downloadPolymer("2LYZ");
 /// \endcode
-Polymer* ProteinDataBank::downloadPolymer(const QString &id) const
+boost::shared_ptr<Polymer> ProteinDataBank::downloadPolymer(const QString &id) const
 {
-    QScopedPointer<PolymerFile> file(downloadFile(id));
+    boost::scoped_ptr<PolymerFile> file(downloadFile(id));
     if(!file){
-        return 0;
+        return boost::shared_ptr<Polymer>();
     }
 
-    Polymer *polymer = file->polymer();
-    file->takePolymer(polymer);
-
-    return polymer;
+    return file->polymer();
 }
 
 /// Downloads and returns the ligand molecule with \p name. If an
@@ -117,13 +114,13 @@ Polymer* ProteinDataBank::downloadPolymer(const QString &id) const
 /// \code
 /// Molecule *heme = pdb.downloadLigand("HEM");
 /// \endcode
-Molecule* ProteinDataBank::downloadLigand(const QString &name) const
+boost::shared_ptr<Molecule> ProteinDataBank::downloadLigand(const QString &name) const
 {
     QString url("%1/pdb/files/ligand/%2_ideal.sdf");
 
     QByteArray data = DownloadThread::download(url.arg(d->url.toString()).arg(name.toUpper()));
     if(data.isEmpty()){
-        return 0;
+        return boost::shared_ptr<Molecule>();
     }
 
     std::stringstream buffer(std::string(data.constData(), data.size()));
@@ -132,13 +129,10 @@ Molecule* ProteinDataBank::downloadLigand(const QString &name) const
     bool ok = file.read(buffer, "sdf");
 
     if(!ok || file.isEmpty()){
-        return 0;
+        return boost::shared_ptr<Molecule>();
     }
 
-    Molecule *molecule = file.molecule();
-    file.takeMolecule(molecule);
-
-    return molecule;
+    return file.molecule();
 }
 
 /// Downloads the file for the biomolecule with the PDB ID of \p id.

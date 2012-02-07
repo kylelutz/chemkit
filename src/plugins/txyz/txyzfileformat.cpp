@@ -84,7 +84,7 @@ bool TxyzFileFormat::read(QIODevice *iodev, chemkit::MoleculeFile *file)
         return false;
     }
 
-    chemkit::Molecule *molecule = new chemkit::Molecule();
+    boost::shared_ptr<chemkit::Molecule> molecule(new chemkit::Molecule);
     QVector<QList<int> > bondLists(atomCount);
 
     for(int i = 0; i < atomCount; i++){
@@ -156,7 +156,7 @@ bool TxyzFileFormat::write(const chemkit::MoleculeFile *file, QIODevice *iodev)
         return false;
     }
 
-    const chemkit::Molecule *molecule = file->molecule();
+    const boost::shared_ptr<chemkit::Molecule> &molecule = file->molecule();
 
     // write atom count and molecule name
     iodev->write(QString("%1 %2\n").arg(molecule->atomCount())

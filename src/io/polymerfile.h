@@ -41,6 +41,9 @@
 #include <string>
 #include <vector>
 
+#include <boost/shared_ptr.hpp>
+#include <boost/range/iterator_range.hpp>
+
 #include "genericfile.h"
 #include "polymerfileformat.h"
 
@@ -53,6 +56,10 @@ class PolymerFilePrivate;
 class CHEMKIT_IO_EXPORT PolymerFile : public GenericFile<PolymerFile, PolymerFileFormat>
 {
 public:
+    // typedefs
+    typedef boost::iterator_range<std::vector<boost::shared_ptr<Polymer> >::const_iterator> PolymerRange;
+    typedef boost::iterator_range<std::vector<boost::shared_ptr<Molecule> >::const_iterator> LigandRange;
+
     // construction and destruction
     PolymerFile();
     PolymerFile(const std::string &fileName);
@@ -63,21 +70,19 @@ public:
     bool isEmpty() const;
 
     // file contents
-    void addPolymer(Polymer *polymer);
-    bool removePolymer(Polymer *polymer);
-    bool takePolymer(Polymer *polymer);
-    Polymer* polymer(size_t index = 0) const;
-    std::vector<Polymer *> polymers() const;
+    void addPolymer(const boost::shared_ptr<Polymer> &polymer);
+    bool removePolymer(const boost::shared_ptr<Polymer> &polymer);
+    boost::shared_ptr<Polymer> polymer(size_t index = 0) const;
+    PolymerRange polymers() const;
     size_t polymerCount() const;
     bool contains(const Polymer *polymer) const;
-    void addLigand(Molecule *ligand);
-    bool removeLigand(Molecule *ligand);
-    bool takeLigand(Molecule *ligand);
-    Molecule* ligand(size_t index);
-    Molecule* ligand(const std::string &name);
-    std::vector<Molecule *> ligands() const;
+    void addLigand(const boost::shared_ptr<Molecule> &ligand);
+    bool removeLigand(const boost::shared_ptr<Molecule> &ligand);
+    boost::shared_ptr<Molecule> ligand(size_t index);
+    boost::shared_ptr<Molecule> ligand(const std::string &name);
+    LigandRange ligands() const;
     size_t ligandCount() const;
-    bool contains(const Molecule *ligand) const;
+    bool contains(const boost::shared_ptr<Molecule> &ligand) const;
     void clear();
 
 private:

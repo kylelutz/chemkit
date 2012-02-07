@@ -58,7 +58,7 @@ void BenzeneRingsBenchmark::benchmark()
     int ringCount = 0;
 
     QBENCHMARK_ONCE {
-        foreach(const chemkit::Molecule *molecule, file.molecules()){
+        foreach(const boost::shared_ptr<chemkit::Molecule> &molecule, file.molecules()){
             // don't use molecule->ringCount() because it
             // may not actually perceive the rings.
             ringCount += molecule->rings().size();

@@ -35,6 +35,8 @@
 
 #include "polymerfile.h"
 
+#include "moleculefile.h"
+
 #include <chemkit/foreach.h>
 #include <chemkit/polymer.h>
 
@@ -44,8 +46,8 @@ namespace chemkit {
 class PolymerFilePrivate
 {
 public:
-    std::vector<Polymer *> polymers;
-    std::vector<Molecule *> ligands;
+    std::vector<boost::shared_ptr<Polymer> > polymers;
+    MoleculeFile ligandFile; // use a molecule file to manage ligand molecules
 };
 
 // === PolymerFile ========================================================= //
@@ -75,12 +77,6 @@ PolymerFile::PolymerFile(const std::string &fileName)
 /// Destroys the polymer file object.
 PolymerFile::~PolymerFile()
 {
-    foreach(Polymer *polymer, d->polymers)
-        delete polymer;
-
-    foreach(Molecule *ligand, d->ligands)
-        delete ligand;
-
     delete d;
 }
 
@@ -98,49 +94,34 @@ bool PolymerFile::isEmpty() const
 }
 
 // --- File Contents ------------------------------------------------------- //
-/// Adds a polymer to the file.
-///
-/// The ownership of the polymer is passed to the file.
-void PolymerFile::addPolymer(Polymer *polymer)
+/// Adds \p polymer to the file.
+void PolymerFile::addPolymer(const boost::shared_ptr<Polymer> &polymer)
 {
     d->polymers.push_back(polymer);
 }
 
-/// Removes a polymer from the file and deletes it.
-bool PolymerFile::removePolymer(Polymer *polymer)
+/// Removes \p polymer from the file.
+bool PolymerFile::removePolymer(const boost::shared_ptr<Polymer> &polymer)
 {
-    bool found = takePolymer(polymer);
-
-    if(found){
-        delete polymer;
-    }
-
-    return found;
-}
-
-/// Removes a polymer from the file.
-///
-/// The ownership of the polymer is passed to the caller.
-bool PolymerFile::takePolymer(Polymer *polymer)
-{
-    std::vector<Polymer *>::iterator location = std::find(d->polymers.begin(), d->polymers.end(), polymer);
-    if(location == d->polymers.end()){
+    std::vector<boost::shared_ptr<Polymer> >::iterator iter = std::find(d->polymers.begin(),
+                                                                        d->polymers.end(),
+                                                                        polymer);
+    if(iter == d->polymers.end()){
         return false;
     }
 
-    d->polymers.erase(location);
-
+    d->polymers.erase(iter);
     return true;
 }
 
 /// Returns the polymer at \p index in the file.
-Polymer* PolymerFile::polymer(size_t index) const
+boost::shared_ptr<Polymer> PolymerFile::polymer(size_t index) const
 {
     return d->polymers[index];
 }
 
 /// Returns a list of all the polymers in the file.
-std::vector<Polymer *> PolymerFile::polymers() const
+PolymerFile::PolymerRange PolymerFile::polymers() const
 {
     return d->polymers;
 }
@@ -154,97 +135,63 @@ size_t PolymerFile::polymerCount() const
 /// Returns \c true if the file contains \p polymer.
 bool PolymerFile::contains(const Polymer *polymer) const
 {
-    return std::find(d->polymers.begin(), d->polymers.end(), polymer) != d->polymers.end();
-}
-
-/// Adds \p ligand to the file.
-void PolymerFile::addLigand(Molecule *ligand)
-{
-    d->ligands.push_back(ligand);
-}
-
-/// Removes \p ligand from the file and deletes it.
-bool PolymerFile::removeLigand(Molecule *ligand)
-{
-    bool found = takeLigand(ligand);
-
-    if(found){
-        delete ligand;
+    foreach(const boost::shared_ptr<Polymer> &polymerPointer, d->polymers){
+        if(polymerPointer.get() == polymer){
+            return true;
+        }
     }
 
-    return found;
+    return false;
+}
+
+/// Adds \p ligand to file.
+void PolymerFile::addLigand(const boost::shared_ptr<Molecule> &ligand)
+{
+    d->ligandFile.addMolecule(ligand);
 }
 
 /// Removes \p ligand from the file.
-///
-/// The ownership of \p ligand is passed to the caller.
-bool PolymerFile::takeLigand(Molecule *ligand)
+bool PolymerFile::removeLigand(const boost::shared_ptr<Molecule> &ligand)
 {
-    std::vector<Molecule *>::iterator location = std::find(d->ligands.begin(),
-                                                           d->ligands.end(),
-                                                           ligand);
-    if(location == d->ligands.end()){
-        return false;
-    }
-
-    d->ligands.erase(location);
-
-    return true;
+    return d->ligandFile.removeMolecule(ligand);
 }
 
 /// Returns the ligand at \p index in the file.
-Molecule* PolymerFile::ligand(size_t index)
+boost::shared_ptr<Molecule> PolymerFile::ligand(size_t index)
 {
-    assert(index < d->ligands.size());
-
-    return d->ligands[index];
+    return d->ligandFile.molecule(index);
 }
 
 /// Returns the ligand in the file with \p name. Returns \c 0 if
 /// a ligand with \p name is not found.
-Molecule* PolymerFile::ligand(const std::string &name)
+boost::shared_ptr<Molecule> PolymerFile::ligand(const std::string &name)
 {
-    foreach(Molecule *ligand, d->ligands){
-        if(ligand->name() == name){
-            return ligand;
-        }
-    }
-
-    return 0;
+    return d->ligandFile.molecule(name);
 }
 
 /// Returns a list of all the ligands in the file.
-std::vector<Molecule *> PolymerFile::ligands() const
+PolymerFile::LigandRange PolymerFile::ligands() const
 {
-    return d->ligands;
+    return d->ligandFile.molecules();
 }
 
 /// Returns the number of ligands in the file.
 size_t PolymerFile::ligandCount() const
 {
-    return d->ligands.size();
+    return d->ligandFile.size();
 }
 
 /// Returns \c true if the file contains \p ligand.
-bool PolymerFile::contains(const Molecule *ligand) const
+bool PolymerFile::contains(const boost::shared_ptr<Molecule> &ligand) const
 {
-    return std::find(d->ligands.begin(),
-                     d->ligands.end(),
-                     ligand) != d->ligands.end();
+    return d->ligandFile.contains(ligand);
 }
 
 /// Removes all the polymers and ligands from the file.
 void PolymerFile::clear()
 {
-    foreach(Polymer *polymer, d->polymers)
-        delete polymer;
-
     d->polymers.clear();
-
-    foreach(Molecule *ligand, d->ligands)
-        delete ligand;
-
-    d->ligands.clear();
+    d->ligandFile.clear();
 }
 
 } // end chemkit namespace

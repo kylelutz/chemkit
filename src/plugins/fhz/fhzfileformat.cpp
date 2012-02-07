@@ -80,7 +80,7 @@ bool FhzFileFormat::read(QIODevice *iodev, chemkit::MoleculeFile *file)
     }
     int atomCount = lineItems[0].toInt();
 
-    chemkit::Molecule *molecule = new chemkit::Molecule;
+    boost::shared_ptr<chemkit::Molecule> molecule(new chemkit::Molecule);
     chemkit::InternalCoordinates *coordinates = new chemkit::InternalCoordinates(atomCount);
 
     for(int i = 0; i < atomCount; i++){

@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
         return -1;
     }
 
-    chemkit::Molecule *molecule = file.molecule();
+    boost::shared_ptr<chemkit::Molecule> molecule = file.molecule();
     if(!molecule){
         err << "File contains no molecules.\n";
         return -1;
@@ -70,7 +70,7 @@ int main(int argc, char *argv[])
         return -1;
     }
 
-    uff->setMolecule(molecule);
+    uff->setMolecule(molecule.get());
     uff->setup();
 
     if(!uff->isSetup()){
@@ -86,5 +86,5 @@ int main(int argc, char *argv[])
 
     delete uff;
 
-	return 0;
+    return 0;
 }

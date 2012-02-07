@@ -35,6 +35,8 @@
 
 #include "sdfmol2test.h"
 
+#include <boost/make_shared.hpp>
+
 #include <chemkit/molecule.h>
 #include <chemkit/moleculefile.h>
 #include <chemkit/moleculefileformat.h>
@@ -48,20 +50,19 @@ void SdfMol2Test::initTestCase()
 
 void SdfMol2Test::ethanol()
 {
-    chemkit::Molecule molecule("CCO", "smiles");
-    QCOMPARE(molecule.formula(), std::string("C2H6O"));
+    boost::shared_ptr<chemkit::Molecule> molecule = boost::make_shared<chemkit::Molecule>("CCO", "smiles");
+    QCOMPARE(molecule->formula(), std::string("C2H6O"));
 
     chemkit::MoleculeFile sdfFile;
-    sdfFile.addMolecule(&molecule);
+    sdfFile.addMolecule(molecule);
 
     std::stringstream buffer;
     sdfFile.write(buffer, "mol2");
-    sdfFile.takeMolecule(&molecule);
 
     chemkit::MoleculeFile mol2File;
     mol2File.read(buffer, "mol2");
     QCOMPARE(mol2File.moleculeCount(), 1);
-    QCOMPARE(molecule.formula("inchi"), mol2File.molecule(0)->formula("inchi"));
+    QCOMPARE(molecule->formula("inchi"), mol2File.molecule(0)->formula("inchi"));
 }
 
 QTEST_APPLESS_MAIN(SdfMol2Test)

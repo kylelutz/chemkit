@@ -54,12 +54,12 @@ void ProteinSurfaceBenchmark::benchmark()
         qDebug() << file.errorString().c_str();
     QVERIFY(ok);
 
-    chemkit::Polymer *protein = file.polymer();
+    const boost::shared_ptr<chemkit::Polymer> &protein = file.polymer();
     QVERIFY(protein);
     QCOMPARE(protein->size(), size_t(2201));
 
     QBENCHMARK {
-        chemkit::MolecularSurface surface(protein);
+        chemkit::MolecularSurface surface(protein.get());
         surface.setSurfaceType(chemkit::MolecularSurface::SolventAccessible);
 
         QCOMPARE(qRound(surface.surfaceArea()), 14791);

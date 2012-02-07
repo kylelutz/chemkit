@@ -70,7 +70,7 @@ void MoleculeListDock::fileChanged(chemkit::MoleculeFile *file)
         ui->tableWidget->setRowCount(file->moleculeCount());
 
         for(int i = 0; i < file->moleculeCount(); i++){
-            chemkit::Molecule *molecule = file->molecule(i);
+            chemkit::Molecule *molecule = file->molecule(i).get();
             QTableWidgetItem *item = new QTableWidgetItem(molecule->name().c_str());
             ui->tableWidget->setItem(i, 0, item);
         }
@@ -85,7 +85,7 @@ void MoleculeListDock::moleculeChanged(chemkit::Molecule *molecule)
 
 void MoleculeListDock::itemSelectionChanged()
 {
-    chemkit::Molecule *molecule = currentMolecule();
+    boost::shared_ptr<chemkit::Molecule> molecule = currentMolecule();
     if(molecule){
         m_builder->setMolecule(molecule);
     }
@@ -100,7 +100,7 @@ void MoleculeListDock::itemDoubleClicked(QTableWidgetItem *item)
 
 void MoleculeListDock::itemChanged(QTableWidgetItem *item)
 {
-    chemkit::Molecule *molecule = currentMolecule();
+    boost::shared_ptr<chemkit::Molecule> molecule = currentMolecule();
     if(!molecule)
         return;
 
@@ -135,7 +135,7 @@ void MoleculeListDock::renameMolecule()
 
 void MoleculeListDock::deleteMolecule()
 {
-    chemkit::Molecule *molecule = currentMolecule();
+    boost::shared_ptr<chemkit::Molecule> molecule = currentMolecule();
     if(molecule){
         m_builder->file()->removeMolecule(molecule);
     }
@@ -143,25 +143,25 @@ void MoleculeListDock::deleteMolecule()
 
 void MoleculeListDock::showMoleculeProperties()
 {
-    const chemkit::Molecule *molecule = currentMolecule();
+    const boost::shared_ptr<chemkit::Molecule> &molecule = currentMolecule();
     if(molecule){
-        MoleculePropertiesDialog dialog(molecule, m_builder);
+        MoleculePropertiesDialog dialog(molecule.get(), m_builder);
         dialog.exec();
     }
 }
 
-chemkit::Molecule* MoleculeListDock::currentMolecule() const
+boost::shared_ptr<chemkit::Molecule> MoleculeListDock::currentMolecule() const
 {
     if(m_builder->file()){
         int row = ui->tableWidget->currentRow();
 
         if(row == -1){
-            return 0;
+            return boost::shared_ptr<chemkit::Molecule>();
         }
         else if(row < m_builder->file()->moleculeCount()){
             return m_builder->file()->molecule(row);
         }
     }
 
-    return 0;
+    return boost::shared_ptr<chemkit::Molecule>();
 }

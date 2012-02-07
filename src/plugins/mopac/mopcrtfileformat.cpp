@@ -37,6 +37,8 @@
 
 #include <QtCore>
 
+#include <boost/make_shared.hpp>
+
 #include <chemkit/atom.h>
 #include <chemkit/molecule.h>
 #include <chemkit/moleculefile.h>
@@ -65,7 +67,7 @@ bool MopcrtFileFormat::read(QIODevice *iodev, chemkit::MoleculeFile *file)
     iodev->setTextModeEnabled(true);
 
     // create molecule
-    chemkit::Molecule *molecule = new chemkit::Molecule;
+    boost::shared_ptr<chemkit::Molecule> molecule = boost::make_shared<chemkit::Molecule>();
 
     // keyword line
     QString line = iodev->readLine();
@@ -97,7 +99,6 @@ bool MopcrtFileFormat::read(QIODevice *iodev, chemkit::MoleculeFile *file)
     }
 
     if(molecule->isEmpty()){
-        delete molecule;
         return false;
     }
 

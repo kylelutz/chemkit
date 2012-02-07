@@ -40,6 +40,8 @@
 
 #include <string>
 
+#include <boost/shared_ptr.hpp>
+
 #include <QtCore>
 #include <QtNetwork>
 
@@ -61,7 +63,7 @@ public:
     QUrl url() const;
 
     // downloads
-    Molecule* downloadMolecule(const QString &id) const;
+    boost::shared_ptr<Molecule> downloadMolecule(const QString &id) const;
     MoleculeFile* downloadFile(const QString &id) const;
     MoleculeFile* downloadFile(const QStringList &ids) const;
     QByteArray downloadFileData(const QString &id, const QString &format) const;

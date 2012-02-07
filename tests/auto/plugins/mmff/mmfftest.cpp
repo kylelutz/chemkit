@@ -87,7 +87,7 @@ void MmffTest::validate()
 
     // validate molecules
     QList<chemkit::ForceField *> failedMolecules;
-    foreach(const chemkit::Molecule *molecule, dataFile.molecules()){
+    foreach(const boost::shared_ptr<chemkit::Molecule> &molecule, dataFile.molecules()){
         bool failed = false;
 
         // check for correct expected molecule
@@ -98,7 +98,7 @@ void MmffTest::validate()
         QVERIFY(forceField);
 
         // add molecule and setup force field
-        forceField->setMolecule(molecule);
+        forceField->setMolecule(molecule.get());
         bool setup = forceField->setup();
         if(!setup){
             //failed = true;

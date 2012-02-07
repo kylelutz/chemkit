@@ -58,7 +58,7 @@ void XtcTest::spc216()
         qDebug() << file.errorString().c_str();
     QVERIFY(ok);
 
-    chemkit::Trajectory *trajectory = file.trajectory();
+    boost::shared_ptr<chemkit::Trajectory> trajectory = file.trajectory();
     QVERIFY(trajectory != 0);
     QCOMPARE(trajectory->frameCount(), 201);
 }

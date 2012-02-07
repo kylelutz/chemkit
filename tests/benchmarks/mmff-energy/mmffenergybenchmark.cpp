@@ -56,10 +56,10 @@ void MmffEnergyBenchmark::benchmark()
     QBENCHMARK_ONCE {
         chemkit::ForceField *forceField = chemkit::ForceField::create("mmff");
 
-        foreach(const chemkit::Molecule *molecule, file.molecules()){
+        foreach(const boost::shared_ptr<chemkit::Molecule> &molecule, file.molecules()){
             QVERIFY(forceField);
 
-            forceField->setMolecule(molecule);
+            forceField->setMolecule(molecule.get());
             forceField->setup();
             //QVERIFY(forceField->isSetup());
 

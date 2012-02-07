@@ -50,7 +50,7 @@ void ProteinDataBankTest::downloadFile()
     QVERIFY(file != 0);
 
     QCOMPARE(file->polymerCount(), size_t(1));
-    chemkit::Polymer *protein = file->polymer();
+    boost::shared_ptr<chemkit::Polymer> protein = file->polymer();
     QCOMPARE(protein->chainCount(), size_t(1));
     QCOMPARE(protein->chain(0)->residueCount(), size_t(129));
 
@@ -61,7 +61,7 @@ void ProteinDataBankTest::downloadLigand()
 {
     chemkit::ProteinDataBank pdb;
 
-    chemkit::Molecule *molecule = pdb.downloadLigand("ADP");
+    boost::shared_ptr<chemkit::Molecule> molecule = pdb.downloadLigand("ADP");
     QVERIFY(molecule != 0);
     QCOMPARE(molecule->name(), std::string("ADP"));
     QCOMPARE(molecule->formula(), std::string("C10H15N5O10P2"));

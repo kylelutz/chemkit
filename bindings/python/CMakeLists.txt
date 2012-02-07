@@ -37,6 +37,7 @@ set(SOURCES
   point3.pxi
   ring.pxd
   ring.pxi
+  shared_ptr.pxd
   string.pxd
   variant.pxd
   vector3.pxd

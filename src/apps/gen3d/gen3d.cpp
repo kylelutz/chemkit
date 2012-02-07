@@ -154,17 +154,17 @@ int main(int argc, char *argv[])
     }
 
     // read input formula
-    chemkit::Molecule *molecule = inputFormat->read(inputFormula);
+    boost::shared_ptr<chemkit::Molecule> molecule(inputFormat->read(inputFormula));
     if(!molecule){
         std::cerr << "Failed to parse formula: " << inputFormat->errorString() << std::endl;
         return -1;
     }
 
     // generate 3d coordinates
-    chemkit::CoordinatePredictor::predictCoordinates(molecule);
+    chemkit::CoordinatePredictor::predictCoordinates(molecule.get());
 
     // optimize coordinates
-    optimizeGeometry(molecule);
+    optimizeGeometry(molecule.get());
 
     // set center to origin
     molecule->setCenter(0, 0, 0);

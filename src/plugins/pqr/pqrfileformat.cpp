@@ -53,7 +53,7 @@ PqrFileFormat::~PqrFileFormat()
 
 bool PqrFileFormat::read(std::istream &input, chemkit::MoleculeFile *file)
 {
-    chemkit::Molecule *molecule = new chemkit::Molecule;
+    boost::shared_ptr<chemkit::Molecule> molecule(new chemkit::Molecule);
 
     for(;;){
         std::string line;

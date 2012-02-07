@@ -90,20 +90,15 @@ QUrl PubChem::url() const
 
 // --- Downloads ----------------------------------------------------------- //
 /// Downloads and returns the molecule with the compound ID \p id.
-/// If an error occurs \c 0 is returned.
-///
-/// The ownership of the returned molecule is passed to the caller.
-Molecule* PubChem::downloadMolecule(const QString &id) const
+/// If an error occurs a null pointer is returned.
+boost::shared_ptr<Molecule> PubChem::downloadMolecule(const QString &id) const
 {
     QScopedPointer<MoleculeFile> file(downloadFile(id));
     if(!file){
-        return 0;
+        return boost::shared_ptr<Molecule>();
     }
 
-    Molecule *molecule = file->molecule();
-    file->takeMolecule(molecule);
-
-    return molecule;
+    return file->molecule();
 }
 
 /// Downloads and returns the file with the compound ID \p id. If an

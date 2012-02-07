@@ -162,21 +162,16 @@ int main(int argc, char *argv[])
 
     std::vector<chemkit::Molecule *> matchingMolecules;
 
-    foreach(chemkit::Molecule *molecule, inputFile.molecules()){
-        bool match = query.matches(molecule);
+    foreach(const boost::shared_ptr<chemkit::Molecule> &molecule, inputFile.molecules()){
+        bool match = query.matches(molecule.get());
 
         if((match && !invertMatch) || (!match && invertMatch)){
-            matchingMolecules.push_back(molecule);
+            outputFile.addMolecule(molecule);
         }
     }
 
-    foreach(chemkit::Molecule *molecule, matchingMolecules){
-        inputFile.takeMolecule(molecule);
-        outputFile.addMolecule(molecule);
-    }
-
     if(namesOnly){
-        foreach(const chemkit::Molecule *molecule, outputFile.molecules()){
+        foreach(const boost::shared_ptr<chemkit::Molecule> &molecule, outputFile.molecules()){
             std::cout << molecule->name() << "\n";
         }
     }

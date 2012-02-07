@@ -40,6 +40,8 @@
 #include <cstdio>
 #include <iostream>
 
+#include <boost/make_shared.hpp>
+
 #include <chemkit/atom.h>
 #include <chemkit/bond.h>
 #include <chemkit/foreach.h>
@@ -68,10 +70,10 @@ bool CmlFileFormat::read(std::istream &input, chemkit::MoleculeFile *file)
     doc.parse<0>(const_cast<char *>(data.c_str()));
 
     // parse molecules
-    chemkit::Molecule *molecule = 0;
+    boost::shared_ptr<chemkit::Molecule> molecule;
     rapidxml::xml_node<> *moleculeNode = doc.first_node("molecule");
     while(moleculeNode){
-        molecule = new chemkit::Molecule;
+        molecule = boost::make_shared<chemkit::Molecule>();
 
         chemkit::DiagramCoordinates *diagramCoordinates = 0;
         chemkit::CartesianCoordinates *cartesianCoordinates = 0;
@@ -177,7 +179,7 @@ bool CmlFileFormat::read(std::istream &input, chemkit::MoleculeFile *file)
 
         // add molecule to file
         file->addMolecule(molecule);
-        molecule = 0;
+        molecule.reset();
 
         // move to next molecule
         moleculeNode = moleculeNode->next_sibling("molecule");
@@ -191,7 +193,7 @@ bool CmlFileFormat::write(const chemkit::MoleculeFile *file, std::ostream &outpu
     output << "<?xml version=\"1.0\"?>\n";
 
     // write each molecule
-    foreach(const chemkit::Molecule *molecule, file->molecules()){
+    foreach(const boost::shared_ptr<chemkit::Molecule> &molecule, file->molecules()){
         output << "<molecule>\n";
 
         // write molecule name

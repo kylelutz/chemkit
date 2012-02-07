@@ -35,6 +35,8 @@
 
 #include "mol2fileformat.h"
 
+#include <boost/make_shared.hpp>
+
 #include <chemkit/atom.h>
 #include <chemkit/bond.h>
 #include <chemkit/moleculefile.h>
@@ -68,7 +70,7 @@ bool Mol2FileFormat::read(QIODevice *iodev, chemkit::MoleculeFile *file)
 {
     iodev->setTextModeEnabled(true);
 
-    chemkit::Molecule *molecule = 0;
+    boost::shared_ptr<chemkit::Molecule> molecule;
 
     QHash<int, chemkit::Atom *> atom_ids;
 
@@ -95,7 +97,7 @@ bool Mol2FileFormat::read(QIODevice *iodev, chemkit::MoleculeFile *file)
             bondCount = countsLine[1].toInt();
 
             atom_ids.clear();
-            molecule = new chemkit::Molecule();
+            molecule = boost::make_shared<chemkit::Molecule>();
 
             if(!name.isEmpty())
                 molecule->setName(name.toStdString());
@@ -204,10 +206,10 @@ bool Mol2FileFormat::write(const chemkit::MoleculeFile *file, QIODevice *iodev)
 {
     iodev->setTextModeEnabled(true);
 
-    foreach(chemkit::Molecule *molecule, file->molecules()){
+    foreach(const boost::shared_ptr<chemkit::Molecule> &molecule, file->molecules()){
         // perceive sybyl atom types
         SybylAtomTyper atomTyper;
-        atomTyper.setMolecule(molecule);
+        atomTyper.setMolecule(molecule.get());
 
         iodev->write("@<TRIPOS>MOLECULE\n");
         iodev->write((molecule->name() + "\n").c_str());

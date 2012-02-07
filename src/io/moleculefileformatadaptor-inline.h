@@ -85,7 +85,7 @@ inline bool MoleculeFileFormatAdaptor<LineFormat>::read(std::istream &input, Mol
         }
 
         std::string formula = lineItems[0];
-        Molecule *molecule = m_format->read(formula);
+        boost::shared_ptr<Molecule> molecule(m_format->read(formula));
         if(!molecule){
             continue;
         }
@@ -102,8 +102,8 @@ inline bool MoleculeFileFormatAdaptor<LineFormat>::read(std::istream &input, Mol
 
 inline bool MoleculeFileFormatAdaptor<LineFormat>::write(const MoleculeFile *file, std::ostream &output)
 {
-    BOOST_FOREACH(const Molecule *molecule, file->molecules()){
-        std::string formula = m_format->write(molecule);
+    BOOST_FOREACH(const boost::shared_ptr<Molecule> &molecule, file->molecules()){
+        std::string formula = m_format->write(molecule.get());
         output << formula;
 
         if(!molecule->name().empty()){
@@ -137,13 +137,7 @@ inline bool MoleculeFileFormatAdaptor<PolymerFileFormat>::read(std::istream &inp
         return false;
     }
 
-    std::vector<Polymer *> polymers = polymerFile.polymers();
-    
-    BOOST_FOREACH(Polymer *polymer, polymers){
-        // take polymer from the polymer file
-        polymerFile.takePolymer(polymer);
-
-        // add polymer to the molecule file
+    BOOST_FOREACH(const boost::shared_ptr<Polymer> &polymer, polymerFile.polymers()){
         file->addMolecule(polymer);
     }
 

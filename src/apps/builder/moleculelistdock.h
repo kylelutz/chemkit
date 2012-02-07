@@ -67,7 +67,7 @@ private slots:
     void showMoleculeProperties();
 
 private:
-    chemkit::Molecule* currentMolecule() const;
+    boost::shared_ptr<chemkit::Molecule> currentMolecule() const;
 
 private:
     Ui::MoleculeListDock *ui;

@@ -38,6 +38,8 @@
 
 #include <algorithm>
 
+#include <boost/make_shared.hpp>
+
 #include <chemkit/atom.h>
 #include <chemkit/bondpredictor.h>
 #include <chemkit/graphicscamera.h>
@@ -60,7 +62,6 @@ BuilderWindow::BuilderWindow(QWidget *parent)
 {
     // properties
     m_file = 0;
-    m_molecule = 0;
     m_inMoleculeEdit = false;
 
     // setup ui
@@ -162,7 +163,7 @@ BuilderWindow::BuilderWindow(QWidget *parent)
     ui->menuView->addAction(dockWidget->toggleViewAction());
 
     //setMolecule(0);
-    setMolecule(new chemkit::Molecule);
+    setMolecule(boost::make_shared<chemkit::Molecule>());
 
     setTool(m_buildTool);
 }
@@ -200,14 +201,11 @@ void BuilderWindow::setTool(BuilderTool *tool)
         ui->actionManipulate->setChecked(true);
 }
 
-void BuilderWindow::setMolecule(chemkit::Molecule *molecule)
+void BuilderWindow::setMolecule(const boost::shared_ptr<chemkit::Molecule> &molecule)
 {
     if(m_molecule == molecule){
         return;
     }
-
-    // set molecule
-    m_molecule = molecule;
 
     // remove old molecule item
     if(m_moleculeItem){
@@ -215,25 +213,28 @@ void BuilderWindow::setMolecule(chemkit::Molecule *molecule)
         m_moleculeItem = 0;
     }
 
+    // set molecule
+    m_molecule = molecule;
+
     // add new molecule item
     if(molecule){
-        m_moleculeItem = new chemkit::GraphicsMoleculeItem(molecule);
+        m_moleculeItem = new chemkit::GraphicsMoleculeItem(molecule.get());
         ui->graphicsView->addItem(m_moleculeItem);
     }
 
     // reset editor
-    m_editor->setMolecule(molecule);
+    m_editor->setMolecule(molecule.get());
 
     // reset energy minimizer
-    m_energyMinimizer->setMolecule(molecule);
+    m_energyMinimizer->setMolecule(molecule.get());
 
     centerCamera();
 
     // notify observers
-    emit moleculeChanged(molecule);
+    emit moleculeChanged(molecule.get());
 }
 
-chemkit::Molecule* BuilderWindow::molecule() const
+boost::shared_ptr<chemkit::Molecule> BuilderWindow::molecule() const
 {
     return m_molecule;
 }
@@ -368,7 +369,7 @@ void BuilderWindow::saveFileAs()
 void BuilderWindow::closeFile()
 {
     // remove molecule
-    setMolecule(0);
+    setMolecule(boost::shared_ptr<chemkit::Molecule>());
 
     // remove file
     delete m_file;
@@ -485,7 +486,7 @@ void BuilderWindow::predictBonds()
     foreach(chemkit::Bond *bond, m_molecule->bonds())
         m_molecule->removeBond(bond);
 
-    chemkit::BondPredictor predictor(m_molecule);
+    chemkit::BondPredictor predictor(m_molecule.get());
 
     std::pair<chemkit::Atom *, chemkit::Atom *> bondedPair;
     foreach(bondedPair, predictor.predictedBonds()){
@@ -557,6 +558,6 @@ void BuilderWindow::setCanDelete(bool canDelete)
 
 void BuilderWindow::moleculeProperties()
 {
-    MoleculePropertiesDialog dialog(m_molecule, this);
+    MoleculePropertiesDialog dialog(m_molecule.get(), this);
     dialog.exec();
 }

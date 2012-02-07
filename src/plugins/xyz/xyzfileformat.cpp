@@ -65,7 +65,7 @@ bool XyzFileFormat::read(std::istream &input, chemkit::MoleculeFile *file)
     CHEMKIT_UNUSED(commentLine);
 
     // create molecule
-    chemkit::Molecule *molecule = new chemkit::Molecule;
+    boost::shared_ptr<chemkit::Molecule> molecule(new chemkit::Molecule);
 
     // read atoms and coordinates
     for(int i = 0; i < atomCount; i++){
@@ -106,7 +106,7 @@ bool XyzFileFormat::read(std::istream &input, chemkit::MoleculeFile *file)
 
 bool XyzFileFormat::write(const chemkit::MoleculeFile *file, std::ostream &output)
 {
-    chemkit::Molecule *molecule = file->molecule();
+    boost::shared_ptr<chemkit::Molecule> molecule = file->molecule();
     if(!molecule){
         setErrorString("No molecule in file.");
         return false;

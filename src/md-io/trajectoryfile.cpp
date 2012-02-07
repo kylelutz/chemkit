@@ -43,7 +43,7 @@ namespace chemkit {
 class TrajectoryFilePrivate
 {
 public:
-    Trajectory *trajectory;
+    boost::shared_ptr<Trajectory> trajectory;
 };
 
 // === TrajectoryFile ====================================================== //
@@ -61,7 +61,6 @@ public:
 TrajectoryFile::TrajectoryFile()
     : d(new TrajectoryFilePrivate)
 {
-    d->trajectory = 0;
 }
 
 /// Creates a new trajectory file with \p fileName.
@@ -69,13 +68,11 @@ TrajectoryFile::TrajectoryFile(const std::string &fileName)
     : GenericFile<TrajectoryFile, TrajectoryFileFormat>(fileName),
       d(new TrajectoryFilePrivate)
 {
-    d->trajectory = 0;
 }
 
 /// Destroys the trajectory file object.
 TrajectoryFile::~TrajectoryFile()
 {
-    delete d->trajectory;
     delete d;
 }
 
@@ -88,42 +85,25 @@ bool TrajectoryFile::isEmpty() const
 
 // --- File Contents ------------------------------------------------------- //
 /// Sets the trajectory for the file to \p trajectory.
-void TrajectoryFile::setTrajectory(Trajectory *trajectory)
+void TrajectoryFile::setTrajectory(const boost::shared_ptr<Trajectory> &trajectory)
 {
-    // delete current trajectory
-    removeTrajectory();
-
     d->trajectory = trajectory;
 }
 
 /// Returns the trajectory that the file contains.
-Trajectory* TrajectoryFile::trajectory() const
+boost::shared_ptr<Trajectory> TrajectoryFile::trajectory() const
 {
     return d->trajectory;
 }
 
-/// Remove the trajectory from the file and deletes it.
+/// Remove the trajectory from the file.
 bool TrajectoryFile::removeTrajectory()
 {
     if(!d->trajectory){
         return false;
     }
 
-    delete d->trajectory;
-    d->trajectory = 0;
-    return true;
-}
-
-/// Removes the trajectory from the file.
-///
-/// The ownership of the trajectory is passed to the caller.
-bool TrajectoryFile::takeTrajectory()
-{
-    if(!d->trajectory){
-        return false;
-    }
-
-    d->trajectory = 0;
+    d->trajectory.reset();
     return true;
 }
 

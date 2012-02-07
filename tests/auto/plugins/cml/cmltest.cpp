@@ -33,7 +33,7 @@
 **
 ******************************************************************************/
 
-#include "cmltest.h" 
+#include "cmltest.h"
 
 #include <boost/range/algorithm.hpp>
 
@@ -75,7 +75,7 @@ void CmlTest::read()
     QVERIFY(ok);
 
     QCOMPARE(file.moleculeCount(), 1);
-    chemkit::Molecule *molecule = file.molecule();
+    const boost::shared_ptr<chemkit::Molecule> &molecule = file.molecule();
     QVERIFY(molecule != 0);
     QCOMPARE(molecule->formula(), formula.toStdString());
     QCOMPARE(molecule->coordinateSetCount(), size_t(1));
@@ -91,7 +91,7 @@ void CmlTest::glucose()
     QVERIFY(ok);
 
     QCOMPARE(file.moleculeCount(), 1);
-    chemkit::Molecule *molecule = file.molecule();
+    boost::shared_ptr<chemkit::Molecule> molecule = file.molecule();
     QVERIFY(molecule != 0);
     QCOMPARE(molecule->formula(), std::string("C6H12O6"));
 

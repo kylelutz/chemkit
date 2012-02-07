@@ -35,6 +35,8 @@
 
 #include "smilessdftest.h"
 
+#include <boost/make_shared.hpp>
+
 #include <chemkit/molecule.h>
 #include <chemkit/lineformat.h>
 #include <chemkit/moleculefile.h>
@@ -51,19 +53,19 @@ void SmilesSdfTest::initTestCase()
 
 void SmilesSdfTest::ethanol()
 {
-    chemkit::Molecule molecule("CCO", "smiles");
-    QCOMPARE(molecule.formula(), std::string("C2H6O"));
+    boost::shared_ptr<chemkit::Molecule> molecule = boost::make_shared<chemkit::Molecule>("CCO", "smiles");
+    QCOMPARE(molecule->formula(), std::string("C2H6O"));
 
     chemkit::MoleculeFile file;
-    file.addMolecule(&molecule);
+    file.addMolecule(molecule);
 
     std::stringstream buffer;
     file.write(buffer, "sdf");
-    file.takeMolecule(&molecule);
 
+    file.clear();
     file.read(buffer, "sdf");
     QCOMPARE(file.moleculeCount(), 1);
-    QCOMPARE(molecule.formula("inchi"), file.molecule(0)->formula("inchi"));
+    QCOMPARE(molecule->formula("inchi"), file.molecule(0)->formula("inchi"));
 }
 
 QTEST_APPLESS_MAIN(SmilesSdfTest)

@@ -59,7 +59,7 @@ void MopacTest::ethanol()
     QVERIFY(ok);
     QCOMPARE(file.moleculeCount(), 1);
 
-    const chemkit::Molecule *molecule = file.molecule(0);
+    const boost::shared_ptr<chemkit::Molecule> molecule = file.molecule();
     QCOMPARE(molecule->formula(), std::string("C2H6O"));
 }
 
@@ -72,7 +72,7 @@ void MopacTest::guanine()
     QVERIFY(ok);
     QCOMPARE(file.moleculeCount(), 1);
 
-    const chemkit::Molecule *molecule = file.molecule(0);
+    const boost::shared_ptr<chemkit::Molecule> molecule = file.molecule();
     QCOMPARE(molecule->formula(), std::string("C5H5N5O"));
 }
 

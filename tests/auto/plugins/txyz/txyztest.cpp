@@ -59,7 +59,7 @@ void TxyzTest::uridine()
 
     QCOMPARE(file.moleculeCount(), 1);
 
-    chemkit::Molecule *molecule = file.molecule();
+    boost::shared_ptr<chemkit::Molecule> molecule = file.molecule();
     QCOMPARE(molecule->formula(), std::string("C9H13N2O9P"));
 }
 

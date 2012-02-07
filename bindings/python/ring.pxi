@@ -56,13 +56,13 @@ cdef class Ring:
     def molecule(self):
         """Returns the molecule that the ring is a member of."""
 
-        return Molecule_toPyObject(self._ring.molecule())
+        return Molecule_fromPointer(self._ring.molecule())
 
     ### Structure #############################################################
     def atom(self, int index):
         """Returns the atom at index in the ring."""
 
-        return Atom_toPyObject(self._ring.atom(index))
+        return Atom_fromPointer(self._ring.atom(index))
 
     def atoms(self):
         """Returns a list of the atoms in the ring."""
@@ -81,7 +81,7 @@ cdef class Ring:
     def bond(self, int index):
         """Returns the bond at index in the ring."""
 
-        return Bond_toPyObject(self._ring.bond(index))
+        return Bond_fromPointer(self._ring.bond(index))
 
     def bonds(self):
         """Returns a list of bonds in the ring."""
@@ -103,11 +103,8 @@ cdef class Ring:
 
         return self._ring.isAromatic()
 
-cdef Ring Ring_toPyObject(_Ring *ring):
-    if ring is NULL:
-        return None
-
-    cdef Ring r = Ring.__new__(Ring)
-    r._ring = ring
-    return r
+cdef Ring Ring_fromPointer(_Ring *_ring):
+    cdef Ring ring = Ring.__new__(Ring)
+    ring._ring = _ring
+    return ring
 

@@ -75,14 +75,14 @@ void OplsTest::energy()
     QFETCH(QString, formula);
     QFETCH(double, energy);
 
-    chemkit::Molecule *molecule = chemkit::MoleculeFile::quickRead(dataPath + fileName.toStdString());
+    boost::shared_ptr<chemkit::Molecule> molecule = chemkit::MoleculeFile::quickRead(dataPath + fileName.toStdString());
     QVERIFY(molecule != 0);
     QCOMPARE(molecule->formula(), formula.toStdString());
 
     chemkit::ForceField *opls = chemkit::ForceField::create("opls");
     QVERIFY(opls != 0);
 
-    opls->setMolecule(molecule);
+    opls->setMolecule(molecule.get());
     bool setup = opls->setup();
     QVERIFY(setup == true);
 
@@ -91,7 +91,6 @@ void OplsTest::energy()
     // check opls energy descriptor
     QCOMPARE(qRound(molecule->descriptor("opls-energy").toDouble()), qRound(energy));
 
-    delete molecule;
     delete opls;
 }
 

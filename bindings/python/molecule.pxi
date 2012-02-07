@@ -39,33 +39,34 @@ from libcpp.vector cimport vector
 
 from variant cimport _Variant
 from molecule cimport _Molecule
+from shared_ptr cimport shared_ptr
 
 cdef class Molecule:
     """The Molecule class represents a molecule."""
 
     cdef _Molecule *_molecule
-    cdef bool dealloc
+    cdef shared_ptr[_Molecule] *_moleculePointer
 
     ### Construction and Destruction ##########################################
     def __cinit__(self):
         self._molecule = NULL
-        self.dealloc = False
+        self._moleculePointer = NULL
 
     def __init__(self, char *formula = NULL, char *format = NULL):
         """Creates a new molecule."""
 
         if formula and format:
-            self._molecule = new _Molecule(formula, format)
+            self._moleculePointer = new shared_ptr[_Molecule](new _Molecule(formula, format))
         else:
-            self._molecule = new _Molecule()
+            self._moleculePointer = new shared_ptr[_Molecule](new _Molecule())
 
-        self.dealloc = True
+        self._molecule = self._moleculePointer.get()
 
     def __dealloc__(self):
         """Destroys the molecule object."""
 
-        if self.dealloc:
-            del self._molecule
+        if self._moleculePointer != NULL:
+            del self._moleculePointer
 
     ### Properties ############################################################
     def setName(self, char *name):
@@ -116,9 +117,9 @@ cdef class Molecule:
         if not e.isValid():
             return None
 
-        cdef _Atom *atom = self._molecule.addAtom(cython.operator.dereference(e._element))
+        cdef _Atom *_atom = self._molecule.addAtom(cython.operator.dereference(e._element))
 
-        return Atom_toPyObject(atom)
+        return Atom_fromPointer(_atom)
 
     def removeAtom(self, Atom atom):
         """Removes the atom from the molecule."""
@@ -128,7 +129,9 @@ cdef class Molecule:
     def atom(self, int index):
         """Returns the atom at index in the molecule."""
 
-        return Atom_toPyObject(self._molecule.atom(index))
+        cdef _Atom *_atom = self._molecule.atom(index)
+
+        return Atom_fromPointer(_atom)
 
     def atoms(self):
         """Returns a list of the atoms in the molecule."""
@@ -147,9 +150,9 @@ cdef class Molecule:
     def addBond(self, Atom a, Atom b, int order = Bond.Single):
         """Adds and returns a new bond between atoms a and b with order."""
 
-        cdef _Bond *bond = self._molecule.addBond(a._atom, b._atom, order)
+        cdef _Bond *_bond = self._molecule.addBond(a._atom, b._atom, order)
 
-        return Bond_toPyObject(bond)
+        return Bond_fromPointer(_bond)
 
     def removeBond(self, Bond bond):
         """Removes bond from the molecule."""
@@ -159,7 +162,9 @@ cdef class Molecule:
     def bond(self, int index):
         """Returns the bond at index in the molecule."""
 
-        return Bond_toPyObject(self._molecule.bond(index))
+        cdef _Bond *_bond = self._molecule.bond(index)
+
+        return Bond_fromPointer(_bond)
 
     def bonds(self):
         """Returns a list of the bonds in the molecule."""
@@ -179,7 +184,7 @@ cdef class Molecule:
     def ring(self, int index):
         """Returns the ring at index in the molecule."""
 
-        return Ring_toPyObject(self._molecule.ring(index))
+        return Ring_fromPointer(self._molecule.ring(index))
 
     def rings(self):
         """Returns a list of rings in the molecule."""
@@ -199,7 +204,7 @@ cdef class Molecule:
     def fragment(self, int index):
         """Returns the fragment at index in the molecule."""
 
-        return Fragment_toPyObject(self._molecule.fragment(index))
+        return Fragment_fromPointer(self._molecule.fragment(index))
 
     def fragments(self):
         """Returns a list of all the fragments in the molecule."""
@@ -225,10 +230,15 @@ cdef class Molecule:
 
         self._molecule.removeFragment(fragment._fragment)
 
-cdef Molecule Molecule_toPyObject(_Molecule *molecule):
-    if molecule is NULL:
-        return None
+cdef Molecule Molecule_fromPointer(_Molecule *_molecule):
+    cdef Molecule molecule = Molecule.__new__(Molecule)
+    molecule._molecule = _molecule
+    molecule._moleculePointer = NULL
+    return molecule
 
-    cdef Molecule m = Molecule.__new__(Molecule)
-    m._molecule = molecule
-    return m
+cdef Molecule Molecule_fromSharedPointer(shared_ptr[_Molecule] *_molecule):
+    cdef Molecule molecule = Molecule.__new__(Molecule)
+    molecule._molecule = _molecule.get()
+    molecule._moleculePointer = _molecule
+    return molecule
+

@@ -80,7 +80,7 @@ void SurfaceDescriptorsTest::test()
         qDebug() << file.errorString().c_str();
     QVERIFY(ok);
 
-    chemkit::Molecule *molecule = file.molecule();
+    boost::shared_ptr<chemkit::Molecule> molecule = file.molecule();
     QVERIFY(molecule);
     QCOMPARE(molecule->formula(), formula.toStdString());
 

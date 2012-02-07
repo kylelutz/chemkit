@@ -99,7 +99,7 @@ bool MdlFileFormat::write(const chemkit::MoleculeFile *file, std::ostream &outpu
     }
 
     if(name() == "mol" || name() == "mdl"){
-        writeMolFile(file->molecule(), output);
+        writeMolFile(file->molecule().get(), output);
     }
     else if(name() == "sdf" || name() == "sd"){
         writeSdfFile(file, output);
@@ -139,21 +139,20 @@ bool MdlFileFormat::readMolFile(std::istream &input, chemkit::MoleculeFile *file
     int bondCount = readNumber(&countsLine[3], 3);
 
     // create molecule
-    chemkit::Molecule *molecule = new chemkit::Molecule;
+    boost::shared_ptr<chemkit::Molecule> molecule(new chemkit::Molecule);
     if(!title.empty()){
         molecule->setName(title);
     }
 
     // read atoms
-    readAtomBlock(input, molecule, atomCount);
+    readAtomBlock(input, molecule.get(), atomCount);
 
     // read bonds
-    readBondBlock(input, molecule, bondCount);
+    readBondBlock(input, molecule.get(), bondCount);
 
     // read properties
-    readPropertyBlock(input, molecule);
+    readPropertyBlock(input, molecule.get());
 
-    // add molecule to the file
     file->addMolecule(molecule);
 
     return true;
@@ -166,7 +165,7 @@ bool MdlFileFormat::readSdfFile(std::istream &input, chemkit::MoleculeFile *file
         readMolFile(input, file);
 
         // read data block
-        chemkit::Molecule *molecule = file->molecules().back();
+        chemkit::Molecule *molecule = file->molecules().back().get();
         readDataBlock(input, molecule);
     }
 
@@ -313,8 +312,8 @@ void MdlFileFormat::writeMolFile(const chemkit::Molecule *molecule, std::ostream
 
 void MdlFileFormat::writeSdfFile(const chemkit::MoleculeFile *file, std::ostream &output)
 {
-    foreach(const chemkit::Molecule *molecule, file->molecules()){
-        writeMolFile(molecule, output);
+    foreach(const boost::shared_ptr<chemkit::Molecule> molecule, file->molecules()){
+        writeMolFile(molecule.get(), output);
         output << "$$$$\n";
     }
 }

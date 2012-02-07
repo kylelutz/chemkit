@@ -40,6 +40,8 @@
 
 #include <string>
 
+#include <boost/smart_ptr.hpp>
+
 #include <chemkit/genericfile.h>
 
 #include "trajectoryfileformat.h"
@@ -61,10 +63,9 @@ public:
     bool isEmpty() const;
 
     // file contents
-    void setTrajectory(Trajectory *trajectory);
-    Trajectory* trajectory() const;
+    void setTrajectory(const boost::shared_ptr<Trajectory> &trajectory);
+    boost::shared_ptr<Trajectory> trajectory() const;
     bool removeTrajectory();
-    bool takeTrajectory();
 
 private:
     TrajectoryFilePrivate* const d;

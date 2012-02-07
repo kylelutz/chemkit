@@ -66,8 +66,8 @@ public:
     chemkit::MoleculeFile* file() const { return m_file; }
 
     // molecule
-    void setMolecule(chemkit::Molecule *molecule);
-    chemkit::Molecule* molecule() const;
+    void setMolecule(const boost::shared_ptr<chemkit::Molecule> &molecule);
+    boost::shared_ptr<chemkit::Molecule> molecule() const;
     chemkit::GraphicsMoleculeItem* moleculeItem() const;
     chemkit::MoleculeEditor* editor() const;
     EnergyMinimizer* energyMinimizer() const;
@@ -121,7 +121,7 @@ private slots:
 private:
     Ui::BuilderWindow *ui;
     chemkit::MoleculeFile *m_file;
-    chemkit::Molecule *m_molecule;
+    boost::shared_ptr<chemkit::Molecule> m_molecule;
     chemkit::GraphicsMoleculeItem *m_moleculeItem;
     chemkit::MoleculeEditor *m_editor;
     BuilderTool *m_tool;

@@ -33,47 +33,9 @@
 ##
 ###############################################################################
 
-from libcpp cimport bool
-from string cimport string
-from shared_ptr cimport shared_ptr
-from libcpp.vector cimport vector
-
-cdef extern from "chemkit/molecule.h" namespace "chemkit":
-    cdef cppclass _Molecule "chemkit::Molecule"
-
-cdef extern from "chemkit/moleculefile.h" namespace "chemkit":
-    cdef cppclass _MoleculeFile "chemkit::MoleculeFile":
-        # construction and destruction
-        _MoleculeFile()
-        _MoleculeFile(char *fileName)
-
-        # properties
-        void setFileName(char *fileName)
-        string fileName()
-        string formatName()
-        int size()
-        bool isEmpty()
-
-        # input and output
-        bool read()
-        bool read(char *fileName)
-        bool read(char *fileName, char *formatName)
-        bool write()
-        bool write(char *fileName)
-        bool write(char *fileName, char *formatName)
-
-        # file contents
-        void addMolecule(shared_ptr[_Molecule] molecule)
-        bool removeMolecule(shared_ptr[_Molecule] molecule)
-        shared_ptr[_Molecule] molecule(int index)
-        int moleculeCount()
-        bool contains(shared_ptr[_Molecule] molecule)
-        void clear()
-
-        # error handling
-        string errorString()
-
-cdef extern from "chemkit/moleculefile.h" namespace "chemkit::MoleculeFile":
-    vector[string] formats()
-    shared_ptr[_Molecule] quickRead(string fileName)
-
+cdef extern from "boost/shared_ptr.hpp" namespace "boost":
+    cdef cppclass shared_ptr[T]:
+        shared_ptr()
+        shared_ptr(T*)
+        shared_ptr(shared_ptr&)
+        T* get()

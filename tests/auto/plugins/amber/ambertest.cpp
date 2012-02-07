@@ -64,13 +64,13 @@ void AmberTest::adenosine()
     QVERIFY(ok);
 
     QCOMPARE(file.moleculeCount(), 1);
-    chemkit::Molecule *molecule = file.molecule();
+    boost::shared_ptr<chemkit::Molecule> molecule = file.molecule();
     QCOMPARE(molecule->formula(), std::string("C10H13N5O4"));
 
     chemkit::ForceField *forceField = chemkit::ForceField::create("amber");
     QVERIFY(forceField != 0);
 
-    forceField->setMolecule(molecule);
+    forceField->setMolecule(molecule.get());
     forceField->setup();
     QVERIFY(forceField->isSetup());
 
@@ -127,13 +127,13 @@ void AmberTest::serine()
     QVERIFY(ok);
 
     QCOMPARE(file.moleculeCount(), 1);
-    chemkit::Molecule *molecule = file.molecule();
+    boost::shared_ptr<chemkit::Molecule> molecule = file.molecule();
     QCOMPARE(molecule->formula(), std::string("C3H7NO3"));
 
     chemkit::ForceField *forceField = chemkit::ForceField::create("amber");
     QVERIFY(forceField != 0);
 
-    forceField->setMolecule(molecule);
+    forceField->setMolecule(molecule.get());
     forceField->setup();
     QVERIFY(forceField->isSetup());
 

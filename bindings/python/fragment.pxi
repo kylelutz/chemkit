@@ -59,13 +59,13 @@ cdef class Fragment:
     def molecule(self):
         """Returns the molecule that the fragment is a part of."""
 
-        return Molecule_toPyObject(self._fragment.molecule())
+        return Molecule_fromPointer(self._fragment.molecule())
 
     ### Structure #############################################################
     def atom(self, int index):
         """Returns the atom at index in the fragment."""
 
-        return Atom_toPyObject(self._fragment.atom(index))
+        return Atom_fromPointer(self._fragment.atom(index))
 
     def atoms(self):
         """Returns a list of the atoms in the fragment."""
@@ -91,11 +91,8 @@ cdef class Fragment:
 
         return self._fragment.bondCount()
 
-cdef Fragment Fragment_toPyObject(_Fragment *fragment):
-    if fragment is NULL:
-        return None
-
-    cdef Fragment f = Fragment.__new__(Fragment)
-    f._fragment = fragment
-    return f
+cdef Fragment Fragment_fromPointer(_Fragment *_fragment):
+    cdef Fragment fragment = Fragment.__new__(Fragment)
+    fragment._fragment = _fragment
+    return fragment
 

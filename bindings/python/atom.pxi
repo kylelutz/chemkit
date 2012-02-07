@@ -122,18 +122,18 @@ cdef class Atom:
     def fragment(self):
         """Returns the fragment that the atom is a part of."""
 
-        return Fragment_toPyObject(self._atom.fragment())
+        return Fragment_fromPointer(self._atom.fragment())
 
     def molecule(self):
         """Returns the molecule that the atom is a part of."""
 
-        return Molecule_toPyObject(self._atom.molecule())
+        return Molecule_fromPointer(self._atom.molecule())
 
     ### Structure #############################################################
     def bond(self, index):
         """Returns the bond at index for the atom."""
 
-        return Bond_toPyObject(self._atom.bond(index))
+        return Bond_fromPointer(self._atom.bond(index))
 
     def bonds(self):
         """Returns a list of bonds that the atom is a part of."""
@@ -157,12 +157,12 @@ cdef class Atom:
     def bondTo(self, Atom neighbor):
         """Returns the bond from the atom to neighbor."""
 
-        return Bond_toPyObject(self._atom.bondTo(neighbor._atom))
+        return Bond_fromPointer(self._atom.bondTo(neighbor._atom))
 
     def neighbor(self, int index):
         """Returns the neighbor at index."""
 
-        return Atom_toPyObject(self._atom.neighbor(index))
+        return Atom_fromPointer(self._atom.neighbor(index))
 
     def neighbors(self):
         """Returns a list of neighboring atoms."""
@@ -202,7 +202,7 @@ cdef class Atom:
     def ring(self, index):
         """Returns the ring at index for the atom."""
 
-        return Ring_toPyObject(self._atom.ring(index))
+        return Ring_fromPointer(self._atom.ring(index))
 
     def rings(self):
         """Returns a list of rings that the atom is a part of."""
@@ -229,7 +229,7 @@ cdef class Atom:
     def smallestRing(self):
         """Returns the smallest ring that the atom is a part of."""
 
-        return Ring_toPyObject(self._atom.smallestRing())
+        return Ring_fromPointer(self._atom.smallestRing())
 
     def isAromatic(self):
         """Returns True if the atom is in an aromatic ring."""
@@ -387,11 +387,8 @@ cdef class Atom:
     Hassium = 108
     Meitnerium = 109
 
-cdef Atom Atom_toPyObject(_Atom *atom):
-    if atom is NULL:
-        return None
-
-    cdef Atom a = Atom.__new__(Atom)
-    a._atom = atom
-    return a
+cdef Atom Atom_fromPointer(_Atom *_atom):
+    cdef Atom atom = Atom.__new__(Atom)
+    atom._atom = _atom
+    return atom
 

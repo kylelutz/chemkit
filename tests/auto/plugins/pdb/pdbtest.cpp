@@ -63,7 +63,7 @@ void PdbTest::read_1BNA()
 
     // check nucleic acid
     QCOMPARE(file.polymerCount(), size_t(1));
-    chemkit::Polymer *polymer = file.polymer();
+    const boost::shared_ptr<chemkit::Polymer> &polymer = file.polymer();
     QVERIFY(polymer != 0);
     QCOMPARE(polymer->chainCount(), size_t(2));
 
@@ -90,7 +90,7 @@ void PdbTest::read_1UBQ()
 
     // check protein
     QCOMPARE(file.polymerCount(), size_t(1));
-    chemkit::Polymer *polymer = file.polymer();
+    const boost::shared_ptr<chemkit::Polymer> &polymer = file.polymer();
     QVERIFY(polymer != 0);
     QCOMPARE(polymer->chainCount(), size_t(1));
 
@@ -120,7 +120,7 @@ void PdbTest::read_2DHB()
 
     // check protein
     QCOMPARE(file.polymerCount(), size_t(1));
-    chemkit::Polymer *polymer = file.polymer();
+    const boost::shared_ptr<chemkit::Polymer> &polymer = file.polymer();
     QVERIFY(polymer != 0);
     QCOMPARE(polymer->chainCount(), size_t(2));
 
@@ -156,7 +156,7 @@ void PdbTest::read_alphabet()
 
     // check protein
     QCOMPARE(file.polymerCount(), size_t(1));
-    chemkit::Polymer *polymer = file.polymer();
+    const boost::shared_ptr<chemkit::Polymer> &polymer = file.polymer();
     QVERIFY(polymer != 0);
     QCOMPARE(polymer->chainCount(), size_t(1));
 

@@ -63,8 +63,8 @@ void BenzeneSubstructureBenchmark::benchmark()
         // number of substructure matches
         int count = 0;
 
-        foreach(const chemkit::Molecule *molecule, file.molecules()){
-            if(query.matches(molecule)){
+        foreach(const boost::shared_ptr<chemkit::Molecule> &molecule, file.molecules()){
+            if(query.matches(molecule.get())){
                 count++;
             }
         }

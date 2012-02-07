@@ -57,7 +57,7 @@ void ConvertTest::convertEthanol()
     }
     QCOMPARE(ok, true);
     QCOMPARE(inputFile.moleculeCount(), 1);
-    chemkit::Molecule *inputEthanol = inputFile.molecule();
+    boost::shared_ptr<chemkit::Molecule> inputEthanol = inputFile.molecule();
     QCOMPARE(inputEthanol->formula(), std::string("C2H6O"));
 
     // setup output file
@@ -85,7 +85,7 @@ void ConvertTest::convertEthanol()
     QCOMPARE(outputFile.moleculeCount(), 1);
 
     // verify the output molecule
-    chemkit::Molecule *outputEthanol = outputFile.molecule();
+    boost::shared_ptr<chemkit::Molecule> outputEthanol = outputFile.molecule();
     QCOMPARE(outputEthanol->name(), inputEthanol->name());
 }
 
@@ -126,8 +126,8 @@ void ConvertTest::convertBenzenes()
 
     // verify the output molecules
     for(int i = 0; i < 416; i++){
-        chemkit::Molecule *inputMolecule = inputFile.molecule(i);
-        chemkit::Molecule *outputMolecule = outputFile.molecule(i);
+        boost::shared_ptr<chemkit::Molecule> inputMolecule = inputFile.molecule(i);
+        boost::shared_ptr<chemkit::Molecule> outputMolecule = outputFile.molecule(i);
 
         QCOMPARE(inputMolecule->name(), outputMolecule->name());
     }

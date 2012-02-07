@@ -66,7 +66,7 @@ bool MopinFileFormat::read(QIODevice *iodev, chemkit::MoleculeFile *file)
     iodev->setTextModeEnabled(true);
 
     // create molecule
-    chemkit::Molecule *molecule = new chemkit::Molecule;
+    boost::shared_ptr<chemkit::Molecule> molecule(new chemkit::Molecule);
 
     // keyword line
     QString line = iodev->readLine();
@@ -118,6 +118,7 @@ bool MopinFileFormat::read(QIODevice *iodev, chemkit::MoleculeFile *file)
     // set molecule coordinates
     molecule->addCoordinateSet(coordinates);
 
+    // add molecule to the file
     file->addMolecule(molecule);
 
     return true;

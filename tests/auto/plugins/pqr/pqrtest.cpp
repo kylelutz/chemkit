@@ -57,7 +57,7 @@ void PqrTest::read()
         qDebug() << file.errorString().c_str();
     QVERIFY(ok);
 
-    chemkit::Molecule *molecule = file.molecule();
+    boost::shared_ptr<chemkit::Molecule> molecule = file.molecule();
     QVERIFY(molecule != 0);
     QCOMPARE(molecule->atomCount(), size_t(1961));
 }

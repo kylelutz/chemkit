@@ -35,6 +35,7 @@
 
 #include "cubefileformat.h"
 
+#include <boost/make_shared.hpp>
 #include <boost/algorithm/string.hpp>
 
 #include <chemkit/atom.h>
@@ -55,7 +56,7 @@ CubeFileFormat::~CubeFileFormat()
 
 bool CubeFileFormat::read(std::istream &input, chemkit::MoleculeFile *file)
 {
-    chemkit::Molecule *molecule = new chemkit::Molecule;
+    boost::shared_ptr<chemkit::Molecule> molecule(new chemkit::Molecule);
 
     // title line
     std::string titleLine;

@@ -40,6 +40,8 @@
 
 #include <QtCore>
 
+#include <boost/shared_ptr.hpp>
+
 namespace chemkit {
 
 class Polymer;
@@ -59,8 +61,8 @@ public:
     QUrl url() const;
 
     // downloads
-    Polymer* downloadPolymer(const QString &id) const;
-    Molecule* downloadLigand(const QString &name) const;
+    boost::shared_ptr<Polymer> downloadPolymer(const QString &id) const;
+    boost::shared_ptr<Molecule> downloadLigand(const QString &name) const;
     PolymerFile* downloadFile(const QString &id) const;
     QByteArray downloadFileData(const QString &id, const QString &format) const;
 
