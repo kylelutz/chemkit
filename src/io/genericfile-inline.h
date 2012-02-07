@@ -43,9 +43,12 @@
 #include <boost/filesystem.hpp>
 #include <boost/scoped_ptr.hpp>
 #include <boost/algorithm/string.hpp>
+#include <boost/iostreams/filtering_stream.hpp>
+
+#ifndef CHEMKIT_OS_WIN32
 #include <boost/iostreams/filter/gzip.hpp>
 #include <boost/iostreams/filter/bzip2.hpp>
-#include <boost/iostreams/filtering_stream.hpp>
+#endif
 
 namespace chemkit {
 
@@ -299,12 +302,14 @@ inline bool GenericFile<File, Format>::read(std::istream &input)
     boost::iostreams::filtering_istream inputStream;
 
     // insert stream decompressor
+#ifndef CHEMKIT_OS_WIN32
     if(m_compressionFormat == "gz"){
         inputStream.push(boost::iostreams::gzip_decompressor());
     }
     else if(m_compressionFormat == "bz2"){
         inputStream.push(boost::iostreams::bzip2_decompressor());
     }
+#endif
 
     // insert input stream
     inputStream.push(input);
@@ -392,12 +397,14 @@ inline bool GenericFile<File, Format>::write(std::ostream &output, Format *forma
     boost::iostreams::filtering_ostream outputStream;
 
     // insert stream compressor
+#ifndef CHEMKIT_OS_WIN32
     if(m_compressionFormat == "gz"){
         outputStream.push(boost::iostreams::gzip_compressor());
     }
     else if(m_compressionFormat == "bz2"){
         outputStream.push(boost::iostreams::bzip2_compressor());
     }
+#endif
 
     // insert output stream
     outputStream.push(output);
@@ -454,8 +461,10 @@ inline std::vector<std::string> GenericFile<File, Format>::compressionFormats()
 {
     std::vector<std::string> formats;
 
+#ifndef CHEMKIT_OS_WIN32
     formats.push_back("gz");
     formats.push_back("bz2");
+#endif
 
     return formats;
 }
