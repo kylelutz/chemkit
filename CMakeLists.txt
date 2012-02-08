@@ -10,6 +10,7 @@ set(CMAKE_MODULE_PATH ${Chemkit_SOURCE_DIR}/cmake)
 # find dependencies
 find_package(Eigen3 REQUIRED)
 find_package(Boost REQUIRED)
+link_directories(${Boost_LIBRARY_DIRS})
 
 # add option for CMAKE_BUILD_TYPE
 if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
@@ -55,6 +56,19 @@ option(CHEMKIT_BUILD_APPS "Build the chemkit applications" ON)
 option(CHEMKIT_BUILD_QT_DESIGNER_PLUGINS "Build the chemkit QtDesigner plugins." OFF)
 option(CHEMKIT_BUILD_EXAMPLES "Build the chemkit examples." OFF)
 option(CHEMKIT_BUILD_TESTS "Build the chemkit tests." OFF)
+
+# compiler options
+if(MSVC)
+  # disable dll-linkage warnings from MSVC
+  add_definitions("/wd4251")
+
+  # disable boost auto-linking
+  add_definitions("-DBOOST_ALL_NO_LIB")
+  add_definitions("-DBOOST_ALL_DYN_LINK")
+
+  # disable unsafe string function warnings
+  add_definitions("-D_CRT_SECURE_NO_WARNINGS")
+endif()
 
 add_subdirectory(src)
 add_subdirectory(bindings)
