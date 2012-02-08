@@ -115,6 +115,10 @@ std::string UffAtomTyper::atomType(const chemkit::Atom *atom) const
         else if(atom->neighborCount() == 2){
             return "N_1";
         }
+        else if(atom->neighborCount() == 1 &&
+                atom->valence() == 3){
+            return "N_1";
+        }
     }
     else if(atom->is(chemkit::Atom::Oxygen)){
         if(atom->isAromatic()){
