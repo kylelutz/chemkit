@@ -62,6 +62,7 @@ public:
     bool setup();
     bool step();
     bool optimize();
+    void writeCoordinates();
 
     // error handling
     std::string errorString() const;

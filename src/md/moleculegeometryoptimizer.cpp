@@ -189,6 +189,16 @@ bool MoleculeGeometryOptimizer::optimize()
     return done;
 }
 
+/// Writes the optimized coordinates to the molecule.
+void MoleculeGeometryOptimizer::writeCoordinates()
+{
+    if(!d->molecule || !d->forceField){
+        return;
+    }
+
+    d->forceField->writeCoordinates(d->molecule);
+}
+
 // --- Error Handling ------------------------------------------------------ //
 /// Returns a string describing the last error that occurred.
 std::string MoleculeGeometryOptimizer::errorString() const
