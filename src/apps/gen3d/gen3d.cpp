@@ -48,6 +48,7 @@
 #include <chemkit/lineformat.h>
 #include <chemkit/moleculefile.h>
 #include <chemkit/coordinatepredictor.h>
+#include <chemkit/moleculegeometryoptimizer.h>
 
 void printHelp(char *argv[], const boost::program_options::options_description &options)
 {
@@ -57,31 +58,6 @@ void printHelp(char *argv[], const boost::program_options::options_description &
     std::cout << "\n";
     std::cout << "Options:\n";
     std::cout << options << "\n";
-}
-
-// Optimize the 3D coordinates using the uff force field
-void optimizeGeometry(chemkit::Molecule *molecule)
-{
-    boost::scoped_ptr<chemkit::ForceField> forceField(chemkit::ForceField::create("uff"));
-    if(!forceField){
-        return;
-    }
-
-    forceField->setMolecule(molecule);
-
-    bool ok = forceField->setup();
-    if(!ok){
-        return;
-    }
-
-    bool converged = false;
-    size_t maxSteps = 500;
-
-    while(!converged && maxSteps--){
-        converged = forceField->minimizationStep(1);
-    }
-
-    forceField->writeCoordinates(molecule);
 }
 
 int main(int argc, char *argv[])
@@ -163,8 +139,8 @@ int main(int argc, char *argv[])
     // generate 3d coordinates
     chemkit::CoordinatePredictor::predictCoordinates(molecule.get());
 
-    // optimize coordinates
-    optimizeGeometry(molecule.get());
+    // optimize 3d coordinates
+    chemkit::MoleculeGeometryOptimizer::optimizeCoordinates(molecule.get());
 
     // set center to origin
     molecule->setCenter(0, 0, 0);
