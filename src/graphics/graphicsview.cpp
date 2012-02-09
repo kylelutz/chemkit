@@ -113,13 +113,13 @@ GraphicsViewPrivate::GraphicsViewPrivate()
 /// // read the molecule from the file
 /// MoleculeFile file("/path/to/guanine.mol");
 /// file.read();
-/// Molecule *molecule = file.molecule();
+/// boost::shared_ptr<Molecule> molecule = file.molecule();
 ///
 /// // create the graphics view widget
 /// GraphicsView view;
 ///
 /// // add a molecule item to display the molecule
-/// GraphicsMoleculeItem *item = new GraphicsMoleculeItem(molecule);
+/// GraphicsMoleculeItem *item = new GraphicsMoleculeItem(molecule.get());
 /// view.addItem(item);
 ///
 /// // add the navigation tool for mouse navigation
