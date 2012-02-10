@@ -681,7 +681,10 @@ void GraphicsView::resizeGL(int width, int height)
     // setup projection matrix
     glMatrixMode(GL_PROJECTION);
     float aspectRatio = static_cast<float>(width) / static_cast<float>(height);
-    d->projectionTransform = GraphicsTransform::perspective(d->fieldOfView, aspectRatio, d->nearClipDistance, d->farClipDistance);
+    d->projectionTransform = GraphicsTransform::perspective(d->fieldOfView,
+                                                            aspectRatio,
+                                                            d->nearClipDistance,
+                                                            d->farClipDistance);
     glLoadMatrixf(d->projectionTransform.data());
     glMatrixMode(GL_MODELVIEW);
 
