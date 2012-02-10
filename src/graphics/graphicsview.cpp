@@ -108,6 +108,9 @@ GraphicsViewPrivate::GraphicsViewPrivate()
 ///   - GraphicsProteinItem
 ///   - GraphicsNucleicAcidItem
 ///
+/// A gallery showing the different graphics items is available
+/// at: http://wiki.chemkit.org/Graphics_Item_Gallery
+///
 /// The example below shows how to read a molecule from a file,
 /// display it in a GraphicsView widget and setup mouse navigation.
 /// \code
