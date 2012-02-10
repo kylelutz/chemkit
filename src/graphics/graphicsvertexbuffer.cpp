@@ -273,6 +273,9 @@ void GraphicsVertexBuffer::draw() const
     else{
         glDrawArrays(GL_POINTS, 0, d->verticies.size());
     }
+
+    glDisableClientState(GL_VERTEX_ARRAY);
+    glDisableClientState(GL_NORMAL_ARRAY);
 }
 
 void GraphicsVertexBuffer::prepareToDraw() const
