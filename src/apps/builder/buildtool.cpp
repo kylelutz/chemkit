@@ -232,9 +232,9 @@ void BuildTool::mouseMoveEvent(QMouseEvent *event)
     chemkit::GraphicsItem *item = 0;
 
     if(m_movingAtom){
-        QList<chemkit::GraphicsItem *> items = view()->itemsAt(event->x(), event->y());
+        std::vector<chemkit::GraphicsItem *> items = view()->itemsAt(event->x(), event->y());
 
-        if(items.isEmpty()){
+        if(items.empty()){
             item = 0;
         }
         else if(items.size() == 1){

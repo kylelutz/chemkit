@@ -38,6 +38,8 @@
 
 #include "graphics.h"
 
+#include <vector>
+
 #include "graphicsray.h"
 
 namespace chemkit {
@@ -54,19 +56,19 @@ public:
     ~GraphicsScene();
 
     // properties
-    int size() const;
+    size_t size() const;
     bool isEmpty() const;
-    QList<GraphicsView *> views() const;
+    std::vector<GraphicsView *> views() const;
 
     // items
     void addItem(GraphicsItem *item);
     bool removeItem(GraphicsItem *item);
     bool deleteItem(GraphicsItem *item);
-    GraphicsItem* item(int index) const;
+    GraphicsItem* item(size_t index) const;
     GraphicsItem* item(const GraphicsRay &ray) const;
-    QList<GraphicsItem *> items() const;
-    QList<GraphicsItem *> items(const GraphicsRay &ray, bool sorted = true) const;
-    int itemCount() const;
+    std::vector<GraphicsItem *> items() const;
+    std::vector<GraphicsItem *> items(const GraphicsRay &ray, bool sorted = true) const;
+    size_t itemCount() const;
 
 private:
     // internal methods

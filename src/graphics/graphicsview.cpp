@@ -66,7 +66,7 @@ public:
     boost::shared_ptr<GraphicsCamera> camera;
     GraphicsTool *tool;
     QColor backgroundColor;
-    QList<boost::shared_ptr<GraphicsLight> > lights;
+    std::vector<boost::shared_ptr<GraphicsLight> > lights;
     GraphicsOverlay *overlay;
     bool overlayEnabled;
     GraphicsTransform modelViewTransform;
@@ -303,18 +303,18 @@ bool GraphicsView::deleteItem(GraphicsItem *item)
 /// Returns a list of all the items in the view's scene.
 ///
 /// \see GraphicsScene::items()
-QList<GraphicsItem *> GraphicsView::items() const
+std::vector<GraphicsItem *> GraphicsView::items() const
 {
     if(d->scene)
         return d->scene->items();
 
-    return QList<GraphicsItem *>();
+    return std::vector<GraphicsItem *>();
 }
 
 /// Returns the number of items in the view's scene.
 ///
 /// \see GraphicsScene::itemCount()
-int GraphicsView::itemCount() const
+size_t GraphicsView::itemCount() const
 {
     if(d->scene)
         return d->scene->itemCount();
@@ -439,31 +439,42 @@ float GraphicsView::farClipDistance() const
 /// Adds \p light to the view.
 void GraphicsView::addLight(const boost::shared_ptr<GraphicsLight> &light)
 {
-    d->lights.append(light);
+    d->lights.push_back(light);
 }
 
 /// Removes \p light from the view.
 bool GraphicsView::removeLight(const boost::shared_ptr<GraphicsLight> &light)
 {
-    return d->lights.removeOne(light);
+    std::vector<boost::shared_ptr<GraphicsLight> >::iterator iter = std::find(d->lights.begin(),
+                                                                              d->lights.end(),
+                                                                              light);
+
+    if(iter == d->lights.end()){
+        return false;
+    }
+
+    d->lights.erase(iter);
+    return true;
 }
 
 /// Returns a list of lights in the view.
-QList<boost::shared_ptr<GraphicsLight> > GraphicsView::lights() const
+std::vector<boost::shared_ptr<GraphicsLight> > GraphicsView::lights() const
 {
     return d->lights;
 }
 
 /// Returns the number of lights in the view.
-int GraphicsView::lightCount() const
+size_t GraphicsView::lightCount() const
 {
-    return lights().size();
+    return d->lights.size();
 }
 
 /// Returns the light at \p index.
-boost::shared_ptr<GraphicsLight> GraphicsView::light(int index) const
+boost::shared_ptr<GraphicsLight> GraphicsView::light(size_t index) const
 {
-    return d->lights.value(index);
+    assert(index < d->lights.size());
+
+    return d->lights[index];
 }
 
 // --- Fog ----------------------------------------------------------------- //
@@ -493,10 +504,10 @@ GraphicsItem* GraphicsView::itemAt(int x, int y) const
 }
 
 /// Returns a list of all items under the window point (\p x, \p y).
-QList<GraphicsItem *> GraphicsView::itemsAt(int x, int y, bool sorted) const
+std::vector<GraphicsItem *> GraphicsView::itemsAt(int x, int y, bool sorted) const
 {
     if(!d->scene){
-        return QList<GraphicsItem *>();
+        return std::vector<GraphicsItem *>();
     }
 
     GraphicsRay ray = buildPickRay(x, y);
@@ -610,14 +621,14 @@ void GraphicsView::paintGL()
     // draw items
     GraphicsPainter painter;
 
-    QList<GraphicsItem *> nonOpaqueItems;
+    std::vector<GraphicsItem *> nonOpaqueItems;
 
     foreach(GraphicsItem *item, scene()->items()){
         if(!item->isVisible())
             continue;
 
         if(!item->isOpaque()){
-            nonOpaqueItems.append(item);
+            nonOpaqueItems.push_back(item);
         }
         else{
             glPushMatrix();
@@ -632,7 +643,7 @@ void GraphicsView::paintGL()
         }
     }
 
-    if(!nonOpaqueItems.isEmpty()){
+    if(!nonOpaqueItems.empty()){
         glEnable(GL_BLEND);
 
         foreach(GraphicsItem *item, nonOpaqueItems){

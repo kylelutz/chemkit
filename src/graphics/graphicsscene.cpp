@@ -44,8 +44,8 @@ namespace chemkit {
 class GraphicsScenePrivate
 {
 public:
-    QList<GraphicsItem *> items;
-    QList<GraphicsView *> views;
+    std::vector<GraphicsItem *> items;
+    std::vector<GraphicsView *> views;
 };
 
 // === GraphicsScene ======================================================= //
@@ -76,7 +76,7 @@ GraphicsScene::~GraphicsScene()
 
 // --- Properties ---------------------------------------------------------- //
 /// Returns the number of items in the scene.
-int GraphicsScene::size() const
+size_t GraphicsScene::size() const
 {
     return itemCount();
 }
@@ -84,11 +84,11 @@ int GraphicsScene::size() const
 /// Returns \c true if the scene contains no items.
 bool GraphicsScene::isEmpty() const
 {
-    return size() == 0;
+    return d->items.empty();
 }
 
 /// Returns a list of views that show the scene.
-QList<GraphicsView *> GraphicsScene::views() const
+std::vector<GraphicsView *> GraphicsScene::views() const
 {
     return d->views;
 }
@@ -99,7 +99,7 @@ QList<GraphicsView *> GraphicsScene::views() const
 /// The scene takes ownership of the item.
 void GraphicsScene::addItem(GraphicsItem *item)
 {
-    d->items.append(item);
+    d->items.push_back(item);
     item->setScene(this);
 }
 
@@ -109,13 +109,15 @@ void GraphicsScene::addItem(GraphicsItem *item)
 /// The ownership of item is passed to the caller.
 bool GraphicsScene::removeItem(GraphicsItem *item)
 {
-    bool found = d->items.removeOne(item);
-
-    if(found){
-        item->setScene(0);
+    std::vector<GraphicsItem *>::iterator iter = std::find(d->items.begin(),
+                                                           d->items.end(),
+                                                           item);
+    if(iter == d->items.end()){
+        return false;
     }
 
-    return found;
+    d->items.erase(iter);
+    return true;
 }
 
 /// Removes \p item from the scene and deletes it. Returns \c true
@@ -132,9 +134,11 @@ bool GraphicsScene::deleteItem(GraphicsItem *item)
 }
 
 /// Returns the item at \p index.
-GraphicsItem* GraphicsScene::item(int index) const
+GraphicsItem* GraphicsScene::item(size_t index) const
 {
-    return d->items.value(index, 0);
+    assert(index < d->items.size());
+
+    return d->items[index];
 }
 
 /// Returns the item that intersects \p ray.
@@ -158,37 +162,37 @@ GraphicsItem* GraphicsScene::item(const GraphicsRay &ray) const
 }
 
 /// Returns a list of items in the scene.
-QList<GraphicsItem *> GraphicsScene::items() const
+std::vector<GraphicsItem *> GraphicsScene::items() const
 {
     return d->items;
 }
 
 /// Returns a list of all items that intersect \p ray.
-QList<GraphicsItem *> GraphicsScene::items(const GraphicsRay &ray, bool sorted) const
+std::vector<GraphicsItem *> GraphicsScene::items(const GraphicsRay &ray, bool sorted) const
 {
-    QList<GraphicsItem *> items;
+    std::vector<GraphicsItem *> items;
 
     if(sorted){
-        QList<float> distances;
+        std::vector<float> distances;
 
         foreach(GraphicsItem *item, d->items){
             float distance;
 
             if(item->intersects(ray, &distance)){
-                int index;
+                size_t index;
                 for(index = 0; index < items.size(); index++)
                     if(distance < distances[index])
                         break;
 
-                items.insert(index, item);
-                distances.insert(index, distance);
+                items.insert(items.begin() + index, item);
+                distances.insert(distances.begin() + index, distance);
             }
         }
     }
     else{
         foreach(GraphicsItem *item, d->items){
             if(item->intersects(ray)){
-                items.append(item);
+                items.push_back(item);
             }
         }
     }
@@ -197,7 +201,7 @@ QList<GraphicsItem *> GraphicsScene::items(const GraphicsRay &ray, bool sorted) 
 }
 
 /// Returns the number of items in the scene.
-int GraphicsScene::itemCount() const
+size_t GraphicsScene::itemCount() const
 {
     return d->items.size();
 }
@@ -205,12 +209,18 @@ int GraphicsScene::itemCount() const
 // --- Internal Methods ---------------------------------------------------- //
 void GraphicsScene::addView(GraphicsView *view)
 {
-    d->views.append(view);
+    d->views.push_back(view);
 }
 
 void GraphicsScene::removeView(GraphicsView *view)
 {
-    d->views.removeOne(view);
+    std::vector<GraphicsView *>::iterator iter = std::find(d->views.begin(),
+                                                           d->views.end(),
+                                                           view);
+
+    if(iter != d->views.end()){
+        d->views.erase(iter);
+    }
 }
 
 } // end chemkit namespace

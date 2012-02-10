@@ -42,50 +42,50 @@
 void GraphicsSceneTest::items()
 {
     boost::shared_ptr<chemkit::GraphicsScene> scene(new chemkit::GraphicsScene);
-    QCOMPARE(scene->itemCount(), 0);
-    QCOMPARE(scene->size(), 0);
+    QCOMPARE(scene->itemCount(), size_t(0));
+    QCOMPARE(scene->size(), size_t(0));
     QCOMPARE(scene->isEmpty(), true);
-    QCOMPARE(scene->items().size(), 0);
+    QCOMPARE(scene->items().size(), size_t(0));
 
     chemkit::GraphicsItem *item = new chemkit::GraphicsItem(0);
     scene->addItem(item);
-    QCOMPARE(scene->itemCount(), 1);
+    QCOMPARE(scene->itemCount(), size_t(1));
     QCOMPARE(scene->isEmpty(), false);
     QVERIFY(scene->items()[0] == item);
 
     chemkit::GraphicsItem *item2 = new chemkit::GraphicsItem(0);
     scene->addItem(item2);
-    QCOMPARE(scene->itemCount(), 2);
+    QCOMPARE(scene->itemCount(), size_t(2));
     QVERIFY(scene->items()[1] == item2);
 
     scene->deleteItem(item);
-    QCOMPARE(scene->itemCount(), 1);
+    QCOMPARE(scene->itemCount(), size_t(1));
     QVERIFY(scene->item(0) == item2);
 
     scene->deleteItem(item2);
-    QCOMPARE(scene->itemCount(), 0);
+    QCOMPARE(scene->itemCount(), size_t(0));
     QCOMPARE(scene->isEmpty(), true);
 }
 
 void GraphicsSceneTest::views()
 {
     boost::shared_ptr<chemkit::GraphicsScene> scene(new chemkit::GraphicsScene);
-    QCOMPARE(scene->views().size(), 0);
+    QCOMPARE(scene->views().size(), size_t(0));
 
     chemkit::GraphicsView *view = new chemkit::GraphicsView(scene);
-    QCOMPARE(scene->views().size(), 1);
+    QCOMPARE(scene->views().size(), size_t(1));
     QVERIFY(scene->views()[0] == view);
 
     chemkit::GraphicsView *view2 = new chemkit::GraphicsView(scene);
-    QCOMPARE(scene->views().size(), 2);
+    QCOMPARE(scene->views().size(), size_t(2));
     QVERIFY(scene->views()[1] == view2);
 
     delete view;
-    QCOMPARE(scene->views().size(), 1);
+    QCOMPARE(scene->views().size(), size_t(1));
     QVERIFY(scene->views()[0] == view2);
 
     delete view2;
-    QCOMPARE(scene->views().size(), 0);
+    QCOMPARE(scene->views().size(), size_t(0));
 }
 
 QTEST_MAIN(GraphicsSceneTest)
