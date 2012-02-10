@@ -95,12 +95,11 @@ public:
     float depth(const Point3f &point) const;
 
     // lighting
-    void addLight(GraphicsLight *light);
-    bool removeLight(GraphicsLight *light);
-    bool deleteLight(GraphicsLight *light);
-    QList<GraphicsLight *> lights() const;
+    void addLight(const boost::shared_ptr<GraphicsLight> &light);
+    bool removeLight(const boost::shared_ptr<GraphicsLight> &light);
+    QList<boost::shared_ptr<GraphicsLight> > lights() const;
     int lightCount() const;
-    GraphicsLight* light(int index = 0) const;
+    boost::shared_ptr<GraphicsLight> light(int index = 0) const;
 
     // fog
     void setFogEnabled(bool enabled);

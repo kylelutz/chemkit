@@ -66,7 +66,7 @@ public:
     boost::shared_ptr<GraphicsCamera> camera;
     GraphicsTool *tool;
     QColor backgroundColor;
-    QList<GraphicsLight *> lights;
+    QList<boost::shared_ptr<GraphicsLight> > lights;
     GraphicsOverlay *overlay;
     bool overlayEnabled;
     GraphicsTransform modelViewTransform;
@@ -437,41 +437,19 @@ float GraphicsView::farClipDistance() const
 
 // --- Lighting ------------------------------------------------------------ //
 /// Adds \p light to the view.
-///
-/// The view takes ownership of the light.
-void GraphicsView::addLight(GraphicsLight *light)
+void GraphicsView::addLight(const boost::shared_ptr<GraphicsLight> &light)
 {
     d->lights.append(light);
 }
 
 /// Removes \p light from the view.
-///
-/// The ownership of the light is passed to the caller.
-bool GraphicsView::removeLight(GraphicsLight *light)
+bool GraphicsView::removeLight(const boost::shared_ptr<GraphicsLight> &light)
 {
     return d->lights.removeOne(light);
 }
 
-/// Removes \p light from the view and deletes it.
-///
-/// Equivalent to:
-/// \code
-/// view.removeLight(light);
-/// delete light;
-/// \endcode
-bool GraphicsView::deleteLight(GraphicsLight *light)
-{
-    bool found = removeLight(light);
-
-    if(found){
-        delete light;
-    }
-
-    return found;
-}
-
 /// Returns a list of lights in the view.
-QList<GraphicsLight *> GraphicsView::lights() const
+QList<boost::shared_ptr<GraphicsLight> > GraphicsView::lights() const
 {
     return d->lights;
 }
@@ -483,9 +461,9 @@ int GraphicsView::lightCount() const
 }
 
 /// Returns the light at \p index.
-GraphicsLight* GraphicsView::light(int index) const
+boost::shared_ptr<GraphicsLight> GraphicsView::light(int index) const
 {
-    return d->lights.value(index, 0);
+    return d->lights.value(index);
 }
 
 // --- Fog ----------------------------------------------------------------- //
