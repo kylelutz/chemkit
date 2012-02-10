@@ -38,19 +38,6 @@
 #include <chemkit/graphicsview.h>
 #include <chemkit/graphicscamera.h>
 
-void GraphicsCameraTest::view()
-{
-    chemkit::GraphicsCamera camera;
-    QVERIFY(camera.view() == 0);
-
-    chemkit::GraphicsView view;
-    view.setCamera(&camera);
-    QVERIFY(camera.view() == &view);
-
-    view.setCamera(0);
-    QVERIFY(camera.view() == 0);
-}
-
 void GraphicsCameraTest::position()
 {
     chemkit::GraphicsCamera camera;

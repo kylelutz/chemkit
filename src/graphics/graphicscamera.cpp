@@ -47,7 +47,6 @@ public:
     Vector3f direction;
     Vector3f upVector;
     Point3f focus;
-    GraphicsView *view;
     bool changed;
 };
 
@@ -67,7 +66,6 @@ GraphicsCamera::GraphicsCamera()
     d->upVector = Vector3f::UnitY();
     d->focus = Point3f(0, 0, 0);
     d->changed = true;
-    d->view = 0;
 }
 
 /// Creates a new graphics camera object at \p position.
@@ -79,7 +77,6 @@ GraphicsCamera::GraphicsCamera(const Point3f &position)
     d->upVector = Vector3f::UnitY();
     d->focus = Point3f(0, 0, 0);
     d->changed = true;
-    d->view = 0;
 }
 
 /// \overload
@@ -91,20 +88,12 @@ GraphicsCamera::GraphicsCamera(float x, float y, float z)
     d->upVector = Vector3f::UnitY();
     d->focus = Point3f(0, 0, 0);
     d->changed = true;
-    d->view = 0;
 }
 
 /// Destroys the camera object.
 GraphicsCamera::~GraphicsCamera()
 {
     delete d;
-}
-
-// --- Properties ---------------------------------------------------------- //
-/// Returns the graphics view that the camera belongs to.
-GraphicsView* GraphicsCamera::view() const
-{
-    return d->view;
 }
 
 // --- Position ------------------------------------------------------------ //
@@ -291,11 +280,6 @@ void GraphicsCamera::tilt(float angle)
 }
 
 // --- Internal Methods ---------------------------------------------------- //
-void GraphicsCamera::setView(GraphicsView *view)
-{
-    d->view = view;
-}
-
 void GraphicsCamera::setChanged(bool changed)
 {
     d->changed = changed;

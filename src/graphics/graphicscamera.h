@@ -55,9 +55,6 @@ public:
     GraphicsCamera(float x, float y, float z);
     ~GraphicsCamera();
 
-    // properties
-    GraphicsView* view() const;
-
     // position
     void setPosition(const Point3f &position);
     void setPosition(float x, float y, float z);
@@ -88,7 +85,6 @@ public:
 
 private:
     // internal methods
-    void setView(GraphicsView *view);
     void setChanged(bool changed);
     bool changed() const;
 

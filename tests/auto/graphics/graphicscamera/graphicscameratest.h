@@ -43,7 +43,6 @@ class GraphicsCameraTest : public QObject
     Q_OBJECT
 
     private slots:
-        void view();
         void position();
         void direction();
         void upVector();

@@ -86,7 +86,7 @@ void GraphicsNavigationTool::mouseReleaseEvent(QMouseEvent *event)
 void GraphicsNavigationTool::mouseMoveEvent(QMouseEvent *event)
 {
     if(d->mouseDown){
-        GraphicsCamera *camera = view()->camera();
+        const boost::shared_ptr<GraphicsCamera> &camera = view()->camera();
         int dx = event->x() - d->lastPosition.x();
         int dy = event->y() - d->lastPosition.y();
 
@@ -107,7 +107,7 @@ void GraphicsNavigationTool::mouseMoveEvent(QMouseEvent *event)
 
 void GraphicsNavigationTool::wheelEvent(QWheelEvent *event)
 {
-    GraphicsCamera *camera = view()->camera();
+    const boost::shared_ptr<GraphicsCamera> &camera = view()->camera();
 
     if(event->delta() > 0){
         camera->moveFoward(5);

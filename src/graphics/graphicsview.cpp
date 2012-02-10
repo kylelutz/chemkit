@@ -63,8 +63,7 @@ public:
     GraphicsViewPrivate();
 
     boost::shared_ptr<GraphicsScene> scene;
-    GraphicsCamera *camera;
-    bool ownCamera;
+    boost::shared_ptr<GraphicsCamera> camera;
     GraphicsTool *tool;
     QColor backgroundColor;
     QList<GraphicsLight *> lights;
@@ -82,7 +81,6 @@ GraphicsViewPrivate::GraphicsViewPrivate()
 {
     tool = 0;
     backgroundColor = Qt::black;
-    camera = 0;
     overlay = new GraphicsOverlay;
     overlayEnabled = true;
     nearClipDistance = 0.01f;
@@ -141,8 +139,7 @@ GraphicsView::GraphicsView(QWidget *parent)
       d(new GraphicsViewPrivate)
 {
     setScene(boost::make_shared<GraphicsScene>());
-    setCamera(new GraphicsCamera(0, 0, 10));
-    d->ownCamera = true;
+    setCamera(boost::make_shared<GraphicsCamera>(0, 0, 10));
     setAutoFillBackground(false);
 }
 
@@ -153,8 +150,7 @@ GraphicsView::GraphicsView(const boost::shared_ptr<GraphicsScene> &scene,
       d(new GraphicsViewPrivate)
 {
     setScene(scene);
-    setCamera(new GraphicsCamera(0, 0, 10));
-    d->ownCamera = true;
+    setCamera(boost::make_shared<GraphicsCamera>(0, 0, 10));
     setAutoFillBackground(false);
 }
 
@@ -163,14 +159,6 @@ GraphicsView::~GraphicsView()
 {
     if(d->scene){
         d->scene->removeView(this);
-    }
-
-    if(d->camera){
-        d->camera->setView(0);
-
-        if(d->ownCamera){
-            delete d->camera;
-        }
     }
 
     delete d->tool;
@@ -334,30 +322,15 @@ int GraphicsView::itemCount() const
 
 // --- Camera -------------------------------------------------------------- //
 /// Sets the camera to \p camera.
-///
-/// The view takes ownership of the camera.
-void GraphicsView::setCamera(GraphicsCamera *camera)
+void GraphicsView::setCamera(const boost::shared_ptr<GraphicsCamera> &camera)
 {
-    if(d->camera){
-        d->camera->setView(0);
-
-        if(d->ownCamera){
-            delete d->camera;
-        }
-    }
-
     d->camera = camera;
-    d->ownCamera = false;
-
-    if(d->camera){
-        camera->setView(this);
-    }
 
     update();
 }
 
 /// Returns the camera.
-GraphicsCamera* GraphicsView::camera() const
+boost::shared_ptr<GraphicsCamera> GraphicsView::camera() const
 {
     return d->camera;
 }
@@ -595,7 +568,7 @@ void GraphicsView::initializeGL()
 
 void GraphicsView::paintGL()
 {
-    if(!d->scene){
+    if(!d->scene || !d->camera){
         return;
     }
 

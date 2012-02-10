@@ -83,8 +83,8 @@ public:
     int itemCount() const;
 
     // camera
-    void setCamera(GraphicsCamera *camera);
-    GraphicsCamera* camera() const;
+    void setCamera(const boost::shared_ptr<GraphicsCamera> &camera);
+    boost::shared_ptr<GraphicsCamera> camera() const;
     void setNearClipDistance(float distance);
     float nearClipDistance() const;
     void setFarClipDistance(float distance);
