@@ -68,6 +68,7 @@ class CubeViewerExample : public QMainWindow
 
     private:
         Ui::CubeViewerExample *ui;
+        boost::shared_ptr<chemkit::Molecule> m_molecule;
         chemkit::GraphicsView *m_view;
         chemkit::GraphicsMoleculeItem *m_moleculeItem;
         chemkit::GraphicsIsosurfaceItem *m_positiveSurfaceItem;

@@ -121,9 +121,9 @@ void CubeViewerExample::openFile(const QString &fileName)
     }
 
     // setup molecule
-    boost::shared_ptr<chemkit::Molecule> molecule = file.molecule();
-    chemkit::BondPredictor::predictBonds(molecule.get());
-    m_moleculeItem->setMolecule(molecule.get());
+    m_molecule = file.molecule();
+    chemkit::BondPredictor::predictBonds(m_molecule.get());
+    m_moleculeItem->setMolecule(m_molecule.get());
 
     // setup scalar fields and isosurface items
     m_positiveScalarField = readVolumeData(fileName);
