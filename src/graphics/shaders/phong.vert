@@ -44,4 +44,6 @@ void main()
     normal = normalize(gl_NormalMatrix * gl_Normal);
 
     gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;
+
+    gl_FogFragCoord = gl_Position.z;
 }

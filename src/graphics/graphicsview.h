@@ -102,6 +102,10 @@ public:
     int lightCount() const;
     GraphicsLight* light(int index = 0) const;
 
+    // fog
+    void setFogEnabled(bool enabled);
+    bool fogEnabled() const;
+
     // selection
     GraphicsItem* itemAt(int x, int y) const;
     QList<GraphicsItem *> itemsAt(int x, int y, bool sorted = true) const;

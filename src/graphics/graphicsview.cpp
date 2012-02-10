@@ -75,6 +75,7 @@ public:
     float nearClipDistance;
     float farClipDistance;
     float fieldOfView;
+    bool fogEnabled;
 };
 
 GraphicsViewPrivate::GraphicsViewPrivate()
@@ -87,6 +88,7 @@ GraphicsViewPrivate::GraphicsViewPrivate()
     farClipDistance = 500.0f;
     fieldOfView = 45.0f;
     shader = 0;
+    fogEnabled = true;
 }
 
 // === GraphicsView ======================================================== //
@@ -486,6 +488,19 @@ GraphicsLight* GraphicsView::light(int index) const
     return d->lights.value(index, 0);
 }
 
+// --- Fog ----------------------------------------------------------------- //
+/// Enables/disables for rendering for the view.
+void GraphicsView::setFogEnabled(bool enabled)
+{
+    d->fogEnabled = enabled;
+}
+
+/// Returns \c true if fog is enabled.
+bool GraphicsView::fogEnabled() const
+{
+    return d->fogEnabled;
+}
+
 // --- Selection ----------------------------------------------------------- //
 /// Returns the item at the window position (\p x, \p y).
 GraphicsItem* GraphicsView::itemAt(int x, int y) const
@@ -597,6 +612,21 @@ void GraphicsView::paintGL()
         glLoadMatrixf(d->modelViewTransform.data());
 
         camera()->setChanged(false);
+    }
+
+    // setup fog
+    float fogColor[] = {d->backgroundColor.redF(),
+                        d->backgroundColor.greenF(),
+                        d->backgroundColor.blueF()};
+    glFogfv(GL_FOG_COLOR, fogColor);
+
+    if(d->fogEnabled){
+        glFogf(GL_FOG_START, nearClipDistance());
+        glFogf(GL_FOG_END, farClipDistance());
+    }
+    else{
+        glFogf(GL_FOG_START, farClipDistance());
+        glFogf(GL_FOG_END, farClipDistance());
     }
 
     // draw items
