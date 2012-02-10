@@ -39,6 +39,7 @@
 #include "graphics.h"
 
 #include "graphicstransform.h"
+#include "graphicsboundingbox.h"
 
 namespace chemkit {
 
@@ -98,6 +99,7 @@ public:
     void translate(const Vector3f &vector);
     void translate(float x, float y, float z);
     void rotate(const Vector3f &axis, const float angle);
+    virtual GraphicsBoundingBox boundingBox() const;
     virtual bool intersects(const GraphicsRay &ray, float *distance = 0) const;
 
     // drawing

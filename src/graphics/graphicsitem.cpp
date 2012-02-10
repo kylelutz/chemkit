@@ -188,6 +188,12 @@ void GraphicsItem::rotate(const Vector3f &axis, const float angle)
     d->transform *= GraphicsTransform::rotation(axis, angle);
 }
 
+/// Returns the axis-aligned bounding box for the item.
+GraphicsBoundingBox GraphicsItem::boundingBox() const
+{
+    return GraphicsBoundingBox();
+}
+
 bool GraphicsItem::intersects(const GraphicsRay &ray, float *distance) const
 {
     Q_UNUSED(ray);

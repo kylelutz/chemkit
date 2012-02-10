@@ -14,6 +14,7 @@ find_package(OpenGL REQUIRED)
 set(HEADERS
   graphicsatomitem.h
   graphicsbonditem.h
+  graphicsboundingbox.h
   graphicscamera.h
   graphicscylinder.h
   graphicscylinderitem.h
