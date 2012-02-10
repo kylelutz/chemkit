@@ -37,6 +37,7 @@
 
 #include <chemkit/atom.h>
 #include <chemkit/point3.h>
+#include <chemkit/foreach.h>
 #include <chemkit/aminoacid.h>
 
 #include "graphicspainter.h"

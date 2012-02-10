@@ -39,6 +39,7 @@
 
 #include <chemkit/atom.h>
 #include <chemkit/point3.h>
+#include <chemkit/foreach.h>
 #include <chemkit/polymer.h>
 #include <chemkit/nucleotide.h>
 #include <chemkit/polymerchain.h>

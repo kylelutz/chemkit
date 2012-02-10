@@ -35,6 +35,7 @@
 
 #include "graphicssphere.h"
 
+#include <chemkit/foreach.h>
 #include <chemkit/geometry.h>
 
 #include "graphicsray.h"

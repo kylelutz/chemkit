@@ -37,6 +37,7 @@
 
 #include <boost/make_shared.hpp>
 
+#include <chemkit/foreach.h>
 #include <chemkit/vector3.h>
 
 #include "graphics.h"

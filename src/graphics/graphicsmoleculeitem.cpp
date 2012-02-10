@@ -41,6 +41,7 @@
 
 #include <chemkit/atom.h>
 #include <chemkit/bond.h>
+#include <chemkit/foreach.h>
 #include <chemkit/molecule.h>
 
 namespace chemkit {

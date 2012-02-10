@@ -36,6 +36,7 @@
 #include "graphicsmolecularsurfaceitem.h"
 
 #include <chemkit/atom.h>
+#include <chemkit/foreach.h>
 #include <chemkit/geometry.h>
 #include <chemkit/molecule.h>
 #include <chemkit/alphashape.h>

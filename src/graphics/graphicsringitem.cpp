@@ -39,6 +39,7 @@
 
 #include <chemkit/atom.h>
 #include <chemkit/ring.h>
+#include <chemkit/foreach.h>
 
 namespace chemkit {
 

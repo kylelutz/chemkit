@@ -35,6 +35,8 @@
 
 #include "graphicsscene.h"
 
+#include <chemkit/foreach.h>
+
 #include "graphicsitem.h"
 #include "graphicsview.h"
 

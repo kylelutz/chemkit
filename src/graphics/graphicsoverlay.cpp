@@ -35,6 +35,8 @@
 
 #include "graphicsoverlay.h"
 
+#include <chemkit/foreach.h>
+
 #include "graphicsview.h"
 
 namespace chemkit {

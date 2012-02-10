@@ -9,6 +9,9 @@ find_package(Qt4 4.6 COMPONENTS QtCore QtGui QtOpenGL REQUIRED)
 set(QT_USE_QTOPENGL TRUE)
 include(${QT_USE_FILE})
 
+# disable Qt keywords
+add_definitions("-DQT_NO_KEYWORDS")
+
 find_package(OpenGL REQUIRED)
 
 set(HEADERS

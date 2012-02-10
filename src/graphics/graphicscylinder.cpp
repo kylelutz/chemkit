@@ -35,6 +35,7 @@
 
 #include "graphicscylinder.h"
 
+#include <chemkit/foreach.h>
 #include <chemkit/constants.h>
 
 #include "graphicsray.h"
