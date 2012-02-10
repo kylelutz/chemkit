@@ -38,6 +38,8 @@
 
 #include "graphics.h"
 
+#include <boost/shared_ptr.hpp>
+
 #include <chemkit/point3.h>
 
 #include "graphicsray.h"
@@ -60,12 +62,12 @@ class CHEMKIT_GRAPHICS_EXPORT GraphicsView : public QGLWidget
 public:
     // construction and destruction
     GraphicsView(QWidget *parent = 0);
-    GraphicsView(GraphicsScene *scene, QWidget *parent = 0);
+    GraphicsView(const boost::shared_ptr<GraphicsScene> &scene, QWidget *parent = 0);
     ~GraphicsView();
 
     // properties
-    void setScene(GraphicsScene *scene);
-    GraphicsScene* scene() const;
+    void setScene(const boost::shared_ptr<GraphicsScene> &scene);
+    boost::shared_ptr<GraphicsScene> scene() const;
     void setBackgroundColor(const QColor &color);
     QColor backgroundColor() const;
     void setTool(GraphicsTool *tool);

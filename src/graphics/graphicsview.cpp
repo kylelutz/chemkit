@@ -35,6 +35,8 @@
 
 #include "graphicsview.h"
 
+#include <boost/make_shared.hpp>
+
 #include <chemkit/vector3.h>
 
 #include "graphics.h"
@@ -60,8 +62,7 @@ class GraphicsViewPrivate
 public:
     GraphicsViewPrivate();
 
-    GraphicsScene *scene;
-    bool ownScene;
+    boost::shared_ptr<GraphicsScene> scene;
     GraphicsCamera *camera;
     bool ownCamera;
     GraphicsTool *tool;
@@ -79,7 +80,6 @@ public:
 
 GraphicsViewPrivate::GraphicsViewPrivate()
 {
-    scene = 0;
     tool = 0;
     backgroundColor = Qt::black;
     camera = 0;
@@ -140,20 +140,19 @@ GraphicsView::GraphicsView(QWidget *parent)
     : QGLWidget(QGLFormat(QGL::SampleBuffers), parent),
       d(new GraphicsViewPrivate)
 {
-    setScene(new GraphicsScene);
-    d->ownScene = true;
+    setScene(boost::make_shared<GraphicsScene>());
     setCamera(new GraphicsCamera(0, 0, 10));
     d->ownCamera = true;
     setAutoFillBackground(false);
 }
 
 /// Creates a new graphics view widget displaying \p scene.
-GraphicsView::GraphicsView(GraphicsScene *scene, QWidget *parent)
+GraphicsView::GraphicsView(const boost::shared_ptr<GraphicsScene> &scene,
+                           QWidget *parent)
     : QGLWidget(QGLFormat(QGL::SampleBuffers), parent),
       d(new GraphicsViewPrivate)
 {
     setScene(scene);
-    d->ownScene = false;
     setCamera(new GraphicsCamera(0, 0, 10));
     d->ownCamera = true;
     setAutoFillBackground(false);
@@ -164,10 +163,6 @@ GraphicsView::~GraphicsView()
 {
     if(d->scene){
         d->scene->removeView(this);
-
-        if(d->ownScene){
-            delete d->scene;
-        }
     }
 
     if(d->camera){
@@ -186,7 +181,7 @@ GraphicsView::~GraphicsView()
 
 // --- Properties ---------------------------------------------------------- //
 /// Sets the graphics scene to show.
-void GraphicsView::setScene(GraphicsScene *scene)
+void GraphicsView::setScene(const boost::shared_ptr<GraphicsScene> &scene)
 {
     if(scene == d->scene){
         return;
@@ -194,14 +189,9 @@ void GraphicsView::setScene(GraphicsScene *scene)
 
     if(d->scene){
         d->scene->removeView(this);
-
-        if(d->ownScene){
-            delete d->scene;
-        }
     }
 
     d->scene = scene;
-    d->ownScene = false;
 
     if(d->scene){
         d->scene->addView(this);
@@ -211,7 +201,7 @@ void GraphicsView::setScene(GraphicsScene *scene)
 }
 
 /// Returns the scene that the view is showing.
-GraphicsScene* GraphicsView::scene() const
+boost::shared_ptr<GraphicsScene> GraphicsView::scene() const
 {
     return d->scene;
 }

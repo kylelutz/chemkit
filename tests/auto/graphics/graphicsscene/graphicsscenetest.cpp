@@ -41,7 +41,7 @@
 
 void GraphicsSceneTest::items()
 {
-    chemkit::GraphicsScene *scene = new chemkit::GraphicsScene;
+    boost::shared_ptr<chemkit::GraphicsScene> scene(new chemkit::GraphicsScene);
     QCOMPARE(scene->itemCount(), 0);
     QCOMPARE(scene->size(), 0);
     QCOMPARE(scene->isEmpty(), true);
@@ -69,7 +69,7 @@ void GraphicsSceneTest::items()
 
 void GraphicsSceneTest::views()
 {
-    chemkit::GraphicsScene *scene = new chemkit::GraphicsScene;
+    boost::shared_ptr<chemkit::GraphicsScene> scene(new chemkit::GraphicsScene);
     QCOMPARE(scene->views().size(), 0);
 
     chemkit::GraphicsView *view = new chemkit::GraphicsView(scene);
@@ -86,8 +86,6 @@ void GraphicsSceneTest::views()
 
     delete view2;
     QCOMPARE(scene->views().size(), 0);
-
-    delete scene;
 }
 
 QTEST_MAIN(GraphicsSceneTest)
