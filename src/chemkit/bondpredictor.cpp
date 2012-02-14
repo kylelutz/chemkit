@@ -66,6 +66,8 @@ public:
 ///
 /// BondPredictor::predictBonds(molecule);
 /// \endcode
+///
+/// This class implements the \blueobeliskalgorithm{rebondFrom3DCoordinates}.
 
 /// \typedef BondPredictor::PredictedBond;
 /// This tuple contains information about each predicted bond.

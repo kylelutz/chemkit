@@ -664,6 +664,9 @@ Ring* Molecule::ring(size_t index) const
 
 /// Returns a range containing all of the rings in the molecule.
 ///
+/// This method implements the
+/// \blueobeliskalgorithm{findSmallestSetOfSmallestRings}.
+///
 /// \warning The range of rings returned from this method is only
 ///          valid as long as the molecule's structure remains
 ///          unchanged. If any atoms or bonds in the molecule are
@@ -1026,6 +1029,8 @@ Point3 Molecule::center() const
 }
 
 /// Returns the center of mass for the molecule.
+///
+/// This method implements the \blueobeliskalgorithm{calculate3DCenterOfMass}.
 Point3 Molecule::centerOfMass() const
 {
     if(!m_coordinates){

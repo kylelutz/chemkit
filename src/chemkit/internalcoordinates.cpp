@@ -199,6 +199,9 @@ std::vector<size_t> InternalCoordinates::connections(size_t row) const
 /// The ownership of the returned coordinates object is passed to
 /// the caller.
 ///
+/// This method implements the
+/// \blueobeliskalgorithm{zmatrixCoordinatesIntoCartesianCoordinates}.
+///
 /// \internal
 /// This method implements the Natural Extension Reference Frame
 /// (NeRF) algorithm presented in [Parsons 2005].

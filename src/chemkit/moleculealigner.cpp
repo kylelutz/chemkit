@@ -61,6 +61,8 @@ public:
 /// \ingroup chemkit
 /// \brief The MoleculeAligner class aligns two molecules based on
 ///        their atomic coordinates.
+///
+/// This class implements the \blueobeliskalgorithm{alignmentKabsch}.
 
 // --- Construction and Destruction ---------------------------------------- //
 /// Create a new molecule aligner object using \p mapping.
