@@ -62,11 +62,8 @@ public:
     const Molecule* molecule() const;
 
     // types
-    virtual Variant type(int index) const;
     virtual Variant type(const Atom *atom) const;
-    virtual int typeNumber(int index) const;
     virtual int typeNumber(const Atom *atom) const;
-    virtual std::string typeString(int index) const;
     virtual std::string typeString(const Atom *atom) const;
 
     // static methods

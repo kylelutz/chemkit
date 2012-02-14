@@ -46,9 +46,7 @@ public:
     virtual ~AmberAtomTyper();
 
     // types
-    virtual chemkit::Variant type(int index) const;
     virtual chemkit::Variant type(const chemkit::Atom *atom) const;
-    virtual std::string typeString(int index) const;
     virtual std::string typeString(const chemkit::Atom *atom) const;
 
 protected:

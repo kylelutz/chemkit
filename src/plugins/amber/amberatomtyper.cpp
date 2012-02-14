@@ -51,24 +51,14 @@ AmberAtomTyper::~AmberAtomTyper()
 }
 
 // --- Types --------------------------------------------------------------- //
-chemkit::Variant AmberAtomTyper::type(int index) const
-{
-    return m_types[index];
-}
-
 chemkit::Variant AmberAtomTyper::type(const chemkit::Atom *atom) const
 {
-    return type(atom->index());
-}
-
-std::string AmberAtomTyper::typeString(int index) const
-{
-    return m_types[index];
+    return m_types[atom->index()];
 }
 
 std::string AmberAtomTyper::typeString(const chemkit::Atom *atom) const
 {
-    return typeString(atom->index());
+    return m_types[atom->index()];
 }
 
 std::string AmberAtomTyper::assignType(const chemkit::Atom *atom) const

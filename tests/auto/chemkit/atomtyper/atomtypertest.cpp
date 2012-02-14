@@ -91,9 +91,9 @@ void AtomTyperTest::type()
     molecule.addAtom("Pb");
 
     typer->setMolecule(&molecule);
-    QCOMPARE(typer->type(0).toString(), std::string("C"));
+    QCOMPARE(typer->type(molecule.atom(0)).toString(), std::string("C"));
     QCOMPARE(typer->type(molecule.atom(1)).toString(), std::string("O"));
-    QCOMPARE(typer->typeString(2), std::string("S"));
+    QCOMPARE(typer->typeString(molecule.atom(2)), std::string("S"));
     QCOMPARE(typer->typeString(molecule.atom(3)), std::string("Pb"));
 
     delete typer;

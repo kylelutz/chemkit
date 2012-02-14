@@ -50,14 +50,9 @@ UffAtomTyper::~UffAtomTyper()
 }
 
 // --- Types --------------------------------------------------------------- //
-std::string UffAtomTyper::typeString(int index) const
-{
-    return m_types[index];
-}
-
 std::string UffAtomTyper::typeString(const chemkit::Atom *atom) const
 {
-    return typeString(atom->index());
+    return m_types[atom->index()];
 }
 
 // --- Internal Methods ---------------------------------------------------- //

@@ -49,7 +49,6 @@ public:
     ~MmffAtomTyper();
 
     // types
-    int typeNumber(int index) const;
     int typeNumber(const chemkit::Atom *atom) const;
 
     // charges

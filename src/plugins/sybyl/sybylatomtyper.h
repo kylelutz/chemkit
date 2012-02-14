@@ -46,7 +46,6 @@ public:
     ~SybylAtomTyper();
 
     // types
-    std::string typeString(int index) const;
     std::string typeString(const chemkit::Atom *atom) const;
 
 protected:

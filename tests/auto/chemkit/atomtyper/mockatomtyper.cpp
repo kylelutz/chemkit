@@ -48,9 +48,9 @@ MockAtomTyper::~MockAtomTyper()
 {
 }
 
-chemkit::Variant MockAtomTyper::type(int index) const
+chemkit::Variant MockAtomTyper::type(const chemkit::Atom *atom) const
 {
-    return molecule()->atom(index)->symbol();
+    return atom->symbol();
 }
 
 // === MockAtomTyperPlugin ================================================= //

@@ -45,7 +45,7 @@ class MockAtomTyper : public chemkit::AtomTyper
         MockAtomTyper();
         ~MockAtomTyper();
 
-        virtual chemkit::Variant type(int index) const;
+        virtual chemkit::Variant type(const chemkit::Atom *atom) const;
 };
 
 class MockAtomTyperPlugin : public chemkit::Plugin

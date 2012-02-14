@@ -51,14 +51,9 @@ SybylAtomTyper::~SybylAtomTyper()
 }
 
 // --- Types --------------------------------------------------------------- //
-std::string SybylAtomTyper::typeString(int index) const
-{
-    return m_types[index];
-}
-
 std::string SybylAtomTyper::typeString(const chemkit::Atom *atom) const
 {
-    return typeString(atom->index());
+    return m_types[atom->index()];
 }
 
 // --- Internal Methods ---------------------------------------------------- //

@@ -399,14 +399,9 @@ MmffAtomTyper::~MmffAtomTyper()
 }
 
 // --- Types --------------------------------------------------------------- //
-int MmffAtomTyper::typeNumber(int index) const
-{
-    return m_types[index];
-}
-
 int MmffAtomTyper::typeNumber(const chemkit::Atom *atom) const
 {
-    return typeNumber(atom->index());
+    return m_types[atom->index()];
 }
 
 // --- Charges ------------------------------------------------------------- //
