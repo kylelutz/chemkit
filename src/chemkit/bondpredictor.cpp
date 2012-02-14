@@ -55,6 +55,17 @@ public:
 /// \class BondPredictor bondpredictor.h chemkit/bondpredictor.h
 /// \ingroup chemkit
 /// \brief The BondPredictor class predicts bonds in a molecule.
+///
+/// The BondPredictor class predicts bonds for a molecule based on
+/// the 3D coordinates of its atoms.
+///
+/// The easiest way to predict bonds for a molecule is by using the
+/// static predictBonds() method as the following example shows:
+/// \code
+/// Molecule *molecule = ...
+///
+/// BondPredictor::predictBonds(molecule);
+/// \endcode
 
 /// \typedef BondPredictor::PredictedBond;
 /// This tuple contains information about each predicted bond.
@@ -62,7 +73,7 @@ public:
 /// For example, the following code will retrieve each atom and
 /// the bond order for the predicted bond:
 /// \code
-/// BondPredictor::PredictedBond bond = ...
+/// BondPredictor::PredictedBond bond = bondPredictor.predictedBonds()[0];
 ///
 /// Atom *a = boost::get<0>(bond);
 /// Atom *b = boost::get<1>(bond);
@@ -167,7 +178,8 @@ bool BondPredictor::couldBeBonded(Atom *a, Atom *b) const
 }
 
 // --- Static Methods ------------------------------------------------------ //
-/// Predict bonds for the molecule.
+/// This static convenience method predicts the bonds for \p molecule
+/// and adds each predicted bond with the Molecule::addBond() method.
 void BondPredictor::predictBonds(Molecule *molecule)
 {
     BondPredictor predictor(molecule);
