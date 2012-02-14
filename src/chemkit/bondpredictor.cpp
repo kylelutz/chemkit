@@ -166,19 +166,6 @@ std::vector<BondPredictor::PredictedBond> BondPredictor::predictedBonds()
     return bonds;
 }
 
-/// Returns \c true if the atoms could feasibly be bonded.
-bool BondPredictor::couldBeBonded(Atom *a, Atom *b) const
-{
-    Real distance = a->distance(b);
-
-    if(distance > minimumBondLength() &&
-       distance < maximumBondLength() &&
-       std::abs((a->covalentRadius() + b->covalentRadius()) - distance) < tolerance())
-        return true;
-    else
-        return false;
-}
-
 // --- Static Methods ------------------------------------------------------ //
 /// This static convenience method predicts the bonds for \p molecule
 /// and adds each predicted bond with the Molecule::addBond() method.
@@ -189,6 +176,20 @@ void BondPredictor::predictBonds(Molecule *molecule)
     foreach(const PredictedBond &bond, predictor.predictedBonds()){
         molecule->addBond(boost::get<0>(bond), boost::get<1>(bond), boost::get<2>(bond));
     }
+}
+
+// --- Internal Methods ---------------------------------------------------- //
+// Returns \c true if the atoms could feasibly be bonded.
+bool BondPredictor::couldBeBonded(Atom *a, Atom *b) const
+{
+    Real distance = a->distance(b);
+
+    if(distance > minimumBondLength() &&
+       distance < maximumBondLength() &&
+       std::abs((a->covalentRadius() + b->covalentRadius()) - distance) < tolerance())
+        return true;
+    else
+        return false;
 }
 
 } // end chemkit namespace

@@ -71,10 +71,12 @@ public:
 
     // prediction
     std::vector<PredictedBond> predictedBonds();
-    bool couldBeBonded(Atom *a, Atom *b) const;
 
     // static methods
     static void predictBonds(Molecule *molecule);
+
+private:
+    bool couldBeBonded(Atom *a, Atom *b) const;
 
 private:
     BondPredictorPrivate* const d;
