@@ -56,6 +56,19 @@ public:
 /// \ingroup chemkit
 /// \brief The BondPredictor class predicts bonds in a molecule.
 
+/// \typedef BondPredictor::PredictedBond;
+/// This tuple contains information about each predicted bond.
+///
+/// For example, the following code will retrieve each atom and
+/// the bond order for the predicted bond:
+/// \code
+/// BondPredictor::PredictedBond bond = ...
+///
+/// Atom *a = boost::get<0>(bond);
+/// Atom *b = boost::get<1>(bond);
+/// Bond::BondOrderType order = boost::get<2>(bond);
+/// \endcode
+
 // --- Construction and Destruction ---------------------------------------- //
 /// Create a new bond predictor object for molecule.
 BondPredictor::BondPredictor(Molecule *molecule)
@@ -120,9 +133,9 @@ Molecule* BondPredictor::molecule() const
 
 // --- Prediction ---------------------------------------------------------- //
 /// Returns a list of pairs of atoms that are predicted to be bonded.
-std::vector<std::pair<Atom *, Atom *> > BondPredictor::predictedBonds()
+std::vector<BondPredictor::PredictedBond> BondPredictor::predictedBonds()
 {
-    std::vector<std::pair<Atom *, Atom *> >  bonds;
+    std::vector<PredictedBond> bonds;
 
     if(!d->molecule)
         return bonds;
@@ -132,7 +145,7 @@ std::vector<std::pair<Atom *, Atom *> > BondPredictor::predictedBonds()
     for(unsigned int i = 0; i < atoms.size(); i++){
         for(unsigned int j = i+1; j < atoms.size(); j++){
             if(couldBeBonded(atoms[i], atoms[j])){
-                bonds.push_back(std::make_pair(atoms[i], atoms[j]));
+                bonds.push_back(boost::make_tuple(atoms[i], atoms[j], Bond::Single));
             }
         }
     }
@@ -159,9 +172,8 @@ void BondPredictor::predictBonds(Molecule *molecule)
 {
     BondPredictor predictor(molecule);
 
-    std::pair<Atom *, Atom *> bond;
-    foreach(bond, predictor.predictedBonds()){
-        molecule->addBond(bond.first, bond.second);
+    foreach(const PredictedBond &bond, predictor.predictedBonds()){
+        molecule->addBond(boost::get<0>(bond), boost::get<1>(bond), boost::get<2>(bond));
     }
 }
 
