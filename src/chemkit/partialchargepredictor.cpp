@@ -95,18 +95,12 @@ const Molecule* PartialChargePredictor::molecule() const
 }
 
 // --- Partial Charges ----------------------------------------------------- //
-/// Returns the partial charge for the atom at \p index.
-Real PartialChargePredictor::partialCharge(int index) const
-{
-    CHEMKIT_UNUSED(index);
-
-    return 0;
-}
-
 /// Returns the partial charge for \p atom.
 Real PartialChargePredictor::partialCharge(const Atom *atom) const
 {
-    return partialCharge(atom->index());
+    CHEMKIT_UNUSED(atom);
+
+    return 0;
 }
 
 void PartialChargePredictor::assignPartialCharges(const Molecule *molecule)

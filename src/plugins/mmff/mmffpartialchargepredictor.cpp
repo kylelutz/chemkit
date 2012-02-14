@@ -74,14 +74,9 @@ void MmffPartialChargePredictor::setAtomTyper(const MmffAtomTyper *typer)
 }
 
 // --- Partial Charges ----------------------------------------------------- //
-chemkit::Real MmffPartialChargePredictor::partialCharge(int index) const
-{
-    return m_partialCharges.value(index, 0);
-}
-
 chemkit::Real MmffPartialChargePredictor::partialCharge(const chemkit::Atom *atom) const
 {
-    return partialCharge(atom->index());
+    return m_partialCharges[atom->index()];
 }
 
 void MmffPartialChargePredictor::assignPartialCharges(const chemkit::Molecule *molecule)

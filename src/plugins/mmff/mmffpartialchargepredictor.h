@@ -52,7 +52,6 @@ public:
     void setAtomTyper(const MmffAtomTyper *typer);
 
     // partial charges
-    virtual chemkit::Real partialCharge(int index) const;
     virtual chemkit::Real partialCharge(const chemkit::Atom *atom) const;
 
 protected:

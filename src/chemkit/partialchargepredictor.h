@@ -61,7 +61,6 @@ public:
     const Molecule* molecule() const;
 
     // partial charges
-    virtual Real partialCharge(int index) const;
     virtual Real partialCharge(const Atom *atom) const;
 
     // static methods

@@ -54,7 +54,7 @@ public:
     ~GasteigerPartialChargePredictor();
 
     // partial charges
-    chemkit::Real partialCharge(int index) const;
+    chemkit::Real partialCharge(const chemkit::Atom *atom) const;
 
 protected:
     void assignPartialCharges(const chemkit::Molecule *molecule);

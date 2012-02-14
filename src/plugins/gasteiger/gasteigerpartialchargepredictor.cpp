@@ -71,9 +71,9 @@ GasteigerPartialChargePredictor::~GasteigerPartialChargePredictor()
 }
 
 // --- Partial Charges ----------------------------------------------------- //
-chemkit::Real GasteigerPartialChargePredictor::partialCharge(int index) const
+chemkit::Real GasteigerPartialChargePredictor::partialCharge(const chemkit::Atom *atom) const
 {
-    return m_charges.value(index, 0);
+    return m_charges.value(atom->index(), 0);
 }
 
 void GasteigerPartialChargePredictor::assignPartialCharges(const chemkit::Molecule *molecule)
