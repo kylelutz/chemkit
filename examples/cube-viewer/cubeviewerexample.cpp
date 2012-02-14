@@ -78,9 +78,6 @@ CubeViewerExample::CubeViewerExample(QWidget *parent)
     // setup scalar fields
     m_positiveScalarField = 0;
     m_negativeScalarField = 0;
-
-    // add navigation tool
-    m_view->setTool(new chemkit::GraphicsNavigationTool);
 }
 
 CubeViewerExample::~CubeViewerExample()

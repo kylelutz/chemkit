@@ -114,7 +114,7 @@ void GraphicsTool::wheelEvent(QWheelEvent *event)
 /// This method is called when the current tool in the view changes.
 ///
 /// \see GraphicsView::setTool()
-void GraphicsTool::toolChanged(const GraphicsTool *tool)
+void GraphicsTool::toolChanged(const boost::shared_ptr<GraphicsTool> &tool)
 {
     Q_UNUSED(tool);
 }

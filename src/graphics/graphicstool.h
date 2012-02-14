@@ -38,6 +38,8 @@
 
 #include "graphics.h"
 
+#include <boost/shared_ptr.hpp>
+
 namespace chemkit {
 
 class GraphicsView;
@@ -59,7 +61,7 @@ public:
     virtual void mouseMoveEvent(QMouseEvent *event);
     virtual void mouseDoubleClickEvent(QMouseEvent *event);
     virtual void wheelEvent(QWheelEvent *event);
-    virtual void toolChanged(const GraphicsTool *tool);
+    virtual void toolChanged(const boost::shared_ptr<GraphicsTool> &tool);
 
 private:
     void setView(GraphicsView *view);

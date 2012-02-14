@@ -132,10 +132,9 @@ BuilderWindow::BuilderWindow(QWidget *parent)
     connect(m_energyMinimizer, SIGNAL(stateChanged(int)), SLOT(minimizerStateChanged(int)));
 
     // setup tools
-    m_tool = 0;
-    m_navigateTool = new NavigateTool(this);
-    m_buildTool = new BuildTool(this);
-    m_manipulateTool = new ManipulateTool(this);
+    m_navigateTool = boost::make_shared<NavigateTool>(this);
+    m_buildTool = boost::make_shared<BuildTool>(this);
+    m_manipulateTool = boost::make_shared<ManipulateTool>(this);
     setTool(m_navigateTool);
 
     // dock widgets
@@ -170,11 +169,6 @@ BuilderWindow::BuilderWindow(QWidget *parent)
 
 BuilderWindow::~BuilderWindow()
 {
-    ui->graphicsView->setTool(0);
-    delete m_navigateTool;
-    delete m_buildTool;
-    delete m_manipulateTool;
-
 //    delete m_editor;
 //    delete m_molecule;
 //    delete m_energyMinimizer;
@@ -183,7 +177,7 @@ BuilderWindow::~BuilderWindow()
     delete ui;
 }
 
-void BuilderWindow::setTool(BuilderTool *tool)
+void BuilderWindow::setTool(const boost::shared_ptr<BuilderTool> &tool)
 {
     if(tool == m_tool){
         return; // no change
@@ -191,7 +185,7 @@ void BuilderWindow::setTool(BuilderTool *tool)
 
     m_tool = tool;
     ui->graphicsView->setTool(tool);
-    emit toolChanged(tool);
+    emit toolChanged(tool.get());
 
     if(tool == m_navigateTool)
         ui->actionNavigate->setChecked(true);

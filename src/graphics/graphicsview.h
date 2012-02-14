@@ -70,8 +70,8 @@ public:
     boost::shared_ptr<GraphicsScene> scene() const;
     void setBackgroundColor(const QColor &color);
     QColor backgroundColor() const;
-    void setTool(GraphicsTool *tool);
-    GraphicsTool* tool() const;
+    void setTool(const boost::shared_ptr<GraphicsTool> &tool);
+    boost::shared_ptr<GraphicsTool> tool() const;
     const GraphicsTransform& projectionTransform() const;
     const GraphicsTransform& modelViewTransform() const;
 

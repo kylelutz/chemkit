@@ -57,11 +57,11 @@ ToolSettingsDock::~ToolSettingsDock()
 
 void ToolSettingsDock::toolChanged(BuilderTool *tool)
 {
-    if(tool == builder()->navigateTool())
+    if(tool == builder()->navigateTool().get())
         ui->comboBox->setCurrentIndex(0);
-    else if(tool == builder()->buildTool())
+    else if(tool == builder()->buildTool().get())
         ui->comboBox->setCurrentIndex(1);
-    else if(tool == builder()->manipulateTool())
+    else if(tool == builder()->manipulateTool().get())
         ui->comboBox->setCurrentIndex(2);
 
     if(m_settingsWidget){

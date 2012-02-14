@@ -50,6 +50,7 @@
 #include "graphicspainter.h"
 #include "graphicsmaterial.h"
 #include "graphicstransform.h"
+#include "graphicsnavigationtool.h"
 
 #ifndef GL_MULTISAMPLE
 #define GL_MULTISAMPLE 0x809D
@@ -65,7 +66,7 @@ public:
 
     boost::shared_ptr<GraphicsScene> scene;
     boost::shared_ptr<GraphicsCamera> camera;
-    GraphicsTool *tool;
+    boost::shared_ptr<GraphicsTool> tool;
     QColor backgroundColor;
     std::vector<boost::shared_ptr<GraphicsLight> > lights;
     GraphicsOverlay *overlay;
@@ -81,7 +82,6 @@ public:
 
 GraphicsViewPrivate::GraphicsViewPrivate()
 {
-    tool = 0;
     backgroundColor = Qt::black;
     overlay = new GraphicsOverlay;
     overlayEnabled = true;
@@ -126,9 +126,6 @@ GraphicsViewPrivate::GraphicsViewPrivate()
 /// GraphicsMoleculeItem *item = new GraphicsMoleculeItem(molecule.get());
 /// view.addItem(item);
 ///
-/// // add the navigation tool for mouse navigation
-/// view.setTool(new GraphicsNavigationTool);
-///
 /// // run the application
 /// QApplication app;
 /// view.show();
@@ -146,6 +143,7 @@ GraphicsView::GraphicsView(QWidget *parent)
 {
     setScene(boost::make_shared<GraphicsScene>());
     setCamera(boost::make_shared<GraphicsCamera>(0, 0, 10));
+    setTool(boost::make_shared<GraphicsNavigationTool>());
     setAutoFillBackground(false);
 }
 
@@ -157,6 +155,7 @@ GraphicsView::GraphicsView(const boost::shared_ptr<GraphicsScene> &scene,
 {
     setScene(scene);
     setCamera(boost::make_shared<GraphicsCamera>(0, 0, 10));
+    setTool(boost::make_shared<GraphicsNavigationTool>());
     setAutoFillBackground(false);
 }
 
@@ -167,7 +166,6 @@ GraphicsView::~GraphicsView()
         d->scene->removeView(this);
     }
 
-    delete d->tool;
     delete d->overlay;
     delete d->shader;
     delete d;
@@ -216,7 +214,7 @@ QColor GraphicsView::backgroundColor() const
 /// Sets the current tool to \p tool.
 ///
 /// The view takes ownership of the tool.
-void GraphicsView::setTool(GraphicsTool *tool)
+void GraphicsView::setTool(const boost::shared_ptr<GraphicsTool> &tool)
 {
     if(d->tool){
         // notify the current tool that the tool changed
@@ -234,7 +232,7 @@ void GraphicsView::setTool(GraphicsTool *tool)
 }
 
 /// Returns the current tool.
-GraphicsTool* GraphicsView::tool() const
+boost::shared_ptr<GraphicsTool> GraphicsView::tool() const
 {
     return d->tool;
 }

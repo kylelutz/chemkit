@@ -62,7 +62,6 @@ PdbViewerWindow::PdbViewerWindow(QWidget *parent)
     // setup view
     m_view = new chemkit::GraphicsView;
     setCentralWidget(m_view);
-    m_view->setTool(new chemkit::GraphicsNavigationTool);
 
     m_proteinItem = new chemkit::GraphicsProteinItem;
     m_view->addItem(m_proteinItem);
