@@ -5,10 +5,9 @@
 #   CHEMKIT_LIBRARIES  - list of enabled chemkit libraries
 
 # get file paths
-get_filename_component(CHEMKIT_CMAKE_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
-if(EXISTS "${CHEMKIT_CMAKE_DIR}/CMakeCache.txt")
+if(${CHEMKIT_IN_BUILD_TREE})
   # in build tree
-  include("${CHEMKIT_CMAKE_DIR}/ChemkitBuildTreeSettings.cmake")
+  include("${Chemkit_BINARY_DIR}/ChemkitBuildTreeSettings.cmake")
 else()
   # directory where the chemkit header files are installed
   set(CHEMKIT_INCLUDE_DIRS @CMAKE_INSTALL_PREFIX@/include)

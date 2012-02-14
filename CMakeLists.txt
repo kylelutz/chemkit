@@ -29,6 +29,8 @@ configure_file(
 add_custom_target(uninstall 
 	COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake)
 
+set(CHEMKIT_IN_BUILD_TREE TRUE)
+
 # configure and install ChemkitConfig.cmake file
 configure_file(
     "${CMAKE_MODULE_PATH}/ChemkitConfig.cmake.in"
