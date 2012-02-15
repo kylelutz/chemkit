@@ -139,6 +139,9 @@ Molecule::Molecule()
 /// Molecule *benzene = new Molecule("InChI=1/C6H6/c1-2-4-6-5-3-1/h1-6H", "inchi");
 /// \endcode
 ///
+/// A list of supported formats is available at:
+/// http://wiki.chemkit.org/Features#Line_Formats
+///
 /// \see LineFormat
 Molecule::Molecule(const std::string &formula, const std::string &format)
     : d(new MoleculePrivate)
@@ -273,6 +276,9 @@ std::string Molecule::formula() const
 /// molecule->formula("inchi");
 /// \endcode
 ///
+/// A list of supported formats is available at:
+/// http://wiki.chemkit.org/Features#Line_Formats
+///
 /// \see LineFormat
 std::string Molecule::formula(const std::string &format) const
 {
@@ -293,6 +299,9 @@ std::string Molecule::formula(const std::string &format) const
 /// double randicIndex = molecule->descriptor("randic-index").toDouble();
 /// \endcode
 ///
+/// A list of supported molecular descriptors is available at:
+/// http://wiki.chemkit.org/Features#Molecular_Descriptors
+///
 /// \see MolecularDescriptor
 Variant Molecule::descriptor(const std::string &name) const
 {
@@ -305,6 +314,9 @@ Variant Molecule::descriptor(const std::string &name) const
 }
 
 /// Returns the binary fingerprint for \p name.
+///
+/// A list of supported fingerprints is available at:
+/// http://wiki.chemkit.org/Features#Fingerprints
 ///
 /// \see Fingerprint
 Bitset Molecule::fingerprint(const std::string &name) const
