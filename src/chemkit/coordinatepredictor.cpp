@@ -68,7 +68,7 @@ CoordinatePredictor::~CoordinatePredictor()
     delete d;
 }
 
-/// --- Properties --------------------------------------------------------- //
+// --- Properties ---------------------------------------------------------- //
 /// Sets the molecule to \p molecule.
 void CoordinatePredictor::setMolecule(const Molecule *molecule)
 {
