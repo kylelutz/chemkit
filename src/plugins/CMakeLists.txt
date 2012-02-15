@@ -56,10 +56,8 @@ add_subdirectory(vabc)
 add_subdirectory(wienerindex)
 
 # only compile xtc plugin on *nix where we have XDR
-if(${UNIX})
-  if(!${APPLE})
-    add_subdirectory(xtc)
-  endif()
+if(${CHEMKIT_OS_UNIX} AND NOT ${CHEMKIT_OS_MAC})
+  add_subdirectory(xtc)
 endif()
 
 add_subdirectory(xyz)

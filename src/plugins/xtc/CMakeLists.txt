@@ -1,4 +1,4 @@
-if(NOT ${CHEMKIT_WITH_MD} OR NOT ${CHEMKIT_WITH_MD})
+if(NOT ${CHEMKIT_WITH_MD_IO})
   return()
 endif()
 
