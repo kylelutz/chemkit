@@ -35,9 +35,9 @@
 
 #include "coordinatepredictor.h"
 
-#include <chemkit/atom.h>
-#include <chemkit/foreach.h>
-#include <chemkit/molecule.h>
+#include "atom.h"
+#include "foreach.h"
+#include "molecule.h"
 
 namespace chemkit {
 
