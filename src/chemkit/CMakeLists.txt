@@ -96,7 +96,6 @@ set(SOURCES
   internalcoordinates.cpp
   isotope.cpp
   lineformat.cpp
-  matrix.cpp
   moiety.cpp
   moleculardescriptor.cpp
   molecularsurface.cpp
