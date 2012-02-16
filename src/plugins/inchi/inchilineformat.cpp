@@ -183,12 +183,21 @@ std::string InchiLineFormat::write(const chemkit::Molecule *molecule)
         inputAtom++;
     }
 
+    // count double bonds with stereochemistry
+    std::vector<const chemkit::Bond *> stereogenicBonds;
+    foreach(const chemkit::Bond *bond, molecule->bonds()){
+        if(bond->order() == chemkit::Bond::Double &&
+           bond->stereochemistry() != chemkit::Stereochemistry::None){
+            stereogenicBonds.push_back(bond);
+        }
+    }
+
     // add stereochemistry if enabled
     bool stereochemistry = option("stereochemistry").toBool();
 
     if(stereochemistry){
-        input.stereo0D = new inchi_Stereo0D[chiralAtoms.size()];
-        input.num_stereo0D = chiralAtoms.size();
+        input.num_stereo0D = chiralAtoms.size() + stereogenicBonds.size();
+        input.stereo0D = new inchi_Stereo0D[input.num_stereo0D];
 
         int chiralIndex = 0;
 
@@ -216,6 +225,64 @@ std::string InchiLineFormat::write(const chemkit::Molecule *molecule)
             else{
                 stereo->parity = INCHI_PARITY_UNKNOWN;
             }
+
+            chiralIndex++;
+        }
+
+        foreach(const chemkit::Bond *bond, stereogenicBonds){
+            inchi_Stereo0D *stereo = &input.stereo0D[chiralIndex];
+            memset(stereo, 0, sizeof(*stereo));
+
+            stereo->central_atom = NO_ATOM;
+            stereo->type = INCHI_StereoType_DoubleBond;
+
+            if(bond->stereochemistry() == chemkit::Stereochemistry::E){
+                stereo->parity = INCHI_PARITY_EVEN;
+            }
+            else if(bond->stereochemistry() == chemkit::Stereochemistry::Z){
+                stereo->parity = INCHI_PARITY_ODD;
+            }
+            else{
+                stereo->parity = INCHI_PARITY_UNKNOWN;
+            }
+
+            // bond atoms
+            stereo->neighbor[1] = bond->atom1()->index();
+            stereo->neighbor[2] = bond->atom2()->index();
+
+            // neighbor atoms
+            const chemkit::Atom *highestPriorityNeighbor = 0;
+
+            foreach(const chemkit::Atom *neighbor, bond->atom1()->neighbors()){
+                if(neighbor == bond->atom2()){
+                    continue;
+                }
+
+                if(!highestPriorityNeighbor){
+                    highestPriorityNeighbor = neighbor;
+                }
+                else if(neighbor->atomicNumber() > highestPriorityNeighbor->atomicNumber()){
+                    highestPriorityNeighbor = neighbor;
+                }
+            }
+
+            stereo->neighbor[0] = highestPriorityNeighbor->index();
+
+            highestPriorityNeighbor = 0;
+            foreach(const chemkit::Atom *neighbor, bond->atom2()->neighbors()){
+                if(neighbor == bond->atom1()){
+                    continue;
+                }
+
+                if(!highestPriorityNeighbor){
+                    highestPriorityNeighbor = neighbor;
+                }
+                else if(neighbor->atomicNumber() > highestPriorityNeighbor->atomicNumber()){
+                    highestPriorityNeighbor = neighbor;
+                }
+            }
+
+            stereo->neighbor[3] = highestPriorityNeighbor->index();
 
             chiralIndex++;
         }

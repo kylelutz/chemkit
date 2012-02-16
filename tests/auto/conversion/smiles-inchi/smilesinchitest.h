@@ -45,6 +45,7 @@ class SmilesInchiTest : public QObject
     private slots:
         void initTestCase();
         void alanine();
+        void butene();
         void carvone();
         void ethanol();
         void serine();

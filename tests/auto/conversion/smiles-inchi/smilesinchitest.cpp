@@ -37,6 +37,7 @@
 
 #include <algorithm>
 
+#include <chemkit/bond.h>
 #include <chemkit/molecule.h>
 #include <chemkit/lineformat.h>
 
@@ -58,6 +59,19 @@ void SmilesInchiTest::alanine()
     molecule = chemkit::Molecule("C[C@@H](C(=O)O)N", "smiles");
     QCOMPARE(molecule.formula("inchi"),
              std::string("InChI=1S/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)/t2-/m0/s1"));
+}
+
+void SmilesInchiTest::butene()
+{
+    // cis-butene
+    chemkit::Molecule molecule("C/C=C\\C", "smiles");
+    QCOMPARE(molecule.formula("inchi"),
+             std::string("InChI=1S/C4H8/c1-3-4-2/h3-4H,1-2H3/b4-3-"));
+
+    // trans-butene
+    molecule = chemkit::Molecule("C/C=C/C", "smiles");
+    QCOMPARE(molecule.formula("inchi"),
+             std::string("InChI=1S/C4H8/c1-3-4-2/h3-4H,1-2H3/b4-3+"));
 }
 
 void SmilesInchiTest::carvone()
