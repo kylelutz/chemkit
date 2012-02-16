@@ -176,6 +176,10 @@ Molecule::Molecule(const Molecule &molecule)
     foreach(const Bond *bond, molecule.bonds()){
         Bond *newBond = addBond(oldToNew[bond->atom1()], oldToNew[bond->atom2()]);
         newBond->setOrder(bond->order());
+
+        if(bond->stereochemistry() != Stereochemistry::None){
+            newBond->setStereochemistry(bond->stereochemistry());
+        }
     }
 }
 
@@ -1117,6 +1121,10 @@ Molecule& Molecule::operator=(const Molecule &molecule)
         foreach(const Bond *bond, molecule.bonds()){
             Bond *newBond = addBond(oldToNew[bond->atom1()], oldToNew[bond->atom2()]);
             newBond->setOrder(bond->order());
+
+            if(bond->stereochemistry() != Stereochemistry::None){
+                newBond->setStereochemistry(bond->stereochemistry());
+            }
         }
     }
 

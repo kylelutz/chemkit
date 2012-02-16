@@ -215,6 +215,7 @@ bool SmilesLineFormat::read(const char *formula, chemkit::Molecule *molecule)
     chemkit::Atom *atom = 0;
     chemkit::Bond *bond = 0;
     chemkit::Atom *lastAtom = 0;
+    chemkit::Bond *lastDoubleBond = 0;
     int bondOrder = 1;
     std::map<chemkit::Atom *, int> charges; // atom -> formal charge
     std::vector<chemkit::Atom *> organicAtoms;
@@ -224,6 +225,13 @@ bool SmilesLineFormat::read(const char *formula, chemkit::Molecule *molecule)
     std::stack<BranchState> branchRoots;
     RingState ringState;
     std::map<int, RingState> rings;
+
+    enum BondStereo {
+        Up = 1,
+        Down = 2
+    };
+
+    int bondStereo = 0;
 
     // go to initial state
     if(isTerminator(*p)) goto done;
@@ -372,6 +380,10 @@ organic_atom:
     if(lastAtom){
         if(bondOrder){
             bond = molecule->addBond(atom, lastAtom, bondOrder);
+
+            if(bondOrder == chemkit::Bond::Double){
+                lastDoubleBond = bond;
+            }
         }
 
         bondOrder = chemkit::Bond::Single;
@@ -404,6 +416,10 @@ aromatic_atom:
     if(lastAtom){
         if(bondOrder){
             bond = molecule->addBond(atom, lastAtom, bondOrder);
+
+            if(bondOrder == chemkit::Bond::Double){
+                lastDoubleBond = bond;
+            }
 
             if(aromatic){
                 aromaticBonds.push_back(bond);
@@ -440,6 +456,40 @@ bond:
         bondOrder = 1;
     else if(*p == '\\')
         bondOrder = 1;
+
+    // set stereochemistry
+    if(*p == '/'){
+        if(bondStereo != 0 && lastDoubleBond){
+            if(bondStereo == Up){
+                lastDoubleBond->setStereochemistry(chemkit::Stereochemistry::E);
+            }
+            else if(bondStereo == Down){
+                lastDoubleBond->setStereochemistry(chemkit::Stereochemistry::Z);
+            }
+
+            bondStereo = 0;
+            lastDoubleBond = 0;
+        }
+        else{
+            bondStereo = Up;
+        }
+    }
+    else if(*p == '\\'){
+        if(bondStereo != 0 && lastDoubleBond){
+            if(bondStereo == Up){
+                lastDoubleBond->setStereochemistry(chemkit::Stereochemistry::Z);
+            }
+            else if(bondStereo == Down){
+                lastDoubleBond->setStereochemistry(chemkit::Stereochemistry::E);
+            }
+
+            bondStereo = 0;
+            lastDoubleBond = 0;
+        }
+        else{
+            bondStereo = Down;
+        }
+    }
 
     p++; // move past bond symbol
 

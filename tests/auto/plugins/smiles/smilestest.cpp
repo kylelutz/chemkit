@@ -316,9 +316,21 @@ void SmilesTest::butene()
     chemkit::Molecule cis("C(=C\\C)\\C", "smiles");
     QCOMPARE(cis.formula(), std::string("C4H8"));
 
+    foreach(const chemkit::Bond *bond, cis.bonds()){
+        if(bond->order() == chemkit::Bond::Double){
+            QVERIFY(bond->stereochemistry() == chemkit::Stereochemistry::E);
+        }
+    }
+
     // trans butene
     chemkit::Molecule trans("C(=C/C)\\C", "smiles");
     QCOMPARE(trans.formula(), std::string("C4H8"));
+
+    foreach(const chemkit::Bond *bond, trans.bonds()){
+        if(bond->order() == chemkit::Bond::Double){
+            QVERIFY(bond->stereochemistry() == chemkit::Stereochemistry::Z);
+        }
+    }
 }
 
 void SmilesTest::caffeine()
