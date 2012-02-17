@@ -35,6 +35,7 @@
 
 #include "formulalineformat.h"
 
+#include <chemkit/foreach.h>
 #include <chemkit/molecule.h>
 
 FormulaLineFormat::FormulaLineFormat()
@@ -46,8 +47,8 @@ bool FormulaLineFormat::read(const std::string &formula, chemkit::Molecule *mole
 {
     bool inSymbol = false;
     bool inNumber = false;
-    QString symbol;
-    QString number;
+    std::string symbol;
+    std::string number;
 
     foreach(const char &c, formula){
         if(isspace(c)){
@@ -68,8 +69,9 @@ bool FormulaLineFormat::read(const std::string &formula, chemkit::Molecule *mole
         }
         else if(isalpha(c)){
             if(inNumber){
-                for(int i = 0; i < number.toInt(); i++){
-                    molecule->addAtom(symbol.toStdString());
+                int quantity = boost::lexical_cast<int>(number);
+                for(int i = 0; i < quantity; i++){
+                    molecule->addAtom(symbol);
                 }
 
                 number.clear();
@@ -80,7 +82,7 @@ bool FormulaLineFormat::read(const std::string &formula, chemkit::Molecule *mole
                 symbol += c;
             }
             else if(inSymbol && isupper(c)){
-                molecule->addAtom(symbol.toStdString());
+                molecule->addAtom(symbol);
                 symbol = c;
             }
             else{
@@ -90,13 +92,15 @@ bool FormulaLineFormat::read(const std::string &formula, chemkit::Molecule *mole
         }
     }
 
-    if(!symbol.isEmpty()){
-        if(number.isEmpty()){
+    if(!symbol.empty()){
+        if(number.empty()){
             number = "1";
         }
 
-        for(int i = 0; i < number.toInt(); i++){
-            molecule->addAtom(symbol.toStdString());
+        int quantity = boost::lexical_cast<int>(number);
+
+        for(int i = 0; i < quantity; i++){
+            molecule->addAtom(symbol);
         }
     }
 
@@ -107,4 +111,3 @@ std::string FormulaLineFormat::write(const chemkit::Molecule *molecule)
 {
     return molecule->formula();
 }
-

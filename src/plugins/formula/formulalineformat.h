@@ -36,8 +36,6 @@
 #ifndef FORMULALINEFORMAT_H
 #define FORMULALINEFORMAT_H
 
-#include <QtCore>
-
 #include <chemkit/lineformat.h>
 
 class FormulaLineFormat : public chemkit::LineFormat
