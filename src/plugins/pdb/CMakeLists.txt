@@ -7,6 +7,7 @@ include_directories(${CHEMKIT_INCLUDE_DIRS})
 
 set(SOURCES
   pdbfileformat.cpp
+  pdbmlfileformat.cpp
   pdbplugin.cpp
 )
 

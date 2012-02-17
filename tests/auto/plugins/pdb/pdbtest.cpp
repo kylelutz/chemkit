@@ -48,6 +48,7 @@ void PdbTest::initTestCase()
 {
     // verify that the pdb plugin registered itself correctly
     QVERIFY(boost::count(chemkit::PolymerFileFormat::formats(), "pdb") == 1);
+    QVERIFY(boost::count(chemkit::PolymerFileFormat::formats(), "pdbml") == 1);
 }
 
 void PdbTest::read_1BNA()
@@ -107,6 +108,32 @@ void PdbTest::read_1UBQ()
                                                   "KESTLHLVLRLRGG"));
 }
 
+void PdbTest::read_1UBQ_pdbml()
+{
+    chemkit::PolymerFile file(dataPath + "1UBQ.pdbml");
+
+    bool ok = file.read();
+    if(!ok)
+        qDebug() << file.errorString().c_str();
+    QVERIFY(ok);
+    QCOMPARE(file.polymerCount(), size_t(1));
+
+    // protein
+    const boost::shared_ptr<chemkit::Polymer> &protein = file.polymer();
+    QCOMPARE(protein->chainCount(), size_t(1));
+
+    // chain
+    chemkit::PolymerChain *chain = protein->chain(0);
+    QVERIFY(chain != 0);
+    QCOMPARE(chain->residueCount(), size_t(76));
+    QCOMPARE(chain->sequenceString(), std::string("MQIFVKTLTGKTITLEVEPSDTIENVKAKIQ"
+                                                  "DKEGIPPDQQRLIFAGKQLEDGRTLSDYNIQ"
+                                                  "KESTLHLVLRLRGG"));
+
+    // molecule
+    QCOMPARE(protein->atomCount(), size_t(660));
+}
+
 void PdbTest::read_2DHB()
 {
     // create file
@@ -135,6 +162,39 @@ void PdbTest::read_2DHB()
 
     // chain B
     chemkit::PolymerChain *chainB = polymer->chain(1);
+    QCOMPARE(chainB->residueCount(), size_t(146));
+    QCOMPARE(chainB->sequenceString(), std::string("VQLSGEEKAAVLALWDKVNEEEVGGEALGR"
+                                                   "LLVVYPWTQRFFDSFGDLSNPGAVMGNPKV"
+                                                   "KAHGKKVLHSFGEGVHHLDNLKGTFAALSE"
+                                                   "LHCDKLHVDPENFRLLGNVLALVVARHFGK"
+                                                   "DFTPELQASYQKVVAGVANALAHKYH"));
+}
+
+void PdbTest::read_2DHB_pdbml()
+{
+    chemkit::PolymerFile file(dataPath + "2DHB.pdbml");
+
+    bool ok = file.read();
+    if(!ok)
+        qDebug() << file.errorString().c_str();
+    QVERIFY(ok);
+    QCOMPARE(file.polymerCount(), size_t(1));
+
+    // protein
+    const boost::shared_ptr<chemkit::Polymer> &protein = file.polymer();
+    QCOMPARE(protein->chainCount(), size_t(2));
+
+    // chain A
+    chemkit::PolymerChain *chainA = protein->chain(0);
+    QCOMPARE(chainA->residueCount(), size_t(141));
+    QCOMPARE(chainA->sequenceString(), std::string("VLSAADKTNVKAAWSKVGGHAGEYGAEALE"
+                                                   "RMFLGFPTTKTYFPHFDLSHGSAQVKAHGK"
+                                                   "KVADGLTLAVGHLDDLPGALSDLSNLHAHK"
+                                                   "LRVDPVNFKLLSHCLLSTLAVHLPNDFTPA"
+                                                   "VHASLDKFLSSVSTVLTSKYR"));
+
+    // chain B
+    chemkit::PolymerChain *chainB = protein->chain(1);
     QCOMPARE(chainB->residueCount(), size_t(146));
     QCOMPARE(chainB->sequenceString(), std::string("VQLSGEEKAAVLALWDKVNEEEVGGEALGR"
                                                    "LLVVYPWTQRFFDSFGDLSNPGAVMGNPKV"

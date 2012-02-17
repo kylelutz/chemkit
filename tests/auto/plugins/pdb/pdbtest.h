@@ -46,7 +46,9 @@ class PdbTest : public QObject
         void initTestCase();
         void read_1BNA();
         void read_1UBQ();
+        void read_1UBQ_pdbml();
         void read_2DHB();
+        void read_2DHB_pdbml();
         void read_alphabet();
         void read_fmc();
 };

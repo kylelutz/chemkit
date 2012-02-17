@@ -37,6 +37,7 @@
 #include <chemkit/moleculefileformatadaptor.h>
 
 #include "pdbfileformat.h"
+#include "pdbmlfileformat.h"
 
 class PdbPlugin : public chemkit::Plugin
 {
@@ -45,13 +46,21 @@ public:
         : chemkit::Plugin("pdb")
     {
         CHEMKIT_REGISTER_POLYMER_FILE_FORMAT("pdb", PdbFileFormat);
+        CHEMKIT_REGISTER_POLYMER_FILE_FORMAT("pdbml", PdbmlFileFormat);
         registerPluginClass<chemkit::MoleculeFileFormat>("pdb", createPdbMoleculeFormat);
+        registerPluginClass<chemkit::MoleculeFileFormat>("pdbml", createPdbmlMoleculeFormat);
     }
 
     static chemkit::MoleculeFileFormat* createPdbMoleculeFormat()
     {
         return new chemkit::MoleculeFileFormatAdaptor<chemkit::PolymerFileFormat>(new PdbFileFormat);
     }
+
+    static chemkit::MoleculeFileFormat* createPdbmlMoleculeFormat()
+    {
+        return new chemkit::MoleculeFileFormatAdaptor<chemkit::PolymerFileFormat>(new PdbmlFileFormat);
+    }
+
 };
 
 CHEMKIT_EXPORT_PLUGIN(pdb, PdbPlugin)
