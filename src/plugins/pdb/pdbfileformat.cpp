@@ -35,13 +35,10 @@
 
 #include "pdbfileformat.h"
 
-#include <QHash>
-#include <QString>
-#include <QVector>
-
 #include <boost/algorithm/string.hpp>
 
 #include <chemkit/atom.h>
+#include <chemkit/foreach.h>
 #include <chemkit/polymer.h>
 #include <chemkit/residue.h>
 #include <chemkit/molecule.h>
@@ -61,7 +58,7 @@ public:
     PdbAtom(const char *data);
 
     int id;
-    QString name;
+    std::string name;
     chemkit::Point3 position;
     int atomicNumber;
 };
@@ -76,7 +73,7 @@ PdbAtom::PdbAtom(const char *data)
     for(int i = 13; i < 16; i++){
         name += data[i];
     }
-    name = name.trimmed();
+    boost::trim(name);
 
     // coordinates
     double x, y, z;
@@ -84,33 +81,34 @@ PdbAtom::PdbAtom(const char *data)
     position = chemkit::Point3(x, y, z);
 
     // atomic number
-    QString symbol;
+    std::string symbol;
     for(int i = 77; i < 79 && isalpha(data[i]); i++){
         symbol += data[i];
     }
-    atomicNumber = chemkit::Element::atomicNumber(symbol.trimmed().toStdString());
+    boost::trim(symbol);
+    atomicNumber = chemkit::Element::atomicNumber(symbol);
 }
 
 // === PdbResidue ========================================================== //
 class PdbResidue
 {
 public:
-    PdbResidue(const QString &name, int index);
+    PdbResidue(const std::string &name, int index);
     ~PdbResidue();
 
     void addAtom(PdbAtom *atom);
-    QList<PdbAtom *> atoms() const;
+    std::vector<PdbAtom *> atoms() const;
 
-    QString name() const;
+    std::string name() const;
     int index() const;
 
 private:
-    QString m_name;
+    std::string m_name;
     int m_index;
-    QList<PdbAtom *> m_atoms;
+    std::vector<PdbAtom *> m_atoms;
 };
 
-PdbResidue::PdbResidue(const QString &name, int index)
+PdbResidue::PdbResidue(const std::string &name, int index)
     : m_name(name),
       m_index(index)
 {
@@ -118,20 +116,22 @@ PdbResidue::PdbResidue(const QString &name, int index)
 
 PdbResidue::~PdbResidue()
 {
-    qDeleteAll(m_atoms);
+    foreach(PdbAtom *atom, m_atoms){
+        delete atom;
+    }
 }
 
 void PdbResidue::addAtom(PdbAtom *atom)
 {
-    m_atoms.append(atom);
+    m_atoms.push_back(atom);
 }
 
-QList<PdbAtom *> PdbResidue::atoms() const
+std::vector<PdbAtom *> PdbResidue::atoms() const
 {
     return m_atoms;
 }
 
-QString PdbResidue::name() const
+std::string PdbResidue::name() const
 {
     return m_name;
 }
@@ -155,17 +155,17 @@ public:
     ~PdbChain();
 
     char id() const;
-    QString name() const;
+    std::string name() const;
 
     void addResidue(PdbResidue *residue);
-    QList<PdbResidue *> residues() const;
+    std::vector<PdbResidue *> residues() const;
 
     Type guessType() const;
 
 private:
     char m_id;
-    QString m_name;
-    QList<PdbResidue *> m_residues;
+    std::string m_name;
+    std::vector<PdbResidue *> m_residues;
 };
 
 PdbChain::PdbChain(char id)
@@ -175,7 +175,9 @@ PdbChain::PdbChain(char id)
 
 PdbChain::~PdbChain()
 {
-    qDeleteAll(m_residues);
+    foreach(PdbResidue *residue, m_residues){
+        delete residue;
+    }
 }
 
 char PdbChain::id() const
@@ -183,27 +185,27 @@ char PdbChain::id() const
     return m_id;
 }
 
-QString PdbChain::name() const
+std::string PdbChain::name() const
 {
     return m_name;
 }
 
 void PdbChain::addResidue(PdbResidue *residue)
 {
-    m_residues.append(residue);
+    m_residues.push_back(residue);
 }
 
-QList<PdbResidue *> PdbChain::residues() const
+std::vector<PdbResidue *> PdbChain::residues() const
 {
     return m_residues;
 }
 
 PdbChain::Type PdbChain::guessType() const
 {
-    if(m_residues.isEmpty())
+    if(m_residues.empty())
         return Protein;
 
-    PdbResidue *residue = m_residues.first();
+    PdbResidue *residue = m_residues.front();
 
     if(residue->name() == "DG" ||
        residue->name() == "DA" ||
@@ -260,7 +262,7 @@ public:
     chemkit::Point3 position(int atom) const;
 
 private:
-    QVector<chemkit::Point3> m_positions;
+    std::vector<chemkit::Point3> m_positions;
 };
 
 PdbConformer::PdbConformer(std::istream &input)
@@ -278,7 +280,7 @@ PdbConformer::PdbConformer(std::istream &input)
             chemkit::Real y = boost::lexical_cast<chemkit::Real>(boost::trim_left_copy(line.substr(38, 8)));
             chemkit::Real z = boost::lexical_cast<chemkit::Real>(boost::trim_left_copy(line.substr(46, 8)));
 
-            m_positions.append(chemkit::Point3(x, y, z));
+            m_positions.push_back(chemkit::Point3(x, y, z));
         }
         else if(boost::starts_with(line, "ENDMDL")){
             break;
@@ -304,9 +306,9 @@ public:
     void writePolymerFile(chemkit::PolymerFile *file);
 
 private:
-    QList<PdbChain *> m_chains;
-    QList<PdbConformer *> m_conformers;
-    QList<PdbConformation *> m_conformations;
+    std::vector<PdbChain *> m_chains;
+    std::vector<PdbConformer *> m_conformers;
+    std::vector<PdbConformation *> m_conformations;
 };
 
 PdbFile::PdbFile()
@@ -316,9 +318,12 @@ PdbFile::PdbFile()
 
 PdbFile::~PdbFile()
 {
-    qDeleteAll(m_chains);
-    qDeleteAll(m_conformers);
-    qDeleteAll(m_conformations);
+    foreach(PdbChain *chain, m_chains)
+        delete chain;
+    foreach(PdbConformer *conformer, m_conformers)
+        delete conformer;
+    foreach(PdbConformation *conformation, m_conformations)
+        delete conformation;
 }
 
 bool PdbFile::read(std::istream &input)
@@ -346,12 +351,12 @@ bool PdbFile::read(std::istream &input)
 
             int residueIndex = strtol(&line[22], 0, 10);
             if(!currentResidue || currentResidue->index() != residueIndex){
-                QString name;
+                std::string name;
                 for(int i = 17; i < 21; i++){
                     name += line[i];
                 }
 
-                name = name.trimmed();
+                boost::trim(name);
 
                 currentResidue = new PdbResidue(name, residueIndex);
                 currentChain->addResidue(currentResidue);
@@ -361,11 +366,11 @@ bool PdbFile::read(std::istream &input)
         }
         else if(strncmp("HELIX", line, 5) == 0 ||
                 strncmp("SHEET", line, 5) == 0){
-            m_conformations.append(new PdbConformation(line));
+            m_conformations.push_back(new PdbConformation(line));
         }
-        else if(strncmp("MODEL", line, 5) == 0 && !m_chains.isEmpty()){
+        else if(strncmp("MODEL", line, 5) == 0 && !m_chains.empty()){
             PdbConformer *conformer = new PdbConformer(input);
-            m_conformers.append(conformer);
+            m_conformers.push_back(conformer);
         }
     }
 
@@ -374,18 +379,18 @@ bool PdbFile::read(std::istream &input)
 
 void PdbFile::addChain(PdbChain *chain)
 {
-    m_chains.append(chain);
+    m_chains.push_back(chain);
 }
 
 void PdbFile::writePolymerFile(chemkit::PolymerFile *file)
 {
-    if(m_chains.isEmpty()){
+    if(m_chains.empty()){
         return;
     }
 
     boost::shared_ptr<chemkit::Polymer> polymer(new chemkit::Polymer);
 
-    QHash<int, chemkit::Atom *> atomIds;
+    std::map<int, chemkit::Atom *> atomIds;
     PdbChain::Type chainType = PdbChain::Protein;
 
     foreach(PdbChain *pdbChain, m_chains){
@@ -401,18 +406,18 @@ void PdbFile::writePolymerFile(chemkit::PolymerFile *file)
                 aminoAcid = new chemkit::AminoAcid(polymer.get());
                 residue = aminoAcid;
 
-                aminoAcid->setType(pdbResidue->name().toStdString());
+                aminoAcid->setType(pdbResidue->name());
             }
             else{
                 nucleotide = new chemkit::Nucleotide(polymer.get());
                 residue = nucleotide;
 
-                QChar symbol;
+                char symbol;
                 if(pdbResidue->name().length() == 1){
                     symbol = pdbResidue->name().at(0);
                     nucleotide->setSugarType(chemkit::Nucleotide::Ribose);
                 }
-                else if(pdbResidue->name().length() == 2 && pdbResidue->name().startsWith("D")){
+                else if(pdbResidue->name().length() == 2 && pdbResidue->name()[0] == 'D'){
                     symbol = pdbResidue->name().at(1);
                     nucleotide->setSugarType(chemkit::Nucleotide::Deoxyribose);
                 }
@@ -444,7 +449,7 @@ void PdbFile::writePolymerFile(chemkit::PolymerFile *file)
 
                 atom->setPosition(pdbAtom->position);
                 residue->addAtom(atom);
-                residue->setAtomType(atom, pdbAtom->name.toStdString());
+                residue->setAtomType(atom, pdbAtom->name);
 
                 if(chainType == PdbChain::Protein){
                     if(pdbAtom->name == "CA"){
@@ -468,7 +473,7 @@ void PdbFile::writePolymerFile(chemkit::PolymerFile *file)
 
     // set amino acid conformations (alpha helix or beta sheet)
     if(chainType == PdbChain::Protein){
-        for(int i = 0; i < m_chains.size(); i++){
+        for(size_t i = 0; i < m_chains.size(); i++){
             PdbChain *pdbChain = m_chains[i];
             chemkit::PolymerChain *chain = polymer->chain(i);
 
