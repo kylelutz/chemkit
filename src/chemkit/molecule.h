@@ -73,7 +73,7 @@ public:
     typedef boost::iterator_range<std::vector<Bond *>::const_iterator> BondRange;
     typedef boost::iterator_range<std::vector<Ring *>::const_iterator> RingRange;
     typedef boost::iterator_range<std::vector<Fragment *>::const_iterator> FragmentRange;
-    typedef boost::iterator_range<std::vector<CoordinateSet *>::const_iterator> CoordinateSetRange;
+    typedef boost::iterator_range<std::vector<boost::shared_ptr<CoordinateSet> >::const_iterator> CoordinateSetRange;
 
     // construction and destruction
     Molecule();
@@ -141,13 +141,12 @@ public:
 
     // coordinates
     CartesianCoordinates* coordinates() const;
-    void addCoordinateSet(CoordinateSet *coordinates);
+    void addCoordinateSet(const boost::shared_ptr<CoordinateSet> &coordinates);
     void addCoordinateSet(CartesianCoordinates *coordinates);
     void addCoordinateSet(InternalCoordinates *coordinates);
     void addCoordinateSet(DiagramCoordinates *coordinates);
-    bool removeCoordinateSet(CoordinateSet *coordinates);
-    bool deleteCoordinateSet(CoordinateSet *coordinates);
-    CoordinateSet* coordinateSet(size_t index) const;
+    bool removeCoordinateSet(const boost::shared_ptr<CoordinateSet> &coordinates);
+    boost::shared_ptr<CoordinateSet> coordinateSet(size_t index) const;
     CoordinateSetRange coordinateSets() const;
     size_t coordinateSetCount() const;
 

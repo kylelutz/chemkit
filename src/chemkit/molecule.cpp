@@ -41,6 +41,7 @@
 #include <algorithm>
 
 #include <boost/scoped_ptr.hpp>
+#include <boost/make_shared.hpp>
 
 #include <Eigen/Core>
 #include <Eigen/Geometry>
@@ -199,13 +200,11 @@ Molecule::~Molecule()
     // delete coordinates and all coordinate sets
     bool deletedCoordinates = false;
 
-    foreach(CoordinateSet *coordinateSet, d->coordinateSets){
+    foreach(const boost::shared_ptr<CoordinateSet> &coordinateSet, d->coordinateSets){
         if(coordinateSet->type() == CoordinateSet::Cartesian &&
            coordinateSet->cartesianCoordinates() == m_coordinates){
             deletedCoordinates = true;
         }
-
-        delete coordinateSet;
     }
 
     if(!deletedCoordinates){
@@ -875,10 +874,10 @@ CartesianCoordinates* Molecule::coordinates() const
            d->coordinateSets.front()->type() == CoordinateSet::None){
             // create a new, empty cartesian coordinate set
             m_coordinates = new CartesianCoordinates(atomCount());
-            d->coordinateSets.push_back(new CoordinateSet(m_coordinates));
+            d->coordinateSets.push_back(boost::make_shared<CoordinateSet>(m_coordinates));
         }
         else{
-            CoordinateSet *coordinateSet = d->coordinateSets.front();
+            const boost::shared_ptr<CoordinateSet> &coordinateSet = d->coordinateSets.front();
 
             switch(coordinateSet->type()){
                 case CoordinateSet::Cartesian:
@@ -899,9 +898,8 @@ CartesianCoordinates* Molecule::coordinates() const
     return m_coordinates;
 }
 
-/// Add \p coordinates to the molecule. The ownership of
-/// \p coordinates is passed to the molecule.
-void Molecule::addCoordinateSet(CoordinateSet *coordinates)
+/// Add \p coordinates to the molecule.
+void Molecule::addCoordinateSet(const boost::shared_ptr<CoordinateSet> &coordinates)
 {
     d->coordinateSets.push_back(coordinates);
 }
@@ -909,29 +907,30 @@ void Molecule::addCoordinateSet(CoordinateSet *coordinates)
 /// Add a new coordinate set containing \p coordinates.
 void Molecule::addCoordinateSet(CartesianCoordinates *coordinates)
 {
-    addCoordinateSet(new CoordinateSet(coordinates));
+    addCoordinateSet(boost::make_shared<CoordinateSet>(coordinates));
 }
 
 /// Add a new coordinate set containing \p coordinates.
 void Molecule::addCoordinateSet(InternalCoordinates *coordinates)
 {
-    addCoordinateSet(new CoordinateSet(coordinates));
+    addCoordinateSet(boost::make_shared<CoordinateSet>(coordinates));
 }
 
 /// Add a new coordinate set containing \p coordinates.
 void Molecule::addCoordinateSet(DiagramCoordinates *coordinates)
 {
-    addCoordinateSet(new CoordinateSet(coordinates));
+    addCoordinateSet(boost::make_shared<CoordinateSet>(coordinates));
 }
 
 /// Removes \p coordinates from the molecule. Returns \c true if
-/// successful. The ownership of \p coordinates is passed to the
-/// caller.
-bool Molecule::removeCoordinateSet(CoordinateSet *coordinates)
+/// successful.
+bool Molecule::removeCoordinateSet(const boost::shared_ptr<CoordinateSet> &coordinates)
 {
-    std::vector<CoordinateSet *>::iterator iter = std::find(d->coordinateSets.begin(),
-                                                            d->coordinateSets.end(),
-                                                            coordinates);
+    typedef std::vector<boost::shared_ptr<CoordinateSet> >::iterator CoordinateSetIterator;
+    CoordinateSetIterator iter = std::find(d->coordinateSets.begin(),
+                                           d->coordinateSets.end(),
+                                           coordinates);
+
     if(iter != d->coordinateSets.end()){
         d->coordinateSets.erase(iter);
         return true;
@@ -940,26 +939,13 @@ bool Molecule::removeCoordinateSet(CoordinateSet *coordinates)
     return false;
 }
 
-/// Removes and deletes \p coordinates if they are contained in the
-/// molecule. Returns \c true if successful.
-bool Molecule::deleteCoordinateSet(CoordinateSet *coordinates)
-{
-    bool found = removeCoordinateSet(coordinates);
-
-    if(found){
-        delete coordinates;
-    }
-
-    return found;
-}
-
 /// Returns the coordinate set at \p index in the molecule.
 ///
 /// Equivalent to:
 /// \code
 /// molecule.coordinateSets()[index];
 /// \endcode
-CoordinateSet* Molecule::coordinateSet(size_t index) const
+boost::shared_ptr<CoordinateSet> Molecule::coordinateSet(size_t index) const
 {
     assert(index < d->coordinateSets.size());
 

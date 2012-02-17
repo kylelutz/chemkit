@@ -74,7 +74,7 @@ public:
     std::vector<std::pair<Atom*, Atom*> > bondAtoms;
     std::vector<std::vector<Bond *> > atomBonds;
     std::vector<Bond::BondOrderType> bondOrders;
-    std::vector<CoordinateSet *> coordinateSets;
+    std::vector<boost::shared_ptr<CoordinateSet> > coordinateSets;
 };
 
 } // end chemkit namespace
