@@ -141,6 +141,10 @@ inline bool MoleculeFileFormatAdaptor<PolymerFileFormat>::read(std::istream &inp
         file->addMolecule(polymer);
     }
 
+    BOOST_FOREACH(const boost::shared_ptr<Molecule> &ligand, polymerFile.ligands()){
+        file->addMolecule(ligand);
+    }
+
     return true;
 }
 

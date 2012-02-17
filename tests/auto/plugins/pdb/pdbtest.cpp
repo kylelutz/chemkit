@@ -76,6 +76,14 @@ void PdbTest::read_1BNA()
     chemkit::PolymerChain *chainB = polymer->chain(1);
     QCOMPARE(chainB->residueCount(), size_t(12));
     QCOMPARE(chainB->sequenceString(), std::string("CGCGAATTCGCG"));
+
+    // check ligands
+    QCOMPARE(file.ligandCount(), size_t(80));
+    foreach(const boost::shared_ptr<chemkit::Molecule> &ligand, file.ligands()){
+        QCOMPARE(ligand->name(), std::string("HOH"));
+        QCOMPARE(ligand->atomCount(), size_t(1));
+        QCOMPARE(ligand->formula(), std::string("O"));
+    }
 }
 
 void PdbTest::read_1UBQ()
@@ -168,6 +176,13 @@ void PdbTest::read_2DHB()
                                                    "KAHGKKVLHSFGEGVHHLDNLKGTFAALSE"
                                                    "LHCDKLHVDPENFRLLGNVLALVVARHFGK"
                                                    "DFTPELQASYQKVVAGVANALAHKYH"));
+
+    // check ligands
+    QCOMPARE(file.ligandCount(), size_t(4));
+    QCOMPARE(file.ligand(0)->name(), std::string("PROTOPORPHYRIN IX CONTAINING FE"));
+    QCOMPARE(file.ligand(1)->name(), std::string("PROTOPORPHYRIN IX CONTAINING FE"));
+    QCOMPARE(file.ligand(2)->name(), std::string("HOH"));
+    QCOMPARE(file.ligand(3)->name(), std::string("HOH"));
 }
 
 void PdbTest::read_2DHB_pdbml()
@@ -232,6 +247,12 @@ void PdbTest::read_fmc()
     if(!ok)
         qDebug() << "Failed to read file: " << file.errorString().c_str();
     QVERIFY(ok);
+
+    QCOMPARE(file.polymerCount(), size_t(0));
+    QCOMPARE(file.ligandCount(), size_t(1));
+
+    const boost::shared_ptr<chemkit::Molecule> &molecule = file.ligand(0);
+    QCOMPARE(molecule->atomCount(), size_t(2596));
 }
 
 QTEST_APPLESS_MAIN(PdbTest)

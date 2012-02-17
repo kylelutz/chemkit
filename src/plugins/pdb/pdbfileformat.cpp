@@ -66,7 +66,7 @@ public:
 PdbAtom::PdbAtom(const char *data)
 {
     // atom id
-    sscanf(&data[5], "%d", &id);
+    sscanf(&data[7], "%d", &id);
 
     // atom name
     name.clear();
@@ -83,10 +83,18 @@ PdbAtom::PdbAtom(const char *data)
     // atomic number
     std::string symbol;
     for(int i = 77; i < 79 && isalpha(data[i]); i++){
-        symbol += data[i];
+        symbol += tolower(data[i]);
     }
     boost::trim(symbol);
+    symbol[0] = toupper(symbol[0]);
     atomicNumber = chemkit::Element::atomicNumber(symbol);
+
+    if(!atomicNumber){
+        // try atomic number from name
+        symbol = boost::to_lower_copy(name);
+        symbol[0] = toupper(symbol[0]);
+        atomicNumber = chemkit::Element::atomicNumber(symbol);
+    }
 }
 
 // === PdbResidue ========================================================== //
@@ -293,6 +301,57 @@ chemkit::Point3 PdbConformer::position(int atom) const
     return m_positions[atom];
 }
 
+// === PdbLigand =========================================================== //
+class PdbLigand
+{
+public:
+    PdbLigand(const std::string &name, int index);
+    ~PdbLigand();
+
+    std::string name() const;
+    int index() const;
+    void addAtom(PdbAtom *atom);
+    std::vector<PdbAtom *> atoms() const;
+
+private:
+    int m_index;
+    std::string m_name;
+    std::vector<PdbAtom *> m_atoms;
+};
+
+PdbLigand::PdbLigand(const std::string &name, int index)
+{
+    m_name = name;
+    m_index = index;
+}
+
+PdbLigand::~PdbLigand()
+{
+    foreach(PdbAtom *atom, m_atoms){
+        delete atom;
+    }
+}
+
+std::string PdbLigand::name() const
+{
+    return m_name;
+}
+
+int PdbLigand::index() const
+{
+    return m_index;
+}
+
+void PdbLigand::addAtom(PdbAtom *atom)
+{
+    m_atoms.push_back(atom);
+}
+
+std::vector<PdbAtom *> PdbLigand::atoms() const
+{
+    return m_atoms;
+}
+
 // === PdbFile ============================================================= //
 class PdbFile
 {
@@ -303,12 +362,17 @@ public:
     bool read(std::istream &input);
 
     void addChain(PdbChain *chain);
+    void addLigand(PdbLigand *ligand);
+    void addConnections(const std::vector<int> &connections);
     void writePolymerFile(chemkit::PolymerFile *file);
 
 private:
     std::vector<PdbChain *> m_chains;
     std::vector<PdbConformer *> m_conformers;
     std::vector<PdbConformation *> m_conformations;
+    std::vector<PdbLigand *> m_ligands;
+    std::vector<std::vector<int> > m_connections;
+    std::map<std::string, std::string> m_ligandNames;
 };
 
 PdbFile::PdbFile()
@@ -329,16 +393,17 @@ PdbFile::~PdbFile()
 bool PdbFile::read(std::istream &input)
 {
     PdbChain *currentChain = 0;
+    PdbLigand *currentLigand = 0;
     PdbResidue *currentResidue = 0;
 
     for(;;){
-        char line[80];
-        input.read(line, 79);
-        if(input.eof()){
+        std::string lineString;
+        std::getline(input, lineString);
+        if(lineString.empty() || input.eof()){
             break;
         }
 
-        input.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        const char *line = lineString.c_str();
 
         if(strncmp("ATOM", line, 4) == 0){
             PdbAtom *atom = new PdbAtom(line);
@@ -364,6 +429,24 @@ bool PdbFile::read(std::istream &input)
 
             currentResidue->addAtom(atom);
         }
+        else if(strncmp("HETATM", line, 6) == 0){
+            PdbAtom *atom = new PdbAtom(line);
+
+            int ligandIndex = strtol(&line[22], 0, 10);
+            if(!currentLigand || currentLigand->index() != ligandIndex){
+                std::string ligandName;
+                for(int i = 17; i < 21; i++){
+                    ligandName += line[i];
+                }
+
+                boost::trim(ligandName);
+
+                currentLigand = new PdbLigand(ligandName, ligandIndex);
+                addLigand(currentLigand);
+            }
+
+            currentLigand->addAtom(atom);
+        }
         else if(strncmp("HELIX", line, 5) == 0 ||
                 strncmp("SHEET", line, 5) == 0){
             m_conformations.push_back(new PdbConformation(line));
@@ -371,6 +454,41 @@ bool PdbFile::read(std::istream &input)
         else if(strncmp("MODEL", line, 5) == 0 && !m_chains.empty()){
             PdbConformer *conformer = new PdbConformer(input);
             m_conformers.push_back(conformer);
+        }
+        else if(strncmp("CONECT", line, 6) == 0){
+            std::string string = &line[7];
+            boost::trim(string);
+
+            std::vector<std::string> tokens;
+            boost::split(tokens, string, boost::is_any_of(" "), boost::token_compress_on);
+
+            std::vector<int> ids;
+
+            foreach(const std::string &idString, tokens){
+                try {
+                    ids.push_back(boost::lexical_cast<int>(idString));
+                }
+                catch(boost::bad_lexical_cast&){
+                }
+            }
+
+            addConnections(ids);
+        }
+        else if(strncmp("HETNAM", line, 6) == 0){
+            std::string string = &line[7];
+            boost::trim(string);
+
+            std::vector<std::string> tokens;
+            boost::split(tokens, string, boost::is_any_of(" "), boost::token_compress_on);
+
+            if(tokens.size() > 1){
+                std::string residueName = tokens[0];
+                tokens.erase(tokens.begin());
+
+                std::string name = boost::join(tokens, " ");
+
+                m_ligandNames[residueName] = name;
+            }
         }
     }
 
@@ -382,12 +500,18 @@ void PdbFile::addChain(PdbChain *chain)
     m_chains.push_back(chain);
 }
 
+void PdbFile::addLigand(PdbLigand *ligand)
+{
+    m_ligands.push_back(ligand);
+}
+
+void PdbFile::addConnections(const std::vector<int> &connections)
+{
+    m_connections.push_back(connections);
+}
+
 void PdbFile::writePolymerFile(chemkit::PolymerFile *file)
 {
-    if(m_chains.empty()){
-        return;
-    }
-
     boost::shared_ptr<chemkit::Polymer> polymer(new chemkit::Polymer);
 
     std::map<int, chemkit::Atom *> atomIds;
@@ -502,7 +626,61 @@ void PdbFile::writePolymerFile(chemkit::PolymerFile *file)
         polymer->addCoordinateSet(coordinates);
     }
 
-    file->addPolymer(polymer);
+    if(!polymer->isEmpty()){
+        file->addPolymer(polymer);
+    }
+
+    // add ligands
+    foreach(const PdbLigand *pdbLigand, m_ligands){
+        boost::shared_ptr<chemkit::Molecule> ligand =
+            boost::shared_ptr<chemkit::Molecule>(new chemkit::Molecule);
+
+        std::map<std::string, std::string>::const_iterator iter = m_ligandNames.find(pdbLigand->name());
+        if(iter != m_ligandNames.end()){
+            ligand->setName(iter->second);
+        }
+        else{
+            ligand->setName(pdbLigand->name());
+        }
+
+        foreach(const PdbAtom *pdbAtom, pdbLigand->atoms()){
+            chemkit::Atom *atom = ligand->addAtom(pdbAtom->atomicNumber);
+            if(!atom){
+                continue;
+            }
+
+            atom->setPosition(pdbAtom->position);
+
+            atomIds[pdbAtom->id] = atom;
+        }
+
+        file->addLigand(ligand);
+    }
+
+    // add connections
+    foreach(const std::vector<int> &connections, m_connections){
+        if(connections.size() < 2){
+            continue;
+        }
+
+        int atomIdA = connections[0];
+        chemkit::Atom *a = atomIds[atomIdA];
+        if(!a){
+            continue;
+        }
+
+        chemkit::Molecule *molecule = a->molecule();
+
+        for(size_t i = 1; i < connections.size(); i++){
+            int atomIdB = connections[i];
+            chemkit::Atom *b = atomIds[atomIdB];
+            if(!b){
+                continue;
+            }
+
+            molecule->addBond(a, b);
+        }
+    }
 }
 
 } // end anonymous namespace
