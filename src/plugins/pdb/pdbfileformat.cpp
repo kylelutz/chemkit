@@ -373,6 +373,7 @@ private:
     std::vector<PdbLigand *> m_ligands;
     std::vector<std::vector<int> > m_connections;
     std::map<std::string, std::string> m_ligandNames;
+    std::string m_title;
 };
 
 PdbFile::PdbFile()
@@ -490,6 +491,11 @@ bool PdbFile::read(std::istream &input)
                 m_ligandNames[residueName] = name;
             }
         }
+        else if(strncmp("TITLE", line, 5) == 0){
+            std::string title = &line[10];
+            boost::trim_right(title);
+            m_title += title;
+        }
     }
 
     return true;
@@ -513,6 +519,10 @@ void PdbFile::addConnections(const std::vector<int> &connections)
 void PdbFile::writePolymerFile(chemkit::PolymerFile *file)
 {
     boost::shared_ptr<chemkit::Polymer> polymer(new chemkit::Polymer);
+
+    if(!m_title.empty()){
+        polymer->setName(m_title);
+    }
 
     std::map<int, chemkit::Atom *> atomIds;
     PdbChain::Type chainType = PdbChain::Protein;

@@ -66,6 +66,8 @@ void PdbTest::read_1BNA()
     QCOMPARE(file.polymerCount(), size_t(1));
     const boost::shared_ptr<chemkit::Polymer> &polymer = file.polymer();
     QVERIFY(polymer != 0);
+    QCOMPARE(polymer->name(),
+             std::string("STRUCTURE OF A B-DNA DODECAMER. CONFORMATION AND DYNAMICS"));
     QCOMPARE(polymer->chainCount(), size_t(2));
 
     // check chains
@@ -101,6 +103,8 @@ void PdbTest::read_1UBQ()
     QCOMPARE(file.polymerCount(), size_t(1));
     const boost::shared_ptr<chemkit::Polymer> &polymer = file.polymer();
     QVERIFY(polymer != 0);
+    QCOMPARE(polymer->name(),
+             std::string("STRUCTURE OF UBIQUITIN REFINED AT 1.8 ANGSTROMS RESOLUTION"));
     QCOMPARE(polymer->chainCount(), size_t(1));
 
     // check chain
@@ -157,6 +161,9 @@ void PdbTest::read_2DHB()
     QCOMPARE(file.polymerCount(), size_t(1));
     const boost::shared_ptr<chemkit::Polymer> &polymer = file.polymer();
     QVERIFY(polymer != 0);
+    QCOMPARE(polymer->name(),
+             std::string("THREE DIMENSIONAL FOURIER SYNTHESIS OF HORSE "
+                         "DEOXYHAEMOGLOBIN AT 2.8 ANGSTROMS RESOLUTION"));
     QCOMPARE(polymer->chainCount(), size_t(2));
 
     // chain A
