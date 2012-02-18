@@ -421,6 +421,24 @@ bool Element::isNonmetal() const
 }
 
 // --- Static Methods ------------------------------------------------------ //
+/// Returns the element corresponding to \p name.
+Element Element::fromName(const std::string &name)
+{
+    return fromName(name.c_str());
+}
+
+/// Returns the element corresponding to \p name.
+Element Element::fromName(const char *name)
+{
+    for(AtomicNumberType i = 1; i < ElementDataSize; i++){
+        if(!strcmp(name, ElementData[i].name)){
+            return Element(i);
+        }
+    }
+
+    return Element();
+}
+
 /// Returns the element corresponding to \p symbol.
 Element Element::fromSymbol(const std::string &symbol)
 {

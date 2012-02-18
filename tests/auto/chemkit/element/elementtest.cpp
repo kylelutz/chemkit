@@ -115,6 +115,18 @@ void ElementTest::isMetal()
     QCOMPARE(chemkit::Element("Li").isNonmetal(), false);
 }
 
+void ElementTest::fromName()
+{
+    QCOMPARE(chemkit::Element::fromName("Hydrogen").atomicNumber(),
+             chemkit::Element::AtomicNumberType(1));
+    QCOMPARE(chemkit::Element::fromName("Carbon").atomicNumber(),
+             chemkit::Element::AtomicNumberType(6));
+    QCOMPARE(chemkit::Element::fromName("InvalidName").atomicNumber(),
+             chemkit::Element::AtomicNumberType(0));
+    QCOMPARE(chemkit::Element::fromName("").atomicNumber(),
+             chemkit::Element::AtomicNumberType(0));
+}
+
 void ElementTest::fromSymbol()
 {
     QCOMPARE(chemkit::Element::fromSymbol("H").atomicNumber(),

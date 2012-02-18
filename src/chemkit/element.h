@@ -78,6 +78,8 @@ public:
     inline bool operator!=(const Element &element) const;
 
     // static methods
+    static Element fromName(const std::string &name);
+    static Element fromName(const char *name);
     static Element fromSymbol(const std::string &symbol);
     static Element fromSymbol(const char *symbol);
     static Element fromSymbol(const char *symbol, int length);
