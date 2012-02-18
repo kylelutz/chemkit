@@ -4,7 +4,7 @@ if(NOT ${CHEMKIT_BUILD_BINDINGS_PYTHON})
 endif()
 
 # find chemkit
-find_package(Chemkit COMPONENTS io REQUIRED)
+find_package(Chemkit COMPONENTS io md REQUIRED)
 include_directories(${CHEMKIT_INCLUDE_DIRS})
 
 # find python
@@ -23,6 +23,8 @@ set(SOURCES
   chemkit.pyx
   element.pxd
   element.pxi
+  forcefield.pxd
+  forcefield.pxi
   fragment.pxd
   fragment.pxi
   lineformat.pxd

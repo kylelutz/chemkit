@@ -33,16 +33,55 @@
 ##
 ###############################################################################
 
-include "atom.pxi"
-include "bond.pxi"
-include "element.pxi"
-include "forcefield.pxi"
-include "fragment.pxi"
-include "lineformat.pxi"
-include "moleculardescriptor.pxi"
-include "molecule.pxi"
-include "moleculefile.pxi"
-include "point3.pxi"
-include "ring.pxi"
-include "vector3.pxi"
+from string cimport string
+from libcpp.vector cimport vector
+
+from forcefield cimport _ForceField
+from forcefield cimport create as _ForceField_create
+from forcefield cimport forceFields as _ForceField_forceFields
+
+cdef class ForceField:
+    cdef _ForceField *_forceField
+
+    ### Construction and Destruction ##########################################
+    def __cinit__(self):
+        self._forceField = NULL
+
+    def __init__(self):
+        raise TypeError("ForceField objects are not constructible, use the ForceField.create() method")
+
+    def __dealloc__(self):
+        del self._forceField
+
+    ### Properties ############################################################
+    def name(self):
+        """Returns the name of the force field."""
+
+        return self._forceField.name().c_str()
+
+    ### Static Methods ########################################################
+    @classmethod
+    def create(cls, char *name):
+        """Creates a new force field."""
+
+        cdef _ForceField *_forceField = _ForceField_create(name)
+        if _forceField is NULL:
+            return None
+
+        cdef ForceField descriptor = ForceField.__new__(ForceField)
+        descriptor._forceField = _forceField
+
+        return descriptor
+
+    @classmethod
+    def forceFields(cls):
+        """Returns a list of the names of supported force fields."""
+
+        cdef vector[string] _forceFields = _ForceField_forceFields()
+
+        forceFields = []
+        for i in range(_forceFields.size()):
+            forceFields.append(_forceFields[i].c_str())
+
+        return forceFields
 

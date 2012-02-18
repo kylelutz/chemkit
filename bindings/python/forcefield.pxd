@@ -33,16 +33,16 @@
 ##
 ###############################################################################
 
-include "atom.pxi"
-include "bond.pxi"
-include "element.pxi"
-include "forcefield.pxi"
-include "fragment.pxi"
-include "lineformat.pxi"
-include "moleculardescriptor.pxi"
-include "molecule.pxi"
-include "moleculefile.pxi"
-include "point3.pxi"
-include "ring.pxi"
-include "vector3.pxi"
+from string cimport string
+from libcpp.vector cimport vector
+
+cdef extern from "chemkit/forcefield.h" namespace "chemkit":
+    cdef cppclass _ForceField "chemkit::ForceField":
+        # properties
+        string name()
+
+# static methods
+cdef extern from "chemkit/forcefield.h" namespace "chemkit::ForceField":
+    _ForceField* create(char *name)
+    vector[string] forceFields()
 

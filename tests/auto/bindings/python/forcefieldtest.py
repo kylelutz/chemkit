@@ -33,16 +33,13 @@
 ##
 ###############################################################################
 
-include "atom.pxi"
-include "bond.pxi"
-include "element.pxi"
-include "forcefield.pxi"
-include "fragment.pxi"
-include "lineformat.pxi"
-include "moleculardescriptor.pxi"
-include "molecule.pxi"
-include "moleculefile.pxi"
-include "point3.pxi"
-include "ring.pxi"
-include "vector3.pxi"
+import chemkit
+import unittest
 
+class ForceFieldTest(unittest.TestCase):
+    def test_name(self):
+        uff = chemkit.ForceField.create("uff")
+        self.assertEqual(uff.name(), "uff")
+
+if __name__ == '__main__':
+    unittest.main()
