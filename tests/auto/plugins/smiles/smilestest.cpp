@@ -543,7 +543,7 @@ void SmilesTest::folate()
     QCOMPARE(molecule.formula(), std::string("C19H19N7O6"));
     QCOMPARE(molecule.ringCount(), size_t(3));
 
-    //COMPARE_SMILES(&molecule, molecule.formula("smiles"));
+    COMPARE_SMILES(&molecule, molecule.formula("smiles"));
 }
 
 void SmilesTest::furan()
@@ -719,7 +719,7 @@ void SmilesTest::isoindene()
         }
     }
 
-    //COMPARE_SMILES(&molecule, molecule.formula("smiles"));
+    COMPARE_SMILES(&molecule, molecule.formula("smiles"));
 }
 
 void SmilesTest::isoindole()
@@ -833,7 +833,7 @@ void SmilesTest::phenanthrene()
         QCOMPARE(ring->isAromatic(), true);
     }
 
-    //COMPARE_SMILES(&molecule, molecule.formula("smiles"));
+    COMPARE_SMILES(&molecule, molecule.formula("smiles"));
 }
 
 void SmilesTest::phenothiazine()
@@ -1093,7 +1093,7 @@ void SmilesTest::thiamin()
     QCOMPARE(molecule.formula(), std::string("C12H16N4OS"));
     QCOMPARE(molecule.ringCount(), size_t(2));
 
-    //COMPARE_SMILES(&molecule, molecule.formula("smiles"));
+    COMPARE_SMILES(&molecule, molecule.formula("smiles"));
 }
 
 void SmilesTest::thiirane()
