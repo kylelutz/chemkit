@@ -33,17 +33,55 @@
 ##
 ###############################################################################
 
-include "atom.pxi"
-include "bond.pxi"
-include "element.pxi"
-include "fingerprint.pxi"
-include "forcefield.pxi"
-include "fragment.pxi"
-include "lineformat.pxi"
-include "moleculardescriptor.pxi"
-include "molecule.pxi"
-include "moleculefile.pxi"
-include "point3.pxi"
-include "ring.pxi"
-include "vector3.pxi"
+from string cimport string
+from libcpp.vector cimport vector
+
+from fingerprint cimport _Fingerprint
+from fingerprint cimport create as _Fingerprint_create
+from fingerprint cimport fingerprints as _Fingerprint_fingerprints
+
+cdef class Fingerprint:
+    cdef _Fingerprint *_fingerprint
+
+    ### Construction and Destruction ##########################################
+    def __cinit__(self):
+        self._fingerprint = NULL
+
+    def __init__(self):
+        raise TypeError("Fingerprint objects are not constructible, use the Fingerprint.create() method")
+
+    def __dealloc__(self):
+        del self._fingerprint
+
+    ### Properties ############################################################
+    def name(self):
+        """Returns the name of the fingerprint."""
+
+        return self._fingerprint.name().c_str()
+
+    ### Static Methods ########################################################
+    @classmethod
+    def create(cls, char *name):
+        """Creates a new fingerprint."""
+
+        cdef _Fingerprint *_fingerprint = _Fingerprint_create(name)
+        if _fingerprint is NULL:
+            return None
+
+        cdef Fingerprint descriptor = Fingerprint.__new__(Fingerprint)
+        descriptor._fingerprint = _fingerprint
+
+        return descriptor
+
+    @classmethod
+    def fingerprints(cls):
+        """Returns a list of the names of supported fingerprints."""
+
+        cdef vector[string] _fingerprints = _Fingerprint_fingerprints()
+
+        fingerprints = []
+        for i in range(_fingerprints.size()):
+            fingerprints.append(_fingerprints[i].c_str())
+
+        return fingerprints
 

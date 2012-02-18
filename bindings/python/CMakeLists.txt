@@ -23,6 +23,8 @@ set(SOURCES
   chemkit.pyx
   element.pxd
   element.pxi
+  fingerprint.pxd
+  fingerprint.pxi
   forcefield.pxd
   forcefield.pxi
   fragment.pxd

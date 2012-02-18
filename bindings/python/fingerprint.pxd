@@ -33,17 +33,16 @@
 ##
 ###############################################################################
 
-include "atom.pxi"
-include "bond.pxi"
-include "element.pxi"
-include "fingerprint.pxi"
-include "forcefield.pxi"
-include "fragment.pxi"
-include "lineformat.pxi"
-include "moleculardescriptor.pxi"
-include "molecule.pxi"
-include "moleculefile.pxi"
-include "point3.pxi"
-include "ring.pxi"
-include "vector3.pxi"
+from string cimport string
+from libcpp.vector cimport vector
+
+cdef extern from "chemkit/fingerprint.h" namespace "chemkit":
+    cdef cppclass _Fingerprint "chemkit::Fingerprint":
+        # properties
+        string name()
+
+# static methods
+cdef extern from "chemkit/fingerprint.h" namespace "chemkit::Fingerprint":
+    _Fingerprint* create(char *name)
+    vector[string] fingerprints()
 
