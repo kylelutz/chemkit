@@ -115,6 +115,22 @@ void ElementTest::isMetal()
     QCOMPARE(chemkit::Element("Li").isNonmetal(), false);
 }
 
+void ElementTest::fromSymbol()
+{
+    QCOMPARE(chemkit::Element::fromSymbol("H").atomicNumber(),
+             chemkit::Element::AtomicNumberType(1));
+    QCOMPARE(chemkit::Element::fromSymbol("C").atomicNumber(),
+             chemkit::Element::AtomicNumberType(6));
+    QCOMPARE(chemkit::Element::fromSymbol("Invalid").atomicNumber(),
+             chemkit::Element::AtomicNumberType(0));
+    QCOMPARE(chemkit::Element::fromSymbol("").atomicNumber(),
+             chemkit::Element::AtomicNumberType(0));
+    QCOMPARE(chemkit::Element::fromSymbol('N').atomicNumber(),
+             chemkit::Element::AtomicNumberType(7));
+    QCOMPARE(chemkit::Element::fromSymbol("FeAtom", 2).atomicNumber(),
+             chemkit::Element::AtomicNumberType(26));
+}
+
 void ElementTest::isValidAtomicNumber()
 {
     QCOMPARE(chemkit::Element::isValidAtomicNumber(1), true);

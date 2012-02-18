@@ -60,7 +60,7 @@ public:
     int id;
     std::string name;
     chemkit::Point3 position;
-    int atomicNumber;
+    chemkit::Element element;
 };
 
 PdbAtom::PdbAtom(const char *data)
@@ -87,13 +87,13 @@ PdbAtom::PdbAtom(const char *data)
     }
     boost::trim(symbol);
     symbol[0] = toupper(symbol[0]);
-    atomicNumber = chemkit::Element::atomicNumber(symbol);
+    element = chemkit::Element::fromSymbol(symbol);
 
-    if(!atomicNumber){
+    if(!element.isValid()){
         // try atomic number from name
         symbol = boost::to_lower_copy(name);
         symbol[0] = toupper(symbol[0]);
-        atomicNumber = chemkit::Element::atomicNumber(symbol);
+        element = chemkit::Element::fromSymbol(symbol);
     }
 }
 
@@ -574,7 +574,7 @@ void PdbFile::writePolymerFile(chemkit::PolymerFile *file)
             }
 
             foreach(PdbAtom *pdbAtom, pdbResidue->atoms()){
-                chemkit::Atom *atom = polymer->addAtom(pdbAtom->atomicNumber);
+                chemkit::Atom *atom = polymer->addAtom(pdbAtom->element);
                 if(!atom){
                     continue;
                 }
@@ -654,7 +654,7 @@ void PdbFile::writePolymerFile(chemkit::PolymerFile *file)
         }
 
         foreach(const PdbAtom *pdbAtom, pdbLigand->atoms()){
-            chemkit::Atom *atom = ligand->addAtom(pdbAtom->atomicNumber);
+            chemkit::Atom *atom = ligand->addAtom(pdbAtom->element);
             if(!atom){
                 continue;
             }

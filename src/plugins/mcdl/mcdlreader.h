@@ -58,7 +58,7 @@ private:
     bool readCompositionModule();
     bool readConnectionModule();
     int readNumber(const char **p);
-    int readElement(const char **p);
+    chemkit::Element readElement(const char **p);
     void addFragmentCopies(chemkit::Atom *atom, int quantity);
     void addFragmentConnections(const QList<int> &connections, int fragment);
     void setErrorString(const std::string &error);

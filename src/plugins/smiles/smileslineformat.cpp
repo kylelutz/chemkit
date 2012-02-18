@@ -96,7 +96,7 @@ int readAromaticSymbol(const char **p)
         return chemkit::Atom::Tellurium;
     }
     else{
-        int atomicNumber = chemkit::Element::atomicNumber(toupper(first));
+        int atomicNumber = chemkit::Element::fromSymbol(toupper(first)).atomicNumber();
         if(!atomicNumber){
             (*p)--;
             return 0;
@@ -252,11 +252,11 @@ bracket_atom:
     // symbol
     if(isupper(*p)){
         if(islower(*(p+1))){
-            atom = molecule->addAtom(chemkit::Element::atomicNumber(p, 2));
+            atom = molecule->addAtom(chemkit::Element::fromSymbol(p, 2));
             p += 2;
         }
         else{
-            atom = molecule->addAtom(chemkit::Element::atomicNumber(*p));
+            atom = molecule->addAtom(chemkit::Element::fromSymbol(*p));
             p++; // move past atom symbol
         }
 

@@ -133,11 +133,11 @@ bool McdlReader::readCompositionModule()
         else if(isupper(*p)){
             if(atom){
                 // add new terminal atom
-                int atomicNumber = readElement(&p);
+                chemkit::Element element = readElement(&p);
 
-                chemkit::Atom *terminalAtom = m_molecule->addAtom(atomicNumber);
+                chemkit::Atom *terminalAtom = m_molecule->addAtom(element);
                 if(!terminalAtom){
-                    setErrorString(QString("Invalid terminal element in formula: %1").arg(atomicNumber).toStdString());
+                    setErrorString(QString("Invalid terminal element in formula").toStdString());
                     return false;
                 }
 
@@ -145,11 +145,11 @@ bool McdlReader::readCompositionModule()
             }
             else{
                 // add root atom
-                int atomicNumber = readElement(&p);
+                chemkit::Element element = readElement(&p);
 
-                atom = m_molecule->addAtom(atomicNumber);
+                atom = m_molecule->addAtom(element);
                 if(!atom){
-                    setErrorString(QString("Invalid element in formula: %1").arg(atomicNumber).toStdString());
+                    setErrorString(QString("Invalid element in formula").toStdString());
                     return false;
                 }
 
@@ -219,17 +219,17 @@ int McdlReader::readNumber(const char **p)
     return number;
 }
 
-int McdlReader::readElement(const char **p)
+chemkit::Element McdlReader::readElement(const char **p)
 {
     char first = **p;
     char second = *(*p+1);
 
     if(islower(second)){
         (*p)++;
-        return chemkit::Element::atomicNumber(*p-1, 2);
+        return chemkit::Element::fromSymbol(*p-1, 2);
     }
     else{
-        return chemkit::Element::atomicNumber(first);
+        return chemkit::Element::fromSymbol(first);
     }
 }
 

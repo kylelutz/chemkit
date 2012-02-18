@@ -421,54 +421,51 @@ bool Element::isNonmetal() const
 }
 
 // --- Static Methods ------------------------------------------------------ //
-/// Returns the atomic number for \p symbol. If \p symbol is invalid
-/// then \c 0 is returned.
-int Element::atomicNumber(const std::string &symbol)
+/// Returns the element corresponding to \p symbol.
+Element Element::fromSymbol(const std::string &symbol)
 {
-    return Element(symbol).atomicNumber();
+    return Element(symbol);
 }
 
-/// Returns the atomic number for \p symbol. If \p symbol is invalid
-/// then \c 0 is returned.
-int Element::atomicNumber(const char *symbol)
+/// Returns the element corresponding to \p symbol.
+Element Element::fromSymbol(const char *symbol)
 {
-    return Element(symbol).atomicNumber();
+    return Element(symbol);
 }
 
-/// Returns the atomic number for \p symbol with \p length. If
-/// \p symbol is invalid then \c 0 is returned.
-int Element::atomicNumber(const char *symbol, int length)
+/// Returns the element corresponding to \p symbol with \p length.
+Element Element::fromSymbol(const char *symbol, int length)
 {
-    for(int i = 1; i < ElementDataSize; i++){
+    for(AtomicNumberType i = 1; i < ElementDataSize; i++){
         if(!strncmp(symbol, ElementData[i].symbol, length)){
-            return i;
+            return Element(i);
         }
     }
 
-    return 0;
+    return Element();
 }
 
-/// Returns the atomic number for \p symbol. If \p symbol is invalid
-/// then \c 0 is returned.
-int Element::atomicNumber(char symbol)
+/// Returns the element corresponding to \p symbol.
+Element Element::fromSymbol(char symbol)
 {
     switch(symbol){
-        case 'H': return 1;
-        case 'B': return 5;
-        case 'C': return 6;
-        case 'N': return 7;
-        case 'O': return 8;
-        case 'F': return 9;
-        case 'P': return 15;
-        case 'S': return 16;
-        case 'K': return 19;
-        case 'V': return 23;
-        case 'Y': return 39;
-        case 'I': return 53;
-        case 'W': return 74;
-        case 'U': return 92;
-        default: return 0;
+        case 'H': return Element(1);
+        case 'B': return Element(5);
+        case 'C': return Element(6);
+        case 'N': return Element(7);
+        case 'O': return Element(8);
+        case 'F': return Element(9);
+        case 'P': return Element(15);
+        case 'S': return Element(16);
+        case 'K': return Element(19);
+        case 'V': return Element(23);
+        case 'Y': return Element(39);
+        case 'I': return Element(53);
+        case 'W': return Element(74);
+        case 'U': return Element(92);
     }
+
+    return Element();
 }
 
 /// Returns \c true if the atomic number is valid.
