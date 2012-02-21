@@ -28,6 +28,7 @@ set(HEADERS
   graphicsmaterial.h
   graphicsmolecularsurfaceitem.h
   graphicsmoleculeitem.h
+  graphicsmoleculewireframeitem.h
   graphicsnavigationtool.h
   graphicsnucleicaciditem.h
   graphicsoverlay.h
@@ -60,6 +61,7 @@ set(SOURCES
   graphicsmaterial.cpp
   graphicsmolecularsurfaceitem.cpp
   graphicsmoleculeitem.cpp
+  graphicsmoleculewireframeitem.cpp
   graphicsnavigationtool.cpp
   graphicsnucleicaciditem.cpp
   graphicsoverlay.cpp

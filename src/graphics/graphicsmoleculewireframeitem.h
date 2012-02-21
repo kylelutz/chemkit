@@ -1,8 +1,6 @@
-#version 120
-
 /******************************************************************************
 **
-** Copyright (C) 2009-2011 Kyle Lutz <kyle.r.lutz@gmail.com>
+** Copyright (C) 2009-2012 Kyle Lutz <kyle.r.lutz@gmail.com>
 ** All rights reserved.
 **
 ** This file is a part of the chemkit project. For more information
@@ -35,8 +33,43 @@
 **
 ******************************************************************************/
 
-void main()
-{
-    gl_FragColor = gl_Color;
-}
+#ifndef CHEMKIT_GRAPHICSMOLECULEWIREFRAMEITEM_H
+#define CHEMKIT_GRAPHICSMOLECULEWIREFRAMEITEM_H
 
+#include "graphics.h"
+
+#include <boost/shared_ptr.hpp>
+
+#include "graphicsitem.h"
+
+namespace chemkit {
+
+class Molecule;
+class AtomColorMap;
+class GraphicsMoleculeWireframeItemPrivate;
+
+class CHEMKIT_GRAPHICS_EXPORT GraphicsMoleculeWireframeItem : public GraphicsItem
+{
+public:
+    // construction and destruction
+    GraphicsMoleculeWireframeItem(const Molecule *molecule = 0);
+    ~GraphicsMoleculeWireframeItem();
+
+    // properties
+    void setMolecule(const Molecule *molecule);
+    const Molecule* molecule() const;
+    void setColorMap(const boost::shared_ptr<AtomColorMap> &colorMap);
+    boost::shared_ptr<AtomColorMap> colorMap() const;
+    void setHydrogensVisibible(bool visibile);
+    bool hydrogensVisibile();
+
+    // drawing
+    void paint(GraphicsPainter *painter);
+
+private:
+    GraphicsMoleculeWireframeItemPrivate* const d;
+};
+
+} // end chemkit namespace
+
+#endif // CHEMKIT_GRAPHICSMOLECULEWIREFRAMEITEM_H

@@ -80,8 +80,13 @@ public:
     QVector<unsigned short> indicies() const;
     int indexCount() const;
 
+    // colors
+    void setColors(const QVector<QColor> &colors);
+    QVector<QColor> colors() const;
+    int colorCount() const;
+
     // drawing
-    void draw() const;
+    void draw(GLenum mode = GL_TRIANGLES) const;
     void prepareToDraw() const;
     bool readyToDraw() const;
 

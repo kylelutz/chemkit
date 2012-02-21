@@ -90,9 +90,36 @@ GraphicsPainter::~GraphicsPainter()
 // --- Drawing ------------------------------------------------------------- //
 void GraphicsPainter::draw(const GraphicsVertexBuffer *buffer, GraphicsPainter::PrimitiveType type)
 {
-    Q_UNUSED(type);
+    GLenum mode;
 
-    buffer->draw();
+    switch(type){
+    case Triangles:
+        mode = GL_TRIANGLES;
+        break;
+    case TriangleStrip:
+        mode = GL_TRIANGLE_STRIP;
+        break;
+    case TriangleFan:
+        mode = GL_TRIANGLE_FAN;
+        break;
+    case Lines:
+        mode = GL_LINES;
+        break;
+    case LineStrip:
+        mode = GL_LINE_STRIP;
+        break;
+    case LineLoop:
+        mode = GL_LINE_LOOP;
+        break;
+    case Points:
+        mode = GL_POINTS;
+        break;
+    default:
+        mode = GL_TRIANGLES;
+        break;
+    }
+
+    buffer->draw(mode);
 }
 
 void GraphicsPainter::drawSphere(float radius)
