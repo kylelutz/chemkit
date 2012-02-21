@@ -449,6 +449,7 @@ void Molecule::removeAtom(Atom *atom)
     }
 
     atom->m_molecule = 0;
+    setFragmentsPerceived(false);
     notifyWatchers(atom, MoleculeWatcher::AtomRemoved);
 
     delete atom;

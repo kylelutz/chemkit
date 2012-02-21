@@ -352,6 +352,20 @@ void MoleculeTest::wilsonAngle()
 
 void MoleculeTest::fragments()
 {
+    chemkit::Molecule neon;
+    QCOMPARE(neon.fragmentCount(), size_t(0));
+
+    neon.addAtom("Ne");
+    QCOMPARE(neon.fragmentCount(), size_t(1));
+
+    neon.addAtom("Ne");
+    QCOMPARE(neon.fragmentCount(), size_t(2));
+
+    neon.removeAtom(neon.atom(1));
+    QCOMPARE(neon.fragmentCount(), size_t(1));
+
+    neon.removeAtom(neon.atom(0));
+    QCOMPARE(neon.fragmentCount(), size_t(0));
 }
 
 void MoleculeTest::isFragmented()
