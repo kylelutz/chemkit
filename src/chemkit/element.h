@@ -82,7 +82,7 @@ public:
     static Element fromName(const char *name);
     static Element fromSymbol(const std::string &symbol);
     static Element fromSymbol(const char *symbol);
-    static Element fromSymbol(const char *symbol, int length);
+    static Element fromSymbol(const char *symbol, size_t length);
     static Element fromSymbol(char symbol);
     static bool isValidAtomicNumber(AtomicNumberType atomicNumber);
     static bool isValidSymbol(const std::string &symbol);

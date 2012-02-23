@@ -452,10 +452,11 @@ Element Element::fromSymbol(const char *symbol)
 }
 
 /// Returns the element corresponding to \p symbol with \p length.
-Element Element::fromSymbol(const char *symbol, int length)
+Element Element::fromSymbol(const char *symbol, size_t length)
 {
     for(AtomicNumberType i = 1; i < ElementDataSize; i++){
-        if(!strncmp(symbol, ElementData[i].symbol, length)){
+        if(strlen(ElementData[i].symbol) == length &&
+           strncmp(symbol, ElementData[i].symbol, length) == 0){
             return Element(i);
         }
     }

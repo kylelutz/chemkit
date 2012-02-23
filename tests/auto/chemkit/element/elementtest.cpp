@@ -141,6 +141,8 @@ void ElementTest::fromSymbol()
              chemkit::Element::AtomicNumberType(7));
     QCOMPARE(chemkit::Element::fromSymbol("FeAtom", 2).atomicNumber(),
              chemkit::Element::AtomicNumberType(26));
+    QCOMPARE(chemkit::Element::fromSymbol("S", 1).atomicNumber(),
+             chemkit::Element::AtomicNumberType(16));
 }
 
 void ElementTest::isValidAtomicNumber()
