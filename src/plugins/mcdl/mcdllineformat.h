@@ -47,7 +47,6 @@ public:
 
     // input and output
     bool read(const std::string &formula, chemkit::Molecule *molecule);
-    std::string write(const chemkit::Molecule *molecule);
 };
 
 #endif // MCDLLINEFORMAT_H

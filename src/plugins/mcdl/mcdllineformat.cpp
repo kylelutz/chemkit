@@ -60,12 +60,3 @@ bool McdlLineFormat::read(const std::string &formula, chemkit::Molecule *molecul
 
     return ok;
 }
-
-std::string McdlLineFormat::write(const chemkit::Molecule *molecule)
-{
-    CHEMKIT_UNUSED(molecule);
-
-    setErrorString("MCDL write not supported.");
-
-    return std::string();
-}
