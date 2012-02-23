@@ -49,6 +49,7 @@
 #include "element.h"
 #include "variant.h"
 #include "vector3.h"
+#include "coordinateset.h"
 #include "moleculewatcher.h"
 
 namespace chemkit {
@@ -57,7 +58,6 @@ class Atom;
 class Bond;
 class Ring;
 class Fragment;
-class CoordinateSet;
 class MoleculePrivate;
 class MoleculeWatcher;
 class Stereochemistry;
@@ -147,6 +147,7 @@ public:
     void addCoordinateSet(DiagramCoordinates *coordinates);
     bool removeCoordinateSet(const boost::shared_ptr<CoordinateSet> &coordinates);
     boost::shared_ptr<CoordinateSet> coordinateSet(size_t index) const;
+    boost::shared_ptr<CoordinateSet> coordinateSet(CoordinateSet::Type type) const;
     CoordinateSetRange coordinateSets() const;
     size_t coordinateSetCount() const;
 

@@ -64,7 +64,6 @@
 #include "quaternion.h"
 #include "variantmap.h"
 #include "fingerprint.h"
-#include "coordinateset.h"
 #include "moleculeprivate.h"
 #include "moleculewatcher.h"
 #include "diagramcoordinates.h"
@@ -951,6 +950,20 @@ boost::shared_ptr<CoordinateSet> Molecule::coordinateSet(size_t index) const
     assert(index < d->coordinateSets.size());
 
     return d->coordinateSets[index];
+}
+
+/// Returns the first coordinate set in the molecule of the given
+/// \p type. Returns null if the molecule contains no coordinate
+/// sets of the given \p type.
+boost::shared_ptr<CoordinateSet> Molecule::coordinateSet(CoordinateSet::Type type) const
+{
+    foreach(const boost::shared_ptr<CoordinateSet> &coordinates, d->coordinateSets){
+        if(coordinates->type() == type){
+            return coordinates;
+        }
+    }
+
+    return boost::shared_ptr<CoordinateSet>();
 }
 
 /// Returns a range containing all of the coordinate sets that the
