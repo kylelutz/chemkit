@@ -36,8 +36,6 @@
 #ifndef MMFFFORCEFIELD_H
 #define MMFFFORCEFIELD_H
 
-#include <QtCore>
-
 #include <chemkit/molecule.h>
 #include <chemkit/forcefield.h>
 

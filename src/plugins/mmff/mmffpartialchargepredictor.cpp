@@ -35,6 +35,7 @@
 
 #include "mmffpartialchargepredictor.h"
 
+#include <chemkit/foreach.h>
 #include <chemkit/molecule.h>
 #include <chemkit/pluginmanager.h>
 
@@ -102,7 +103,7 @@ void MmffPartialChargePredictor::assignPartialCharges(const chemkit::Molecule *m
 
     // setup space for partial charges
     m_partialCharges.resize(molecule->size());
-    m_partialCharges.fill(0);
+    std::fill(m_partialCharges.begin(), m_partialCharges.end(), 0);
 
     // assign partial charges for each atom
     for(size_t i = 0; i < molecule->size(); i++){

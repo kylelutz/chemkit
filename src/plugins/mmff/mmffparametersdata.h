@@ -36,7 +36,8 @@
 #ifndef MMFFPARAMETERSDATA_H
 #define MMFFPARAMETERSDATA_H
 
-#include <QtCore>
+#include <map>
+#include <vector>
 
 #include "mmffparameters.h"
 
@@ -46,26 +47,15 @@ public:
     // construction and destruction
     MmffParametersData();
 
-    // reference counting
-    void ref();
-    void deref();
-
-private:
-    ~MmffParametersData();
-
-public:
-    QMap<int, MmffBondStrechParameters *> bondStrechParameters;
-    QMap<int, MmffAngleBendParameters *> angleBendParameters;
-    QMap<int, MmffStrechBendParameters *> strechBendParameters;
-    QList<MmffDefaultStrechBendParameters *> defaultStrechBendParameters;
-    QMap<int, MmffOutOfPlaneBendingParameters *> outOfPlaneBendingParameters;
-    QMap<int, MmffTorsionParameters *> torsionParameters;
-    QVector<MmffVanDerWaalsParameters *> vanDerWaalsParameters;
-    QList<MmffChargeParameters *> chargeParameters;
-    QVector<MmffPartialChargeParameters *> partialChargeParameters;
-
-private:
-    QAtomicInt m_refcount;
+    std::map<int, MmffBondStrechParameters> bondStrechParameters;
+    std::map<int, MmffAngleBendParameters> angleBendParameters;
+    std::map<int, MmffStrechBendParameters> strechBendParameters;
+    std::vector<MmffDefaultStrechBendParameters> defaultStrechBendParameters;
+    std::map<int, MmffOutOfPlaneBendingParameters> outOfPlaneBendingParameters;
+    std::map<int, MmffTorsionParameters> torsionParameters;
+    std::vector<MmffVanDerWaalsParameters> vanDerWaalsParameters;
+    std::vector<MmffChargeParameters> chargeParameters;
+    std::vector<MmffPartialChargeParameters> partialChargeParameters;
 };
 
 #endif // MMFFPARAMETERSDATA_H

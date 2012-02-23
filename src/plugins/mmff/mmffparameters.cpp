@@ -35,6 +35,12 @@
 
 #include "mmffparameters.h"
 
+#include <fstream>
+
+#include <boost/make_shared.hpp>
+#include <boost/lexical_cast.hpp>
+#include <boost/algorithm/string.hpp>
+
 #include "mmffatom.h"
 #include "mmffplugin.h"
 #include "mmffforcefield.h"
@@ -43,6 +49,7 @@
 #include <chemkit/atom.h>
 #include <chemkit/bond.h>
 #include <chemkit/ring.h>
+#include <chemkit/foreach.h>
 #include <chemkit/pluginmanager.h>
 
 namespace {
@@ -261,7 +268,6 @@ MmffParameters::MmffParameters()
 
 MmffParameters::~MmffParameters()
 {
-    d->deref();
 }
 
 // --- Parameters ---------------------------------------------------------- //
@@ -272,31 +278,24 @@ std::string MmffParameters::fileName() const
 
 bool MmffParameters::read(const std::string &fileName)
 {
-    // delete old parameters data
-    if(d){
-        d->deref();
-        d = 0;
-    }
-
     // try to load cached parameters
     MmffPlugin *mmffPlugin = static_cast<MmffPlugin *>(chemkit::PluginManager::instance()->plugin("mmff"));
     if(mmffPlugin){
-        d = mmffPlugin->parameters(QString::fromStdString(fileName));
+        d = mmffPlugin->parameters(fileName);
 
         if(d){
-            d->ref();
             return true;
         }
     }
 
     // create new parameters data if we don't have a cached one
     if(!d){
-        d = new MmffParametersData;
+        d = boost::make_shared<MmffParametersData>();
     }
 
-    QFile file(QString::fromStdString(fileName));
-    if(!file.open(QFile::ReadOnly)){
-        setErrorString(file.errorString());
+    std::ifstream file(fileName.c_str());
+    if(!file.is_open()){
+        setErrorString("Failed to open parameters file.");
         return false;
     }
 
@@ -320,11 +319,13 @@ bool MmffParameters::read(const std::string &fileName)
     // first section is bond strech parameters
     int section = BondStrech;
 
-    while(!file.atEnd()){
-        QString line = file.readLine();
+    while(!file.eof()){
+        std::string line;
+        std::getline(file, line);
+        boost::trim_left(line);
 
         // lines that start with '$' indicate a new section
-        if(line.startsWith("$")){
+        if(boost::starts_with(line, "$")){
             section++;
 
             if(section == End){
@@ -333,129 +334,123 @@ bool MmffParameters::read(const std::string &fileName)
         }
 
         // lines starting with '#' are comments
-        else if(line.startsWith("#")){
+        else if(boost::starts_with(line, "#")){
             continue;
         }
 
         // read data from line
         else{
-            QStringList data = line.split(" ", QString::SkipEmptyParts);
-            if(data.isEmpty() || data.size() < 2){
+            std::vector<std::string> data;
+            boost::split(data, line, boost::is_any_of(" "), boost::token_compress_on);
+            if(data.empty() || data.size() < 2){
                 continue;
             }
 
             if(section == BondStrech){
-                int bondType = data.value(0).toInt();
-                int typeA = data.value(1).toInt();
-                int typeB = data.value(2).toInt();
+                int bondType = boost::lexical_cast<int>(data[0]);
+                int typeA = boost::lexical_cast<int>(data[1]);
+                int typeB = boost::lexical_cast<int>(data[2]);
 
                 int index = calculateBondStrechIndex(bondType, typeA, typeB);
 
-                MmffBondStrechParameters *parameters = new MmffBondStrechParameters;
-                parameters->kb = data.value(3).toDouble();
-                parameters->r0 = data.value(4).toDouble();
-
+                MmffBondStrechParameters parameters;
+                parameters.kb = boost::lexical_cast<chemkit::Real>(data[3]);
+                parameters.r0 = boost::lexical_cast<chemkit::Real>(data[4]);
                 d->bondStrechParameters[index] = parameters;
             }
             else if(section == EmpiricalBondStrech){
             }
             else if(section == AngleBend){
-                int angleType = data.value(0).toInt();
-                int typeA = data.value(1).toInt();
-                int typeB = data.value(2).toInt();
-                int typeC = data.value(3).toInt();
+                int angleType = boost::lexical_cast<int>(data[0]);
+                int typeA = boost::lexical_cast<int>(data[1]);
+                int typeB = boost::lexical_cast<int>(data[2]);
+                int typeC = boost::lexical_cast<int>(data[3]);
 
                 int index = calculateAngleBendIndex(angleType, typeA, typeB, typeC);
 
-                MmffAngleBendParameters *parameters = new MmffAngleBendParameters;
-                parameters->ka = data.value(4).toDouble();
-                parameters->theta0 = data.value(5).toDouble();
-
+                MmffAngleBendParameters parameters;
+                parameters.ka = boost::lexical_cast<chemkit::Real>(data[4]);
+                parameters.theta0 = boost::lexical_cast<chemkit::Real>(data[5]);
                 d->angleBendParameters[index] = parameters;
             }
             else if(section == StrechBend){
-                int strechBendType = data.value(0).toInt();
-                int typeA = data.value(1).toInt();
-                int typeB = data.value(2).toInt();
-                int typeC = data.value(3).toInt();
+                int strechBendType = boost::lexical_cast<int>(data[0]);
+                int typeA = boost::lexical_cast<int>(data[1]);
+                int typeB = boost::lexical_cast<int>(data[2]);
+                int typeC = boost::lexical_cast<int>(data[3]);
 
                 int index = calculateStrechBendIndex(strechBendType, typeA, typeB, typeC);
 
-                MmffStrechBendParameters *parameters = new MmffStrechBendParameters;
-                parameters->kba_ijk = data.value(4).toDouble();
-                parameters->kba_kji = data.value(5).toDouble();
-
+                MmffStrechBendParameters parameters;
+                parameters.kba_ijk = boost::lexical_cast<chemkit::Real>(data[4]);
+                parameters.kba_kji = boost::lexical_cast<chemkit::Real>(data[5]);
                 d->strechBendParameters[index] = parameters;
             }
             else if(section == DefaultStrechBend){
-                MmffDefaultStrechBendParameters *parameters = new MmffDefaultStrechBendParameters;
-                parameters->rowA = data.value(0).toInt();
-                parameters->rowB = data.value(1).toInt();
-                parameters->rowC = data.value(2).toInt();
-                parameters->parameters.kba_ijk = data.value(3).toDouble();
-                parameters->parameters.kba_kji = data.value(4).toDouble();
-                d->defaultStrechBendParameters.append(parameters);
+                MmffDefaultStrechBendParameters parameters;
+                parameters.rowA = boost::lexical_cast<int>(data[0]);
+                parameters.rowB = boost::lexical_cast<int>(data[1]);
+                parameters.rowC = boost::lexical_cast<int>(data[2]);
+                parameters.parameters.kba_ijk = boost::lexical_cast<chemkit::Real>(data[3]);
+                parameters.parameters.kba_kji = boost::lexical_cast<chemkit::Real>(data[4]);
+                d->defaultStrechBendParameters.push_back(parameters);
             }
             else if(section == OutOfPlaneBending){
-                int typeA = data.value(0).toInt();
-                int typeB = data.value(1).toInt();
-                int typeC = data.value(2).toInt();
-                int typeD = data.value(3).toInt();
+                int typeA = boost::lexical_cast<int>(data[0]);
+                int typeB = boost::lexical_cast<int>(data[1]);
+                int typeC = boost::lexical_cast<int>(data[2]);
+                int typeD = boost::lexical_cast<int>(data[3]);
 
                 int index = calculateOutOfPlaneBendingIndex(typeA, typeB, typeC, typeD);
 
-                MmffOutOfPlaneBendingParameters *parameters = new MmffOutOfPlaneBendingParameters;
-                parameters->koop = data.value(4).toDouble();
-
+                MmffOutOfPlaneBendingParameters parameters;
+                parameters.koop = boost::lexical_cast<chemkit::Real>(data[4]);
                 d->outOfPlaneBendingParameters[index] = parameters;
             }
             else if(section == Torsion){
-                int torsionType = data.value(0).toInt();
-                int typeA = data.value(1).toInt();
-                int typeB = data.value(2).toInt();
-                int typeC = data.value(3).toInt();
-                int typeD = data.value(4).toInt();
+                int torsionType = boost::lexical_cast<int>(data[0]);
+                int typeA = boost::lexical_cast<int>(data[1]);
+                int typeB = boost::lexical_cast<int>(data[2]);
+                int typeC = boost::lexical_cast<int>(data[3]);
+                int typeD = boost::lexical_cast<int>(data[4]);
 
                 int index = calculateTorsionIndex(torsionType, typeA, typeB, typeC, typeD);
 
-                MmffTorsionParameters *parameters = new MmffTorsionParameters;
-                parameters->V1 = data.value(5).toDouble();
-                parameters->V2 = data.value(6).toDouble();
-                parameters->V3 = data.value(7).toDouble();
-
+                MmffTorsionParameters parameters;
+                parameters.V1 = boost::lexical_cast<chemkit::Real>(data[5]);
+                parameters.V2 = boost::lexical_cast<chemkit::Real>(data[6]);
+                parameters.V3 = boost::lexical_cast<chemkit::Real>(data[7]);
                 d->torsionParameters[index] = parameters;
             }
             else if(section == VanDerWaals){
-                int type = data.value(0).toInt();
+                int type = boost::lexical_cast<int>(data[0]);
                 if(type > MaxAtomType)
                     continue;
 
-                MmffVanDerWaalsParameters *parameters = new MmffVanDerWaalsParameters;
-                parameters->alpha = data.value(1).toDouble();
-                parameters->N = data.value(2).toDouble();
-                parameters->A = data.value(3).toDouble();
-                parameters->G = data.value(4).toDouble();
-                parameters->DA = data.value(5).at(0).toAscii();
-
+                MmffVanDerWaalsParameters parameters;
+                parameters.alpha = boost::lexical_cast<chemkit::Real>(data[1]);
+                parameters.N = boost::lexical_cast<chemkit::Real>(data[2]);
+                parameters.A = boost::lexical_cast<chemkit::Real>(data[3]);
+                parameters.G = boost::lexical_cast<chemkit::Real>(data[4]);
+                parameters.DA = data[5][0];
                 d->vanDerWaalsParameters[type] = parameters;
             }
             else if(section == Charge){
-                MmffChargeParameters *parameters = new MmffChargeParameters;
-                parameters->bondType = data.value(0).toInt();
-                parameters->typeA = data.value(1).toInt();
-                parameters->typeB = data.value(2).toInt();
-                parameters->bci = data.value(3).toDouble();
-                d->chargeParameters.append(parameters);
+                MmffChargeParameters parameters;
+                parameters.bondType = boost::lexical_cast<int>(data[0]);
+                parameters.typeA = boost::lexical_cast<int>(data[1]);
+                parameters.typeB = boost::lexical_cast<int>(data[2]);
+                parameters.bci = boost::lexical_cast<chemkit::Real>(data[3]);
+                d->chargeParameters.push_back(parameters);
             }
             else if(section == PartialCharge){
-                int type = data.value(1).toInt();
+                int type = boost::lexical_cast<int>(data[1]);
                 if(type > MaxAtomType)
                     continue;
 
-                MmffPartialChargeParameters *parameters = new MmffPartialChargeParameters;
-                parameters->pbci = data.value(2).toDouble();
-                parameters->fcadj = data.value(3).toDouble();
-
+                MmffPartialChargeParameters parameters;
+                parameters.pbci = boost::lexical_cast<chemkit::Real>(data[2]);
+                parameters.fcadj = boost::lexical_cast<chemkit::Real>(data[3]);
                 d->partialChargeParameters[type] = parameters;
             }
         }
@@ -463,7 +458,7 @@ bool MmffParameters::read(const std::string &fileName)
 
     // store parameters in the cache
     if(mmffPlugin){
-        mmffPlugin->storeParameters(QString::fromStdString(fileName), d);
+        mmffPlugin->storeParameters(fileName, d);
     }
 
     return true;
@@ -480,9 +475,9 @@ const MmffBondStrechParameters* MmffParameters::bondStrechParameters(const MmffA
 
 const MmffAngleBendParameters* MmffParameters::angleBendParameters(const MmffAtom *a, const MmffAtom *b, const MmffAtom *c) const
 {
-    int typeA = qMin(a->typeNumber(), c->typeNumber());
+    int typeA = std::min(a->typeNumber(), c->typeNumber());
     int typeB = b->typeNumber();
-    int typeC = qMax(a->typeNumber(), c->typeNumber());
+    int typeC = std::max(a->typeNumber(), c->typeNumber());
     int angleType = calculateAngleType(a, b, c);
 
     return angleBendParameters(angleType, typeA, typeB, typeC);
@@ -570,7 +565,7 @@ const MmffVanDerWaalsParameters* MmffParameters::vanDerWaalsParameters(const Mmf
 {
     int type = atom->typeNumber();
 
-    return d->vanDerWaalsParameters.value(type, 0);
+    return &d->vanDerWaalsParameters[type];
 }
 
 const MmffAtomParameters* MmffParameters::atomParameters(int type) const
@@ -590,11 +585,11 @@ const MmffChargeParameters* MmffParameters::chargeParameters(const chemkit::Atom
 {
     int bondType = calculateBondType(a->bondTo(b), typeA, typeB);
 
-    foreach(const MmffChargeParameters *parameters, d->chargeParameters){
-        if(parameters->bondType == bondType &&
-           parameters->typeA == typeA &&
-           parameters->typeB == typeB){
-            return parameters;
+    foreach(const MmffChargeParameters &parameters, d->chargeParameters){
+        if(parameters.bondType == bondType &&
+           parameters.typeA == typeA &&
+           parameters.typeB == typeB){
+            return &parameters;
         }
     }
 
@@ -608,7 +603,7 @@ const MmffChargeParameters* MmffParameters::chargeParameters(const MmffAtom *a, 
 
 const MmffPartialChargeParameters* MmffParameters::partialChargeParameters(int type) const
 {
-    return d->partialChargeParameters.value(type, 0);
+    return &d->partialChargeParameters[type];
 }
 
 const MmffPartialChargeParameters* MmffParameters::partialChargeParameters(const MmffAtom *atom) const
@@ -624,7 +619,12 @@ const MmffBondStrechParameters* MmffParameters::bondStrechParameters(int bondTyp
 
     int index = calculateBondStrechIndex(bondType, typeA, typeB);
 
-    return d->bondStrechParameters.value(index, 0);
+    std::map<int, MmffBondStrechParameters>::const_iterator iter = d->bondStrechParameters.find(index);
+    if(iter == d->bondStrechParameters.end()){
+        return 0;
+    }
+
+    return &iter->second;
 }
 
 const MmffBondStrechParameters* MmffParameters::empiricalBondStrechParameters(int atomicNumberA, int atomicNumberB) const
@@ -642,23 +642,33 @@ const MmffAngleBendParameters* MmffParameters::angleBendParameters(int angleType
 
     int index = calculateAngleBendIndex(angleType, typeA, typeB, typeC);
 
-    return d->angleBendParameters.value(index, 0);
+    std::map<int, MmffAngleBendParameters>::const_iterator iter = d->angleBendParameters.find(index);
+    if(iter == d->angleBendParameters.end()){
+        return 0;
+    }
+
+    return &iter->second;
 }
 
 const MmffStrechBendParameters* MmffParameters::strechBendParameters(int strechBendType, int typeA, int typeB, int typeC) const
 {
     int index = calculateStrechBendIndex(strechBendType, typeA, typeB, typeC);
 
-    return d->strechBendParameters.value(index, 0);
+    std::map<int, MmffStrechBendParameters>::const_iterator iter = d->strechBendParameters.find(index);
+    if(iter == d->strechBendParameters.end()){
+        return 0;
+    }
+
+    return &iter->second;
 }
 
 const MmffStrechBendParameters* MmffParameters::defaultStrechBendParameters(int rowA, int rowB, int rowC) const
 {
-    foreach(const MmffDefaultStrechBendParameters *parameters, d->defaultStrechBendParameters){
-        if(parameters->rowA == rowA &&
-           parameters->rowB == rowB &&
-           parameters->rowC == rowC){
-            return &parameters->parameters;
+    foreach(const MmffDefaultStrechBendParameters &parameters, d->defaultStrechBendParameters){
+        if(parameters.rowA == rowA &&
+           parameters.rowB == rowB &&
+           parameters.rowC == rowC){
+            return &parameters.parameters;
         }
     }
 
@@ -675,7 +685,12 @@ const MmffOutOfPlaneBendingParameters* MmffParameters::outOfPlaneBendingParamete
 
     int index = calculateOutOfPlaneBendingIndex(typeA, typeB, typeC, typeD);
 
-    return d->outOfPlaneBendingParameters.value(index, 0);
+    std::map<int, MmffOutOfPlaneBendingParameters>::const_iterator iter = d->outOfPlaneBendingParameters.find(index);
+    if(iter == d->outOfPlaneBendingParameters.end()){
+        return 0;
+    }
+
+    return &iter->second;
 }
 
 const MmffTorsionParameters* MmffParameters::torsionParameters(int torsionType, int typeA, int typeB, int typeC, int typeD) const
@@ -690,7 +705,12 @@ const MmffTorsionParameters* MmffParameters::torsionParameters(int torsionType, 
 
     int index = calculateTorsionIndex(torsionType, typeA, typeB, typeC, typeD);
 
-    return d->torsionParameters.value(index, 0);
+    std::map<int, MmffTorsionParameters>::const_iterator iter = d->torsionParameters.find(index);
+    if(iter == d->torsionParameters.end()){
+        return 0;
+    }
+
+    return &iter->second;
 }
 
 int MmffParameters::calculateBondType(const chemkit::Bond *bond, int typeA, int typeB) const
@@ -919,12 +939,12 @@ int MmffParameters::calculateTorsionIndex(int torsionType, int typeA, int typeB,
 }
 
 // --- Error Handling ------------------------------------------------------ //
-void MmffParameters::setErrorString(const QString &errorString)
+void MmffParameters::setErrorString(const std::string &errorString)
 {
     m_errorString = errorString;
 }
 
-QString MmffParameters::errorString() const
+std::string MmffParameters::errorString() const
 {
     return m_errorString;
 }

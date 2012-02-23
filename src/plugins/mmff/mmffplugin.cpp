@@ -55,24 +55,23 @@ MmffPlugin::MmffPlugin()
 
 MmffPlugin::~MmffPlugin()
 {
-    foreach(MmffParametersData *parameters, m_parametersCache.values()){
-        parameters->deref();
-    }
 }
 
-void MmffPlugin::storeParameters(const QString &name, MmffParametersData *parameters)
+void MmffPlugin::storeParameters(const std::string &name,
+                                 const boost::shared_ptr<MmffParametersData> &parameters)
 {
-    if(m_parametersCache.contains(name)){
-        m_parametersCache[name]->deref();
-    }
-
-    m_parametersCache.insert(name, parameters);
-    parameters->ref();
+    m_parametersCache[name] = parameters;
 }
 
-MmffParametersData* MmffPlugin::parameters(const QString &name) const
+boost::shared_ptr<MmffParametersData> MmffPlugin::parameters(const std::string &name) const
 {
-    return m_parametersCache.value(name, 0);
+    std::map<std::string, boost::shared_ptr<MmffParametersData> >::const_iterator iter;
+    iter = m_parametersCache.find(name);
+    if(iter == m_parametersCache.end()){
+        return boost::shared_ptr<MmffParametersData>();
+    }
+
+    return iter->second;
 }
 
 chemkit::MolecularDescriptor* MmffPlugin::createMmffEnergyDescriptor()

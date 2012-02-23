@@ -35,7 +35,10 @@
 
 #include "mmffatomtyper.h"
 
+#include <boost/math/special_functions/round.hpp>
+
 #include <chemkit/atom.h>
+#include <chemkit/foreach.h>
 #include <chemkit/molecule.h>
 
 #include "mmffforcefield.h"
@@ -429,29 +432,24 @@ void MmffAtomTyper::assignTypes(const chemkit::Molecule *molecule)
     MmffAromaticityModel aromaticityModel;
     aromaticityModel.setMolecule(molecule);
 
-    QList<const chemkit::Atom *> terminalHydrogens;
-
     // assign types to heavy atoms
-    for(size_t i = 0; i < molecule->atomCount(); i++){
-        const chemkit::Atom *atom = molecule->atom(i);
-
+    foreach(const chemkit::Atom *atom, molecule->atoms()){
         if(atom->isTerminalHydrogen()){
-            terminalHydrogens.append(atom);
+            continue;
         }
-        else{
-            setType(i, molecule->atom(i));
-        }
+
+        setType(atom->index(), atom);
     }
 
     // assign aromatic atom types
-    QList<const chemkit::Ring *> sixMemberedAromaticRings;
-    QList<const chemkit::Ring *> fiveMemberedAromaticRings;
+    std::vector<const chemkit::Ring *> sixMemberedAromaticRings;
+    std::vector<const chemkit::Ring *> fiveMemberedAromaticRings;
     foreach(const chemkit::Ring *ring, molecule->rings()){
         if(ring->size() == 5 && aromaticityModel.isAromatic(ring)){
-            fiveMemberedAromaticRings.append(ring);
+            fiveMemberedAromaticRings.push_back(ring);
         }
         else if(ring->size() == 6 && aromaticityModel.isAromatic(ring)){
-            sixMemberedAromaticRings.append(ring);
+            sixMemberedAromaticRings.push_back(ring);
         }
     }
 
@@ -468,8 +466,10 @@ void MmffAtomTyper::assignTypes(const chemkit::Molecule *molecule)
     }
 
     // assign terminal hydrogen types
-    foreach(const chemkit::Atom *atom, terminalHydrogens){
-        setHydrogenType(atom->index(), atom);
+    foreach(const chemkit::Atom *atom, molecule->atoms()){
+        if(atom->isTerminalHydrogen()){
+            setHydrogenType(atom->index(), atom);
+        }
     }
 }
 
@@ -562,7 +562,7 @@ void MmffAtomTyper::setType(int index, const chemkit::Atom *atom)
 
         // iron
         case chemkit::Atom::Iron:
-            if(qRound(atom->partialCharge()) == 2){
+            if(boost::math::iround(atom->partialCharge()) == 2){
                 setType(index, 87, 2.0);
             }
             else{
@@ -597,7 +597,7 @@ void MmffAtomTyper::setType(int index, const chemkit::Atom *atom)
 
         // copper
         case chemkit::Atom::Copper:
-            if(qRound(atom->partialCharge()) == 2){
+            if(boost::math::iround(atom->partialCharge()) == 2){
                 setType(index, 98, 2.0);
             }
             else{

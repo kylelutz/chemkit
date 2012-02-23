@@ -58,7 +58,7 @@ protected:
     virtual void assignPartialCharges(const chemkit::Molecule *molecule);
 
 private:
-    QVector<chemkit::Real> m_partialCharges;
+    std::vector<chemkit::Real> m_partialCharges;
     const MmffAtomTyper *m_typer;
     MmffParameters *m_parameters;
 };

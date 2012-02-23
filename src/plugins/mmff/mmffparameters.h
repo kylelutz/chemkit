@@ -36,8 +36,6 @@
 #ifndef MMFFPARAMETERS_H
 #define MMFFPARAMETERS_H
 
-#include <QtCore>
-
 #include <string>
 
 #include "mmffatom.h"
@@ -143,7 +141,7 @@ public:
     const MmffPartialChargeParameters* partialChargeParameters(const MmffAtom *atom) const;
 
     // error handling
-    QString errorString() const;
+    std::string errorString() const;
 
     // constants
     const static int MaxAtomType = 99;
@@ -167,12 +165,12 @@ private:
     int calculateStrechBendIndex(int strechBendType, int typeA, int typeB, int typeC) const;
     int calculateOutOfPlaneBendingIndex(int typeA, int typeB, int typeC, int typeD) const;
     int calculateTorsionIndex(int torsionType, int typeA, int typeB, int typeC, int typeD) const;
-    void setErrorString(const QString &errorString);
+    void setErrorString(const std::string &errorString);
 
 private:
     std::string m_fileName;
-    QString m_errorString;
-    MmffParametersData *d;
+    std::string m_errorString;
+    boost::shared_ptr<MmffParametersData> d;
     MmffAromaticityModel m_aromaticityModel;
 };
 

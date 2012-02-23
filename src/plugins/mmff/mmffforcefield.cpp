@@ -57,6 +57,7 @@
 #include <chemkit/bond.h>
 #include <chemkit/ring.h>
 #include <chemkit/plugin.h>
+#include <chemkit/foreach.h>
 #include <chemkit/molecule.h>
 #include <chemkit/pluginmanager.h>
 #include <chemkit/forcefieldinteractions.h>
@@ -105,7 +106,7 @@ bool MmffForceField::setup()
         m_parameters = new MmffParameters;
         bool ok = m_parameters->read(parameterFile());
         if(!ok){
-            setErrorString(QString("Failed to load parameters: %1").arg(m_parameters->errorString()).toStdString());
+            setErrorString("Failed to load parameters: " + m_parameters->errorString());
             delete m_parameters;
             m_parameters = 0;
             return false;

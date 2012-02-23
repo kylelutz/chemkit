@@ -42,36 +42,4 @@ MmffParametersData::MmffParametersData()
     : vanDerWaalsParameters(MmffParameters::MaxAtomType + 1),
       partialChargeParameters(MmffParameters::MaxAtomType + 1)
 {
-    m_refcount.ref();
-}
-
-/// Destroys the parameters data object. This should not be called
-/// directly, instead use the deref() method.
-MmffParametersData::~MmffParametersData()
-{
-    qDeleteAll(bondStrechParameters.values());
-    qDeleteAll(angleBendParameters.values());
-    qDeleteAll(strechBendParameters.values());
-    qDeleteAll(defaultStrechBendParameters);
-    qDeleteAll(outOfPlaneBendingParameters.values());
-    qDeleteAll(torsionParameters.values());
-    qDeleteAll(vanDerWaalsParameters);
-    qDeleteAll(chargeParameters);
-    qDeleteAll(partialChargeParameters);
-}
-
-// --- Reference Counting -------------------------------------------------- //
-/// Increases the reference count by one.
-void MmffParametersData::ref()
-{
-    m_refcount.ref();
-}
-
-/// Decreases the reference count by one and deletes the object if
-/// the reference count is zero.
-void MmffParametersData::deref()
-{
-    if(!m_refcount.deref()){
-        delete this;
-    }
 }
