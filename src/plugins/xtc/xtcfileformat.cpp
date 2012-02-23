@@ -35,8 +35,7 @@
 
 #include "xtcfileformat.h"
 
-#include <QTemporaryFile>
-
+#include <boost/filesystem.hpp>
 #include <boost/make_shared.hpp>
 
 #include <rpc/xdr.h>
@@ -58,24 +57,16 @@ XtcFileFormat::XtcFileFormat()
 bool XtcFileFormat::read(std::istream &input, chemkit::TrajectoryFile *file)
 {
     // read data into temporary file
-    QTemporaryFile dataFile;
-    dataFile.open();
+    std::string tempFileName = (boost::filesystem::temp_directory_path() /
+                                boost::filesystem::unique_path()).string();
 
-    unsigned int dataSize = 0;
-    for(;;){
-        char c = input.get();
-        if(input.eof()){
-            break;
-        }
-
-        dataFile.write(&c, 1);
-        dataSize++;
-    }
-
-    dataFile.close();
+    std::ofstream ostream(tempFileName.c_str());
+    ostream << input.rdbuf();
+    size_t dataSize = ostream.tellp();
+    ostream.close();
 
     XDR xdrs;
-    xdropen(&xdrs, dataFile.fileName().toAscii().constData(), "r");
+    xdropen(&xdrs, tempFileName.c_str(), "r");
 
     boost::shared_ptr<chemkit::Trajectory> trajectory = boost::make_shared<chemkit::Trajectory>();
 
@@ -137,6 +128,9 @@ bool XtcFileFormat::read(std::istream &input, chemkit::TrajectoryFile *file)
     }
 
     xdrclose(&xdrs);
+
+    // remove temp file
+    boost::filesystem::remove(tempFileName);
 
     if(trajectory->isEmpty()){
         return false;
