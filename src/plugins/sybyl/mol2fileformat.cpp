@@ -36,9 +36,12 @@
 #include "mol2fileformat.h"
 
 #include <boost/make_shared.hpp>
+#include <boost/algorithm/string.hpp>
 
 #include <chemkit/atom.h>
 #include <chemkit/bond.h>
+#include <chemkit/foreach.h>
+#include <chemkit/molecule.h>
 #include <chemkit/moleculefile.h>
 
 #include "sybylatomtyper.h"
@@ -54,128 +57,132 @@ Mol2FileFormat::~Mol2FileFormat()
 
 bool Mol2FileFormat::read(std::istream &input, chemkit::MoleculeFile *file)
 {
-    QByteArray data;
-    while(!input.eof()){
-        data += input.get();
-    }
-    data.chop(1);
-
-    QBuffer buffer;
-    buffer.setData(data);
-    buffer.open(QBuffer::ReadOnly);
-    return read(&buffer, file);
-}
-
-bool Mol2FileFormat::read(QIODevice *iodev, chemkit::MoleculeFile *file)
-{
-    iodev->setTextModeEnabled(true);
-
     boost::shared_ptr<chemkit::Molecule> molecule;
-
-    QHash<int, chemkit::Atom *> atom_ids;
 
     int atomCount = 0;
     int bondCount = 0;
 
-    while(!iodev->atEnd()){
-        QString line = iodev->readLine();
+    while(!input.eof()){
+        std::string line;
+        std::getline(input, line);
 
-        if(line.startsWith("@<TRIPOS>MOLECULE")){
+        if(boost::starts_with(line, "@<TRIPOS>MOLECULE")){
             if(molecule){
                 file->addMolecule(molecule);
             }
 
-            QString name = iodev->readLine().simplified();
+            std::string name;
+            std::getline(input, name);
+            boost::trim(name);
 
-            QStringList countsLine = QString(iodev->readLine()).split(' ', QString::SkipEmptyParts);
+            std::string countsLineString;
+            std::getline(input, countsLineString);
+            boost::trim_left(countsLineString);
+            std::vector<std::string> countsLine;
+            boost::split(countsLine,
+                         countsLineString,
+                         boost::is_any_of(" \t"),
+                         boost::token_compress_on);
             if(countsLine.size() < 2){
-                qDebug() << "chemkit: Mol2FileFormat: Counts line too short.";
                 continue;
             }
 
-            atomCount = countsLine[0].toInt();
-            bondCount = countsLine[1].toInt();
+            atomCount = boost::lexical_cast<int>(countsLine[0]);
+            bondCount = boost::lexical_cast<int>(countsLine[1]);
 
-            atom_ids.clear();
             molecule = boost::make_shared<chemkit::Molecule>();
 
-            if(!name.isEmpty())
-                molecule->setName(name.toStdString());
+            if(!name.empty()){
+                molecule->setName(name);
+            }
         }
         else if(!molecule){
             continue;
         }
-        else if(line.startsWith("@<TRIPOS>")){
-            line = line.trimmed();
-            QStringRef type = line.midRef(9);
+        else if(boost::starts_with(line, "@<TRIPOS>")){
+            boost::trim(line);
+            std::string type = line.substr(9);
 
             if(type == "ATOM"){
                 while(atomCount--){
-                    QStringList atomLine = QString(iodev->readLine()).split(' ', QString::SkipEmptyParts);
+                    std::string atomLineString;
+                    std::getline(input, atomLineString);
+                    boost::trim_left(atomLineString);
+                    std::vector<std::string> atomLine;
+                    boost::split(atomLine,
+                                 atomLineString,
+                                 boost::is_any_of(" \t"),
+                                 boost::token_compress_on);
                     if(atomLine.size() < 6){
-                        qDebug() << "chemkit: Mol2FileFormat: Atom line too short.";
                         return false;
                     }
 
-                    QString symbol = QString(atomLine[5]).split('.', QString::SkipEmptyParts)[0];
-                    if(symbol.length() > 1){
-                        symbol = symbol[0] + symbol.mid(1).toLower();
+                    chemkit::Element element;
+                    std::string symbol = atomLine[5];
+                    boost::to_lower(symbol);
+                    symbol[0] = toupper(symbol[0]);
+                    size_t dotPosition = symbol.find_first_of('.');
+                    if(dotPosition == std::string::npos){
+                        element = chemkit::Element::fromSymbol(symbol);
+                    }
+                    else{
+                        element = chemkit::Element::fromSymbol(symbol.c_str(), dotPosition);
                     }
 
-                    chemkit::Atom *atom = molecule->addAtom(symbol.toStdString());
+                    chemkit::Atom *atom = molecule->addAtom(element);
                     if(!atom){
-                        qDebug() << "chemkit: Mol2FileFormat: Invalid atom symbol: " << symbol;
                         continue;
                     }
 
-                    atom->setPosition(atomLine[2].toDouble(),
-                                      atomLine[3].toDouble(),
-                                      atomLine[4].toDouble());
+                    atom->setPosition(boost::lexical_cast<chemkit::Real>(atomLine[2]),
+                                      boost::lexical_cast<chemkit::Real>(atomLine[3]),
+                                      boost::lexical_cast<chemkit::Real>(atomLine[4]));
 
                     if(atomLine.size() >= 9){
-                        atom->setPartialCharge(atomLine[8].toDouble());
+                        atom->setPartialCharge(boost::lexical_cast<chemkit::Real>(atomLine[8]));
                     }
-
-                    atom_ids[atomLine[0].toInt()] = atom;
                 }
             }
             else if(type == "BOND"){
                 while(bondCount--){
-                    QStringList bondLine = QString(iodev->readLine()).split(' ', QString::SkipEmptyParts);
+                    std::string bondLineString;
+                    std::getline(input, bondLineString);
+                    boost::trim_left(bondLineString);
+                    std::vector<std::string> bondLine;
+                    boost::split(bondLine,
+                                 bondLineString,
+                                 boost::is_any_of(" \t"),
+                                 boost::token_compress_on);
                     if(bondLine.size() < 4){
-                        qDebug() << "chemkit: Mol2FileFormat: Bond line too short.";
                         continue;
                     }
 
-                    chemkit::Atom *a1 = atom_ids.value(bondLine[1].toInt(), 0);
-                    chemkit::Atom *a2 = atom_ids.value(bondLine[2].toInt(), 0);
+                    chemkit::Atom *a1 = molecule->atom(boost::lexical_cast<int>(bondLine[1]) - 1);
+                    chemkit::Atom *a2 = molecule->atom(boost::lexical_cast<int>(bondLine[2]) - 1);
 
-                    if(!a1 || !a2){
-                        continue;
+                    int bondOrder;
+                    std::string bondOrderString = bondLine[3];
+
+                    try {
+                        bondOrder = boost::lexical_cast<int>(bondOrderString);
                     }
-
-                    int order;
-                    QString bondOrder = bondLine[3];
-
-                    bool is_int;
-                    order = bondOrder.toInt(&is_int);
-                    if(!is_int){
+                    catch(boost::bad_lexical_cast&){
                         // aromatic bond
-                        if(bondOrder == "ar")
-                            order = 1;
+                        if(bondOrderString == "ar")
+                            bondOrder = 1;
                         // amide bond
-                        else if(bondOrder == "am")
-                            order = 1;
+                        else if(bondOrderString == "am")
+                            bondOrder = 1;
                         // not connected
-                        else if(bondOrder == "nc")
-                            order = 0;
+                        else if(bondOrderString == "nc")
+                            bondOrder = 0;
                         // default = single bond
                         else
-                            order = 1;
+                            bondOrder = 1;
                     }
 
-                    if(order > 0){
-                        molecule->addBond(a1, a2, order);
+                    if(bondOrder > 0){
+                        molecule->addBond(a1, a2, bondOrder);
                     }
                 }
             }
@@ -191,45 +198,31 @@ bool Mol2FileFormat::read(QIODevice *iodev, chemkit::MoleculeFile *file)
 
 bool Mol2FileFormat::write(const chemkit::MoleculeFile *file, std::ostream &output)
 {
-    QBuffer buffer;
-    buffer.open(QBuffer::WriteOnly);
-    bool ok = write(file, &buffer);
-    if(!ok){
-        return false;
-    }
-
-    output.write(buffer.data().constData(), buffer.size());
-    return true;
-}
-
-bool Mol2FileFormat::write(const chemkit::MoleculeFile *file, QIODevice *iodev)
-{
-    iodev->setTextModeEnabled(true);
+    char line[80];
 
     foreach(const boost::shared_ptr<chemkit::Molecule> &molecule, file->molecules()){
         // perceive sybyl atom types
         SybylAtomTyper atomTyper;
         atomTyper.setMolecule(molecule.get());
 
-        iodev->write("@<TRIPOS>MOLECULE\n");
-        iodev->write((molecule->name() + "\n").c_str());
-        QString countsLine;
-        countsLine.sprintf("%4u%4u%3u%3u%3u\n", static_cast<int>(molecule->atomCount()),
-                                                static_cast<int>(molecule->bondCount()),
-                                                0,
-                                                0,
-                                                0);
-        iodev->write(countsLine.toAscii());
-        iodev->write("SMALL\n");
-        iodev->write("GASTEIGER\n");
-        iodev->write("\n");
-        iodev->write("\n");
+        output << "@<TRIPOS>MOLECULE\n";
+        output << molecule->name() << "\n";
+        sprintf(line,
+                "%4u%4u%3u%3u%3u\n",
+                static_cast<int>(molecule->atomCount()),
+                static_cast<int>(molecule->bondCount()),
+                0,
+                0,
+                0);
+        output << line;
+        output << "SMALL\n";
+        output << "GASTEIGER\n";
+        output << "\n";
+        output << "\n";
 
-        iodev->write("@<TRIPOS>ATOM\n");
+        output << "@<TRIPOS>ATOM\n";
         int atomNumber = 1;
         foreach(chemkit::Atom *atom, molecule->atoms()){
-            QString line;
-
             // get atom type from the atom typer
             std::string type = atomTyper.typeString(atom);
 
@@ -238,29 +231,32 @@ bool Mol2FileFormat::write(const chemkit::MoleculeFile *file, QIODevice *iodev)
                 type = atom->symbol();
             }
 
-            line.sprintf("%7u %2s %10.4g %10.4g %10.4g %6s %u  LIG1 %10.4g\n",
-                         atomNumber,
-                         atom->symbol().c_str(),
-                         atom->x(),
-                         atom->y(),
-                         atom->z(),
-                         type.c_str(),
-                         1,
-                         atom->partialCharge());
+            sprintf(line,
+                    "%7u %2s %10.4g %10.4g %10.4g %6s %u  LIG1 %10.4g\n",
+                    atomNumber,
+                    atom->symbol().c_str(),
+                    atom->x(),
+                    atom->y(),
+                    atom->z(),
+                    type.c_str(),
+                    1,
+                    atom->partialCharge());
 
-            iodev->write(line.toAscii());
+            output << line;
             atomNumber++;
         }
 
-        iodev->write("@<TRIPOS>BOND\n");
+        output << "@<TRIPOS>BOND\n";
         int bondNumber = 1;
         foreach(chemkit::Bond *bond, molecule->bonds()){
-            QString line;
-            line.sprintf("%6u%6u%6u%6u\n", bondNumber,
-                                           static_cast<int>(bond->atom1()->index()) + 1,
-                                           static_cast<int>(bond->atom2()->index()) + 1,
-                                           bond->order());
-            iodev->write(line.toAscii());
+            sprintf(line,
+                    "%6u%6u%6u%6u\n",
+                    bondNumber,
+                    static_cast<int>(bond->atom1()->index()) + 1,
+                    static_cast<int>(bond->atom2()->index()) + 1,
+                    bond->order());
+
+            output << line;
             bondNumber++;
         }
     }
