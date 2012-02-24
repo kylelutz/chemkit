@@ -38,6 +38,7 @@
 #include "oplsforcefield.h"
 
 #include <chemkit/plugin.h>
+#include <chemkit/foreach.h>
 #include <chemkit/molecule.h>
 #include <chemkit/pluginmanager.h>
 #include <chemkit/forcefieldinteractions.h>
@@ -55,7 +56,7 @@ OplsForceField::OplsForceField()
 
     const chemkit::Plugin *oplsPlugin = chemkit::PluginManager::instance()->plugin("opls");
     if(oplsPlugin){
-        m_parameters = new OplsParameters(QString::fromStdString(oplsPlugin->dataPath()) + "oplsaa.prm");
+        m_parameters = new OplsParameters(oplsPlugin->dataPath() + "oplsaa.prm");
     }
 }
 

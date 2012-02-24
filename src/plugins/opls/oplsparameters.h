@@ -36,7 +36,8 @@
 #ifndef OPLSPARAMETERS_H
 #define OPLSPARAMETERS_H
 
-#include <QtCore>
+#include <string>
+#include <vector>
 
 #include <chemkit/chemkit.h>
 #include <chemkit/forcefieldatom.h>
@@ -79,16 +80,16 @@ class OplsParameters
 {
 public:
     // construction and destruction
-    OplsParameters(const QString &fileName);
+    OplsParameters(const std::string &fileName);
     ~OplsParameters();
 
     // properties
-    void setFileName(const QString &fileName);
-    QString fileName() const;
+    void setFileName(const std::string &fileName);
+    std::string fileName() const;
 
     // parameters
     int atomClass(int type) const;
-    QString atomName(int type) const;
+    std::string atomName(int type) const;
     chemkit::Real partialCharge(int type) const;
     const OplsBondStrechParameters* bondStrechParameters(int a, int b) const;
     const OplsAngleBendParameters* angleBendParameters(int a, int b, int c) const;
@@ -96,17 +97,17 @@ public:
     const OplsVanDerWaalsParameters* vanDerWaalsParameters(int type) const;
 
 private:
-    bool read(const QString &fileName);
+    bool read(const std::string &fileName);
 
 private:
-    QString m_fileName;
-    QVector<int> m_typeToClass;
-    QVector<QString> m_typeToName;
-    QVector<OplsBondStrechParameters> m_bondStrechParameters;
-    QVector<OplsAngleBendParameters> m_angleBendParameters;
-    QVector<OplsTorsionParameters> m_torsionParameters;
-    QVector<OplsVanDerWaalsParameters> m_vanDerWaalsParameters;
-    QVector<chemkit::Real> m_typeToCharge;
+    std::string m_fileName;
+    std::vector<int> m_typeToClass;
+    std::vector<std::string> m_typeToName;
+    std::vector<OplsBondStrechParameters> m_bondStrechParameters;
+    std::vector<OplsAngleBendParameters> m_angleBendParameters;
+    std::vector<OplsTorsionParameters> m_torsionParameters;
+    std::vector<OplsVanDerWaalsParameters> m_vanDerWaalsParameters;
+    std::vector<chemkit::Real> m_typeToCharge;
 };
 
 #endif // OPLSPARAMETERS_H

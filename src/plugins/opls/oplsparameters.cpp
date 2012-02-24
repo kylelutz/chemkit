@@ -35,10 +35,15 @@
 
 #include "oplsparameters.h"
 
-#include <QtCore>
+#include <fstream>
+
+#include <boost/lexical_cast.hpp>
+#include <boost/algorithm/string.hpp>
+
+#include <chemkit/foreach.h>
 
 // --- Construction and Destruction ---------------------------------------- //
-OplsParameters::OplsParameters(const QString &fileName)
+OplsParameters::OplsParameters(const std::string &fileName)
     : m_fileName(fileName)
 {
     read(fileName);
@@ -49,12 +54,12 @@ OplsParameters::~OplsParameters()
 }
 
 // --- Properties ---------------------------------------------------------- //
-void OplsParameters::setFileName(const QString &fileName)
+void OplsParameters::setFileName(const std::string &fileName)
 {
     m_fileName = fileName;
 }
 
-QString OplsParameters::fileName() const
+std::string OplsParameters::fileName() const
 {
     return m_fileName;
 }
@@ -62,17 +67,17 @@ QString OplsParameters::fileName() const
 // --- Parameters ---------------------------------------------------------- //
 int OplsParameters::atomClass(int type) const
 {
-    return m_typeToClass.value(type);
+    return m_typeToClass[type];
 }
 
-QString OplsParameters::atomName(int type) const
+std::string OplsParameters::atomName(int type) const
 {
-    return m_typeToName.value(type);
+    return m_typeToName[type];
 }
 
 chemkit::Real OplsParameters::partialCharge(int type) const
 {
-    return m_typeToCharge.value(type);
+    return m_typeToCharge[type];
 }
 
 const OplsBondStrechParameters* OplsParameters::bondStrechParameters(int a, int b) const
@@ -142,121 +147,141 @@ const OplsVanDerWaalsParameters* OplsParameters::vanDerWaalsParameters(int type)
 }
 
 // --- Internal Methods ---------------------------------------------------- //
-bool OplsParameters::read(const QString &fileName)
+bool OplsParameters::read(const std::string &fileName)
 {
-    QFile file(fileName);
-    bool ok = file.open(QFile::ReadOnly);
-    if(!ok){
+    std::ifstream file(fileName.c_str());
+    if(!file.is_open()){
         return false;
     }
 
-    while(!file.atEnd()){
-        QByteArray line = file.readLine();
+    while(!file.eof()){
+        std::string line;
+        std::getline(file, line);
 
         // atom parameters
-        if(line.startsWith("atom")){
-            QStringList lineItems = QString(line).split(' ', QString::SkipEmptyParts);
+        if(boost::starts_with(line, "atom")){
+            std::vector<std::string> lineItems;
+            boost::split(lineItems,
+                         line,
+                         boost::is_any_of(" \t"),
+                         boost::token_compress_on);
 
             if(lineItems.size() < 4){
                 continue;
             }
 
-            int type = lineItems[1].toInt();
-            int klass = lineItems[2].toInt();
-            QString name = lineItems[3];
+            int type = boost::lexical_cast<int>(lineItems[1]);
+            int klass = boost::lexical_cast<int>(lineItems[2]);
+            std::string name = lineItems[3];
 
-            if(m_typeToClass.size() < type + 1)
+            if(m_typeToClass.size() < static_cast<size_t>(type + 1))
                 m_typeToClass.resize(type + 1);
             m_typeToClass[type] = klass;
 
-            if(m_typeToName.size() < type + 1)
+            if(m_typeToName.size() < static_cast<size_t>(type + 1))
                 m_typeToName.resize(type + 1);
             m_typeToName[type] = name;
         }
         // bond parameters
-        else if(line.startsWith("bond")){
-            QStringList lineItems = QString(line).split(' ', QString::SkipEmptyParts);
+        else if(boost::starts_with(line, "bond")){
+            std::vector<std::string> lineItems;
+            boost::split(lineItems,
+                         line,
+                         boost::is_any_of(" \t"),
+                         boost::token_compress_on);
 
             if(lineItems.size() < 5){
                 continue;
             }
 
             OplsBondStrechParameters p;
-            p.typeA = lineItems[1].toInt();
-            p.typeB = lineItems[2].toInt();
-            p.kb = lineItems[3].toDouble();
-            p.r0 = lineItems[4].toDouble();
-
-            m_bondStrechParameters.append(p);
+            p.typeA = boost::lexical_cast<int>(lineItems[1]);
+            p.typeB = boost::lexical_cast<int>(lineItems[2]);
+            p.kb = boost::lexical_cast<chemkit::Real>(lineItems[3]);
+            p.r0 = boost::lexical_cast<chemkit::Real>(lineItems[4]);
+            m_bondStrechParameters.push_back(p);
         }
         // angle parameters
-        else if(line.startsWith("angle")){
-            QStringList lineItems = QString(line).split(' ', QString::SkipEmptyParts);
+        else if(boost::starts_with(line, "angle")){
+            std::vector<std::string> lineItems;
+            boost::split(lineItems,
+                         line,
+                         boost::is_any_of(" \t"),
+                         boost::token_compress_on);
 
             if(lineItems.size() < 6){
                 continue;
             }
 
             OplsAngleBendParameters p;
-            p.typeA = lineItems[1].toInt();
-            p.typeB = lineItems[2].toInt();
-            p.typeC = lineItems[3].toInt();
-            p.ka = lineItems[4].toDouble();
-            p.theta0 = lineItems[5].toDouble();
-
-            m_angleBendParameters.append(p);
+            p.typeA = boost::lexical_cast<int>(lineItems[1]);
+            p.typeB = boost::lexical_cast<int>(lineItems[2]);
+            p.typeC = boost::lexical_cast<int>(lineItems[3]);
+            p.ka = boost::lexical_cast<chemkit::Real>(lineItems[4]);
+            p.theta0 = boost::lexical_cast<chemkit::Real>(lineItems[5]);
+            m_angleBendParameters.push_back(p);
         }
         // torsion parameters
-        else if(line.startsWith("torsion")){
-            QStringList lineItems = QString(line).split(' ', QString::SkipEmptyParts);
+        else if(boost::starts_with(line, "torsion")){
+            std::vector<std::string> lineItems;
+            boost::split(lineItems,
+                         line,
+                         boost::is_any_of(" \t"),
+                         boost::token_compress_on);
 
             if(lineItems.size() < 14){
                 continue;
             }
 
             OplsTorsionParameters p;
-            p.typeA = lineItems[1].toInt();
-            p.typeB = lineItems[2].toInt();
-            p.typeC = lineItems[3].toInt();
-            p.typeD = lineItems[4].toInt();
-            p.v1 = lineItems[5].toDouble();
-            p.v2 = lineItems[8].toDouble();
-            p.v3 = lineItems[11].toDouble();
-
-            m_torsionParameters.append(p);
+            p.typeA = boost::lexical_cast<int>(lineItems[1]);
+            p.typeB = boost::lexical_cast<int>(lineItems[2]);
+            p.typeC = boost::lexical_cast<int>(lineItems[3]);
+            p.typeD = boost::lexical_cast<int>(lineItems[4]);
+            p.v1 = boost::lexical_cast<chemkit::Real>(lineItems[5]);
+            p.v2 = boost::lexical_cast<chemkit::Real>(lineItems[8]);
+            p.v3 = boost::lexical_cast<chemkit::Real>(lineItems[11]);
+            m_torsionParameters.push_back(p);
         }
         // van der waals parameters
-        else if(line.startsWith("vdw")){
-            QStringList lineItems = QString(line).split(' ', QString::SkipEmptyParts);
+        else if(boost::starts_with(line, "vdw")){
+            std::vector<std::string> lineItems;
+            boost::split(lineItems,
+                         line,
+                         boost::is_any_of(" \t"),
+                         boost::token_compress_on);
 
             if(lineItems.size() < 4){
                 continue;
             }
 
-            int type = lineItems[1].toInt();
-            if(m_vanDerWaalsParameters.size() < type + 1)
+            int type = boost::lexical_cast<int>(lineItems[1]);
+            if(m_vanDerWaalsParameters.size() < static_cast<size_t>(type + 1))
                 m_vanDerWaalsParameters.resize(type + 1);
 
             OplsVanDerWaalsParameters p;
-            p.sigma = lineItems[2].toDouble();
-            p.epsilon = lineItems[3].toDouble();
-
+            p.sigma = boost::lexical_cast<chemkit::Real>(lineItems[2]);
+            p.epsilon = boost::lexical_cast<chemkit::Real>(lineItems[3]);
             m_vanDerWaalsParameters[type] = p;
         }
-        else if(line.startsWith("charge")){
-            QStringList lineItems = QString(line).split(' ', QString::SkipEmptyParts);
+        else if(boost::starts_with(line, "charge")){
+            std::vector<std::string> lineItems;
+            boost::split(lineItems,
+                         line,
+                         boost::is_any_of(" \t"),
+                         boost::token_compress_on);
 
             if(lineItems.size() < 3){
                 continue;
             }
 
-            int type = lineItems[1].toInt();
+            int type = boost::lexical_cast<int>(lineItems[1]);
 
-            if(m_typeToCharge.size() < type + 1){
+            if(m_typeToCharge.size() < static_cast<size_t>(type + 1)){
                 m_typeToCharge.resize(type + 1);
             }
 
-            m_typeToCharge[type] = lineItems[2].toDouble();
+            m_typeToCharge[type] = boost::lexical_cast<chemkit::Real>(lineItems[2]);
         }
     }
 
