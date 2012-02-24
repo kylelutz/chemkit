@@ -36,8 +36,6 @@
 #ifndef GASTEIGERPARTIALCHARGEPREDICTOR_H
 #define GASTEIGERPARTIALCHARGEPREDICTOR_H
 
-#include <QtCore>
-
 #include <chemkit/partialchargepredictor.h>
 
 struct GasteigerParameters {
@@ -63,9 +61,9 @@ private:
     const GasteigerParameters* atomParameters(const chemkit::Atom *atom) const;
 
 private:
-    QVector<chemkit::Real> m_charges;
-    QVector<chemkit::Real> m_electronegativies;
-    QVector<const GasteigerParameters *> m_parameters;
+    std::vector<chemkit::Real> m_charges;
+    std::vector<chemkit::Real> m_electronegativies;
+    std::vector<const GasteigerParameters *> m_parameters;
 };
 
 #endif // GASTEIGERPARTIALCHARGEPREDICTOR_H
