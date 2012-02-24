@@ -40,10 +40,8 @@
 
 #include <chemkit/atom.h>
 #include <chemkit/molecule.h>
+#include <chemkit/constants.h>
 #include <chemkit/moleculefile.h>
-
-// Conversion factor between bohr units and Angstroms.
-const double BohrToAnstroms = 0.52918;
 
 CubeFileFormat::CubeFileFormat()
     : chemkit::MoleculeFileFormat("cube")
@@ -108,7 +106,7 @@ bool CubeFileFormat::read(std::istream &input, chemkit::MoleculeFile *file)
         chemkit::Point3 position(x, y, z);
 
         // scale from bohr units to angstroms
-        position *= BohrToAnstroms;
+        position *= chemkit::constants::BohrToAnstroms;
 
         // set position
         atom->setPosition(position);

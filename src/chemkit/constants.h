@@ -118,6 +118,9 @@ const Real VacuumPermittivity = 1.0 / (VacuumPermeability * SpeedOfLight * Speed
 /// Equal to \f$\frac{e^{2} c \epsilon_{0}}{2 h}\f$.
 const Real FineStructureConstant = (ElementaryCharge * ElementaryCharge * SpeedOfLight * VacuumPermittivity) / (2.0 * PlanckConstant);
 
+/// Conversion factor between Bohr units and Angstroms.
+const Real BohrToAnstroms = 0.52918;
+
 } // end constants namespace
 
 } // end chemkit namespace
