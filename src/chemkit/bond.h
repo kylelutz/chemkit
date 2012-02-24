@@ -82,6 +82,7 @@ public:
     Atom* otherAtom(const Atom *atom) const;
     void setOrder(BondOrderType order);
     BondOrderType order() const;
+    bool is(BondOrderType order) const;
     Real polarity() const;
     Vector3 dipoleMoment() const;
     inline Molecule* molecule() const;

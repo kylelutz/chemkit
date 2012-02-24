@@ -79,6 +79,20 @@ void BondTest::order()
     QCOMPARE(bond->order(), chemkit::Bond::BondOrderType(1));
 }
 
+void BondTest::is()
+{
+    chemkit::Molecule molecule;
+    chemkit::Atom *C1 = molecule.addAtom("C");
+    chemkit::Atom *C2 = molecule.addAtom("C");
+    chemkit::Bond *bond = molecule.addBond(C1, C2);
+    QVERIFY(bond->is(chemkit::Bond::Single) == true);
+    QVERIFY(bond->is(chemkit::Bond::Double) == false);
+
+    bond->setOrder(chemkit::Bond::Double);
+    QVERIFY(bond->is(chemkit::Bond::Double) == true);
+    QVERIFY(bond->is(chemkit::Bond::Single) == false);
+}
+
 void BondTest::molecule()
 {
     chemkit::Molecule molecule;

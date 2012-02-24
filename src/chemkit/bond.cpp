@@ -118,6 +118,12 @@ Bond::BondOrderType Bond::order() const
     return m_molecule->d->bondOrders[m_index];
 }
 
+/// Returns \c true if the bond order of the bond is \p order.
+bool Bond::is(BondOrderType order) const
+{
+    return this->order() == order;
+}
+
 /// Returns the polarity of the bond. This is calculated as the
 /// absolute value of the difference in electronegativity between the
 /// two atoms in the bond.
