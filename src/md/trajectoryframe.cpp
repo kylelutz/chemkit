@@ -84,7 +84,7 @@ TrajectoryFrame::~TrajectoryFrame()
 
 // --- Properties ---------------------------------------------------------- //
 /// Returns the number of coordinates in the frame.
-int TrajectoryFrame::size() const
+size_t TrajectoryFrame::size() const
 {
     return d->coordinates->size();
 }
@@ -96,7 +96,7 @@ bool TrajectoryFrame::isEmpty() const
 }
 
 /// Returns the index of the frame in the trajectory.
-int TrajectoryFrame::index() const
+size_t TrajectoryFrame::index() const
 {
     const std::vector<TrajectoryFrame *> &frames = trajectory()->frames();
 
@@ -124,13 +124,13 @@ const CartesianCoordinates* TrajectoryFrame::coordinates() const
 }
 
 /// Sets the coordinates at \p index to \p position.
-void TrajectoryFrame::setPosition(int index, const Point3 &position)
+void TrajectoryFrame::setPosition(size_t index, const Point3 &position)
 {
     d->coordinates->setPosition(index, position);
 }
 
 /// Returns the position at \p index.
-Point3 TrajectoryFrame::position(int index) const
+Point3 TrajectoryFrame::position(size_t index) const
 {
     return d->coordinates->position(index);
 }
