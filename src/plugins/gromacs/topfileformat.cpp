@@ -35,10 +35,7 @@
 
 #include "topfileformat.h"
 
-#include <iostream>
-
 #include <boost/make_shared.hpp>
-
 
 #include <chemkit/topology.h>
 #include <chemkit/topologyfile.h>
@@ -93,7 +90,6 @@ bool TopFileFormat::read(std::istream &input, chemkit::TopologyFile *file)
                          boost::algorithm::token_compress_on);
 
             std::string sectionName = tokens[1];
-            std::cout << "section: " << sectionName << std::endl;
 
             if(sectionName == "moleculetype"){
                 section = MoleculeType;
@@ -198,4 +194,3 @@ bool TopFileFormat::read(std::istream &input, chemkit::TopologyFile *file)
 
     return true;
 }
-
