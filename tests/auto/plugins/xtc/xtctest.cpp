@@ -60,7 +60,7 @@ void XtcTest::spc216()
 
     boost::shared_ptr<chemkit::Trajectory> trajectory = file.trajectory();
     QVERIFY(trajectory != 0);
-    QCOMPARE(trajectory->frameCount(), 201);
+    QCOMPARE(trajectory->frameCount(), size_t(201));
 }
 
 QTEST_APPLESS_MAIN(XtcTest)

@@ -83,7 +83,7 @@ Trajectory::~Trajectory()
 
 // --- Properties ---------------------------------------------------------- //
 /// Returns the number of frames in the trajectory.
-int Trajectory::size() const
+size_t Trajectory::size() const
 {
     return frameCount();
 }
@@ -118,7 +118,7 @@ bool Trajectory::removeFrame(TrajectoryFrame *frame)
 }
 
 /// Returns the frame at \p index in the trajectory.
-TrajectoryFrame* Trajectory::frame(int index) const
+TrajectoryFrame* Trajectory::frame(size_t index) const
 {
     return d->frames[index];
 }
@@ -130,7 +130,7 @@ std::vector<TrajectoryFrame *> Trajectory::frames() const
 }
 
 /// Returns the number of frames in the trajectory.
-int Trajectory::frameCount() const
+size_t Trajectory::frameCount() const
 {
     return d->frames.size();
 }

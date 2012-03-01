@@ -53,15 +53,15 @@ public:
     ~Trajectory();
 
     // properties
-    int size() const;
+    size_t size() const;
     bool isEmpty() const;
 
     // frames
     TrajectoryFrame* addFrame();
     bool removeFrame(TrajectoryFrame *frame);
-    TrajectoryFrame* frame(int index) const;
+    TrajectoryFrame* frame(size_t index) const;
     std::vector<TrajectoryFrame *> frames() const;
-    int frameCount() const;
+    size_t frameCount() const;
 
 private:
     TrajectoryPrivate* const d;
