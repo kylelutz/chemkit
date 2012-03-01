@@ -53,7 +53,16 @@ public:
 // === Trajectory ========================================================== //
 /// \class Trajectory trajectory.h chemkit/trajectory.h
 /// \ingroup chemkit-md
-/// \brief The Trajectory class contains a trajectory.
+/// \brief The Trajectory class contains a molecular dynamics trajectory.
+///
+/// Trajectory objects contain multiple TrajectoryFrame objects. Each
+/// trajectory frame contains the coordinates for each particle in the
+/// system at a specific point in time.
+///
+/// Trajectories are usually associated with a Topology which contains
+/// the atomic properties and atomic interactions for a system.
+///
+/// \see Topology, TrajectoryFrame, TrajectoryFile
 
 // --- Construction and Destruction ---------------------------------------- //
 /// Creates a new trajectory.
