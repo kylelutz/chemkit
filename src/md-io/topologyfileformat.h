@@ -51,9 +51,6 @@ class TopologyFileFormatPrivate;
 class CHEMKIT_MD_IO_EXPORT TopologyFileFormat
 {
 public:
-    // typedefs
-    typedef TopologyFileFormat* (*CreateFunction)();
-
     // construction and destruction
     virtual ~TopologyFileFormat();
 
