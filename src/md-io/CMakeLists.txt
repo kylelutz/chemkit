@@ -6,11 +6,15 @@ find_package(Chemkit COMPONENTS io md REQUIRED)
 include_directories(${CHEMKIT_INCLUDE_DIRS})
 
 set(HEADERS
+  topologyfile.h
+  topologyfileformat.h
   trajectoryfile.h
   trajectoryfileformat.h
 )
 
 set(SOURCES
+  topologyfile.cpp
+  topologyfileformat.cpp
   trajectoryfile.cpp
   trajectoryfileformat.cpp
 )
