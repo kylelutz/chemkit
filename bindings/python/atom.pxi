@@ -129,6 +129,11 @@ cdef class Atom:
 
         return Molecule_fromPointer(self._atom.molecule())
 
+    def index(self):
+        """Returns the index of the atom in the molecule."""
+
+        return self._atom.index()
+
     ### Structure #############################################################
     def bond(self, index):
         """Returns the bond at index for the atom."""

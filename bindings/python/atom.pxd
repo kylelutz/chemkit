@@ -70,6 +70,7 @@ cdef extern from "chemkit/atom.h" namespace "chemkit":
         double vanDerWaalsRadius()
         _Fragment* fragment()
         _Molecule* molecule()
+        size_t index()
 
         # structure
         _Bond* bond(int index)
