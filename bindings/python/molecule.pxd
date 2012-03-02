@@ -69,6 +69,7 @@ cdef extern from "chemkit/molecule.h" namespace "chemkit":
         int size()
         bool isEmpty()
         double mass()
+        _Variant data(char* name)
 
         # structure
         _Atom* addAtom(_Element element)

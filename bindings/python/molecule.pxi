@@ -109,6 +109,13 @@ cdef class Molecule:
 
         return self._molecule.mass()
 
+    def data(self, char *name):
+        """Returns the molecule data for name."""
+
+        cdef _Variant value = self._molecule.data(name)
+
+        return value.toString().c_str()
+
     ### Structure #############################################################
     def addAtom(self, element):
         """Adds a new atom to the molecule."""
