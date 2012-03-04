@@ -56,6 +56,14 @@
     #define CHEMKIT_EXPORT CHEMKIT_DECL_IMPORT
 #endif
 
+#define CHEMKIT_XSTRINGIFY(x) #x
+#define CHEMKIT_STRINGIFY(x) CHEMKIT_XSTRINGIFY(x)
+
+/// A string containing the version number of the chemkit
+/// library (e.g. "1.2").
+#define CHEMKIT_VERSION_STRING CHEMKIT_STRINGIFY(CHEMKIT_VERSION_MAJOR) "." \
+                               CHEMKIT_STRINGIFY(CHEMKIT_VERSION_MINOR)
+
 #define CHEMKIT_UNUSED(variable) (void) variable
 
 /// This macro marks a class as not copyable. It should be used in
