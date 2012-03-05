@@ -57,7 +57,7 @@ Fp2Fingerprint::~Fp2Fingerprint()
 chemkit::Bitset Fp2Fingerprint::value(const chemkit::Molecule *molecule) const
 {
     // create bitset
-    chemkit::Bitset fingerprint(1024);
+    chemkit::Bitset fingerprint(1021);
 
     foreach(const chemkit::Atom *atom, molecule->atoms()){
         // skip fragments starting at terminal hydrogens

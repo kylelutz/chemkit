@@ -244,9 +244,9 @@ void Fp2Test::test()
     QCOMPARE(expected.size(), size_t(1024));
 
     chemkit::Bitset actual = molecule.fingerprint("fp2");
-    QCOMPARE(actual.size(), size_t(1024));
+    QCOMPARE(actual.size(), size_t(1021));
 
-    for(size_t i = 0; i < 1024; i++){
+    for(size_t i = 0; i < 1021; i++){
         if(actual[i] != expected[i]){
             qDebug() << "Value at bit" << i << "does not match.";
             qDebug() << "  Actual:" << actual[i];
