@@ -52,7 +52,7 @@ void SmilesTest::initTestCase()
 {
     // verify that the smiles plugin registered itself correctly
     QVERIFY(boost::count(chemkit::LineFormat::formats(), "smiles") == 1);
-    QVERIFY(boost::count(chemkit::AromaticityModel::models(), "smiles") == 1);
+    QVERIFY(boost::count(chemkit::AromaticityModel::models(), "daylight") == 1);
     QVERIFY(boost::count(chemkit::MoleculeFileFormat::formats(), "smi") == 1);
 }
 

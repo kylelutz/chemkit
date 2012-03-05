@@ -33,25 +33,20 @@
 **
 ******************************************************************************/
 
-#include "smilesaromaticitymodel.h"
+#ifndef DAYLIGHTAROMATICITYMODEL_H
+#define DAYLIGHTAROMATICITYMODEL_H
 
-#include "smiles.h"
+#include <chemkit/aromaticitymodel.h>
 
-SmilesAromaticityModel::SmilesAromaticityModel()
-    : chemkit::AromaticityModel("smiles")
+class DaylightAromaticityModel : public chemkit::AromaticityModel
 {
-}
+public:
+    DaylightAromaticityModel();
+    virtual ~DaylightAromaticityModel();
 
-SmilesAromaticityModel::~SmilesAromaticityModel()
-{
-}
+protected:
+    virtual bool isAromaticAtom(const chemkit::Atom *atom) const;
+    virtual bool isAromaticRing(const chemkit::Ring *ring) const;
+};
 
-bool SmilesAromaticityModel::isAromaticAtom(const chemkit::Atom *atom) const
-{
-    return ::isAromaticAtom(atom);
-}
-
-bool SmilesAromaticityModel::isAromaticRing(const chemkit::Ring *ring) const
-{
-    return ::isAromaticRing(ring);
-}
+#endif // DAYLIGHTAROMATICITYMODEL_H

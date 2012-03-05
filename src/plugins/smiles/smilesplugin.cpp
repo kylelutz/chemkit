@@ -40,7 +40,7 @@
 #endif
 
 #include "smileslineformat.h"
-#include "smilesaromaticitymodel.h"
+#include "daylightaromaticitymodel.h"
 
 class SmilesPlugin : public chemkit::Plugin
 {
@@ -49,7 +49,7 @@ public:
         : chemkit::Plugin("smiles")
     {
         CHEMKIT_REGISTER_LINE_FORMAT("smiles", SmilesLineFormat);
-        CHEMKIT_REGISTER_AROMATICITY_MODEL("smiles", SmilesAromaticityModel);
+        CHEMKIT_REGISTER_AROMATICITY_MODEL("daylight", DaylightAromaticityModel);
 
         #ifdef CHEMKIT_WITH_IO
         registerPluginClass<chemkit::MoleculeFileFormat>("smi", createSmiFormat);

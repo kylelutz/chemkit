@@ -4,8 +4,8 @@ include_directories(${CHEMKIT_INCLUDE_DIRS})
 include_directories(../../3rdparty/lemon)
 
 set(SOURCES
+  daylightaromaticitymodel.cpp
   kekulizer.cpp
-  smilesaromaticitymodel.cpp
   smilesgraph.cpp
   smileslineformat.cpp
   smilesplugin.cpp
