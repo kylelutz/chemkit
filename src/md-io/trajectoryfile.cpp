@@ -44,6 +44,7 @@ class TrajectoryFilePrivate
 {
 public:
     boost::shared_ptr<Trajectory> trajectory;
+    boost::shared_ptr<Topology> topology;
 };
 
 // === TrajectoryFile ====================================================== //
@@ -81,6 +82,19 @@ TrajectoryFile::~TrajectoryFile()
 bool TrajectoryFile::isEmpty() const
 {
     return d->trajectory == 0;
+}
+
+/// --- Topology ----------------------------------------------------------- //
+/// Sets the topology associated with the trajectory for the file.
+void TrajectoryFile::setTopology(const boost::shared_ptr<Topology> &topology)
+{
+    d->topology = topology;
+}
+
+/// Returns the topology associated with the trajectory for the file.
+boost::shared_ptr<Topology> TrajectoryFile::topology() const
+{
+    return d->topology;
 }
 
 // --- File Contents ------------------------------------------------------- //

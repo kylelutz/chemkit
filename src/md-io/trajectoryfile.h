@@ -48,6 +48,7 @@
 
 namespace chemkit {
 
+class Topology;
 class Trajectory;
 class TrajectoryFilePrivate;
 
@@ -61,6 +62,10 @@ public:
 
     // properties
     bool isEmpty() const;
+
+    // topology
+    void setTopology(const boost::shared_ptr<Topology> &topology);
+    boost::shared_ptr<Topology> topology() const;
 
     // file contents
     void setTrajectory(const boost::shared_ptr<Trajectory> &trajectory);
