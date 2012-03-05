@@ -35,6 +35,7 @@
 
 #include "fingerprint.h"
 
+#include "molecule.h"
 #include "pluginmanager.h"
 
 namespace chemkit {
@@ -92,6 +93,17 @@ Fingerprint::~Fingerprint()
 std::string Fingerprint::name() const
 {
     return m_name;
+}
+
+/// Returns the number of bits in the fingerprint.
+///
+/// The default implementation calls value() with an empty molecule
+/// and uses the size of the returned fingerprint.
+size_t Fingerprint::size() const
+{
+    Molecule molecule;
+
+    return value(&molecule).size();
 }
 
 // --- Fingerprint --------------------------------------------------------- //

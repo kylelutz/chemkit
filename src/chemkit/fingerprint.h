@@ -56,6 +56,7 @@ public:
 
     // properties
     std::string name() const;
+    virtual size_t size() const;
 
     // fingerprint
     virtual Bitset value(const Molecule *molecule) const;
