@@ -42,6 +42,8 @@
 
 #cmakedefine CHEMKIT_WITH_GRAPHICS
 #cmakedefine CHEMKIT_WITH_IO
+#cmakedefine CHEMKIT_WITH_MD
+#cmakedefine CHEMKIT_WITH_MD_IO
 #cmakedefine CHEMKIT_WITH_WEB
 #cmakedefine CHEMKIT_WITH_GUI
 
