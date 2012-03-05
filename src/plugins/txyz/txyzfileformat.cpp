@@ -174,14 +174,14 @@ bool TxyzFileFormat::write(const chemkit::MoleculeFile *file, QIODevice *iodev)
                                             .arg("0", 6)
                                             .toAscii());
 
-        // list of atom indicies for each bonded neighbor
+        // list of atom indices for each bonded neighbor
         QList<int> neighborIndicies;
         foreach(const chemkit::Atom *neighbor, atom->neighbors()){
             neighborIndicies.append(neighbor->index());
         }
         qSort(neighborIndicies);
 
-        // write neighbor indicies
+        // write neighbor indices
         foreach(int neighborIndex, neighborIndicies){
             iodev->write(QString("%1").arg(neighborIndex+1, 6).toAscii());
         }

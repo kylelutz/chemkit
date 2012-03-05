@@ -138,10 +138,10 @@ GraphicsVertexBuffer* GraphicsSphere::tesselate(int subdivisions) const
         verticies[i] = point;
     }
 
-    // set up initial triangle indicies
-    QVector<unsigned short> indicies(IcosahedronIndexCount);
+    // set up initial triangle indices
+    QVector<unsigned short> indices(IcosahedronIndexCount);
     for(int i = 0; i < IcosahedronIndexCount; i++){
-        indicies[i] = IcosahedronIndicies[i];
+        indices[i] = IcosahedronIndicies[i];
     }
 
     // subdivide
@@ -149,11 +149,11 @@ GraphicsVertexBuffer* GraphicsSphere::tesselate(int subdivisions) const
     while(subdivisionCount < subdivisions){
         QVector<unsigned short> subdivisionIndicies;
 
-        for(int i = 0; i < indicies.size() / 3; i++){
-            // indicies of current triangle
-            int i0 = indicies[i*3];
-            int i1 = indicies[i*3+1];
-            int i2 = indicies[i*3+2];
+        for(int i = 0; i < indices.size() / 3; i++){
+            // indices of current triangle
+            int i0 = indices[i*3];
+            int i1 = indices[i*3+1];
+            int i2 = indices[i*3+2];
 
             // verticies of the current triangle
             Point3f v0 = verticies[i0];
@@ -170,7 +170,7 @@ GraphicsVertexBuffer* GraphicsSphere::tesselate(int subdivisions) const
             v12 *= radius() / v12.norm();
             v20 *= radius() / v20.norm();
 
-            // add verticies and record their indicies
+            // add verticies and record their indices
             int i01 = verticies.size();
             verticies.append(v01);
             int i12 = verticies.size();
@@ -199,7 +199,7 @@ GraphicsVertexBuffer* GraphicsSphere::tesselate(int subdivisions) const
             subdivisionIndicies.append(i2);
         }
 
-        indicies = subdivisionIndicies;
+        indices = subdivisionIndicies;
 
         subdivisionCount++;
     }
@@ -215,7 +215,7 @@ GraphicsVertexBuffer* GraphicsSphere::tesselate(int subdivisions) const
 
     buffer->setVerticies(verticies);
     buffer->setNormals(normals);
-    buffer->setIndicies(indicies);
+    buffer->setIndicies(indices);
 
     return buffer;
 }

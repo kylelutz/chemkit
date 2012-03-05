@@ -82,14 +82,14 @@ GraphicsVertexBuffer* ClippedSphere::tesselate() const
 
     QVector<Point3f> verticies = buffer->verticies();
     QVector<Vector3f> normals = buffer->normals();
-    QVector<unsigned short> indicies = buffer->indicies();
+    QVector<unsigned short> indices = buffer->indices();
 
     QVector<unsigned short> clippedIndicies;
 
-    for(int triangleIndex = 0; triangleIndex < indicies.size() / 3; triangleIndex++){
-        unsigned short ia = indicies[triangleIndex*3+0];
-        unsigned short ib = indicies[triangleIndex*3+1];
-        unsigned short ic = indicies[triangleIndex*3+2];
+    for(int triangleIndex = 0; triangleIndex < indices.size() / 3; triangleIndex++){
+        unsigned short ia = indices[triangleIndex*3+0];
+        unsigned short ib = indices[triangleIndex*3+1];
+        unsigned short ic = indices[triangleIndex*3+2];
 
         const Point3f &a = verticies[ia];
         const Point3f &b = verticies[ib];

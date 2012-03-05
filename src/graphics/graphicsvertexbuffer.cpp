@@ -132,7 +132,7 @@ public:
     GLuint indexBuffer;
     QVector<Point3f> verticies;
     QVector<Vector3f> normals;
-    QVector<unsigned short> indicies;
+    QVector<unsigned short> indices;
     QVector<unsigned char> colors;
 };
 
@@ -144,7 +144,7 @@ public:
 ///        object.
 ///
 /// Vertex buffers contain vertex positions and optionally may also
-/// contain data for normals, indicies, and colors.
+/// contain data for normals, indices, and colors.
 
 // --- Construction and Destruction ---------------------------------------- //
 /// Create a new, empty vertex buffer object.
@@ -202,7 +202,7 @@ void GraphicsVertexBuffer::clear()
 {
     d->verticies.clear();
     d->normals.clear();
-    d->indicies.clear();
+    d->indices.clear();
     d->colors.clear();
 
     d->readyToDraw = false;
@@ -247,22 +247,22 @@ int GraphicsVertexBuffer::normalCount() const
 }
 
 // --- Indicies ------------------------------------------------------------ //
-/// Sets the indicies to \p indicies.
-void GraphicsVertexBuffer::setIndicies(const QVector<unsigned short> &indicies)
+/// Sets the indices to \p indices.
+void GraphicsVertexBuffer::setIndicies(const QVector<unsigned short> &indices)
 {
-    d->indicies = indicies;
+    d->indices = indices;
 }
 
-/// Returns the indicies contained in the vertex buffer.
-QVector<unsigned short> GraphicsVertexBuffer::indicies() const
+/// Returns the indices contained in the vertex buffer.
+QVector<unsigned short> GraphicsVertexBuffer::indices() const
 {
-    return d->indicies;
+    return d->indices;
 }
 
-/// Returns the number of indicies in the buffer.
+/// Returns the number of indices in the buffer.
 int GraphicsVertexBuffer::indexCount() const
 {
-    return d->indicies.size();
+    return d->indices.size();
 }
 
 // --- Colors -------------------------------------------------------------- //
@@ -329,8 +329,8 @@ void GraphicsVertexBuffer::draw(GLenum mode) const
     }
 
     // draw
-    if(!d->indicies.isEmpty()){
-        glDrawElements(mode, d->indicies.size(), GL_UNSIGNED_SHORT, d->indicies.data());
+    if(!d->indices.isEmpty()){
+        glDrawElements(mode, d->indices.size(), GL_UNSIGNED_SHORT, d->indices.data());
     }
     else{
         glDrawArrays(GL_POINTS, 0, d->verticies.size());

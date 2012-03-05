@@ -394,7 +394,7 @@ GraphicsVertexBuffer* marchCubes(const ScalarField *scalarField, float isovalue)
 {
     QVector<Point3f> verticies;
     QVector<Vector3f> normals;
-    QVector<unsigned short> indicies;
+    QVector<unsigned short> indices;
 
     float xStep = scalarField->cellWidth();
     float yStep = scalarField->cellHeight();
@@ -452,7 +452,7 @@ GraphicsVertexBuffer* marchCubes(const ScalarField *scalarField, float isovalue)
                         int vertexIndex = TriangleConnectionTable[cubeIndex][i*3 + j];
                         Point3f vertex = cubeVerticies[vertexIndex];
 
-                        indicies.append(indicies.size());
+                        indices.append(indices.size());
                         verticies.append(vertex);
                         normals.append(scalarField->gradient(vertex.cast<Real>()).cast<float>());
                     }
@@ -465,7 +465,7 @@ GraphicsVertexBuffer* marchCubes(const ScalarField *scalarField, float isovalue)
     GraphicsVertexBuffer *buffer = new GraphicsVertexBuffer;
     buffer->setVerticies(verticies);
     buffer->setNormals(normals);
-    buffer->setIndicies(indicies);
+    buffer->setIndicies(indices);
 
     return buffer;
 }

@@ -207,15 +207,15 @@ void GraphicsPainter::drawTriangle(const Point3f &a, const Point3f &b, const Poi
     QVector<Vector3f> normals(3);
     normals.fill(normal);
 
-    // indicies
-    QVector<unsigned short> indicies;
-    indicies << 0 << 1 << 2;
+    // indices
+    QVector<unsigned short> indices;
+    indices << 0 << 1 << 2;
 
     // setup buffer
     GraphicsVertexBuffer buffer;
     buffer.setVerticies(verticies);
     buffer.setNormals(normals);
-    buffer.setIndicies(indicies);
+    buffer.setIndicies(indices);
 
     // draw buffer
     draw(&buffer);

@@ -124,7 +124,7 @@ void GraphicsMoleculeWireframeItem::paint(GraphicsPainter *painter)
     }
 
     QVector<Point3f> verticies;
-    QVector<unsigned short> indicies;
+    QVector<unsigned short> indices;
     QVector<QColor> colors;
 
     foreach(const Atom *atom, d->molecule->atoms()){
@@ -146,8 +146,8 @@ void GraphicsMoleculeWireframeItem::paint(GraphicsPainter *painter)
         QColor colorB = colors[b->index()];
 
         if(colorA == colorB){
-            indicies.append(a->index());
-            indicies.append(b->index());
+            indices.append(a->index());
+            indices.append(b->index());
         }
         else{
             Point3f center = bond->center().cast<float>();
@@ -156,19 +156,19 @@ void GraphicsMoleculeWireframeItem::paint(GraphicsPainter *painter)
             colors.append(colorA);
 
             // a -> center
-            indicies.append(a->index());
-            indicies.append(centerIndex);
+            indices.append(a->index());
+            indices.append(centerIndex);
 
             // center -> b
-            indicies.append(centerIndex);
-            indicies.append(b->index());
+            indices.append(centerIndex);
+            indices.append(b->index());
         }
     }
 
     GraphicsVertexBuffer buffer;
 
     buffer.setVerticies(verticies);
-    buffer.setIndicies(indicies);
+    buffer.setIndicies(indices);
     buffer.setColors(colors);
 
     glDisable(GL_LIGHTING);

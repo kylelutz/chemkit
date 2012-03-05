@@ -538,7 +538,7 @@ Bond* Molecule::addBond(Atom *a, Atom *b, int order)
     return bond;
 }
 
-/// Adds a new bond between atoms with indicies \p a and \p b.
+/// Adds a new bond between atoms with indices \p a and \p b.
 Bond* Molecule::addBond(size_t a, size_t b, int order)
 {
     return addBond(atom(a), atom(b), order);
@@ -586,7 +586,7 @@ void Molecule::removeBond(Atom *a, Atom *b)
     }
 }
 
-/// Removes the bond between atoms with indicies \p a and \p b.
+/// Removes the bond between atoms with indices \p a and \p b.
 void Molecule::removeBond(size_t a, size_t b)
 {
     removeBond(bond(a, b));
@@ -627,7 +627,7 @@ Bond* Molecule::bond(const Atom *a, const Atom *b) const
     return a->bondTo(b);
 }
 
-/// Returns the bond between the atoms with indicies \p a and \p b.
+/// Returns the bond between the atoms with indices \p a and \p b.
 Bond* Molecule::bond(size_t a, size_t b) const
 {
     return bond(atom(a), atom(b));
