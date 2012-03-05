@@ -105,6 +105,14 @@ Variant MoleculeFileFormat::option(const std::string &name) const
     if(element != d->options.end()){
         return element->second;
     }
+    else{
+        return defaultOption(name);
+    }
+}
+
+Variant MoleculeFileFormat::defaultOption(const std::string &name) const
+{
+    CHEMKIT_UNUSED(name);
 
     return Variant();
 }

@@ -78,6 +78,7 @@ public:
 protected:
     MoleculeFileFormat(const std::string &name);
     void setErrorString(const std::string &error);
+    virtual Variant defaultOption(const std::string &name) const;
 
 private:
     MoleculeFileFormatPrivate* const d;
