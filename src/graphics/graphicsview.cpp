@@ -78,6 +78,7 @@ public:
     float farClipDistance;
     float fieldOfView;
     bool fogEnabled;
+    bool hardwareIsSupported;
 };
 
 GraphicsViewPrivate::GraphicsViewPrivate()
@@ -90,6 +91,7 @@ GraphicsViewPrivate::GraphicsViewPrivate()
     fieldOfView = 45.0f;
     shader = 0;
     fogEnabled = true;
+    hardwareIsSupported = false;
 }
 
 // === GraphicsView ======================================================== //
@@ -541,8 +543,12 @@ void GraphicsView::initializeGL()
 {
     // check opengl version
     if(!(QGLFormat::openGLVersionFlags() & QGLFormat::OpenGL_Version_2_0)){
-        qWarning() << "GraphicsView: OpenGL version is not 2.0 or later.";
+        qWarning() << "Error: OpenGL version is not 2.0 or later.";
+        d->hardwareIsSupported = false;
+        return;
     }
+
+    d->hardwareIsSupported = true;
 
     // background color
     qglClearColor(d->backgroundColor);
@@ -688,6 +694,17 @@ void GraphicsView::resizeGL(int width, int height)
 // --- Events -------------------------------------------------------------- //
 void GraphicsView::paintEvent(QPaintEvent *event)
 {
+    if(!d->hardwareIsSupported){
+        // if the graphics hardware doesn't support OpenGL 2.0 or
+        // later just draw an error message on screen and return
+        QPainter painter(this);
+        painter.setPen(Qt::white);
+        painter.setBrush(Qt::white);
+        painter.drawText(QPointF(5, 25),
+                         "Error: OpenGL 2.0 not supported by hardware.");
+        return;
+    }
+
     // draw opengl
     makeCurrent();
     paintGL();
