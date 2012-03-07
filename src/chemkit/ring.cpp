@@ -197,7 +197,7 @@ Atom* Ring::root() const
     return root;
 }
 
-/// Returns the relative postion (distance around the ring) of atom to
+/// Returns the relative position (distance around the ring) of atom to
 /// root. If root is 0, the atom returned from root() is used.
 int Ring::position(const Atom *atom, const Atom *root) const
 {

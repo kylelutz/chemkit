@@ -98,7 +98,7 @@ void SimilarityDescriptor::setFingerprint(const std::string &name)
     d->fingerprint = Fingerprint::create(name);
 }
 
-/// Returns the fingerprint used to calculate similiarity.
+/// Returns the fingerprint used to calculate similarity.
 std::string SimilarityDescriptor::fingerprint() const
 {
     if(d->fingerprint){

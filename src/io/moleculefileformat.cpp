@@ -139,13 +139,13 @@ bool MoleculeFileFormat::write(const MoleculeFile *file, std::ostream &output)
 }
 
 // --- Error Handling ------------------------------------------------------ //
-/// Sets a string describing the last error that occured.
+/// Sets a string describing the last error that occurred.
 void MoleculeFileFormat::setErrorString(const std::string &error)
 {
     d->errorString = error;
 }
 
-/// Returns a string describing the last error that occured.
+/// Returns a string describing the last error that occurred.
 std::string MoleculeFileFormat::errorString() const
 {
     return d->errorString;

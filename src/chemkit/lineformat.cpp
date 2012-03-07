@@ -154,7 +154,7 @@ void LineFormat::setErrorString(const std::string &error)
     d->errorString = error;
 }
 
-/// Returns a string describing the last error that occured.
+/// Returns a string describing the last error that occurred.
 std::string LineFormat::errorString() const
 {
     return d->errorString;

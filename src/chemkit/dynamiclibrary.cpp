@@ -210,7 +210,7 @@ void DynamicLibrary::setErrorString(const std::string &errorString)
     d->errorString = errorString;
 }
 
-/// Returns a string describing the last error that occured.
+/// Returns a string describing the last error that occurred.
 std::string DynamicLibrary::errorString() const
 {
     return d->errorString;

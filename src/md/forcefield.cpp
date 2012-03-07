@@ -513,13 +513,13 @@ bool ForceField::minimizationStep(Real converganceValue)
 }
 
 // --- Error Handling ------------------------------------------------------ //
-/// Sets a string that describes the last error that occured.
+/// Sets a string that describes the last error that occurred.
 void ForceField::setErrorString(const std::string &errorString)
 {
     d->errorString = errorString;
 }
 
-/// Returns a string describing the last error that occured.
+/// Returns a string describing the last error that occurred.
 std::string ForceField::errorString() const
 {
     return d->errorString;

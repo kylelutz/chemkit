@@ -693,7 +693,7 @@ Molecule* MoleculeEditor::molecule() const
 }
 
 // --- Editing ------------------------------------------------------------- //
-/// Reverts the last change the occured.
+/// Reverts the last change that occurred.
 void MoleculeEditor::undo()
 {
     d->undoStack.undo();

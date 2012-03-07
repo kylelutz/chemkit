@@ -284,7 +284,7 @@ void BuildTool::mouseMoveEvent(QMouseEvent *event)
         chemkit::GraphicsAtomItem *atomItem = static_cast<chemkit::GraphicsAtomItem *>(item);
         chemkit::Atom *atom = const_cast<chemkit::Atom *>(atomItem->atom());
 
-        // over intial atom
+        // over initial atom
         if(atom == m_intialAtom){
             if(m_movingAtom){
                 removeAtom(m_movingAtom);

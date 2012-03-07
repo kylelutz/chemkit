@@ -464,7 +464,7 @@ inline std::vector<std::vector<Atom *> > rppath(const Fragment *fragment)
     std::vector<size_t> originalIndicies;
     graph.cyclize(originalIndicies);
 
-    // percieve rings
+    // perceive rings
     std::vector<std::vector<size_t> > sssr = rppath(graph);
 
     // convert from lists of indices to lists of atoms

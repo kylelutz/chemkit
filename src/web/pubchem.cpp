@@ -286,7 +286,7 @@ void PubChem::setErrorString(const QString &error)
     d->errorString = error;
 }
 
-/// Returns a string describing the last error that occured.
+/// Returns a string describing the last error that occurred.
 QString PubChem::errorString() const
 {
     return d->errorString;

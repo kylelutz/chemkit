@@ -689,7 +689,7 @@ Ring* Molecule::ring(size_t index) const
 ///          this method must be called again.
 Molecule::RingRange Molecule::rings() const
 {
-    // only run ring perception if neccessary
+    // only run ring perception if necessary
     if(!ringsPerceived()){
         // find rings
         foreach(const std::vector<Atom *> &ring, chemkit::algorithm::rppath(this)){

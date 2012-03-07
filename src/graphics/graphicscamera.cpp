@@ -140,7 +140,7 @@ void GraphicsCamera::moveTo(const Point3f &position)
     setPosition(position);
 }
 
-/// Sets the camera's postion to (\p x, \p y, \p z).
+/// Sets the camera's position to (\p x, \p y, \p z).
 void GraphicsCamera::moveTo(float x, float y, float z)
 {
     setPosition(x, y, z);

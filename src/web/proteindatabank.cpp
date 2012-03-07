@@ -176,7 +176,7 @@ void ProteinDataBank::setErrorString(const QString &error)
     d->errorString = error;
 }
 
-/// Returns a string describing the last error that occured.
+/// Returns a string describing the last error that occurred.
 QString ProteinDataBank::errorString() const
 {
     return d->errorString;
