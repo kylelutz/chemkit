@@ -281,7 +281,8 @@ void BuilderWindow::openFile(const QString &fileName)
     closeFile();
 
     // open and read file
-    chemkit::MoleculeFile *file = new chemkit::MoleculeFile(fileName.toStdString());
+    QByteArray fileNameString = fileName.toAscii();
+    chemkit::MoleculeFile *file = new chemkit::MoleculeFile(fileNameString.constData());
     if(!file->read()){
         QMessageBox::critical(this, "Error", QString("Error opening file: %1").arg(file->errorString().c_str()));
         delete file;
@@ -336,12 +337,14 @@ void BuilderWindow::saveFile()
 
 void BuilderWindow::saveFileAs(const QString &fileName)
 {
+    QByteArray fileNameString = fileName.toAscii();
+
     if(!m_file){
-        m_file = new chemkit::MoleculeFile(fileName.toStdString());
+        m_file = new chemkit::MoleculeFile(fileNameString.constData());
         m_file->addMolecule(m_molecule);
     }
 
-    m_file->setFileName(fileName.toStdString());
+    m_file->setFileName(fileNameString.constData());
     saveFile();
 }
 

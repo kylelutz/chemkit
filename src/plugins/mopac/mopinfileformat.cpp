@@ -73,8 +73,8 @@ bool MopinFileFormat::read(QIODevice *iodev, chemkit::MoleculeFile *file)
 
     // title line
     line = iodev->readLine();
-    QString name = line.trimmed();
-    molecule->setName(name.toStdString());
+    QByteArray name = line.trimmed().toAscii();
+    molecule->setName(name.constData());
 
     // blank line
     iodev->readLine();
@@ -89,7 +89,8 @@ bool MopinFileFormat::read(QIODevice *iodev, chemkit::MoleculeFile *file)
             break;
         }
 
-        chemkit::Atom *atom = molecule->addAtom(lineItems[0].toStdString());
+        QByteArray symbol = lineItems[0].toAscii();
+        chemkit::Atom *atom = molecule->addAtom(symbol.constData());
         if(!atom){
             continue;
         }

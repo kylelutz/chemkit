@@ -54,8 +54,8 @@ void CmlTest::initTestCase()
 
 void CmlTest::read_data()
 {
-    QTest::addColumn<QString>("fileName");
-    QTest::addColumn<QString>("formula");
+    QTest::addColumn<QString>("fileNameString");
+    QTest::addColumn<QString>("formulaString");
 
     QTest::newRow("buckminsterfullerene") << "buckminsterfullerene.cml" << "C60";
     QTest::newRow("ethanol") << "ethanol.cml" << "C2H6O";
@@ -65,10 +65,13 @@ void CmlTest::read_data()
 
 void CmlTest::read()
 {
-    QFETCH(QString, fileName);
-    QFETCH(QString, formula);
+    QFETCH(QString, fileNameString);
+    QFETCH(QString, formulaString);
 
-    chemkit::MoleculeFile file(dataPath + fileName.toStdString());
+    QByteArray fileName = fileNameString.toAscii();
+    QByteArray formula = formulaString.toAscii();
+
+    chemkit::MoleculeFile file(dataPath + fileName.constData());
     bool ok = file.read();
     if(!ok)
         qDebug() << file.errorString().c_str();
@@ -77,7 +80,7 @@ void CmlTest::read()
     QCOMPARE(file.moleculeCount(), size_t(1));
     const boost::shared_ptr<chemkit::Molecule> &molecule = file.molecule();
     QVERIFY(molecule != 0);
-    QCOMPARE(molecule->formula(), formula.toStdString());
+    QCOMPARE(molecule->formula().c_str(), formula.constData());
     QCOMPARE(molecule->coordinateSetCount(), size_t(1));
     QVERIFY(molecule->coordinateSet(0)->type() == chemkit::CoordinateSet::Cartesian);
 }

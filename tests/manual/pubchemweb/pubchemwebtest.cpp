@@ -69,7 +69,8 @@ void PubChemWebTest::downloadMultiFile()
     for(int i = 0; i < ids.size(); i++){
         boost::shared_ptr<chemkit::Molecule> molecule = file->molecule(i);
         QVERIFY(molecule != 0);
-        QCOMPARE(molecule->name(), ids[i].toStdString());
+        QByteArray id = ids[i].toAscii();
+        QCOMPARE(molecule->name().c_str(), id.constData());
     }
 
     delete file;

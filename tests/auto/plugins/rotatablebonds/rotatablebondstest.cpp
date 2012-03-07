@@ -48,7 +48,7 @@ void RotatableBondsTest::initTestCase()
 
 void RotatableBondsTest::test_data()
 {
-    QTest::addColumn<QString>("smiles");
+    QTest::addColumn<QString>("smilesString");
     QTest::addColumn<int>("rotatableBonds");
 
     QTest::newRow("alanine") << "CC(C(=O)O)N" << 1;
@@ -61,10 +61,12 @@ void RotatableBondsTest::test_data()
 
 void RotatableBondsTest::test()
 {
-    QFETCH(QString, smiles);
+    QFETCH(QString, smilesString);
     QFETCH(int, rotatableBonds);
 
-    chemkit::Molecule molecule(smiles.toStdString(), "smiles");
+    QByteArray smiles = smilesString.toAscii();
+
+    chemkit::Molecule molecule(smiles.constData(), "smiles");
     if(molecule.isEmpty()){
         qDebug() << "failed to load molecule";
     }

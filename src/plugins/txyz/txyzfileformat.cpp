@@ -102,7 +102,8 @@ bool TxyzFileFormat::read(QIODevice *iodev, chemkit::MoleculeFile *file)
         }
         // else we interpret it as an atomic symbol
         else{
-            atomicNumber = chemkit::Element(line[1].toStdString()).atomicNumber();
+            QByteArray symbol = line[1].toAscii();
+            atomicNumber = chemkit::Element(symbol.constData()).atomicNumber();
         }
 
         // add the atom if we have a valid atomic number

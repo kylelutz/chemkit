@@ -59,8 +59,8 @@ void OplsTest::initTestCase()
 
 void OplsTest::energy_data()
 {
-    QTest::addColumn<QString>("fileName");
-    QTest::addColumn<QString>("formula");
+    QTest::addColumn<QString>("fileNameString");
+    QTest::addColumn<QString>("formulaString");
     QTest::addColumn<double>("energy");
 
     QTest::newRow("water") << "water.mol" << "H2O" << 1.8698;
@@ -71,13 +71,17 @@ void OplsTest::energy_data()
 
 void OplsTest::energy()
 {
-    QFETCH(QString, fileName);
-    QFETCH(QString, formula);
+    QFETCH(QString, fileNameString);
+    QFETCH(QString, formulaString);
     QFETCH(double, energy);
 
-    boost::shared_ptr<chemkit::Molecule> molecule = chemkit::MoleculeFile::quickRead(dataPath + fileName.toStdString());
+    QByteArray fileName = fileNameString.toAscii();
+    QByteArray formula = formulaString.toAscii();
+
+    boost::shared_ptr<chemkit::Molecule> molecule =
+        chemkit::MoleculeFile::quickRead(dataPath + fileName.constData());
     QVERIFY(molecule != 0);
-    QCOMPARE(molecule->formula(), formula.toStdString());
+    QCOMPARE(molecule->formula().c_str(), formula.constData());
 
     chemkit::ForceField *opls = chemkit::ForceField::create("opls");
     QVERIFY(opls != 0);

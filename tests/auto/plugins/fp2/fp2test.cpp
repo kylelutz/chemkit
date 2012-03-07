@@ -58,7 +58,7 @@ void Fp2Test::name()
 // echo "SMILES" | babel -ismi -ofpt -xfFP2 -xh
 void Fp2Test::test_data()
 {
-    QTest::addColumn<QString>("smiles");
+    QTest::addColumn<QString>("smilesString");
     QTest::addColumn<QString>("fp2_hex");
 
     QTest::newRow("methane") << "C" <<
@@ -215,10 +215,12 @@ void Fp2Test::test_data()
 
 void Fp2Test::test()
 {
-    QFETCH(QString, smiles);
+    QFETCH(QString, smilesString);
     QFETCH(QString, fp2_hex);
 
-    chemkit::Molecule molecule(smiles.toStdString(), "smiles");
+    QByteArray smiles = smilesString.toAscii();
+
+    chemkit::Molecule molecule(smiles.constData(), "smiles");
     QVERIFY(!molecule.isEmpty());
 
     QStringList strings = fp2_hex.split(' ', QString::SkipEmptyParts);

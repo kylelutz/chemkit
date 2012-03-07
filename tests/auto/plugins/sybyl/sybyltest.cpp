@@ -53,18 +53,21 @@ void SybylTest::initTestCase()
 
 void SybylTest::readMol2_data()
 {
-    QTest::addColumn<QString>("fileName");
-    QTest::addColumn<QString>("formula");
+    QTest::addColumn<QString>("fileNameString");
+    QTest::addColumn<QString>("formulaString");
 
     QTest::newRow("uridine") << "uridine.mol2" << "C9H13N2O9P";
 }
 
 void SybylTest::readMol2()
 {
-    QFETCH(QString, fileName);
-    QFETCH(QString, formula);
+    QFETCH(QString, fileNameString);
+    QFETCH(QString, formulaString);
 
-    chemkit::MoleculeFile file(dataPath + fileName.toStdString());
+    QByteArray fileName = fileNameString.toAscii();
+    QByteArray formula = formulaString.toAscii();
+
+    chemkit::MoleculeFile file(dataPath + fileName.constData());
     bool ok = file.read();
     if(!ok)
         qDebug() << file.errorString().c_str();
@@ -73,7 +76,7 @@ void SybylTest::readMol2()
     QCOMPARE(file.moleculeCount(), size_t(1));
     boost::shared_ptr<chemkit::Molecule> molecule = file.molecule();
     QVERIFY(molecule != 0);
-    QCOMPARE(molecule->formula(), formula.toStdString());
+    QCOMPARE(molecule->formula().c_str(), formula.constData());
 }
 
 QTEST_APPLESS_MAIN(SybylTest)

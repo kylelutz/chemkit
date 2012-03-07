@@ -92,7 +92,8 @@ bool FhzFileFormat::read(QIODevice *iodev, chemkit::MoleculeFile *file)
         }
 
         // create atom
-        chemkit::Atom *atom = molecule->addAtom(lineItems[0].toStdString());
+        QByteArray symbol = lineItems[0].toAscii();
+        chemkit::Atom *atom = molecule->addAtom(symbol.constData());
         if(!atom){
             continue;
         }

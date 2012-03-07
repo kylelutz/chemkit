@@ -63,7 +63,7 @@ void GromacsTest::spc216()
     QCOMPARE(topology->size(), size_t(648));
 
     for(size_t i = 0; i < 648; i += 3){
-        QCOMPARE(QString::fromStdString(topology->type(i+0)), QString::fromStdString(std::string("OW")));
+        QCOMPARE(topology->type(i+0), std::string("OW"));
         QCOMPARE(topology->type(i+1), std::string("HW1"));
         QCOMPARE(topology->type(i+2), std::string("HW2"));
     }

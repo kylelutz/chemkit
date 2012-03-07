@@ -91,7 +91,8 @@ void MmffTest::validate()
         bool failed = false;
 
         // check for correct expected molecule
-        QCOMPARE(expectedMolecule.attribute("name").toStdString(), molecule->name());
+        QByteArray name = expectedMolecule.attribute("name").toAscii();
+        QCOMPARE(name.constData(), molecule->name().c_str());
 
         // create mmff force field
         chemkit::ForceField *forceField = chemkit::ForceField::create("mmff");
@@ -115,8 +116,8 @@ void MmffTest::validate()
         QCOMPARE(expectedAtom.tagName(), QString("atom"));
         foreach(const chemkit::ForceFieldAtom *forceFieldAtom, forceField->atoms()){
             std::string type = forceFieldAtom->type();
-            std::string expectedType = expectedAtom.attribute("type").toStdString();
-            if(type != expectedType){
+            QByteArray expectedType = expectedAtom.attribute("type").toAscii();
+            if(type != expectedType.constData()){
                 failed = true;
             }
 

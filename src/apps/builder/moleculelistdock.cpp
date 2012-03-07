@@ -104,8 +104,10 @@ void MoleculeListDock::itemChanged(QTableWidgetItem *item)
     if(!molecule)
         return;
 
-    if(molecule->name() != item->text().toStdString()){
-        molecule->setName(item->text().toStdString());
+    QByteArray text = item->text().toAscii();
+
+    if(molecule->name() != text.constData()){
+        molecule->setName(text.constData());
     }
 }
 

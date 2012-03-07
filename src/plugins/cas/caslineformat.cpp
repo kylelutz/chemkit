@@ -54,7 +54,7 @@ bool CasLineFormat::read(const std::string &formula, chemkit::Molecule *molecule
 
     // lookup the compound id for the cas formula
     chemkit::PubChem pubchem;
-    QStringList ids = pubchem.search(QString::fromStdString(formula));
+    QStringList ids = pubchem.search(formula.c_str());
 
     if(ids.isEmpty()){
         setErrorString("Failed to lookup CAS number");

@@ -129,7 +129,8 @@ void EnergyMinimizer::start()
     if(m_moleculeChanged){
         delete m_forceField;
 
-        m_forceField = chemkit::ForceField::create(m_forceFieldName.toStdString());
+        QByteArray forceFieldNameString = m_forceFieldName.toAscii();
+        m_forceField = chemkit::ForceField::create(forceFieldNameString.constData());
         if(!m_forceField){
             setState(SetupFailed);
             return;

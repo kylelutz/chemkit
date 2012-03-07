@@ -137,7 +137,7 @@ bool McdlReader::readCompositionModule()
 
                 chemkit::Atom *terminalAtom = m_molecule->addAtom(element);
                 if(!terminalAtom){
-                    setErrorString(QString("Invalid terminal element in formula").toStdString());
+                    setErrorString("Invalid terminal element in formula");
                     return false;
                 }
 
@@ -149,7 +149,7 @@ bool McdlReader::readCompositionModule()
 
                 atom = m_molecule->addAtom(element);
                 if(!atom){
-                    setErrorString(QString("Invalid element in formula").toStdString());
+                    setErrorString("Invalid element in formula");
                     return false;
                 }
 
@@ -159,7 +159,7 @@ bool McdlReader::readCompositionModule()
             p++;
         }
         else{
-            setErrorString(QString("Invalid character in formula: %1").arg(*p).toStdString());
+            setErrorString("Invalid character in formula");
             return false;
         }
     }
@@ -200,7 +200,7 @@ bool McdlReader::readConnectionModule()
             p++;
         }
         else{
-            setErrorString(QString("Invalid character in formula: %1").arg(*p).toStdString());
+            setErrorString("Invalid character in formula");
             return false;
         }
     }

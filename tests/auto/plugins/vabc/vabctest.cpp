@@ -48,8 +48,8 @@ void VabcTest::initTestCase()
 
 void VabcTest::vabc_data()
 {
-    QTest::addColumn<QString>("smiles");
-    QTest::addColumn<QString>("formula");
+    QTest::addColumn<QString>("smilesString");
+    QTest::addColumn<QString>("formulaString");
     QTest::addColumn<double>("vabc");
 
     // general compounds
@@ -497,12 +497,15 @@ void VabcTest::vabc_data()
 
 void VabcTest::vabc()
 {
-    QFETCH(QString, smiles);
-    QFETCH(QString, formula);
+    QFETCH(QString, smilesString);
+    QFETCH(QString, formulaString);
     QFETCH(double, vabc);
 
-    chemkit::Molecule molecule(smiles.toStdString(), "smiles");
-    QCOMPARE(molecule.formula(), formula.toStdString());
+    QByteArray smiles = smilesString.toAscii();
+    QByteArray formula = formulaString.toAscii();
+
+    chemkit::Molecule molecule(smiles.constData(), "smiles");
+    QCOMPARE(molecule.formula().c_str(), formula.constData());
     QCOMPARE(qRound(molecule.descriptor("vabc").toDouble()), qRound(vabc));
 }
 

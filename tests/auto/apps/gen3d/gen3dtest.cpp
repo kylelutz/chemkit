@@ -58,7 +58,8 @@ void Gen3dTest::benzene()
     process.waitForFinished();
 
     // read output file
-    chemkit::MoleculeFile file(output.fileName().toStdString());
+    QByteArray outputFileName = output.fileName().toAscii();
+    chemkit::MoleculeFile file(outputFileName.constData());
     bool ok = file.read();
     if(!ok)
         qDebug() << file.errorString().c_str();

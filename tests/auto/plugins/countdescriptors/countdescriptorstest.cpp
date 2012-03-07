@@ -51,8 +51,8 @@ void CountDescriptorsTest::initTestCase()
 
 void CountDescriptorsTest::test_data()
 {
-    QTest::addColumn<QString>("smiles");
-    QTest::addColumn<QString>("formula");
+    QTest::addColumn<QString>("smilesString");
+    QTest::addColumn<QString>("formulaString");
     QTest::addColumn<int>("atomCount");
     QTest::addColumn<int>("heavyAtomCount");
     QTest::addColumn<int>("bondCount");
@@ -65,15 +65,18 @@ void CountDescriptorsTest::test_data()
 
 void CountDescriptorsTest::test()
 {
-    QFETCH(QString, smiles);
-    QFETCH(QString, formula);
+    QFETCH(QString, smilesString);
+    QFETCH(QString, formulaString);
     QFETCH(int, atomCount);
     QFETCH(int, heavyAtomCount);
     QFETCH(int, bondCount);
     QFETCH(int, ringCount);
 
-    chemkit::Molecule molecule(smiles.toStdString(), "smiles");
-    QCOMPARE(molecule.formula(), formula.toStdString());
+    QByteArray smiles = smilesString.toAscii();
+    QByteArray formula = formulaString.toAscii();
+
+    chemkit::Molecule molecule(smiles.constData(), "smiles");
+    QCOMPARE(molecule.formula().c_str(), formula.constData());
     QCOMPARE(molecule.descriptor("atom-count").toInt(), atomCount);
     QCOMPARE(molecule.descriptor("heavy-atom-count").toInt(), heavyAtomCount);
     QCOMPARE(molecule.descriptor("bond-count").toInt(), bondCount);

@@ -118,14 +118,16 @@ void PdbViewerWindow::openFile(const QString &fileName)
     // close current file
     setFile(0);
 
-    std::string format = QFileInfo(fileName).suffix().toStdString();
+    QByteArray formatString = QFileInfo(fileName).suffix().toAscii();
+    std::string format = formatString.constData();
     if(format == "xml")
         format = "pdbml";
 
     // open and read file
     chemkit::PolymerFile *file = new chemkit::PolymerFile;
 
-    bool ok = file->read(fileName.toStdString(), format);
+    QByteArray fileNameString = fileName.toAscii();
+    bool ok = file->read(fileNameString.constData(), format);
     if(!ok){
         QMessageBox::critical(this, "Error Reading File", file->errorString().c_str());
         delete file;

@@ -51,8 +51,8 @@ void FhzTest::initTestCase()
 
 void FhzTest::read_data()
 {
-    QTest::addColumn<QString>("fileName");
-    QTest::addColumn<QString>("formula");
+    QTest::addColumn<QString>("fileNameString");
+    QTest::addColumn<QString>("formulaString");
 
     QTest::newRow("ethanol") << "ethanol.fh" << "C2H6O";
     QTest::newRow("guanine") << "guanine.fh" << "C5H5N5O";
@@ -60,10 +60,13 @@ void FhzTest::read_data()
 
 void FhzTest::read()
 {
-    QFETCH(QString, fileName);
-    QFETCH(QString, formula);
+    QFETCH(QString, fileNameString);
+    QFETCH(QString, formulaString);
 
-    chemkit::MoleculeFile file(dataPath + fileName.toStdString());
+    QByteArray fileName = fileNameString.toAscii();
+    QByteArray formula = formulaString.toAscii();
+
+    chemkit::MoleculeFile file(dataPath + fileName.constData());
     bool ok = file.read();
     if(!ok)
         qDebug() << file.errorString().c_str();
@@ -72,7 +75,7 @@ void FhzTest::read()
     QCOMPARE(file.moleculeCount(), size_t(1));
     boost::shared_ptr<chemkit::Molecule> molecule = file.molecule();
     QVERIFY(molecule != 0);
-    QCOMPARE(molecule->formula(), formula.toStdString());
+    QCOMPARE(molecule->formula().c_str(), formula.constData());
 }
 
 QTEST_APPLESS_MAIN(FhzTest)

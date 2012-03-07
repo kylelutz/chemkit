@@ -54,8 +54,8 @@ void SurfaceDescriptorsTest::initTestCase()
 
 void SurfaceDescriptorsTest::test_data()
 {
-    QTest::addColumn<QString>("fileName");
-    QTest::addColumn<QString>("formula");
+    QTest::addColumn<QString>("fileNameString");
+    QTest::addColumn<QString>("formulaString");
     QTest::addColumn<int>("vanDerWaalsArea");
     QTest::addColumn<int>("vanDerWaalsVolume");
     QTest::addColumn<int>("solventAccessibleArea");
@@ -67,14 +67,17 @@ void SurfaceDescriptorsTest::test_data()
 
 void SurfaceDescriptorsTest::test()
 {
-    QFETCH(QString, fileName);
-    QFETCH(QString, formula);
+    QFETCH(QString, fileNameString);
+    QFETCH(QString, formulaString);
     QFETCH(int, vanDerWaalsArea);
     QFETCH(int, vanDerWaalsVolume);
     QFETCH(int, solventAccessibleArea);
     QFETCH(int, solventAccessibleVolume);
 
-    chemkit::MoleculeFile file(dataPath + fileName.toStdString());
+    QByteArray fileName = fileNameString.toAscii();
+    QByteArray formula = formulaString.toAscii();
+
+    chemkit::MoleculeFile file(dataPath + fileName.constData());
     bool ok = file.read();
     if(!ok)
         qDebug() << file.errorString().c_str();
@@ -82,7 +85,7 @@ void SurfaceDescriptorsTest::test()
 
     boost::shared_ptr<chemkit::Molecule> molecule = file.molecule();
     QVERIFY(molecule);
-    QCOMPARE(molecule->formula(), formula.toStdString());
+    QCOMPARE(molecule->formula().c_str(), formula.constData());
 
     QCOMPARE(qRound(molecule->descriptor("vdw-area").toDouble()), vanDerWaalsArea);
     QCOMPARE(qRound(molecule->descriptor("vdw-volume").toDouble()), vanDerWaalsVolume);

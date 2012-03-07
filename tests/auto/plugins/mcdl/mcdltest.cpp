@@ -48,8 +48,8 @@ void McdlTest::initTestCase()
 
 void McdlTest::read_data()
 {
-    QTest::addColumn<QString>("mcdl");
-    QTest::addColumn<QString>("formula");
+    QTest::addColumn<QString>("mcdlString");
+    QTest::addColumn<QString>("formulaString");
     QTest::addColumn<int>("atomCount");
     QTest::addColumn<int>("bondCount");
     QTest::addColumn<int>("ringCount");
@@ -73,19 +73,22 @@ void McdlTest::read()
         return;
     }
 
-    QFETCH(QString, mcdl);
-    QFETCH(QString, formula);
+    QFETCH(QString, mcdlString);
+    QFETCH(QString, formulaString);
     QFETCH(int, atomCount);
     QFETCH(int, bondCount);
     QFETCH(int, ringCount);
 
+    QByteArray mcdl = mcdlString.toAscii();
+    QByteArray formula = formulaString.toAscii();
+
     chemkit::Molecule molecule;
-    bool ok = mcdlFormat->read(mcdl.toStdString(), &molecule);
+    bool ok = mcdlFormat->read(mcdl.constData(), &molecule);
     if(!ok)
         qDebug() << mcdlFormat->errorString().c_str();
     QVERIFY(ok);
 
-    QCOMPARE(molecule.formula(), formula.toStdString());
+    QCOMPARE(molecule.formula().c_str(), formula.constData());
     QCOMPARE(molecule.atomCount(), size_t(atomCount));
     QCOMPARE(molecule.bondCount(), size_t(bondCount));
     QCOMPARE(molecule.ringCount(), size_t(ringCount));

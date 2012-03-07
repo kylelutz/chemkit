@@ -48,7 +48,7 @@ void MassDescriptorsTest::initTestCase()
 
 void MassDescriptorsTest::test_data()
 {
-    QTest::addColumn<QString>("formula");
+    QTest::addColumn<QString>("formulaString");
     QTest::addColumn<int>("mass");
 
     QTest::newRow("water") << "H2O" << 18;
@@ -58,11 +58,13 @@ void MassDescriptorsTest::test_data()
 
 void MassDescriptorsTest::test()
 {
-    QFETCH(QString, formula);
+    QFETCH(QString, formulaString);
     QFETCH(int, mass);
 
-    chemkit::Molecule molecule(formula.toStdString(), "formula");
-    QCOMPARE(molecule.formula(), formula.toStdString());
+    QByteArray formula = formulaString.toAscii();
+
+    chemkit::Molecule molecule(formula.constData(), "formula");
+    QCOMPARE(molecule.formula().c_str(), formula.constData());
     QCOMPARE(molecule.descriptor("molecular-mass").toInt(), mass);
 }
 

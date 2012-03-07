@@ -109,8 +109,8 @@ void PubChemTest::name()
 void PubChemTest::test_data()
 {
     QTest::addColumn<QString>("cid");
-    QTest::addColumn<QString>("smiles");
-    QTest::addColumn<QString>("formula");
+    QTest::addColumn<QString>("smilesString");
+    QTest::addColumn<QString>("formulaString");
     QTest::addColumn<QByteArray>("fingerprint_base64");
 
     QTest::newRow("acetylcholine") <<
@@ -223,12 +223,15 @@ void PubChemTest::test_data()
 
 void PubChemTest::test()
 {
-    QFETCH(QString, smiles);
-    QFETCH(QString, formula);
+    QFETCH(QString, smilesString);
+    QFETCH(QString, formulaString);
     QFETCH(QByteArray, fingerprint_base64);
 
-    chemkit::Molecule molecule(smiles.toStdString(), "smiles");
-    QCOMPARE(molecule.formula(), formula.toStdString());
+    QByteArray smiles = smilesString.toAscii();
+    QByteArray formula = formulaString.toAscii();
+
+    chemkit::Molecule molecule(smiles.constData(), "smiles");
+    QCOMPARE(molecule.formula().c_str(), formula.constData());
 
     chemkit::Bitset fingerprint = molecule.fingerprint("pubchem");
     QCOMPARE(fingerprint.size(), size_t(881));

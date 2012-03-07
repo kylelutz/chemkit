@@ -220,7 +220,7 @@ void InchiTest::addHydrogens()
 
 void InchiTest::readWrite_data()
 {
-    QTest::addColumn<QString>("inchi");
+    QTest::addColumn<QString>("inchiString");
 
     QTest::newRow("ethanol") << "InChI=1S/C2H6O/c1-2-3/h3H,2H2,1H3";
     QTest::newRow("acetone") << "InChI=1S/C3H6O/c1-3(2)4/h1-2H3";
@@ -231,11 +231,12 @@ void InchiTest::readWrite_data()
 
 void InchiTest::readWrite()
 {
-    QFETCH(QString, inchi);
+    QFETCH(QString, inchiString);
+    QByteArray inchi = inchiString.toAscii();
 
-    chemkit::Molecule molecule(inchi.toStdString(), "inchi");
+    chemkit::Molecule molecule(inchi.constData(), "inchi");
     QVERIFY(!molecule.isEmpty());
-    QCOMPARE(molecule.formula("inchi"), inchi.toStdString());
+    QCOMPARE(molecule.formula("inchi").c_str(), inchi.constData());
 }
 
 QTEST_APPLESS_MAIN(InchiTest)

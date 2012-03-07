@@ -76,8 +76,9 @@ void ConvertTest::convertEthanol()
     process.close();
 
     // read and verify the output file
+    QByteArray outputFileName = output.fileName().toAscii();
     chemkit::MoleculeFile outputFile;
-    ok = outputFile.read(output.fileName().toStdString());
+    ok = outputFile.read(outputFileName.constData());
     if(!ok){
         qDebug() << outputFile.errorString().c_str();
     }
@@ -117,7 +118,8 @@ void ConvertTest::convertBenzenes()
 
     // read and verify the output file
     chemkit::MoleculeFile outputFile;
-    ok = outputFile.read(tempFile.fileName().toStdString());
+    QByteArray outputFileName = tempFile.fileName().toAscii();
+    ok = outputFile.read(outputFileName.constData());
     if(!ok){
         qDebug() << outputFile.errorString().c_str();
     }

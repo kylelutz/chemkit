@@ -260,7 +260,8 @@ std::string PubChem::standardizeFormula(const std::string &formula, const std::s
 
     QDomNode node = nodes.at(0);
     QDomElement element = node.toElement();
-    std::string standardizedFormula = element.text().toStdString();
+    QByteArray elementText = element.text().toAscii();
+    std::string standardizedFormula = elementText.constData();
 
     return standardizedFormula;
 }
