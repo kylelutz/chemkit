@@ -87,6 +87,12 @@ void GrepTest::benzoicAcid()
     QString output = process.readAllStandardOutput();
     QStringList moleculeNames = output.split("\n", QString::SkipEmptyParts);
     QCOMPARE(moleculeNames.size(), 39);
+
+    // trim whitespace from names
+    for(int i = 0; i < moleculeNames.size(); i++){
+        moleculeNames[i] = moleculeNames[i].trimmed();
+    }
+
     QCOMPARE(moleculeNames[0], QString("2605"));
     QCOMPARE(moleculeNames[1], QString("2541"));
     QCOMPARE(moleculeNames[2], QString("2536"));
