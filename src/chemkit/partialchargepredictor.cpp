@@ -84,8 +84,6 @@ std::string PartialChargePredictor::name() const
 void PartialChargePredictor::setMolecule(const Molecule *molecule)
 {
     d->molecule = molecule;
-
-    assignPartialCharges(molecule);
 }
 
 /// Returns the molecule for the predictor.
@@ -101,11 +99,6 @@ Real PartialChargePredictor::partialCharge(const Atom *atom) const
     CHEMKIT_UNUSED(atom);
 
     return 0;
-}
-
-void PartialChargePredictor::assignPartialCharges(const Molecule *molecule)
-{
-    CHEMKIT_UNUSED(molecule);
 }
 
 // --- Static Methods ------------------------------------------------------ //

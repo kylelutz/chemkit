@@ -57,7 +57,7 @@ public:
 
     // properties
     std::string name() const;
-    void setMolecule(const Molecule *molecule);
+    virtual void setMolecule(const Molecule *molecule);
     const Molecule* molecule() const;
 
     // partial charges
@@ -70,7 +70,6 @@ public:
 
 protected:
     PartialChargePredictor(const std::string &name);
-    virtual void assignPartialCharges(const Molecule *molecule);
 
 private:
     PartialChargePredictorPrivate* const d;

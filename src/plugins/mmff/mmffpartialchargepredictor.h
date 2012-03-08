@@ -49,13 +49,11 @@ public:
     ~MmffPartialChargePredictor();
 
     // properties
+    virtual void setMolecule(const chemkit::Molecule *molecule);
     void setAtomTyper(const MmffAtomTyper *typer);
 
     // partial charges
     virtual chemkit::Real partialCharge(const chemkit::Atom *atom) const;
-
-protected:
-    virtual void assignPartialCharges(const chemkit::Molecule *molecule);
 
 private:
     std::vector<chemkit::Real> m_partialCharges;

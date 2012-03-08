@@ -69,19 +69,10 @@ MmffPartialChargePredictor::~MmffPartialChargePredictor()
 }
 
 // --- Properties ---------------------------------------------------------- //
-void MmffPartialChargePredictor::setAtomTyper(const MmffAtomTyper *typer)
+void MmffPartialChargePredictor::setMolecule(const chemkit::Molecule *molecule)
 {
-    m_typer = typer;
-}
+    chemkit::PartialChargePredictor::setMolecule(molecule);
 
-// --- Partial Charges ----------------------------------------------------- //
-chemkit::Real MmffPartialChargePredictor::partialCharge(const chemkit::Atom *atom) const
-{
-    return m_partialCharges[atom->index()];
-}
-
-void MmffPartialChargePredictor::assignPartialCharges(const chemkit::Molecule *molecule)
-{
     if(!molecule){
         m_partialCharges.resize(0);
         return;
@@ -175,4 +166,15 @@ void MmffPartialChargePredictor::assignPartialCharges(const chemkit::Molecule *m
     if(!m_typer){
         delete typer;
     }
+}
+
+void MmffPartialChargePredictor::setAtomTyper(const MmffAtomTyper *typer)
+{
+    m_typer = typer;
+}
+
+// --- Partial Charges ----------------------------------------------------- //
+chemkit::Real MmffPartialChargePredictor::partialCharge(const chemkit::Atom *atom) const
+{
+    return m_partialCharges[atom->index()];
 }
