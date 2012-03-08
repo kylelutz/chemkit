@@ -57,6 +57,9 @@ public:
 /// \brief The AtomTyper class assigns symbolic types to atoms.
 ///
 /// To create atom typer objects use the AtomTyper::create() method.
+///
+/// A list of supported atom typers is available at:
+/// http://wiki.chemkit.org/Features#Atom_Typers
 
 // --- Construction and Destruction ---------------------------------------- //
 AtomTyper::AtomTyper(const std::string &name)
