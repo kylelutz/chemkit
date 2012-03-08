@@ -60,7 +60,7 @@ public:
 
     // properties
     std::string name() const;
-    void setMolecule(const Molecule *molecule);
+    virtual void setMolecule(const Molecule *molecule);
     const Molecule* molecule() const;
 
     // aromaticity
