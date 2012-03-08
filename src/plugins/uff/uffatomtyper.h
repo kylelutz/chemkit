@@ -45,12 +45,14 @@ public:
     UffAtomTyper(const chemkit::Molecule *molecule = 0);
     ~UffAtomTyper();
 
+    // properties
+    virtual void setMolecule(const chemkit::Molecule *molecule);
+
     // types
     std::string typeString(const chemkit::Atom *atom) const;
 
-protected:
+private:
     std::string atomType(const chemkit::Atom *atom) const;
-    void assignTypes(const chemkit::Molecule *molecule);
 
 private:
     std::vector<std::string> m_types;

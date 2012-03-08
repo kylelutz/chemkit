@@ -58,7 +58,7 @@ public:
 
     // properties
     std::string name() const;
-    void setMolecule(const Molecule *molecule);
+    virtual void setMolecule(const Molecule *molecule);
     const Molecule* molecule() const;
 
     // types
@@ -72,7 +72,6 @@ public:
 
 protected:
     AtomTyper(const std::string &name);
-    virtual void assignTypes(const Molecule *molecule);
 
 private:
     AtomTyperPrivate* const d;

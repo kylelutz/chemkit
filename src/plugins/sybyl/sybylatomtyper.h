@@ -45,12 +45,14 @@ public:
     SybylAtomTyper();
     ~SybylAtomTyper();
 
+    // properties
+    virtual void setMolecule(const chemkit::Molecule *molecule);
+
     // types
     std::string typeString(const chemkit::Atom *atom) const;
 
 protected:
     std::string atomType(const chemkit::Atom *atom) const;
-    void assignTypes(const chemkit::Molecule *molecule);
 
 private:
     std::vector<std::string> m_types;

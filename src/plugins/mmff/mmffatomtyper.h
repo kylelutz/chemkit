@@ -48,15 +48,15 @@ public:
     MmffAtomTyper(const chemkit::Molecule *molecule = 0);
     ~MmffAtomTyper();
 
+    // properties
+    virtual void setMolecule(const chemkit::Molecule *molecule);
+
     // types
     int typeNumber(const chemkit::Atom *atom) const;
 
     // charges
     chemkit::Real formalCharge(int index) const;
     chemkit::Real formalCharge(const chemkit::Atom *atom) const;
-
-protected:
-    void assignTypes(const chemkit::Molecule *molecule);
 
 private:
     void setType(int index, int type, chemkit::Real formalCharge = 0);

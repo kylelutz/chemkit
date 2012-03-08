@@ -83,8 +83,6 @@ std::string AtomTyper::name() const
 void AtomTyper::setMolecule(const Molecule *molecule)
 {
     d->molecule = molecule;
-
-    assignTypes(molecule);
 }
 
 /// Returns the molecule for the atom typer.
@@ -126,12 +124,6 @@ AtomTyper* AtomTyper::create(const std::string &name)
 std::vector<std::string> AtomTyper::typers()
 {
     return PluginManager::instance()->pluginClassNames<AtomTyper>();
-}
-
-// --- Internal Methods ---------------------------------------------------- //
-void AtomTyper::assignTypes(const Molecule *molecule)
-{
-    CHEMKIT_UNUSED(molecule);
 }
 
 } // end chemkit namespace

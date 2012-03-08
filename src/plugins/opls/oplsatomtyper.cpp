@@ -46,24 +46,11 @@ OplsAtomTyper::~OplsAtomTyper()
 {
 }
 
-// --- Types --------------------------------------------------------------- //
-void OplsAtomTyper::setTypeNumber(int index, int typeNumber)
+// --- Properties ---------------------------------------------------------- //
+void OplsAtomTyper::setMolecule(const chemkit::Molecule *molecule)
 {
-    m_typeNumbers[index] = typeNumber;
-}
+    chemkit::AtomTyper::setMolecule(molecule);
 
-int OplsAtomTyper::typeNumber(const chemkit::Atom *atom) const
-{
-    return m_typeNumbers[atom->index()];
-}
-
-std::string OplsAtomTyper::typeString(const chemkit::Atom *atom) const
-{
-    return boost::lexical_cast<std::string>(typeNumber(atom));
-}
-
-void OplsAtomTyper::assignTypes(const chemkit::Molecule *molecule)
-{
     if(!molecule){
         m_typeNumbers.resize(0);
         return;
@@ -239,4 +226,20 @@ void OplsAtomTyper::assignTypes(const chemkit::Molecule *molecule)
             setTypeNumber(index, 47); // xenon atom
         }
     }
+}
+
+// --- Types --------------------------------------------------------------- //
+void OplsAtomTyper::setTypeNumber(int index, int typeNumber)
+{
+    m_typeNumbers[index] = typeNumber;
+}
+
+int OplsAtomTyper::typeNumber(const chemkit::Atom *atom) const
+{
+    return m_typeNumbers[atom->index()];
+}
+
+std::string OplsAtomTyper::typeString(const chemkit::Atom *atom) const
+{
+    return boost::lexical_cast<std::string>(typeNumber(atom));
 }

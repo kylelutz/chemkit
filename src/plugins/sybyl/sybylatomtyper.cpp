@@ -50,6 +50,23 @@ SybylAtomTyper::~SybylAtomTyper()
 {
 }
 
+// --- Properties ---------------------------------------------------------- //
+void SybylAtomTyper::setMolecule(const chemkit::Molecule *molecule)
+{
+    chemkit::AtomTyper::setMolecule(molecule);
+
+    if(!molecule){
+        m_types.resize(0);
+        return;
+    }
+
+    m_types = std::vector<std::string>(molecule->atomCount());
+
+    for(size_t i = 0; i < molecule->atomCount(); i++){
+        m_types[i] = atomType(molecule->atom(i));
+    }
+}
+
 // --- Types --------------------------------------------------------------- //
 std::string SybylAtomTyper::typeString(const chemkit::Atom *atom) const
 {
@@ -201,18 +218,4 @@ std::string SybylAtomTyper::atomType(const chemkit::Atom *atom) const
     }
 
     return std::string();
-}
-
-void SybylAtomTyper::assignTypes(const chemkit::Molecule *molecule)
-{
-    if(!molecule){
-        m_types.resize(0);
-        return;
-    }
-
-    m_types = std::vector<std::string>(molecule->atomCount());
-
-    for(size_t i = 0; i < molecule->atomCount(); i++){
-        m_types[i] = atomType(molecule->atom(i));
-    }
 }

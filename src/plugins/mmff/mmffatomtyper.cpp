@@ -401,26 +401,11 @@ MmffAtomTyper::~MmffAtomTyper()
 {
 }
 
-// --- Types --------------------------------------------------------------- //
-int MmffAtomTyper::typeNumber(const chemkit::Atom *atom) const
+// --- Properties ---------------------------------------------------------- //
+void MmffAtomTyper::setMolecule(const chemkit::Molecule *molecule)
 {
-    return m_types[atom->index()];
-}
+    chemkit::AtomTyper::setMolecule(molecule);
 
-// --- Charges ------------------------------------------------------------- //
-chemkit::Real MmffAtomTyper::formalCharge(int index) const
-{
-    return m_formalCharges[index];
-}
-
-chemkit::Real MmffAtomTyper::formalCharge(const chemkit::Atom *atom) const
-{
-    return formalCharge(atom->index());
-}
-
-// --- Internal Methods ---------------------------------------------------- //
-void MmffAtomTyper::assignTypes(const chemkit::Molecule *molecule)
-{
     if(!molecule){
         m_types.resize(0);
         return;
@@ -473,6 +458,24 @@ void MmffAtomTyper::assignTypes(const chemkit::Molecule *molecule)
     }
 }
 
+// --- Types --------------------------------------------------------------- //
+int MmffAtomTyper::typeNumber(const chemkit::Atom *atom) const
+{
+    return m_types[atom->index()];
+}
+
+// --- Charges ------------------------------------------------------------- //
+chemkit::Real MmffAtomTyper::formalCharge(int index) const
+{
+    return m_formalCharges[index];
+}
+
+chemkit::Real MmffAtomTyper::formalCharge(const chemkit::Atom *atom) const
+{
+    return formalCharge(atom->index());
+}
+
+// --- Internal Methods ---------------------------------------------------- //
 void MmffAtomTyper::setType(int index, int type, chemkit::Real formalCharge)
 {
     m_types[index] = type;

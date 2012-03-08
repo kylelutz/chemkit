@@ -50,6 +50,18 @@ AmberAtomTyper::~AmberAtomTyper()
 {
 }
 
+// --- Properties ---------------------------------------------------------- //
+void AmberAtomTyper::setMolecule(const chemkit::Molecule *molecule)
+{
+    chemkit::AtomTyper::setMolecule(molecule);
+
+    m_types.resize(molecule->atomCount());
+
+    for(size_t i = 0; i < molecule->size(); i++){
+        m_types[i] = assignType(molecule->atom(i));
+    }
+}
+
 // --- Types --------------------------------------------------------------- //
 chemkit::Variant AmberAtomTyper::type(const chemkit::Atom *atom) const
 {
@@ -295,13 +307,4 @@ std::string AmberAtomTyper::assignType(const chemkit::Atom *atom) const
     }
 
     return std::string();
-}
-
-void AmberAtomTyper::assignTypes(const chemkit::Molecule *molecule)
-{
-    m_types.resize(molecule->atomCount());
-
-    for(size_t i = 0; i < molecule->size(); i++){
-        m_types[i] = assignType(molecule->atom(i));
-    }
 }
