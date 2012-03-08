@@ -306,6 +306,7 @@ void BuildTool::mouseMoveEvent(QMouseEvent *event)
 
             if(m_newBond && atom != m_bondingAtom){
                 removeBond(m_newBond);
+                m_newBond = 0;
                 m_bondingAtom = 0;
             }
 
@@ -405,9 +406,8 @@ void BuildTool::removeAtom(chemkit::Atom *atom)
         m_modifiedAtoms.insert(neighbor);
     }
 
-    m_modifiedAtoms.remove(atom);
-
     editor()->removeAtom(atom);
+    m_modifiedAtoms.remove(atom);
 }
 
 void BuildTool::setAtomAtomicNumber(chemkit::Atom *atom, int atomicNumber)
@@ -447,27 +447,33 @@ void BuildTool::adjustHydrogens(chemkit::Atom *atom)
     // remove lone hydrogens
     if(atom->is(chemkit::Atom::Hydrogen) && atom->neighborCount() < 2){
         editor()->removeAtom(atom);
+        m_modifiedAtoms.remove(atom);
+        return;
     }
 
     // add hydrogens
-    else if(atom->valence() < atom->expectedValence()){
-        while(atom->valence() < atom->expectedValence()){
-            chemkit::Atom *hydrogen = editor()->addAtom(chemkit::Atom::Hydrogen);
-            editor()->setAtomPosition(hydrogen, atom->position() + chemkit::Vector3::Random().normalized());
-            editor()->addBond(atom, hydrogen);
-        }
+    while(atom->valence() < atom->expectedValence()){
+        chemkit::Atom *hydrogen = editor()->addAtom(chemkit::Atom::Hydrogen);
+        editor()->setAtomPosition(hydrogen, atom->position() + chemkit::Vector3::Random().normalized());
+        editor()->addBond(atom, hydrogen);
     }
 
     // remove hydrogens
-    else if(atom->valence() > atom->expectedValence()){
+    while(atom->valence() > atom->expectedValence()){
+        bool foundTerminalHydrogen = false;
+
         foreach(chemkit::Atom *neighbor, atom->neighbors()){
             if(neighbor->isTerminalHydrogen()){
                 editor()->removeAtom(neighbor);
                 m_modifiedAtoms.remove(neighbor);
-
-                if(atom->valence() == atom->expectedValence())
-                    break;
+                foundTerminalHydrogen = true;
+                break;
             }
+        }
+
+        if(!foundTerminalHydrogen){
+            // no more hydrogens to remove
+            break;
         }
     }
 }
