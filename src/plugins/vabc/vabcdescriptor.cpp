@@ -84,7 +84,7 @@ chemkit::Real VabcDescriptor::volume(const chemkit::Atom *atom) const
     }
 }
 
-// Returns the wiener index for the molecule.
+// Returns the VABC value for the molecule.
 chemkit::Variant VabcDescriptor::value(const chemkit::Molecule *molecule) const
 {
     chemkit::Real atomContributions = 0;
