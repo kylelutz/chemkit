@@ -74,7 +74,7 @@ public:
     QColor color() const;
     void setColorMode(ColorMode mode);
     ColorMode colorMode() const;
-    void setAtomColorMap(AtomColorMap *colorMap);
+    void setColorMap(AtomColorMap *colorMap);
     AtomColorMap* colorMap() const;
 
 private:

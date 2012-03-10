@@ -423,7 +423,7 @@ GraphicsMolecularSurfaceItem::ColorMode GraphicsMolecularSurfaceItem::colorMode(
 }
 
 /// Sets the color map for the surface item to \p colorMap.
-void GraphicsMolecularSurfaceItem::setAtomColorMap(AtomColorMap *colorMap)
+void GraphicsMolecularSurfaceItem::setColorMap(AtomColorMap *colorMap)
 {
     delete d->colorMap;
 
