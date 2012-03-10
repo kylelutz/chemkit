@@ -35,6 +35,8 @@
 
 #include "graphicsmolecularsurfaceitem.h"
 
+#include <boost/make_shared.hpp>
+
 #include <chemkit/atom.h>
 #include <chemkit/foreach.h>
 #include <chemkit/geometry.h>
@@ -256,7 +258,7 @@ class GraphicsMolecularSurfaceItemPrivate
 public:
     MolecularSurface *surface;
     QColor color;
-    AtomColorMap *colorMap;
+    boost::shared_ptr<AtomColorMap> colorMap;
     GraphicsMolecularSurfaceItem::ColorMode colorMode;
     QList<ContactPatchItem *> contactPatches;
 };
@@ -287,7 +289,7 @@ GraphicsMolecularSurfaceItem::GraphicsMolecularSurfaceItem(const Molecule *molec
     d->surface = new MolecularSurface(molecule, MolecularSurface::SolventExcluded);
     d->color = Qt::red;
     d->colorMode = AtomColor;
-    d->colorMap = new AtomColorMap(AtomColorMap::DefaultColorScheme);
+    d->colorMap = boost::make_shared<AtomColorMap>(AtomColorMap::DefaultColorScheme);
 
     setMolecule(molecule);
 }
@@ -300,7 +302,7 @@ GraphicsMolecularSurfaceItem::GraphicsMolecularSurfaceItem(const MolecularSurfac
     d->surface = new MolecularSurface(surface->molecule(), MolecularSurface::SolventExcluded);
     d->color = Qt::red;
     d->colorMode = AtomColor;
-    d->colorMap = new AtomColorMap(AtomColorMap::DefaultColorScheme);
+    d->colorMap = boost::make_shared<AtomColorMap>(AtomColorMap::DefaultColorScheme);
 
     setSurface(surface);
 }
@@ -309,7 +311,6 @@ GraphicsMolecularSurfaceItem::GraphicsMolecularSurfaceItem(const MolecularSurfac
 GraphicsMolecularSurfaceItem::~GraphicsMolecularSurfaceItem()
 {
     delete d->surface;
-    delete d->colorMap;
     delete d;
 }
 
@@ -423,15 +424,13 @@ GraphicsMolecularSurfaceItem::ColorMode GraphicsMolecularSurfaceItem::colorMode(
 }
 
 /// Sets the color map for the surface item to \p colorMap.
-void GraphicsMolecularSurfaceItem::setColorMap(AtomColorMap *colorMap)
+void GraphicsMolecularSurfaceItem::setColorMap(const boost::shared_ptr<AtomColorMap> &colorMap)
 {
-    delete d->colorMap;
-
     d->colorMap = colorMap;
 }
 
 /// Returns the color map for the surface item.
-AtomColorMap* GraphicsMolecularSurfaceItem::colorMap() const
+boost::shared_ptr<AtomColorMap> GraphicsMolecularSurfaceItem::colorMap() const
 {
     return d->colorMap;
 }

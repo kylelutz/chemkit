@@ -38,6 +38,8 @@
 
 #include "graphics.h"
 
+#include <boost/shared_ptr.hpp>
+
 #include "graphicsitem.h"
 
 #include <chemkit/atomcolormap.h>
@@ -74,8 +76,8 @@ public:
     QColor color() const;
     void setColorMode(ColorMode mode);
     ColorMode colorMode() const;
-    void setColorMap(AtomColorMap *colorMap);
-    AtomColorMap* colorMap() const;
+    void setColorMap(const boost::shared_ptr<AtomColorMap> &colorMap);
+    boost::shared_ptr<AtomColorMap> colorMap() const;
 
 private:
     void itemChanged(ItemChange change);
