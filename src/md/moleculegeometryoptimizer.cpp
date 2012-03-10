@@ -134,6 +134,17 @@ std::string MoleculeGeometryOptimizer::forceField() const
     return d->forceFieldName;
 }
 
+// --- Energy -------------------------------------------------------------- //
+/// Returns the current energy of the force field.
+Real MoleculeGeometryOptimizer::energy() const
+{
+    if(!d->forceField){
+        return 0;
+    }
+
+    return d->forceField->energy();
+}
+
 // --- Optimization -------------------------------------------------------- //
 /// Sets up the force field. Returns \c false if an error occurred.
 bool MoleculeGeometryOptimizer::setup()

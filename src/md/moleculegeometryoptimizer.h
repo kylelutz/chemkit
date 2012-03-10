@@ -58,6 +58,9 @@ public:
     bool setForceField(const std::string &forceField);
     std::string forceField() const;
 
+    // energy
+    Real energy() const;
+
     // optimization
     bool setup();
     bool step();
