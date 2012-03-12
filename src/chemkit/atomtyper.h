@@ -66,6 +66,23 @@ public:
     virtual int typeNumber(const Atom *atom) const;
     virtual std::string typeString(const Atom *atom) const;
 
+    // predicates
+    static bool isCarbonylCarbon(const Atom *atom);
+    static bool isCarbonylOxygen(const Atom *atom);
+    static bool isHalogen(const Atom *atom);
+    static bool isHydrogenDonor(const Atom *atom);
+    static bool isHydrogenAcceptor(const Atom *atom);
+    static bool isHydroxylHydrogen(const Atom *atom);
+    static bool isHydroxylOxygen(const Atom *atom);
+    static bool isNitrileCarbon(const Atom *atom);
+    static bool isNitrileNitrogen(const Atom *atom);
+    static bool isNitroOxygen(const Atom *atom);
+    static bool isNitroNitrogen(const Atom *atom);
+    static bool isPolarHydrogen(const Atom *atom);
+    static bool isNonpolarHydrogen(const Atom *atom);
+    static bool isThiolHydrogen(const Atom *atom);
+    static bool isThiolSulfur(const Atom *atom);
+
     // static methods
     static AtomTyper* create(const std::string &name);
     static std::vector<std::string> typers();

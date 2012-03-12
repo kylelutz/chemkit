@@ -37,6 +37,7 @@
 #include "atomtyper.h"
 
 #include "atom.h"
+#include "bond.h"
 #include "foreach.h"
 #include "molecule.h"
 #include "pluginmanager.h"
@@ -113,6 +114,144 @@ int AtomTyper::typeNumber(const Atom *atom) const
 std::string AtomTyper::typeString(const Atom *atom) const
 {
     return type(atom).toString();
+}
+
+// --- Predicates ---------------------------------------------------------- //
+/// Returns \c true if \p atom is a carbon in a carbonyl group.
+bool AtomTyper::isCarbonylCarbon(const Atom *atom)
+{
+    return atom->is(Atom::Carbon) &&
+           atom->isBondedTo(Atom::Oxygen, Bond::Double);
+}
+
+/// Returns \c true if \p atom is an oxygen in a carbonyl group.
+bool AtomTyper::isCarbonylOxygen(const Atom *atom)
+{
+    return atom->is(Atom::Oxygen) &&
+           atom->isTerminal() &&
+           atom->isBondedTo(Atom::Carbon, Bond::Double);
+}
+
+/// Returns \c true if \p atom is a halogen.
+bool AtomTyper::isHalogen(const Atom *atom)
+{
+    return atom->is(Atom::Fluorine) ||
+           atom->is(Atom::Chlorine) ||
+           atom->is(Atom::Bromine) ||
+           atom->is(Atom::Iodine);
+}
+
+/// Returns \c true if \p atom is a hydrogen donor.
+bool AtomTyper::isHydrogenDonor(const Atom *atom)
+{
+    return (atom->is(Atom::Oxygen) ||
+            atom->is(Atom::Nitrogen) ||
+            atom->is(Atom::Fluorine)) &&
+           atom->isBondedTo(Atom::Hydrogen);
+}
+
+/// Returns \c true if \p atom is a hydrogen acceptor.
+bool AtomTyper::isHydrogenAcceptor(const Atom *atom)
+{
+    return atom->is(Atom::Oxygen) ||
+           atom->is(Atom::Nitrogen) ||
+           atom->is(Atom::Fluorine);
+}
+
+/// Returns \c true if \p atom is a terminal hydrogen in a hydroxyl
+/// group.
+bool AtomTyper::isHydroxylHydrogen(const Atom *atom)
+{
+    return atom->isTerminalHydrogen() &&
+           isHydroxylOxygen(atom->neighbor(0));
+}
+
+/// Returns \c true if \p atom is an oxygen in a hydroxyl group.
+bool AtomTyper::isHydroxylOxygen(const Atom *atom)
+{
+    return atom->is(Atom::Oxygen) &&
+           atom->neighborCount() == 2 &&
+           atom->isBondedTo(Atom::Hydrogen, Bond::Single);
+}
+
+/// Returns \c true if \p atom is a carbon in a nitrile group.
+bool AtomTyper::isNitrileCarbon(const Atom *atom)
+{
+    return atom->is(Atom::Carbon) &&
+           atom->neighborCount() == 2 &&
+           atom->isBondedTo(Atom::Nitrogen, Bond::Triple);
+}
+
+/// Returns \c true if \p atom is a terminal nitrogen in a nitrile
+/// group.
+bool AtomTyper::isNitrileNitrogen(const Atom *atom)
+{
+    return atom->is(Atom::Nitrogen) &&
+           atom->isTerminal() &&
+           atom->isBondedTo(Atom::Carbon, Bond::Triple);
+}
+
+/// Returns \c true if \p atom is an oxygen in a nitro group.
+bool AtomTyper::isNitroOxygen(const Atom *atom)
+{
+    if(!atom->is(Atom::Oxygen) || !atom->isTerminal()){
+        return false;
+    }
+
+    const Atom *neighbor = atom->neighbor(0);
+    if(!neighbor->is(Atom::Nitrogen)){
+        return false;
+    }
+
+    const Bond *neighborBond = atom->bond(0);
+    return (neighborBond->is(Bond::Single) && atom->formalCharge() == -1) ||
+           (neighborBond->is(Bond::Double) && atom->formalCharge() == 0);
+}
+
+/// Returns \c true if \p atom is a nitrogen in a nitro group.
+bool AtomTyper::isNitroNitrogen(const Atom *atom)
+{
+    return atom->is(Atom::Nitrogen) &&
+           atom->neighborCount() == 3 &&
+           atom->isBondedTo(Atom::Oxygen, Bond::Single) &&
+           atom->isBondedTo(Atom::Oxygen, Bond::Double);
+}
+
+/// Returns \c true if \p atom is a terminal hydrogen attached to a
+/// polar atom.
+bool AtomTyper::isPolarHydrogen(const Atom *atom)
+{
+    if(!atom->isTerminalHydrogen()){
+        return false;
+    }
+
+    const Atom *neighbor = atom->neighbor(0);
+
+    return neighbor->is(Atom::Nitrogen) ||
+           neighbor->is(Atom::Oxygen) ||
+           neighbor->is(Atom::Fluorine);
+}
+
+/// Returns \c true if \p atom is a terminal hydrogen attached to a
+/// non-polar atom.
+bool AtomTyper::isNonpolarHydrogen(const Atom *atom)
+{
+    return atom->isTerminalHydrogen() && !isPolarHydrogen(atom);
+}
+
+/// Returns \c true if \p atom is a hydrogen in a thiol group.
+bool AtomTyper::isThiolHydrogen(const Atom *atom)
+{
+    return atom->isTerminalHydrogen() &&
+           isThiolSulfur(atom->neighbor(0));
+}
+
+/// Returns \c true if \p atom is a sulfur in a thiol group.
+bool AtomTyper::isThiolSulfur(const Atom *atom)
+{
+    return atom->is(Atom::Sulfur) &&
+           atom->neighborCount() == 2 &&
+           atom->isBondedTo(Atom::Hydrogen, Bond::Single);
 }
 
 // --- Static Methods ------------------------------------------------------ //
