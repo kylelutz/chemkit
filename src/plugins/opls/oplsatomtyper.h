@@ -61,7 +61,6 @@ private:
     void setTypeNumber(int index, int typeNumber);
 
 private:
-    const chemkit::Molecule *m_molecule;
     std::vector<int> m_typeNumbers;
 };
 
