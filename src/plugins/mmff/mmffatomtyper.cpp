@@ -41,7 +41,6 @@
 #include <chemkit/foreach.h>
 #include <chemkit/molecule.h>
 
-#include "mmffforcefield.h"
 #include "mmffaromaticitymodel.h"
 
 namespace {
