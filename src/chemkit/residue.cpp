@@ -82,7 +82,7 @@ int Residue::residueType() const
 }
 
 /// Returns the number of atoms in the residue.
-int Residue::size() const
+size_t Residue::size() const
 {
     return atomCount();
 }
@@ -126,7 +126,7 @@ std::vector<Atom *> Residue::atoms() const
 }
 
 /// Returns the number of atoms in the residue.
-int Residue::atomCount() const
+size_t Residue::atomCount() const
 {
     return d->atoms.size();
 }
@@ -136,8 +136,8 @@ std::vector<Bond *> Residue::bonds() const
 {
     std::vector<Bond *> bonds;
 
-    for(int i = 0; i < atomCount(); i++){
-        for(int j = i + 1; j < atomCount(); j++){
+    for(size_t i = 0; i < atomCount(); i++){
+        for(size_t j = i + 1; j < atomCount(); j++){
             Bond *bond = d->atoms[i]->bondTo(d->atoms[j]);
 
             if(bond){
@@ -150,7 +150,7 @@ std::vector<Bond *> Residue::bonds() const
 }
 
 /// Returns the number of bonds in the residue.
-int Residue::bondCount() const
+size_t Residue::bondCount() const
 {
     return bonds().size();
 }

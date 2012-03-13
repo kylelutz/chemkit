@@ -64,7 +64,7 @@ public:
 
     // properties
     int residueType() const;
-    int size() const;
+    size_t size() const;
     virtual char letter() const;
     Molecule* molecule() const;
 
@@ -72,9 +72,9 @@ public:
     void addAtom(Atom *atom);
     void removeAtom(Atom *atom);
     std::vector<Atom *> atoms() const;
-    int atomCount() const;
+    size_t atomCount() const;
     std::vector<Bond *> bonds() const;
-    int bondCount() const;
+    size_t bondCount() const;
     bool contains(const Atom *atom) const;
     bool contains(const Bond *bond) const;
 
