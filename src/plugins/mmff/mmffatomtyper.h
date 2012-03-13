@@ -71,7 +71,6 @@ private:
 private:
     std::vector<int> m_types;
     std::vector<chemkit::Real> m_formalCharges;
-    std::vector<chemkit::Real> m_partialCharges;
 };
 
 #endif // MMFFATOMTYPER_H
