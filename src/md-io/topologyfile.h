@@ -63,7 +63,6 @@ public:
     // file contents
     void setTopology(const boost::shared_ptr<Topology> &topology);
     boost::shared_ptr<Topology> topology() const;
-    bool removeTopology();
 
 private:
     TopologyFilePrivate* const d;

@@ -97,15 +97,4 @@ boost::shared_ptr<Topology> TopologyFile::topology() const
     return d->topology;
 }
 
-/// Removes the topology from the file.
-bool TopologyFile::removeTopology()
-{
-    if(!d->topology == 0){
-        return false;
-    }
-
-    d->topology.reset();
-    return true;
-}
-
 } // end chemkit namespace
