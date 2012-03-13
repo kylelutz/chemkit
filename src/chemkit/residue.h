@@ -86,8 +86,6 @@ public:
 private:
     CHEMKIT_DISABLE_COPY(Residue)
 
-    friend class Molecule;
-
 private:
     ResiduePrivate* const d;
 };
