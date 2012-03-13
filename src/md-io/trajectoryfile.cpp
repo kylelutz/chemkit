@@ -110,15 +110,4 @@ boost::shared_ptr<Trajectory> TrajectoryFile::trajectory() const
     return d->trajectory;
 }
 
-/// Remove the trajectory from the file.
-bool TrajectoryFile::removeTrajectory()
-{
-    if(!d->trajectory){
-        return false;
-    }
-
-    d->trajectory.reset();
-    return true;
-}
-
 } // end chemkit namespace

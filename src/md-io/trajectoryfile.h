@@ -70,7 +70,6 @@ public:
     // file contents
     void setTrajectory(const boost::shared_ptr<Trajectory> &trajectory);
     boost::shared_ptr<Trajectory> trajectory() const;
-    bool removeTrajectory();
 
 private:
     TrajectoryFilePrivate* const d;
