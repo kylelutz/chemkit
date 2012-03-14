@@ -37,9 +37,6 @@
 
 #include "../../3rdparty/rapidxml/rapidxml.hpp"
 
-#include <cstdio>
-#include <iostream>
-
 #include <boost/make_shared.hpp>
 
 #include <chemkit/atom.h>
