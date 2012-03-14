@@ -166,17 +166,14 @@ void AtomTest::is()
     chemkit::Atom *atom = molecule.addAtom("H");
     QCOMPARE(atom->is(chemkit::Atom::Hydrogen), true);
     QCOMPARE(atom->is(chemkit::Atom::Carbon), false);
-    QCOMPARE(atom->isHeteroatom(), false);
 
     atom->setAtomicNumber(chemkit::Atom::Carbon);
     QCOMPARE(atom->is(chemkit::Atom::Carbon), true);
     QCOMPARE(atom->is(chemkit::Atom::Oxygen), false);
-    QCOMPARE(atom->isHeteroatom(), false);
 
     atom->setAtomicNumber(chemkit::Atom::Lithium);
     QCOMPARE(atom->is(chemkit::Atom::Lithium), true);
     QCOMPARE(atom->is(chemkit::Atom::Hydrogen), false);
-    QCOMPARE(atom->isHeteroatom(), true);
 }
 
 void AtomTest::molecule()

@@ -215,12 +215,6 @@ Real Atom::vanDerWaalsRadius() const
     return element().vanDerWaalsRadius();
 }
 
-/// Returns \c true if this atom is not Carbon or Hydrogen.
-bool Atom::isHeteroatom() const
-{
-    return !is(Hydrogen) && !is(Carbon);
-}
-
 /// Returns the fragment the atom is a part of.
 Fragment* Atom::fragment() const
 {

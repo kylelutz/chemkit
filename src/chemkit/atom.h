@@ -95,7 +95,6 @@ public:
     Real covalentRadius() const;
     Real vanDerWaalsRadius() const;
     inline bool is(const Element &element) const;
-    bool isHeteroatom() const;
     inline Molecule* molecule() const;
     Fragment* fragment() const;
     inline size_t index() const;
