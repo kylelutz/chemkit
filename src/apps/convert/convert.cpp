@@ -105,12 +105,19 @@ int main(int argc, char *argv[])
     }
 
     // read input
-    chemkit::MoleculeFile inputFile(inputFileName);
+    chemkit::MoleculeFile inputFile;
     if(!inputFormatName.empty()){
         inputFile.setFormat(inputFormatName);
     }
 
-    bool ok = inputFile.read();
+    bool ok = false;
+    if(inputFileName == "-"){
+        ok = inputFile.read(std::cin);
+    }
+    else{
+        ok = inputFile.read(inputFileName);
+    }
+
     if(!ok){
         std::cerr << "Error: Failed to read input file: " << inputFile.errorString() << std::endl;
         return -1;
@@ -121,7 +128,12 @@ int main(int argc, char *argv[])
         ok = inputFile.write(outputFileName);
     }
     else{
-        ok = inputFile.write(outputFileName, outputFormatName);
+        if(outputFileName == "-"){
+            ok = inputFile.write(std::cout, outputFormatName);
+        }
+        else{
+            ok = inputFile.write(outputFileName, outputFormatName);
+        }
     }
 
     if(!ok){
