@@ -116,12 +116,6 @@ MoleculePrivate::MoleculePrivate()
 /// Fragment, and CoordinateSet objects that they contain. Deleting
 /// the molecule will also delete all of the objects that it contains.
 
-/// \enum Molecule::CompareFlag
-/// Option flags for molecule comparisons.
-///    - \c CompareAtomsOnly
-///    - \c CompareHydrogens
-///    - \c CompareAromaticity
-
 // --- Construction and Destruction ---------------------------------------- //
 /// Creates a new, empty molecule.
 Molecule::Molecule()
