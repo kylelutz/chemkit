@@ -79,9 +79,8 @@ public:
     void setColorMap(const boost::shared_ptr<AtomColorMap> &colorMap);
     boost::shared_ptr<AtomColorMap> colorMap() const;
 
-private:
-    void itemChanged(ItemChange change);
-    void recalculate();
+    // drawing
+    virtual void paint(GraphicsPainter *painter);
 
 private:
     GraphicsMolecularSurfaceItemPrivate* const d;

@@ -52,206 +52,6 @@
 
 namespace chemkit {
 
-namespace {
-
-// === ClippedSphere ======================================================= //
-class ClippedSphere
-{
-public:
-    ClippedSphere(float radius);
-
-    void addClipPlane(const Point3f &point, const Vector3f &normal);
-    GraphicsVertexBuffer* tesselate() const;
-
-private:
-    float m_radius;
-    QList<QPair<Point3f, Vector3f> > m_clipPlanes;
-};
-
-ClippedSphere::ClippedSphere(float radius)
-    : m_radius(radius)
-{
-}
-
-void ClippedSphere::addClipPlane(const Point3f &point, const Vector3f &normal)
-{
-    m_clipPlanes.append(qMakePair(point, normal));
-}
-
-GraphicsVertexBuffer* ClippedSphere::tesselate() const
-{
-    GraphicsVertexBuffer *buffer = GraphicsSphere(m_radius).tesselate();
-
-    QVector<Point3f> verticies = buffer->verticies();
-    QVector<Vector3f> normals = buffer->normals();
-    QVector<unsigned short> indices = buffer->indices();
-
-    QVector<unsigned short> clippedIndicies;
-
-    for(int triangleIndex = 0; triangleIndex < indices.size() / 3; triangleIndex++){
-        unsigned short ia = indices[triangleIndex*3+0];
-        unsigned short ib = indices[triangleIndex*3+1];
-        unsigned short ic = indices[triangleIndex*3+2];
-
-        const Point3f &a = verticies[ia];
-        const Point3f &b = verticies[ib];
-        const Point3f &c = verticies[ic];
-
-        // check triangle against each clipping plane
-        bool clipTriangle = false;
-
-        for(int clipPlaneIndex = 0; clipPlaneIndex < m_clipPlanes.size(); clipPlaneIndex++){
-            const Point3f &planePoint = m_clipPlanes[clipPlaneIndex].first;
-            const Vector3f &planeNormal = m_clipPlanes[clipPlaneIndex].second;
-
-            QList<unsigned short> invalidVerticies;
-
-            if((planePoint - a).dot(planeNormal) < 0){
-                invalidVerticies.append(ia);
-            }
-            if((planePoint - b).dot(planeNormal) < 0){
-                invalidVerticies.append(ib);
-            }
-            if((planePoint - c).dot(planeNormal) < 0){
-                invalidVerticies.append(ic);
-            }
-
-            // keep entire triangle
-            if(invalidVerticies.isEmpty()){
-                continue;
-            }
-            // clip entire triangle
-            else if(invalidVerticies.size() == 3){
-                clipTriangle = true;
-                break;
-            }
-            // clip part of the triangle
-            else{
-                foreach(unsigned short vertexIndex, invalidVerticies){
-                    Point3f invalidPoint = verticies[vertexIndex];
-
-                    float d = -(planePoint - invalidPoint).dot(planeNormal);
-                    float theta = acos(planePoint.norm() / m_radius) - acos((planePoint.norm() + d) / m_radius);
-                    Vector3f up = invalidPoint.cross(planeNormal).normalized();
-
-                    // set new vertex position
-                    verticies[vertexIndex] = chemkit::geometry::rotateRadians(invalidPoint, up, -theta);
-
-                    // update normal
-                    normals[vertexIndex] = verticies[vertexIndex].normalized();
-                }
-            }
-        }
-
-        if(!clipTriangle){
-            clippedIndicies.append(ia);
-            clippedIndicies.append(ib);
-            clippedIndicies.append(ic);
-        }
-    }
-
-    buffer->setVerticies(verticies);
-    buffer->setNormals(normals);
-    buffer->setIndicies(clippedIndicies);
-
-    return buffer;
-}
-
-// === ContactPatchItem ==================================================== //
-class ContactPatchItem : public GraphicsItem
-{
-public:
-    ContactPatchItem(GraphicsMolecularSurfaceItem *parent, const Point3f &center, float radius);
-    ~ContactPatchItem();
-
-    Point3f center() const;
-    float radius() const;
-    void setColor(const QColor &color);
-    void addIntersection(const ContactPatchItem *item);
-
-    void paint(GraphicsPainter *painter);
-
-private:
-    GraphicsMolecularSurfaceItem *m_parent;
-    Point3f m_center;
-    float m_radius;
-    QColor m_color;
-    GraphicsVertexBuffer *m_buffer;
-    QList<const ContactPatchItem *> m_intersections;
-};
-
-ContactPatchItem::ContactPatchItem(GraphicsMolecularSurfaceItem *parent, const Point3f &center, float radius)
-    : GraphicsItem(),
-      m_parent(parent),
-      m_center(center),
-      m_radius(radius)
-{
-    m_buffer = 0;
-    m_color = Qt::red;
-
-    translate(center);
-}
-
-ContactPatchItem::~ContactPatchItem()
-{
-    delete m_buffer;
-}
-
-Point3f ContactPatchItem::center() const
-{
-    return m_center;
-}
-
-float ContactPatchItem::radius() const
-{
-    return m_radius;
-}
-
-void ContactPatchItem::setColor(const QColor &color)
-{
-    m_color = color;
-}
-
-void ContactPatchItem::addIntersection(const ContactPatchItem *item)
-{
-    m_intersections.append(item);
-}
-
-void ContactPatchItem::paint(GraphicsPainter *painter)
-{
-    if(!m_buffer){
-        ClippedSphere clippedSphere(m_radius);
-
-        // calculate and add clip plane for each intersection
-        foreach(const ContactPatchItem *item, m_intersections){
-            const Point3f &a = m_center;
-            float ra = m_radius;
-            const Point3f &b = item->center();
-            float rb = item->radius();
-
-            const float d = chemkit::geometry::distance(a.cast<Real>(), b.cast<Real>());
-            const float x = (d*d - rb*rb + ra*ra) / (2 * d);
-
-            Vector3f planeNormal = (b - a).normalized();
-            const Point3f planeCenter = planeNormal * x;
-
-            clippedSphere.addClipPlane(planeCenter, planeNormal);
-        }
-
-        m_buffer = clippedSphere.tesselate();
-    }
-
-    QColor color = m_color;
-    color.setAlphaF(opacity());
-    painter->setColor(color);
-
-    painter->setMaterial(m_parent->material());
-
-    painter->draw(m_buffer);
-}
-
-} // end anonymous namespace
-
 // === GraphicsMolecularSurfaceItemPrivate ================================= //
 class GraphicsMolecularSurfaceItemPrivate
 {
@@ -260,7 +60,6 @@ public:
     QColor color;
     boost::shared_ptr<AtomColorMap> colorMap;
     GraphicsMolecularSurfaceItem::ColorMode colorMode;
-    QList<ContactPatchItem *> contactPatches;
 };
 
 // === GraphicsMolecularSurfaceItem ======================================== //
@@ -326,8 +125,6 @@ void GraphicsMolecularSurfaceItem::setSurface(const MolecularSurface *surface)
     else{
         d->surface->setMolecule(0);
     }
-
-    recalculate();
 }
 
 /// Returns the surface that the item is displaying.
@@ -340,8 +137,6 @@ const MolecularSurface* GraphicsMolecularSurfaceItem::surface() const
 void GraphicsMolecularSurfaceItem::setMolecule(const Molecule *molecule)
 {
     d->surface->setMolecule(molecule);
-
-    recalculate();
 }
 
 /// Returns the molecule for the surface.
@@ -354,8 +149,6 @@ const Molecule* GraphicsMolecularSurfaceItem::molecule() const
 void GraphicsMolecularSurfaceItem::setSurfaceType(MolecularSurface::SurfaceType type)
 {
     d->surface->setSurfaceType(type);
-
-    recalculate();
 }
 
 /// Returns the surface type.
@@ -368,11 +161,6 @@ MolecularSurface::SurfaceType GraphicsMolecularSurfaceItem::surfaceType() const
 void GraphicsMolecularSurfaceItem::setProbeRadius(float radius)
 {
     d->surface->setProbeRadius(radius);
-
-    if(surfaceType() == MolecularSurface::SolventAccessible ||
-       surfaceType() == MolecularSurface::SolventExcluded){
-        recalculate();
-    }
 }
 
 /// Returns the probe radius for the surface.
@@ -385,12 +173,6 @@ float GraphicsMolecularSurfaceItem::probeRadius() const
 void GraphicsMolecularSurfaceItem::setColor(const QColor &color)
 {
     d->color = color;
-
-    if(d->colorMode == SolidColor){
-        foreach(ContactPatchItem *item, d->contactPatches){
-            item->setColor(d->color);
-        }
-    }
 }
 
 /// Returns the color for the surface.
@@ -403,18 +185,6 @@ QColor GraphicsMolecularSurfaceItem::color() const
 void GraphicsMolecularSurfaceItem::setColorMode(ColorMode mode)
 {
     d->colorMode = mode;
-
-    if(d->colorMode == SolidColor){
-        foreach(ContactPatchItem *item, d->contactPatches){
-            item->setColor(d->color);
-        }
-    }
-    else if(d->colorMode == AtomColor){
-        for(int i = 0; i < d->contactPatches.size(); i++){
-            ContactPatchItem *item = d->contactPatches[i];
-            item->setColor(d->colorMap->color(molecule()->atom(i)));
-        }
-    }
 }
 
 /// Returns the color mode for the surface item.
@@ -435,78 +205,96 @@ boost::shared_ptr<AtomColorMap> GraphicsMolecularSurfaceItem::colorMap() const
     return d->colorMap;
 }
 
-// --- Internal Methods ---------------------------------------------------- //
-void GraphicsMolecularSurfaceItem::itemChanged(ItemChange change)
+// --- Drawing ------------------------------------------------------------- //
+void GraphicsMolecularSurfaceItem::paint(GraphicsPainter *painter)
 {
-    if(change == ItemVisiblityChanged){
-        foreach(ContactPatchItem *item, d->contactPatches){
-            item->setVisible(isVisible());
-        }
-    }
-    else if(change == ItemOpacityChanged){
-        foreach(ContactPatchItem *item, d->contactPatches){
-            item->setOpacity(opacity());
-        }
-
-        if(isOpaque()){
-            material()->setSpecularColor(QColor::fromRgbF(0.3, 0.3, 0.3));
-        }
-        else{
-            material()->setSpecularColor(Qt::transparent);
-        }
-    }
-    else if(change == ItemSceneChanged){
-        foreach(ContactPatchItem *item, d->contactPatches){
-            if(scene()){
-                scene()->addItem(item);
-            }
-        }
-    }
-}
-
-void GraphicsMolecularSurfaceItem::recalculate()
-{
-    qDeleteAll(d->contactPatches);
-    d->contactPatches.clear();
-
-    const Molecule *molecule = this->molecule();
-    if(!molecule){
+    if(!d->surface || !d->surface->molecule()){
+        // nothing to render
         return;
     }
 
-    // create contact patches
-    foreach(const Atom *atom, molecule->atoms()){
-        float radius = atom->vanDerWaalsRadius();
-        if(surfaceType() == MolecularSurface::SolventAccessible){
-            radius += probeRadius();
-        }
+    // create map of sphere radii -> sphere vertex buffers
+    std::map<Real, boost::shared_ptr<GraphicsVertexBuffer> > sphereCache;
 
-        ContactPatchItem *item = new ContactPatchItem(this, atom->position().cast<float>(), radius);
-        d->contactPatches.append(item);
+    foreach(const Atom *atom, d->surface->molecule()->atoms()){
+        if(sphereCache.find(atom->vanDerWaalsRadius()) == sphereCache.end()){
+            float radius = atom->vanDerWaalsRadius();
+            if(d->surface->surfaceType() != MolecularSurface::VanDerWaals){
+                radius += d->surface->probeRadius();
+            }
 
-        if(d->colorMode == AtomColor){
-            item->setColor(d->colorMap->color(atom));
-        }
-        else{
-            item->setColor(d->color);
-        }
+            GraphicsSphere sphere(radius);
 
-        item->setOpacity(opacity());
-
-        if(scene()){
-            scene()->addItem(item);
+            sphereCache[atom->vanDerWaalsRadius()] =
+                boost::shared_ptr<GraphicsVertexBuffer>(sphere.tesselate());
         }
     }
 
-    // add intersections from alpha shape edges
-    const AlphaShape *alphaShape = d->surface->alphaShape();
+    // draw opaque
+    if(isOpaque()){
+        foreach(const Atom *atom, d->surface->molecule()->atoms()){
+            const boost::shared_ptr<GraphicsVertexBuffer> &buffer =
+                sphereCache.find(atom->vanDerWaalsRadius())->second;
 
-    foreach(const AlphaShape::Edge &edge, alphaShape->edges()){
-        ContactPatchItem *itemA = d->contactPatches[edge[0]];
-        ContactPatchItem *itemB = d->contactPatches[edge[1]];
+            if(d->colorMode == AtomColor)
+                painter->setColor(d->colorMap->color(atom));
+            else if(d->colorMode == SolidColor)
+                painter->setColor(color());
 
-        itemA->addIntersection(itemB);
-        itemB->addIntersection(itemA);
+            glPushMatrix();
+            glTranslated(atom->x(), atom->y(), atom->z());
+            painter->draw(buffer.get());
+            glPopMatrix();
+        }
+    }
+    // draw translucent
+    else{
+        // disable writes to color buffer
+        glColorMask(false, false, false, false);
+
+        // render each sphere to fill depth buffer
+        foreach(const Atom *atom, d->surface->molecule()->atoms()){
+            const boost::shared_ptr<GraphicsVertexBuffer> &buffer =
+                sphereCache.find(atom->vanDerWaalsRadius())->second;
+
+            glPushMatrix();
+            glTranslated(atom->x(), atom->y(), atom->z());
+            painter->draw(buffer.get());
+            glPopMatrix();
+        }
+
+        // re-enabled writes to color buffer
+        glColorMask(true, true, true, true);
+
+        // only select the closest fragments
+        glDepthFunc(GL_EQUAL);
+
+        // disable writes to the depth buffer
+        glDepthMask(false);
+
+        // actually render each sphere
+        foreach(const Atom *atom, d->surface->molecule()->atoms()){
+            const boost::shared_ptr<GraphicsVertexBuffer> &buffer =
+                sphereCache.find(atom->vanDerWaalsRadius())->second;
+
+            QColor color;
+            if(d->colorMode == AtomColor)
+                color = d->colorMap->color(atom);
+            else if(d->colorMode == SolidColor)
+                color = this->color();
+
+            color.setAlphaF(opacity());
+            painter->setColor(color);
+
+            glPushMatrix();
+            glTranslated(atom->x(), atom->y(), atom->z());
+            painter->draw(buffer.get());
+            glPopMatrix();
+        }
+
+        // reset depth buffer
+        glDepthFunc(GL_LESS);
+        glDepthMask(true);
     }
 }
 
