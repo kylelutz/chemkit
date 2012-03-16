@@ -36,11 +36,11 @@
 #include "xyzfileformat.h"
 
 #include <iomanip>
-#include <iostream>
 
 #include <chemkit/atom.h>
 #include <chemkit/element.h>
 #include <chemkit/foreach.h>
+#include <chemkit/molecule.h>
 #include <chemkit/moleculefile.h>
 
 XyzFileFormat::XyzFileFormat()

@@ -36,7 +36,6 @@
 #ifndef XYZFILEFORMAT_H
 #define XYZFILEFORMAT_H
 
-#include <chemkit/molecule.h>
 #include <chemkit/moleculefileformat.h>
 
 class XyzFileFormat : public chemkit::MoleculeFileFormat
