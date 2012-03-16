@@ -171,7 +171,7 @@ std::string FpsFileFormat::fingerprintTypeString() const
     std::string fingerprint = option("fingerprint").toString();
 
     if(fingerprint == "fp2"){
-        return "OpenBabel-FP2/1";
+        return "chemkit-FP2/1";
     }
     else if(fingerprint == "pubchem"){
         return "PubChem/1";
