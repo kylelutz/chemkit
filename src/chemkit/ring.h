@@ -84,7 +84,7 @@ public:
     size_t heteroatomCount() const;
     bool isHeterocycle() const;
     Atom* root() const;
-    int position(const Atom *atom, const Atom *root = 0) const;
+    size_t position(const Atom *atom, const Atom *root = 0) const;
     bool isFusedTo(const Ring *ring) const;
 
     // aromaticity

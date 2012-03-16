@@ -142,21 +142,21 @@ void RingTest::position()
     QVERIFY(furanOxygen->is(chemkit::Atom::Oxygen));
     foreach(chemkit::Atom *atom, furanRing->atoms()){
         if(atom->isBondedTo(furanOxygen)){
-            QCOMPARE(furanRing->position(atom), 1);
-            QCOMPARE(furanRing->position(atom, furanOxygen), 1);
+            QCOMPARE(furanRing->position(atom), size_t(1));
+            QCOMPARE(furanRing->position(atom, furanOxygen), size_t(1));
         }
         else if(atom == furanOxygen){
-            QCOMPARE(furanRing->position(atom), 0);
-            QCOMPARE(furanRing->position(atom, furanOxygen), 0);
+            QCOMPARE(furanRing->position(atom), size_t(0));
+            QCOMPARE(furanRing->position(atom, furanOxygen), size_t(0));
         }
         else{
-            QCOMPARE(furanRing->position(atom), 2);
-            QCOMPARE(furanRing->position(atom, furanOxygen), 2);
+            QCOMPARE(furanRing->position(atom), size_t(2));
+            QCOMPARE(furanRing->position(atom, furanOxygen), size_t(2));
         }
     }
 
     // atom from another molecule
-    QCOMPARE(furanRing->position(benzene->atoms()[0]), 0);
+    QCOMPARE(furanRing->position(benzene->atoms()[0]), size_t(0));
 }
 
 void RingTest::contains()
