@@ -38,17 +38,13 @@
 
 #include <cstddef>
 
+#include <boost/config.hpp>
 #include <boost/preprocessor/stringize.hpp>
 
 #include "config.h"
 
-#if defined(CHEMKIT_OS_UNIX)
-    #define CHEMKIT_DECL_IMPORT
-    #define CHEMKIT_DECL_EXPORT  __attribute__((visibility("default")))
-#elif defined(CHEMKIT_OS_WIN32)
-    #define CHEMKIT_DECL_IMPORT  __declspec(dllimport)
-    #define CHEMKIT_DECL_EXPORT  __declspec(dllexport)
-#endif
+#define CHEMKIT_DECL_IMPORT BOOST_SYMBOL_IMPORT
+#define CHEMKIT_DECL_EXPORT BOOST_SYMBOL_EXPORT
 
 #ifdef CHEMKIT_LIBRARY
     #define CHEMKIT_EXPORT CHEMKIT_DECL_EXPORT
