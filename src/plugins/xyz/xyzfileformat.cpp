@@ -48,10 +48,6 @@ XyzFileFormat::XyzFileFormat()
 {
 }
 
-XyzFileFormat::~XyzFileFormat()
-{
-}
-
 bool XyzFileFormat::read(std::istream &input, chemkit::MoleculeFile *file)
 {
     // atom count line
