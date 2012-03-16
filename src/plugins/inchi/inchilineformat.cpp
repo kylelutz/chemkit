@@ -55,7 +55,8 @@ bool InchiLineFormat::read(const std::string &formula, chemkit::Molecule *molecu
 {
     // verify formula
     if(formula.empty()){
-        return 0;
+        setErrorString("Formula is empty.");
+        return false;
     }
 
     std::string formulaString = formula;
