@@ -47,9 +47,9 @@ public:
     TxyzFileFormat();
     ~TxyzFileFormat();
 
-    bool read(std::istream &input, chemkit::MoleculeFile *file);
+    bool read(std::istream &input, chemkit::MoleculeFile *file) CHEMKIT_OVERRIDE;
     bool read(QIODevice *iodev, chemkit::MoleculeFile *file);
-    bool write(const chemkit::MoleculeFile *file, std::ostream &output);
+    bool write(const chemkit::MoleculeFile *file, std::ostream &output) CHEMKIT_OVERRIDE;
     bool write(const chemkit::MoleculeFile *file, QIODevice *iodev);
 };
 

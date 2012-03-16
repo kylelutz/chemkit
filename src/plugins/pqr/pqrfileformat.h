@@ -44,7 +44,7 @@ public:
     PqrFileFormat();
     ~PqrFileFormat();
 
-    bool read(std::istream &input, chemkit::MoleculeFile *file);
+    bool read(std::istream &input, chemkit::MoleculeFile *file) CHEMKIT_OVERRIDE;
 };
 
 #endif // PQRFILEFORMAT_H

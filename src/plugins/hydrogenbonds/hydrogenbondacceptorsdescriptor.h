@@ -44,7 +44,7 @@ public:
     HydrogenBondAcceptorsDescriptor();
     ~HydrogenBondAcceptorsDescriptor();
 
-    chemkit::Variant value(const chemkit::Molecule *molecule) const;
+    chemkit::Variant value(const chemkit::Molecule *molecule) const CHEMKIT_OVERRIDE;
 };
 
 #endif // HYDROGENBONDACCEPTORSDESCRIPTOR_H

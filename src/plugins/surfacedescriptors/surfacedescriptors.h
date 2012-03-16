@@ -43,7 +43,7 @@ class VanDerWallsAreaDescriptor : public chemkit::MolecularDescriptor
 public:
     VanDerWallsAreaDescriptor();
 
-    virtual chemkit::Variant value(const chemkit::Molecule *molecule) const;
+    chemkit::Variant value(const chemkit::Molecule *molecule) const CHEMKIT_OVERRIDE;
 };
 
 class VanDerWallsVolumeDescriptor : public chemkit::MolecularDescriptor
@@ -51,7 +51,7 @@ class VanDerWallsVolumeDescriptor : public chemkit::MolecularDescriptor
 public:
     VanDerWallsVolumeDescriptor();
 
-    virtual chemkit::Variant value(const chemkit::Molecule *molecule) const;
+    chemkit::Variant value(const chemkit::Molecule *molecule) const CHEMKIT_OVERRIDE;
 };
 
 class SolventAccessibleAreaDescriptor : public chemkit::MolecularDescriptor
@@ -59,7 +59,7 @@ class SolventAccessibleAreaDescriptor : public chemkit::MolecularDescriptor
 public:
     SolventAccessibleAreaDescriptor();
 
-    virtual chemkit::Variant value(const chemkit::Molecule *molecule) const;
+    chemkit::Variant value(const chemkit::Molecule *molecule) const CHEMKIT_OVERRIDE;
 };
 
 class SolventAccessibleVolumeDescriptor : public chemkit::MolecularDescriptor
@@ -67,7 +67,7 @@ class SolventAccessibleVolumeDescriptor : public chemkit::MolecularDescriptor
 public:
     SolventAccessibleVolumeDescriptor();
 
-    virtual chemkit::Variant value(const chemkit::Molecule *molecule) const;
+    chemkit::Variant value(const chemkit::Molecule *molecule) const CHEMKIT_OVERRIDE;
 };
 
 #endif // SURFACEDESCRIPTORS_H

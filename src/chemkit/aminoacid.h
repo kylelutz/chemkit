@@ -90,7 +90,7 @@ public:
     AminoAcidType type() const;
     std::string name() const;
     std::string symbol() const;
-    char letter() const;
+    char letter() const CHEMKIT_OVERRIDE;
     void setConformation(Conformation conformation);
     Conformation conformation() const;
 

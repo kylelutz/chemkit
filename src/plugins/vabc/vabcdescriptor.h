@@ -50,7 +50,7 @@ public:
 
     chemkit::Real volume(const chemkit::Atom *atom) const;
 
-    chemkit::Variant value(const chemkit::Molecule *molecule) const;
+    chemkit::Variant value(const chemkit::Molecule *molecule) const CHEMKIT_OVERRIDE;
 
 private:
     std::map<chemkit::Element::AtomicNumberType, chemkit::Real> m_volumes;

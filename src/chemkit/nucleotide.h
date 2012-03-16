@@ -72,7 +72,7 @@ public:
     void setType(NucleotideType type);
     void setType(const std::string &symbol);
     NucleotideType type() const;
-    char letter() const;
+    char letter() const CHEMKIT_OVERRIDE;
     std::string symbol() const;
     std::string name() const;
     void setSugarType(SugarType type);

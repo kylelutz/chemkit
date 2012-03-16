@@ -65,6 +65,29 @@
     Class(const Class &); \
     Class &operator=(const Class &);
 
+// Define macros for the C++11 final and override identifiers.
+#if defined(__clang__)
+    #if __has_feature(cxx_override_control)
+        #define CHEMKIT_FINAL final
+        #define CHEMKIT_OVERRIDE override
+    #else
+        #define CHEMKIT_FINAL
+        #define CHEMKIT_OVERRIDE
+    #endif
+#elif defined(__GNUC__)
+    #if(__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 7)) && \
+       (defined(__GXX_EXPERIMENTAL_CXX0X__) || __cplusplus >= 201103L)
+        #define CHEMKIT_FINAL final
+        #define CHEMKIT_OVERRIDE override
+    #else
+        #define CHEMKIT_FINAL
+        #define CHEMKIT_OVERRIDE
+    #endif
+#else
+    #define CHEMKIT_FINAL
+    #define CHEMKIT_OVERRIDE
+#endif
+
 namespace chemkit {
 
 /// Typedef for a real number.

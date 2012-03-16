@@ -47,8 +47,8 @@ public:
     ~MdlFileFormat();
 
     // input and output
-    bool read(std::istream &input, chemkit::MoleculeFile *file);
-    bool write(const chemkit::MoleculeFile *file, std::ostream &output);
+    bool read(std::istream &input, chemkit::MoleculeFile *file) CHEMKIT_OVERRIDE;
+    bool write(const chemkit::MoleculeFile *file, std::ostream &output) CHEMKIT_OVERRIDE;
 
 private:
     bool readMolFile(std::istream &input, chemkit::MoleculeFile *file);

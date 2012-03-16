@@ -60,7 +60,7 @@ public:
     std::string fingerprint() const;
 
     // descriptor
-    virtual Variant value(const Molecule *molecule) const;
+    Variant value(const Molecule *molecule) const CHEMKIT_OVERRIDE CHEMKIT_FINAL;
 
 private:
     SimilarityDescriptorPrivate* const d;

@@ -46,11 +46,11 @@ public:
     virtual ~AmberAtomTyper();
 
     // properties
-    virtual void setMolecule(const chemkit::Molecule *molecule);
+    void setMolecule(const chemkit::Molecule *molecule) CHEMKIT_OVERRIDE;
 
     // types
-    virtual chemkit::Variant type(const chemkit::Atom *atom) const;
-    virtual std::string typeString(const chemkit::Atom *atom) const;
+    chemkit::Variant type(const chemkit::Atom *atom) const CHEMKIT_OVERRIDE;
+    std::string typeString(const chemkit::Atom *atom) const CHEMKIT_OVERRIDE;
 
 private:
     std::string assignType(const chemkit::Atom *atom) const;

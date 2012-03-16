@@ -56,8 +56,8 @@ public:
     MoleculeFileFormatAdaptor(LineFormat *format, const std::string &name);
     virtual ~MoleculeFileFormatAdaptor();
 
-    virtual bool read(std::istream &input, MoleculeFile *file);
-    virtual bool write(const MoleculeFile *file, std::ostream &output);
+    virtual bool read(std::istream &input, MoleculeFile *file) CHEMKIT_OVERRIDE;
+    virtual bool write(const MoleculeFile *file, std::ostream &output) CHEMKIT_OVERRIDE;
 
 private:
     LineFormat *m_format;
@@ -70,7 +70,7 @@ public:
     MoleculeFileFormatAdaptor(PolymerFileFormat *format);
     virtual ~MoleculeFileFormatAdaptor();
 
-    virtual bool read(std::istream &input, MoleculeFile *file);
+    virtual bool read(std::istream &input, MoleculeFile *file) CHEMKIT_OVERRIDE;
 
 private:
     PolymerFileFormat *m_format;

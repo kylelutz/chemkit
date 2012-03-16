@@ -44,7 +44,7 @@ class MockDescriptor : public chemkit::MolecularDescriptor
         MockDescriptor();
         ~MockDescriptor();
 
-        chemkit::Variant value(const chemkit::Molecule *molecule) const;
+        chemkit::Variant value(const chemkit::Molecule *molecule) const CHEMKIT_OVERRIDE;
 };
 
 #endif // MOCKDESCRIPTOR_H

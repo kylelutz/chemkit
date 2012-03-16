@@ -43,7 +43,7 @@ class MolecularMassDescriptor : public chemkit::MolecularDescriptor
 public:
     MolecularMassDescriptor();
 
-    virtual chemkit::Variant value(const chemkit::Molecule *molecule) const;
+    chemkit::Variant value(const chemkit::Molecule *molecule) const CHEMKIT_OVERRIDE;
 };
 
 #endif // MASSDESCRIPTORS_H

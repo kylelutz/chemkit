@@ -45,7 +45,7 @@ public:
     RotatableBondsDescriptor();
     ~RotatableBondsDescriptor();
 
-    chemkit::Variant value(const chemkit::Molecule *molecule) const;
+    chemkit::Variant value(const chemkit::Molecule *molecule) const CHEMKIT_OVERRIDE;
 
 private:
     int heavyNeighborCount(const chemkit::Atom *atom) const;

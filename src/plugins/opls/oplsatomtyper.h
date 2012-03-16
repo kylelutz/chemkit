@@ -51,11 +51,11 @@ public:
     ~OplsAtomTyper();
 
     // properties
-    virtual void setMolecule(const chemkit::Molecule *molecule);
+    void setMolecule(const chemkit::Molecule *molecule) CHEMKIT_OVERRIDE;
 
     // types
-    int typeNumber(const chemkit::Atom *atom) const;
-    std::string typeString(const chemkit::Atom *atom) const;
+    int typeNumber(const chemkit::Atom *atom) const CHEMKIT_OVERRIDE;
+    std::string typeString(const chemkit::Atom *atom) const CHEMKIT_OVERRIDE;
 
 private:
     void setTypeNumber(int index, int typeNumber);

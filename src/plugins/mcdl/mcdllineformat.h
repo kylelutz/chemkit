@@ -46,7 +46,7 @@ public:
     ~McdlLineFormat();
 
     // input and output
-    bool read(const std::string &formula, chemkit::Molecule *molecule);
+    bool read(const std::string &formula, chemkit::Molecule *molecule) CHEMKIT_OVERRIDE;
 };
 
 #endif // MCDLLINEFORMAT_H

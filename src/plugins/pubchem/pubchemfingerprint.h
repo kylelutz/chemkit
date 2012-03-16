@@ -44,7 +44,7 @@ public:
     PubChemFingerprint();
     ~PubChemFingerprint();
 
-    virtual chemkit::Bitset value(const chemkit::Molecule *molecule) const;
+    chemkit::Bitset value(const chemkit::Molecule *molecule) const CHEMKIT_OVERRIDE;
 };
 
 #endif // PUBCHEMFINGERPRINT_H

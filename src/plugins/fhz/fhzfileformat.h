@@ -46,7 +46,7 @@ public:
     FhzFileFormat();
     ~FhzFileFormat();
 
-    bool read(std::istream &input, chemkit::MoleculeFile *file);
+    bool read(std::istream &input, chemkit::MoleculeFile *file) CHEMKIT_OVERRIDE;
     bool read(QIODevice *iodev, chemkit::MoleculeFile *file);
 };
 

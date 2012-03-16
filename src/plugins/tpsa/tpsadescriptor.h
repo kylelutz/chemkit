@@ -44,7 +44,7 @@ class TpsaDescriptor : public chemkit::MolecularDescriptor
 public:
     TpsaDescriptor();
 
-    chemkit::Variant value(const chemkit::Molecule *molecule) const;
+    chemkit::Variant value(const chemkit::Molecule *molecule) const CHEMKIT_OVERRIDE;
 
 private:
     chemkit::Real polarSurfaceAreaContribution(const chemkit::Atom *atom) const;

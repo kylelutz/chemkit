@@ -51,7 +51,7 @@ public:
     ~ForceFieldEnergyDescriptor();
 
     // descriptor
-    virtual Variant value(const Molecule *molecule) const;
+    Variant value(const Molecule *molecule) const CHEMKIT_OVERRIDE;
 };
 
 } // end chemkit namespace

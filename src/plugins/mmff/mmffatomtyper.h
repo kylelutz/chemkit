@@ -49,10 +49,10 @@ public:
     ~MmffAtomTyper();
 
     // properties
-    virtual void setMolecule(const chemkit::Molecule *molecule);
+    void setMolecule(const chemkit::Molecule *molecule) CHEMKIT_OVERRIDE;
 
     // types
-    int typeNumber(const chemkit::Atom *atom) const;
+    int typeNumber(const chemkit::Atom *atom) const CHEMKIT_OVERRIDE;
 
     // charges
     chemkit::Real formalCharge(int index) const;

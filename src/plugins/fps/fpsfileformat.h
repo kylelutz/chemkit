@@ -44,10 +44,10 @@ class FpsFileFormat : public chemkit::MoleculeFileFormat
 public:
     FpsFileFormat();
 
-    bool write(const chemkit::MoleculeFile *file, std::ostream &output);
+    bool write(const chemkit::MoleculeFile *file, std::ostream &output) CHEMKIT_OVERRIDE;
 
 protected:
-    chemkit::Variant defaultOption(const std::string &name) const;
+    chemkit::Variant defaultOption(const std::string &name) const CHEMKIT_OVERRIDE;
 
 private:
     std::string dateTimeString() const;

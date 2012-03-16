@@ -44,7 +44,7 @@ public:
     CubeFileFormat();
     ~CubeFileFormat();
 
-    bool read(std::istream &input, chemkit::MoleculeFile *file);
+    bool read(std::istream &input, chemkit::MoleculeFile *file) CHEMKIT_OVERRIDE;
 };
 
 #endif // CUBEFILEFORMAT_H

@@ -43,7 +43,7 @@ class GraphDensityDescriptor : public chemkit::MolecularDescriptor
 public:
     GraphDensityDescriptor();
 
-    chemkit::Variant value(const chemkit::Molecule *molecule) const;
+    chemkit::Variant value(const chemkit::Molecule *molecule) const CHEMKIT_OVERRIDE;
 };
 
 class GraphDiameterDescriptor : public chemkit::MolecularDescriptor
@@ -51,7 +51,7 @@ class GraphDiameterDescriptor : public chemkit::MolecularDescriptor
 public:
     GraphDiameterDescriptor();
     
-    chemkit::Variant value(const chemkit::Molecule *molecule) const;
+    chemkit::Variant value(const chemkit::Molecule *molecule) const CHEMKIT_OVERRIDE;
 };
 
 class GraphOrderDescriptor : public chemkit::MolecularDescriptor
@@ -59,7 +59,7 @@ class GraphOrderDescriptor : public chemkit::MolecularDescriptor
 public:
     GraphOrderDescriptor();
 
-    chemkit::Variant value(const chemkit::Molecule *molecule) const;
+    chemkit::Variant value(const chemkit::Molecule *molecule) const CHEMKIT_OVERRIDE;
 };
 
 class GraphRadiusDescriptor : public chemkit::MolecularDescriptor
@@ -67,7 +67,7 @@ class GraphRadiusDescriptor : public chemkit::MolecularDescriptor
 public:
     GraphRadiusDescriptor();
 
-    chemkit::Variant value(const chemkit::Molecule *molecule) const;
+    chemkit::Variant value(const chemkit::Molecule *molecule) const CHEMKIT_OVERRIDE;
 };
 
 class GraphSizeDescriptor : public chemkit::MolecularDescriptor

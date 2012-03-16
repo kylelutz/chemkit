@@ -45,12 +45,12 @@ public:
     SmilesLineFormat();
 
     // options
-    virtual chemkit::Variant defaultOption(const std::string &name) const;
+    chemkit::Variant defaultOption(const std::string &name) const CHEMKIT_OVERRIDE;
 
     // input and output
-    bool read(const std::string &formula, chemkit::Molecule *molecule);
+    bool read(const std::string &formula, chemkit::Molecule *molecule) CHEMKIT_OVERRIDE;
     bool read(const char *formula, chemkit::Molecule *molecule);
-    std::string write(const chemkit::Molecule *molecule);
+    std::string write(const chemkit::Molecule *molecule) CHEMKIT_OVERRIDE;
 };
 
 #endif // SMILESLINEFORMAT_H

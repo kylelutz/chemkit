@@ -52,10 +52,10 @@ public:
     ~GasteigerPartialChargePredictor();
 
     // properties
-    virtual void setMolecule(const chemkit::Molecule *molecule);
+    void setMolecule(const chemkit::Molecule *molecule) CHEMKIT_OVERRIDE;
 
     // partial charges
-    chemkit::Real partialCharge(const chemkit::Atom *atom) const;
+    chemkit::Real partialCharge(const chemkit::Atom *atom) const CHEMKIT_OVERRIDE;
 
 private:
     const GasteigerParameters* atomParameters(const chemkit::Atom *atom) const;

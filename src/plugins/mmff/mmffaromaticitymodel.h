@@ -45,7 +45,7 @@ public:
     virtual ~MmffAromaticityModel();
 
 protected:
-    virtual bool isAromaticRing(const chemkit::Ring *ring) const;
+    bool isAromaticRing(const chemkit::Ring *ring) const CHEMKIT_OVERRIDE;
 
 private:
     int piElectronCount(const chemkit::Ring *ring) const;

@@ -47,7 +47,7 @@ public:
     Fp2Fingerprint();
     ~Fp2Fingerprint();
 
-    virtual chemkit::Bitset value(const chemkit::Molecule *molecule) const;
+    chemkit::Bitset value(const chemkit::Molecule *molecule) const CHEMKIT_OVERRIDE;
 
 private:
     typedef std::vector<unsigned char> Fragment;

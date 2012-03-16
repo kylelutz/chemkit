@@ -45,7 +45,7 @@ public:
     WienerIndexDescriptor();
     ~WienerIndexDescriptor();
 
-    chemkit::Variant value(const chemkit::Molecule *molecule) const;
+    chemkit::Variant value(const chemkit::Molecule *molecule) const CHEMKIT_OVERRIDE;
 };
 
 #endif // WIENERINDEXDESCRIPTOR_H

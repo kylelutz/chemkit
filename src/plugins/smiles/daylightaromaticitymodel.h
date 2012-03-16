@@ -45,8 +45,8 @@ public:
     virtual ~DaylightAromaticityModel();
 
 protected:
-    virtual bool isAromaticAtom(const chemkit::Atom *atom) const;
-    virtual bool isAromaticRing(const chemkit::Ring *ring) const;
+    bool isAromaticAtom(const chemkit::Atom *atom) const CHEMKIT_OVERRIDE;
+    bool isAromaticRing(const chemkit::Ring *ring) const CHEMKIT_OVERRIDE;
 };
 
 #endif // DAYLIGHTAROMATICITYMODEL_H

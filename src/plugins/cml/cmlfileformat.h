@@ -44,8 +44,8 @@ public:
     CmlFileFormat();
     ~CmlFileFormat();
 
-    bool read(std::istream &input, chemkit::MoleculeFile *file);
-    bool write(const chemkit::MoleculeFile *file, std::ostream &output);
+    bool read(std::istream &input, chemkit::MoleculeFile *file) CHEMKIT_OVERRIDE;
+    bool write(const chemkit::MoleculeFile *file, std::ostream &output) CHEMKIT_OVERRIDE;
 };
 
 #endif // CMLFILEFORMAT_H

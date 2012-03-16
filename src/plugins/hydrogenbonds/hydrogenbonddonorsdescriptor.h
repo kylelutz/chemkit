@@ -44,7 +44,7 @@ public:
     HydrogenBondDonorsDescriptor();
     ~HydrogenBondDonorsDescriptor();
 
-    chemkit::Variant value(const chemkit::Molecule *molecule) const;
+    chemkit::Variant value(const chemkit::Molecule *molecule) const CHEMKIT_OVERRIDE;
 };
 
 #endif // HYDROGENBONDDONORSDESCRIPTOR_H

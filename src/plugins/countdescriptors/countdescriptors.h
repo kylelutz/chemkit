@@ -43,7 +43,7 @@ class AtomCountDescriptor : public chemkit::MolecularDescriptor
 public:
     AtomCountDescriptor();
 
-    virtual chemkit::Variant value(const chemkit::Molecule *molecule) const;
+    chemkit::Variant value(const chemkit::Molecule *molecule) const CHEMKIT_OVERRIDE;
 };
 
 class HeavyAtomCountDescriptor : public chemkit::MolecularDescriptor
@@ -51,7 +51,7 @@ class HeavyAtomCountDescriptor : public chemkit::MolecularDescriptor
 public:
     HeavyAtomCountDescriptor();
 
-    virtual chemkit::Variant value(const chemkit::Molecule *molecule) const;
+    chemkit::Variant value(const chemkit::Molecule *molecule) const CHEMKIT_OVERRIDE;
 };
 
 class BondCountDescriptor : public chemkit::MolecularDescriptor
@@ -59,7 +59,7 @@ class BondCountDescriptor : public chemkit::MolecularDescriptor
 public:
     BondCountDescriptor();
 
-    virtual chemkit::Variant value(const chemkit::Molecule *molecule) const;
+    chemkit::Variant value(const chemkit::Molecule *molecule) const CHEMKIT_OVERRIDE;
 };
 
 class RingCountDescriptor : public chemkit::MolecularDescriptor
@@ -67,7 +67,7 @@ class RingCountDescriptor : public chemkit::MolecularDescriptor
 public:
     RingCountDescriptor();
 
-    virtual chemkit::Variant value(const chemkit::Molecule *molecule) const;
+    chemkit::Variant value(const chemkit::Molecule *molecule) const CHEMKIT_OVERRIDE;
 };
 
 #endif // COUNTDESCRIPTORS_H
