@@ -1125,6 +1125,17 @@ Molecule& Molecule::operator=(const Molecule &molecule)
     return *this;
 }
 
+/// Returns the atom at \p index in the molecule.
+///
+/// Equivalent to:
+/// \code
+/// molecule.atom(index);
+/// \endcode
+Atom* Molecule::operator[](size_t index) const
+{
+    return atom(index);
+}
+
 // --- Internal Methods ---------------------------------------------------- //
 void Molecule::notifyWatchers(MoleculeWatcher::ChangeType type)
 {

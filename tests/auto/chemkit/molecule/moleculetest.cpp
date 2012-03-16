@@ -151,6 +151,19 @@ void MoleculeTest::removeAtomIf()
     QCOMPARE(ethanol.formula(), std::string("O"));
 }
 
+void MoleculeTest::atom()
+{
+    chemkit::Molecule molecule;
+    chemkit::Atom *C1 = molecule.addAtom("C");
+    chemkit::Atom *C2 = molecule.addAtom("C");
+    QVERIFY(molecule.atom(0) == C1);
+    QVERIFY(molecule.atom(1) == C2);
+
+    // check the operator[] method
+    QVERIFY(molecule[0] == C1);
+    QVERIFY(molecule[1] == C2);
+}
+
 void MoleculeTest::addBond()
 {
     chemkit::Molecule molecule;

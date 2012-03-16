@@ -50,6 +50,7 @@ class MoleculeTest : public QObject
         void addAtom();
         void addAtomCopy();
         void removeAtomIf();
+        void atom();
         void addBond();
         void bond();
         void size();

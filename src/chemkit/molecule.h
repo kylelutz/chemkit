@@ -166,6 +166,7 @@ public:
 
     // operators
     Molecule& operator=(const Molecule &molecule);
+    Atom* operator[](size_t index) const;
 
 private:
     // internal methods
