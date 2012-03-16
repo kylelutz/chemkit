@@ -76,36 +76,32 @@ bool InchiLineFormat::read(const std::string &formula, chemkit::Molecule *molecu
     int ret = GetStructFromStdINCHI(&input, &output);
     CHEMKIT_UNUSED(ret);
 
-    // build molecule from inchi output
-    std::vector<chemkit::Atom *> atoms(output.num_atoms);
-
-    bool addHydrogens = option("add-implicit-hydrogens").toBool();
-
     // add atoms
     for(int i = 0; i < output.num_atoms; i++){
-        inchi_Atom *inchiAtom = &output.atom[i];
-
-        chemkit::Atom *atom = molecule->addAtom(inchiAtom->elname);
-        atoms[i] = atom;
-
-        // add implicit hydrogens (if enabled)
-        if(addHydrogens){
-            for(int j = 0; j < inchiAtom->num_iso_H[0]; j++){
-                chemkit::Atom *hydrogen = molecule->addAtom(chemkit::Atom::Hydrogen);
-                molecule->addBond(atom, hydrogen);
-            }
-        }
+        molecule->addAtom(output.atom[i].elname);
     }
 
     // add bonds
     for(int i = 0; i < output.num_atoms; i++){
         inchi_Atom *inchiAtom = &output.atom[i];
 
-        chemkit::Atom *atom = atoms[i];
-
         for(int j = 0; j < inchiAtom->num_bonds; j++){
-            chemkit::Atom *neighbor = atoms[inchiAtom->neighbor[j]];
-            molecule->addBond(atom, neighbor, inchiAtom->bond_type[j]);
+            molecule->addBond(i, inchiAtom->neighbor[j], inchiAtom->bond_type[j]);
+        }
+    }
+
+    // add implicit hydrogens (if enabled)
+    bool addHydrogens = option("add-implicit-hydrogens").toBool();
+
+    if(addHydrogens){
+        for(int i = 0; i < output.num_atoms; i++){
+            chemkit::Atom *atom = molecule->atom(i);
+            inchi_Atom *inchiAtom = &output.atom[i];
+
+            for(int j = 0; j < inchiAtom->num_iso_H[0]; j++){
+                chemkit::Atom *hydrogen = molecule->addAtom(chemkit::Atom::Hydrogen);
+                molecule->addBond(atom, hydrogen);
+            }
         }
     }
 
