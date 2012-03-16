@@ -47,6 +47,7 @@ public:
     bool read(const std::string &formula, chemkit::Molecule *molecule) CHEMKIT_OVERRIDE;
     std::string write(const chemkit::Molecule *molecule) CHEMKIT_OVERRIDE;
 
+protected:
     chemkit::Variant defaultOption(const std::string &name) const CHEMKIT_OVERRIDE;
 };
 
