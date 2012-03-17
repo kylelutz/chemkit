@@ -50,6 +50,7 @@ class TrajectoryFramePrivate
 {
 public:
     Trajectory *trajectory;
+    Real time;
     CartesianCoordinates *coordinates;
     UnitCell *unitCell;
 };
@@ -70,6 +71,7 @@ TrajectoryFrame::TrajectoryFrame(Trajectory *trajectory, size_t size)
     : d(new TrajectoryFramePrivate)
 {
     d->trajectory = trajectory;
+    d->time = 0;
     d->coordinates = new CartesianCoordinates(size);
     d->unitCell = 0;
 }
@@ -113,6 +115,19 @@ size_t TrajectoryFrame::index() const
 Trajectory* TrajectoryFrame::trajectory() const
 {
     return d->trajectory;
+}
+
+// --- Time ---------------------------------------------------------------- //
+/// Sets the time for the trajectory frame to \p time.
+void TrajectoryFrame::setTime(Real time)
+{
+    d->time = time;
+}
+
+/// Returns the time of the trajectory frame.
+Real TrajectoryFrame::time() const
+{
+    return d->time;
 }
 
 // --- Coordinates --------------------------------------------------------- //

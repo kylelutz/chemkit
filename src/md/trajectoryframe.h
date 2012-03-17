@@ -56,6 +56,10 @@ public:
     size_t index() const;
     Trajectory* trajectory() const;
 
+    // time
+    void setTime(Real time);
+    Real time() const;
+
     // coordinates
     const CartesianCoordinates* coordinates() const;
     void setPosition(size_t index, const Point3 &position);
