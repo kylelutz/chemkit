@@ -53,6 +53,7 @@ public:
     ~Trajectory();
 
     // properties
+    void resize(size_t size);
     size_t size() const;
     bool isEmpty() const;
 

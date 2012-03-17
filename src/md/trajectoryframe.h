@@ -57,7 +57,6 @@ public:
     Trajectory* trajectory() const;
 
     // coordinates
-    void setCoordinates(const CartesianCoordinates *coordinates);
     const CartesianCoordinates* coordinates() const;
     void setPosition(size_t index, const Point3 &position);
     Point3 position(size_t index) const;
@@ -68,8 +67,10 @@ public:
 
 private:
     // construction and destruction
-    TrajectoryFrame(Trajectory *trajectory);
+    TrajectoryFrame(Trajectory *trajectory, size_t size);
     ~TrajectoryFrame();
+
+    void resize(size_t size);
 
     friend class Trajectory;
 

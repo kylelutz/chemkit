@@ -47,6 +47,7 @@ namespace chemkit {
 class TrajectoryPrivate
 {
 public:
+    size_t size;
     std::vector<TrajectoryFrame *> frames;
 };
 
@@ -69,6 +70,7 @@ public:
 Trajectory::Trajectory()
     : d(new TrajectoryPrivate)
 {
+    d->size = 0;
 }
 
 /// Destroys the trajectory object.
@@ -82,23 +84,33 @@ Trajectory::~Trajectory()
 }
 
 // --- Properties ---------------------------------------------------------- //
-/// Returns the number of frames in the trajectory.
+/// Sets the number of particles in the trajectory to \p size.
+void Trajectory::resize(size_t size)
+{
+    d->size = size;
+
+    foreach(TrajectoryFrame *frame, d->frames){
+        frame->resize(size);
+    }
+}
+
+/// Returns the number of particles in the trajectory.
 size_t Trajectory::size() const
 {
-    return frameCount();
+    return d->size;
 }
 
 /// Returns \c true if the trajectory contains no frames.
 bool Trajectory::isEmpty() const
 {
-    return size() == 0;
+    return frameCount() == 0;
 }
 
 // --- Frames -------------------------------------------------------------- //
 /// Adds a new frame to the trajectory.
 TrajectoryFrame* Trajectory::addFrame()
 {
-    TrajectoryFrame *frame = new TrajectoryFrame(this);
+    TrajectoryFrame *frame = new TrajectoryFrame(this, d->size);
     d->frames.push_back(frame);
     return frame;
 }

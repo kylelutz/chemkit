@@ -66,11 +66,11 @@ public:
 
 // --- Construction and Destruction ---------------------------------------- //
 /// Creates a new trajectory frame.
-TrajectoryFrame::TrajectoryFrame(Trajectory *trajectory)
+TrajectoryFrame::TrajectoryFrame(Trajectory *trajectory, size_t size)
     : d(new TrajectoryFramePrivate)
 {
     d->trajectory = trajectory;
-    d->coordinates = 0;
+    d->coordinates = new CartesianCoordinates(size);
     d->unitCell = 0;
 }
 
@@ -83,6 +83,12 @@ TrajectoryFrame::~TrajectoryFrame()
 }
 
 // --- Properties ---------------------------------------------------------- //
+/// Sets the number of coordinates in the frame to \p size.
+void TrajectoryFrame::resize(size_t size)
+{
+    d->coordinates->resize(size);
+}
+
 /// Returns the number of coordinates in the frame.
 size_t TrajectoryFrame::size() const
 {
@@ -110,13 +116,6 @@ Trajectory* TrajectoryFrame::trajectory() const
 }
 
 // --- Coordinates --------------------------------------------------------- //
-/// Sets the coordinates for the frame to \p coordinates.
-void TrajectoryFrame::setCoordinates(const CartesianCoordinates *coordinates)
-{
-    delete d->coordinates;
-    d->coordinates = new CartesianCoordinates(*coordinates);
-}
-
 /// Returns the coordinates for the frame.
 const CartesianCoordinates* TrajectoryFrame::coordinates() const
 {

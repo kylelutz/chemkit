@@ -78,12 +78,17 @@ bool XtcFileFormat::read(std::istream &input, chemkit::TrajectoryFile *file)
             break;
         }
 
-        // create new frame
-        chemkit::TrajectoryFrame *frame = trajectory->addFrame();
-
         // read atom count
         int atomCount = 0;
         xdr_int(&xdrs, &atomCount);
+
+        // set trajectory size
+        if(trajectory->isEmpty() || trajectory->size() < size_t(atomCount)){
+            trajectory->resize(atomCount);
+        }
+
+        // create new frame
+        chemkit::TrajectoryFrame *frame = trajectory->addFrame();
 
         // read frame number
         int frameNumber = 0;
@@ -112,8 +117,6 @@ bool XtcFileFormat::read(std::istream &input, chemkit::TrajectoryFile *file)
         float precision = 1000.0f;
         xdr3dfcoord(&xdrs, &coordinateData[0], &atomCount, &precision);
 
-        chemkit::CartesianCoordinates coordinates(atomCount);
-
         for(int i = 0; i < atomCount; i++){
             // multiply each coordinate by 10 to convert
             // from nanometers to angstroms
@@ -121,10 +124,8 @@ bool XtcFileFormat::read(std::istream &input, chemkit::TrajectoryFile *file)
                                      coordinateData[i*3+1] * 10,
                                      coordinateData[i*3+2] * 10);
 
-            coordinates.setPosition(i, position);
+            frame->setPosition(i, position);
         }
-
-        frame->setCoordinates(&coordinates);
     }
 
     xdrclose(&xdrs);
