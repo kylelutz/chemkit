@@ -141,11 +141,10 @@ bool CmlFileFormat::read(std::istream &input, chemkit::MoleculeFile *file)
             while(bondNode){
                 rapidxml::xml_attribute<> *atomRefs2Attr = bondNode->first_attribute("atomRefs2");
                 if(atomRefs2Attr && atomRefs2Attr->value()){
-                    char unused;
                     unsigned int atom1;
                     unsigned int atom2;
-                    int count = sscanf(atomRefs2Attr->value(), "%c%u %c%u", &unused, &atom1, &unused, &atom2);
-                    if(count == 4){
+                    int count = sscanf(atomRefs2Attr->value(), " %*c%u %*c%u", &atom1, &atom2);
+                    if(count == 2){
                         rapidxml::xml_attribute<> *orderAttr = bondNode->first_attribute("order");
                         chemkit::Bond::BondOrderType bondOrder = chemkit::Bond::Single;
 
