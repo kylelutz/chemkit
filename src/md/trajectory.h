@@ -49,7 +49,7 @@ class CHEMKIT_MD_EXPORT Trajectory
 {
 public:
     // construction and destruction
-    Trajectory();
+    Trajectory(size_t size = 0);
     ~Trajectory();
 
     // properties

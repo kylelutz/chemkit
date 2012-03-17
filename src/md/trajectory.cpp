@@ -66,11 +66,11 @@ public:
 /// \see Topology, TrajectoryFrame, TrajectoryFile
 
 // --- Construction and Destruction ---------------------------------------- //
-/// Creates a new trajectory.
-Trajectory::Trajectory()
+/// Creates a new trajectory with \p size.
+Trajectory::Trajectory(size_t size)
     : d(new TrajectoryPrivate)
 {
-    d->size = 0;
+    d->size = size;
 }
 
 /// Destroys the trajectory object.
