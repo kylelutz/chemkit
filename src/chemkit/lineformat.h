@@ -63,8 +63,7 @@ public:
     Variant option(const std::string &name) const;
 
     // input and output
-    virtual bool read(const std::string &formula, Molecule *molecule);
-    Molecule* read(const std::string &formula);
+    virtual Molecule* read(const std::string &formula);
     virtual std::string write(const Molecule *molecule);
 
     // error handling

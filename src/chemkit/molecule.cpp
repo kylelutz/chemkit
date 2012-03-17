@@ -148,7 +148,12 @@ Molecule::Molecule(const std::string &formula, const std::string &format)
         return;
     }
 
-    lineFormat->read(formula, this);
+    boost::scoped_ptr<Molecule> molecule(lineFormat->read(formula));
+    if(!molecule){
+        return;
+    }
+
+    *this = *molecule;
 }
 
 /// Creates a new molecule that is a copy of \p molecule.

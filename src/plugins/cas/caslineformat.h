@@ -43,7 +43,7 @@ class CasLineFormat : public chemkit::LineFormat
 public:
     CasLineFormat();
 
-    bool read(const std::string &formula, chemkit::Molecule *molecule) CHEMKIT_OVERRIDE;
+    chemkit::Molecule* read(const std::string &formula) CHEMKIT_OVERRIDE;
 };
 
 #endif // CASLINEFORMAT_H

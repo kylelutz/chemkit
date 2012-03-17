@@ -61,13 +61,10 @@ cdef class LineFormat:
         return self._lineFormat.name().c_str()
 
     ### Input and Output ######################################################
-    def read(self, char *formula, Molecule molecule = None):
+    def read(self, char *formula):
         """Reads the formula and returns a new molecule."""
 
-        if molecule:
-            return self._lineFormat.read(formula, molecule._molecule)
-        else:
-            return Molecule_fromPointer(self._lineFormat.read(formula))
+        return Molecule_fromPointer(self._lineFormat.read(formula))
 
     def write(self, Molecule molecule):
         """Returns the formula for the molecule."""

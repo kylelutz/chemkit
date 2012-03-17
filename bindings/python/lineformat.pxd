@@ -46,7 +46,6 @@ cdef extern from "chemkit/lineformat.h" namespace "chemkit":
         string name()
 
         # input and output
-        bool read(char *formula, _Molecule *molecule)
         _Molecule* read(char *formula)
         string write(_Molecule *molecule)
 

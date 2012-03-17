@@ -51,13 +51,16 @@ InchiLineFormat::InchiLineFormat()
 {
 }
 
-bool InchiLineFormat::read(const std::string &formula, chemkit::Molecule *molecule)
+chemkit::Molecule* InchiLineFormat::read(const std::string &formula)
 {
     // verify formula
     if(formula.empty()){
         setErrorString("Formula is empty.");
-        return false;
+        return 0;
     }
+
+    // create molecule
+    chemkit::Molecule *molecule = new chemkit::Molecule;
 
     std::string formulaString = formula;
 
@@ -109,7 +112,7 @@ bool InchiLineFormat::read(const std::string &formula, chemkit::Molecule *molecu
     // free output structure
     FreeStructFromStdINCHI(&output);
 
-    return true;
+    return molecule;
 }
 
 std::string InchiLineFormat::write(const chemkit::Molecule *molecule)

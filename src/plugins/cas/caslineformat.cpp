@@ -45,7 +45,7 @@ CasLineFormat::CasLineFormat()
 {
 }
 
-bool CasLineFormat::read(const std::string &formula, chemkit::Molecule *molecule)
+chemkit::Molecule* CasLineFormat::read(const std::string &formula)
 {
     // ensure a QApplication object has been created
     int argc = 0;
@@ -58,7 +58,7 @@ bool CasLineFormat::read(const std::string &formula, chemkit::Molecule *molecule
 
     if(ids.isEmpty()){
         setErrorString("Failed to lookup CAS number");
-        return false;
+        return 0;
     }
 
     // download molecule from its compound id
@@ -66,11 +66,8 @@ bool CasLineFormat::read(const std::string &formula, chemkit::Molecule *molecule
 
     if(!downloadedMolecule){
         setErrorString("Failed to download molecule");
-        return false;
+        return 0;
     }
 
-    // copy into molecule
-    *molecule = *downloadedMolecule;
-
-    return true;
+    return new chemkit::Molecule(*downloadedMolecule);
 }

@@ -43,8 +43,11 @@ FormulaLineFormat::FormulaLineFormat()
 {
 }
 
-bool FormulaLineFormat::read(const std::string &formula, chemkit::Molecule *molecule)
+chemkit::Molecule* FormulaLineFormat::read(const std::string &formula)
 {
+    // create molecule
+    chemkit::Molecule *molecule = new chemkit::Molecule;
+
     bool inSymbol = false;
     bool inNumber = false;
     std::string symbol;
@@ -104,7 +107,7 @@ bool FormulaLineFormat::read(const std::string &formula, chemkit::Molecule *mole
         }
     }
 
-    return true;
+    return molecule;
 }
 
 std::string FormulaLineFormat::write(const chemkit::Molecule *molecule)

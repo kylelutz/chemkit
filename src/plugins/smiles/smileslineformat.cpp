@@ -203,12 +203,12 @@ chemkit::Variant SmilesLineFormat::defaultOption(const std::string &name) const
 }
 
 // --- Input and Output ---------------------------------------------------- //
-bool SmilesLineFormat::read(const std::string &formula, chemkit::Molecule *molecule)
+chemkit::Molecule* SmilesLineFormat::read(const std::string &formula)
 {
-    return read(formula.c_str(), molecule);
+    return read(formula.c_str());
 }
 
-bool SmilesLineFormat::read(const char *formula, chemkit::Molecule *molecule)
+chemkit::Molecule* SmilesLineFormat::read(const char *formula)
 {
     const char *p = formula;
     int number = 0;
@@ -232,6 +232,9 @@ bool SmilesLineFormat::read(const char *formula, chemkit::Molecule *molecule)
     };
 
     int bondStereo = 0;
+
+    // create molecule
+    chemkit::Molecule *molecule = new chemkit::Molecule;
 
     // go to initial state
     if(isTerminator(*p)) goto done;
@@ -597,7 +600,8 @@ invalid_atom_error:
     goto error;
 
 error:
-    return false;
+    delete molecule;
+    return 0;
 
 done:
     // kekulize aromatic bonds
@@ -615,7 +619,7 @@ done:
         }
     }
 
-    return true;
+    return molecule;
 }
 
 std::string SmilesLineFormat::write(const chemkit::Molecule *molecule)

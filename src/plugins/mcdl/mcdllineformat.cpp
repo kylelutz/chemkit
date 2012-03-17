@@ -49,14 +49,19 @@ McdlLineFormat::~McdlLineFormat()
 }
 
 // --- Input and Output ---------------------------------------------------- //
-bool McdlLineFormat::read(const std::string &formula, chemkit::Molecule *molecule)
+chemkit::Molecule* McdlLineFormat::read(const std::string &formula)
 {
     McdlReader reader;
+
+    // create molecule
+    chemkit::Molecule *molecule = new chemkit::Molecule;
 
     bool ok = reader.read(formula, molecule);
     if(!ok){
         setErrorString(reader.errorString());
+        delete molecule;
+        return 0;
     }
 
-    return ok;
+    return molecule;
 }

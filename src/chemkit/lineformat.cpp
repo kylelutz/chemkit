@@ -112,31 +112,15 @@ Variant LineFormat::defaultOption(const std::string &name) const
 }
 
 // --- Input and Output ---------------------------------------------------- //
-/// Reads \p formula and adds its contents to \p molecule. Returns
-/// \c false if \p formula could not be read.
-bool LineFormat::read(const std::string &formula, Molecule *molecule)
-{
-    CHEMKIT_UNUSED(formula);
-    CHEMKIT_UNUSED(molecule);
-
-    setErrorString((boost::format("'%s' read not supported.") % name()).str());
-    return false;
-}
-
 /// Reads and returns the molecule represented by the given
 /// \p formula. Returns \c 0 if \p formula could not be
 /// read.
 Molecule* LineFormat::read(const std::string &formula)
 {
-    Molecule *molecule = new Molecule;
+    CHEMKIT_UNUSED(formula);
 
-    bool ok = read(formula, molecule);
-    if(!ok){
-        delete molecule;
-        return 0;
-    }
-
-    return molecule;
+    setErrorString((boost::format("'%s' read not supported.") % name()).str());
+    return 0;
 }
 
 /// Write and return the formula of a molecule.

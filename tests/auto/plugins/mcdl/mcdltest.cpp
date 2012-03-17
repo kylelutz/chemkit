@@ -82,17 +82,17 @@ void McdlTest::read()
     QByteArray mcdl = mcdlString.toAscii();
     QByteArray formula = formulaString.toAscii();
 
-    chemkit::Molecule molecule;
-    bool ok = mcdlFormat->read(mcdl.constData(), &molecule);
-    if(!ok)
+    chemkit::Molecule *molecule = mcdlFormat->read(mcdl.constData());
+    if(!molecule)
         qDebug() << mcdlFormat->errorString().c_str();
-    QVERIFY(ok);
+    QVERIFY(molecule != 0);
 
-    QCOMPARE(molecule.formula().c_str(), formula.constData());
-    QCOMPARE(molecule.atomCount(), size_t(atomCount));
-    QCOMPARE(molecule.bondCount(), size_t(bondCount));
-    QCOMPARE(molecule.ringCount(), size_t(ringCount));
+    QCOMPARE(molecule->formula().c_str(), formula.constData());
+    QCOMPARE(molecule->atomCount(), size_t(atomCount));
+    QCOMPARE(molecule->bondCount(), size_t(bondCount));
+    QCOMPARE(molecule->ringCount(), size_t(ringCount));
 
+    delete molecule;
     delete mcdlFormat;
 }
 

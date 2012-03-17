@@ -43,7 +43,7 @@ class FormulaLineFormat : public chemkit::LineFormat
 public:
     FormulaLineFormat();
 
-    bool read(const std::string &formula, chemkit::Molecule *molecule) CHEMKIT_OVERRIDE;
+    chemkit::Molecule* read(const std::string &formula) CHEMKIT_OVERRIDE;
     std::string write(const chemkit::Molecule *molecule) CHEMKIT_OVERRIDE;
 };
 

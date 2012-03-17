@@ -48,8 +48,8 @@ public:
     chemkit::Variant defaultOption(const std::string &name) const CHEMKIT_OVERRIDE;
 
     // input and output
-    bool read(const std::string &formula, chemkit::Molecule *molecule) CHEMKIT_OVERRIDE;
-    bool read(const char *formula, chemkit::Molecule *molecule);
+    chemkit::Molecule* read(const std::string &formula) CHEMKIT_OVERRIDE;
+    chemkit::Molecule* read(const char *formula);
     std::string write(const chemkit::Molecule *molecule) CHEMKIT_OVERRIDE;
 };
 
