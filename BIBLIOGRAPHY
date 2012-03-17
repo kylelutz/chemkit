@@ -14,6 +14,13 @@ Jorgensen et al. "Development and Testing of the OPLS All-Atom Force Field
 Lee et al., "A robust method for searching the smallest set of smallest rings 
     with a path-included distance matrix." PNAS, 2009. 106(41): 17355 - 17358
 
+Moriguchi et al., "Simple Method of Calculating Octanol/Water Partition
+    Coefficient." Chemical and Pharmaceutical Bulletin, 1992. 40(1): 127–130.
+
+Moriguchi et al., "Comparison of Reliability of log P Values for Drugs
+    Calculated by Several Methods." Chemical and Pharmaceutical Bulletin,
+    1994. 42(4), 976-978.
+
 Parsons et al, "Practical Conversion from Torsion Space to Cartesian Space for
     In Silico Protein Synthesis." Journal of Computational Chemistry, 2005.
     26(10): 1063-1068.
