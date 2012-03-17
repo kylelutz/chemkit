@@ -61,9 +61,9 @@ public:
     Real time() const;
 
     // coordinates
-    const CartesianCoordinates* coordinates() const;
     void setPosition(size_t index, const Point3 &position);
     Point3 position(size_t index) const;
+    const CartesianCoordinates* coordinates() const;
 
     // unit cell
     void setUnitCell(UnitCell *cell);

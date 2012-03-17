@@ -131,12 +131,6 @@ Real TrajectoryFrame::time() const
 }
 
 // --- Coordinates --------------------------------------------------------- //
-/// Returns the coordinates for the frame.
-const CartesianCoordinates* TrajectoryFrame::coordinates() const
-{
-    return d->coordinates;
-}
-
 /// Sets the coordinates at \p index to \p position.
 void TrajectoryFrame::setPosition(size_t index, const Point3 &position)
 {
@@ -147,6 +141,12 @@ void TrajectoryFrame::setPosition(size_t index, const Point3 &position)
 Point3 TrajectoryFrame::position(size_t index) const
 {
     return d->coordinates->position(index);
+}
+
+/// Returns the coordinates for the frame.
+const CartesianCoordinates* TrajectoryFrame::coordinates() const
+{
+    return d->coordinates;
 }
 
 // --- Unit Cell ----------------------------------------------------------- //
