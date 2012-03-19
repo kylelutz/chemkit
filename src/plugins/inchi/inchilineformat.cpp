@@ -38,6 +38,8 @@
 #include <string>
 #include <vector>
 
+#include <boost/thread/mutex.hpp>
+
 #include <boost/algorithm/string.hpp>
 
 #include "../../3rdparty/inchi/inchi_api.h"
@@ -45,6 +47,13 @@
 #include <chemkit/atom.h>
 #include <chemkit/bond.h>
 #include <chemkit/foreach.h>
+
+// BIL - the big inchi lock
+//
+// The InChI library is not reentrant. In order to safely use the
+// library from multiple threads we introduce a single mutex which
+// must be aquired to use the InChI library functions.
+static boost::mutex BIL;
 
 InchiLineFormat::InchiLineFormat()
     : chemkit::LineFormat("inchi")
@@ -74,6 +83,9 @@ chemkit::Molecule* InchiLineFormat::read(const std::string &formula)
 
     input.szInChI = const_cast<char *>(formulaString.c_str());
     input.szOptions = 0;
+
+    // acquire inchi lock
+    BIL.lock();
 
     // get inchi output
     inchi_OutputStruct output;
@@ -111,6 +123,9 @@ chemkit::Molecule* InchiLineFormat::read(const std::string &formula)
 
     // free output structure
     FreeStructFromStdINCHI(&output);
+
+    // release inchi lock
+    BIL.unlock();
 
     return molecule;
 }
@@ -292,6 +307,9 @@ std::string InchiLineFormat::write(const chemkit::Molecule *molecule)
         input.num_stereo0D = 0;
     }
 
+    // acquire inchi lock
+    BIL.lock();
+
     // create inchi generator object
     INCHIGEN_HANDLE generator = STDINCHIGEN_Create();
 
@@ -321,6 +339,9 @@ std::string InchiLineFormat::write(const chemkit::Molecule *molecule)
 
     // destroy inchi generator object
     STDINCHIGEN_Destroy(generator);
+
+    // release inchi lock
+    BIL.unlock();
 
     return inchiString;
 }
