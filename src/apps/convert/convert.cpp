@@ -115,7 +115,12 @@ int main(int argc, char *argv[])
         ok = inputFile.read(std::cin);
     }
     else{
-        ok = inputFile.read(inputFileName);
+        if(inputFormatName.empty()){
+            ok = inputFile.read(inputFileName);
+        }
+        else{
+            ok = inputFile.read(inputFileName, inputFormatName);
+        }
     }
 
     if(!ok){
