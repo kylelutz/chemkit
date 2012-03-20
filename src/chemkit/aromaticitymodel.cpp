@@ -61,13 +61,6 @@ public:
 /// http://wiki.chemkit.org/Features#Aromaticity_Models
 
 // --- Construction and Destruction ---------------------------------------- //
-/// Creates a new aromaticity model.
-AromaticityModel::AromaticityModel()
-    : d(new AromaticityModelPrivate)
-{
-    d->molecule = 0;
-}
-
 /// Creates a new aromaticity model with \p name.
 AromaticityModel::AromaticityModel(const std::string &name)
     : d(new AromaticityModelPrivate)

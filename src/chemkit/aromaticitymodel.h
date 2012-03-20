@@ -55,7 +55,6 @@ class CHEMKIT_EXPORT AromaticityModel
 {
 public:
     // construction and destruction
-    AromaticityModel();
     virtual ~AromaticityModel();
 
     // properties
