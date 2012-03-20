@@ -38,9 +38,11 @@
 
 #include "graphics.h"
 
-#include <chemkit/atomcolormap.h>
+#include <boost/shared_ptr.hpp>
 
 #include "graphicsitem.h"
+
+#include <chemkit/atomcolormap.h>
 
 namespace chemkit {
 
@@ -102,8 +104,8 @@ public:
     ColorMode colorMode() const;
     void setColor(const QColor &color);
     QColor color() const;
-    void setAtomColorMap(const AtomColorMap &colorMap);
-    AtomColorMap colorMap() const;
+    void setColorMap(const boost::shared_ptr<AtomColorMap> &colorMap);
+    boost::shared_ptr<AtomColorMap> colorMap() const;
 
     // drawing
     virtual void paint(GraphicsPainter *painter);

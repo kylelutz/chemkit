@@ -37,6 +37,8 @@
 
 #include <algorithm>
 
+#include <boost/make_shared.hpp>
+
 #include <chemkit/atom.h>
 #include <chemkit/element.h>
 #include <chemkit/foreach.h>
@@ -179,7 +181,7 @@ public:
     Real probeRadius;
     GraphicsPymolSurfaceItem::ColorMode colorMode;
     QColor color;
-    AtomColorMap colorMap;
+    boost::shared_ptr<AtomColorMap> colorMap;
     std::vector<Point3> points;
     std::vector<Real> radii;
     std::vector<int> atomTypes;
@@ -207,8 +209,7 @@ GraphicsPymolSurfaceItem::GraphicsPymolSurfaceItem(const Molecule *molecule, Sol
     d->probeRadius = 1.4;
     d->color = Qt::red;
     d->colorMode = AtomColor;
-
-    d->colorMap.setColorScheme(AtomColorMap::DefaultColorScheme);
+    d->colorMap = boost::make_shared<AtomColorMap>(AtomColorMap::DefaultColorScheme);
 
     if(molecule){
         d->points.reserve(molecule->size());
@@ -344,14 +345,14 @@ GraphicsPymolSurfaceItem::ColorMode GraphicsPymolSurfaceItem::colorMode() const
 }
 
 /// Sets the color map for the solvent surface to \p colorMap.
-void GraphicsPymolSurfaceItem::setAtomColorMap(const AtomColorMap &colorMap)
+void GraphicsPymolSurfaceItem::setColorMap(const boost::shared_ptr<AtomColorMap> &colorMap)
 {
     d->colorMap = colorMap;
     setCalculated(false);
 }
 
 /// Returns the color map for the solvent surface.
-AtomColorMap GraphicsPymolSurfaceItem::colorMap() const
+boost::shared_ptr<AtomColorMap> GraphicsPymolSurfaceItem::colorMap() const
 {
     return d->colorMap;
 }
@@ -368,13 +369,13 @@ void GraphicsPymolSurfaceItem::paint(GraphicsPainter *painter)
             d->buffer = calculateSurface(d->points, d->radii, std::vector<int>(),
                                          maxVdwRadius(), d->probeRadius,
                                          d->quality, d->surfaceType, d->solventType,
-                                         d->colorMap, opacity());
+                                         *d->colorMap, opacity());
         }
         else {
             d->buffer = calculateSurface(d->points, d->radii, d->atomTypes,
                                          maxVdwRadius(), d->probeRadius,
                                          d->quality, d->surfaceType, d->solventType,
-                                         d->colorMap, opacity());
+                                         *d->colorMap, opacity());
         }
 
         if(!d->buffer) {
