@@ -64,7 +64,13 @@ bool CmlFileFormat::read(std::istream &input, chemkit::MoleculeFile *file)
 
     // parse document
     rapidxml::xml_document<> doc;
-    doc.parse<0>(const_cast<char *>(data.c_str()));
+    try {
+        doc.parse<0>(const_cast<char *>(data.c_str()));
+    }
+    catch(rapidxml::parse_error &e){
+        setErrorString(std::string("XML parse error: ") + e.what());
+        return false;
+    }
 
     // parse molecules
     boost::shared_ptr<chemkit::Molecule> molecule;
