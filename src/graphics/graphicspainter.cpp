@@ -196,11 +196,11 @@ void GraphicsPainter::drawCircle(const Point3f &center, float radius, const Vect
 
 void GraphicsPainter::drawTriangle(const Point3f &a, const Point3f &b, const Point3f &c)
 {
-    // verticies
-    QVector<Point3f> verticies(3);
-    verticies[0] = a;
-    verticies[1] = b;
-    verticies[2] = c;
+    // vertices
+    QVector<Point3f> vertices(3);
+    vertices[0] = a;
+    vertices[1] = b;
+    vertices[2] = c;
 
     // normals
     Vector3f normal = (b - a).cross(c - b).normalized();
@@ -213,7 +213,7 @@ void GraphicsPainter::drawTriangle(const Point3f &a, const Point3f &b, const Poi
 
     // setup buffer
     GraphicsVertexBuffer buffer;
-    buffer.setVerticies(verticies);
+    buffer.setVerticies(vertices);
     buffer.setNormals(normals);
     buffer.setIndicies(indices);
 

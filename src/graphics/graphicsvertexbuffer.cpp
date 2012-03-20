@@ -130,7 +130,7 @@ public:
     bool readyToDraw;
     GLuint vertexBuffer;
     GLuint indexBuffer;
-    QVector<Point3f> verticies;
+    QVector<Point3f> vertices;
     QVector<Vector3f> normals;
     QVector<unsigned short> indices;
     QVector<unsigned char> colors;
@@ -160,12 +160,12 @@ GraphicsVertexBuffer::GraphicsVertexBuffer()
     glGenBuffers(1, &d->vertexBuffer);
 }
 
-/// Create a new vertex buffer object and fill it with \p verticies.
-GraphicsVertexBuffer::GraphicsVertexBuffer(const QVector<Point3f> &verticies)
+/// Create a new vertex buffer object and fill it with \p vertices.
+GraphicsVertexBuffer::GraphicsVertexBuffer(const QVector<Point3f> &vertices)
     : d(new GraphicsVertexBufferPrivate)
 {
     d->readyToDraw = false;
-    d->verticies = verticies;
+    d->vertices = vertices;
 
 #if !defined(Q_WS_MAC)
     setupGlFunctions();
@@ -184,7 +184,7 @@ GraphicsVertexBuffer::~GraphicsVertexBuffer()
 }
 
 // --- Properties ---------------------------------------------------------- //
-/// Returns the number of verticies in the buffer.
+/// Returns the number of vertices in the buffer.
 int GraphicsVertexBuffer::size() const
 {
     return vertexCount();
@@ -196,11 +196,11 @@ bool GraphicsVertexBuffer::isEmpty() const
     return size() == 0;
 }
 
-/// Removes all of the verticies and all associated data from the
+/// Removes all of the vertices and all associated data from the
 /// buffer.
 void GraphicsVertexBuffer::clear()
 {
-    d->verticies.clear();
+    d->vertices.clear();
     d->normals.clear();
     d->indices.clear();
     d->colors.clear();
@@ -209,22 +209,22 @@ void GraphicsVertexBuffer::clear()
 }
 
 // --- Verticies ----------------------------------------------------------- //
-/// Sets the verticies to \p verticies.
-void GraphicsVertexBuffer::setVerticies(const QVector<Point3f> &verticies)
+/// Sets the vertices to \p vertices.
+void GraphicsVertexBuffer::setVerticies(const QVector<Point3f> &vertices)
 {
-    d->verticies = verticies;
+    d->vertices = vertices;
 }
 
-/// Returns the verticies contained in the vertex buffer.
-QVector<Point3f> GraphicsVertexBuffer::verticies() const
+/// Returns the vertices contained in the vertex buffer.
+QVector<Point3f> GraphicsVertexBuffer::vertices() const
 {
-    return d->verticies;
+    return d->vertices;
 }
 
-/// Returns the number of verticies in the buffer.
+/// Returns the number of vertices in the buffer.
 int GraphicsVertexBuffer::vertexCount() const
 {
-    return d->verticies.size();
+    return d->vertices.size();
 }
 
 // --- Normals ------------------------------------------------------------- //
@@ -309,20 +309,20 @@ void GraphicsVertexBuffer::draw(GLenum mode) const
 
     glBindBuffer(GL_ARRAY_BUFFER, d->vertexBuffer);
 
-    // setup verticies
+    // setup vertices
     glVertexPointer(3, GL_FLOAT, 0, 0);
     glEnableClientState(GL_VERTEX_ARRAY);
 
     // setup normals
     if(!d->normals.isEmpty()){
-        size_t offset = d->verticies.size() * sizeof(Point3f);
+        size_t offset = d->vertices.size() * sizeof(Point3f);
         glNormalPointer(GL_FLOAT, 0, reinterpret_cast<void *>(offset));
         glEnableClientState(GL_NORMAL_ARRAY);
     }
 
     // setup colors
     if(!d->colors.isEmpty()){
-        size_t offset = (d->verticies.size() * sizeof(Point3f)) +
+        size_t offset = (d->vertices.size() * sizeof(Point3f)) +
                         (d->normals.size() * sizeof(Vector3f));
         glColorPointer(4, GL_UNSIGNED_BYTE, 0, reinterpret_cast<void *>(offset));
         glEnableClientState(GL_COLOR_ARRAY);
@@ -333,7 +333,7 @@ void GraphicsVertexBuffer::draw(GLenum mode) const
         glDrawElements(mode, d->indices.size(), GL_UNSIGNED_SHORT, d->indices.data());
     }
     else{
-        glDrawArrays(GL_POINTS, 0, d->verticies.size());
+        glDrawArrays(GL_POINTS, 0, d->vertices.size());
     }
 
     // cleanup state
@@ -354,27 +354,27 @@ void GraphicsVertexBuffer::prepareToDraw() const
 
     // allocate space
     glBufferData(GL_ARRAY_BUFFER,
-                 d->verticies.size() * sizeof(Point3f) +
+                 d->vertices.size() * sizeof(Point3f) +
                  d->normals.size() * sizeof(Vector3f) +
                  d->colors.size() * sizeof(unsigned char),
                  0,
                  GL_STATIC_DRAW);
 
-    // load verticies
+    // load vertices
     glBufferSubData(GL_ARRAY_BUFFER,
                     0,
-                    d->verticies.size() * sizeof(Point3f),
-                    d->verticies.data());
+                    d->vertices.size() * sizeof(Point3f),
+                    d->vertices.data());
 
     // load normals
     glBufferSubData(GL_ARRAY_BUFFER,
-                    d->verticies.size() * sizeof(Point3f),
+                    d->vertices.size() * sizeof(Point3f),
                     d->normals.size() * sizeof(Vector3f),
                     d->normals.data());
 
     // load colors
     glBufferSubData(GL_ARRAY_BUFFER,
-                    d->verticies.size() * sizeof(Point3f) +
+                    d->vertices.size() * sizeof(Point3f) +
                     d->normals.size() * sizeof(Vector3f),
                     d->colors.size() * sizeof(unsigned char),
                     d->colors.data());

@@ -202,7 +202,7 @@ private:
 template<typename T>
 inline bool Sssr<T>::isValid(const std::vector<T> &ring) const
 {
-    // check for any duplicate verticies
+    // check for any duplicate vertices
     for(T i = 0; i < ring.size(); i++){
         for(T j = i + 1; j < ring.size(); j++){
             if(ring[i] == ring[j]){

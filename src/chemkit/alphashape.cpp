@@ -80,7 +80,7 @@ AlphaShape::~AlphaShape()
 }
 
 // --- Properties ---------------------------------------------------------- //
-/// Returns the number of verticies in the alpha shape.
+/// Returns the number of vertices in the alpha shape.
 int AlphaShape::size() const
 {
     return vertexCount();
@@ -111,18 +111,18 @@ Real AlphaShape::alphaValue() const
 }
 
 // --- Simplicies ---------------------------------------------------------- //
-/// Returns a list of verticies in the alpha shape.
-std::vector<int> AlphaShape::verticies() const
+/// Returns a list of vertices in the alpha shape.
+std::vector<int> AlphaShape::vertices() const
 {
-    std::vector<int> verticies;
+    std::vector<int> vertices;
 
-    return verticies;
+    return vertices;
 }
 
-/// Returns the number of verticies in the alpha shape.
+/// Returns the number of vertices in the alpha shape.
 int AlphaShape::vertexCount() const
 {
-    return verticies().size();
+    return vertices().size();
 }
 
 /// Returns a list of edges in the alpha shape.

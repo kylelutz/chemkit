@@ -123,12 +123,12 @@ void GraphicsMoleculeWireframeItem::paint(GraphicsPainter *painter)
         return;
     }
 
-    QVector<Point3f> verticies;
+    QVector<Point3f> vertices;
     QVector<unsigned short> indices;
     QVector<QColor> colors;
 
     foreach(const Atom *atom, d->molecule->atoms()){
-        verticies.append(atom->position().cast<float>());
+        vertices.append(atom->position().cast<float>());
         colors.append(d->colorMap->color(atom));
     }
 
@@ -151,8 +151,8 @@ void GraphicsMoleculeWireframeItem::paint(GraphicsPainter *painter)
         }
         else{
             Point3f center = bond->center().cast<float>();
-            size_t centerIndex = verticies.size();
-            verticies.append(center);
+            size_t centerIndex = vertices.size();
+            vertices.append(center);
             colors.append(colorA);
 
             // a -> center
@@ -167,7 +167,7 @@ void GraphicsMoleculeWireframeItem::paint(GraphicsPainter *painter)
 
     GraphicsVertexBuffer buffer;
 
-    buffer.setVerticies(verticies);
+    buffer.setVerticies(vertices);
     buffer.setIndicies(indices);
     buffer.setColors(colors);
 

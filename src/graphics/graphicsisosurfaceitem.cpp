@@ -392,7 +392,7 @@ float vertexOffset(float a, float b, float isovalue)
 
 GraphicsVertexBuffer* marchCubes(const ScalarField *scalarField, float isovalue)
 {
-    QVector<Point3f> verticies;
+    QVector<Point3f> vertices;
     QVector<Vector3f> normals;
     QVector<unsigned short> indices;
 
@@ -453,7 +453,7 @@ GraphicsVertexBuffer* marchCubes(const ScalarField *scalarField, float isovalue)
                         Point3f vertex = cubeVerticies[vertexIndex];
 
                         indices.append(indices.size());
-                        verticies.append(vertex);
+                        vertices.append(vertex);
                         normals.append(scalarField->gradient(vertex.cast<Real>()).cast<float>());
                     }
                 }
@@ -463,7 +463,7 @@ GraphicsVertexBuffer* marchCubes(const ScalarField *scalarField, float isovalue)
 
     // create vertex buffer
     GraphicsVertexBuffer *buffer = new GraphicsVertexBuffer;
-    buffer->setVerticies(verticies);
+    buffer->setVerticies(vertices);
     buffer->setNormals(normals);
     buffer->setIndicies(indices);
 

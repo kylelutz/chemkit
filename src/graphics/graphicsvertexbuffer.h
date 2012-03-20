@@ -57,7 +57,7 @@ public:
 
     // construction and destruction
     GraphicsVertexBuffer();
-    GraphicsVertexBuffer(const QVector<Point3f> &verticies);
+    GraphicsVertexBuffer(const QVector<Point3f> &vertices);
     ~GraphicsVertexBuffer();
 
     // properties
@@ -65,9 +65,9 @@ public:
     bool isEmpty() const;
     void clear();
 
-    // verticies
-    void setVerticies(const QVector<Point3f> &verticies);
-    QVector<Point3f> verticies() const;
+    // vertices
+    void setVerticies(const QVector<Point3f> &vertices);
+    QVector<Point3f> vertices() const;
     int vertexCount() const;
 
     // normals

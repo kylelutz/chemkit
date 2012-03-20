@@ -52,7 +52,7 @@ namespace chemkit {
 /// \brief The Graph class represents a graph.
 
 // --- Construction and Destruction ---------------------------------------- //
-/// Creates a new graph with \p size verticies.
+/// Creates a new graph with \p size vertices.
 template<typename T>
 inline Graph<T>::Graph(T size)
     : m_adjacencyList(size)
@@ -60,21 +60,21 @@ inline Graph<T>::Graph(T size)
 }
 
 // --- Properties ---------------------------------------------------------- //
-/// Sets the number of verticies in the graph to \p size.
+/// Sets the number of vertices in the graph to \p size.
 template<typename T>
 inline void Graph<T>::resize(T size)
 {
     m_adjacencyList.resize(size);
 }
 
-/// Returns the number of verticies in the graph.
+/// Returns the number of vertices in the graph.
 template<typename T>
 inline T Graph<T>::size() const
 {
     return vertexCount();
 }
 
-/// Returns \c true if the graph contains no verticies.
+/// Returns \c true if the graph contains no vertices.
 template<typename T>
 inline bool Graph<T>::isEmpty() const
 {
@@ -98,14 +98,14 @@ inline void Graph<T>::removeVertex(T vertex)
     m_adjacencyList.erase(m_adjacencyList.begin() + vertex);
 }
 
-/// Returns the number of verticies in the graph.
+/// Returns the number of vertices in the graph.
 template<typename T>
 inline T Graph<T>::vertexCount() const
 {
     return m_adjacencyList.size();
 }
 
-/// Adds an edge between verticies \p a and \p b.
+/// Adds an edge between vertices \p a and \p b.
 template<typename T>
 inline void Graph<T>::addEdge(T a, T b)
 {
@@ -115,7 +115,7 @@ inline void Graph<T>::addEdge(T a, T b)
     m_adjacencyList[b].push_back(a);
 }
 
-/// Removes the edge between verticies \p a and \p b.
+/// Removes the edge between vertices \p a and \p b.
 template<typename T>
 inline void Graph<T>::removeEdge(T a, T b)
 {
@@ -148,7 +148,7 @@ inline bool Graph<T>::isAdjacent(T a, T b) const
 }
 
 // --- Algorithms ---------------------------------------------------------- //
-/// Swap verticies \p a and \p b.
+/// Swap vertices \p a and \p b.
 template<typename T>
 inline void Graph<T>::swap(T a, T b)
 {
@@ -181,7 +181,7 @@ inline const std::vector<T>& Graph<T>::neighbors(T vertex) const
     return m_adjacencyList[vertex];
 }
 
-/// Remove all terminal verticies from the graph.
+/// Remove all terminal vertices from the graph.
 template<typename T>
 inline void Graph<T>::cyclize(std::vector<T> &originalIndices)
 {
@@ -210,7 +210,7 @@ inline void Graph<T>::cyclize(std::vector<T> &originalIndices)
             // find next non-terminal vertex
             for(size_t j = i + 1; j < m_adjacencyList.size(); j++){
                 if(!m_adjacencyList[j].empty()){
-                    // swap the terminal and non-terminal verticies
+                    // swap the terminal and non-terminal vertices
                     swap(i, j);
                     originalIndices[i] = j;
                     break;
@@ -219,7 +219,7 @@ inline void Graph<T>::cyclize(std::vector<T> &originalIndices)
         }
     }
 
-    // remove the lone verticies
+    // remove the lone vertices
     for(size_t i = 0; i < m_adjacencyList.size(); i++){
         if(m_adjacencyList[i].empty()){
             m_adjacencyList.resize(i);

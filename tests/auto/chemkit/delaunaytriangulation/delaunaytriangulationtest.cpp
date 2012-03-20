@@ -91,7 +91,7 @@ void DelaunayTriangulationTest::joe89()
         }
 
         if(foundCount != 1){
-            qDebug() << "tetrahedron (index " << i << ") was not found. verticies: " << QVector<int>::fromStdVector(tetrahedron);
+            qDebug() << "tetrahedron (index " << i << ") was not found. vertices: " << QVector<int>::fromStdVector(tetrahedron);
         }
 
         QCOMPARE(foundCount, 1);

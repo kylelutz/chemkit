@@ -115,7 +115,7 @@ GraphicsVertexBuffer* GraphicsCylinder::tesselate(int slices, int stacks) const
     float twoPi = chemkit::constants::Pi * 2;
     float sliceAngle = twoPi / slices;
 
-    QVector<Point3f> verticies;
+    QVector<Point3f> vertices;
 
     for(int i = 0; i < slices; i++){
         float angle = i * sliceAngle;
@@ -123,21 +123,21 @@ GraphicsVertexBuffer* GraphicsCylinder::tesselate(int slices, int stacks) const
         float x = cos(angle) * m_radius;
         float y = sin(angle) * m_radius;
 
-        verticies.append(Point3f(x, y, 0));
+        vertices.append(Point3f(x, y, 0));
     }
 
     Real stackHeight = m_length / stacks;
 
     for(int i = 1; i < stacks + 1; i++){
         for(int j = 0; j < slices; j++){
-            Point3f lowerPoint = verticies[(i-1)*slices + j];
+            Point3f lowerPoint = vertices[(i-1)*slices + j];
 
-            verticies.append(lowerPoint + Vector3f(0, 0, stackHeight));
+            vertices.append(lowerPoint + Vector3f(0, 0, stackHeight));
         }
     }
 
     QVector<Vector3f> normals;
-    foreach(const Point3f &point, verticies){
+    foreach(const Point3f &point, vertices){
         Vector3f normal(point.x(), point.y(), 0);
         normal.normalize();
         normals.append(normal);
@@ -170,7 +170,7 @@ GraphicsVertexBuffer* GraphicsCylinder::tesselate(int slices, int stacks) const
 
     GraphicsVertexBuffer *buffer = new GraphicsVertexBuffer;
 
-    buffer->setVerticies(verticies);
+    buffer->setVerticies(vertices);
     buffer->setNormals(normals);
     buffer->setIndicies(indices);
 

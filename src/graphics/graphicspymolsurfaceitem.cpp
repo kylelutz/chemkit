@@ -102,14 +102,14 @@ GraphicsVertexBuffer* calculateSurface(const std::vector<Point3>& points,
                                         -3.0F, 0.2F, 2.0F);
 
         if (job && SurfaceJobRun(_ctx_holder.ctx, job)) {
-            QVector<Point3f> verticies;
+            QVector<Point3f> vertices;
             QVector<Vector3f> normals;
             QVector<unsigned short> indicies;
 
-            verticies.reserve(job->N);
+            vertices.reserve(job->N);
             normals.reserve(job->N);
             for (float *vp = job->V, *np = job->VN, *e = (job->V + job->N*3); vp < e; vp+=3, np+=3) {
-                verticies.push_back(Point3f(vp[0], vp[1], vp[2]));
+                vertices.push_back(Point3f(vp[0], vp[1], vp[2]));
                 normals.push_back(Point3f(np[0], np[1], np[2]));
             }
 
@@ -124,7 +124,7 @@ GraphicsVertexBuffer* calculateSurface(const std::vector<Point3>& points,
             // create vertex buffer
             GraphicsVertexBuffer *buffer = new GraphicsVertexBuffer;
 
-            buffer->setVerticies(verticies);
+            buffer->setVerticies(vertices);
             buffer->setNormals(normals);
             buffer->setIndicies(indicies);
 

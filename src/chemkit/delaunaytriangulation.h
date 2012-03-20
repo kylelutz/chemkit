@@ -68,7 +68,7 @@ public:
     bool isWeighted() const;
 
     // simplicies
-    std::vector<int> verticies() const;
+    std::vector<int> vertices() const;
     int vertexCount() const;
     const std::vector<Edge>& edges() const;
     int edgeCount() const;

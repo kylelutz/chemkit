@@ -62,7 +62,7 @@ namespace chemkit {
 /// Geometric constructions are functions that create a geometric
 /// object and return information about it. One example is the
 /// tetrahedronVolume() function which calculates the volume of a
-/// tetrahedron given the positions of its four verticies.
+/// tetrahedron given the positions of its four vertices.
 namespace geometry {
 
 // --- Constructions ------------------------------------------------------- //
@@ -334,7 +334,7 @@ Point3 orthocenter(const Point3 &a, const Point3 &b, const Point3 &c, const Poin
 }
 
 /// Returns the radius of a point orthogonal to the edge with
-/// weighted verticies (\p a, \p b).
+/// weighted vertices (\p a, \p b).
 Real orthoradius(const Point3 &a, const Point3 &b, Real wa, Real wb)
 {
     Vector3d ap = a - orthocenter(a, b, wa, wb);
@@ -343,7 +343,7 @@ Real orthoradius(const Point3 &a, const Point3 &b, Real wa, Real wb)
 }
 
 /// Returns the radius of a point orthogonal to the triangle
-/// with weighted verticies (\p a, \p b, \p c).
+/// with weighted vertices (\p a, \p b, \p c).
 Real orthoradius(const Point3 &a, const Point3 &b, const Point3 &c, Real wa, Real wb, Real wc)
 {
     Vector3d r = a - c;
@@ -370,7 +370,7 @@ Real orthoradius(const Point3 &a, const Point3 &b, const Point3 &c, Real wa, Rea
 }
 
 /// Returns the radius of a point orthogonal to the tetrahedron
-/// with weighted verticies (\p a, \p b, \p c, \p d).
+/// with weighted vertices (\p a, \p b, \p c, \p d).
 Real orthoradius(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d, Real wa, Real wb, Real wc, Real wd)
 {
     Vector3d t = a - d;
@@ -388,14 +388,14 @@ Real orthoradius(const Point3 &a, const Point3 &b, const Point3 &c, const Point3
     return l.squaredNorm() / (144.0 * V*V) - wd;
 }
 
-/// Returns the area of the triangle with verticies (\p a, \p b,
+/// Returns the area of the triangle with vertices (\p a, \p b,
 /// \p c).
 Real triangleArea(const Point3 &a, const Point3 &b, const Point3 &c)
 {
     return (1.0/2.0) * (b - a).cross(c - a).norm();
 }
 
-/// Returns the volume of the tetrahedron with verticies (\p a, \p b,
+/// Returns the volume of the tetrahedron with vertices (\p a, \p b,
 /// \p c, \p d).
 Real tetrahedronVolume(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d)
 {
