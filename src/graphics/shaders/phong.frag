@@ -37,6 +37,7 @@
 
 varying vec3 vertex;
 varying vec3 normal;
+varying vec4 color;
 
 void main()
 {
@@ -44,11 +45,14 @@ void main()
     vec3 E = normalize(-vertex);
     vec3 R = normalize(-reflect(L, normal));
 
-    vec4 ambient = gl_FrontLightProduct[0].ambient;
-    vec4 diffuse = gl_FrontLightProduct[0].diffuse * max(dot(normal, L), 0.0);
-    vec4 specular = gl_FrontLightProduct[0].specular * pow(max(dot(R, E), 0.0), gl_FrontMaterial.shininess);
+    vec4 S = gl_FrontMaterial.specular * gl_LightSource[0].specular;
+    vec4 W = gl_FrontMaterial.emission + color * gl_LightModel.ambient;
 
-    vec4 color = gl_FrontLightModelProduct.sceneColor + ambient + diffuse + specular;
+    vec4 ambient = color * gl_LightSource[0].ambient;
+    vec4 diffuse = color * gl_LightSource[0].diffuse * max(dot(normal, L), 0.0);
+    vec4 specular = S * pow(max(dot(R, E), 0.0), gl_FrontMaterial.shininess);
+
+    vec4 color = vec4((W + ambient + diffuse + specular).xyz, color.a);
 
     // apply fog
     float fogFactor = clamp((gl_Fog.end - gl_FogFragCoord) * gl_Fog.scale, 0.0, 1.0);

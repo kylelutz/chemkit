@@ -406,4 +406,15 @@ void AtomColorMap::setColorScheme(ColorScheme scheme)
     }
 }
 
+// --- Operators ----------------------------------------------------------- //
+AtomColorMap& AtomColorMap::operator=(const AtomColorMap &colorMap)
+{
+    if(this != &colorMap){
+        d->colorMap = colorMap.d->colorMap;
+        d->defaultColor = colorMap.d->defaultColor;
+    }
+
+    return *this;
+}
+
 } // end chemkit namespace
