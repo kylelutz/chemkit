@@ -37,11 +37,13 @@
 
 varying vec3 vertex;
 varying vec3 normal;
+varying vec4 color;
 
 void main()
 {
     vertex = vec3(gl_ModelViewMatrix * gl_Vertex);
     normal = normalize(gl_NormalMatrix * gl_Normal);
+    color = gl_Color;
 
     gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;
 
