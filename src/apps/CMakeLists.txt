@@ -13,7 +13,6 @@ macro(add_chemkit_executable name)
   add_custom_command(TARGET ${name} POST_BUILD COMMAND ${CMAKE_COMMAND} ARGS -E copy ${location} ${CMAKE_BINARY_DIR}/bin/chemkit-${name})
 endmacro(add_chemkit_executable)
 
-add_subdirectory(builder)
 add_subdirectory(convert)
 add_subdirectory(gen3d)
 add_subdirectory(grep)
