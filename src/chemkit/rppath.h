@@ -461,8 +461,8 @@ inline std::vector<std::vector<Atom *> > rppath(const Fragment *fragment)
     }
 
     // cyclize graph
-    std::vector<size_t> originalIndicies;
-    graph.cyclize(originalIndicies);
+    std::vector<size_t> originalIndices;
+    graph.cyclize(originalIndices);
 
     // perceive rings
     std::vector<std::vector<size_t> > sssr = rppath(graph);
@@ -474,7 +474,7 @@ inline std::vector<std::vector<Atom *> > rppath(const Fragment *fragment)
         std::vector<Atom *> ring(cycle.size());
 
         for(size_t i = 0; i < cycle.size(); i++){
-            ring[i] = atoms[originalIndicies[cycle[i]]];
+            ring[i] = atoms[originalIndices[cycle[i]]];
         }
 
         rings.push_back(ring);

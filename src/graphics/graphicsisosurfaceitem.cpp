@@ -465,7 +465,7 @@ GraphicsVertexBuffer* marchCubes(const ScalarField *scalarField, float isovalue)
     GraphicsVertexBuffer *buffer = new GraphicsVertexBuffer;
     buffer->setVertices(vertices);
     buffer->setNormals(normals);
-    buffer->setIndicies(indices);
+    buffer->setIndices(indices);
 
     return buffer;
 }

@@ -215,7 +215,7 @@ void GraphicsPainter::drawTriangle(const Point3f &a, const Point3f &b, const Poi
     GraphicsVertexBuffer buffer;
     buffer.setVertices(vertices);
     buffer.setNormals(normals);
-    buffer.setIndicies(indices);
+    buffer.setIndices(indices);
 
     // draw buffer
     draw(&buffer);

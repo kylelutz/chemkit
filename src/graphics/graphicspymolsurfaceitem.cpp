@@ -104,7 +104,7 @@ GraphicsVertexBuffer* calculateSurface(const std::vector<Point3>& points,
         if (job && SurfaceJobRun(_ctx_holder.ctx, job)) {
             QVector<Point3f> vertices;
             QVector<Vector3f> normals;
-            QVector<unsigned short> indicies;
+            QVector<unsigned short> indices;
 
             vertices.reserve(job->N);
             normals.reserve(job->N);
@@ -114,10 +114,10 @@ GraphicsVertexBuffer* calculateSurface(const std::vector<Point3>& points,
             }
 
             if (surface_type != 1) {
-                indicies.reserve(job->NT*3);
+                indices.reserve(job->NT*3);
 
                 for (int *tp = job->T, *e = (job->T + job->NT*3); tp < e; tp++) {
-                    indicies.push_back(static_cast<unsigned short>(*tp));
+                    indices.push_back(static_cast<unsigned short>(*tp));
                 }
             }
 
@@ -126,7 +126,7 @@ GraphicsVertexBuffer* calculateSurface(const std::vector<Point3>& points,
 
             buffer->setVertices(vertices);
             buffer->setNormals(normals);
-            buffer->setIndicies(indicies);
+            buffer->setIndices(indices);
 
             // apply colors
             if(!atomTypes.empty()) {

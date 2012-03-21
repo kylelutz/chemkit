@@ -69,7 +69,7 @@ const float IcosahedronVertices[] = {
 
 const int IcosahedronVertexCount = 12;
 
-const unsigned int IcosahedronIndicies[] = {
+const unsigned int IcosahedronIndices[] = {
     0, 8, 4, 1, 10, 7, 2, 9, 11, 7, 3, 1, 0, 5, 10,
     3, 9, 6, 3, 11, 9, 8, 6, 4, 2, 4, 9, 3, 7, 11,
     4, 2, 0, 9, 4, 6, 2, 11, 5, 0, 10, 8, 5, 0, 2,
@@ -141,13 +141,13 @@ GraphicsVertexBuffer* GraphicsSphere::tesselate(int subdivisions) const
     // set up initial triangle indices
     QVector<unsigned short> indices(IcosahedronIndexCount);
     for(int i = 0; i < IcosahedronIndexCount; i++){
-        indices[i] = IcosahedronIndicies[i];
+        indices[i] = IcosahedronIndices[i];
     }
 
     // subdivide
     int subdivisionCount = 0;
     while(subdivisionCount < subdivisions){
-        QVector<unsigned short> subdivisionIndicies;
+        QVector<unsigned short> subdivisionIndices;
 
         for(int i = 0; i < indices.size() / 3; i++){
             // indices of current triangle
@@ -179,27 +179,27 @@ GraphicsVertexBuffer* GraphicsSphere::tesselate(int subdivisions) const
             vertices.append(v20);
 
             // add triangle (i0, i01, i20)
-            subdivisionIndicies.append(i0);
-            subdivisionIndicies.append(i01);
-            subdivisionIndicies.append(i20);
+            subdivisionIndices.append(i0);
+            subdivisionIndices.append(i01);
+            subdivisionIndices.append(i20);
 
             // add triangle (i01, i12, i20)
-            subdivisionIndicies.append(i01);
-            subdivisionIndicies.append(i12);
-            subdivisionIndicies.append(i20);
+            subdivisionIndices.append(i01);
+            subdivisionIndices.append(i12);
+            subdivisionIndices.append(i20);
 
             // add triangle (i01, i1, i12)
-            subdivisionIndicies.append(i01);
-            subdivisionIndicies.append(i1);
-            subdivisionIndicies.append(i12);
+            subdivisionIndices.append(i01);
+            subdivisionIndices.append(i1);
+            subdivisionIndices.append(i12);
 
             // add triangle (i20, i12, i2)
-            subdivisionIndicies.append(i20);
-            subdivisionIndicies.append(i12);
-            subdivisionIndicies.append(i2);
+            subdivisionIndices.append(i20);
+            subdivisionIndices.append(i12);
+            subdivisionIndices.append(i2);
         }
 
-        indices = subdivisionIndicies;
+        indices = subdivisionIndices;
 
         subdivisionCount++;
     }
@@ -215,7 +215,7 @@ GraphicsVertexBuffer* GraphicsSphere::tesselate(int subdivisions) const
 
     buffer->setVertices(vertices);
     buffer->setNormals(normals);
-    buffer->setIndicies(indices);
+    buffer->setIndices(indices);
 
     return buffer;
 }

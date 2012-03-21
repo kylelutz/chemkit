@@ -246,9 +246,9 @@ int GraphicsVertexBuffer::normalCount() const
     return d->normals.size();
 }
 
-// --- Indicies ------------------------------------------------------------ //
+// --- Indices ------------------------------------------------------------- //
 /// Sets the indices to \p indices.
-void GraphicsVertexBuffer::setIndicies(const QVector<unsigned short> &indices)
+void GraphicsVertexBuffer::setIndices(const QVector<unsigned short> &indices)
 {
     d->indices = indices;
 }

@@ -76,7 +76,7 @@ public:
     int normalCount() const;
 
     // indices
-    void setIndicies(const QVector<unsigned short> &indices);
+    void setIndices(const QVector<unsigned short> &indices);
     QVector<unsigned short> indices() const;
     int indexCount() const;
 
