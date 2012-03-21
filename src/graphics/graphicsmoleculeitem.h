@@ -38,6 +38,8 @@
 
 #include "graphics.h"
 
+#include <boost/shared_ptr.hpp>
+
 #include <chemkit/molecule.h>
 #include <chemkit/atomcolormap.h>
 #include <chemkit/moleculewatcher.h>
@@ -83,8 +85,8 @@ public:
     bool bondOrderVisible() const;
     void setAtomColoredBonds(bool atomColoredBonds);
     bool atomColoredBonds() const;
-    void setColorMap(AtomColorMap *colorMap);
-    AtomColorMap* colorMap() const;
+    void setColorMap(const boost::shared_ptr<AtomColorMap> &colorMap);
+    boost::shared_ptr<AtomColorMap> colorMap() const;
 
     // items
     GraphicsAtomItem* atomItem(const Atom *atom) const;
