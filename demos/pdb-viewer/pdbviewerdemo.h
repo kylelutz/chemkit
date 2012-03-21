@@ -33,8 +33,8 @@
 **
 ******************************************************************************/
 
-#ifndef PDBVIEWEREXAMPLE_H
-#define PDBVIEWEREXAMPLE_H
+#ifndef PDBVIEWERDEMO_H
+#define PDBVIEWERDEMO_H
 
 #include <QtGui>
 
@@ -72,4 +72,4 @@ class PdbViewerWindow : public QMainWindow
         chemkit::GraphicsNucleicAcidItem *m_nucleicAcidItem;
 };
 
-#endif // PDBVIEWEREXAMPLE_H
+#endif // PDBVIEWERDEMO_H

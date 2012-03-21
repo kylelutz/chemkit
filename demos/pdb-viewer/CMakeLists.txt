@@ -11,9 +11,9 @@ include(${QT_USE_FILE})
 
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
-set(SOURCES pdbviewerexample.cpp)
-set(MOC_HEADERS pdbviewerexample.h)
-set(UI_FORMS pdbviewerexample.ui)
+set(SOURCES pdbviewerdemo.cpp)
+set(MOC_HEADERS pdbviewerdemo.h)
+set(UI_FORMS pdbviewerdemo.ui)
 
 qt4_wrap_ui(UI_SOURCES ${UI_FORMS})
 qt4_wrap_cpp(MOC_SOURCES ${MOC_HEADERS})

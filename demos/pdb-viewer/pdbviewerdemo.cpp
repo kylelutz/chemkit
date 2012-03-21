@@ -33,8 +33,8 @@
 **
 ******************************************************************************/
 
-#include "pdbviewerexample.h"
-#include "ui_pdbviewerexample.h"
+#include "pdbviewerdemo.h"
+#include "ui_pdbviewerdemo.h"
 
 #include <chemkit/polymer.h>
 #include <chemkit/bondpredictor.h>
