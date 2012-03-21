@@ -83,7 +83,7 @@ public:
     typedef T SizeType;
     enum { NullIndex = SizeType(-1) }; // represents an invalid vertex index
 
-    State(const Graph<T> &source, const Graph<T> &target, VertexComparator compareVerticies, EdgeComparator compareEdges);
+    State(const Graph<T> &source, const Graph<T> &target, VertexComparator compareVertices, EdgeComparator compareEdges);
     State(const State *state);
     ~State();
 
@@ -108,7 +108,7 @@ private:
     std::pair<T, T> m_lastAddition;
     SharedState<T> *m_sharedState;
     bool m_ownSharedState;
-    VertexComparator m_compareVerticies;
+    VertexComparator m_compareVertices;
     EdgeComparator m_compareEdges;
 };
 
@@ -125,7 +125,7 @@ inline State<T, VertexComparator, EdgeComparator>::State(const Graph<T> &source,
       m_lastAddition(NullIndex, NullIndex),
       m_sharedState(new SharedState<T>(source.size(), target.size())),
       m_ownSharedState(true),
-      m_compareVerticies(compareVertices),
+      m_compareVertices(compareVertices),
       m_compareEdges(compareEdges)
 {
 }
@@ -140,7 +140,7 @@ inline State<T, VertexComparator, EdgeComparator>::State(const State *state)
       m_lastAddition(NullIndex, NullIndex),
       m_sharedState(state->m_sharedState),
       m_ownSharedState(false),
-      m_compareVerticies(state->m_compareVerticies),
+      m_compareVertices(state->m_compareVertices),
       m_compareEdges(state->m_compareEdges)
 {
 }
@@ -309,7 +309,7 @@ inline bool State<T, VertexComparator, EdgeComparator>::isFeasible(const std::pa
     T sourceAtom = candidate.first;
     T targetAtom = candidate.second;
 
-    if(!m_compareVerticies(sourceAtom, targetAtom)){
+    if(!m_compareVertices(sourceAtom, targetAtom)){
         return false;
     }
 

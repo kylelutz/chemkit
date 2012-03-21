@@ -170,7 +170,7 @@ GraphicsVertexBuffer* GraphicsCylinder::tesselate(int slices, int stacks) const
 
     GraphicsVertexBuffer *buffer = new GraphicsVertexBuffer;
 
-    buffer->setVerticies(vertices);
+    buffer->setVertices(vertices);
     buffer->setNormals(normals);
     buffer->setIndicies(indices);
 

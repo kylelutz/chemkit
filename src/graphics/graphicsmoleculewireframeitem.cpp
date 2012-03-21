@@ -167,7 +167,7 @@ void GraphicsMoleculeWireframeItem::paint(GraphicsPainter *painter)
 
     GraphicsVertexBuffer buffer;
 
-    buffer.setVerticies(vertices);
+    buffer.setVertices(vertices);
     buffer.setIndicies(indices);
     buffer.setColors(colors);
 

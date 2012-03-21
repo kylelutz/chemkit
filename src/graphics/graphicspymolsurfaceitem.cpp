@@ -124,7 +124,7 @@ GraphicsVertexBuffer* calculateSurface(const std::vector<Point3>& points,
             // create vertex buffer
             GraphicsVertexBuffer *buffer = new GraphicsVertexBuffer;
 
-            buffer->setVerticies(vertices);
+            buffer->setVertices(vertices);
             buffer->setNormals(normals);
             buffer->setIndicies(indicies);
 

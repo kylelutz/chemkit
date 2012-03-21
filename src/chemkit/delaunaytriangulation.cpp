@@ -512,28 +512,28 @@ const std::vector<DelaunayTriangulation::Triangle>& DelaunayTriangulation::alpha
                     triangles.push_back(triangle);
                 }
                 else{
-                    std::vector<int> tetrahedronVerticies;
-                    std::vector<int> neighborVerticies;
+                    std::vector<int> tetrahedronVertices;
+                    std::vector<int> neighborVertices;
                     for(int i = 0; i < 4; i++){
-                        tetrahedronVerticies.push_back(tetrahedron.vertices[i]);
-                        neighborVerticies.push_back(neighbor.vertices[i]);
+                        tetrahedronVertices.push_back(tetrahedron.vertices[i]);
+                        neighborVertices.push_back(neighbor.vertices[i]);
                     }
 
                     for(int i = 0; i < 3; i++){
-                        tetrahedronVerticies.erase(std::remove(tetrahedronVerticies.begin(),
-                                                               tetrahedronVerticies.end(),
-                                                               triangle[i]));
+                        tetrahedronVertices.erase(std::remove(tetrahedronVertices.begin(),
+                                                              tetrahedronVertices.end(),
+                                                              triangle[i]));
 
-                        neighborVerticies.erase(std::remove(neighborVerticies.begin(),
-                                                            neighborVerticies.end(),
-                                                            triangle[i]));
+                        neighborVertices.erase(std::remove(neighborVertices.begin(),
+                                                           neighborVertices.end(),
+                                                           triangle[i]));
                     }
 
                     int va = triangle[0];
                     int vb = triangle[1];
                     int vc = triangle[2];
-                    int vd = tetrahedronVerticies[0];
-                    int ve = neighborVerticies[0];
+                    int vd = tetrahedronVertices[0];
+                    int ve = neighborVertices[0];
 
                     if(alphaShape->triangleAttached(va, vb, vc, vd)){
                         continue;

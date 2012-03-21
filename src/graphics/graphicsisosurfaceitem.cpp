@@ -429,7 +429,7 @@ GraphicsVertexBuffer* marchCubes(const ScalarField *scalarField, float isovalue)
                     continue;
                 }
 
-                QVector<Point3f> cubeVerticies(12);
+                QVector<Point3f> cubeVertices(12);
 
                 for(int i = 0; i < 12; i++){
                     if(edgeFlags & (1 << i)){
@@ -439,7 +439,7 @@ GraphicsVertexBuffer* marchCubes(const ScalarField *scalarField, float isovalue)
                                              (VertexOffset[EdgeConnection[i][0]][1] + offset * EdgeDirection[i][1]) * yStep,
                                              (VertexOffset[EdgeConnection[i][0]][2] + offset * EdgeDirection[i][2]) * zStep);
 
-                        cubeVerticies[i] = cubeOrigin + vertex;
+                        cubeVertices[i] = cubeOrigin + vertex;
                     }
                 }
 
@@ -450,7 +450,7 @@ GraphicsVertexBuffer* marchCubes(const ScalarField *scalarField, float isovalue)
 
                     for(int j = 0; j < 3; j++){
                         int vertexIndex = TriangleConnectionTable[cubeIndex][i*3 + j];
-                        Point3f vertex = cubeVerticies[vertexIndex];
+                        Point3f vertex = cubeVertices[vertexIndex];
 
                         indices.append(indices.size());
                         vertices.append(vertex);
@@ -463,7 +463,7 @@ GraphicsVertexBuffer* marchCubes(const ScalarField *scalarField, float isovalue)
 
     // create vertex buffer
     GraphicsVertexBuffer *buffer = new GraphicsVertexBuffer;
-    buffer->setVerticies(vertices);
+    buffer->setVertices(vertices);
     buffer->setNormals(normals);
     buffer->setIndicies(indices);
 

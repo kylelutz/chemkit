@@ -208,9 +208,9 @@ void GraphicsVertexBuffer::clear()
     d->readyToDraw = false;
 }
 
-// --- Verticies ----------------------------------------------------------- //
+// --- Vertices ----------------------------------------------------------- //
 /// Sets the vertices to \p vertices.
-void GraphicsVertexBuffer::setVerticies(const QVector<Point3f> &vertices)
+void GraphicsVertexBuffer::setVertices(const QVector<Point3f> &vertices)
 {
     d->vertices = vertices;
 }

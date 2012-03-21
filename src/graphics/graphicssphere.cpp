@@ -52,7 +52,7 @@ const float s = sqrt(1 + GoldenRatio*GoldenRatio);
 const float t = GoldenRatio / s;
 const float one = 1 / s;
 
-const float IcosahedronVerticies[] = {
+const float IcosahedronVertices[] = {
     t, one, 0,
     -t, one, 0,
     t, -one, 0,
@@ -132,7 +132,7 @@ GraphicsVertexBuffer* GraphicsSphere::tesselate(int subdivisions) const
     // setup initial vertices
     QVector<Point3f> vertices(IcosahedronVertexCount);
     for(int i = 0; i < IcosahedronVertexCount; i++){
-        const float *v = &IcosahedronVerticies[i*3];
+        const float *v = &IcosahedronVertices[i*3];
         Point3f point(v[0], v[1], v[2]);
         point *= radius() / point.norm();
         vertices[i] = point;
@@ -213,7 +213,7 @@ GraphicsVertexBuffer* GraphicsSphere::tesselate(int subdivisions) const
     // create vertex buffer
     GraphicsVertexBuffer *buffer = new GraphicsVertexBuffer;
 
-    buffer->setVerticies(vertices);
+    buffer->setVertices(vertices);
     buffer->setNormals(normals);
     buffer->setIndicies(indices);
 

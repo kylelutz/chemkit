@@ -66,7 +66,7 @@ public:
     void clear();
 
     // vertices
-    void setVerticies(const QVector<Point3f> &vertices);
+    void setVertices(const QVector<Point3f> &vertices);
     QVector<Point3f> vertices() const;
     int vertexCount() const;
 
