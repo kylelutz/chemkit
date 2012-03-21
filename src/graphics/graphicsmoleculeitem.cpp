@@ -310,7 +310,7 @@ bool GraphicsMoleculeItem::atomVisible(const Atom *atom) const
 }
 
 /// Sets the color map for the molecule item to \p colorMap.
-void GraphicsMoleculeItem::setAtomColorMap(AtomColorMap *colorMap)
+void GraphicsMoleculeItem::setColorMap(AtomColorMap *colorMap)
 {
     delete d->colorMap;
 
@@ -318,7 +318,7 @@ void GraphicsMoleculeItem::setAtomColorMap(AtomColorMap *colorMap)
 }
 
 /// Returns the color map for the molecule item.
-AtomColorMap* GraphicsMoleculeItem::atomColorMap() const
+AtomColorMap* GraphicsMoleculeItem::colorMap() const
 {
     return d->colorMap;
 }

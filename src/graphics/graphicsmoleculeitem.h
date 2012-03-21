@@ -83,8 +83,8 @@ public:
     bool bondOrderVisible() const;
     void setAtomColoredBonds(bool atomColoredBonds);
     bool atomColoredBonds() const;
-    void setAtomColorMap(AtomColorMap *colorMap);
-    AtomColorMap* atomColorMap() const;
+    void setColorMap(AtomColorMap *colorMap);
+    AtomColorMap* colorMap() const;
 
     // items
     GraphicsAtomItem* atomItem(const Atom *atom) const;
