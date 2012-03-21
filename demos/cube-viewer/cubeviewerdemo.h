@@ -33,8 +33,8 @@
 **
 ******************************************************************************/
 
-#ifndef CUBEVIEWEREXAMPLE_H
-#define CUBEVIEWEREXAMPLE_H
+#ifndef CUBEVIEWERDEMO_H
+#define CUBEVIEWERDEMO_H
 
 #include <QtGui>
 
@@ -44,16 +44,16 @@
 #include <chemkit/graphicsisosurfaceitem.h>
 
 namespace Ui {
-    class CubeViewerExample;
+    class CubeViewerDemo;
 }
 
-class CubeViewerExample : public QMainWindow
+class CubeViewerDemo : public QMainWindow
 {
     Q_OBJECT
 
     public:
-        CubeViewerExample(QWidget *parent = 0);
-        ~CubeViewerExample();
+        CubeViewerDemo(QWidget *parent = 0);
+        ~CubeViewerDemo();
 
     public slots:
         void openFile();
@@ -67,7 +67,7 @@ class CubeViewerExample : public QMainWindow
         chemkit::ScalarField* readVolumeData(const QString &fileName) const;
 
     private:
-        Ui::CubeViewerExample *ui;
+        Ui::CubeViewerDemo *ui;
         boost::shared_ptr<chemkit::Molecule> m_molecule;
         chemkit::GraphicsView *m_view;
         chemkit::GraphicsMoleculeItem *m_moleculeItem;
@@ -77,4 +77,4 @@ class CubeViewerExample : public QMainWindow
         chemkit::ScalarField *m_negativeScalarField;
 };
 
-#endif // CUBEVIEWEREXAMPLE_H
+#endif // CUBEVIEWERDEMO_H

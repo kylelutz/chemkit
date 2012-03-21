@@ -11,9 +11,9 @@ include(${QT_USE_FILE})
 
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
-set(SOURCES cubeviewerexample.cpp)
-set(MOC_HEADERS cubeviewerexample.h)
-set(UI_FORMS cubeviewerexample.ui)
+set(SOURCES cubeviewerdemo.cpp)
+set(MOC_HEADERS cubeviewerdemo.h)
+set(UI_FORMS cubeviewerdemo.ui)
 
 qt4_wrap_ui(UI_SOURCES ${UI_FORMS})
 qt4_wrap_cpp(MOC_SOURCES ${MOC_HEADERS})

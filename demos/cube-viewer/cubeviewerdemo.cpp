@@ -33,19 +33,19 @@
 **
 ******************************************************************************/
 
-#include "cubeviewerexample.h"
-#include "ui_cubeviewerexample.h"
+#include "cubeviewerdemo.h"
+#include "ui_cubeviewerdemo.h"
 
 #include <chemkit/moleculefile.h>
 #include <chemkit/bondpredictor.h>
 #include <chemkit/graphicsmaterial.h>
 #include <chemkit/graphicsnavigationtool.h>
 
-// === CubeViewerExample =================================================== //
+// === CubeViewerDemo =================================================== //
 // --- Construction and Destruction ---------------------------------------- //
-CubeViewerExample::CubeViewerExample(QWidget *parent)
+CubeViewerDemo::CubeViewerDemo(QWidget *parent)
     : QMainWindow(parent),
-      ui(new Ui::CubeViewerExample)
+      ui(new Ui::CubeViewerDemo)
 {
     // setup ui
     ui->setupUi(this);
@@ -80,7 +80,7 @@ CubeViewerExample::CubeViewerExample(QWidget *parent)
     m_negativeScalarField = 0;
 }
 
-CubeViewerExample::~CubeViewerExample()
+CubeViewerDemo::~CubeViewerDemo()
 {
     closeFile();
 
@@ -88,7 +88,7 @@ CubeViewerExample::~CubeViewerExample()
 }
 
 // --- Slots --------------------------------------------------------------- //
-void CubeViewerExample::openFile()
+void CubeViewerDemo::openFile()
 {
     // close current file
     closeFile();
@@ -102,7 +102,7 @@ void CubeViewerExample::openFile()
     }
 }
 
-void CubeViewerExample::openFile(const QString &fileName)
+void CubeViewerDemo::openFile(const QString &fileName)
 {
     // close current file
     closeFile();
@@ -144,7 +144,7 @@ void CubeViewerExample::openFile(const QString &fileName)
     m_view->update();
 }
 
-void CubeViewerExample::closeFile()
+void CubeViewerDemo::closeFile()
 {
     if(m_positiveScalarField){
         delete m_positiveScalarField;
@@ -157,12 +157,12 @@ void CubeViewerExample::closeFile()
     }
 }
 
-void CubeViewerExample::quit()
+void CubeViewerDemo::quit()
 {
     qApp->quit();
 }
 
-void CubeViewerExample::isovalueChanged(int value)
+void CubeViewerDemo::isovalueChanged(int value)
 {
     chemkit::Real isovalue = value / 1000.0;
 
@@ -172,7 +172,7 @@ void CubeViewerExample::isovalueChanged(int value)
     m_view->update();
 }
 
-void CubeViewerExample::opacityChanged(int value)
+void CubeViewerDemo::opacityChanged(int value)
 {
     chemkit::Real opacity = value / 100.0;
 
@@ -184,7 +184,7 @@ void CubeViewerExample::opacityChanged(int value)
 
 // --- Internal Methods ---------------------------------------------------- //
 // Reads and returns the scalar field data from a .cube file.
-chemkit::ScalarField* CubeViewerExample::readVolumeData(const QString &fileName) const
+chemkit::ScalarField* CubeViewerDemo::readVolumeData(const QString &fileName) const
 {
     QFile file(fileName);
     bool ok = file.open(QFile::ReadOnly);
@@ -280,7 +280,7 @@ int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
 
-    CubeViewerExample window;
+    CubeViewerDemo window;
     window.show();
 
     return app.exec();
