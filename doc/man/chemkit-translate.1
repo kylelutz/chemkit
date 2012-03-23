@@ -1,0 +1,28 @@
+.TH CHEMKIT\-TRANSLATE "1"
+.SH NAME
+chemkit-translate \- Convert between chemical line formats
+.SH SYNOPSIS
+.sp
+chemkit-translate [OPTIONS] FORMULA
+.SH DESCRIPTION
+The chemkit-translate tool converts between chemical line formats.
+.SH OPTIONS
+.IP -i
+Input format name.
+.IP -o
+Output format name.
+.SH EXAMPLES
+.PP
+chemkit\-translate -ismiles "CCO" -oinchi
+.RS 4
+Converts the SMILES formula for ethanol into its InChI formula.
+.RE
+.SH AUTHOR
+Kyle Lutz <kyle.r.lutz@gmail.com>
+.SH SEE ALSO
+.BR chemkit-convert
+.BR chemkit-gen3d
+.BR chemkit-grep
+.PP
+More information about the chemkit library and applications can be
+found online at: \%<\fBhttp://www.chemkit.org\fR>

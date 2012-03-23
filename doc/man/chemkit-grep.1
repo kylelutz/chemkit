@@ -1,0 +1,33 @@
+.TH CHEMKIT\-GREP "1"
+.SH NAME
+chemkit-grep \- Searches for substructures in chemical files.
+.SH SYNOPSIS
+.sp
+chemkit-convert [OPTIONS] PATTERN [FILE]
+.SH DESCRIPTION
+The chemkit-grep tool searches for molecular substructures in
+chemical files.
+.SH OPTIONS
+.IP -c "--composition"
+Match composition rather than structure.
+.IP -e "--exact-match"
+Return molecules that exactly match PATTERN.
+.IP -v "--invert-match"
+Return only non-matching molecules.
+.IP -n "--names-only"
+Output only the names of matching molecules.
+.SH EXAMPLES
+.PP
+chemkit\-grep "c1ccccc1O" molecules.sdf
+.RS 4
+Searches for the phenol substructure in the 'molecules.sdf' file.
+.RE
+.SH AUTHOR
+Kyle Lutz <kyle.r.lutz@gmail.com>
+.SH SEE ALSO
+.BR chemkit-convert
+.BR chemkit-gen3d
+.BR chemkit-translate
+.PP
+More information about the chemkit library and applications can be
+found online at: \%<\fBhttp://www.chemkit.org\fR>

@@ -1,0 +1,28 @@
+.TH CHEMKIT\-CONVERT "1"
+.SH NAME
+chemkit-convert \- Convert between chemical file formats
+.SH SYNOPSIS
+.sp
+chemkit-convert [OPTIONS] <INPUT_FILE> <OUTPUT_FILE>
+.SH DESCRIPTION
+The chemkit-convert tool converts between chemical file formats.
+.SH OPTIONS
+.IP -i
+Input format name.
+.IP -o
+Output format name.
+.SH EXAMPLES
+.PP
+chemkit\-convert input.mol output.cml
+.RS 4
+Convert a file in the 'mol' format to the 'cml' format.
+.RE
+.SH AUTHOR
+Kyle Lutz <kyle.r.lutz@gmail.com>
+.SH SEE ALSO
+.BR chemkit-gen3d
+.BR chemkit-grep
+.BR chemkit-translate
+.PP
+More information about the chemkit library and applications can be
+found online at: \%<\fBhttp://www.chemkit.org\fR>

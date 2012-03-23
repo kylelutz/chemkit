@@ -1,0 +1,30 @@
+.TH CHEMKIT\-GEN3D "1"
+.SH NAME
+chemkit-gen3d \- Generates 3D coordinates for a molecule.
+.SH SYNOPSIS
+.sp
+chemkit-gen3d [OPTIONS] FORMULA [FILE]
+.SH DESCRIPTION
+The chemkit-gen3d tool generates 3D coordinates for molecules which 
+are specified by their formula (e.g. SMILES, InChI).
+.SH OPTIONS
+.IP -i
+Input line format name.
+.IP -o
+Output file format name.
+.SH EXAMPLES
+.PP
+chemkit\-gen3d "CCO" ethanol.mol
+.RS 4
+Generates the structure and 3D coordinates for an ethanol molecule
+and writes them to the file 'ethanol.mol'.
+.RE
+.SH AUTHOR
+Kyle Lutz <kyle.r.lutz@gmail.com>
+.SH SEE ALSO
+.BR chemkit-gen3d
+.BR chemkit-grep
+.BR chemkit-translate
+.PP
+More information about the chemkit library and applications can be
+found online at: \%<\fBhttp://www.chemkit.org\fR>
