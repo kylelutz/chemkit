@@ -67,10 +67,6 @@ GasteigerPartialChargePredictor::GasteigerPartialChargePredictor()
 {
 }
 
-GasteigerPartialChargePredictor::~GasteigerPartialChargePredictor()
-{
-}
-
 // --- Properties ---------------------------------------------------------- //
 void GasteigerPartialChargePredictor::setMolecule(const chemkit::Molecule *molecule)
 {

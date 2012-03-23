@@ -49,7 +49,6 @@ class GasteigerPartialChargePredictor : public chemkit::PartialChargePredictor
 public:
     // construction and destruction
     GasteigerPartialChargePredictor();
-    ~GasteigerPartialChargePredictor();
 
     // properties
     void setMolecule(const chemkit::Molecule *molecule) CHEMKIT_OVERRIDE;
