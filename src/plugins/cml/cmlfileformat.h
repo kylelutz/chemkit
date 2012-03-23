@@ -42,7 +42,6 @@ class CmlFileFormat : public chemkit::MoleculeFileFormat
 {
 public:
     CmlFileFormat();
-    ~CmlFileFormat();
 
     bool read(std::istream &input, chemkit::MoleculeFile *file) CHEMKIT_OVERRIDE;
     bool write(const chemkit::MoleculeFile *file, std::ostream &output) CHEMKIT_OVERRIDE;

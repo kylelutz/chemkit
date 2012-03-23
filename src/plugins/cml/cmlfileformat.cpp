@@ -52,10 +52,6 @@ CmlFileFormat::CmlFileFormat()
 {
 }
 
-CmlFileFormat::~CmlFileFormat()
-{
-}
-
 bool CmlFileFormat::read(std::istream &input, chemkit::MoleculeFile *file)
 {
     // read file data into a string
