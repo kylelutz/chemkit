@@ -106,7 +106,7 @@ const std::vector<Plugin *>& PluginManager::plugins() const
 }
 
 /// Returns the number of loaded plugins.
-int PluginManager::pluginCount() const
+size_t PluginManager::pluginCount() const
 {
     return d->plugins.size();
 }

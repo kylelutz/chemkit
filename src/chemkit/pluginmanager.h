@@ -57,7 +57,7 @@ public:
     // properties
     Plugin* plugin(const std::string &name) const;
     const std::vector<Plugin *>& plugins() const;
-    int pluginCount() const;
+    size_t pluginCount() const;
 
     // plugin loading
     bool loadPlugin(const std::string &fileName);
