@@ -41,6 +41,8 @@
 #include <map>
 #include <vector>
 
+#include <boost/shared_ptr.hpp>
+
 #include "moiety.h"
 
 namespace chemkit {
@@ -61,12 +63,13 @@ public:
     };
 
     // construction and destruction
-    SubstructureQuery(const Molecule *molecule = 0);
+    SubstructureQuery();
+    SubstructureQuery(const boost::shared_ptr<Molecule> &molecule);
     ~SubstructureQuery();
 
     // properties
-    void setMolecule(const Molecule *molecule);
-    const Molecule* molecule() const;
+    void setMolecule(const boost::shared_ptr<Molecule> &molecule);
+    boost::shared_ptr<Molecule> molecule() const;
     void setFlags(int flags);
     int flags() const;
 

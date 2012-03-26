@@ -39,6 +39,8 @@
 
 #include "substructuresearchtest.h"
 
+#include <boost/make_shared.hpp>
+
 #include <chemkit/molecule.h>
 #include <chemkit/moleculefile.h>
 #include <chemkit/substructurequery.h>
@@ -83,7 +85,7 @@ void SubstructureSearchTest::cleanupTestCase()
 
 void SubstructureSearchTest::benzene()
 {
-    chemkit::SubstructureQuery query(m_benzene);
+    chemkit::SubstructureQuery query(boost::make_shared<chemkit::Molecule>(*m_benzene));
     QCOMPARE(query.matches(m_benzene), true);
     QCOMPARE(query.matches(m_butane), false);
     QCOMPARE(query.matches(m_cyclopropane), false);
@@ -98,7 +100,7 @@ void SubstructureSearchTest::benzene()
 
 void SubstructureSearchTest::butane()
 {
-    chemkit::SubstructureQuery query(m_butane);
+    chemkit::SubstructureQuery query(boost::make_shared<chemkit::Molecule>(*m_butane));
     QCOMPARE(query.matches(m_benzene), false);
     QCOMPARE(query.matches(m_butane), true);
     QCOMPARE(query.matches(m_cyclopropane), false);
@@ -113,7 +115,7 @@ void SubstructureSearchTest::butane()
 
 void SubstructureSearchTest::cyclopropane()
 {
-    chemkit::SubstructureQuery query(m_cyclopropane);
+    chemkit::SubstructureQuery query(boost::make_shared<chemkit::Molecule>(*m_cyclopropane));
     QCOMPARE(query.matches(m_benzene), false);
     QCOMPARE(query.matches(m_butane), false);
     QCOMPARE(query.matches(m_cyclopropane), true);
@@ -128,7 +130,7 @@ void SubstructureSearchTest::cyclopropane()
 
 void SubstructureSearchTest::ethane()
 {
-    chemkit::SubstructureQuery query(m_ethane);
+    chemkit::SubstructureQuery query(boost::make_shared<chemkit::Molecule>(*m_ethane));
     QCOMPARE(query.matches(m_benzene), true);
     QCOMPARE(query.matches(m_butane), true);
     QCOMPARE(query.matches(m_cyclopropane), true);
@@ -143,7 +145,7 @@ void SubstructureSearchTest::ethane()
 
 void SubstructureSearchTest::ethanol()
 {
-    chemkit::SubstructureQuery query(m_ethanol);
+    chemkit::SubstructureQuery query(boost::make_shared<chemkit::Molecule>(*m_ethanol));
     QCOMPARE(query.matches(m_benzene), false);
     QCOMPARE(query.matches(m_butane), false);
     QCOMPARE(query.matches(m_cyclopropane), false);
@@ -158,7 +160,7 @@ void SubstructureSearchTest::ethanol()
 
 void SubstructureSearchTest::indole()
 {
-    chemkit::SubstructureQuery query(m_indole);
+    chemkit::SubstructureQuery query(boost::make_shared<chemkit::Molecule>(*m_indole));
     QCOMPARE(query.matches(m_benzene), false);
     QCOMPARE(query.matches(m_butane), false);
     QCOMPARE(query.matches(m_cyclopropane), false);
@@ -173,7 +175,7 @@ void SubstructureSearchTest::indole()
 
 void SubstructureSearchTest::methane()
 {
-    chemkit::SubstructureQuery query(m_methane);
+    chemkit::SubstructureQuery query(boost::make_shared<chemkit::Molecule>(*m_methane));
     QCOMPARE(query.matches(m_benzene), true);
     QCOMPARE(query.matches(m_butane), true);
     QCOMPARE(query.matches(m_cyclopropane), true);
@@ -188,7 +190,7 @@ void SubstructureSearchTest::methane()
 
 void SubstructureSearchTest::methanol()
 {
-    chemkit::SubstructureQuery query(m_methanol);
+    chemkit::SubstructureQuery query(boost::make_shared<chemkit::Molecule>(*m_methanol));
     QCOMPARE(query.matches(m_benzene), false);
     QCOMPARE(query.matches(m_butane), false);
     QCOMPARE(query.matches(m_cyclopropane), false);
@@ -203,7 +205,7 @@ void SubstructureSearchTest::methanol()
 
 void SubstructureSearchTest::phenol()
 {
-    chemkit::SubstructureQuery query(m_phenol);
+    chemkit::SubstructureQuery query(boost::make_shared<chemkit::Molecule>(*m_phenol));
     QCOMPARE(query.matches(m_benzene), false);
     QCOMPARE(query.matches(m_butane), false);
     QCOMPARE(query.matches(m_cyclopropane), false);
@@ -218,7 +220,7 @@ void SubstructureSearchTest::phenol()
 
 void SubstructureSearchTest::propane()
 {
-    chemkit::SubstructureQuery query(m_propane);
+    chemkit::SubstructureQuery query(boost::make_shared<chemkit::Molecule>(*m_propane));
     QCOMPARE(query.matches(m_benzene), false);
     QCOMPARE(query.matches(m_butane), true);
     QCOMPARE(query.matches(m_cyclopropane), true);
@@ -255,43 +257,43 @@ void SubstructureSearchTest::protein()
     query.setFlags(chemkit::SubstructureQuery::CompareAromaticity);
 
     // indole in tryptophan
-    chemkit::Molecule indole("InChI=1/C8H7N/c1-2-4-8-7(3-1)5-6-9-8/h1-6,9H", "inchi");
-    query.setMolecule(&indole);
+    boost::shared_ptr<chemkit::Molecule> indole = boost::make_shared<chemkit::Molecule>("InChI=1/C8H7N/c1-2-4-8-7(3-1)5-6-9-8/h1-6,9H", "inchi");
+    query.setMolecule(indole);
     QCOMPARE(query.matches(molecule.get()), true);
 
     // phenol ring in tyrosine
-    chemkit::Molecule phenol("InChI=1/C6H6O/c7-6-4-2-1-3-5-6/h1-5,7H", "inchi");
-    query.setMolecule(&phenol);
+    boost::shared_ptr<chemkit::Molecule> phenol = boost::make_shared<chemkit::Molecule>("InChI=1/C6H6O/c7-6-4-2-1-3-5-6/h1-5,7H", "inchi");
+    query.setMolecule(phenol);
     QCOMPARE(query.matches(molecule.get()), true);
 
     // proline ring
-    chemkit::Molecule prolineRing("InChI=1/C4H9N/c1-2-4-5-3-1/h5H,1-4H2", "inchi");
-    query.setMolecule(&prolineRing);
+    boost::shared_ptr<chemkit::Molecule> prolineRing = boost::make_shared<chemkit::Molecule>("InChI=1/C4H9N/c1-2-4-5-3-1/h5H,1-4H2", "inchi");
+    query.setMolecule(prolineRing);
     QCOMPARE(query.matches(molecule.get()), true);
 
     // guanidine in arginine
-    chemkit::Molecule guanidine("InChI=1/CH5N3/c2-1(3)4/h(H5,2,3,4)/f/h2H,3-4H2", "inchi");
-    query.setMolecule(&guanidine);
+    boost::shared_ptr<chemkit::Molecule> guanidine = boost::make_shared<chemkit::Molecule>("InChI=1/CH5N3/c2-1(3)4/h(H5,2,3,4)/f/h2H,3-4H2", "inchi");
+    query.setMolecule(guanidine);
     QCOMPARE(query.matches(molecule.get()), true);
 
     // lysine chain
-    chemkit::Molecule lysineChain("InChI=1/C5H13N/c1-2-3-4-5-6/h2-6H2,1H3", "inchi");
-    query.setMolecule(&lysineChain);
+    boost::shared_ptr<chemkit::Molecule> lysineChain = boost::make_shared<chemkit::Molecule>("InChI=1/C5H13N/c1-2-3-4-5-6/h2-6H2,1H3", "inchi");
+    query.setMolecule(lysineChain);
     QCOMPARE(query.matches(molecule.get()), true);
 
     // isoleucine residue
-    chemkit::Molecule isoleucine("InChI=1/C6H13NO/c1-3-5(2)6(7)4-8/h4-6H,3,7H2,1-2H3", "inchi");
-    query.setMolecule(&isoleucine);
+    boost::shared_ptr<chemkit::Molecule> isoleucine = boost::make_shared<chemkit::Molecule>("InChI=1/C6H13NO/c1-3-5(2)6(7)4-8/h4-6H,3,7H2,1-2H3", "inchi");
+    query.setMolecule(isoleucine);
     QCOMPARE(query.matches(molecule.get()), true);
 
     // cysteine side chain
-    chemkit::Molecule cysteineChain("InChI=1/C2H6S/c1-2-3/h3H,2H2,1H3", "inchi");
-    query.setMolecule(&cysteineChain);
+    boost::shared_ptr<chemkit::Molecule> cysteineChain = boost::make_shared<chemkit::Molecule>("InChI=1/C2H6S/c1-2-3/h3H,2H2,1H3", "inchi");
+    query.setMolecule(cysteineChain);
     QCOMPARE(query.matches(molecule.get()), true);
 
     // methionine chain
-    chemkit::Molecule methionineChain("InChI=1/C4H10S/c1-3-4-5-2/h3-4H2,1-2H3", "inchi");
-    query.setMolecule(&methionineChain);
+    boost::shared_ptr<chemkit::Molecule> methionineChain = boost::make_shared<chemkit::Molecule>("InChI=1/C4H10S/c1-3-4-5-2/h3-4H2,1-2H3", "inchi");
+    query.setMolecule(methionineChain);
     QCOMPARE(query.matches(molecule.get()), true);
 }
 

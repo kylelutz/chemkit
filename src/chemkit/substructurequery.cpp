@@ -114,7 +114,7 @@ struct BondComparator
 class SubstructureQueryPrivate
 {
 public:
-    const Molecule *molecule;
+    boost::shared_ptr<Molecule> molecule;
     int flags;
 };
 
@@ -124,9 +124,16 @@ public:
 /// \brief The SubstructureQuery class represents a substructure query.
 
 // --- Construction and Destruction ---------------------------------------- //
+/// Creates a new substructure query.
+SubstructureQuery::SubstructureQuery()
+  : d(new SubstructureQueryPrivate)
+{
+    d->flags = 0;
+}
+
 /// Creates a new substructure query with \p molecule as the
 /// substructure to query for.
-SubstructureQuery::SubstructureQuery(const Molecule *molecule)
+SubstructureQuery::SubstructureQuery(const boost::shared_ptr<Molecule> &molecule)
     : d(new SubstructureQueryPrivate)
 {
     d->molecule = molecule;
@@ -141,13 +148,13 @@ SubstructureQuery::~SubstructureQuery()
 
 // --- Properties ---------------------------------------------------------- //
 /// Sets the substructure molecule to \p molecule.
-void SubstructureQuery::setMolecule(const Molecule *molecule)
+void SubstructureQuery::setMolecule(const boost::shared_ptr<Molecule> &molecule)
 {
     d->molecule = molecule;
 }
 
 /// Returns the substructure molecule.
-const Molecule* SubstructureQuery::molecule() const
+boost::shared_ptr<Molecule> SubstructureQuery::molecule() const
 {
     return d->molecule;
 }
@@ -167,24 +174,26 @@ int SubstructureQuery::flags() const
 // --- Queries ------------------------------------------------------------- //
 /// Returns \c true if the substructure molecule matches \p molecule.
 ///
-/// For example, to find a molecule contains an amide group (NC=O):
+/// For example, to find if a molecule contains a carbonyl group (C=O):
 /// \code
-/// bool containsCarboxylGroup(const Molecule *molecule)
+/// bool containsCarbonylGroup(const Molecule *molecule)
 /// {
-///      Molecule carboxyl;
-///      Atom *C1 = carboxyl.addAtom("C");
-///      Atom *O2 = carboxyl.addAtom("O");
-///      Atom *O3 = carboxyl.addAtom("O");
-///      carboxyl.addBond(C1, O2, Bond::Double);
-///      carboxyl.addBond(C1, O3, Bond::Single);
+///      boost::shared_ptr<Molecule> carbonyl(new Molecule);
+///      Atom *C1 = carbonyl->addAtom("C");
+///      Atom *O2 = carbonyl->addAtom("O");
+///      carbonyl->addBond(C1, O2, Bond::Double);
 ///
-///      SubstructureQuery query(&carboxyl);
+///      SubstructureQuery query(carbonyl);
 ///
 ///      return query.matches(molecule);
 /// }
 /// \endcode
 bool SubstructureQuery::matches(const Molecule *molecule) const
 {
+    if(!d->molecule){
+        return false;
+    }
+
     if(d->molecule->isEmpty()){
         return true;
     }
@@ -299,18 +308,18 @@ std::vector<Molecule *> SubstructureQuery::filter(const std::vector<Molecule *> 
 /// molecule in \p molecule and returns it if found. If not found an
 /// empty moiety is returned.
 ///
-/// For example, to find an amide group (NC=O) in the molecule:
+/// For example, to find an amide group (NC=O) in a molecule:
 /// \code
-/// Molecule amide;
-/// Atom *C1 = amide.addAtom("C");
-/// Atom *N2 = amide.addAtom("N");
-/// Atom *O3 = amide.addAtom("O");
-/// amide.addBond(C1, N2, Bond::Single);
-/// amide.addBond(C1, O3, Bond::Double);
+/// boost::shared_ptr<Molecule> amide(new Molecule);
+/// Atom *C1 = amide->addAtom("C");
+/// Atom *N2 = amide->addAtom("N");
+/// Atom *O3 = amide->addAtom("O");
+/// amide->addBond(C1, N2, Bond::Single);
+/// amide->addBond(C1, O3, Bond::Double);
 ///
-/// SubstructureQuery query(&amide);
+/// SubstructureQuery query(amide);
 ///
-/// Moiety amideGroup = query.find(&amide);
+/// Moiety amideGroup = query.find(molecule);
 /// \endcode
 Moiety SubstructureQuery::find(const Molecule *molecule) const
 {
@@ -331,4 +340,3 @@ Moiety SubstructureQuery::find(const Molecule *molecule) const
 }
 
 } // end chemkit namespace
-

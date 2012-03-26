@@ -35,6 +35,7 @@
 
 #include "smilestest.h"
 
+#include <boost/make_shared.hpp>
 #include <boost/range/algorithm.hpp>
 
 #include <chemkit/atom.h>
@@ -60,7 +61,7 @@ void SmilesTest::COMPARE_SMILES(const chemkit::Molecule *molecule, const std::st
 {
     chemkit::Molecule moleculeFromSmiles(smiles, "smiles");
 
-    chemkit::SubstructureQuery query(molecule);
+    chemkit::SubstructureQuery query(boost::make_shared<chemkit::Molecule>(*molecule));
     query.setFlags(chemkit::SubstructureQuery::CompareAromaticity |
                    chemkit::SubstructureQuery::CompareExact);
     bool equal = query.matches(&moleculeFromSmiles);
