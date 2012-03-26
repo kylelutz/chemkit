@@ -35,6 +35,8 @@
 
 #include "substructurequery.h"
 
+#include <boost/make_shared.hpp>
+
 #include "vf2.h"
 #include "atom.h"
 #include "bond.h"
@@ -140,6 +142,15 @@ SubstructureQuery::SubstructureQuery(const boost::shared_ptr<Molecule> &molecule
     d->flags = 0;
 }
 
+/// Creates a new substructure query with \p formula in \p format as
+/// the substructure to query for.
+SubstructureQuery::SubstructureQuery(const std::string &formula, const std::string &format)
+    : d(new SubstructureQueryPrivate)
+{
+    d->molecule = boost::make_shared<Molecule>(formula, format);
+    d->flags = 0;
+}
+
 /// Destroys the substructure query object.
 SubstructureQuery::~SubstructureQuery()
 {
@@ -151,6 +162,12 @@ SubstructureQuery::~SubstructureQuery()
 void SubstructureQuery::setMolecule(const boost::shared_ptr<Molecule> &molecule)
 {
     d->molecule = molecule;
+}
+
+/// Sets the substructure molecule to \p formula with \p format.
+void SubstructureQuery::setMolecule(const std::string &formula, const std::string &format)
+{
+    setMolecule(boost::make_shared<Molecule>(formula, format));
 }
 
 /// Returns the substructure molecule.

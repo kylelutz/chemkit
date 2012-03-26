@@ -65,10 +65,12 @@ public:
     // construction and destruction
     SubstructureQuery();
     SubstructureQuery(const boost::shared_ptr<Molecule> &molecule);
+    SubstructureQuery(const std::string &formula, const std::string &format);
     ~SubstructureQuery();
 
     // properties
     void setMolecule(const boost::shared_ptr<Molecule> &molecule);
+    void setMolecule(const std::string &formula, const std::string &format);
     boost::shared_ptr<Molecule> molecule() const;
     void setFlags(int flags);
     int flags() const;

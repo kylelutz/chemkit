@@ -257,43 +257,35 @@ void SubstructureSearchTest::protein()
     query.setFlags(chemkit::SubstructureQuery::CompareAromaticity);
 
     // indole in tryptophan
-    boost::shared_ptr<chemkit::Molecule> indole = boost::make_shared<chemkit::Molecule>("InChI=1/C8H7N/c1-2-4-8-7(3-1)5-6-9-8/h1-6,9H", "inchi");
-    query.setMolecule(indole);
+    query.setMolecule("InChI=1/C8H7N/c1-2-4-8-7(3-1)5-6-9-8/h1-6,9H", "inchi");
     QCOMPARE(query.matches(molecule.get()), true);
 
     // phenol ring in tyrosine
-    boost::shared_ptr<chemkit::Molecule> phenol = boost::make_shared<chemkit::Molecule>("InChI=1/C6H6O/c7-6-4-2-1-3-5-6/h1-5,7H", "inchi");
-    query.setMolecule(phenol);
+    query.setMolecule("InChI=1/C6H6O/c7-6-4-2-1-3-5-6/h1-5,7H", "inchi");
     QCOMPARE(query.matches(molecule.get()), true);
 
     // proline ring
-    boost::shared_ptr<chemkit::Molecule> prolineRing = boost::make_shared<chemkit::Molecule>("InChI=1/C4H9N/c1-2-4-5-3-1/h5H,1-4H2", "inchi");
-    query.setMolecule(prolineRing);
+    query.setMolecule("InChI=1/C4H9N/c1-2-4-5-3-1/h5H,1-4H2", "inchi");
     QCOMPARE(query.matches(molecule.get()), true);
 
     // guanidine in arginine
-    boost::shared_ptr<chemkit::Molecule> guanidine = boost::make_shared<chemkit::Molecule>("InChI=1/CH5N3/c2-1(3)4/h(H5,2,3,4)/f/h2H,3-4H2", "inchi");
-    query.setMolecule(guanidine);
+    query.setMolecule("InChI=1/CH5N3/c2-1(3)4/h(H5,2,3,4)/f/h2H,3-4H2", "inchi");
     QCOMPARE(query.matches(molecule.get()), true);
 
     // lysine chain
-    boost::shared_ptr<chemkit::Molecule> lysineChain = boost::make_shared<chemkit::Molecule>("InChI=1/C5H13N/c1-2-3-4-5-6/h2-6H2,1H3", "inchi");
-    query.setMolecule(lysineChain);
+    query.setMolecule("InChI=1/C5H13N/c1-2-3-4-5-6/h2-6H2,1H3", "inchi");
     QCOMPARE(query.matches(molecule.get()), true);
 
     // isoleucine residue
-    boost::shared_ptr<chemkit::Molecule> isoleucine = boost::make_shared<chemkit::Molecule>("InChI=1/C6H13NO/c1-3-5(2)6(7)4-8/h4-6H,3,7H2,1-2H3", "inchi");
-    query.setMolecule(isoleucine);
+    query.setMolecule("InChI=1/C6H13NO/c1-3-5(2)6(7)4-8/h4-6H,3,7H2,1-2H3", "inchi");
     QCOMPARE(query.matches(molecule.get()), true);
 
     // cysteine side chain
-    boost::shared_ptr<chemkit::Molecule> cysteineChain = boost::make_shared<chemkit::Molecule>("InChI=1/C2H6S/c1-2-3/h3H,2H2,1H3", "inchi");
-    query.setMolecule(cysteineChain);
+    query.setMolecule("InChI=1/C2H6S/c1-2-3/h3H,2H2,1H3", "inchi");
     QCOMPARE(query.matches(molecule.get()), true);
 
     // methionine chain
-    boost::shared_ptr<chemkit::Molecule> methionineChain = boost::make_shared<chemkit::Molecule>("InChI=1/C4H10S/c1-3-4-5-2/h3-4H2,1-2H3", "inchi");
-    query.setMolecule(methionineChain);
+    query.setMolecule("InChI=1/C4H10S/c1-3-4-5-2/h3-4H2,1-2H3", "inchi");
     QCOMPARE(query.matches(molecule.get()), true);
 }
 
