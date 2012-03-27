@@ -43,7 +43,7 @@ namespace chemkit {
 class FingerprintSimilarityDescriptorPrivate
 {
 public:
-    const Molecule *molecule;
+    boost::shared_ptr<Molecule> molecule;
     Fingerprint *fingerprint;
 };
 
@@ -62,7 +62,7 @@ public:
 
 // --- Construction and Destruction ---------------------------------------- //
 /// Create a new fingerprint similarity descriptor.
-FingerprintSimilarityDescriptor::FingerprintSimilarityDescriptor(const Molecule *molecule,
+FingerprintSimilarityDescriptor::FingerprintSimilarityDescriptor(const boost::shared_ptr<Molecule> &molecule,
                                                                  const std::string &fingerprint)
     : MolecularDescriptor("fingerprint-similarity"),
       d(new FingerprintSimilarityDescriptorPrivate)
@@ -80,13 +80,13 @@ FingerprintSimilarityDescriptor::~FingerprintSimilarityDescriptor()
 
 // --- Properties ---------------------------------------------------------- //
 /// Sets the molecule to \p molecule.
-void FingerprintSimilarityDescriptor::setMolecule(const Molecule *molecule)
+void FingerprintSimilarityDescriptor::setMolecule(const boost::shared_ptr<Molecule> &molecule)
 {
     d->molecule = molecule;
 }
 
 /// Returns the molecule.
-const Molecule* FingerprintSimilarityDescriptor::molecule() const
+boost::shared_ptr<Molecule> FingerprintSimilarityDescriptor::molecule() const
 {
     return d->molecule;
 }
@@ -116,7 +116,7 @@ Variant FingerprintSimilarityDescriptor::value(const Molecule *molecule) const
         return 0;
     }
 
-    Bitset a = d->fingerprint->value(d->molecule);
+    Bitset a = d->fingerprint->value(d->molecule.get());
     Bitset b = d->fingerprint->value(molecule);
 
     return Fingerprint::tanimotoCoefficient(a, b);

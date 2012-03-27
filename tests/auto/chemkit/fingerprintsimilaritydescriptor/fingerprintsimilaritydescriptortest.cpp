@@ -35,6 +35,8 @@
 
 #include "fingerprintsimilaritydescriptortest.h"
 
+#include <boost/make_shared.hpp>
+
 #include <chemkit/molecule.h>
 #include <chemkit/fingerprintsimilaritydescriptor.h>
 
@@ -47,14 +49,14 @@ void FingerprintSimilarityDescriptorTest::name()
 void FingerprintSimilarityDescriptorTest::molecule()
 {
     chemkit::FingerprintSimilarityDescriptor descriptor;
-    QVERIFY(descriptor.molecule() == 0);
+    QVERIFY(descriptor.molecule() == boost::shared_ptr<chemkit::Molecule>());
 
-    chemkit::Molecule molecule;
-    descriptor.setMolecule(&molecule);
-    QVERIFY(descriptor.molecule() == &molecule);
+    boost::shared_ptr<chemkit::Molecule> molecule(new chemkit::Molecule);
+    descriptor.setMolecule(molecule);
+    QVERIFY(descriptor.molecule() == molecule);
 
-    descriptor.setMolecule(0);
-    QVERIFY(descriptor.molecule() == 0);
+    descriptor.setMolecule(boost::shared_ptr<chemkit::Molecule>());
+    QVERIFY(descriptor.molecule() == boost::shared_ptr<chemkit::Molecule>());
 }
 
 void FingerprintSimilarityDescriptorTest::fingerprint()
@@ -71,14 +73,14 @@ void FingerprintSimilarityDescriptorTest::fingerprint()
 
 void FingerprintSimilarityDescriptorTest::value()
 {
-    chemkit::Molecule ethanol("CCO", "smiles");
-    QCOMPARE(ethanol.formula(), std::string("C2H6O"));
+    boost::shared_ptr<chemkit::Molecule> ethanol = boost::make_shared<chemkit::Molecule>("CCO", "smiles");
+    QCOMPARE(ethanol->formula(), std::string("C2H6O"));
 
     chemkit::FingerprintSimilarityDescriptor descriptor;
-    QCOMPARE(qRound(descriptor.value(&ethanol).toDouble()), 0);
+    QCOMPARE(qRound(descriptor.value(ethanol.get()).toDouble()), 0);
 
-    descriptor.setMolecule(&ethanol);
-    QCOMPARE(qRound(descriptor.value(&ethanol).toDouble()), 1);
+    descriptor.setMolecule(ethanol);
+    QCOMPARE(qRound(descriptor.value(ethanol.get()).toDouble()), 1);
 
     chemkit::Molecule methanol("CO", "smiles");
     QCOMPARE(qRound(descriptor.value(&methanol).toDouble() * 100), 33);

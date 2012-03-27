@@ -38,6 +38,8 @@
 
 #include "chemkit.h"
 
+#include <boost/shared_ptr.hpp>
+
 #include "moleculardescriptor.h"
 
 namespace chemkit {
@@ -49,13 +51,13 @@ class CHEMKIT_EXPORT FingerprintSimilarityDescriptor : public MolecularDescripto
 {
 public:
     // construction and destruction
-    FingerprintSimilarityDescriptor(const Molecule *molecule = 0,
+    FingerprintSimilarityDescriptor(const boost::shared_ptr<Molecule> &molecule = boost::shared_ptr<Molecule>(),
                                     const std::string &fingerprint = "fp2");
     ~FingerprintSimilarityDescriptor();
 
     // properties
-    void setMolecule(const Molecule *molecule);
-    const Molecule* molecule() const;
+    void setMolecule(const boost::shared_ptr<Molecule> &molecule);
+    boost::shared_ptr<Molecule> molecule() const;
     void setFingerprint(const std::string &name);
     std::string fingerprint() const;
 
