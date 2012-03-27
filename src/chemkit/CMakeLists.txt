@@ -29,6 +29,7 @@ set(HEADERS
   element.h
   element-inline.h
   fingerprint.h
+  fingerprintsimilaritydescriptor.h
   foreach.h
   fragment.h
   fragment-inline.h
@@ -63,7 +64,6 @@ set(HEADERS
   ring.h
   ring-inline.h
   scalarfield.h
-  similaritydescriptor.h
   stereochemistry.h
   substructurequery.h
   unitcell.h
@@ -91,6 +91,7 @@ set(SOURCES
   dynamiclibrary.cpp
   element.cpp
   fingerprint.cpp
+  fingerprintsimilaritydescriptor.cpp
   fragment.cpp
   geometry.cpp
   internalcoordinates.cpp
@@ -112,7 +113,6 @@ set(SOURCES
   residue.cpp
   ring.cpp
   scalarfield.cpp
-  similaritydescriptor.cpp
   stereochemistry.cpp
   substructurequery.cpp
   unitcell.cpp

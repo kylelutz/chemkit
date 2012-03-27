@@ -33,12 +33,12 @@
 **
 ******************************************************************************/
 
-#ifndef SIMILARITYDESCRIPTORTEST_H
-#define SIMILARITYDESCRIPTORTEST_H
+#ifndef FINGERPRINTSIMILARITYDESCRIPTORTEST_H
+#define FINGERPRINTSIMILARITYDESCRIPTORTEST_H
 
 #include <QtTest>
 
-class SimilarityDescriptorTest : public QObject
+class FingerprintSimilarityDescriptorTest : public QObject
 {
     Q_OBJECT
 
@@ -49,4 +49,4 @@ class SimilarityDescriptorTest : public QObject
         void value();
 };
 
-#endif // SIMILARITYDESCRIPTORTEST_H
+#endif // FINGERPRINTSIMILARITYDESCRIPTORTEST_H

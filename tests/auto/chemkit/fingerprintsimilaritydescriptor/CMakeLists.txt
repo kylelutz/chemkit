@@ -1,0 +1,4 @@
+qt4_wrap_cpp(MOC_SOURCES fingerprintsimilaritydescriptortest.h)
+add_executable(fingerprintsimilaritydescriptortest fingerprintsimilaritydescriptortest.cpp ${MOC_SOURCES})
+target_link_libraries(fingerprintsimilaritydescriptortest chemkit ${QT_LIBRARIES})
+add_chemkit_test(chemkit.FingerprintSimilarityDescriptor fingerprintsimilaritydescriptortest)

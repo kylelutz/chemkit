@@ -33,20 +33,20 @@
 **
 ******************************************************************************/
 
-#include "similaritydescriptortest.h"
+#include "fingerprintsimilaritydescriptortest.h"
 
 #include <chemkit/molecule.h>
-#include <chemkit/similaritydescriptor.h>
+#include <chemkit/fingerprintsimilaritydescriptor.h>
 
-void SimilarityDescriptorTest::name()
+void FingerprintSimilarityDescriptorTest::name()
 {
-    chemkit::SimilarityDescriptor descriptor;
-    QCOMPARE(descriptor.name(), std::string("similarity"));
+    chemkit::FingerprintSimilarityDescriptor descriptor;
+    QCOMPARE(descriptor.name(), std::string("fingerprint-similarity"));
 }
 
-void SimilarityDescriptorTest::molecule()
+void FingerprintSimilarityDescriptorTest::molecule()
 {
-    chemkit::SimilarityDescriptor descriptor;
+    chemkit::FingerprintSimilarityDescriptor descriptor;
     QVERIFY(descriptor.molecule() == 0);
 
     chemkit::Molecule molecule;
@@ -57,9 +57,9 @@ void SimilarityDescriptorTest::molecule()
     QVERIFY(descriptor.molecule() == 0);
 }
 
-void SimilarityDescriptorTest::fingerprint()
+void FingerprintSimilarityDescriptorTest::fingerprint()
 {
-    chemkit::SimilarityDescriptor descriptor;
+    chemkit::FingerprintSimilarityDescriptor descriptor;
     QCOMPARE(descriptor.fingerprint(), std::string("fp2"));
 
     descriptor.setFingerprint(std::string());
@@ -69,12 +69,12 @@ void SimilarityDescriptorTest::fingerprint()
     QVERIFY(descriptor.fingerprint() == std::string("fp2"));
 }
 
-void SimilarityDescriptorTest::value()
+void FingerprintSimilarityDescriptorTest::value()
 {
     chemkit::Molecule ethanol("CCO", "smiles");
     QCOMPARE(ethanol.formula(), std::string("C2H6O"));
 
-    chemkit::SimilarityDescriptor descriptor;
+    chemkit::FingerprintSimilarityDescriptor descriptor;
     QCOMPARE(qRound(descriptor.value(&ethanol).toDouble()), 0);
 
     descriptor.setMolecule(&ethanol);
@@ -84,4 +84,4 @@ void SimilarityDescriptorTest::value()
     QCOMPARE(qRound(descriptor.value(&methanol).toDouble() * 100), 33);
 }
 
-QTEST_APPLESS_MAIN(SimilarityDescriptorTest)
+QTEST_APPLESS_MAIN(FingerprintSimilarityDescriptorTest)

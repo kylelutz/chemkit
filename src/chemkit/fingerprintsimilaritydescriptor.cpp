@@ -33,46 +33,46 @@
 **
 ******************************************************************************/
 
-#include "similaritydescriptor.h"
+#include "fingerprintsimilaritydescriptor.h"
 
 #include "fingerprint.h"
 
 namespace chemkit {
 
-// === SimilarityDescriptorPrivate ========================================= //
-class SimilarityDescriptorPrivate
+// === FingerprintSimilarityDescriptorPrivate ============================== //
+class FingerprintSimilarityDescriptorPrivate
 {
 public:
     const Molecule *molecule;
     Fingerprint *fingerprint;
 };
 
-// === SimilarityDescriptor ================================================ //
-/// \class SimilarityDescriptor similaritydescriptor.h chemkit/similaritydescriptor.h
+// === FingerprintSimilarityDescriptor ===================================== //
+/// \class FingerprintSimilarityDescriptor fingerprintsimilaritydescriptor.h chemkit/fingerprintsimilaritydescriptor.h
 /// \ingroup chemkit
-/// \brief The SimilarityDescriptor class is a similarity molecular
-///        descriptor.
+/// \brief The FingerprintSimilarityDescriptor class is a similarity
+///        molecular descriptor.
 ///
-/// The similarity descriptor class is a molecular descriptor which
-/// returns a value representing the similarity between molecules.
-/// By default, the similarity value is the tanimoto coefficent
-/// between the FP2 fingerprints for each molecule.
+/// The fingerprint similarity descriptor class is a molecular descriptor
+/// which returns a value representing the similarity between molecules.
+/// By default, the similarity value is the tanimoto coefficent between
+/// the FP2 fingerprints for each molecule.
 ///
 /// \see MolecularDescriptor, Fingerprint
 
 // --- Construction and Destruction ---------------------------------------- //
-/// Create a new similarity descriptor.
-SimilarityDescriptor::SimilarityDescriptor(const Molecule *molecule,
-                                           const std::string &fingerprint)
-    : MolecularDescriptor("similarity"),
-      d(new SimilarityDescriptorPrivate)
+/// Create a new fingerprint similarity descriptor.
+FingerprintSimilarityDescriptor::FingerprintSimilarityDescriptor(const Molecule *molecule,
+                                                                 const std::string &fingerprint)
+    : MolecularDescriptor("fingerprint-similarity"),
+      d(new FingerprintSimilarityDescriptorPrivate)
 {
     d->molecule = molecule;
     d->fingerprint = Fingerprint::create(fingerprint);
 }
 
 /// Destroys the similarity descriptor object.
-SimilarityDescriptor::~SimilarityDescriptor()
+FingerprintSimilarityDescriptor::~FingerprintSimilarityDescriptor()
 {
     delete d->fingerprint;
     delete d;
@@ -80,26 +80,26 @@ SimilarityDescriptor::~SimilarityDescriptor()
 
 // --- Properties ---------------------------------------------------------- //
 /// Sets the molecule to \p molecule.
-void SimilarityDescriptor::setMolecule(const Molecule *molecule)
+void FingerprintSimilarityDescriptor::setMolecule(const Molecule *molecule)
 {
     d->molecule = molecule;
 }
 
 /// Returns the molecule.
-const Molecule* SimilarityDescriptor::molecule() const
+const Molecule* FingerprintSimilarityDescriptor::molecule() const
 {
     return d->molecule;
 }
 
 /// Sets the fingerprint to \p name.
-void SimilarityDescriptor::setFingerprint(const std::string &name)
+void FingerprintSimilarityDescriptor::setFingerprint(const std::string &name)
 {
     delete d->fingerprint;
     d->fingerprint = Fingerprint::create(name);
 }
 
 /// Returns the fingerprint used to calculate similarity.
-std::string SimilarityDescriptor::fingerprint() const
+std::string FingerprintSimilarityDescriptor::fingerprint() const
 {
     if(d->fingerprint){
         return d->fingerprint->name();
@@ -110,7 +110,7 @@ std::string SimilarityDescriptor::fingerprint() const
 
 // --- Descriptor ---------------------------------------------------------- //
 /// Returns the similarity to \p molecule.
-Variant SimilarityDescriptor::value(const Molecule *molecule) const
+Variant FingerprintSimilarityDescriptor::value(const Molecule *molecule) const
 {
     if(!d->molecule || !d->fingerprint){
         return 0;

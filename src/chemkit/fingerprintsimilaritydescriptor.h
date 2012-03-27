@@ -33,8 +33,8 @@
 **
 ******************************************************************************/
 
-#ifndef CHEMKIT_SIMILARITYDESCRIPTOR_H
-#define CHEMKIT_SIMILARITYDESCRIPTOR_H
+#ifndef CHEMKIT_FINGERPRINTSIMILARITYDESCRIPTOR_H
+#define CHEMKIT_FINGERPRINTSIMILARITYDESCRIPTOR_H
 
 #include "chemkit.h"
 
@@ -43,15 +43,15 @@
 namespace chemkit {
 
 class Molecule;
-class SimilarityDescriptorPrivate;
+class FingerprintSimilarityDescriptorPrivate;
 
-class CHEMKIT_EXPORT SimilarityDescriptor : public MolecularDescriptor
+class CHEMKIT_EXPORT FingerprintSimilarityDescriptor : public MolecularDescriptor
 {
 public:
     // construction and destruction
-    SimilarityDescriptor(const Molecule *molecule = 0,
-                         const std::string &fingerprint = "fp2");
-    ~SimilarityDescriptor();
+    FingerprintSimilarityDescriptor(const Molecule *molecule = 0,
+                                    const std::string &fingerprint = "fp2");
+    ~FingerprintSimilarityDescriptor();
 
     // properties
     void setMolecule(const Molecule *molecule);
@@ -63,9 +63,9 @@ public:
     Variant value(const Molecule *molecule) const CHEMKIT_OVERRIDE CHEMKIT_FINAL;
 
 private:
-    SimilarityDescriptorPrivate* const d;
+    FingerprintSimilarityDescriptorPrivate* const d;
 };
 
 } // end chemkit namespace
 
-#endif // CHEMKIT_SIMILARITYDESCRIPTOR_H
+#endif // CHEMKIT_FINGERPRINTSIMILARITYDESCRIPTOR_H
