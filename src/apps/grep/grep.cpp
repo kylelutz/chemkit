@@ -160,8 +160,6 @@ int main(int argc, char *argv[])
 
     chemkit::MoleculeFile outputFile;
 
-    std::vector<chemkit::Molecule *> matchingMolecules;
-
     foreach(const boost::shared_ptr<chemkit::Molecule> &molecule, inputFile.molecules()){
         bool match = query.matches(molecule.get());
 
