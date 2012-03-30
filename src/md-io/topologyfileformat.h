@@ -41,6 +41,8 @@
 #include <string>
 #include <vector>
 
+#include <boost/iostreams/device/mapped_file.hpp>
+
 #include <chemkit/plugin.h>
 
 namespace chemkit {
@@ -59,6 +61,7 @@ public:
 
     // input and output
     virtual bool read(std::istream &input, TopologyFile *file);
+    virtual bool readMappedFile(const boost::iostreams::mapped_file_source &input, TopologyFile *file);
     virtual bool write(const TopologyFile *file, std::ostream &output);
 
     // error handling

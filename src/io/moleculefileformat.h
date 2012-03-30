@@ -43,6 +43,8 @@
 #include <istream>
 #include <ostream>
 
+#include <boost/iostreams/device/mapped_file.hpp>
+
 #include <chemkit/plugin.h>
 #include <chemkit/variant.h>
 
@@ -66,6 +68,7 @@ public:
 
     // input and output
     virtual bool read(std::istream &input, MoleculeFile *file);
+    virtual bool readMappedFile(const boost::iostreams::mapped_file_source &input, MoleculeFile *file);
     virtual bool write(const MoleculeFile *file, std::ostream &output);
 
     // error handling

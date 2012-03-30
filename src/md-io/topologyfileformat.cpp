@@ -92,6 +92,19 @@ bool TopologyFileFormat::read(std::istream &input, TopologyFile *file)
     return false;
 }
 
+/// Read the data from \p input into \p file.
+///
+/// \internal
+bool TopologyFileFormat::readMappedFile(const boost::iostreams::mapped_file_source &input,
+                                        TopologyFile *file)
+{
+    CHEMKIT_UNUSED(input);
+    CHEMKIT_UNUSED(file);
+
+    setErrorString((boost::format("'%s' mapped file reading not supported.") % name()).str());
+    return false;
+}
+
 /// Write the contents of \p file to \p output.
 bool TopologyFileFormat::write(const TopologyFile *file, std::ostream &output)
 {

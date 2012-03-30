@@ -128,6 +128,19 @@ bool MoleculeFileFormat::read(std::istream &input, MoleculeFile *file)
     return false;
 }
 
+/// Read the data from \p input into \p file.
+///
+/// \internal
+bool MoleculeFileFormat::readMappedFile(const boost::iostreams::mapped_file_source &input,
+                                        MoleculeFile *file)
+{
+    CHEMKIT_UNUSED(input);
+    CHEMKIT_UNUSED(file);
+
+    setErrorString((boost::format("'%s' mapped file reading not supported.") % name()).str());
+    return false;
+}
+
 /// Write the contents of \p file to \p output.
 bool MoleculeFileFormat::write(const MoleculeFile *file, std::ostream &output)
 {

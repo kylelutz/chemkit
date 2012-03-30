@@ -78,6 +78,22 @@ void XyzTest::read()
     QCOMPARE(molecule->formula().c_str(), formula.constData());
 }
 
+void XyzTest::readMappedFile()
+{
+    boost::iostreams::mapped_file_source input(dataPath + "benzene.xyz");
+
+    chemkit::MoleculeFile file;
+    bool ok = file.read(input, "xyz");
+    if(!ok)
+        qDebug() << file.errorString().c_str();
+    QVERIFY(ok);
+
+    QCOMPARE(file.moleculeCount(), size_t(1));
+    boost::shared_ptr<chemkit::Molecule> molecule = file.molecule();
+    QVERIFY(molecule != 0);
+    QCOMPARE(molecule->formula(), std::string("C6H6"));
+}
+
 void XyzTest::readWriteReadLoop_data()
 {
     QTest::addColumn<QString>("fileNameString");

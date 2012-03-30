@@ -46,6 +46,7 @@ class XyzTest : public QObject
         void initTestCase();
         void read_data();
         void read();
+        void readMappedFile();
         void readWriteReadLoop_data();
         void readWriteReadLoop();
 };

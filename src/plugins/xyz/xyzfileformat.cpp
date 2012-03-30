@@ -35,7 +35,10 @@
 
 #include "xyzfileformat.h"
 
+#include <cstdio>
 #include <iomanip>
+
+#include <boost/make_shared.hpp>
 
 #include <chemkit/atom.h>
 #include <chemkit/element.h>
@@ -82,6 +85,64 @@ bool XyzFileFormat::read(std::istream &input, chemkit::MoleculeFile *file)
         }
         else if(isdigit(symbol.at(0))){
             int atomicNumber = boost::lexical_cast<int>(symbol);
+            atom = molecule->addAtom(atomicNumber);
+        }
+        else{
+            atom = molecule->addAtom(symbol);
+        }
+
+        // set atom position
+        if(atom){
+            atom->setPosition(x, y, z);
+        }
+    }
+
+    // add molecule to file
+    file->addMolecule(molecule);
+
+    return true;
+}
+
+bool XyzFileFormat::readMappedFile(const boost::iostreams::mapped_file_source &input, chemkit::MoleculeFile *file)
+{
+    const char *data = input.data();
+    size_t position = 0;
+
+    // atom count line
+    unsigned int atomCount = 0;
+    int count = sscanf(&data[position], "%u", &atomCount);
+    if(count != 1){
+        setErrorString("Failed to read atom count line");
+        return false;
+    }
+
+    while(data[position++] != '\n');
+
+    // comment line
+    while(data[position++] != '\n');
+
+    // create molecule
+    boost::shared_ptr<chemkit::Molecule> molecule = boost::make_shared<chemkit::Molecule>();
+
+    // read atoms and coordinates
+    for(unsigned int i = 0; i < atomCount; i++){
+        char symbol[4];
+        double x, y, z;
+
+        count = sscanf(&data[position], "%3s %lf %lf %lf", symbol, &x, &y, &z);
+        if(count != 4){
+            setErrorString("Failed to read atom line");
+            continue;
+        }
+        while(data[position++] != '\n');
+
+        chemkit::Atom *atom = 0;
+        if(strlen(symbol) == 0){
+            continue;
+        }
+        else if(isdigit(symbol[0])){
+            chemkit::Element::AtomicNumberType atomicNumber =
+                boost::lexical_cast<chemkit::Element::AtomicNumberType>(symbol);
             atom = molecule->addAtom(atomicNumber);
         }
         else{

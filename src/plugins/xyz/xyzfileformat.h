@@ -44,6 +44,7 @@ public:
     XyzFileFormat();
 
     bool read(std::istream &input, chemkit::MoleculeFile *file) CHEMKIT_OVERRIDE;
+    bool readMappedFile(const boost::iostreams::mapped_file_source &input, chemkit::MoleculeFile *file) CHEMKIT_OVERRIDE;
     bool write(const chemkit::MoleculeFile *file, std::ostream &output) CHEMKIT_OVERRIDE;
 };
 

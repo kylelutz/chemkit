@@ -323,6 +323,45 @@ inline bool GenericFile<File, Format>::read(std::istream &input)
     return ok;
 }
 
+/// Reads data from \p input using \p formatName. Returns \c false
+/// if reading fails.
+///
+/// \internal
+template<typename File, typename Format>
+inline bool GenericFile<File, Format>::read(const boost::iostreams::mapped_file_source &input,
+                                            const std::string &formatName)
+{
+    // set the format for the file
+    bool ok = setFormat(formatName);
+    if(!ok){
+        return false;
+    }
+
+    return read(input);
+}
+
+/// Reads data from \p input using the current file format. Returns
+/// \c false if reading fails.
+///
+/// \internal
+template<typename File, typename Format>
+inline bool GenericFile<File, Format>::read(const boost::iostreams::mapped_file_source &input)
+{
+    // check for valid format
+    if(!m_format){
+        setErrorString("No file format set for reading.");
+        return false;
+    }
+
+    // read the file
+    bool ok = m_format->readMappedFile(input, static_cast<File *>(this));
+    if(!ok){
+        setErrorString(m_format->errorString());
+    }
+
+    return ok;
+}
+
 /// Writes to the file using the set file name. Returns \c false if
 /// writing the file fails.
 template<typename File, typename Format>

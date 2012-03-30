@@ -38,13 +38,19 @@
 
 #include <chemkit/moleculefileformat.h>
 
+#include "../../3rdparty/rapidxml/rapidxml.hpp"
+
 class CmlFileFormat : public chemkit::MoleculeFileFormat
 {
 public:
     CmlFileFormat();
 
     bool read(std::istream &input, chemkit::MoleculeFile *file) CHEMKIT_OVERRIDE;
+    bool readMappedFile(const boost::iostreams::mapped_file_source &input, chemkit::MoleculeFile *file) CHEMKIT_OVERRIDE;
     bool write(const chemkit::MoleculeFile *file, std::ostream &output) CHEMKIT_OVERRIDE;
+
+private:
+    bool readXML(const rapidxml::xml_document<> &doc, chemkit::MoleculeFile *file);
 };
 
 #endif // CMLFILEFORMAT_H

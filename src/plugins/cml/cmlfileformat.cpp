@@ -35,8 +35,6 @@
 
 #include "cmlfileformat.h"
 
-#include "../../3rdparty/rapidxml/rapidxml.hpp"
-
 #include <boost/make_shared.hpp>
 
 #include <chemkit/atom.h>
@@ -68,6 +66,29 @@ bool CmlFileFormat::read(std::istream &input, chemkit::MoleculeFile *file)
         return false;
     }
 
+    return readXML(doc, file);
+}
+
+bool CmlFileFormat::readMappedFile(const boost::iostreams::mapped_file_source &input, chemkit::MoleculeFile *file)
+{
+    // read file data into a string
+    std::string data(input.data(), input.size());
+
+    // parse document
+    rapidxml::xml_document<> doc;
+    try {
+        doc.parse<0>(const_cast<char *>(data.c_str()));
+    }
+    catch(rapidxml::parse_error &e){
+        setErrorString(std::string("XML parse error: ") + e.what());
+        return false;
+    }
+
+    return readXML(doc, file);
+}
+
+bool CmlFileFormat::readXML(const rapidxml::xml_document<> &doc, chemkit::MoleculeFile *file)
+{
     // parse molecules
     boost::shared_ptr<chemkit::Molecule> molecule;
     rapidxml::xml_node<> *moleculeNode = doc.first_node("molecule");

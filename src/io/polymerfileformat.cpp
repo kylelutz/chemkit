@@ -90,6 +90,19 @@ bool PolymerFileFormat::read(std::istream &input, PolymerFile *file)
     return false;
 }
 
+/// Read the data from \p input into \p file.
+///
+/// \internal
+bool PolymerFileFormat::readMappedFile(const boost::iostreams::mapped_file_source &input,
+                                       PolymerFile *file)
+{
+    CHEMKIT_UNUSED(input);
+    CHEMKIT_UNUSED(file);
+
+    setErrorString((boost::format("'%s' mapped file reading not supported.") % name()).str());
+    return false;
+}
+
 /// Write the contents of \p file to \p output.
 bool PolymerFileFormat::write(const PolymerFile *file, std::ostream &output)
 {

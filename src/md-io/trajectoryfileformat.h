@@ -43,6 +43,8 @@
 #include <istream>
 #include <ostream>
 
+#include <boost/iostreams/device/mapped_file.hpp>
+
 #include <chemkit/plugin.h>
 
 namespace chemkit {
@@ -61,6 +63,7 @@ public:
 
     // input and output
     virtual bool read(std::istream &input, TrajectoryFile *file);
+    virtual bool readMappedFile(const boost::iostreams::mapped_file_source &input, TrajectoryFile *file);
     virtual bool write(const TrajectoryFile *file, std::ostream &output);
 
     // error handling
