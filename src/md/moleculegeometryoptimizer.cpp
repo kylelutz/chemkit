@@ -37,7 +37,10 @@
 
 #include <boost/math/special_functions/fpclassify.hpp>
 
+#include <chemkit/atom.h>
+
 #include "forcefield.h"
+#include "forcefieldatom.h"
 
 namespace chemkit {
 
@@ -272,7 +275,8 @@ bool MoleculeGeometryOptimizer::optimize()
         done = step();
     }
 
-    d->forceField->writeCoordinates(d->molecule);
+    // write the optimized coordinates to the molecule
+    writeCoordinates();
 
     return done;
 }
@@ -284,7 +288,11 @@ void MoleculeGeometryOptimizer::writeCoordinates()
         return;
     }
 
-    d->forceField->writeCoordinates(d->molecule);
+    for(int i = 0; i < d->forceField->atomCount(); i++){
+        ForceFieldAtom *forceFieldAtom = d->forceField->atom(i);
+        Atom *atom = const_cast<Atom *>(forceFieldAtom->atom());
+        atom->setPosition(forceFieldAtom->position());
+    }
 }
 
 // --- Error Handling ------------------------------------------------------ //

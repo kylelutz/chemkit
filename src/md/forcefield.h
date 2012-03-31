@@ -96,10 +96,6 @@ public:
     std::vector<Vector3> numericalGradient() const;
     Real rmsg() const;
 
-    // coordinates
-    void writeCoordinates(Molecule *molecule) const;
-    void writeCoordinates(Atom *atom) const;
-
     // error handling
     std::string errorString() const;
 

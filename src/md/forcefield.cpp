@@ -415,25 +415,6 @@ Real ForceField::rmsg() const
     return sqrt(sum / (3.0 * size()));
 }
 
-// --- Coordinates --------------------------------------------------------- //
-/// Writes the coordinates to molecule from the force field.
-void ForceField::writeCoordinates(Molecule *molecule) const
-{
-    foreach(Atom *atom, molecule->atoms()){
-        writeCoordinates(atom);
-    }
-}
-
-/// Writes the coordinates to atom from the force field.
-void ForceField::writeCoordinates(Atom *atom) const
-{
-    const ForceFieldAtom *forceFieldAtom = this->atom(atom);
-
-    if(forceFieldAtom){
-        atom->setPosition(forceFieldAtom->position());
-    }
-}
-
 // --- Error Handling ------------------------------------------------------ //
 /// Sets a string that describes the last error that occurred.
 void ForceField::setErrorString(const std::string &errorString)
