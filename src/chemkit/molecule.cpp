@@ -1019,7 +1019,11 @@ Real Molecule::wilsonAngle(const Atom *a, const Atom *b, const Atom *c, const At
 /// is at \p position.
 void Molecule::setCenter(const Point3 &position)
 {
-    moveBy(position - center());
+    const Vector3 &vector = position - center();
+
+    foreach(Atom *atom, m_atoms){
+        atom->setPosition(atom->position() + vector);
+    }
 }
 
 /// Moves all of the atoms in the molecule so that the new center
@@ -1059,22 +1063,6 @@ Point3 Molecule::centerOfMass() const
     }
 
     return m_coordinates->weightedCenter(weights);
-}
-
-/// Moves all the atoms in the molecule by \p vector.
-void Molecule::moveBy(const Vector3 &vector)
-{
-    foreach(Atom *atom, m_atoms){
-        atom->moveBy(vector);
-    }
-}
-
-/// Moves all of the atoms in the molecule by (\p dx, \p dy, \p dz).
-void Molecule::moveBy(Real dx, Real dy, Real dz)
-{
-    foreach(Atom *atom, m_atoms){
-        atom->moveBy(dx, dy, dz);
-    }
 }
 
 /// Rotates the positions of all the atoms in the molecule

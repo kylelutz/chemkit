@@ -160,8 +160,6 @@ public:
     void setCenter(Real x, Real y, Real z);
     Point3 center() const;
     Point3 centerOfMass() const;
-    void moveBy(const Vector3 &vector);
-    void moveBy(Real dx, Real dy, Real dz);
     void rotate(const Vector3 &axis, Real angle);
 
     // operators
