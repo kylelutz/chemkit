@@ -227,7 +227,7 @@ void MoleculeAligner::align(Molecule *molecule)
 
     Vector3 displacement = displacementVector();
     foreach(Atom *atom, molecule->atoms()){
-        atom->moveBy(displacement);
+        atom->setPosition(atom->position() + displacement);
     }
 }
 

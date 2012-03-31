@@ -132,8 +132,6 @@ public:
     Real x() const;
     Real y() const;
     Real z() const;
-    void moveBy(const Vector3 &vector);
-    void moveBy(Real dx, Real dy, Real dz);
     Real distance(const Atom *atom) const;
 
     // chirality

@@ -500,19 +500,6 @@ Real Atom::z() const
     return position().z();
 }
 
-/// Moves the atom by vector.
-void Atom::moveBy(const Vector3 &vector)
-{
-    moveBy(vector.x(), vector.y(), vector.z());
-}
-
-/// Moves the atom by relative amounts dx, dy, dz. Equivalent to
-/// setPosition(x()+dx, y()+dy, z()+dz).
-void Atom::moveBy(Real dx, Real dy, Real dz)
-{
-    setPosition(x() + dx, y() + dy, z() + dz);
-}
-
 /// Returns the distance between the atom and the other atom.
 /// Distance is in Angstroms.
 Real Atom::distance(const Atom *atom) const
