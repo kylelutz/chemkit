@@ -36,8 +36,8 @@
 #include "uridineminimizationbenchmark.h"
 
 #include <chemkit/molecule.h>
-#include <chemkit/forcefield.h>
 #include <chemkit/moleculefile.h>
+#include <chemkit/moleculegeometryoptimizer.h>
 
 const std::string dataPath = "../../data/";
 
@@ -46,25 +46,23 @@ void UridineMinimizationBenchmark::benchmark()
     boost::shared_ptr<chemkit::Molecule> molecule = chemkit::MoleculeFile::quickRead(dataPath + "uridine.mol2");
     QVERIFY(molecule != 0);
 
-    chemkit::ForceField *forceField = chemkit::ForceField::create("uff");
-    QVERIFY(forceField != 0);
+    chemkit::MoleculeGeometryOptimizer optimizer;
+    optimizer.setForceField("uff");
+    optimizer.setMolecule(molecule.get());
 
-    forceField->setMolecule(molecule.get());
-    bool ok = forceField->setup();
+    bool ok = optimizer.setup();
     QVERIFY(ok);
 
     QBENCHMARK {
         for(;;){
             // converge when rmsg = 0.1
-            bool converged = forceField->minimizationStep(0.1);
+            bool converged = optimizer.step();
 
             if(converged){
                 break;
             }
         }
     }
-
-    delete forceField;
 }
 
 QTEST_APPLESS_MAIN(UridineMinimizationBenchmark)
