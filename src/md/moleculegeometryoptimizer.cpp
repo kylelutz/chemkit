@@ -35,6 +35,8 @@
 
 #include "moleculegeometryoptimizer.h"
 
+#include <boost/math/special_functions/fpclassify.hpp>
+
 #include "forcefield.h"
 
 namespace chemkit {
@@ -172,14 +174,89 @@ bool MoleculeGeometryOptimizer::setup()
     return true;
 }
 
-/// Performs a single geometry optimization step.
+/// Performs a single geometry optimization step. Returns \c true if
+/// converged. The minimization is considered converged when the
+/// root mean square gradient is below the convergance value.
 bool MoleculeGeometryOptimizer::step()
 {
     if(!d->molecule || !d->forceField){
         return false;
     }
 
-    return d->forceField->minimizationStep(0.1);
+    Real converganceValue = 0.1;
+
+    // calculate gradient
+    std::vector<Vector3> gradient = d->forceField->gradient();
+
+    // perform line search
+    std::vector<Point3> initialPositions(d->forceField->atomCount());
+
+    Real step = 0.05;
+    Real stepConv = 1e-5;
+    int stepCount = 10;
+
+    Real initialEnergy = d->forceField->energy();
+
+    for(int i = 0; i < stepCount; i++){
+        for(int atomIndex = 0; atomIndex < d->forceField->atomCount(); atomIndex++){
+            ForceFieldAtom *atom = d->forceField->atom(atomIndex);
+
+            initialPositions[atomIndex] = atom->position();
+            atom->moveBy(-gradient[atomIndex] * step);
+        }
+
+        Real finalEnergy = d->forceField->energy();
+
+        // if the final energy is NaN then most likely the
+        // simulation exploded so we reset the initial atom
+        // positions and then 'wiggle' each atom by one
+        // Angstrom in a random direction
+        if((boost::math::isnan)(finalEnergy)){
+            for(int atomIndex = 0; atomIndex < d->forceField->atomCount(); atomIndex++){
+                ForceFieldAtom *atom = d->forceField->atom(atomIndex);
+
+                atom->setPosition(initialPositions[atomIndex]);
+                atom->moveBy(Vector3::Random().normalized());
+            }
+
+            // recalculate gradient
+            gradient = d->forceField->gradient();
+
+            // continue to next step
+            continue;
+        }
+
+        if(finalEnergy < initialEnergy && std::abs(finalEnergy - initialEnergy) < stepConv){
+            break;
+        }
+        else if(finalEnergy < initialEnergy){
+            // we reduced the energy, so set a bigger step size
+            step *= 2;
+
+            // maximum step size is 1
+            if(step > 1){
+                step = 1;
+            }
+
+            // the initial energy for the next step
+            // is the final energy of this step
+            initialEnergy = finalEnergy;
+        }
+        else if(finalEnergy > initialEnergy){
+            // we went too far, so reset initial atom positions
+            for(int atomIndex = 0; atomIndex < d->forceField->atomCount(); atomIndex++){
+                ForceFieldAtom *atom = d->forceField->atom(atomIndex);
+
+                atom->setPosition(initialPositions[atomIndex]);
+            }
+
+            // and reduce step size
+            step *= 0.1;
+        }
+    }
+
+    // check for convergance
+    return d->forceField->rmsg() < converganceValue;
 }
 
 /// Optimizes the geometry of the molecule. Returns \c true if the

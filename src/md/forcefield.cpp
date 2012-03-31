@@ -35,8 +35,6 @@
 
 #include "forcefield.h"
 
-#include <boost/math/special_functions/fpclassify.hpp>
-
 #include <chemkit/atom.h>
 #include <chemkit/foreach.h>
 #include <chemkit/geometry.h>
@@ -434,82 +432,6 @@ void ForceField::writeCoordinates(Atom *atom) const
     if(forceFieldAtom){
         atom->setPosition(forceFieldAtom->position());
     }
-}
-
-// --- Energy Minimization ------------------------------------------------- //
-/// Perform one step of energy minimization. Returns \c true if
-/// converged. The minimization is considered converged when the
-/// root mean square gradient is below \p converganceValue.
-bool ForceField::minimizationStep(Real converganceValue)
-{
-    // calculate gradient
-    std::vector<Vector3> gradient = this->gradient();
-
-    // perform line search
-    std::vector<Point3> initialPositions(atomCount());
-
-    Real step = 0.05;
-    Real stepConv = 1e-5;
-    int stepCount = 10;
-
-    Real initialEnergy = energy();
-
-    for(int i = 0; i < stepCount; i++){
-        for(int atomIndex = 0; atomIndex < atomCount(); atomIndex++){
-            ForceFieldAtom *atom = d->atoms[atomIndex];
-
-            initialPositions[atomIndex] = atom->position();
-            atom->moveBy(-gradient[atomIndex] * step);
-        }
-
-        Real finalEnergy = energy();
-
-        // if the final energy is NaN then most likely the
-        // simulation exploded so we reset the initial atom
-        // positions and then 'wiggle' each atom by one
-        // Angstrom in a random direction
-        if((boost::math::isnan)(finalEnergy)){
-            for(int atomIndex = 0; atomIndex < atomCount(); atomIndex++){
-                d->atoms[atomIndex]->setPosition(initialPositions[atomIndex]);
-                d->atoms[atomIndex]->moveBy(Vector3::Random().normalized());
-            }
-
-            // recalculate gradient
-            gradient = this->gradient();
-
-            // continue to next step
-            continue;
-        }
-
-        if(finalEnergy < initialEnergy && std::abs(finalEnergy - initialEnergy) < stepConv){
-            break;
-        }
-        else if(finalEnergy < initialEnergy){
-            // we reduced the energy, so set a bigger step size
-            step *= 2;
-
-            // maximum step size is 1
-            if(step > 1){
-                step = 1;
-            }
-
-            // the initial energy for the next step
-            // is the final energy of this step
-            initialEnergy = finalEnergy;
-        }
-        else if(finalEnergy > initialEnergy){
-            // we went too far, so reset initial atom positions
-            for(int atomIndex = 0; atomIndex < atomCount(); atomIndex++){
-                d->atoms[atomIndex]->setPosition(initialPositions[atomIndex]);
-            }
-
-            // and reduce step size
-            step *= 0.1;
-        }
-    }
-
-    // check for convergance
-    return rmsg() < converganceValue;
 }
 
 // --- Error Handling ------------------------------------------------------ //

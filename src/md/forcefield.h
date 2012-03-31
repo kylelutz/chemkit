@@ -100,9 +100,6 @@ public:
     void writeCoordinates(Molecule *molecule) const;
     void writeCoordinates(Atom *atom) const;
 
-    // energy minimization
-    bool minimizationStep(Real converganceValue = 0.1);
-
     // error handling
     std::string errorString() const;
 
