@@ -500,19 +500,6 @@ Real Atom::z() const
     return position().z();
 }
 
-/// Moves the atom to position. Equivalent to setPosition(position).
-void Atom::moveTo(const Point3 &position)
-{
-    setPosition(position);
-}
-
-/// Moves the atom to the point (x, y, z). Equivalent to
-/// setPosition(x, y, z).
-void Atom::moveTo(Real x, Real y, Real z)
-{
-    setPosition(x, y, z);
-}
-
 /// Moves the atom by vector.
 void Atom::moveBy(const Vector3 &vector)
 {

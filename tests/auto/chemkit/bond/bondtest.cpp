@@ -209,10 +209,10 @@ void BondTest::length()
     chemkit::Bond *bond = molecule.addBond(H1, H2);
     QCOMPARE(bond->length(), chemkit::Real(0.0));
 
-    H1->moveTo(0, 1, 0);
+    H1->setPosition(0, 1, 0);
     QCOMPARE(bond->length(), chemkit::Real(1.0));
 
-    H2->moveTo(0, -3, 0);
+    H2->setPosition(0, -3, 0);
     QCOMPARE(bond->length(), chemkit::Real(4.0));
 }
 

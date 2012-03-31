@@ -132,8 +132,6 @@ public:
     Real x() const;
     Real y() const;
     Real z() const;
-    void moveTo(const Point3 &position);
-    void moveTo(Real x, Real y, Real z);
     void moveBy(const Vector3 &vector);
     void moveBy(Real dx, Real dy, Real dz);
     Real distance(const Atom *atom) const;

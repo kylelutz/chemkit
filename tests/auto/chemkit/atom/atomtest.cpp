@@ -244,7 +244,7 @@ void AtomTest::distance()
     QCOMPARE(He1->distance(He1), chemkit::Real(0.0));
     QCOMPARE(He2->distance(He2), chemkit::Real(0.0));
 
-    He1->moveTo(0, 0, 5);
+    He1->setPosition(0, 0, 5);
     QCOMPARE(He1->distance(He2), chemkit::Real(5.0));
     QCOMPARE(He2->distance(He1), chemkit::Real(5.0));
 }
