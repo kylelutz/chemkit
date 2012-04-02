@@ -38,6 +38,7 @@
 #include "atom.h"
 #include "foreach.h"
 #include "molecule.h"
+#include "concurrent.h"
 
 namespace chemkit {
 
@@ -88,6 +89,16 @@ void CoordinatePredictor::predictCoordinates(Molecule *molecule)
     foreach(Atom *atom, molecule->atoms()){
         atom->setPosition(molecule->size() * chemkit::Point3::Random().normalized());
     }
+}
+
+/// Runs the predictCoordinates() method asynchronously and returns
+/// a future containing the result.
+///
+/// \internal
+boost::shared_future<void> CoordinatePredictor::predictCoordinatesAsync(Molecule *molecule)
+{
+  return chemkit::concurrent::run(
+      boost::bind(&CoordinatePredictor::predictCoordinates, molecule));
 }
 
 } // end chemkit namespace

@@ -40,6 +40,7 @@
 #include <chemkit/geometry.h>
 #include <chemkit/molecule.h>
 #include <chemkit/constants.h>
+#include <chemkit/concurrent.h>
 #include <chemkit/pluginmanager.h>
 
 #include "forcefieldatom.h"
@@ -315,6 +316,15 @@ Real ForceField::energy() const
     }
 
     return energy;
+}
+
+/// Runs the energy() method asynchronously and returns a future
+/// containing the result.
+///
+/// \internal
+boost::shared_future<Real> ForceField::energyAsync() const
+{
+    return chemkit::concurrent::run(boost::bind(&ForceField::energy, this));
 }
 
 /// Returns the gradient of the energy with respect to the

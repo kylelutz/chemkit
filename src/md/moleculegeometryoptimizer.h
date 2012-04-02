@@ -40,6 +40,8 @@
 
 #include <string>
 
+#include <boost/thread/future.hpp>
+
 namespace chemkit {
 
 class Molecule;
@@ -72,6 +74,7 @@ public:
 
     // static methods
     static bool optimizeCoordinates(Molecule *molecule);
+    static boost::shared_future<bool> optimizeCoordinatesAsync(Molecule *molecule);
 
 private:
     MoleculeGeometryOptimizerPrivate* const d;

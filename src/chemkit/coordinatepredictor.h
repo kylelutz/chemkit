@@ -38,6 +38,8 @@
 
 #include "chemkit.h"
 
+#include <boost/thread/future.hpp>
+
 namespace chemkit {
 
 class Molecule;
@@ -56,6 +58,7 @@ public:
 
     // static methods
     static void predictCoordinates(Molecule *molecule);
+    static boost::shared_future<void> predictCoordinatesAsync(Molecule *molecule);
 
 private:
     CoordinatePredictorPrivate* const d;

@@ -41,6 +41,8 @@
 #include <string>
 #include <vector>
 
+#include <boost/thread/future.hpp>
+
 #include <chemkit/plugin.h>
 #include <chemkit/point3.h>
 #include <chemkit/vector3.h>
@@ -92,6 +94,7 @@ public:
     std::vector<ForceFieldCalculation *> calculations() const;
     int calculationCount() const;
     virtual Real energy() const;
+    boost::shared_future<Real> energyAsync() const;
     std::vector<Vector3> gradient() const;
     std::vector<Vector3> numericalGradient() const;
     Real rmsg() const;

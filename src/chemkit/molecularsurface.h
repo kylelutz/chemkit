@@ -38,6 +38,8 @@
 
 #include "chemkit.h"
 
+#include <boost/thread/future.hpp>
+
 #include "point3.h"
 
 namespace chemkit {
@@ -73,7 +75,9 @@ public:
     Point3 position(int index) const;
     Real radius(int index) const;
     Real volume() const;
+    boost::shared_future<Real> volumeAsync() const;
     Real surfaceArea() const;
+    boost::shared_future<Real> surfaceAreaAsync() const;
 
 private:
     // internal methods

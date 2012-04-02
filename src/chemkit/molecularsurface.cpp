@@ -39,12 +39,16 @@
 
 #include "molecularsurface.h"
 
+#include <boost/bind.hpp>
+#include <boost/thread.hpp>
+
 #include "atom.h"
 #include "foreach.h"
 #include "vector3.h"
 #include "geometry.h"
 #include "molecule.h"
 #include "alphashape.h"
+#include "concurrent.h"
 #include "delaunaytriangulation.h"
 
 namespace chemkit {
@@ -265,6 +269,15 @@ Real MolecularSurface::volume() const
     return d->volume;
 }
 
+/// Runs the volume() method asynchronously and returns a future
+/// containing the result.
+///
+/// \internal
+boost::shared_future<Real> MolecularSurface::volumeAsync() const
+{
+    return chemkit::concurrent::run(boost::bind(&MolecularSurface::volume, this));
+}
+
 /// Returns the total surface area of the surface. The returned
 /// area is in Angstroms squared (\f$ \AA^{2} \f$).
 Real MolecularSurface::surfaceArea() const
@@ -300,6 +313,15 @@ Real MolecularSurface::surfaceArea() const
     }
 
     return d->surfaceArea;
+}
+
+/// Runs the surfaceArea() method asynchronously and returns a future
+/// containing the result.
+///
+/// \internal
+boost::shared_future<Real> MolecularSurface::surfaceAreaAsync() const
+{
+    return chemkit::concurrent::run(boost::bind(&MolecularSurface::surfaceArea, this));
 }
 
 // --- Internal Methods ---------------------------------------------------- //

@@ -38,6 +38,7 @@
 #include <boost/math/special_functions/fpclassify.hpp>
 
 #include <chemkit/atom.h>
+#include <chemkit/concurrent.h>
 
 #include "forcefield.h"
 #include "forcefieldatom.h"
@@ -307,6 +308,16 @@ std::string MoleculeGeometryOptimizer::errorString() const
 bool MoleculeGeometryOptimizer::optimizeCoordinates(Molecule *molecule)
 {
     return MoleculeGeometryOptimizer(molecule).optimize();
+}
+
+/// Runs the optimizeCoordinates() method asynchronously and returns
+/// a future containing the result.
+///
+/// \internal
+boost::shared_future<bool> MoleculeGeometryOptimizer::optimizeCoordinatesAsync(Molecule *molecule)
+{
+  return chemkit::concurrent::run(
+      boost::bind(&MoleculeGeometryOptimizer::optimizeCoordinates, molecule));
 }
 
 } // end chemkit namespace
