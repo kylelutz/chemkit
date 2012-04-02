@@ -107,6 +107,8 @@ public:
     CartesianCoordinates operator+(const CartesianCoordinates &coordinates) const;
     CartesianCoordinates operator-(const CartesianCoordinates &coordinates) const;
     CartesianCoordinates& operator=(const CartesianCoordinates &coordinates);
+    Point3& operator[](size_t index);
+    const Point3& operator[](size_t index) const;
 
 private:
     std::vector<Point3> m_coordinates;

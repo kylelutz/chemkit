@@ -437,4 +437,16 @@ CartesianCoordinates& CartesianCoordinates::operator=(const CartesianCoordinates
     return *this;
 }
 
+/// Returns the position at \p index.
+Point3& CartesianCoordinates::operator[](size_t index)
+{
+    return m_coordinates[index];
+}
+
+/// \overload
+const Point3& CartesianCoordinates::operator[](size_t index) const
+{
+    return m_coordinates[index];
+}
+
 } // end chemkit namespace
