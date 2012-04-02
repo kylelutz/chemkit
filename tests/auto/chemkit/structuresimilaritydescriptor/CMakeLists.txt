@@ -1,4 +1,4 @@
 qt4_wrap_cpp(MOC_SOURCES structuresimilaritydescriptortest.h)
 add_executable(structuresimilaritydescriptortest structuresimilaritydescriptortest.cpp ${MOC_SOURCES})
 target_link_libraries(structuresimilaritydescriptortest chemkit ${QT_LIBRARIES})
-add_chemkit_test(chemkit.StructureStructureSimilarityDescriptor structuresimilaritydescriptortest)
+add_chemkit_test(chemkit.StructureSimilarityDescriptor structuresimilaritydescriptortest)
