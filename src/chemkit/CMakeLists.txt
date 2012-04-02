@@ -19,6 +19,7 @@ set(HEADERS
   bondpredictor.h
   cartesiancoordinates.h
   chemkit.h
+  concurrent.h
   config.h
   constants.h
   coordinatepredictor.h
