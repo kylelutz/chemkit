@@ -45,6 +45,7 @@ class SubstructureQueryTest : public QObject
     private slots:
         void molecule();
         void mapping();
+        void maximumMapping();
         void matches();
         void find();
 };

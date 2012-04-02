@@ -36,6 +36,8 @@
 #include "substructurequery.h"
 
 #include <boost/make_shared.hpp>
+#include <boost/graph/adjacency_list.hpp>
+#include <boost/graph/mcgregor_common_subgraphs.hpp>
 
 #include "vf2.h"
 #include "atom.h"
@@ -108,6 +110,135 @@ struct BondComparator
     const std::vector<Atom *> &m_sourceAtoms;
     const std::vector<Atom *> &m_targetAtoms;
     int m_flags;
+};
+
+typedef boost::adjacency_list<boost::vecS, boost::vecS, boost::undirectedS> AdjacencyListGraph;
+
+struct AdjacencyListGraphVertexComparator
+{
+    AdjacencyListGraphVertexComparator(const std::vector<Atom *> &sourceAtoms,
+                                       const std::vector<Atom *> &targetAtoms)
+        : m_sourceAtoms(sourceAtoms),
+          m_targetAtoms(targetAtoms)
+    {
+    }
+
+    AdjacencyListGraphVertexComparator(const AdjacencyListGraphVertexComparator &other)
+        : m_sourceAtoms(other.m_sourceAtoms),
+          m_targetAtoms(other.m_targetAtoms)
+    {
+    }
+
+    bool operator()(const boost::graph_traits<AdjacencyListGraph>::vertex_descriptor &vertexA,
+                    const boost::graph_traits<AdjacencyListGraph>::vertex_descriptor &vertexB)
+    {
+        return m_sourceAtoms[vertexA]->atomicNumber() == m_targetAtoms[vertexB]->atomicNumber();
+    }
+
+    const std::vector<Atom *> &m_sourceAtoms;
+    const std::vector<Atom *> &m_targetAtoms;
+};
+
+struct AdjacencyListGraphEdgeComparator
+{
+    AdjacencyListGraphEdgeComparator(const AdjacencyListGraph &source,
+                                     const AdjacencyListGraph &target,
+                                     const std::vector<Atom *> &sourceAtoms,
+                                     const std::vector<Atom *> &targetAtoms,
+                                     int flags)
+        : m_source(source),
+          m_target(target),
+          m_sourceAtoms(sourceAtoms),
+          m_targetAtoms(targetAtoms),
+          m_flags(flags)
+    {
+    }
+
+    AdjacencyListGraphEdgeComparator(const AdjacencyListGraphEdgeComparator &other)
+        : m_source(other.m_source),
+          m_target(other.m_target),
+          m_sourceAtoms(other.m_sourceAtoms),
+          m_targetAtoms(other.m_targetAtoms),
+          m_flags(other.m_flags)
+    {
+    }
+
+    bool operator()(const boost::graph_traits<AdjacencyListGraph>::edge_descriptor &edgeA,
+                    const boost::graph_traits<AdjacencyListGraph>::edge_descriptor &edgeB)
+    {
+        size_t a1 = boost::source(edgeA, m_source);
+        size_t a2 = boost::target(edgeA, m_source);
+        size_t b1 = boost::source(edgeB, m_target);
+        size_t b2 = boost::target(edgeB, m_target);
+
+        const Bond *bondA = m_sourceAtoms[a1]->bondTo(m_sourceAtoms[a2]);
+        const Bond *bondB = m_targetAtoms[b1]->bondTo(m_targetAtoms[b2]);
+
+        if(!bondA || !bondB){
+            return false;
+        }
+
+        if(m_flags & SubstructureQuery::CompareAromaticity){
+            return (bondA->order() == bondB->order()) ||
+                   (bondA->isAromatic() && bondB->isAromatic());
+        }
+        else{
+            return bondA->order() == bondB->order();
+        }
+    }
+
+    const AdjacencyListGraph &m_source;
+    const AdjacencyListGraph &m_target;
+    const std::vector<Atom *> &m_sourceAtoms;
+    const std::vector<Atom *> &m_targetAtoms;
+    int m_flags;
+};
+
+struct McgregorCommonSubgraphsCallback
+{
+    McgregorCommonSubgraphsCallback(const AdjacencyListGraph &source,
+                                    const AdjacencyListGraph &target,
+                                    std::map<size_t, size_t> &mapping)
+        : m_source(source),
+          m_target(target),
+          m_mapping(mapping)
+    {
+    }
+
+    McgregorCommonSubgraphsCallback(const McgregorCommonSubgraphsCallback &other)
+        : m_source(other.m_source),
+          m_target(other.m_target),
+          m_mapping(other.m_mapping)
+    {
+    }
+
+    std::map<size_t, size_t> mapping() const
+    {
+        return m_mapping;
+    }
+
+    template<typename MapType>
+    bool operator()(MapType map1To2,
+                    MapType map2To1,
+                    typename boost::graph_traits<AdjacencyListGraph>::vertices_size_type size)
+    {
+        CHEMKIT_UNUSED(map2To1);
+        CHEMKIT_UNUSED(size);
+
+        if(m_mapping.empty()){
+            BGL_FORALL_VERTICES_T(vertex1, m_source, AdjacencyListGraph){
+                if(boost::get(map1To2, vertex1) != boost::graph_traits<AdjacencyListGraph>::null_vertex()) {
+                    m_mapping[vertex1] = boost::get(map1To2, vertex1);
+                }
+            }
+        }
+
+        return false;
+    }
+
+    const AdjacencyListGraph &m_source;
+    const AdjacencyListGraph &m_target;
+    std::map<size_t, size_t> &m_mapping;
 };
 
 } // end anonymous namespace
@@ -295,6 +426,100 @@ std::map<Atom *, Atom *> SubstructureQuery::mapping(const Molecule *molecule) co
     if(d->flags & CompareExact && mapping.size() != source.size()){
         return std::map<Atom *, Atom *>();
     }
+
+    // convert index mapping to an atom mapping
+    std::map<Atom *, Atom *> atomMapping;
+
+    for(std::map<size_t, size_t>::iterator i = mapping.begin(); i != mapping.end(); ++i){
+        atomMapping[sourceAtoms[i->first]] = targetAtoms[i->second];
+    }
+
+    return atomMapping;
+}
+
+/// Returns the maximum mapping (also known as maximum common
+/// substructure or MCS) between the query molecule and \p molecule.
+std::map<Atom *, Atom *> SubstructureQuery::maximumMapping(const Molecule *molecule) const
+{
+    AdjacencyListGraph source;
+    AdjacencyListGraph target;
+
+    std::vector<Atom *> sourceAtoms;
+    std::vector<Atom *> targetAtoms;
+
+    if(d->flags & CompareHydrogens){
+        for(size_t i = 0; i < d->molecule->size(); i++){
+            boost::add_vertex(source);
+        }
+
+        sourceAtoms = std::vector<Atom *>(d->molecule->atoms().begin(), d->molecule->atoms().end());
+
+        if(!(d->flags & CompareAtomsOnly)){
+            foreach(const Bond *bond, d->molecule->bonds()){
+                boost::add_edge(bond->atom1()->index(), bond->atom2()->index(), source);
+            }
+        }
+
+        for(size_t i = 0; i < molecule->size(); i++){
+            boost::add_vertex(target);
+        }
+
+        targetAtoms = std::vector<Atom *>(molecule->atoms().begin(), molecule->atoms().end());
+
+        if(!(d->flags & CompareAtomsOnly)){
+            foreach(const Bond *bond, molecule->bonds()){
+                boost::add_edge(bond->atom1()->index(), bond->atom2()->index(), target);
+            }
+        }
+    }
+    else{
+        foreach(Atom *atom, d->molecule->atoms()){
+            if(!atom->isTerminalHydrogen()){
+                sourceAtoms.push_back(atom);
+                boost::add_vertex(source);
+            }
+        }
+
+        foreach(Atom *atom, molecule->atoms()){
+            if(!atom->isTerminalHydrogen()){
+                targetAtoms.push_back(atom);
+                boost::add_vertex(target);
+            }
+        }
+
+        if(!(d->flags & CompareAtomsOnly)){
+            for(size_t i = 0; i < sourceAtoms.size(); i++){
+                for(size_t j = i + 1; j < sourceAtoms.size(); j++){
+                    if(sourceAtoms[i]->isBondedTo(sourceAtoms[j])){
+                        boost::add_edge(i, j, source);
+                    }
+                }
+            }
+
+            for(size_t i = 0; i < targetAtoms.size(); i++){
+                for(size_t j = i + 1; j < targetAtoms.size(); j++){
+                    if(targetAtoms[i]->isBondedTo(targetAtoms[j])){
+                        boost::add_edge(i, j, target);
+                    }
+                }
+            }
+        }
+    }
+
+    AdjacencyListGraphVertexComparator vertexComparator(sourceAtoms, targetAtoms);
+    AdjacencyListGraphEdgeComparator edgeComparator(source, target, sourceAtoms, targetAtoms, d->flags);
+
+    std::map<size_t, size_t> mapping;
+    McgregorCommonSubgraphsCallback callback(source, target, mapping);
+
+    boost::mcgregor_common_subgraphs_maximum_unique(source,
+                                                    target,
+                                                    boost::get(boost::vertex_index, source),
+                                                    boost::get(boost::vertex_index, target),
+                                                    edgeComparator,
+                                                    vertexComparator,
+                                                    false,
+                                                    callback);
 
     // convert index mapping to an atom mapping
     std::map<Atom *, Atom *> atomMapping;

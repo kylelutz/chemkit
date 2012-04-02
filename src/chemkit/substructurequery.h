@@ -78,6 +78,7 @@ public:
     // queries
     bool matches(const Molecule *molecule) const;
     std::map<Atom *, Atom *> mapping(const Molecule *molecule) const;
+    std::map<Atom *, Atom *> maximumMapping(const Molecule *molecule) const;
     std::vector<Molecule *> filter(const std::vector<Molecule *> &molecules) const;
     Moiety find(const Molecule *molecule) const;
 

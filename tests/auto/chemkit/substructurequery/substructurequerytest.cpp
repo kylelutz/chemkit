@@ -87,6 +87,120 @@ void SubstructureQueryTest::mapping()
     QVERIFY(mapping[methanol_H3] == ethanol_H4);
 }
 
+void SubstructureQueryTest::maximumMapping()
+{
+    boost::shared_ptr<chemkit::Molecule> bco(new chemkit::Molecule);
+    chemkit::Atom *B1 = bco->addAtom("B");
+    chemkit::Atom *C2 = bco->addAtom("C");
+    chemkit::Atom *O3 = bco->addAtom("O");
+    bco->addBond(B1, C2);
+    bco->addBond(C2, O3);
+
+    boost::shared_ptr<chemkit::Molecule> bcn(new chemkit::Molecule);
+    chemkit::Atom *B4 = bcn->addAtom("B");
+    chemkit::Atom *C5 = bcn->addAtom("C");
+    chemkit::Atom *N6 = bcn->addAtom("N");
+    bcn->addBond(B4, C5);
+    bcn->addBond(C5, N6);
+
+    chemkit::SubstructureQuery query;
+    std::map<chemkit::Atom *, chemkit::Atom *> mapping;
+
+    // bco -> bcn
+    query.setMolecule(bco);
+    mapping = query.maximumMapping(bcn.get());
+    QCOMPARE(mapping.size(), size_t(2));
+    QVERIFY(mapping[B1] == B4);
+    QVERIFY(mapping[C2] == C5);
+
+    // bco -> bco
+    query.setMolecule(bco);
+    mapping = query.maximumMapping(bco.get());
+    QCOMPARE(mapping.size(), size_t(3));
+    QVERIFY(mapping[B1] == B1);
+    QVERIFY(mapping[C2] == C2);
+    QVERIFY(mapping[O3] == O3);
+
+    // bcn -> bco
+    query.setMolecule(bcn);
+    mapping = query.maximumMapping(bco.get());
+    QCOMPARE(mapping.size(), size_t(2));
+    QVERIFY(mapping[B4] == B1);
+    QVERIFY(mapping[C5] == C2);
+
+    // bcn -> bcn
+    query.setMolecule(bcn);
+    mapping = query.maximumMapping(bcn.get());
+    QCOMPARE(mapping.size(), size_t(3));
+    QVERIFY(mapping[B4] == B4);
+    QVERIFY(mapping[C5] == C5);
+    QVERIFY(mapping[N6] == N6);
+
+    boost::shared_ptr<chemkit::Molecule> ethanol =
+        boost::make_shared<chemkit::Molecule>("CCO", "smiles");
+    QCOMPARE(ethanol->formula(), std::string("C2H6O"));
+
+    boost::shared_ptr<chemkit::Molecule> propanol =
+        boost::make_shared<chemkit::Molecule>("CCCO", "smiles");
+    QCOMPARE(propanol->formula(), std::string("C3H8O"));
+
+    // ethanol -> propanol
+    query.setMolecule(ethanol);
+    mapping = query.maximumMapping(propanol.get());
+    QCOMPARE(mapping.size(), size_t(3));
+
+    // propanol -> ethanol
+    query.setMolecule(propanol);
+    mapping = query.maximumMapping(ethanol.get());
+    QCOMPARE(mapping.size(), size_t(3));
+
+    boost::shared_ptr<chemkit::Molecule> phenol =
+        boost::make_shared<chemkit::Molecule>("c1ccccc1O", "smiles");
+    QCOMPARE(phenol->formula(), std::string("C6H6O"));
+
+    // ethanol -> phenol
+    query.setMolecule(ethanol);
+    mapping = query.maximumMapping(phenol.get());
+    QCOMPARE(mapping.size(), size_t(3));
+
+    // phenol -> ethanol
+    query.setMolecule(phenol);
+    mapping = query.maximumMapping(ethanol.get());
+    QCOMPARE(mapping.size(), size_t(3));
+
+    boost::shared_ptr<chemkit::Molecule> glycine =
+        boost::make_shared<chemkit::Molecule>("C(C(=O)O)N", "smiles");
+    QCOMPARE(glycine->formula(), std::string("C2H5NO2"));
+
+    boost::shared_ptr<chemkit::Molecule> alanine =
+        boost::make_shared<chemkit::Molecule>("O=C(O)C(N)C", "smiles");
+    QCOMPARE(alanine->formula(), std::string("C3H7NO2"));
+
+    boost::shared_ptr<chemkit::Molecule> phenylalanine =
+        boost::make_shared<chemkit::Molecule>("c1ccc(cc1)C[C@@H](C(=O)O)N", "smiles");
+    QCOMPARE(phenylalanine->formula(), std::string("C9H11NO2"));
+
+    // glycine -> alanine
+    query.setMolecule(glycine);
+    mapping = query.maximumMapping(alanine.get());
+    QCOMPARE(mapping.size(), size_t(5));
+
+    // alanine -> glycine
+    query.setMolecule(alanine);
+    mapping = query.maximumMapping(glycine.get());
+    QCOMPARE(mapping.size(), size_t(5));
+
+    // alanine -> phenylalanine
+    query.setMolecule(alanine);
+    mapping = query.maximumMapping(phenylalanine.get());
+    QCOMPARE(mapping.size(), size_t(6));
+
+    // glycine -> ethanol
+    query.setMolecule(glycine);
+    mapping = query.maximumMapping(ethanol.get());
+    QCOMPARE(mapping.size(), size_t(3));
+}
+
 void SubstructureQueryTest::matches()
 {
     chemkit::SubstructureQuery query;
