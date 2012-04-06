@@ -33,7 +33,7 @@
 **
 ******************************************************************************/
 
-#include <QtCore>
+#include <iostream>
 
 #include <chemkit/molecule.h>
 #include <chemkit/forcefield.h>
@@ -41,11 +41,8 @@
 
 int main(int argc, char *argv[])
 {
-    QTextStream out(stdout);
-    QTextStream err(stderr);
-
     if(argc < 2){
-        err << "Usage: " << argv[0] << " FILENAME" << "\n";
+        std::cerr << "Usage: " << argv[0] << " FILENAME" << "\n";
         return -1;
     }
 
@@ -54,19 +51,19 @@ int main(int argc, char *argv[])
     chemkit::MoleculeFile file(fileName);
     bool ok = file.read();
     if(!ok){
-        err << "Failed to read file: " << fileName.c_str() << "\n";
+        std::cerr << "Failed to read file: " << fileName.c_str() << "\n";
         return -1;
     }
 
     boost::shared_ptr<chemkit::Molecule> molecule = file.molecule();
     if(!molecule){
-        err << "File contains no molecules.\n";
+        std::cerr << "File contains no molecules.\n";
         return -1;
     }
 
     chemkit::ForceField *uff = chemkit::ForceField::create("uff");
     if(!uff){
-        err << "UFF force field plugin not found.\n";
+        std::cerr << "UFF force field plugin not found.\n";
         return -1;
     }
 
@@ -74,15 +71,15 @@ int main(int argc, char *argv[])
     uff->setup();
 
     if(!uff->isSetup()){
-        err << "Failed to parameterize force field.\n";
+        std::cerr << "Failed to parameterize force field.\n";
         delete uff;
         return -1;
     }
 
     chemkit::Real energy = uff->energy();
 
-    out << "Formula: " << molecule->formula().c_str() << "\n";
-    out << "Energy: " << energy << " kcal/mol\n";
+    std::cout << "Formula: " << molecule->formula().c_str() << "\n";
+    std::cout << "Energy: " << energy << " kcal/mol\n";
 
     delete uff;
 
