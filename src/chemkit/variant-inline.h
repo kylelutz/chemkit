@@ -339,6 +339,9 @@ inline float Variant::value() const
     else if(m_type == Int){
         return static_cast<float>(m_value._int);
     }
+    else if(m_type == Long){
+        return static_cast<float>(m_value._long);
+    }
     else if(m_type == String){
         return boost::lexical_cast<float>(*m_value.string);
     }
@@ -357,6 +360,9 @@ inline double Variant::value() const
     }
     else if(m_type == Int){
         return static_cast<double>(m_value._int);
+    }
+    else if(m_type == Long){
+        return static_cast<double>(m_value._long);
     }
     else if(m_type == String){
         return boost::lexical_cast<double>(*m_value.string);
