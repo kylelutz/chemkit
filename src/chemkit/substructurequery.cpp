@@ -512,13 +512,17 @@ std::map<Atom *, Atom *> SubstructureQuery::maximumMapping(const Molecule *molec
     std::map<size_t, size_t> mapping;
     McgregorCommonSubgraphsCallback callback(source, target, mapping);
 
+    // search for connected subgraphs if the query molecule
+    // consists only of a single connected component
+    bool onlyConnectedSubgraphs = !d->molecule->isFragmented();
+
     boost::mcgregor_common_subgraphs_maximum_unique(source,
                                                     target,
                                                     boost::get(boost::vertex_index, source),
                                                     boost::get(boost::vertex_index, target),
                                                     edgeComparator,
                                                     vertexComparator,
-                                                    false,
+                                                    onlyConnectedSubgraphs,
                                                     callback);
 
     // convert index mapping to an atom mapping
