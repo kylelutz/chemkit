@@ -42,6 +42,7 @@
 #include <chemkit/constants.h>
 #include <chemkit/concurrent.h>
 #include <chemkit/pluginmanager.h>
+#include <chemkit/cartesiancoordinates.h>
 
 #include "forcefieldatom.h"
 #include "forcefieldcalculation.h"
@@ -307,12 +308,12 @@ void ForceField::setCalculationSetup(ForceFieldCalculation *calculation, bool se
 /// Calculates and returns the total energy of the system. Energy is
 /// in kcal/mol. If the force field is not setup this method will
 /// return \c 0.
-Real ForceField::energy() const
+Real ForceField::energy(const CartesianCoordinates *coordinates) const
 {
     Real energy = 0;
 
     foreach(const ForceFieldCalculation *calculation, d->calculations){
-        energy += calculation->energy();
+        energy += calculation->energy(coordinates);
     }
 
     return energy;
@@ -322,9 +323,9 @@ Real ForceField::energy() const
 /// containing the result.
 ///
 /// \internal
-boost::shared_future<Real> ForceField::energyAsync() const
+boost::shared_future<Real> ForceField::energyAsync(const CartesianCoordinates *coordinates) const
 {
-    return chemkit::concurrent::run(boost::bind(&ForceField::energy, this));
+    return chemkit::concurrent::run(boost::bind(&ForceField::energy, this, coordinates));
 }
 
 /// Returns the gradient of the energy with respect to the
@@ -346,14 +347,14 @@ boost::shared_future<Real> ForceField::energyAsync() const
 ///                \right]
 /// \f]
 **/
-std::vector<Vector3> ForceField::gradient() const
+std::vector<Vector3> ForceField::gradient(const CartesianCoordinates *coordinates) const
 {
     if(d->flags & AnalyticalGradient){
         std::vector<Vector3> gradient(atomCount());
         std::fill(gradient.begin(), gradient.end(), Vector3(0, 0, 0));
 
         foreach(const ForceFieldCalculation *calculation, d->calculations){
-            std::vector<Vector3> atomGradients = calculation->gradient();
+            std::vector<Vector3> atomGradients = calculation->gradient(coordinates);
 
             for(unsigned int i = 0; i < atomGradients.size(); i++){
                 const ForceFieldAtom *atom = calculation->atom(i);
@@ -365,7 +366,7 @@ std::vector<Vector3> ForceField::gradient() const
         return gradient;
     }
     else{
-        return numericalGradient();
+        return numericalGradient(coordinates);
     }
 }
 
@@ -374,28 +375,31 @@ std::vector<Vector3> ForceField::gradient() const
 /// calculated numerically.
 ///
 /// \see ForceField::gradient()
-std::vector<Vector3> ForceField::numericalGradient() const
+std::vector<Vector3> ForceField::numericalGradient(const CartesianCoordinates *coordinates) const
 {
     std::vector<Vector3> gradient(atomCount());
 
+    CartesianCoordinates writeableCoordinates = *coordinates;
+
     for(int i = 0; i < atomCount(); i++){
         ForceFieldAtom *atom = d->atoms[i];
+        const Point3 &position = coordinates->position(i);
 
         // initial energy
-        Real eI = atom->energy();
+        Real eI = atom->energy(&writeableCoordinates);
         Real epsilon = 1.0e-10;
 
-        atom->moveBy(epsilon, 0, 0);
-        Real eF_x = atom->energy();
+        writeableCoordinates.setPosition(i, position + Vector3(epsilon, 0, 0));
+        Real eF_x = atom->energy(&writeableCoordinates);
 
-        atom->moveBy(-epsilon, epsilon, 0);
-        Real eF_y = atom->energy();
+        writeableCoordinates.setPosition(i, position + Vector3(0, epsilon, 0));
+        Real eF_y = atom->energy(&writeableCoordinates);
 
-        atom->moveBy(0, -epsilon, epsilon);
-        Real eF_z = atom->energy();
+        writeableCoordinates.setPosition(i, position + Vector3(0, 0, epsilon));
+        Real eF_z = atom->energy(&writeableCoordinates);
 
         // restore initial position
-        atom->moveBy(0, 0, -epsilon);
+        writeableCoordinates.setPosition(i, coordinates->position(i));
 
         Real dx = (eF_x - eI) / epsilon;
         Real dy = (eF_y - eI) / epsilon;
@@ -408,7 +412,7 @@ std::vector<Vector3> ForceField::numericalGradient() const
 }
 
 /// Returns the root mean square gradient.
-Real ForceField::rmsg() const
+Real ForceField::rmsg(const CartesianCoordinates *coordinates) const
 {
     if(!size()){
         return 0;
@@ -416,7 +420,7 @@ Real ForceField::rmsg() const
 
     Real sum = 0;
 
-    std::vector<Vector3> gradient = this->gradient();
+    std::vector<Vector3> gradient = this->gradient(coordinates);
 
     for(unsigned int i = 0; i < gradient.size(); i++){
         sum += gradient[i].squaredNorm();

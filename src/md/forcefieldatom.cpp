@@ -132,13 +132,13 @@ ForceField* ForceFieldAtom::forceField() const
 // --- Calculations -------------------------------------------------------- //
 /// Returns the total energy of all the calculations the atom is a
 /// part of.
-Real ForceFieldAtom::energy() const
+Real ForceFieldAtom::energy(const CartesianCoordinates *coordinates) const
 {
     Real energy = 0;
 
     foreach(const ForceFieldCalculation *calculation, forceField()->calculations()){
         if(calculation->contains(this)){
-            energy += calculation->energy();
+            energy += calculation->energy(coordinates);
         }
     }
 

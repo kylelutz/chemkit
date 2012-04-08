@@ -57,8 +57,8 @@ public:
     MmffBondStrechCalculation(const MmffAtom *a, const MmffAtom *b);
 
     bool setup(const MmffParameters *parameters);
-    chemkit::Real energy() const;
-    std::vector<chemkit::Vector3> gradient() const;
+    chemkit::Real energy(const chemkit::CartesianCoordinates *coordinates) const CHEMKIT_OVERRIDE;
+    std::vector<chemkit::Vector3> gradient(const chemkit::CartesianCoordinates *coordinates) const CHEMKIT_OVERRIDE;
 };
 
 class MmffAngleBendCalculation : public MmffCalculation
@@ -67,8 +67,8 @@ public:
     MmffAngleBendCalculation(const MmffAtom *a, const MmffAtom *b, const MmffAtom *c);
 
     bool setup(const MmffParameters *parameters);
-    chemkit::Real energy() const;
-    std::vector<chemkit::Vector3> gradient() const;
+    chemkit::Real energy(const chemkit::CartesianCoordinates *coordinates) const CHEMKIT_OVERRIDE;
+    std::vector<chemkit::Vector3> gradient(const chemkit::CartesianCoordinates *coordinates) const CHEMKIT_OVERRIDE;
 };
 
 class MmffStrechBendCalculation : public MmffCalculation
@@ -77,8 +77,8 @@ public:
     MmffStrechBendCalculation(const MmffAtom *a, const MmffAtom *b, const MmffAtom *c);
 
     bool setup(const MmffParameters *parameters);
-    chemkit::Real energy() const;
-    std::vector<chemkit::Vector3> gradient() const;
+    chemkit::Real energy(const chemkit::CartesianCoordinates *coordinates) const CHEMKIT_OVERRIDE;
+    std::vector<chemkit::Vector3> gradient(const chemkit::CartesianCoordinates *coordinates) const CHEMKIT_OVERRIDE;
 };
 
 class MmffOutOfPlaneBendingCalculation : public MmffCalculation
@@ -87,8 +87,8 @@ public:
     MmffOutOfPlaneBendingCalculation(const MmffAtom *a, const MmffAtom *b, const MmffAtom *c, const MmffAtom *d);
 
     bool setup(const MmffParameters *parameters);
-    chemkit::Real energy() const;
-    std::vector<chemkit::Vector3> gradient() const;
+    chemkit::Real energy(const chemkit::CartesianCoordinates *coordinates) const CHEMKIT_OVERRIDE;
+    std::vector<chemkit::Vector3> gradient(const chemkit::CartesianCoordinates *coordinates) const CHEMKIT_OVERRIDE;
 };
 
 class MmffTorsionCalculation : public MmffCalculation
@@ -97,8 +97,8 @@ public:
     MmffTorsionCalculation(const MmffAtom *a, const MmffAtom *b, const MmffAtom *c, const MmffAtom *d);
 
     bool setup(const MmffParameters *parameters);
-    chemkit::Real energy() const;
-    std::vector<chemkit::Vector3> gradient() const;
+    chemkit::Real energy(const chemkit::CartesianCoordinates *coordinates) const CHEMKIT_OVERRIDE;
+    std::vector<chemkit::Vector3> gradient(const chemkit::CartesianCoordinates *coordinates) const CHEMKIT_OVERRIDE;
 };
 
 class MmffVanDerWaalsCalculation : public MmffCalculation
@@ -107,8 +107,8 @@ public:
     MmffVanDerWaalsCalculation(const MmffAtom *a, const MmffAtom *b);
 
     bool setup(const MmffParameters *parameters);
-    chemkit::Real energy() const;
-    std::vector<chemkit::Vector3> gradient() const;
+    chemkit::Real energy(const chemkit::CartesianCoordinates *coordinates) const CHEMKIT_OVERRIDE;
+    std::vector<chemkit::Vector3> gradient(const chemkit::CartesianCoordinates *coordinates) const CHEMKIT_OVERRIDE;
 };
 
 class MmffElectrostaticCalculation : public MmffCalculation
@@ -117,8 +117,8 @@ public:
     MmffElectrostaticCalculation(const MmffAtom *a, const MmffAtom *b);
 
     bool setup(const MmffParameters *parameters);
-    chemkit::Real energy() const;
-    std::vector<chemkit::Vector3> gradient() const;
+    chemkit::Real energy(const chemkit::CartesianCoordinates *coordinates) const CHEMKIT_OVERRIDE;
+    std::vector<chemkit::Vector3> gradient(const chemkit::CartesianCoordinates *coordinates) const CHEMKIT_OVERRIDE;
 };
 
 #endif // MMFFCALCULATION_H

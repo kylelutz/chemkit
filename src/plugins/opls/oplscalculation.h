@@ -55,8 +55,8 @@ public:
     OplsBondStrechCalculation(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b);
 
     bool setup(const OplsParameters *parameters);
-    chemkit::Real energy() const;
-    std::vector<chemkit::Vector3> gradient() const;
+    chemkit::Real energy(const chemkit::CartesianCoordinates *coordinates) const CHEMKIT_OVERRIDE;
+    std::vector<chemkit::Vector3> gradient(const chemkit::CartesianCoordinates *coordinates) const CHEMKIT_OVERRIDE;
 };
 
 class OplsAngleBendCalculation : public OplsCalculation
@@ -65,8 +65,8 @@ public:
     OplsAngleBendCalculation(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b, const chemkit::ForceFieldAtom *c);
 
     bool setup(const OplsParameters *parameters);
-    chemkit::Real energy() const;
-    std::vector<chemkit::Vector3> gradient() const;
+    chemkit::Real energy(const chemkit::CartesianCoordinates *coordinates) const CHEMKIT_OVERRIDE;
+    std::vector<chemkit::Vector3> gradient(const chemkit::CartesianCoordinates *coordinates) const CHEMKIT_OVERRIDE;
 };
 
 class OplsTorsionCalculation : public OplsCalculation
@@ -75,8 +75,8 @@ public:
     OplsTorsionCalculation(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b, const chemkit::ForceFieldAtom *c, const chemkit::ForceFieldAtom *d);
 
     bool setup(const OplsParameters *parameters);
-    chemkit::Real energy() const;
-    std::vector<chemkit::Vector3> gradient() const;
+    chemkit::Real energy(const chemkit::CartesianCoordinates *coordinates) const CHEMKIT_OVERRIDE;
+    std::vector<chemkit::Vector3> gradient(const chemkit::CartesianCoordinates *coordinates) const CHEMKIT_OVERRIDE;
 };
 
 class OplsNonbondedCalculation : public OplsCalculation
@@ -85,8 +85,8 @@ public:
     OplsNonbondedCalculation(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b);
 
     bool setup(const OplsParameters *parameters);
-    chemkit::Real energy() const;
-    std::vector<chemkit::Vector3> gradient() const;
+    chemkit::Real energy(const chemkit::CartesianCoordinates *coordinates) const CHEMKIT_OVERRIDE;
+    std::vector<chemkit::Vector3> gradient(const chemkit::CartesianCoordinates *coordinates) const CHEMKIT_OVERRIDE;
 };
 
 #endif // OPLSCALCULATION_H

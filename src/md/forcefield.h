@@ -55,6 +55,7 @@ namespace chemkit {
 class Atom;
 class Molecule;
 class ForceFieldPrivate;
+class CartesianCoordinates;
 
 class CHEMKIT_MD_EXPORT ForceField
 {
@@ -93,11 +94,11 @@ public:
     // calculations
     std::vector<ForceFieldCalculation *> calculations() const;
     int calculationCount() const;
-    virtual Real energy() const;
-    boost::shared_future<Real> energyAsync() const;
-    std::vector<Vector3> gradient() const;
-    std::vector<Vector3> numericalGradient() const;
-    Real rmsg() const;
+    virtual Real energy(const CartesianCoordinates *coordinates) const;
+    boost::shared_future<Real> energyAsync(const CartesianCoordinates *coordinates) const;
+    std::vector<Vector3> gradient(const CartesianCoordinates *coordinates) const;
+    std::vector<Vector3> numericalGradient(const CartesianCoordinates *coordinates) const;
+    Real rmsg(const CartesianCoordinates *coordinates) const;
 
     // error handling
     std::string errorString() const;

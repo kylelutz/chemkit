@@ -38,6 +38,7 @@
 #include <chemkit/atom.h>
 #include <chemkit/constants.h>
 #include <chemkit/forcefield.h>
+#include <chemkit/cartesiancoordinates.h>
 
 #include "mmffatom.h"
 #include "mmffparameters.h"
@@ -77,15 +78,15 @@ bool MmffBondStrechCalculation::setup(const MmffParameters *parameters)
     return false;
 }
 
-chemkit::Real MmffBondStrechCalculation::energy() const
+chemkit::Real MmffBondStrechCalculation::energy(const chemkit::CartesianCoordinates *coordinates) const
 {
-    const MmffAtom *a = atom(0);
-    const MmffAtom *b = atom(1);
+    size_t a = atom(0)->index();
+    size_t b = atom(1)->index();
 
     chemkit::Real kb = parameter(0);
     chemkit::Real r0 = parameter(1);
 
-    chemkit::Real r = distance(a, b);
+    chemkit::Real r = coordinates->distance(a, b);
     chemkit::Real dr = r - r0;
     chemkit::Real cs = -2.0; // cubic strech constant
 
@@ -93,22 +94,22 @@ chemkit::Real MmffBondStrechCalculation::energy() const
     return 143.9325 * (kb / 2) * (dr*dr) * (1 + cs * dr + ((7.0/12.0)*(cs*cs)) * (dr*dr));
 }
 
-std::vector<chemkit::Vector3> MmffBondStrechCalculation::gradient() const
+std::vector<chemkit::Vector3> MmffBondStrechCalculation::gradient(const chemkit::CartesianCoordinates *coordinates) const
 {
-    const MmffAtom *a = atom(0);
-    const MmffAtom *b = atom(1);
+    size_t a = atom(0)->index();
+    size_t b = atom(1)->index();
 
     chemkit::Real kb = parameter(0);
     chemkit::Real r0 = parameter(1);
 
-    chemkit::Real r = distance(a, b);
+    chemkit::Real r = coordinates->distance(a, b);
     chemkit::Real dr = r - r0;
     chemkit::Real cs = -2.0; // cubic strech constant
 
     // dE/dr
     chemkit::Real de_dr = 143.9325 * kb * dr * (1 + cs * dr + (7.0/12.0 * (cs*cs) * (dr*dr)) + 0.5 * dr * (cs + (14.0/12.0 * (cs*cs) * dr)));
 
-    boost::array<chemkit::Vector3, 2> gradient = distanceGradient(a, b);
+    boost::array<chemkit::Vector3, 2> gradient = coordinates->distanceGradient(a, b);
 
     gradient[0] *= de_dr;
     gradient[1] *= de_dr;
@@ -143,40 +144,40 @@ bool MmffAngleBendCalculation::setup(const MmffParameters *parameters)
     return false;
 }
 
-chemkit::Real MmffAngleBendCalculation::energy() const
+chemkit::Real MmffAngleBendCalculation::energy(const chemkit::CartesianCoordinates *coordinates) const
 {
-    const MmffAtom *a = atom(0);
-    const MmffAtom *b = atom(1);
-    const MmffAtom *c = atom(2);
+    size_t a = atom(0)->index();
+    size_t b = atom(1)->index();
+    size_t c = atom(2)->index();
 
     chemkit::Real ka = parameter(0);
     chemkit::Real t0 = parameter(1);
 
     chemkit::Real cb = -0.007; // cubic bend constant
-    chemkit::Real t = bondAngle(a, b, c);
+    chemkit::Real t = coordinates->angle(a, b, c);
     chemkit::Real dt = t - t0;
 
     // equation 3
     return 0.043844 * (ka / 2.0) * pow(dt, 2) * (1 + cb * dt);
 }
 
-std::vector<chemkit::Vector3> MmffAngleBendCalculation::gradient() const
+std::vector<chemkit::Vector3> MmffAngleBendCalculation::gradient(const chemkit::CartesianCoordinates *coordinates) const
 {
-    const MmffAtom *a = atom(0);
-    const MmffAtom *b = atom(1);
-    const MmffAtom *c = atom(2);
+    size_t a = atom(0)->index();
+    size_t b = atom(1)->index();
+    size_t c = atom(2)->index();
 
     chemkit::Real ka = parameter(0);
     chemkit::Real t0 = parameter(1);
 
     chemkit::Real cb = -0.007; // cubic bend constant
-    chemkit::Real t = bondAngle(a, b, c);
+    chemkit::Real t = coordinates->angle(a, b, c);
     chemkit::Real dt = t - t0;
 
     // dE/dt
     chemkit::Real de_dt = 0.043844 * ka * dt * (1 + cb * dt + 0.5 * cb * dt);
 
-    boost::array<chemkit::Vector3, 3> gradient = bondAngleGradient(a, b, c);
+    boost::array<chemkit::Vector3, 3> gradient = coordinates->angleGradient(a, b, c);
 
     gradient[0] *= de_dt;
     gradient[1] *= de_dt;
@@ -242,11 +243,11 @@ bool MmffStrechBendCalculation::setup(const MmffParameters *parameters)
     return false;
 }
 
-chemkit::Real MmffStrechBendCalculation::energy() const
+chemkit::Real MmffStrechBendCalculation::energy(const chemkit::CartesianCoordinates *coordinates) const
 {
-    const MmffAtom *a = atom(0);
-    const MmffAtom *b = atom(1);
-    const MmffAtom *c = atom(2);
+    size_t a = atom(0)->index();
+    size_t b = atom(1)->index();
+    size_t c = atom(2)->index();
 
     chemkit::Real kba_ijk = parameter(0);
     chemkit::Real kba_kji = parameter(1);
@@ -254,22 +255,22 @@ chemkit::Real MmffStrechBendCalculation::energy() const
     chemkit::Real r0_bc = parameter(3);
     chemkit::Real t0 = parameter(4);
 
-    chemkit::Real r_ab = distance(a, b);
-    chemkit::Real r_bc = distance(b, c);
+    chemkit::Real r_ab = coordinates->distance(a, b);
+    chemkit::Real r_bc = coordinates->distance(b, c);
     chemkit::Real dr_ab = r_ab - r0_ab;
     chemkit::Real dr_bc = r_bc - r0_bc;
-    chemkit::Real t = bondAngle(a, b, c);
+    chemkit::Real t = coordinates->angle(a, b, c);
     chemkit::Real dt = t - t0;
 
     // equation 5
     return 2.51210 * (kba_ijk * dr_ab + kba_kji * dr_bc) * dt;
 }
 
-std::vector<chemkit::Vector3> MmffStrechBendCalculation::gradient() const
+std::vector<chemkit::Vector3> MmffStrechBendCalculation::gradient(const chemkit::CartesianCoordinates *coordinates) const
 {
-    const MmffAtom *a = atom(0);
-    const MmffAtom *b = atom(1);
-    const MmffAtom *c = atom(2);
+    size_t a = atom(0)->index();
+    size_t b = atom(1)->index();
+    size_t c = atom(2)->index();
 
     chemkit::Real kba_ijk = parameter(0);
     chemkit::Real kba_kji = parameter(1);
@@ -277,22 +278,22 @@ std::vector<chemkit::Vector3> MmffStrechBendCalculation::gradient() const
     chemkit::Real r0_bc = parameter(3);
     chemkit::Real t0 = parameter(4);
 
-    chemkit::Real r_ab = distance(a, b);
-    chemkit::Real r_bc = distance(b, c);
+    chemkit::Real r_ab = coordinates->distance(a, b);
+    chemkit::Real r_bc = coordinates->distance(b, c);
     chemkit::Real dr_ab = r_ab - r0_ab;
     chemkit::Real dr_bc = r_bc - r0_bc;
-    chemkit::Real t = bondAngle(a, b, c);
+    chemkit::Real t = coordinates->angle(a, b, c);
     chemkit::Real dt = t - t0;
 
     std::vector<chemkit::Vector3> gradient(3);
 
-    boost::array<chemkit::Vector3, 2> distanceGradientAB = distanceGradient(a, b);
-    boost::array<chemkit::Vector3, 2> distanceGradientBC = distanceGradient(b, c);
-    boost::array<chemkit::Vector3, 3> bondAngleGradientABC = bondAngleGradient(a, b, c);
+    boost::array<chemkit::Vector3, 2> distanceGradientAB = coordinates->distanceGradient(a, b);
+    boost::array<chemkit::Vector3, 2> distanceGradientBC = coordinates->distanceGradient(b, c);
+    boost::array<chemkit::Vector3, 3> angleGradientABC = coordinates->angleGradient(a, b, c);
 
-    gradient[0] = (distanceGradientAB[0] * kba_ijk * dt + bondAngleGradientABC[0] * (kba_ijk * dr_ab + kba_kji * dr_bc)) * 2.51210;
-    gradient[1] = ((distanceGradientAB[1] * kba_ijk + distanceGradientBC[0] * kba_kji) * dt + bondAngleGradientABC[1] * (kba_ijk * dr_ab + kba_kji * dr_bc)) * 2.51210;
-    gradient[2] = ((distanceGradientBC[1] * kba_kji) * dt + bondAngleGradientABC[2] * (kba_ijk * dr_ab + kba_kji * dr_bc)) * 2.51210;
+    gradient[0] = (distanceGradientAB[0] * kba_ijk * dt + angleGradientABC[0] * (kba_ijk * dr_ab + kba_kji * dr_bc)) * 2.51210;
+    gradient[1] = ((distanceGradientAB[1] * kba_ijk + distanceGradientBC[0] * kba_kji) * dt + angleGradientABC[1] * (kba_ijk * dr_ab + kba_kji * dr_bc)) * 2.51210;
+    gradient[2] = ((distanceGradientBC[1] * kba_kji) * dt + angleGradientABC[2] * (kba_ijk * dr_ab + kba_kji * dr_bc)) * 2.51210;
 
     return gradient;
 }
@@ -326,34 +327,34 @@ bool MmffOutOfPlaneBendingCalculation::setup(const MmffParameters *parameters)
     return true;
 }
 
-chemkit::Real MmffOutOfPlaneBendingCalculation::energy() const
+chemkit::Real MmffOutOfPlaneBendingCalculation::energy(const chemkit::CartesianCoordinates *coordinates) const
 {
-    const MmffAtom *a = atom(0);
-    const MmffAtom *b = atom(1);
-    const MmffAtom *c = atom(2);
-    const MmffAtom *d = atom(3);
+    size_t a = atom(0)->index();
+    size_t b = atom(1)->index();
+    size_t c = atom(2)->index();
+    size_t d = atom(3)->index();
 
-    chemkit::Real angle = wilsonAngle(a, b, c, d);
+    chemkit::Real angle = coordinates->wilsonAngle(a, b, c, d);
     chemkit::Real koop = parameter(0);
 
     // equation 6
     return 0.043844 * (koop / 2.0) * (angle*angle);
 }
 
-std::vector<chemkit::Vector3> MmffOutOfPlaneBendingCalculation::gradient() const
+std::vector<chemkit::Vector3> MmffOutOfPlaneBendingCalculation::gradient(const chemkit::CartesianCoordinates *coordinates) const
 {
-    const MmffAtom *a = atom(0);
-    const MmffAtom *b = atom(1);
-    const MmffAtom *c = atom(2);
-    const MmffAtom *d = atom(3);
+    size_t a = atom(0)->index();
+    size_t b = atom(1)->index();
+    size_t c = atom(2)->index();
+    size_t d = atom(3)->index();
 
-    chemkit::Real angle = wilsonAngle(a, b, c, d);
+    chemkit::Real angle = coordinates->wilsonAngle(a, b, c, d);
     chemkit::Real koop = parameter(0);
 
     // dE/dw
     chemkit::Real de_dw = 0.043844 * koop * angle;
 
-    boost::array<chemkit::Vector3, 4> gradient = wilsonAngleGradient(a, b, c, d);
+    boost::array<chemkit::Vector3, 4> gradient = coordinates->wilsonAngleGradient(a, b, c, d);
 
     gradient[0] *= de_dw;
     gradient[1] *= de_dw;
@@ -395,14 +396,14 @@ bool MmffTorsionCalculation::setup(const MmffParameters *parameters)
     return true;
 }
 
-chemkit::Real MmffTorsionCalculation::energy() const
+chemkit::Real MmffTorsionCalculation::energy(const chemkit::CartesianCoordinates *coordinates) const
 {
-    const MmffAtom *a = atom(0);
-    const MmffAtom *b = atom(1);
-    const MmffAtom *c = atom(2);
-    const MmffAtom *d = atom(3);
+    size_t a = atom(0)->index();
+    size_t b = atom(1)->index();
+    size_t c = atom(2)->index();
+    size_t d = atom(3)->index();
 
-    chemkit::Real angle = torsionAngleRadians(a, b, c, d);
+    chemkit::Real angle = coordinates->torsionAngleRadians(a, b, c, d);
     chemkit::Real V1 = parameter(0);
     chemkit::Real V2 = parameter(1);
     chemkit::Real V3 = parameter(2);
@@ -411,14 +412,14 @@ chemkit::Real MmffTorsionCalculation::energy() const
     return 0.5 * (V1 * (1.0 + cos(angle)) + V2 * (1.0 - cos(2.0 * angle)) + V3 * (1.0 + cos(3.0 * angle)));
 }
 
-std::vector<chemkit::Vector3> MmffTorsionCalculation::gradient() const
+std::vector<chemkit::Vector3> MmffTorsionCalculation::gradient(const chemkit::CartesianCoordinates *coordinates) const
 {
-    const MmffAtom *a = atom(0);
-    const MmffAtom *b = atom(1);
-    const MmffAtom *c = atom(2);
-    const MmffAtom *d = atom(3);
+    size_t a = atom(0)->index();
+    size_t b = atom(1)->index();
+    size_t c = atom(2)->index();
+    size_t d = atom(3)->index();
 
-    chemkit::Real phi = torsionAngleRadians(a, b, c, d);
+    chemkit::Real phi = coordinates->torsionAngleRadians(a, b, c, d);
     chemkit::Real V1 = parameter(0);
     chemkit::Real V2 = parameter(1);
     chemkit::Real V3 = parameter(2);
@@ -426,7 +427,7 @@ std::vector<chemkit::Vector3> MmffTorsionCalculation::gradient() const
     // dE/dphi
     chemkit::Real de_dphi = 0.5 * (-V1 * sin(phi) + 2 * V2 * sin(2 * phi) - 3 * V3 * sin(3 * phi));
 
-    boost::array<chemkit::Vector3, 4> gradient = torsionAngleGradientRadians(a, b, c, d);
+    boost::array<chemkit::Vector3, 4> gradient = coordinates->torsionAngleGradientRadians(a, b, c, d);
 
     gradient[0] *= de_dphi;
     gradient[1] *= de_dphi;
@@ -498,34 +499,34 @@ bool MmffVanDerWaalsCalculation::setup(const MmffParameters *parameters)
     return true;
 }
 
-chemkit::Real MmffVanDerWaalsCalculation::energy() const
+chemkit::Real MmffVanDerWaalsCalculation::energy(const chemkit::CartesianCoordinates *coordinates) const
 {
-    const MmffAtom *a = atom(0);
-    const MmffAtom *b = atom(1);
+    size_t a = atom(0)->index();
+    size_t b = atom(1)->index();
 
     chemkit::Real rs = parameter(0);
     chemkit::Real eps = parameter(1);
-    chemkit::Real r = distance(a, b);
+    chemkit::Real r = coordinates->distance(a, b);
 
     // equation 8
     return eps * pow(((1.07 * rs) / (r + 0.07 * rs)), 7) * (((1.12 * pow(rs, 7)) / (pow(r, 7) + 0.12 * pow(rs, 7))) - 2);
 }
 
-std::vector<chemkit::Vector3> MmffVanDerWaalsCalculation::gradient() const
+std::vector<chemkit::Vector3> MmffVanDerWaalsCalculation::gradient(const chemkit::CartesianCoordinates *coordinates) const
 {
-    const MmffAtom *a = atom(0);
-    const MmffAtom *b = atom(1);
+    size_t a = atom(0)->index();
+    size_t b = atom(1)->index();
 
     chemkit::Real rs = parameter(0);
     chemkit::Real eps = parameter(1);
-    chemkit::Real r = distance(a, b);
+    chemkit::Real r = coordinates->distance(a, b);
 
     // dE/dr
     chemkit::Real de_dr = 7 * eps * pow(1.07 * rs / (r + 0.07 * rs), 6) *
                            ((-1.07 * rs / pow(r + 0.07 * rs, 2)) * (1.12 * pow(rs, 7) / (pow(r, 7) + 0.12 * pow(rs, 7)) - 2) +
                            (-1.12 * pow(rs, 7) * pow(r, 6) / pow(pow(r, 7) + 0.12 * pow(rs, 7), 2)) * (1.07 * rs / (r + 0.07 * rs)));
 
-    boost::array<chemkit::Vector3, 2> gradient = distanceGradient(a, b);
+    boost::array<chemkit::Vector3, 2> gradient = coordinates->distanceGradient(a, b);
 
     gradient[0] *= de_dr;
     gradient[1] *= de_dr;
@@ -565,16 +566,16 @@ bool MmffElectrostaticCalculation::setup(const MmffParameters *parameters)
     return true;
 }
 
-chemkit::Real MmffElectrostaticCalculation::energy() const
+chemkit::Real MmffElectrostaticCalculation::energy(const chemkit::CartesianCoordinates *coordinates) const
 {
-    const chemkit::ForceFieldAtom *a = atom(0);
-    const chemkit::ForceFieldAtom *b = atom(1);
+    size_t a = atom(0)->index();
+    size_t b = atom(1)->index();
 
     chemkit::Real qa = parameter(0);
     chemkit::Real qb = parameter(1);
     chemkit::Real oneFourScaling = parameter(2);
 
-    chemkit::Real r = distance(a, b);
+    chemkit::Real r = coordinates->distance(a, b);
     chemkit::Real e = 1.0; // dielectric constant
     chemkit::Real d = 0.05; // electrostatic buffering constant
 
@@ -582,22 +583,22 @@ chemkit::Real MmffElectrostaticCalculation::energy() const
     return ((332.0716 * qa * qb) / (e * (r + d))) * oneFourScaling;
 }
 
-std::vector<chemkit::Vector3> MmffElectrostaticCalculation::gradient() const
+std::vector<chemkit::Vector3> MmffElectrostaticCalculation::gradient(const chemkit::CartesianCoordinates *coordinates) const
 {
-    const chemkit::ForceFieldAtom *a = atom(0);
-    const chemkit::ForceFieldAtom *b = atom(1);
+    size_t a = atom(0)->index();
+    size_t b = atom(1)->index();
 
     chemkit::Real qa = parameter(0);
     chemkit::Real qb = parameter(1);
     chemkit::Real oneFourScaling = parameter(2);
 
-    chemkit::Real r = distance(a, b);
+    chemkit::Real r = coordinates->distance(a, b);
     chemkit::Real e = 1.0; // dielectric constant
     chemkit::Real d = 0.05; // electrostatic buffering constant
 
     chemkit::Real de_dr = 332.0716 * qa * qb * oneFourScaling * (-1.0 / (e * pow(r + d, 2)));
 
-    boost::array<chemkit::Vector3, 2> gradient = distanceGradient(a, b);
+    boost::array<chemkit::Vector3, 2> gradient = coordinates->distanceGradient(a, b);
 
     gradient[0] *= de_dr;
     gradient[1] *= de_dr;

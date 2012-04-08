@@ -76,7 +76,7 @@ int main(int argc, char *argv[])
         return -1;
     }
 
-    chemkit::Real energy = uff->energy();
+    chemkit::Real energy = uff->energy(molecule->coordinates());
 
     std::cout << "Formula: " << molecule->formula().c_str() << "\n";
     std::cout << "Energy: " << energy << " kcal/mol\n";

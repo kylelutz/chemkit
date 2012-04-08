@@ -90,7 +90,7 @@ void OplsTest::energy()
     bool setup = opls->setup();
     QVERIFY(setup == true);
 
-    QCOMPARE(qRound(opls->energy()), qRound(energy));
+    QCOMPARE(qRound(opls->energy(molecule->coordinates())), qRound(energy));
 
     // check opls energy descriptor
     QCOMPARE(qRound(molecule->descriptor("opls-energy").toDouble()), qRound(energy));

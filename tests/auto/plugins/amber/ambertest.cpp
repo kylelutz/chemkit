@@ -110,7 +110,7 @@ void AmberTest::adenosine()
     QCOMPARE(atoms[31]->type(), std::string("H"));
 
     QCOMPARE(forceField->calculationCount(), 585);
-    QCOMPARE(qRound(forceField->energy()), 1460);
+    QCOMPARE(qRound(forceField->energy(molecule->coordinates())), 1460);
 
     // check amber energy descriptor
     QCOMPARE(qRound(molecule->descriptor("amber-energy").toDouble()), 1460);
@@ -155,7 +155,7 @@ void AmberTest::serine()
     QCOMPARE(atoms[13]->type(), std::string("H"));
 
     QCOMPARE(forceField->calculationCount(), 118);
-    QCOMPARE(qRound(forceField->energy()), 322);
+    QCOMPARE(qRound(forceField->energy(molecule->coordinates())), 322);
 
     // check amber energy descriptor
     QCOMPARE(qRound(molecule->descriptor("amber-energy").toDouble()), 322);
@@ -189,7 +189,7 @@ void AmberTest::water()
 
     QCOMPARE(forceField->calculationCount(), 3);
 
-    QCOMPARE(qRound(forceField->energy()), 21085);
+    QCOMPARE(qRound(forceField->energy(water.coordinates())), 21085);
 
     delete forceField;
 }

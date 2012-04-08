@@ -39,6 +39,7 @@
 
 #include <chemkit/constants.h>
 #include <chemkit/forcefieldatom.h>
+#include <chemkit/cartesiancoordinates.h>
 
 // === AmberCalculation ==================================================== //
 AmberCalculation::AmberCalculation(int type, int atomCount, int parameterCount)
@@ -71,32 +72,32 @@ bool AmberBondCalculation::setup(const AmberParameters *parameters)
     return true;
 }
 
-chemkit::Real AmberBondCalculation::energy() const
+chemkit::Real AmberBondCalculation::energy(const chemkit::CartesianCoordinates *coordinates) const
 {
-    const chemkit::ForceFieldAtom *a = atom(0);
-    const chemkit::ForceFieldAtom *b = atom(1);
+    size_t a = atom(0)->index();
+    size_t b = atom(1)->index();
 
     chemkit::Real kb = parameter(0);
     chemkit::Real r0 = parameter(1);
-    chemkit::Real r = distance(a, b);
+    chemkit::Real r = coordinates->distance(a, b);
     chemkit::Real dr = r - r0;
 
     return kb * (dr*dr);
 }
 
-std::vector<chemkit::Vector3> AmberBondCalculation::gradient() const
+std::vector<chemkit::Vector3> AmberBondCalculation::gradient(const chemkit::CartesianCoordinates *coordinates) const
 {
-    const chemkit::ForceFieldAtom *a = atom(0);
-    const chemkit::ForceFieldAtom *b = atom(1);
+    size_t a = atom(0)->index();
+    size_t b = atom(1)->index();
 
     chemkit::Real kb = parameter(0);
     chemkit::Real r0 = parameter(1);
-    chemkit::Real r = distance(a, b);
+    chemkit::Real r = coordinates->distance(a, b);
 
     // dE/dr
     chemkit::Real de_dr = 2.0 * kb * (r - r0);
 
-    boost::array<chemkit::Vector3, 2> gradient = distanceGradient(a, b);
+    boost::array<chemkit::Vector3, 2> gradient = coordinates->distanceGradient(a, b);
 
     gradient[0] *= de_dr;
     gradient[1] *= de_dr;
@@ -132,34 +133,34 @@ bool AmberAngleCalculation::setup(const AmberParameters *parameters)
     return true;
 }
 
-chemkit::Real AmberAngleCalculation::energy() const
+chemkit::Real AmberAngleCalculation::energy(const chemkit::CartesianCoordinates *coordinates) const
 {
-    const chemkit::ForceFieldAtom *a = atom(0);
-    const chemkit::ForceFieldAtom *b = atom(1);
-    const chemkit::ForceFieldAtom *c = atom(2);
+    size_t a = atom(0)->index();
+    size_t b = atom(1)->index();
+    size_t c = atom(2)->index();
 
     chemkit::Real ka = parameter(0);
     chemkit::Real theta0 = parameter(1);
-    chemkit::Real theta = bondAngle(a, b, c);
+    chemkit::Real theta = coordinates->angle(a, b, c);
     chemkit::Real dt = theta - theta0;
 
     return ka * (dt*dt);
 }
 
-std::vector<chemkit::Vector3> AmberAngleCalculation::gradient() const
+std::vector<chemkit::Vector3> AmberAngleCalculation::gradient(const chemkit::CartesianCoordinates *coordinates) const
 {
-    const chemkit::ForceFieldAtom *a = atom(0);
-    const chemkit::ForceFieldAtom *b = atom(1);
-    const chemkit::ForceFieldAtom *c = atom(2);
+    size_t a = atom(0)->index();
+    size_t b = atom(1)->index();
+    size_t c = atom(2)->index();
 
     chemkit::Real ka = parameter(0);
     chemkit::Real theta0 = parameter(1);
-    chemkit::Real theta = bondAngle(a, b, c);
+    chemkit::Real theta = coordinates->angle(a, b, c);
 
     // dE/dtheta
     chemkit::Real de_dtheta = 2.0 * ka * (theta - theta0);
 
-    boost::array<chemkit::Vector3, 3> gradient = bondAngleGradient(a, b, c);
+    boost::array<chemkit::Vector3, 3> gradient = coordinates->angleGradient(a, b, c);
 
     gradient[0] *= de_dtheta;
     gradient[1] *= de_dtheta;
@@ -205,12 +206,12 @@ bool AmberTorsionCalculation::setup(const AmberParameters *parameters)
     return true;
 }
 
-chemkit::Real AmberTorsionCalculation::energy() const
+chemkit::Real AmberTorsionCalculation::energy(const chemkit::CartesianCoordinates *coordinates) const
 {
-    const chemkit::ForceFieldAtom *a = atom(0);
-    const chemkit::ForceFieldAtom *b = atom(1);
-    const chemkit::ForceFieldAtom *c = atom(2);
-    const chemkit::ForceFieldAtom *d = atom(3);
+    size_t a = atom(0)->index();
+    size_t b = atom(1)->index();
+    size_t c = atom(2)->index();
+    size_t d = atom(3)->index();
 
     chemkit::Real V1 = parameter(0);
     chemkit::Real V2 = parameter(1);
@@ -221,7 +222,7 @@ chemkit::Real AmberTorsionCalculation::energy() const
     chemkit::Real gamma3 = parameter(6);
     chemkit::Real gamma4 = parameter(7);
 
-    chemkit::Real angle = torsionAngle(a, b, c, d);
+    chemkit::Real angle = coordinates->torsionAngle(a, b, c, d);
 
     chemkit::Real energy = 0;
     energy += V1 * (1.0 + cos((1.0 * angle - gamma1) * chemkit::constants::DegreesToRadians));
@@ -232,12 +233,12 @@ chemkit::Real AmberTorsionCalculation::energy() const
     return energy;
 }
 
-std::vector<chemkit::Vector3> AmberTorsionCalculation::gradient() const
+std::vector<chemkit::Vector3> AmberTorsionCalculation::gradient(const chemkit::CartesianCoordinates *coordinates) const
 {
-    const chemkit::ForceFieldAtom *a = atom(0);
-    const chemkit::ForceFieldAtom *b = atom(1);
-    const chemkit::ForceFieldAtom *c = atom(2);
-    const chemkit::ForceFieldAtom *d = atom(3);
+    size_t a = atom(0)->index();
+    size_t b = atom(1)->index();
+    size_t c = atom(2)->index();
+    size_t d = atom(3)->index();
 
     chemkit::Real V1 = parameter(0);
     chemkit::Real V2 = parameter(1);
@@ -248,7 +249,7 @@ std::vector<chemkit::Vector3> AmberTorsionCalculation::gradient() const
     chemkit::Real gamma3 = parameter(6);
     chemkit::Real gamma4 = parameter(7);
 
-    chemkit::Real phi = torsionAngle(a, b, c, d);
+    chemkit::Real phi = coordinates->torsionAngle(a, b, c, d);
 
     // dE/dphi
     chemkit::Real de_dphi = 0;
@@ -258,7 +259,7 @@ std::vector<chemkit::Vector3> AmberTorsionCalculation::gradient() const
     de_dphi += V4 * (-sin((4.0 * phi - gamma4) * chemkit::constants::DegreesToRadians) * 4.0);
     de_dphi *= chemkit::constants::DegreesToRadians;
 
-    boost::array<chemkit::Vector3, 4> gradient = torsionAngleGradient(a, b, c, d);
+    boost::array<chemkit::Vector3, 4> gradient = coordinates->torsionAngleGradient(a, b, c, d);
 
     gradient[0] *= de_dphi;
     gradient[1] *= de_dphi;
@@ -297,41 +298,41 @@ bool AmberNonbondedCalculation::setup(const AmberParameters *parameters)
     return true;
 }
 
-chemkit::Real AmberNonbondedCalculation::energy() const
+chemkit::Real AmberNonbondedCalculation::energy(const chemkit::CartesianCoordinates *coordinates) const
 {
-    const chemkit::ForceFieldAtom *a = atom(0);
-    const chemkit::ForceFieldAtom *b = atom(1);
+    size_t a = atom(0)->index();
+    size_t b = atom(1)->index();
 
     chemkit::Real epsilon = parameter(0);
     chemkit::Real sigma = parameter(1);
-    chemkit::Real r = distance(a, b);
+    chemkit::Real r = coordinates->distance(a, b);
     chemkit::Real e0 = 1;
 
     chemkit::Real vanDerWaalsTerm = epsilon * (pow(sigma/r, 12) - 2 * pow(sigma/r, 6));
-    chemkit::Real electrostaticTerm = (a->charge() * b->charge()) / (4.0 * chemkit::constants::Pi * e0 * r);
+    chemkit::Real electrostaticTerm = (atom(0)->charge() * atom(1)->charge()) / (4.0 * chemkit::constants::Pi * e0 * r);
 
     return vanDerWaalsTerm + electrostaticTerm;
 }
 
-std::vector<chemkit::Vector3> AmberNonbondedCalculation::gradient() const
+std::vector<chemkit::Vector3> AmberNonbondedCalculation::gradient(const chemkit::CartesianCoordinates *coordinates) const
 {
-    const chemkit::ForceFieldAtom *a = atom(0);
-    const chemkit::ForceFieldAtom *b = atom(1);
+    size_t a = atom(0)->index();
+    size_t b = atom(1)->index();
 
     chemkit::Real epsilon = parameter(0);
     chemkit::Real sigma = parameter(1);
-    chemkit::Real qa = a->charge();
-    chemkit::Real qb = b->charge();
+    chemkit::Real qa = atom(0)->charge();
+    chemkit::Real qb = atom(1)->charge();
     chemkit::Real e0 = 1;
     chemkit::Real pi = chemkit::constants::Pi;
 
-    chemkit::Real r = distance(a, b);
+    chemkit::Real r = coordinates->distance(a, b);
     chemkit::Real sr = sigma / r;
 
     // dE/dr
     chemkit::Real de_dr = (-12 * epsilon * sigma / pow(r, 2) * (pow(sr, 11) - pow(sr, 5))) - ((qa * qb) / (4.0 * pi * e0 * pow(r, 2)));
 
-    boost::array<chemkit::Vector3, 2> gradient = distanceGradient(a, b);
+    boost::array<chemkit::Vector3, 2> gradient = coordinates->distanceGradient(a, b);
 
     gradient[0] *= de_dr;
     gradient[1] *= de_dr;

@@ -38,6 +38,8 @@
 
 #include "forcefieldenergydescriptor.h"
 
+#include <chemkit/molecule.h>
+
 #include "forcefield.h"
 
 namespace chemkit {
@@ -76,7 +78,7 @@ Variant ForceFieldEnergyDescriptor<ForceField>::value(const Molecule *molecule) 
         return Variant();
     }
 
-    return forceField.energy();
+    return forceField.energy(molecule->coordinates());
 }
 
 } // end chemkit namespace

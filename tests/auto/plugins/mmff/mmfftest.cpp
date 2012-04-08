@@ -132,7 +132,7 @@ void MmffTest::validate()
         }
 
         // verify energy
-        double energy = forceField->energy();
+        double energy = forceField->energy(molecule->coordinates());
         double expectedEnergy = expectedMolecule.attribute("energy").toDouble();
         double energyDifference = std::abs(energy - expectedEnergy);
         if(energyDifference > 1.0){
@@ -162,7 +162,7 @@ void MmffTest::validate()
 
             actualFile.write(QString("  <molecule name=\"%1\" energy=\"%2\" atomCount=\"%3\">\n")
                                 .arg(molecule->name().c_str())
-                                .arg(forceField->energy())
+                                .arg(forceField->energy(molecule->coordinates()))
                                 .arg(forceField->atomCount())
                                 .toAscii());
 

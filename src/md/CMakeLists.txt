@@ -8,7 +8,6 @@ include_directories(${CHEMKIT_INCLUDE_DIRS})
 set(HEADERS
   forcefieldatom.h
   forcefieldcalculation.h
-  forcefieldcalculation-inline.h
   forcefieldenergydescriptor.h
   forcefieldenergydescriptor-inline.h
   forcefield.h

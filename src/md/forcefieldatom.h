@@ -45,6 +45,7 @@ namespace chemkit {
 
 class Atom;
 class ForceField;
+class CartesianCoordinates;
 class ForceFieldAtomPrivate;
 
 class CHEMKIT_MD_EXPORT ForceFieldAtom
@@ -64,7 +65,7 @@ public:
     ForceField* forceField() const;
 
     // calculations
-    Real energy() const;
+    Real energy(const CartesianCoordinates *coordinates) const;
 
     // structure
     bool isOneFour(const ForceFieldAtom *atom) const;

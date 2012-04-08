@@ -59,8 +59,8 @@ public:
     UffBondStrechCalculation(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b);
 
     bool setup();
-    chemkit::Real energy() const;
-    std::vector<chemkit::Vector3> gradient() const;
+    chemkit::Real energy(const chemkit::CartesianCoordinates *coordinates) const CHEMKIT_OVERRIDE;
+    std::vector<chemkit::Vector3> gradient(const chemkit::CartesianCoordinates *coordinates) const CHEMKIT_OVERRIDE;
 };
 
 class UffAngleBendCalculation : public UffCalculation
@@ -69,8 +69,8 @@ public:
     UffAngleBendCalculation(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b, const chemkit::ForceFieldAtom *c);
 
     bool setup();
-    chemkit::Real energy() const;
-    std::vector<chemkit::Vector3> gradient() const;
+    chemkit::Real energy(const chemkit::CartesianCoordinates *coordinates) const CHEMKIT_OVERRIDE;
+    std::vector<chemkit::Vector3> gradient(const chemkit::CartesianCoordinates *coordinates) const CHEMKIT_OVERRIDE;
 };
 
 class UffTorsionCalculation : public UffCalculation
@@ -79,8 +79,8 @@ public:
     UffTorsionCalculation(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b, const chemkit::ForceFieldAtom *c, const chemkit::ForceFieldAtom *d);
 
     bool setup();
-    chemkit::Real energy() const;
-    std::vector<chemkit::Vector3> gradient() const;
+    chemkit::Real energy(const chemkit::CartesianCoordinates *coordinates) const CHEMKIT_OVERRIDE;
+    std::vector<chemkit::Vector3> gradient(const chemkit::CartesianCoordinates *coordinates) const CHEMKIT_OVERRIDE;
 };
 
 class UffInversionCalculation : public UffCalculation
@@ -89,8 +89,8 @@ public:
     UffInversionCalculation(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b, const chemkit::ForceFieldAtom *c, const chemkit::ForceFieldAtom *d);
 
     bool setup();
-    chemkit::Real energy() const;
-    std::vector<chemkit::Vector3> gradient() const;
+    chemkit::Real energy(const chemkit::CartesianCoordinates *coordinates) const CHEMKIT_OVERRIDE;
+    std::vector<chemkit::Vector3> gradient(const chemkit::CartesianCoordinates *coordinates) const CHEMKIT_OVERRIDE;
 };
 
 class UffVanDerWaalsCalculation : public UffCalculation
@@ -99,8 +99,8 @@ public:
     UffVanDerWaalsCalculation(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b);
 
     bool setup();
-    chemkit::Real energy() const;
-    std::vector<chemkit::Vector3> gradient() const;
+    chemkit::Real energy(const chemkit::CartesianCoordinates *coordinates) const CHEMKIT_OVERRIDE;
+    std::vector<chemkit::Vector3> gradient(const chemkit::CartesianCoordinates *coordinates) const CHEMKIT_OVERRIDE;
 };
 
 class UffElectrostaticCalculation : public UffCalculation
@@ -109,7 +109,7 @@ public:
     UffElectrostaticCalculation(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b);
 
     bool setup();
-    chemkit::Real energy() const;
+    chemkit::Real energy(const chemkit::CartesianCoordinates *coordinates) const CHEMKIT_OVERRIDE;
 };
 
 #endif // UFFCALCULATION_H

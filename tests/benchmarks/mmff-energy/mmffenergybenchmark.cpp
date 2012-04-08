@@ -63,7 +63,7 @@ void MmffEnergyBenchmark::benchmark()
             forceField->setup();
             //QVERIFY(forceField->isSetup());
 
-            totalEnergy += forceField->energy();
+            totalEnergy += forceField->energy(molecule->coordinates());
         }
 
         delete forceField;
