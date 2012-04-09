@@ -85,12 +85,18 @@ public:
     void addBondedInteraction(size_t i, size_t j);
     BondedInteractionRange bondedInteractions() const;
     size_t bondedInteractionCount() const;
+    void setBondedInteractionType(size_t i, size_t j, int type);
+    int bondedInteractionType(size_t i, size_t j) const;
     void addAngleInteraction(size_t i, size_t j, size_t k);
     AngleInteractionRange angleInteractions() const;
     size_t angleInteractionCount() const;
+    void setAngleInteractionType(size_t i, size_t j, size_t k, int type);
+    int angleInteractionType(size_t i, size_t j, size_t k) const;
     void addTorsionInteraction(size_t i, size_t j, size_t k, size_t l);
     TorsionInteractionRange torsionInteractions() const;
     size_t torsionInteractionCount() const;
+    void setTorsionInteractionType(size_t i, size_t j, size_t k, size_t l, int type);
+    int torsionInteractionType(size_t i, size_t j, size_t k, size_t l) const;
     void addImproperTorsionInteraction(size_t i, size_t j, size_t k, size_t l);
     ImproperTorsionInteractionRange improperTorsionInteractions() const;
     size_t improperTorsionInteractionCount() const;

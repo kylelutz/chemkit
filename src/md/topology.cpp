@@ -35,6 +35,8 @@
 
 #include "topology.h"
 
+#include <boost/range/algorithm.hpp>
+
 #include <chemkit/foreach.h>
 
 namespace chemkit {
@@ -53,6 +55,9 @@ public:
     std::vector<Topology::TorsionInteraction> torsionInteractions;
     std::vector<Topology::ImproperTorsionInteraction> improperTorsionInteractions;
     std::vector<Topology::NonbondedInteraction> nonbondedInteractions;
+    std::vector<int> bondedInteractionTypes;
+    std::vector<int> angleInteractionTypes;
+    std::vector<int> torsionInteractionTypes;
 };
 
 // === Topology ============================================================ //
@@ -163,6 +168,7 @@ void Topology::addBondedInteraction(size_t i, size_t j)
     interaction[0] = i;
     interaction[1] = j;
     d->bondedInteractions.push_back(interaction);
+    d->bondedInteractionTypes.push_back(0);
 }
 
 Topology::BondedInteractionRange Topology::bondedInteractions() const
@@ -176,6 +182,35 @@ size_t Topology::bondedInteractionCount() const
     return d->bondedInteractions.size();
 }
 
+void Topology::setBondedInteractionType(size_t i, size_t j, int type)
+{
+    BondedInteraction interaction;
+    interaction[0] = i;
+    interaction[1] = j;
+
+    BondedInteractionRange::const_iterator iter =
+        boost::find(d->bondedInteractions, interaction);
+
+    if(iter != d->bondedInteractions.end()){
+        size_t index = iter - d->bondedInteractions.begin();
+
+        d->bondedInteractionTypes[index] = type;
+    }
+}
+
+int Topology::bondedInteractionType(size_t i, size_t j) const
+{
+    for(size_t index = 0; index < d->bondedInteractions.size(); index++){
+        const BondedInteraction &interaction = d->bondedInteractions[index];
+        if((interaction[0] == i && interaction[1] == j) ||
+           (interaction[1] == i && interaction[0] == j)){
+            return d->bondedInteractionTypes[index];
+        }
+    }
+
+    return 0;
+}
+
 void Topology::addAngleInteraction(size_t i, size_t j, size_t k)
 {
     AngleInteraction interaction;
@@ -183,6 +218,7 @@ void Topology::addAngleInteraction(size_t i, size_t j, size_t k)
     interaction[1] = j;
     interaction[2] = k;
     d->angleInteractions.push_back(interaction);
+    d->angleInteractionTypes.push_back(0);
 }
 
 Topology::AngleInteractionRange Topology::angleInteractions() const
@@ -196,6 +232,49 @@ size_t Topology::angleInteractionCount() const
     return d->angleInteractions.size();
 }
 
+void Topology::setAngleInteractionType(size_t i, size_t j, size_t k, int type)
+{
+    AngleInteraction interaction;
+    interaction[0] = i;
+    interaction[1] = j;
+    interaction[2] = k;
+
+    AngleInteractionRange::const_iterator iter =
+        boost::find(d->angleInteractions, interaction);
+
+    if(iter != d->angleInteractions.end()){
+        size_t index = iter - d->angleInteractions.begin();
+
+        d->angleInteractionTypes[index] = type;
+    }
+}
+
+int Topology::angleInteractionType(size_t i, size_t j, size_t k) const
+{
+    AngleInteraction interaction;
+    interaction[0] = i;
+    interaction[1] = j;
+    interaction[2] = k;
+
+    AngleInteractionRange::const_iterator iter =
+        boost::find(d->angleInteractions, interaction);
+
+    if(iter == d->angleInteractions.end()){
+        interaction[0] = k;
+        interaction[2] = i;
+
+        iter = boost::find(d->angleInteractions, interaction);
+    }
+
+    if(iter != d->angleInteractions.end()){
+        size_t index = iter - d->angleInteractions.begin();
+
+        return d->angleInteractionTypes[index];
+    }
+
+    return 0;
+}
+
 void Topology::addTorsionInteraction(size_t i, size_t j, size_t k, size_t l)
 {
     TorsionInteraction interaction;
@@ -204,6 +283,7 @@ void Topology::addTorsionInteraction(size_t i, size_t j, size_t k, size_t l)
     interaction[2] = k;
     interaction[3] = l;
     d->torsionInteractions.push_back(interaction);
+    d->torsionInteractionTypes.push_back(0);
 }
 
 Topology::TorsionInteractionRange Topology::torsionInteractions() const
@@ -215,6 +295,53 @@ Topology::TorsionInteractionRange Topology::torsionInteractions() const
 size_t Topology::torsionInteractionCount() const
 {
     return d->torsionInteractions.size();
+}
+
+void Topology::setTorsionInteractionType(size_t i, size_t j, size_t k, size_t l, int type)
+{
+    TorsionInteraction interaction;
+    interaction[0] = i;
+    interaction[1] = j;
+    interaction[2] = k;
+    interaction[3] = l;
+
+    TorsionInteractionRange::const_iterator iter =
+        boost::find(d->torsionInteractions, interaction);
+
+    if(iter != d->torsionInteractions.end()){
+        size_t index = iter - d->torsionInteractions.begin();
+
+        d->torsionInteractionTypes[index] = type;
+    }
+}
+
+int Topology::torsionInteractionType(size_t i, size_t j, size_t k, size_t l) const
+{
+    TorsionInteraction interaction;
+    interaction[0] = i;
+    interaction[1] = j;
+    interaction[2] = k;
+    interaction[3] = l;
+
+    TorsionInteractionRange::const_iterator iter =
+        boost::find(d->torsionInteractions, interaction);
+
+    if(iter == d->torsionInteractions.end()){
+        interaction[0] = l;
+        interaction[1] = k;
+        interaction[2] = j;
+        interaction[3] = i;
+
+        iter = boost::find(d->torsionInteractions, interaction);
+    }
+
+    if(iter != d->torsionInteractions.end()){
+        size_t index = iter - d->torsionInteractions.begin();
+
+        return d->torsionInteractionTypes[index];
+    }
+
+    return 0;
 }
 
 void Topology::addImproperTorsionInteraction(size_t i, size_t j, size_t k, size_t l)
