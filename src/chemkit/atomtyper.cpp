@@ -116,6 +116,34 @@ std::string AtomTyper::typeString(const Atom *atom) const
     return type(atom).toString();
 }
 
+// --- Interaction Types --------------------------------------------------- //
+int AtomTyper::bondedInteractionType(const Atom *a, const Atom *b) const
+{
+    CHEMKIT_UNUSED(a);
+    CHEMKIT_UNUSED(b);
+
+    return 0;
+}
+
+int AtomTyper::angleInteractionType(const Atom *a, const Atom *b, const Atom *c) const
+{
+    CHEMKIT_UNUSED(a);
+    CHEMKIT_UNUSED(b);
+    CHEMKIT_UNUSED(c);
+
+    return 0;
+}
+
+int AtomTyper::torsionInteractionType(const Atom *a, const Atom *b, const Atom *c, const Atom *d) const
+{
+    CHEMKIT_UNUSED(a);
+    CHEMKIT_UNUSED(b);
+    CHEMKIT_UNUSED(c);
+    CHEMKIT_UNUSED(d);
+
+    return 0;
+}
+
 // --- Predicates ---------------------------------------------------------- //
 /// Returns \c true if \p atom is a carbon in a carbonyl group.
 bool AtomTyper::isCarbonylCarbon(const Atom *atom)

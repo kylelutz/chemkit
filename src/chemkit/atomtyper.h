@@ -66,6 +66,11 @@ public:
     virtual int typeNumber(const Atom *atom) const;
     virtual std::string typeString(const Atom *atom) const;
 
+    // interaction types
+    virtual int bondedInteractionType(const Atom *a, const Atom *b) const;
+    virtual int angleInteractionType(const Atom *a, const Atom *b, const Atom *c) const;
+    virtual int torsionInteractionType(const Atom *a, const Atom *b, const Atom *c, const Atom *d) const;
+
     // predicates
     static bool isCarbonylCarbon(const Atom *atom);
     static bool isCarbonylOxygen(const Atom *atom);
