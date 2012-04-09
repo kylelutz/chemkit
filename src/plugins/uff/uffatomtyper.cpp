@@ -36,6 +36,7 @@
 #include "uffatomtyper.h"
 
 #include <chemkit/atom.h>
+#include <chemkit/bond.h>
 #include <chemkit/molecule.h>
 
 // --- Construction and Destruction ---------------------------------------- //
@@ -72,6 +73,23 @@ void UffAtomTyper::setMolecule(const chemkit::Molecule *molecule)
 std::string UffAtomTyper::typeString(const chemkit::Atom *atom) const
 {
     return m_types[atom->index()];
+}
+
+// --- Interaction Types --------------------------------------------------- //
+int UffAtomTyper::bondedInteractionType(const chemkit::Atom *a,
+                                        const chemkit::Atom *b) const
+{
+    const chemkit::Bond *bond = a->bondTo(b);
+
+    std::string typeA = typeString(a);
+    std::string typeB = typeString(b);
+
+    if((typeA.length() > 2 && typeA[2] == 'R') && (typeB.length() > 2 && typeB[2] == 'R')){
+        return Resonant;
+    }
+    else{
+        return bond->order();
+    }
 }
 
 // --- Internal Methods ---------------------------------------------------- //

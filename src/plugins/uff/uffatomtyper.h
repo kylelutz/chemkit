@@ -41,6 +41,14 @@
 class UffAtomTyper : public chemkit::AtomTyper
 {
 public:
+    // enumerations
+    enum BondedInteractionType {
+        Single = 1,
+        Double = 2,
+        Triple = 3,
+        Resonant = 15
+    };
+
     // construction and destruction
     UffAtomTyper(const chemkit::Molecule *molecule = 0);
     ~UffAtomTyper();
@@ -50,6 +58,9 @@ public:
 
     // types
     std::string typeString(const chemkit::Atom *atom) const CHEMKIT_OVERRIDE;
+
+    // interaction types
+    int bondedInteractionType(const chemkit::Atom *a, const chemkit::Atom *b) const CHEMKIT_OVERRIDE;
 
 private:
     std::string atomType(const chemkit::Atom *atom) const;
