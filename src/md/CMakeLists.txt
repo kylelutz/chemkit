@@ -15,6 +15,7 @@ set(HEADERS
   md.h
   moleculegeometryoptimizer.h
   topology.h
+  topologybuilder.h
   trajectory.h
   trajectoryframe.h
 )
@@ -27,6 +28,7 @@ set(SOURCES
   md.cpp
   moleculegeometryoptimizer.cpp
   topology.cpp
+  topologybuilder.cpp
   trajectory.cpp
   trajectoryframe.cpp
 )
