@@ -295,7 +295,7 @@ std::vector<ForceFieldCalculation *> ForceField::calculations() const
 }
 
 /// Returns the number of calculations in the force field.
-int ForceField::calculationCount() const
+size_t ForceField::calculationCount() const
 {
     return d->calculations.size();
 }

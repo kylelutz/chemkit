@@ -93,7 +93,7 @@ public:
 
     // calculations
     std::vector<ForceFieldCalculation *> calculations() const;
-    int calculationCount() const;
+    size_t calculationCount() const;
     virtual Real energy(const CartesianCoordinates *coordinates) const;
     boost::shared_future<Real> energyAsync(const CartesianCoordinates *coordinates) const;
     std::vector<Vector3> gradient(const CartesianCoordinates *coordinates) const;
