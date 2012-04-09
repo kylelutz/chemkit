@@ -458,6 +458,11 @@ void MmffAtomTyper::setMolecule(const chemkit::Molecule *molecule)
 }
 
 // --- Types --------------------------------------------------------------- //
+chemkit::Variant MmffAtomTyper::type(const chemkit::Atom *atom) const
+{
+    return m_types[atom->index()];
+}
+
 int MmffAtomTyper::typeNumber(const chemkit::Atom *atom) const
 {
     return m_types[atom->index()];

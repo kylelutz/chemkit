@@ -52,6 +52,7 @@ public:
     void setMolecule(const chemkit::Molecule *molecule) CHEMKIT_OVERRIDE;
 
     // types
+    chemkit::Variant type(const chemkit::Atom *atom) const CHEMKIT_OVERRIDE;
     int typeNumber(const chemkit::Atom *atom) const CHEMKIT_OVERRIDE;
 
     // charges
