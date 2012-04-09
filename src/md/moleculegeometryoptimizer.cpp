@@ -43,7 +43,6 @@
 #include <chemkit/cartesiancoordinates.h>
 
 #include "forcefield.h"
-#include "forcefieldatom.h"
 
 namespace chemkit {
 
@@ -171,8 +170,9 @@ bool MoleculeGeometryOptimizer::setup()
         return false;
     }
 
-    d->forceField->setMolecule(d->molecule);
+    d->coordinates = *d->molecule->coordinates();
 
+    d->forceField->setTopologyFromMolecule(d->molecule);
     if(!d->forceField->setup()){
         d->errorString = "Failed to setup force field.";
         return false;
@@ -208,7 +208,7 @@ bool MoleculeGeometryOptimizer::step()
         CartesianCoordinates initialCoordinates = d->coordinates;
 
         // move each atom against its gradient
-        for(int atomIndex = 0; atomIndex < d->forceField->atomCount(); atomIndex++){
+        for(size_t atomIndex = 0; atomIndex < d->forceField->size(); atomIndex++){
             d->coordinates[atomIndex] += -gradient[atomIndex] * step;
         }
 
@@ -220,7 +220,7 @@ bool MoleculeGeometryOptimizer::step()
         // positions and then 'wiggle' each atom by one
         // Angstrom in a random direction
         if((boost::math::isnan)(finalEnergy)){
-            for(int atomIndex = 0; atomIndex < d->forceField->atomCount(); atomIndex++){
+            for(size_t atomIndex = 0; atomIndex < d->forceField->size(); atomIndex++){
                 Point3 position = initialCoordinates.position(atomIndex);
                 position += Vector3::Random().normalized();
                 d->coordinates.setPosition(atomIndex, position);

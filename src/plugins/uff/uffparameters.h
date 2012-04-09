@@ -36,7 +36,9 @@
 #ifndef UFFPARAMETERS_H
 #define UFFPARAMETERS_H
 
-#include <chemkit/forcefieldatom.h>
+#include <string>
+
+#include <chemkit/chemkit.h>
 
 struct UffAtomParameters {
     const char *type;
@@ -61,7 +63,7 @@ public:
     ~UffParameters();
 
     // parameters
-    const UffAtomParameters* parameters(const chemkit::ForceFieldAtom *atom) const;
+    const UffAtomParameters* parameters(const std::string &type) const;
 };
 
 #endif // UFFPARAMETERS_H

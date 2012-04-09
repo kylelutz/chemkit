@@ -47,13 +47,12 @@
 #include <chemkit/point3.h>
 #include <chemkit/vector3.h>
 
-#include "forcefieldatom.h"
 #include "forcefieldcalculation.h"
 
 namespace chemkit {
 
-class Atom;
 class Molecule;
+class Topology;
 class ForceFieldPrivate;
 class CartesianCoordinates;
 
@@ -71,18 +70,14 @@ public:
     // properties
     std::string name() const;
     int flags() const;
-    int size() const;
-    std::vector<ForceFieldAtom *> atoms() const;
-    int atomCount() const;
-    ForceFieldAtom* atom(int index) const;
-    ForceFieldAtom* atom(const Atom *atom) const;
+    size_t size() const;
 
     // setup
-    void setMolecule(const Molecule *molecule);
-    const Molecule* molecule() const;
+    void setTopology(const boost::shared_ptr<Topology> &topology);
+    void setTopologyFromMolecule(const Molecule *molecule);
+    boost::shared_ptr<Topology> topology() const;
     virtual bool setup();
     bool isSetup() const;
-    virtual void clear();
 
     // parameters
     void setParameterSet(const std::string &name);
@@ -110,8 +105,6 @@ public:
 protected:
     ForceField(const std::string &name);
     void setFlags(int flags);
-    void addAtom(ForceFieldAtom *atom);
-    void removeAtom(ForceFieldAtom *atom);
     void addCalculation(ForceFieldCalculation *calculation);
     void removeCalculation(ForceFieldCalculation *calculation);
     void setCalculationSetup(ForceFieldCalculation *calculation, bool setup);

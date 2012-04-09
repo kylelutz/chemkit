@@ -52,7 +52,7 @@ protected:
 class OplsBondStrechCalculation : public OplsCalculation
 {
 public:
-    OplsBondStrechCalculation(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b);
+    OplsBondStrechCalculation(size_t a, size_t b);
 
     bool setup(const OplsParameters *parameters);
     chemkit::Real energy(const chemkit::CartesianCoordinates *coordinates) const CHEMKIT_OVERRIDE;
@@ -62,7 +62,7 @@ public:
 class OplsAngleBendCalculation : public OplsCalculation
 {
 public:
-    OplsAngleBendCalculation(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b, const chemkit::ForceFieldAtom *c);
+    OplsAngleBendCalculation(size_t a, size_t b, size_t c);
 
     bool setup(const OplsParameters *parameters);
     chemkit::Real energy(const chemkit::CartesianCoordinates *coordinates) const CHEMKIT_OVERRIDE;
@@ -72,7 +72,7 @@ public:
 class OplsTorsionCalculation : public OplsCalculation
 {
 public:
-    OplsTorsionCalculation(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b, const chemkit::ForceFieldAtom *c, const chemkit::ForceFieldAtom *d);
+    OplsTorsionCalculation(size_t a, size_t b, size_t c, size_t d);
 
     bool setup(const OplsParameters *parameters);
     chemkit::Real energy(const chemkit::CartesianCoordinates *coordinates) const CHEMKIT_OVERRIDE;
@@ -82,7 +82,7 @@ public:
 class OplsNonbondedCalculation : public OplsCalculation
 {
 public:
-    OplsNonbondedCalculation(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b);
+    OplsNonbondedCalculation(size_t a, size_t b);
 
     bool setup(const OplsParameters *parameters);
     chemkit::Real energy(const chemkit::CartesianCoordinates *coordinates) const CHEMKIT_OVERRIDE;

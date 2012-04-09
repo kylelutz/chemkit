@@ -47,20 +47,16 @@
 
 #include "mmffforcefield.h"
 
-#include "mmffatom.h"
 #include "mmffatomtyper.h"
 #include "mmffparameters.h"
 #include "mmffcalculation.h"
 #include "mmffpartialchargepredictor.h"
 
-#include <chemkit/atom.h>
-#include <chemkit/bond.h>
-#include <chemkit/ring.h>
 #include <chemkit/plugin.h>
 #include <chemkit/foreach.h>
 #include <chemkit/molecule.h>
+#include <chemkit/topology.h>
 #include <chemkit/pluginmanager.h>
-#include <chemkit/forcefieldinteractions.h>
 
 // --- Construction and Destruction ---------------------------------------- //
 MmffForceField::MmffForceField()
@@ -82,23 +78,6 @@ MmffForceField::~MmffForceField()
     delete m_parameters;
 }
 
-// --- Atoms --------------------------------------------------------------- //
-MmffAtom* MmffForceField::atom(const chemkit::Atom *atom)
-{
-    foreach(chemkit::ForceFieldAtom *forceFieldAtom, atoms()){
-        if(forceFieldAtom->atom() == atom){
-            return static_cast<MmffAtom *>(forceFieldAtom);
-        }
-    }
-
-    return 0;
-}
-
-const MmffAtom* MmffForceField::atom(const chemkit::Atom *atom) const
-{
-    return const_cast<MmffForceField *>(this)->atom(atom);
-}
-
 // --- Parameterization ---------------------------------------------------- //
 bool MmffForceField::setup()
 {
@@ -113,85 +92,55 @@ bool MmffForceField::setup()
         }
     }
 
-    const chemkit::Molecule *molecule = this->molecule();
-    if(!molecule){
+    const boost::shared_ptr<chemkit::Topology> &topology = this->topology();
+    if(!topology){
         return false;
     }
 
-    MmffAtomTyper typer(molecule);
-
-    // add atoms
-    foreach(const chemkit::Atom *atom, molecule->atoms()){
-        MmffAtom *mmffAtom = new MmffAtom(this, atom);
-        addAtom(mmffAtom);
-        mmffAtom->setType(typer.typeNumber(atom), typer.formalCharge(atom));
-    }
-
-    // setup atom charges
-    MmffPartialChargePredictor partialCharges;
-    partialCharges.setAtomTyper(&typer);
-    partialCharges.setMolecule(molecule);
-
-    foreach(chemkit::ForceFieldAtom *atom, atoms()){
-        atom->setCharge(partialCharges.partialCharge(atom->atom()));
-    }
-
-    // add calculations
-    chemkit::ForceFieldInteractions interactions(molecule, this);
-
     // bond strech calculations
-    std::pair<const chemkit::ForceFieldAtom *, const chemkit::ForceFieldAtom *> bondedPair;
-    foreach(bondedPair, interactions.bondedPairs()){
-        const MmffAtom *a = static_cast<const MmffAtom *>(bondedPair.first);
-        const MmffAtom *b = static_cast<const MmffAtom *>(bondedPair.second);
+    foreach(const chemkit::Topology::BondedInteraction &interaction, topology->bondedInteractions()){
+        size_t a = interaction[0];
+        size_t b = interaction[1];
 
         addCalculation(new MmffBondStrechCalculation(a, b));
     }
 
     // angle bend and strech bend calculations
-    std::vector<const chemkit::ForceFieldAtom *> angleGroup;
-    foreach(angleGroup, interactions.angleGroups()){
-        const MmffAtom *a = static_cast<const MmffAtom *>(angleGroup[0]);
-        const MmffAtom *b = static_cast<const MmffAtom *>(angleGroup[1]);
-        const MmffAtom *c = static_cast<const MmffAtom *>(angleGroup[2]);
+    foreach(const chemkit::Topology::AngleInteraction &interaction, topology->angleInteractions()){
+        size_t a = interaction[0];
+        size_t b = interaction[1];
+        size_t c = interaction[2];
 
         addCalculation(new MmffAngleBendCalculation(a, b, c));
         addCalculation(new MmffStrechBendCalculation(a, b, c));
     }
 
     // out of plane bending calculation (for each trigonal center)
-    foreach(const chemkit::Atom *atom, molecule->atoms()){
-        if(atom->neighborCount() == 3){
-            std::vector<chemkit::Atom *> neighbors(atom->neighbors().begin(),
-                                                   atom->neighbors().end());
+    foreach(const chemkit::Topology::ImproperTorsionInteraction &interaction, topology->improperTorsionInteractions()){
+        size_t a = interaction[0];
+        size_t b = interaction[1];
+        size_t c = interaction[2];
+        size_t d = interaction[3];
 
-            const MmffAtom *a = this->atom(neighbors[0]);
-            const MmffAtom *b = this->atom(atom);
-            const MmffAtom *c = this->atom(neighbors[1]);
-            const MmffAtom *d = this->atom(neighbors[2]);
-
-            addCalculation(new MmffOutOfPlaneBendingCalculation(a, b, c, d));
-            addCalculation(new MmffOutOfPlaneBendingCalculation(a, b, d, c));
-            addCalculation(new MmffOutOfPlaneBendingCalculation(c, b, d, a));
-        }
+        addCalculation(new MmffOutOfPlaneBendingCalculation(a, b, c, d));
+        addCalculation(new MmffOutOfPlaneBendingCalculation(a, b, d, c));
+        addCalculation(new MmffOutOfPlaneBendingCalculation(c, b, d, a));
     }
 
     // torsion calculations (for each dihedral)
-    std::vector<const chemkit::ForceFieldAtom *> torsionGroup;
-    foreach(torsionGroup, interactions.torsionGroups()){
-        const MmffAtom *a = static_cast<const MmffAtom *>(torsionGroup[0]);
-        const MmffAtom *b = static_cast<const MmffAtom *>(torsionGroup[1]);
-        const MmffAtom *c = static_cast<const MmffAtom *>(torsionGroup[2]);
-        const MmffAtom *d = static_cast<const MmffAtom *>(torsionGroup[3]);
+    foreach(const chemkit::Topology::TorsionInteraction &interaction, topology->torsionInteractions()){
+        size_t a = interaction[0];
+        size_t b = interaction[1];
+        size_t c = interaction[2];
+        size_t d = interaction[3];
 
         addCalculation(new MmffTorsionCalculation(a, b, c, d));
     }
 
     // van der waals and electrostatic calculations
-    std::pair<const chemkit::ForceFieldAtom *, const chemkit::ForceFieldAtom *> nonbondedPair;
-    foreach(nonbondedPair, interactions.nonbondedPairs()){
-        const MmffAtom *a = static_cast<const MmffAtom *>(nonbondedPair.first);
-        const MmffAtom *b = static_cast<const MmffAtom *>(nonbondedPair.second);
+    foreach(const chemkit::Topology::NonbondedInteraction &interaction, topology->nonbondedInteractions()){
+        size_t a = interaction[0];
+        size_t b = interaction[1];
 
         addCalculation(new MmffVanDerWaalsCalculation(a, b));
         addCalculation(new MmffElectrostaticCalculation(a, b));

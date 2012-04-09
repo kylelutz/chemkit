@@ -40,6 +40,7 @@
 #include <boost/range/algorithm.hpp>
 
 #include <chemkit/molecule.h>
+#include <chemkit/topology.h>
 #include <chemkit/atomtyper.h>
 #include <chemkit/forcefield.h>
 #include <chemkit/moleculefile.h>
@@ -86,7 +87,8 @@ void MmffTest::validate()
     QCOMPARE(expectedMolecule.tagName(), QString("molecule"));
 
     // validate molecules
-    QList<chemkit::ForceField *> failedMolecules;
+    QList<chemkit::Molecule *> failedMolecules;
+    QList<chemkit::ForceField *> failedForceFields;
     foreach(const boost::shared_ptr<chemkit::Molecule> &molecule, dataFile.molecules()){
         bool failed = false;
 
@@ -94,34 +96,36 @@ void MmffTest::validate()
         QByteArray name = expectedMolecule.attribute("name").toAscii();
         QCOMPARE(name.constData(), molecule->name().c_str());
 
-        // create mmff force field
+        // create force field
         chemkit::ForceField *forceField = chemkit::ForceField::create("mmff");
         QVERIFY(forceField);
 
-        // add molecule and setup force field
-        forceField->setMolecule(molecule.get());
+        // setup force field
+        forceField->setTopologyFromMolecule(molecule.get());
         bool setup = forceField->setup();
         if(!setup){
             //failed = true;
         }
 
         // verify atoms
-        int atomCount = forceField->atomCount();
-        int expectedAtomCount = expectedMolecule.attribute("atomCount").toInt();
+        size_t atomCount = molecule->atomCount();
+        size_t expectedAtomCount = expectedMolecule.attribute("atomCount").toInt();
         if(atomCount != expectedAtomCount){
             failed = true;
         }
 
         QDomElement expectedAtom = expectedMolecule.firstChildElement();
         QCOMPARE(expectedAtom.tagName(), QString("atom"));
-        foreach(const chemkit::ForceFieldAtom *forceFieldAtom, forceField->atoms()){
-            std::string type = forceFieldAtom->type();
+
+        boost::shared_ptr<chemkit::Topology> topology = forceField->topology();
+        for(size_t i = 0; i < topology->size(); i++){
+            std::string type = topology->type(i);
             QByteArray expectedType = expectedAtom.attribute("type").toAscii();
             if(type != expectedType.constData()){
                 failed = true;
             }
 
-            double charge = forceFieldAtom->charge();
+            double charge = topology->charge(i);
             double expectedCharge = expectedAtom.attribute("charge").toDouble();
             double chargeDifference = std::abs(charge - expectedCharge);
             if(chargeDifference > 0.1){
@@ -143,7 +147,8 @@ void MmffTest::validate()
         expectedMolecule = expectedMolecule.nextSiblingElement();
 
         if(failed){
-            failedMolecules.append(forceField);
+            failedForceFields.append(forceField);
+            failedMolecules.append(molecule.get());
         }
         else{
             delete forceField;
@@ -151,25 +156,27 @@ void MmffTest::validate()
     }
 
     // write actual results file if any molecules failed
-    if(failedMolecules.size() > 0){
+    if(failedForceFields.size() > 0){
         QFile actualFile("mmff94.actual");
         actualFile.open(QFile::WriteOnly);
 
         actualFile.write("<molecules>\n");
 
-        foreach(chemkit::ForceField *forceField, failedMolecules){
-            const chemkit::Molecule *molecule = forceField->molecule();
+        for(int i = 0; i < failedForceFields.size(); i++){
+            chemkit::ForceField *forceField = failedForceFields[i];
+            const chemkit::Molecule *molecule = failedMolecules[i];
 
             actualFile.write(QString("  <molecule name=\"%1\" energy=\"%2\" atomCount=\"%3\">\n")
                                 .arg(molecule->name().c_str())
                                 .arg(forceField->energy(molecule->coordinates()))
-                                .arg(forceField->atomCount())
+                                .arg(forceField->size())
                                 .toAscii());
 
-            foreach(const chemkit::ForceFieldAtom *forceFieldAtom, forceField->atoms()){
+            boost::shared_ptr<chemkit::Topology> topology = forceField->topology();
+            for(size_t atomIndex = 0; atomIndex < topology->size(); atomIndex++){
                 actualFile.write(QString("    <atom type=\"%1\" charge=\"%2\"/>\n")
-                                    .arg(forceFieldAtom->type().c_str())
-                                    .arg(forceFieldAtom->charge())
+                                    .arg(topology->type(atomIndex).c_str())
+                                    .arg(topology->charge(atomIndex))
                                     .toAscii());
             }
 

@@ -42,6 +42,7 @@
 #include <boost/range/algorithm.hpp>
 
 #include <chemkit/molecule.h>
+#include <chemkit/topology.h>
 #include <chemkit/atomtyper.h>
 #include <chemkit/forcefield.h>
 #include <chemkit/moleculefile.h>
@@ -66,7 +67,6 @@ void OplsTest::energy_data()
     QTest::newRow("water") << "water.mol" << "H2O" << 1.8698;
     QTest::newRow("methanol") << "methanol.sdf" << "CH4O" << 5.6693;
     QTest::newRow("ethanol") << "ethanol.cml" << "C2H6O" << 1.2309;
-
 }
 
 void OplsTest::energy()
@@ -86,7 +86,7 @@ void OplsTest::energy()
     chemkit::ForceField *opls = chemkit::ForceField::create("opls");
     QVERIFY(opls != 0);
 
-    opls->setMolecule(molecule.get());
+    opls->setTopologyFromMolecule(molecule.get());
     bool setup = opls->setup();
     QVERIFY(setup == true);
 

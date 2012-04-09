@@ -35,8 +35,6 @@
 
 #include "uffparameters.h"
 
-#include <chemkit/forcefieldatom.h>
-
 namespace {
 
 const UffAtomParameters AtomParameters[] = {
@@ -183,10 +181,10 @@ UffParameters::~UffParameters()
 }
 
 // --- Parameters ---------------------------------------------------------- //
-const UffAtomParameters* UffParameters::parameters(const chemkit::ForceFieldAtom *atom) const
+const UffAtomParameters* UffParameters::parameters(const std::string &type) const
 {
     for(int i = 0; i < AtomParametersCount; i++){
-        if(atom->type() == AtomParameters[i].type){
+        if(type == AtomParameters[i].type){
             return &AtomParameters[i];
         }
     }

@@ -49,7 +49,6 @@ public:
 
     // parameterization
     bool setup();
-    bool setupMolecule(const chemkit::Molecule *molecule);
 
 private:
     OplsParameters *m_parameters;

@@ -37,8 +37,8 @@
 
 #include "amberparameters.h"
 
+#include <chemkit/topology.h>
 #include <chemkit/constants.h>
-#include <chemkit/forcefieldatom.h>
 #include <chemkit/cartesiancoordinates.h>
 
 // === AmberCalculation ==================================================== //
@@ -48,8 +48,7 @@ AmberCalculation::AmberCalculation(int type, int atomCount, int parameterCount)
 }
 
 // === AmberBondCalculation ================================================ //
-AmberBondCalculation::AmberBondCalculation(const chemkit::ForceFieldAtom *a,
-                                           const chemkit::ForceFieldAtom *b)
+AmberBondCalculation::AmberBondCalculation(size_t a, size_t b)
     : AmberCalculation(BondStrech, 2, 2)
 {
     setAtom(0, a);
@@ -58,10 +57,10 @@ AmberBondCalculation::AmberBondCalculation(const chemkit::ForceFieldAtom *a,
 
 bool AmberBondCalculation::setup(const AmberParameters *parameters)
 {
-    const chemkit::ForceFieldAtom *a = atom(0);
-    const chemkit::ForceFieldAtom *b = atom(1);
+    std::string typeA = atomType(0);
+    std::string typeB = atomType(1);
 
-    const AmberBondParameters *bondParameters = parameters->bondParameters(a, b);
+    const AmberBondParameters *bondParameters = parameters->bondParameters(typeA, typeB);
     if(!bondParameters){
         return false;
     }
@@ -74,8 +73,8 @@ bool AmberBondCalculation::setup(const AmberParameters *parameters)
 
 chemkit::Real AmberBondCalculation::energy(const chemkit::CartesianCoordinates *coordinates) const
 {
-    size_t a = atom(0)->index();
-    size_t b = atom(1)->index();
+    size_t a = atom(0);
+    size_t b = atom(1);
 
     chemkit::Real kb = parameter(0);
     chemkit::Real r0 = parameter(1);
@@ -87,8 +86,8 @@ chemkit::Real AmberBondCalculation::energy(const chemkit::CartesianCoordinates *
 
 std::vector<chemkit::Vector3> AmberBondCalculation::gradient(const chemkit::CartesianCoordinates *coordinates) const
 {
-    size_t a = atom(0)->index();
-    size_t b = atom(1)->index();
+    size_t a = atom(0);
+    size_t b = atom(1);
 
     chemkit::Real kb = parameter(0);
     chemkit::Real r0 = parameter(1);
@@ -106,9 +105,7 @@ std::vector<chemkit::Vector3> AmberBondCalculation::gradient(const chemkit::Cart
 }
 
 // === AmberAngleCalculation =============================================== //
-AmberAngleCalculation::AmberAngleCalculation(const chemkit::ForceFieldAtom *a,
-                                             const chemkit::ForceFieldAtom *b,
-                                             const chemkit::ForceFieldAtom *c)
+AmberAngleCalculation::AmberAngleCalculation(size_t a, size_t b, size_t c)
     : AmberCalculation(AngleBend, 3, 2)
 {
     setAtom(0, a);
@@ -118,11 +115,11 @@ AmberAngleCalculation::AmberAngleCalculation(const chemkit::ForceFieldAtom *a,
 
 bool AmberAngleCalculation::setup(const AmberParameters *parameters)
 {
-    const chemkit::ForceFieldAtom *a = atom(0);
-    const chemkit::ForceFieldAtom *b = atom(1);
-    const chemkit::ForceFieldAtom *c = atom(2);
+    std::string typeA = atomType(0);
+    std::string typeB = atomType(1);
+    std::string typeC = atomType(2);
 
-    const AmberAngleParameters *angleParameters = parameters->angleParameters(a, b, c);
+    const AmberAngleParameters *angleParameters = parameters->angleParameters(typeA, typeB, typeC);
     if(!angleParameters){
         return false;
     }
@@ -135,9 +132,9 @@ bool AmberAngleCalculation::setup(const AmberParameters *parameters)
 
 chemkit::Real AmberAngleCalculation::energy(const chemkit::CartesianCoordinates *coordinates) const
 {
-    size_t a = atom(0)->index();
-    size_t b = atom(1)->index();
-    size_t c = atom(2)->index();
+    size_t a = atom(0);
+    size_t b = atom(1);
+    size_t c = atom(2);
 
     chemkit::Real ka = parameter(0);
     chemkit::Real theta0 = parameter(1);
@@ -149,9 +146,9 @@ chemkit::Real AmberAngleCalculation::energy(const chemkit::CartesianCoordinates 
 
 std::vector<chemkit::Vector3> AmberAngleCalculation::gradient(const chemkit::CartesianCoordinates *coordinates) const
 {
-    size_t a = atom(0)->index();
-    size_t b = atom(1)->index();
-    size_t c = atom(2)->index();
+    size_t a = atom(0);
+    size_t b = atom(1);
+    size_t c = atom(2);
 
     chemkit::Real ka = parameter(0);
     chemkit::Real theta0 = parameter(1);
@@ -170,10 +167,7 @@ std::vector<chemkit::Vector3> AmberAngleCalculation::gradient(const chemkit::Car
 }
 
 // === AmberTorsionCalculation ============================================= //
-AmberTorsionCalculation::AmberTorsionCalculation(const chemkit::ForceFieldAtom *a,
-                                                 const chemkit::ForceFieldAtom *b,
-                                                 const chemkit::ForceFieldAtom *c,
-                                                 const chemkit::ForceFieldAtom *d)
+AmberTorsionCalculation::AmberTorsionCalculation(size_t a, size_t b, size_t c, size_t d)
     : AmberCalculation(Torsion, 4, 8)
 {
     setAtom(0, a);
@@ -184,12 +178,15 @@ AmberTorsionCalculation::AmberTorsionCalculation(const chemkit::ForceFieldAtom *
 
 bool AmberTorsionCalculation::setup(const AmberParameters *parameters)
 {
-    const chemkit::ForceFieldAtom *a = atom(0);
-    const chemkit::ForceFieldAtom *b = atom(1);
-    const chemkit::ForceFieldAtom *c = atom(2);
-    const chemkit::ForceFieldAtom *d = atom(3);
+    std::string typeA = atomType(0);
+    std::string typeB = atomType(1);
+    std::string typeC = atomType(2);
+    std::string typeD = atomType(3);
 
-    const AmberTorsionParameters *torsionParameters = parameters->torsionParameters(a, b, c, d);
+    const AmberTorsionParameters *torsionParameters = parameters->torsionParameters(typeA,
+                                                                                    typeB,
+                                                                                    typeC,
+                                                                                    typeD);
     if(!torsionParameters){
         return false;
     }
@@ -208,10 +205,10 @@ bool AmberTorsionCalculation::setup(const AmberParameters *parameters)
 
 chemkit::Real AmberTorsionCalculation::energy(const chemkit::CartesianCoordinates *coordinates) const
 {
-    size_t a = atom(0)->index();
-    size_t b = atom(1)->index();
-    size_t c = atom(2)->index();
-    size_t d = atom(3)->index();
+    size_t a = atom(0);
+    size_t b = atom(1);
+    size_t c = atom(2);
+    size_t d = atom(3);
 
     chemkit::Real V1 = parameter(0);
     chemkit::Real V2 = parameter(1);
@@ -235,10 +232,10 @@ chemkit::Real AmberTorsionCalculation::energy(const chemkit::CartesianCoordinate
 
 std::vector<chemkit::Vector3> AmberTorsionCalculation::gradient(const chemkit::CartesianCoordinates *coordinates) const
 {
-    size_t a = atom(0)->index();
-    size_t b = atom(1)->index();
-    size_t c = atom(2)->index();
-    size_t d = atom(3)->index();
+    size_t a = atom(0);
+    size_t b = atom(1);
+    size_t c = atom(2);
+    size_t d = atom(3);
 
     chemkit::Real V1 = parameter(0);
     chemkit::Real V2 = parameter(1);
@@ -270,8 +267,7 @@ std::vector<chemkit::Vector3> AmberTorsionCalculation::gradient(const chemkit::C
 }
 
 // === AmberNonbondedCalculation =========================================== //
-AmberNonbondedCalculation::AmberNonbondedCalculation(const chemkit::ForceFieldAtom *a,
-                                                     const chemkit::ForceFieldAtom *b)
+AmberNonbondedCalculation::AmberNonbondedCalculation(size_t a, size_t b)
     : AmberCalculation(VanDerWaals | Electrostatic, 2, 2)
 {
     setAtom(0, a);
@@ -280,11 +276,11 @@ AmberNonbondedCalculation::AmberNonbondedCalculation(const chemkit::ForceFieldAt
 
 bool AmberNonbondedCalculation::setup(const AmberParameters *parameters)
 {
-    const chemkit::ForceFieldAtom *a = atom(0);
-    const chemkit::ForceFieldAtom *b = atom(1);
+    std::string typeA = atomType(0);
+    std::string typeB = atomType(1);
 
-    const struct AmberNonbondedParameters *parametersA = parameters->nonbondedParameters(a);
-    const struct AmberNonbondedParameters *parametersB = parameters->nonbondedParameters(b);
+    const struct AmberNonbondedParameters *parametersA = parameters->nonbondedParameters(typeA);
+    const struct AmberNonbondedParameters *parametersB = parameters->nonbondedParameters(typeB);
     if(!parametersA || !parametersB){
         return false;
     }
@@ -300,29 +296,31 @@ bool AmberNonbondedCalculation::setup(const AmberParameters *parameters)
 
 chemkit::Real AmberNonbondedCalculation::energy(const chemkit::CartesianCoordinates *coordinates) const
 {
-    size_t a = atom(0)->index();
-    size_t b = atom(1)->index();
+    size_t a = atom(0);
+    size_t b = atom(1);
 
     chemkit::Real epsilon = parameter(0);
     chemkit::Real sigma = parameter(1);
+    chemkit::Real qa = topology()->charge(a);
+    chemkit::Real qb = topology()->charge(b);
     chemkit::Real r = coordinates->distance(a, b);
     chemkit::Real e0 = 1;
 
     chemkit::Real vanDerWaalsTerm = epsilon * (pow(sigma/r, 12) - 2 * pow(sigma/r, 6));
-    chemkit::Real electrostaticTerm = (atom(0)->charge() * atom(1)->charge()) / (4.0 * chemkit::constants::Pi * e0 * r);
+    chemkit::Real electrostaticTerm = (qa * qb) / (4.0 * chemkit::constants::Pi * e0 * r);
 
     return vanDerWaalsTerm + electrostaticTerm;
 }
 
 std::vector<chemkit::Vector3> AmberNonbondedCalculation::gradient(const chemkit::CartesianCoordinates *coordinates) const
 {
-    size_t a = atom(0)->index();
-    size_t b = atom(1)->index();
+    size_t a = atom(0);
+    size_t b = atom(1);
 
     chemkit::Real epsilon = parameter(0);
     chemkit::Real sigma = parameter(1);
-    chemkit::Real qa = atom(0)->charge();
-    chemkit::Real qb = atom(1)->charge();
+    chemkit::Real qa = topology()->charge(a);
+    chemkit::Real qb = topology()->charge(b);
     chemkit::Real e0 = 1;
     chemkit::Real pi = chemkit::constants::Pi;
 

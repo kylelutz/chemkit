@@ -48,15 +48,15 @@ public:
     virtual bool setup() = 0;
 
 protected:
-    chemkit::Real bondOrder(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b) const;
+    chemkit::Real bondOrder(size_t a,  size_t b) const;
     chemkit::Real bondLength(const UffAtomParameters *a, const UffAtomParameters *b, chemkit::Real bondOrder) const;
-    const UffAtomParameters* parameters(const chemkit::ForceFieldAtom *atom) const;
+    const UffAtomParameters* parameters(const std::string &type) const;
 };
 
 class UffBondStrechCalculation : public UffCalculation
 {
 public:
-    UffBondStrechCalculation(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b);
+    UffBondStrechCalculation(size_t a, size_t b);
 
     bool setup();
     chemkit::Real energy(const chemkit::CartesianCoordinates *coordinates) const CHEMKIT_OVERRIDE;
@@ -66,7 +66,7 @@ public:
 class UffAngleBendCalculation : public UffCalculation
 {
 public:
-    UffAngleBendCalculation(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b, const chemkit::ForceFieldAtom *c);
+    UffAngleBendCalculation(size_t a, size_t b, size_t c);
 
     bool setup();
     chemkit::Real energy(const chemkit::CartesianCoordinates *coordinates) const CHEMKIT_OVERRIDE;
@@ -76,7 +76,7 @@ public:
 class UffTorsionCalculation : public UffCalculation
 {
 public:
-    UffTorsionCalculation(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b, const chemkit::ForceFieldAtom *c, const chemkit::ForceFieldAtom *d);
+    UffTorsionCalculation(size_t a, size_t b, size_t c, size_t d);
 
     bool setup();
     chemkit::Real energy(const chemkit::CartesianCoordinates *coordinates) const CHEMKIT_OVERRIDE;
@@ -86,7 +86,7 @@ public:
 class UffInversionCalculation : public UffCalculation
 {
 public:
-    UffInversionCalculation(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b, const chemkit::ForceFieldAtom *c, const chemkit::ForceFieldAtom *d);
+    UffInversionCalculation(size_t a, size_t b, size_t c, size_t d);
 
     bool setup();
     chemkit::Real energy(const chemkit::CartesianCoordinates *coordinates) const CHEMKIT_OVERRIDE;
@@ -96,7 +96,7 @@ public:
 class UffVanDerWaalsCalculation : public UffCalculation
 {
 public:
-    UffVanDerWaalsCalculation(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b);
+    UffVanDerWaalsCalculation(size_t a, size_t b);
 
     bool setup();
     chemkit::Real energy(const chemkit::CartesianCoordinates *coordinates) const CHEMKIT_OVERRIDE;
@@ -106,7 +106,7 @@ public:
 class UffElectrostaticCalculation : public UffCalculation
 {
 public:
-    UffElectrostaticCalculation(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b);
+    UffElectrostaticCalculation(size_t a, size_t b);
 
     bool setup();
     chemkit::Real energy(const chemkit::CartesianCoordinates *coordinates) const CHEMKIT_OVERRIDE;

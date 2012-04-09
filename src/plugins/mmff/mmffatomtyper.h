@@ -56,6 +56,11 @@ public:
     chemkit::Variant type(const chemkit::Atom *atom) const CHEMKIT_OVERRIDE;
     int typeNumber(const chemkit::Atom *atom) const CHEMKIT_OVERRIDE;
 
+    // interaction types
+    int bondedInteractionType(const chemkit::Atom *a, const chemkit::Atom *b) const CHEMKIT_OVERRIDE;
+    int angleInteractionType(const chemkit::Atom *a, const chemkit::Atom *b, const chemkit::Atom *c) const CHEMKIT_OVERRIDE;
+    int torsionInteractionType(const chemkit::Atom *a, const chemkit::Atom *b, const chemkit::Atom *c, const chemkit::Atom *d) const CHEMKIT_OVERRIDE;
+
     // charges
     chemkit::Real formalCharge(int index) const;
     chemkit::Real formalCharge(const chemkit::Atom *atom) const;

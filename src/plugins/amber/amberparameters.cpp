@@ -35,7 +35,7 @@
 
 #include "amberparameters.h"
 
-#include <chemkit/forcefieldatom.h>
+#include <cstring>
 
 namespace {
 
@@ -634,13 +634,13 @@ AmberParameters::~AmberParameters()
 }
 
 // --- Parameters ---------------------------------------------------------- //
-const AmberBondParameters* AmberParameters::bondParameters(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b) const
+const AmberBondParameters* AmberParameters::bondParameters(const std::string &typeA, const std::string &typeB) const
 {
     for(int i = 0; i < BondParametersCount; i++){
         const struct BondParameters *parameters = &BondParameters[i];
 
-        if((a->type() == parameters->typeA && b->type() == parameters->typeB) ||
-           (a->type() == parameters->typeB && (b->type() == parameters->typeA))){
+        if((typeA == parameters->typeA && typeB == parameters->typeB) ||
+           (typeA == parameters->typeB && (typeB == parameters->typeA))){
             return &parameters->parameters;
         }
     }
@@ -648,14 +648,14 @@ const AmberBondParameters* AmberParameters::bondParameters(const chemkit::ForceF
     return 0;
 }
 
-const AmberAngleParameters* AmberParameters::angleParameters(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b, const chemkit::ForceFieldAtom *c) const
+const AmberAngleParameters* AmberParameters::angleParameters(const std::string &typeA, const std::string &typeB, const std::string &typeC) const
 {
     for(int i = 0; i < AngleParametersCount; i++){
         const struct AngleParameters *parameters = &AngleParameters[i];
 
-        if(b->type() == parameters->typeB){
-            if((a->type() == parameters->typeA && c->type() == parameters->typeC) ||
-               (a->type() == parameters->typeC && c->type() == parameters->typeA)){
+        if(typeB == parameters->typeB){
+            if((typeA == parameters->typeA && typeC == parameters->typeC) ||
+               (typeA == parameters->typeC && typeC == parameters->typeA)){
                 return &parameters->parameters;
             }
         }
@@ -664,21 +664,13 @@ const AmberAngleParameters* AmberParameters::angleParameters(const chemkit::Forc
     return 0;
 }
 
-const AmberTorsionParameters* AmberParameters::torsionParameters(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b, const chemkit::ForceFieldAtom *c, const chemkit::ForceFieldAtom *d) const
+const AmberTorsionParameters* AmberParameters::torsionParameters(const std::string &typeA, const std::string &typeB, const std::string &typeC, const std::string &typeD) const
 {
-    std::string typeA = a->type();
-    std::string typeB = b->type();
-    std::string typeC = c->type();
-    std::string typeD = d->type();
-
-    if(typeB > typeC){
-        std::swap(typeB, typeC);
-    }
-
     for(int i = 0; i < TorsionParametersCount; i++){
         const struct TorsionParameters *parameters = &TorsionParameters[i];
 
-        if(typeB == parameters->typeB && typeC == parameters->typeC){
+        if((typeB == parameters->typeB && typeC == parameters->typeC) ||
+           (typeC == parameters->typeB && typeB == parameters->typeC)){
             if(strcmp("X", parameters->typeA) == 0){
                 return &parameters->parameters;
             }
@@ -692,12 +684,12 @@ const AmberTorsionParameters* AmberParameters::torsionParameters(const chemkit::
     return 0;
 }
 
-const AmberNonbondedParameters* AmberParameters::nonbondedParameters(const chemkit::ForceFieldAtom *atom) const
+const AmberNonbondedParameters* AmberParameters::nonbondedParameters(const std::string &type) const
 {
     for(int i = 0; i < NonbondedParametersCount; i++){
         const struct NonbondedParameters *parameters = &NonbondedParameters[i];
 
-        if(atom->type() == parameters->type){
+        if(type == parameters->type){
             return &parameters->parameters;
         }
     }

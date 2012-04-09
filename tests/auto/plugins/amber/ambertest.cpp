@@ -39,10 +39,10 @@
 
 #include <chemkit/atom.h>
 #include <chemkit/molecule.h>
+#include <chemkit/topology.h>
 #include <chemkit/atomtyper.h>
 #include <chemkit/forcefield.h>
 #include <chemkit/moleculefile.h>
-#include <chemkit/forcefieldatom.h>
 #include <chemkit/moleculardescriptor.h>
 
 const std::string dataPath = "../../../data/";
@@ -70,44 +70,44 @@ void AmberTest::adenosine()
     chemkit::ForceField *forceField = chemkit::ForceField::create("amber");
     QVERIFY(forceField != 0);
 
-    forceField->setMolecule(molecule.get());
+    forceField->setTopologyFromMolecule(molecule.get());
     forceField->setup();
     QVERIFY(forceField->isSetup());
 
-    QCOMPARE(forceField->atomCount(), 32);
-    const std::vector<chemkit::ForceFieldAtom *> &atoms = forceField->atoms();
-    QCOMPARE(atoms[0]->type(), std::string("CT"));
-    QCOMPARE(atoms[1]->type(), std::string("OS"));
-    QCOMPARE(atoms[2]->type(), std::string("CT"));
-    QCOMPARE(atoms[3]->type(), std::string("CT"));
-    QCOMPARE(atoms[4]->type(), std::string("OH"));
-    QCOMPARE(atoms[5]->type(), std::string("CT"));
-    QCOMPARE(atoms[6]->type(), std::string("OH"));
-    QCOMPARE(atoms[7]->type(), std::string("CT"));
-    QCOMPARE(atoms[8]->type(), std::string("OH"));
-    QCOMPARE(atoms[9]->type(), std::string("N*"));
-    QCOMPARE(atoms[10]->type(), std::string("CK"));
-    QCOMPARE(atoms[11]->type(), std::string("NB"));
-    QCOMPARE(atoms[12]->type(), std::string("CB"));
-    QCOMPARE(atoms[13]->type(), std::string("CB"));
-    QCOMPARE(atoms[14]->type(), std::string("NC"));
-    QCOMPARE(atoms[15]->type(), std::string("CQ"));
-    QCOMPARE(atoms[16]->type(), std::string("NC"));
-    QCOMPARE(atoms[17]->type(), std::string("CA"));
-    QCOMPARE(atoms[18]->type(), std::string("N2"));
-    QCOMPARE(atoms[19]->type(), std::string("H2"));
-    QCOMPARE(atoms[20]->type(), std::string("H1"));
-    QCOMPARE(atoms[21]->type(), std::string("H1"));
-    QCOMPARE(atoms[22]->type(), std::string("HO"));
-    QCOMPARE(atoms[23]->type(), std::string("H1"));
-    QCOMPARE(atoms[24]->type(), std::string("HO"));
-    QCOMPARE(atoms[25]->type(), std::string("H1"));
-    QCOMPARE(atoms[26]->type(), std::string("H1"));
-    QCOMPARE(atoms[27]->type(), std::string("HO"));
-    QCOMPARE(atoms[28]->type(), std::string("H5"));
-    QCOMPARE(atoms[29]->type(), std::string("H5"));
-    QCOMPARE(atoms[30]->type(), std::string("H"));
-    QCOMPARE(atoms[31]->type(), std::string("H"));
+    boost::shared_ptr<chemkit::Topology> topology = forceField->topology();
+    QCOMPARE(topology->size(), size_t(32));
+    QCOMPARE(topology->type(0), std::string("CT"));
+    QCOMPARE(topology->type(1), std::string("OS"));
+    QCOMPARE(topology->type(2), std::string("CT"));
+    QCOMPARE(topology->type(3), std::string("CT"));
+    QCOMPARE(topology->type(4), std::string("OH"));
+    QCOMPARE(topology->type(5), std::string("CT"));
+    QCOMPARE(topology->type(6), std::string("OH"));
+    QCOMPARE(topology->type(7), std::string("CT"));
+    QCOMPARE(topology->type(8), std::string("OH"));
+    QCOMPARE(topology->type(9), std::string("N*"));
+    QCOMPARE(topology->type(10), std::string("CK"));
+    QCOMPARE(topology->type(11), std::string("NB"));
+    QCOMPARE(topology->type(12), std::string("CB"));
+    QCOMPARE(topology->type(13), std::string("CB"));
+    QCOMPARE(topology->type(14), std::string("NC"));
+    QCOMPARE(topology->type(15), std::string("CQ"));
+    QCOMPARE(topology->type(16), std::string("NC"));
+    QCOMPARE(topology->type(17), std::string("CA"));
+    QCOMPARE(topology->type(18), std::string("N2"));
+    QCOMPARE(topology->type(19), std::string("H2"));
+    QCOMPARE(topology->type(20), std::string("H1"));
+    QCOMPARE(topology->type(21), std::string("H1"));
+    QCOMPARE(topology->type(22), std::string("HO"));
+    QCOMPARE(topology->type(23), std::string("H1"));
+    QCOMPARE(topology->type(24), std::string("HO"));
+    QCOMPARE(topology->type(25), std::string("H1"));
+    QCOMPARE(topology->type(26), std::string("H1"));
+    QCOMPARE(topology->type(27), std::string("HO"));
+    QCOMPARE(topology->type(28), std::string("H5"));
+    QCOMPARE(topology->type(29), std::string("H5"));
+    QCOMPARE(topology->type(30), std::string("H"));
+    QCOMPARE(topology->type(31), std::string("H"));
 
     QCOMPARE(forceField->calculationCount(), size_t(585));
     QCOMPARE(qRound(forceField->energy(molecule->coordinates())), 1460);
@@ -133,26 +133,26 @@ void AmberTest::serine()
     chemkit::ForceField *forceField = chemkit::ForceField::create("amber");
     QVERIFY(forceField != 0);
 
-    forceField->setMolecule(molecule.get());
+    forceField->setTopologyFromMolecule(molecule.get());
     forceField->setup();
     QVERIFY(forceField->isSetup());
 
-    QCOMPARE(forceField->atomCount(), 14);
-    const std::vector<chemkit::ForceFieldAtom *> &atoms = forceField->atoms();
-    QCOMPARE(atoms[0]->type(), std::string("N3"));
-    QCOMPARE(atoms[1]->type(), std::string("CT"));
-    QCOMPARE(atoms[2]->type(), std::string("H"));
-    QCOMPARE(atoms[3]->type(), std::string("HP"));
-    QCOMPARE(atoms[4]->type(), std::string("C"));
-    QCOMPARE(atoms[5]->type(), std::string("CT"));
-    QCOMPARE(atoms[6]->type(), std::string("H1"));
-    QCOMPARE(atoms[7]->type(), std::string("H1"));
-    QCOMPARE(atoms[8]->type(), std::string("OH"));
-    QCOMPARE(atoms[9]->type(), std::string("HO"));
-    QCOMPARE(atoms[10]->type(), std::string("O2"));
-    QCOMPARE(atoms[11]->type(), std::string("O2"));
-    QCOMPARE(atoms[12]->type(), std::string("H"));
-    QCOMPARE(atoms[13]->type(), std::string("H"));
+    boost::shared_ptr<chemkit::Topology> topology = forceField->topology();
+    QCOMPARE(topology->size(), size_t(14));
+    QCOMPARE(topology->type(0), std::string("N3"));
+    QCOMPARE(topology->type(1), std::string("CT"));
+    QCOMPARE(topology->type(2), std::string("H"));
+    QCOMPARE(topology->type(3), std::string("HP"));
+    QCOMPARE(topology->type(4), std::string("C"));
+    QCOMPARE(topology->type(5), std::string("CT"));
+    QCOMPARE(topology->type(6), std::string("H1"));
+    QCOMPARE(topology->type(7), std::string("H1"));
+    QCOMPARE(topology->type(8), std::string("OH"));
+    QCOMPARE(topology->type(9), std::string("HO"));
+    QCOMPARE(topology->type(10), std::string("O2"));
+    QCOMPARE(topology->type(11), std::string("O2"));
+    QCOMPARE(topology->type(12), std::string("H"));
+    QCOMPARE(topology->type(13), std::string("H"));
 
     QCOMPARE(forceField->calculationCount(), size_t(118));
     QCOMPARE(qRound(forceField->energy(molecule->coordinates())), 322);
@@ -178,14 +178,15 @@ void AmberTest::water()
     chemkit::ForceField *forceField = chemkit::ForceField::create("amber");
     QVERIFY(forceField != 0);
 
-    forceField->setMolecule(&water);
+    forceField->setTopologyFromMolecule(&water);
     forceField->setup();
     QVERIFY(forceField->isSetup());
 
-    QCOMPARE(forceField->atomCount(), 3);
-    QCOMPARE(forceField->atoms()[0]->type(), std::string("OW"));
-    QCOMPARE(forceField->atoms()[1]->type(), std::string("HW"));
-    QCOMPARE(forceField->atoms()[2]->type(), std::string("HW"));
+    boost::shared_ptr<chemkit::Topology> topology = forceField->topology();
+    QCOMPARE(topology->size(), size_t(3));
+    QCOMPARE(topology->type(0), std::string("OW"));
+    QCOMPARE(topology->type(1), std::string("HW"));
+    QCOMPARE(topology->type(2), std::string("HW"));
 
     QCOMPARE(forceField->calculationCount(), size_t(3));
 

@@ -41,6 +41,7 @@
 #include <chemkit/foreach.h>
 #include <chemkit/molecule.h>
 
+#include "mmffparameters.h"
 #include "mmffaromaticitymodel.h"
 
 namespace {
@@ -466,6 +467,118 @@ chemkit::Variant MmffAtomTyper::type(const chemkit::Atom *atom) const
 int MmffAtomTyper::typeNumber(const chemkit::Atom *atom) const
 {
     return m_types[atom->index()];
+}
+
+// --- Interaction Types --------------------------------------------------- //
+int MmffAtomTyper::bondedInteractionType(const chemkit::Atom *a,
+                                         const chemkit::Atom *b) const
+{
+    const chemkit::Bond *bond = a->bondTo(b);
+
+    int typeA = typeNumber(a);
+    int typeB = typeNumber(b);
+
+    return MmffParameters::calculateBondType(bond, typeA, typeB);
+}
+
+int MmffAtomTyper::angleInteractionType(const chemkit::Atom *a,
+                                        const chemkit::Atom *b,
+                                        const chemkit::Atom *c) const
+{
+    int bondTypeAB = bondedInteractionType(a, b);
+    int bondTypeBC = bondedInteractionType(b, c);
+    int bondTypeSum = bondTypeAB + bondTypeBC;
+
+    bool inThreeMemberedRing = false;
+    bool inFourMemberedRing = false;
+
+    if(a->isBondedTo(c)){
+        inThreeMemberedRing = true;
+    }
+    else{
+        foreach(const chemkit::Atom *neighbor, a->neighbors()){
+            if(neighbor == b){
+                continue;
+            }
+
+            if(neighbor->isBondedTo(c)){
+                inFourMemberedRing = true;
+            }
+        }
+    }
+
+    if(inThreeMemberedRing){
+        if(bondTypeSum == 1){
+            return 5;
+        }
+        else if(bondTypeSum == 2){
+            return 6;
+        }
+        else{
+            return 3;
+        }
+    }
+    else if(inFourMemberedRing){
+        if(bondTypeSum == 1){
+            return 7;
+        }
+        else if(bondTypeSum == 2){
+            return 8;
+        }
+        else{
+            return 4;
+        }
+    }
+    else if(bondTypeSum == 1){
+        return 1;
+    }
+    else if(bondTypeSum == 2){
+        return 2;
+    }
+    else{
+        return 0;
+    }
+}
+
+int MmffAtomTyper::torsionInteractionType(const chemkit::Atom *a,
+                                          const chemkit::Atom *b,
+                                          const chemkit::Atom *c,
+                                          const chemkit::Atom *d) const
+{
+    int bondTypeAB = bondedInteractionType(a, b);
+    int bondTypeBC = bondedInteractionType(b, c);
+    int bondTypeCD = bondedInteractionType(c, d);
+
+    bool inFourMemberedRing = false;
+    bool inFiveMemberedRing = false;
+
+    if(a->isBondedTo(d)){
+        inFourMemberedRing = true;
+    }
+
+    foreach(const chemkit::Ring *ring, a->rings()){
+        if(ring->size() == 5){
+            if(ring->contains(b) && ring->contains(c) && ring->contains(d)){
+                inFiveMemberedRing = true;
+            }
+        }
+    }
+
+    if(inFourMemberedRing){
+        return 4;
+    }
+    else if(inFiveMemberedRing){
+        return 5;
+    }
+    else if(bondTypeBC == 1){
+        return 1;
+    }
+    else if(bondTypeAB == 1 || bondTypeCD == 1){
+        return 2;
+    }
+    else{
+        return 0;
+    }
 }
 
 // --- Charges ------------------------------------------------------------- //

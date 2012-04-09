@@ -37,6 +37,7 @@
 
 #include <boost/lexical_cast.hpp>
 
+#include <chemkit/topology.h>
 #include <chemkit/constants.h>
 #include <chemkit/cartesiancoordinates.h>
 
@@ -47,7 +48,7 @@ OplsCalculation::OplsCalculation(int type, int atomCount, int parameterCount)
 }
 
 // === OplsBondStrechCalculation =========================================== //
-OplsBondStrechCalculation::OplsBondStrechCalculation(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b)
+OplsBondStrechCalculation::OplsBondStrechCalculation(size_t a, size_t b)
     : OplsCalculation(BondStrech, 2, 2)
 {
     setAtom(0, a);
@@ -56,11 +57,8 @@ OplsBondStrechCalculation::OplsBondStrechCalculation(const chemkit::ForceFieldAt
 
 bool OplsBondStrechCalculation::setup(const OplsParameters *parameters)
 {
-    const chemkit::ForceFieldAtom *a = atom(0);
-    const chemkit::ForceFieldAtom *b = atom(1);
-
-    int typeA = boost::lexical_cast<int>(a->type());
-    int typeB = boost::lexical_cast<int>(b->type());
+    int typeA = boost::lexical_cast<int>(atomType(0));
+    int typeB = boost::lexical_cast<int>(atomType(1));
 
     const OplsBondStrechParameters *p = parameters->bondStrechParameters(typeA, typeB);
     if(!p){
@@ -75,8 +73,8 @@ bool OplsBondStrechCalculation::setup(const OplsParameters *parameters)
 
 chemkit::Real OplsBondStrechCalculation::energy(const chemkit::CartesianCoordinates *coordinates) const
 {
-    size_t a = atom(0)->index();
-    size_t b = atom(1)->index();
+    size_t a = atom(0);
+    size_t b = atom(1);
 
     chemkit::Real kb = parameter(0);
     chemkit::Real r0 = parameter(1);
@@ -88,8 +86,8 @@ chemkit::Real OplsBondStrechCalculation::energy(const chemkit::CartesianCoordina
 
 std::vector<chemkit::Vector3> OplsBondStrechCalculation::gradient(const chemkit::CartesianCoordinates *coordinates) const
 {
-    size_t a = atom(0)->index();
-    size_t b = atom(1)->index();
+    size_t a = atom(0);
+    size_t b = atom(1);
 
     chemkit::Real kb = parameter(0);
     chemkit::Real r0 = parameter(1);
@@ -108,7 +106,7 @@ std::vector<chemkit::Vector3> OplsBondStrechCalculation::gradient(const chemkit:
 }
 
 // === OplsAngleBendCalculation ============================================ //
-OplsAngleBendCalculation::OplsAngleBendCalculation(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b, const chemkit::ForceFieldAtom *c)
+OplsAngleBendCalculation::OplsAngleBendCalculation(size_t a, size_t b, size_t c)
     : OplsCalculation(AngleBend, 3, 2)
 {
     setAtom(0, a);
@@ -118,13 +116,9 @@ OplsAngleBendCalculation::OplsAngleBendCalculation(const chemkit::ForceFieldAtom
 
 bool OplsAngleBendCalculation::setup(const OplsParameters *parameters)
 {
-    const chemkit::ForceFieldAtom *a = atom(0);
-    const chemkit::ForceFieldAtom *b = atom(1);
-    const chemkit::ForceFieldAtom *c = atom(2);
-
-    int typeA = boost::lexical_cast<int>(a->type());
-    int typeB = boost::lexical_cast<int>(b->type());
-    int typeC = boost::lexical_cast<int>(c->type());
+    int typeA = boost::lexical_cast<int>(atomType(0));
+    int typeB = boost::lexical_cast<int>(atomType(1));
+    int typeC = boost::lexical_cast<int>(atomType(2));
 
     const OplsAngleBendParameters *p = parameters->angleBendParameters(typeA, typeB, typeC);
     if(!p){
@@ -139,9 +133,9 @@ bool OplsAngleBendCalculation::setup(const OplsParameters *parameters)
 
 chemkit::Real OplsAngleBendCalculation::energy(const chemkit::CartesianCoordinates *coordinates) const
 {
-    size_t a = atom(0)->index();
-    size_t b = atom(1)->index();
-    size_t c = atom(2)->index();
+    size_t a = atom(0);
+    size_t b = atom(1);
+    size_t c = atom(2);
 
     chemkit::Real ka = parameter(0);
     chemkit::Real theta0 = parameter(1);
@@ -153,9 +147,9 @@ chemkit::Real OplsAngleBendCalculation::energy(const chemkit::CartesianCoordinat
 
 std::vector<chemkit::Vector3> OplsAngleBendCalculation::gradient(const chemkit::CartesianCoordinates *coordinates) const
 {
-    size_t a = atom(0)->index();
-    size_t b = atom(1)->index();
-    size_t c = atom(2)->index();
+    size_t a = atom(0);
+    size_t b = atom(1);
+    size_t c = atom(2);
 
     chemkit::Real ka = parameter(0);
     chemkit::Real theta0 = parameter(1);
@@ -175,7 +169,7 @@ std::vector<chemkit::Vector3> OplsAngleBendCalculation::gradient(const chemkit::
 }
 
 // === OplsTorsionCalculation ============================================== //
-OplsTorsionCalculation::OplsTorsionCalculation(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b, const chemkit::ForceFieldAtom *c, const chemkit::ForceFieldAtom *d)
+OplsTorsionCalculation::OplsTorsionCalculation(size_t a, size_t b, size_t c, size_t d)
     : OplsCalculation(Torsion, 4, 3)
 {
     setAtom(0, a);
@@ -186,15 +180,10 @@ OplsTorsionCalculation::OplsTorsionCalculation(const chemkit::ForceFieldAtom *a,
 
 bool OplsTorsionCalculation::setup(const OplsParameters *parameters)
 {
-    const chemkit::ForceFieldAtom *a = atom(0);
-    const chemkit::ForceFieldAtom *b = atom(1);
-    const chemkit::ForceFieldAtom *c = atom(2);
-    const chemkit::ForceFieldAtom *d = atom(3);
-
-    int typeA = boost::lexical_cast<int>(a->type());
-    int typeB = boost::lexical_cast<int>(b->type());
-    int typeC = boost::lexical_cast<int>(c->type());
-    int typeD = boost::lexical_cast<int>(d->type());
+    int typeA = boost::lexical_cast<int>(atomType(0));
+    int typeB = boost::lexical_cast<int>(atomType(1));
+    int typeC = boost::lexical_cast<int>(atomType(2));
+    int typeD = boost::lexical_cast<int>(atomType(3));
 
     const OplsTorsionParameters *p = parameters->torsionParameters(typeA, typeB, typeC, typeD);
     if(!p){
@@ -210,10 +199,10 @@ bool OplsTorsionCalculation::setup(const OplsParameters *parameters)
 
 chemkit::Real OplsTorsionCalculation::energy(const chemkit::CartesianCoordinates *coordinates) const
 {
-    size_t a = atom(0)->index();
-    size_t b = atom(1)->index();
-    size_t c = atom(2)->index();
-    size_t d = atom(3)->index();
+    size_t a = atom(0);
+    size_t b = atom(1);
+    size_t c = atom(2);
+    size_t d = atom(3);
 
     chemkit::Real v1 = parameter(0);
     chemkit::Real v2 = parameter(1);
@@ -226,10 +215,10 @@ chemkit::Real OplsTorsionCalculation::energy(const chemkit::CartesianCoordinates
 
 std::vector<chemkit::Vector3> OplsTorsionCalculation::gradient(const chemkit::CartesianCoordinates *coordinates) const
 {
-    size_t a = atom(0)->index();
-    size_t b = atom(1)->index();
-    size_t c = atom(2)->index();
-    size_t d = atom(3)->index();
+    size_t a = atom(0);
+    size_t b = atom(1);
+    size_t c = atom(2);
+    size_t d = atom(3);
 
     chemkit::Real v1 = parameter(0);
     chemkit::Real v2 = parameter(1);
@@ -251,7 +240,7 @@ std::vector<chemkit::Vector3> OplsTorsionCalculation::gradient(const chemkit::Ca
 }
 
 // === OplsNonbondedCalculation ============================================ //
-OplsNonbondedCalculation::OplsNonbondedCalculation(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b)
+OplsNonbondedCalculation::OplsNonbondedCalculation(size_t a, size_t b)
     : OplsCalculation(VanDerWaals | Electrostatic, 2, 5)
 {
     setAtom(0, a);
@@ -260,11 +249,8 @@ OplsNonbondedCalculation::OplsNonbondedCalculation(const chemkit::ForceFieldAtom
 
 bool OplsNonbondedCalculation::setup(const OplsParameters *parameters)
 {
-    const chemkit::ForceFieldAtom *a = atom(0);
-    const chemkit::ForceFieldAtom *b = atom(1);
-
-    int typeA = boost::lexical_cast<int>(a->type());
-    int typeB = boost::lexical_cast<int>(b->type());
+    int typeA = boost::lexical_cast<int>(atomType(0));
+    int typeB = boost::lexical_cast<int>(atomType(1));
 
     const OplsVanDerWaalsParameters *pa = parameters->vanDerWaalsParameters(typeA);
     const OplsVanDerWaalsParameters *pb = parameters->vanDerWaalsParameters(typeB);
@@ -283,7 +269,7 @@ bool OplsNonbondedCalculation::setup(const OplsParameters *parameters)
     setParameter(3, epsilon);
 
     // one-four scaling
-    if(a->isOneFour(b)){
+    if(topology()->isOneFour(atom(0), atom(1))){
         setParameter(4, 0.5);
     }
     else{
@@ -295,8 +281,8 @@ bool OplsNonbondedCalculation::setup(const OplsParameters *parameters)
 
 chemkit::Real OplsNonbondedCalculation::energy(const chemkit::CartesianCoordinates *coordinates) const
 {
-    size_t a = atom(0)->index();
-    size_t b = atom(1)->index();
+    size_t a = atom(0);
+    size_t b = atom(1);
 
     chemkit::Real qa = parameter(0);
     chemkit::Real qb = parameter(1);
@@ -314,8 +300,8 @@ std::vector<chemkit::Vector3> OplsNonbondedCalculation::gradient(const chemkit::
 {
     std::vector<chemkit::Vector3> gradient(2);
 
-    size_t a = atom(0)->index();
-    size_t b = atom(1)->index();
+    size_t a = atom(0);
+    size_t b = atom(1);
 
     chemkit::Real qa = parameter(0);
     chemkit::Real qb = parameter(1);

@@ -39,9 +39,8 @@
 
 #include <chemkit/plugin.h>
 #include <chemkit/foreach.h>
-#include <chemkit/molecule.h>
+#include <chemkit/topology.h>
 #include <chemkit/pluginmanager.h>
-#include <chemkit/forcefieldinteractions.h>
 
 #include "oplsatomtyper.h"
 #include "oplsparameters.h"
@@ -68,69 +67,45 @@ OplsForceField::~OplsForceField()
 // --- Parameterization ---------------------------------------------------- //
 bool OplsForceField::setup()
 {
-    bool failed = false;
-
-    const chemkit::Molecule *molecule = this->molecule();
-    if(!molecule){
+    const boost::shared_ptr<chemkit::Topology> &topology = this->topology();
+    if(!topology){
         return false;
     }
 
-    if(!setupMolecule(molecule)){
-        failed = true;
+    foreach(const chemkit::Topology::BondedInteraction &interaction, topology->bondedInteractions()){
+        addCalculation(new OplsBondStrechCalculation(interaction[0],
+                                                     interaction[1]));
     }
 
-    if(!m_parameters){
-        return false;
+    foreach(const chemkit::Topology::AngleInteraction &interaction, topology->angleInteractions()){
+        addCalculation(new OplsAngleBendCalculation(interaction[0],
+                                                    interaction[1],
+                                                    interaction[2]));
     }
+
+    foreach(const chemkit::Topology::TorsionInteraction &interaction, topology->torsionInteractions()){
+        addCalculation(new OplsTorsionCalculation(interaction[0],
+                                                  interaction[1],
+                                                  interaction[2],
+                                                  interaction[3]));
+    }
+
+    foreach(const chemkit::Topology::NonbondedInteraction &interaction, topology->nonbondedInteractions()){
+        addCalculation(new OplsNonbondedCalculation(interaction[0],
+                                                    interaction[1]));
+    }
+
+    bool ok = true;
 
     foreach(chemkit::ForceFieldCalculation *calculation, calculations()){
         bool setup = static_cast<OplsCalculation *>(calculation)->setup(m_parameters);
 
         if(!setup){
-            failed = true;
+            ok = false;
         }
 
         setCalculationSetup(calculation, setup);
     }
 
-    return !failed;
-}
-
-bool OplsForceField::setupMolecule(const chemkit::Molecule *molecule)
-{
-    OplsAtomTyper typer(molecule);
-
-    foreach(const chemkit::Atom *atom, molecule->atoms()){
-        chemkit::ForceFieldAtom *forceFieldAtom = new chemkit::ForceFieldAtom(this, atom);
-        forceFieldAtom->setType(typer.typeString(atom).c_str());
-        addAtom(forceFieldAtom);
-    }
-
-    chemkit::ForceFieldInteractions interactions(molecule, this);
-
-    // bond strech pairs
-    std::pair<const chemkit::ForceFieldAtom *, const chemkit::ForceFieldAtom *> bondedPair;
-    foreach(bondedPair, interactions.bondedPairs()){
-        addCalculation(new OplsBondStrechCalculation(bondedPair.first, bondedPair.second));
-    }
-
-    // angle bend groups
-    std::vector<const chemkit::ForceFieldAtom *> angleGroup;
-    foreach(angleGroup, interactions.angleGroups()){
-        addCalculation(new OplsAngleBendCalculation(angleGroup[0], angleGroup[1], angleGroup[2]));
-    }
-
-    // torsion groups
-    std::vector<const chemkit::ForceFieldAtom *> torsionGroup;
-    foreach(torsionGroup, interactions.torsionGroups()){
-        addCalculation(new OplsTorsionCalculation(torsionGroup[0], torsionGroup[1], torsionGroup[2], torsionGroup[3]));
-    }
-
-    // nonbonded pairs
-    std::pair<const chemkit::ForceFieldAtom *, const chemkit::ForceFieldAtom *> nonbondedPair;
-    foreach(nonbondedPair, interactions.nonbondedPairs()){
-        addCalculation(new OplsNonbondedCalculation(nonbondedPair.first, nonbondedPair.second));
-    }
-
-    return true;
+    return ok;
 }

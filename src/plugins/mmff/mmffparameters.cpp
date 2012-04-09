@@ -41,14 +41,13 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/algorithm/string.hpp>
 
-#include "mmffatom.h"
 #include "mmffplugin.h"
+#include "mmffatomtyper.h"
 #include "mmffforcefield.h"
 #include "mmffparametersdata.h"
 
 #include <chemkit/atom.h>
 #include <chemkit/bond.h>
-#include <chemkit/ring.h>
 #include <chemkit/foreach.h>
 #include <chemkit/pluginmanager.h>
 
@@ -464,107 +463,8 @@ bool MmffParameters::read(const std::string &fileName)
     return true;
 }
 
-const MmffBondStrechParameters* MmffParameters::bondStrechParameters(const MmffAtom *a, const MmffAtom *b) const
+const MmffVanDerWaalsParameters* MmffParameters::vanDerWaalsParameters(int type) const
 {
-    int typeA = a->typeNumber();
-    int typeB = b->typeNumber();
-    int bondType = calculateBondType(a, b);
-
-    return bondStrechParameters(bondType, typeA, typeB);
-}
-
-const MmffAngleBendParameters* MmffParameters::angleBendParameters(const MmffAtom *a, const MmffAtom *b, const MmffAtom *c) const
-{
-    int typeA = std::min(a->typeNumber(), c->typeNumber());
-    int typeB = b->typeNumber();
-    int typeC = std::max(a->typeNumber(), c->typeNumber());
-    int angleType = calculateAngleType(a, b, c);
-
-    return angleBendParameters(angleType, typeA, typeB, typeC);
-}
-
-const MmffStrechBendParameters* MmffParameters::strechBendParameters(const MmffAtom *a, const MmffAtom *b, const MmffAtom *c) const
-{
-    int typeA = a->typeNumber();
-    int typeB = b->typeNumber();
-    int typeC = c->typeNumber();
-    int strechBendType = calculateStrechBendType(a, b, c);
-
-    return strechBendParameters(strechBendType, typeA, typeB, typeC);
-}
-
-const MmffStrechBendParameters* MmffParameters::defaultStrechBendParameters(const MmffAtom *a, const MmffAtom *b, const MmffAtom *c) const
-{
-    return defaultStrechBendParameters(a->period()-1, b->period()-1, c->period()-1);
-}
-
-const MmffOutOfPlaneBendingParameters* MmffParameters::outOfPlaneBendingParameters(const MmffAtom *a, const MmffAtom *b, const MmffAtom *c, const MmffAtom *d) const
-{
-    int typeA = a->typeNumber();
-    int typeB = b->typeNumber();
-    int typeC = c->typeNumber();
-    int typeD = d->typeNumber();
-
-    const MmffOutOfPlaneBendingParameters *parameters = outOfPlaneBendingParameters(typeA, typeB, typeC, typeD);
-    if(parameters)
-        return parameters;
-
-    // step down 3-2-3-3
-    parameters = outOfPlaneBendingParameters(equivalentType(a, 3), typeB, equivalentType(c, 3), equivalentType(d, 3));
-    if(parameters)
-        return parameters;
-
-    // step down 4-2-4-4
-    parameters = outOfPlaneBendingParameters(equivalentType(a, 4), typeB, equivalentType(c, 4), equivalentType(d, 4));
-    if(parameters)
-        return parameters;
-
-    // step down 5-2-5-5
-    parameters = outOfPlaneBendingParameters(equivalentType(a, 5), typeB, equivalentType(c, 5), equivalentType(d, 5));
-    if(parameters)
-        return parameters;
-
-    return 0;
-}
-
-const MmffTorsionParameters* MmffParameters::torsionParameters(const MmffAtom *a, const MmffAtom *b, const MmffAtom *c, const MmffAtom *d) const
-{
-    int typeA = a->typeNumber();
-    int typeB = b->typeNumber();
-    int typeC = c->typeNumber();
-    int typeD = d->typeNumber();
-    int torsionType = calculateTorsionType(a, b, c, d);
-
-    const MmffTorsionParameters *parameters = torsionParameters(torsionType, typeA, typeB, typeC, typeD);
-    if(parameters)
-        return parameters;
-
-    // step down 3-2-2-5
-    parameters = torsionParameters(torsionType, equivalentType(a, 3), typeB, typeC, equivalentType(d, 5));
-    if(parameters)
-        return parameters;
-
-    // step down 5-2-2-3
-    parameters = torsionParameters(torsionType, equivalentType(a, 5), typeB, typeC, equivalentType(d, 3));
-    if(parameters)
-        return parameters;
-
-    // step down 5-2-2-5
-    parameters = torsionParameters(torsionType, equivalentType(a, 5), typeB, typeC, equivalentType(d, 5));
-    if(parameters)
-        return parameters;
-
-    parameters = torsionParameters(0, equivalentType(a, 5), typeB, typeC, equivalentType(d, 5));
-    if(parameters)
-        return parameters;
-
-    return 0;
-}
-
-const MmffVanDerWaalsParameters* MmffParameters::vanDerWaalsParameters(const MmffAtom *atom) const
-{
-    int type = atom->typeNumber();
-
     return &d->vanDerWaalsParameters[type];
 }
 
@@ -574,11 +474,6 @@ const MmffAtomParameters* MmffParameters::atomParameters(int type) const
         return 0;
 
     return &AtomParameters[type-1];
-}
-
-const MmffAtomParameters* MmffParameters::atomParameters(const MmffAtom *atom) const
-{
-    return atomParameters(atom->typeNumber());
 }
 
 const MmffChargeParameters* MmffParameters::chargeParameters(const chemkit::Atom *a, int typeA, const chemkit::Atom *b, int typeB) const
@@ -596,22 +491,11 @@ const MmffChargeParameters* MmffParameters::chargeParameters(const chemkit::Atom
     return 0;
 }
 
-const MmffChargeParameters* MmffParameters::chargeParameters(const MmffAtom *a, const MmffAtom *b) const
-{
-    return chargeParameters(a->atom(), a->typeNumber(), b->atom(), b->typeNumber());
-}
-
 const MmffPartialChargeParameters* MmffParameters::partialChargeParameters(int type) const
 {
     return &d->partialChargeParameters[type];
 }
 
-const MmffPartialChargeParameters* MmffParameters::partialChargeParameters(const MmffAtom *atom) const
-{
-    return partialChargeParameters(atom->typeNumber());
-}
-
-// --- Internal Methods ---------------------------------------------------- //
 const MmffBondStrechParameters* MmffParameters::bondStrechParameters(int bondType, int typeA, int typeB) const
 {
     if(typeA > typeB)
@@ -662,8 +546,12 @@ const MmffStrechBendParameters* MmffParameters::strechBendParameters(int strechB
     return &iter->second;
 }
 
-const MmffStrechBendParameters* MmffParameters::defaultStrechBendParameters(int rowA, int rowB, int rowC) const
+const MmffStrechBendParameters* MmffParameters::defaultStrechBendParameters(int typeA, int typeB, int typeC) const
 {
+    int rowA = MmffAtomTyper::typeToElement(typeA).period() - 1;
+    int rowB = MmffAtomTyper::typeToElement(typeB).period() - 1;
+    int rowC = MmffAtomTyper::typeToElement(typeC).period() - 1;
+
     foreach(const MmffDefaultStrechBendParameters &parameters, d->defaultStrechBendParameters){
         if(parameters.rowA == rowA &&
            parameters.rowB == rowB &&
@@ -685,12 +573,34 @@ const MmffOutOfPlaneBendingParameters* MmffParameters::outOfPlaneBendingParamete
 
     int index = calculateOutOfPlaneBendingIndex(typeA, typeB, typeC, typeD);
 
-    std::map<int, MmffOutOfPlaneBendingParameters>::const_iterator iter = d->outOfPlaneBendingParameters.find(index);
-    if(iter == d->outOfPlaneBendingParameters.end()){
-        return 0;
+    std::map<int, MmffOutOfPlaneBendingParameters>::const_iterator iter;
+    iter = d->outOfPlaneBendingParameters.find(index);
+    if(iter != d->outOfPlaneBendingParameters.end()){
+        return &iter->second;
     }
 
-    return &iter->second;
+    // step down 3-2-3-3
+    index = calculateOutOfPlaneBendingIndex(equivalentType(typeA, 3), typeB, equivalentType(typeC, 3), equivalentType(typeD, 3));
+    iter = d->outOfPlaneBendingParameters.find(index);
+    if(iter != d->outOfPlaneBendingParameters.end()){
+        return &iter->second;
+    }
+
+    // step down 4-2-4-4
+    index = calculateOutOfPlaneBendingIndex(equivalentType(typeA, 4), typeB, equivalentType(typeC, 4), equivalentType(typeD, 4));
+    iter = d->outOfPlaneBendingParameters.find(index);
+    if(iter != d->outOfPlaneBendingParameters.end()){
+        return &iter->second;
+    }
+
+    // step down 5-2-5-5
+    index = calculateOutOfPlaneBendingIndex(equivalentType(typeA, 5), typeB, equivalentType(typeC, 5), equivalentType(typeD, 5));
+    iter = d->outOfPlaneBendingParameters.find(index);
+    if(iter != d->outOfPlaneBendingParameters.end()){
+        return &iter->second;
+    }
+
+    return 0;
 }
 
 const MmffTorsionParameters* MmffParameters::torsionParameters(int torsionType, int typeA, int typeB, int typeC, int typeD) const
@@ -705,27 +615,59 @@ const MmffTorsionParameters* MmffParameters::torsionParameters(int torsionType, 
 
     int index = calculateTorsionIndex(torsionType, typeA, typeB, typeC, typeD);
 
-    std::map<int, MmffTorsionParameters>::const_iterator iter = d->torsionParameters.find(index);
-    if(iter == d->torsionParameters.end()){
-        return 0;
+    std::map<int, MmffTorsionParameters>::const_iterator iter;
+    iter = d->torsionParameters.find(index);
+    if(iter != d->torsionParameters.end()){
+        return &iter->second;
     }
 
-    return &iter->second;
+    // step down 3-2-2-5
+    index = calculateTorsionIndex(torsionType, equivalentType(typeA, 3), typeB, typeC, equivalentType(typeD, 5));
+    iter = d->torsionParameters.find(index);
+    if(iter != d->torsionParameters.end()){
+        return &iter->second;
+    }
+
+    // step down 5-2-2-3
+    index = calculateTorsionIndex(torsionType, equivalentType(typeA, 5), typeB, typeC, equivalentType(typeD, 3));
+    iter = d->torsionParameters.find(index);
+    if(iter != d->torsionParameters.end()){
+        return &iter->second;
+    }
+
+    // step down 5-2-2-5
+    index = calculateTorsionIndex(torsionType, equivalentType(typeA, 5), typeB, typeC, equivalentType(typeD, 5));
+    iter = d->torsionParameters.find(index);
+    if(iter != d->torsionParameters.end()){
+        return &iter->second;
+    }
+
+    // step down 5-2-2-5 (with no torsion type)
+    index = calculateTorsionIndex(0, equivalentType(typeA, 5), typeB, typeC, equivalentType(typeD, 5));
+    iter = d->torsionParameters.find(index);
+    if(iter != d->torsionParameters.end()){
+        return &iter->second;
+    }
+
+    return 0;
 }
 
-int MmffParameters::calculateBondType(const chemkit::Bond *bond, int typeA, int typeB) const
+// --- Static Methods ------------------------------------------------------ //
+int MmffParameters::calculateBondType(const chemkit::Bond *bond, int typeA, int typeB)
 {
-    const MmffAtomParameters *pa = atomParameters(typeA);
-    const MmffAtomParameters *pb = atomParameters(typeB);
-    if(!pa || !pb){
+    MmffParameters parameters;
+    const MmffAtomParameters *parametersA = parameters.atomParameters(typeA);
+    const MmffAtomParameters *parametersB = parameters.atomParameters(typeB);
+
+    if(!parametersA || !parametersB){
         return 0;
     }
 
-    if(bond->order() == chemkit::Bond::Single && !m_aromaticityModel.isAromatic(bond)){
-        if(pa->sbmb && pb->sbmb){
+    if(bond->order() == chemkit::Bond::Single && !MmffAromaticityModel().isAromatic(bond)){
+        if(parametersA->sbmb && parametersB->sbmb){
             return 1;
         }
-        else if(pa->arom && pb->arom){
+        else if(parametersA->arom && parametersB->arom){
             return 1;
         }
     }
@@ -733,74 +675,8 @@ int MmffParameters::calculateBondType(const chemkit::Bond *bond, int typeA, int 
     return 0;
 }
 
-int MmffParameters::calculateBondType(const MmffAtom *a, const MmffAtom *b) const
+int MmffParameters::calculateStrechBendType(int bondTypeAB, int bondTypeBC, int angleType)
 {
-    const chemkit::Bond *bond = a->atom()->bondTo(b->atom());
-
-    return calculateBondType(bond, a->typeNumber(), b->typeNumber());
-}
-
-int MmffParameters::calculateAngleType(const MmffAtom *a, const MmffAtom *b, const MmffAtom *c) const
-{
-    int bondTypeAB = calculateBondType(a, b);
-    int bondTypeBC = calculateBondType(b, c);
-    int bondTypeSum = bondTypeAB + bondTypeBC;
-
-    bool inThreeMemberedRing = false;
-    bool inFourMemberedRing = false;
-
-    if(a->atom()->isBondedTo(c->atom())){
-        inThreeMemberedRing = true;
-    }
-    else{
-        foreach(const chemkit::Atom *neighbor, a->atom()->neighbors()){
-            if(neighbor == b->atom())
-                continue;
-
-            if(neighbor->isBondedTo(c->atom()))
-                inFourMemberedRing = true;
-        }
-    }
-
-    if(inThreeMemberedRing){
-        if(bondTypeSum == 1){
-            return 5;
-        }
-        else if(bondTypeSum == 2){
-            return 6;
-        }
-        else{
-            return 3;
-        }
-    }
-    else if(inFourMemberedRing){
-        if(bondTypeSum == 1){
-            return 7;
-        }
-        else if(bondTypeSum == 2){
-            return 8;
-        }
-        else{
-            return 4;
-        }
-    }
-    else if(bondTypeSum == 1){
-        return 1;
-    }
-    else if(bondTypeSum == 2){
-        return 2;
-    }
-    else{
-        return 0;
-    }
-}
-
-int MmffParameters::calculateStrechBendType(const MmffAtom *a, const MmffAtom *b, const MmffAtom *c) const
-{
-    int bondTypeAB = calculateBondType(a, b);
-    int bondTypeBC = calculateBondType(b, c);
-    int angleType = calculateAngleType(a, b, c);
-
     if(angleType == 0){
         return 0;
     }
@@ -857,55 +733,15 @@ int MmffParameters::calculateStrechBendType(const MmffAtom *a, const MmffAtom *b
     }
 }
 
-int MmffParameters::calculateTorsionType(const MmffAtom *a, const MmffAtom *b, const MmffAtom *c, const MmffAtom *d) const
-{
-    int bondTypeAB = calculateBondType(a, b);
-    int bondTypeBC = calculateBondType(b, c);
-    int bondTypeCD = calculateBondType(c, d);
-
-    bool inFourMemberedRing = false;
-    bool inFiveMemberedRing = false;
-
-    if(a->atom()->isBondedTo(d->atom())){
-        inFourMemberedRing = true;
-    }
-
-    foreach(const chemkit::Ring *ring, a->atom()->rings()){
-        if(ring->size() == 5){
-            if(ring->contains(b->atom()) && ring->contains(c->atom()) && ring->contains(d->atom())){
-                if(!m_aromaticityModel.isAromatic(ring)){
-                    inFiveMemberedRing = true;
-                    break;
-                }
-            }
-        }
-    }
-
-    if(inFourMemberedRing){
-        return 4;
-    }
-    else if(inFiveMemberedRing){
-        return 5;
-    }
-    else if(bondTypeBC == 1){
-        return 1;
-    }
-    else if(bondTypeAB == 1 || bondTypeCD == 1){
-        return 2;
-    }
-    else{
-        return 0;
-    }
-}
-
-int MmffParameters::equivalentType(const MmffAtom *atom, int level) const
+// --- Internal Methods ---------------------------------------------------- //
+int MmffParameters::equivalentType(int type, int level) const
 {
     if(level < 3){
-        return atom->typeNumber();
+        return type;
     }
 
     for(int i = 0; i < EquivalentTypesCount; i++){
-        if(EquivalentTypes[i][0] == atom->typeNumber()){
+        if(EquivalentTypes[i][0] == type){
             return EquivalentTypes[i][level-1];
         }
     }

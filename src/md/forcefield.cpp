@@ -35,16 +35,14 @@
 
 #include "forcefield.h"
 
-#include <chemkit/atom.h>
 #include <chemkit/foreach.h>
-#include <chemkit/geometry.h>
-#include <chemkit/molecule.h>
 #include <chemkit/constants.h>
 #include <chemkit/concurrent.h>
 #include <chemkit/pluginmanager.h>
 #include <chemkit/cartesiancoordinates.h>
 
-#include "forcefieldatom.h"
+#include "topology.h"
+#include "topologybuilder.h"
 #include "forcefieldcalculation.h"
 
 namespace chemkit {
@@ -55,9 +53,8 @@ class ForceFieldPrivate
 public:
     std::string name;
     int flags;
-    std::vector<ForceFieldAtom *> atoms;
+    boost::shared_ptr<Topology> topology;
     std::vector<ForceFieldCalculation *> calculations;
-    const Molecule *molecule;
     std::string parameterSet;
     std::string parameterFile;
     std::map<std::string, std::string> parameterSets;
@@ -74,20 +71,20 @@ public:
 /// http://wiki.chemkit.org/Features#Force_Fields
 ///
 /// The following example shows how to calculate the energy of a
-/// molecule using the uff force field.
+/// molecule using the UFF force field.
 ///
 /// \code
 /// // create the uff force field
 /// ForceField *forceField = ForceField::create("uff");
 ///
-/// // add the molecule to the force field
-/// forceField->addMolecule(molecule);
+/// // set the topology for the force field
+/// forceField->setTopologyFromMolecule(molecule);
 ///
 /// // setup the force field
 /// forceField->setup();
 ///
 /// // calculate the total energy
-/// Float energy = forceField->energy();
+/// double energy = forceField->energy(molecule->coordinates());
 /// \endcode
 
 // --- Construction and Destruction ---------------------------------------- //
@@ -95,7 +92,6 @@ ForceField::ForceField(const std::string &name)
     : d(new ForceFieldPrivate)
 {
     d->name = name;
-    d->molecule = 0;
     d->flags = 0;
 }
 
@@ -105,11 +101,6 @@ ForceField::~ForceField()
     // delete all calculations
     foreach(ForceFieldCalculation *calculation, d->calculations){
         delete calculation;
-    }
-
-    // delete all atoms
-    foreach(ForceFieldAtom *atom, d->atoms){
-        delete atom;
     }
 
     delete d;
@@ -135,78 +126,38 @@ int ForceField::flags() const
 }
 
 /// Returns the number of atoms in the force field.
-int ForceField::size() const
+size_t ForceField::size() const
 {
-    return atomCount();
-}
-
-/// Returns a list of all the atoms in the force field.
-std::vector<ForceFieldAtom *> ForceField::atoms() const
-{
-    return d->atoms;
-}
-
-/// Returns the number of atoms in the force field.
-int ForceField::atomCount() const
-{
-    return d->atoms.size();
-}
-
-/// Returns the atom at index.
-ForceFieldAtom* ForceField::atom(int index) const
-{
-    return d->atoms[index];
-}
-
-/// Returns the force field atom that represents atom.
-ForceFieldAtom* ForceField::atom(const Atom *atom) const
-{
-    foreach(ForceFieldAtom *forceFieldAtom, d->atoms){
-        if(forceFieldAtom->atom() == atom){
-            return forceFieldAtom;
-        }
+    if(!d->topology){
+        return 0;
     }
 
-    return 0;
+    return d->topology->size();
 }
 
 // --- Setup --------------------------------------------------------------- //
-/// Sets the molecule for the force field to \p molecule.
-void ForceField::setMolecule(const Molecule *molecule)
+/// Sets the topology for the force field to \p topology.
+void ForceField::setTopology(const boost::shared_ptr<Topology> &topology)
 {
-    d->molecule = molecule;
-
-    foreach(ForceFieldAtom *atom, d->atoms){
-        delete atom;
-    }
-    d->atoms.clear();
-
-    foreach(ForceFieldCalculation *calculation, d->calculations){
-        delete calculation;
-    }
-    d->calculations.clear();
+    d->topology = topology;
 }
 
-/// Returns the molecule for the force field.
-const Molecule* ForceField::molecule() const
+/// Builds a topology for the molecule and sets it with setTopology().
+///
+/// \see TopologyBuilder
+void ForceField::setTopologyFromMolecule(const Molecule *molecule)
 {
-    return d->molecule;
+    TopologyBuilder builder;
+    builder.setAtomTyper(name());
+    builder.setPartialChargePredictor(name());
+    builder.addMolecule(molecule);
+    setTopology(builder.topology());
 }
 
-void ForceField::addAtom(ForceFieldAtom *atom)
+/// Returns the topology for the force field.
+boost::shared_ptr<Topology> ForceField::topology() const
 {
-    d->atoms.push_back(atom);
-}
-
-void ForceField::removeAtom(ForceFieldAtom *atom)
-{
-    d->atoms.erase(std::remove(d->atoms.begin(), d->atoms.end(), atom));
-}
-
-/// Removes all of the molecules in the force field.
-void ForceField::clear()
-{
-    setMolecule(0);
+    return d->topology;
 }
 
 /// Sets up the force field. Returns false if the setup failed.
@@ -279,6 +230,8 @@ std::string ForceField::parameterFile() const
 // --- Calculations -------------------------------------------------------- //
 void ForceField::addCalculation(ForceFieldCalculation *calculation)
 {
+    calculation->setForceField(this);
+
     d->calculations.push_back(calculation);
 }
 
@@ -350,16 +303,14 @@ boost::shared_future<Real> ForceField::energyAsync(const CartesianCoordinates *c
 std::vector<Vector3> ForceField::gradient(const CartesianCoordinates *coordinates) const
 {
     if(d->flags & AnalyticalGradient){
-        std::vector<Vector3> gradient(atomCount());
+        std::vector<Vector3> gradient(size());
         std::fill(gradient.begin(), gradient.end(), Vector3(0, 0, 0));
 
         foreach(const ForceFieldCalculation *calculation, d->calculations){
             std::vector<Vector3> atomGradients = calculation->gradient(coordinates);
 
-            for(unsigned int i = 0; i < atomGradients.size(); i++){
-                const ForceFieldAtom *atom = calculation->atom(i);
-
-                gradient[atom->index()] += atomGradients[i];
+            for(size_t i = 0; i < atomGradients.size(); i++){
+                gradient[calculation->atom(i)] += atomGradients[i];
             }
         }
 
@@ -377,26 +328,25 @@ std::vector<Vector3> ForceField::gradient(const CartesianCoordinates *coordinate
 /// \see ForceField::gradient()
 std::vector<Vector3> ForceField::numericalGradient(const CartesianCoordinates *coordinates) const
 {
-    std::vector<Vector3> gradient(atomCount());
+    std::vector<Vector3> gradient(size());
 
     CartesianCoordinates writeableCoordinates = *coordinates;
 
-    for(int i = 0; i < atomCount(); i++){
-        ForceFieldAtom *atom = d->atoms[i];
+    for(size_t i = 0; i < size(); i++){
         const Point3 &position = coordinates->position(i);
 
         // initial energy
-        Real eI = atom->energy(&writeableCoordinates);
+        Real eI = energy(&writeableCoordinates);
         Real epsilon = 1.0e-10;
 
         writeableCoordinates.setPosition(i, position + Vector3(epsilon, 0, 0));
-        Real eF_x = atom->energy(&writeableCoordinates);
+        Real eF_x = energy(&writeableCoordinates);
 
         writeableCoordinates.setPosition(i, position + Vector3(0, epsilon, 0));
-        Real eF_y = atom->energy(&writeableCoordinates);
+        Real eF_y = energy(&writeableCoordinates);
 
         writeableCoordinates.setPosition(i, position + Vector3(0, 0, epsilon));
-        Real eF_z = atom->energy(&writeableCoordinates);
+        Real eF_z = energy(&writeableCoordinates);
 
         // restore initial position
         writeableCoordinates.setPosition(i, coordinates->position(i));

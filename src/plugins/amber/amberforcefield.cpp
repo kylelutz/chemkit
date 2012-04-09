@@ -42,11 +42,8 @@
 #include "amberparameters.h"
 #include "ambercalculation.h"
 
-#include <chemkit/atom.h>
-#include <chemkit/ring.h>
 #include <chemkit/foreach.h>
-#include <chemkit/molecule.h>
-#include <chemkit/forcefieldinteractions.h>
+#include <chemkit/topology.h>
 
 // --- Construction and Destruction ---------------------------------------- //
 AmberForceField::AmberForceField()
@@ -65,53 +62,32 @@ AmberForceField::~AmberForceField()
 // --- Setup --------------------------------------------------------------- //
 bool AmberForceField::setup()
 {
-    const chemkit::Molecule *molecule = this->molecule();
-    if(!molecule){
+    const boost::shared_ptr<chemkit::Topology> &topology = this->topology();
+    if(!topology){
         return false;
     }
 
-    // assign atom types
-    AmberAtomTyper typer;
-    typer.setMolecule(molecule);
-
-    // add atoms
-    foreach(const chemkit::Atom *atom, molecule->atoms()){
-        chemkit::ForceFieldAtom *forceFieldAtom = new chemkit::ForceFieldAtom(this, atom);
-        forceFieldAtom->setType(typer.typeString(atom));
-        addAtom(forceFieldAtom);
+    foreach(const chemkit::Topology::BondedInteraction &interaction, topology->bondedInteractions()){
+        addCalculation(new AmberBondCalculation(interaction[0],
+                                                interaction[1]));
     }
 
-    chemkit::ForceFieldInteractions interactions(molecule, this);
-
-    // add bond calculations
-    std::pair<const chemkit::ForceFieldAtom *, const chemkit::ForceFieldAtom *> bondedPair;
-    foreach(bondedPair, interactions.bondedPairs()){
-        addCalculation(new AmberBondCalculation(bondedPair.first,
-                                                bondedPair.second));
+    foreach(const chemkit::Topology::AngleInteraction &interaction, topology->angleInteractions()){
+        addCalculation(new AmberAngleCalculation(interaction[0],
+                                                 interaction[1],
+                                                 interaction[2]));
     }
 
-    // add angle calculations
-    std::vector<const chemkit::ForceFieldAtom *> angleGroup;
-    foreach(angleGroup, interactions.angleGroups()){
-        addCalculation(new AmberAngleCalculation(angleGroup[0],
-                                                 angleGroup[1],
-                                                 angleGroup[2]));
+    foreach(const chemkit::Topology::TorsionInteraction &interaction, topology->torsionInteractions()){
+        addCalculation(new AmberTorsionCalculation(interaction[0],
+                                                   interaction[1],
+                                                   interaction[2],
+                                                   interaction[3]));
     }
 
-    // add torsion calculations
-    std::vector<const chemkit::ForceFieldAtom *> torsionGroup;
-    foreach(torsionGroup, interactions.torsionGroups()){
-        addCalculation(new AmberTorsionCalculation(torsionGroup[0],
-                                                   torsionGroup[1],
-                                                   torsionGroup[2],
-                                                   torsionGroup[3]));
-    }
-
-    // add nonbonded calculations
-    std::pair<const chemkit::ForceFieldAtom *, const chemkit::ForceFieldAtom *> nonbondedPair;
-    foreach(nonbondedPair, interactions.nonbondedPairs()){
-        addCalculation(new AmberNonbondedCalculation(nonbondedPair.first,
-                                                     nonbondedPair.second));
+    foreach(const chemkit::Topology::NonbondedInteraction &interaction, topology->nonbondedInteractions()){
+        addCalculation(new AmberNonbondedCalculation(interaction[0],
+                                                     interaction[1]));
     }
 
     bool ok = true;

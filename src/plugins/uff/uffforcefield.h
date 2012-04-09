@@ -37,7 +37,6 @@
 #define UFFFORCEFIELD_H
 
 #include <chemkit/forcefield.h>
-#include <chemkit/forcefieldatom.h>
 
 class UffParameters;
 
@@ -54,7 +53,7 @@ public:
     // setup
     virtual bool setup();
 
-    bool isGroupSix(const chemkit::ForceFieldAtom *atom) const;
+    bool isGroupSix(size_t atom) const;
 
 private:
     UffParameters *m_parameters;

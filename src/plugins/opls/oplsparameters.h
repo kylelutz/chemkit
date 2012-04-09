@@ -40,7 +40,6 @@
 #include <vector>
 
 #include <chemkit/chemkit.h>
-#include <chemkit/forcefieldatom.h>
 
 struct OplsBondStrechParameters
 {

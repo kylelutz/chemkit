@@ -36,7 +36,9 @@
 #ifndef AMBERPARAMETERS_H
 #define AMBERPARAMETERS_H
 
-#include <chemkit/forcefieldatom.h>
+#include <string>
+
+#include <chemkit/chemkit.h>
 
 struct AmberBondParameters
 {
@@ -76,10 +78,10 @@ public:
     ~AmberParameters();
 
     // parameters
-    const AmberBondParameters* bondParameters(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b) const;
-    const AmberAngleParameters* angleParameters(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b, const chemkit::ForceFieldAtom *c) const;
-    const AmberTorsionParameters* torsionParameters(const chemkit::ForceFieldAtom *a, const chemkit::ForceFieldAtom *b, const chemkit::ForceFieldAtom *c, const chemkit::ForceFieldAtom *d) const;
-    const AmberNonbondedParameters* nonbondedParameters(const chemkit::ForceFieldAtom *atom) const;
+    const AmberBondParameters* bondParameters(const std::string &typeA, const std::string &typeB) const;
+    const AmberAngleParameters* angleParameters(const std::string &typeA, const std::string &typeB, const std::string &typeC) const;
+    const AmberTorsionParameters* torsionParameters(const std::string &typeA, const std::string &typeB, const std::string &typeC, const std::string &typeD) const;
+    const AmberNonbondedParameters* nonbondedParameters(const std::string &type) const;
 };
 
 #endif // AMBERPARAMETERS_H

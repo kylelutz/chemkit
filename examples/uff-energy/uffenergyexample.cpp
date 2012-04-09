@@ -67,7 +67,7 @@ int main(int argc, char *argv[])
         return -1;
     }
 
-    uff->setMolecule(molecule.get());
+    uff->setTopologyFromMolecule(molecule.get());
     uff->setup();
 
     if(!uff->isSetup()){

@@ -38,7 +38,8 @@
 
 #include <string>
 
-#include "mmffatom.h"
+#include <boost/shared_ptr.hpp>
+
 #include "mmffaromaticitymodel.h"
 
 class MmffParametersData;
@@ -119,6 +120,9 @@ struct MmffPartialChargeParameters
 class MmffParameters
 {
 public:
+    // constants
+    const static int MaxAtomType = 99;
+
     // construction and destruction
     MmffParameters();
     ~MmffParameters();
@@ -126,40 +130,27 @@ public:
     // parameters
     std::string fileName() const;
     bool read(const std::string &fileName);
-    const MmffBondStrechParameters* bondStrechParameters(const MmffAtom *a, const MmffAtom *b) const;
-    const MmffAngleBendParameters* angleBendParameters(const MmffAtom *a, const MmffAtom *b, const MmffAtom *c) const;
-    const MmffStrechBendParameters* strechBendParameters(const MmffAtom *a, const MmffAtom *b, const MmffAtom *c) const;
-    const MmffStrechBendParameters* defaultStrechBendParameters(const MmffAtom *a, const MmffAtom *b, const MmffAtom *c) const;
-    const MmffOutOfPlaneBendingParameters* outOfPlaneBendingParameters(const MmffAtom *a, const MmffAtom *b, const MmffAtom *c, const MmffAtom *d) const;
-    const MmffTorsionParameters* torsionParameters(const MmffAtom *a, const MmffAtom *b, const MmffAtom *c, const MmffAtom *d) const;
-    const MmffVanDerWaalsParameters* vanDerWaalsParameters(const MmffAtom *atom) const;
+    const MmffVanDerWaalsParameters* vanDerWaalsParameters(int type) const;
     const MmffAtomParameters* atomParameters(int type) const;
-    const MmffAtomParameters* atomParameters(const MmffAtom *atom) const;
     const MmffChargeParameters* chargeParameters(const chemkit::Atom *a, int typeA, const chemkit::Atom *b, int typeB) const;
-    const MmffChargeParameters* chargeParameters(const MmffAtom *a, const MmffAtom *b) const;
     const MmffPartialChargeParameters* partialChargeParameters(int type) const;
-    const MmffPartialChargeParameters* partialChargeParameters(const MmffAtom *atom) const;
-
-    // error handling
-    std::string errorString() const;
-
-    // constants
-    const static int MaxAtomType = 99;
-
-private:
     const MmffBondStrechParameters* bondStrechParameters(int bondType, int typeA, int typeB) const;
     const MmffBondStrechParameters* empiricalBondStrechParameters(int atomicNumberA, int atomicNumberB) const;
     const MmffAngleBendParameters* angleBendParameters(int angleType, int typeA, int typeB, int typeC) const;
     const MmffStrechBendParameters* strechBendParameters(int strechBendType, int typeA, int typeB, int typeC) const;
-    const MmffStrechBendParameters* defaultStrechBendParameters(int rowA, int rowB, int rowC) const;
+    const MmffStrechBendParameters* defaultStrechBendParameters(int typeA, int typeB, int typeC) const;
     const MmffOutOfPlaneBendingParameters* outOfPlaneBendingParameters(int typeA, int typeB, int typeC, int typeD) const;
     const MmffTorsionParameters* torsionParameters(int torsionType, int typeA, int typeB, int typeC, int typeD) const;
-    int calculateBondType(const chemkit::Bond *bond, int typeA, int typeB) const;
-    int calculateBondType(const MmffAtom *a, const MmffAtom *b) const;
-    int calculateAngleType(const MmffAtom *a, const MmffAtom *b, const MmffAtom *c) const;
-    int calculateStrechBendType(const MmffAtom *a, const MmffAtom *b, const MmffAtom *c) const;
-    int calculateTorsionType(const MmffAtom *a, const MmffAtom *b, const MmffAtom *c, const MmffAtom *d) const;
-    int equivalentType(const MmffAtom *atom, int level) const;
+
+    // error handling
+    std::string errorString() const;
+
+    // static methods
+    static int calculateBondType(const chemkit::Bond *bond, int typeA, int typeB);
+    static int calculateStrechBendType(int bondTypeAB, int bondTypeBC, int angleType);
+
+private:
+    int equivalentType(int type, int level) const;
     int calculateBondStrechIndex(int bondType, int typeA, int typeB) const;
     int calculateAngleBendIndex(int angleType, int typeA, int typeB, int typeC) const;
     int calculateStrechBendIndex(int strechBendType, int typeA, int typeB, int typeC) const;

@@ -71,7 +71,7 @@ template<typename ForceField>
 Variant ForceFieldEnergyDescriptor<ForceField>::value(const Molecule *molecule) const
 {
     ForceField forceField;
-    forceField.setMolecule(molecule);
+    forceField.setTopologyFromMolecule(molecule);
 
     bool ok = forceField.setup();
     if(!ok){

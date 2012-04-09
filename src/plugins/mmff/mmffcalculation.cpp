@@ -35,12 +35,13 @@
 
 #include "mmffcalculation.h"
 
-#include <chemkit/atom.h>
+#include <boost/lexical_cast.hpp>
+
+#include <chemkit/topology.h>
 #include <chemkit/constants.h>
 #include <chemkit/forcefield.h>
 #include <chemkit/cartesiancoordinates.h>
 
-#include "mmffatom.h"
 #include "mmffparameters.h"
 
 // === MmffCalculation ===================================================== //
@@ -49,14 +50,8 @@ MmffCalculation::MmffCalculation(int type, int atomCount, int parameterCount)
 {
 }
 
-const MmffAtom* MmffCalculation::atom(int index) const
-{
-    return static_cast<const MmffAtom *>(ForceFieldCalculation::atom(index));
-}
-
 // === MmffBondStrechCalculation =========================================== //
-MmffBondStrechCalculation::MmffBondStrechCalculation(const MmffAtom *a,
-                                                     const MmffAtom *b)
+MmffBondStrechCalculation::MmffBondStrechCalculation(size_t a, size_t b)
     : MmffCalculation(BondStrech, 2, 2)
 {
     setAtom(0, a);
@@ -65,10 +60,16 @@ MmffBondStrechCalculation::MmffBondStrechCalculation(const MmffAtom *a,
 
 bool MmffBondStrechCalculation::setup(const MmffParameters *parameters)
 {
-    const MmffAtom *a = atom(0);
-    const MmffAtom *b = atom(1);
+    const boost::shared_ptr<chemkit::Topology> &topology = this->topology();
 
-    const MmffBondStrechParameters *bondStrechParameters = parameters->bondStrechParameters(a, b);
+    size_t a = atom(0);
+    size_t b = atom(1);
+
+    int typeA = boost::lexical_cast<int>(topology->type(a));
+    int typeB = boost::lexical_cast<int>(topology->type(b));
+    int bondType = topology->bondedInteractionType(a, b);
+
+    const MmffBondStrechParameters *bondStrechParameters = parameters->bondStrechParameters(bondType, typeA, typeB);
     if(bondStrechParameters){
         setParameter(0, bondStrechParameters->kb);
         setParameter(1, bondStrechParameters->r0);
@@ -80,8 +81,8 @@ bool MmffBondStrechCalculation::setup(const MmffParameters *parameters)
 
 chemkit::Real MmffBondStrechCalculation::energy(const chemkit::CartesianCoordinates *coordinates) const
 {
-    size_t a = atom(0)->index();
-    size_t b = atom(1)->index();
+    size_t a = atom(0);
+    size_t b = atom(1);
 
     chemkit::Real kb = parameter(0);
     chemkit::Real r0 = parameter(1);
@@ -96,8 +97,8 @@ chemkit::Real MmffBondStrechCalculation::energy(const chemkit::CartesianCoordina
 
 std::vector<chemkit::Vector3> MmffBondStrechCalculation::gradient(const chemkit::CartesianCoordinates *coordinates) const
 {
-    size_t a = atom(0)->index();
-    size_t b = atom(1)->index();
+    size_t a = atom(0);
+    size_t b = atom(1);
 
     chemkit::Real kb = parameter(0);
     chemkit::Real r0 = parameter(1);
@@ -118,9 +119,7 @@ std::vector<chemkit::Vector3> MmffBondStrechCalculation::gradient(const chemkit:
 }
 
 // === MmffAngleBendCalculation ============================================ //
-MmffAngleBendCalculation::MmffAngleBendCalculation(const MmffAtom *a,
-                                                   const MmffAtom *b,
-                                                   const MmffAtom *c)
+MmffAngleBendCalculation::MmffAngleBendCalculation(size_t a, size_t b, size_t c)
     : MmffCalculation(AngleBend, 3, 2)
 {
     setAtom(0, a);
@@ -130,11 +129,20 @@ MmffAngleBendCalculation::MmffAngleBendCalculation(const MmffAtom *a,
 
 bool MmffAngleBendCalculation::setup(const MmffParameters *parameters)
 {
-    const MmffAtom *a = atom(0);
-    const MmffAtom *b = atom(1);
-    const MmffAtom *c = atom(2);
+    const boost::shared_ptr<chemkit::Topology> &topology = this->topology();
 
-    const MmffAngleBendParameters *angleBendParameters = parameters->angleBendParameters(a, b, c);
+    size_t a = atom(0);
+    size_t b = atom(1);
+    size_t c = atom(2);
+
+    int typeA = boost::lexical_cast<int>(topology->type(a));
+    int typeB = boost::lexical_cast<int>(topology->type(b));
+    int typeC = boost::lexical_cast<int>(topology->type(c));
+    int angleType = topology->angleInteractionType(a, b, c);
+
+    const MmffAngleBendParameters *angleBendParameters =
+        parameters->angleBendParameters(angleType, typeA, typeB, typeC);
+
     if(angleBendParameters){
         setParameter(0, angleBendParameters->ka);
         setParameter(1, angleBendParameters->theta0);
@@ -146,9 +154,9 @@ bool MmffAngleBendCalculation::setup(const MmffParameters *parameters)
 
 chemkit::Real MmffAngleBendCalculation::energy(const chemkit::CartesianCoordinates *coordinates) const
 {
-    size_t a = atom(0)->index();
-    size_t b = atom(1)->index();
-    size_t c = atom(2)->index();
+    size_t a = atom(0);
+    size_t b = atom(1);
+    size_t c = atom(2);
 
     chemkit::Real ka = parameter(0);
     chemkit::Real t0 = parameter(1);
@@ -163,9 +171,9 @@ chemkit::Real MmffAngleBendCalculation::energy(const chemkit::CartesianCoordinat
 
 std::vector<chemkit::Vector3> MmffAngleBendCalculation::gradient(const chemkit::CartesianCoordinates *coordinates) const
 {
-    size_t a = atom(0)->index();
-    size_t b = atom(1)->index();
-    size_t c = atom(2)->index();
+    size_t a = atom(0);
+    size_t b = atom(1);
+    size_t c = atom(2);
 
     chemkit::Real ka = parameter(0);
     chemkit::Real t0 = parameter(1);
@@ -187,9 +195,7 @@ std::vector<chemkit::Vector3> MmffAngleBendCalculation::gradient(const chemkit::
 }
 
 // === MmffStrechBendCalculation =========================================== //
-MmffStrechBendCalculation::MmffStrechBendCalculation(const MmffAtom *a,
-                                                     const MmffAtom *b,
-                                                     const MmffAtom *c)
+MmffStrechBendCalculation::MmffStrechBendCalculation(size_t a, size_t b, size_t c)
     : MmffCalculation(BondStrech | AngleBend, 3, 5)
 {
     setAtom(0, a);
@@ -199,31 +205,50 @@ MmffStrechBendCalculation::MmffStrechBendCalculation(const MmffAtom *a,
 
 bool MmffStrechBendCalculation::setup(const MmffParameters *parameters)
 {
-    const MmffAtom *a = atom(0);
-    const MmffAtom *b = atom(1);
-    const MmffAtom *c = atom(2);
+    const boost::shared_ptr<chemkit::Topology> &topology = this->topology();
+
+    size_t a = atom(0);
+    size_t b = atom(1);
+    size_t c = atom(2);
+
+    int typeA = boost::lexical_cast<int>(topology->type(a));
+    int typeB = boost::lexical_cast<int>(topology->type(b));
+    int typeC = boost::lexical_cast<int>(topology->type(c));
+    int bondTypeAB = topology->bondedInteractionType(a, b);
+    int bondTypeBC = topology->bondedInteractionType(b, c);
+    int angleType = topology->angleInteractionType(a, b, c);
+
+    int strechBendType =
+        parameters->calculateStrechBendType(bondTypeAB, bondTypeBC, angleType);
 
     bool parametersSwapped = false;
-    const MmffStrechBendParameters *strechBendParameters = parameters->strechBendParameters(a, b, c);
+    const MmffStrechBendParameters *strechBendParameters =
+        parameters->strechBendParameters(strechBendType, typeA, typeB, typeC);
     if(!strechBendParameters){
-        strechBendParameters = parameters->strechBendParameters(c, b, a);
+        strechBendType =
+            parameters->calculateStrechBendType(bondTypeBC, bondTypeAB, angleType);
+        strechBendParameters =
+            parameters->strechBendParameters(strechBendType, typeC, typeB, typeA);
 
         if(strechBendParameters){
             parametersSwapped = true;
         }
         else{
-            strechBendParameters = parameters->defaultStrechBendParameters(a, b, c);
+            strechBendParameters = parameters->defaultStrechBendParameters(typeA, typeB, typeC);
 
             if(!strechBendParameters){
-                strechBendParameters = parameters->defaultStrechBendParameters(c, b, a);
+                strechBendParameters = parameters->defaultStrechBendParameters(typeC, typeB, typeA);
                 parametersSwapped = true;
             }
         }
     }
 
-    const MmffBondStrechParameters *bondStrechParameters_ab = parameters->bondStrechParameters(a, b);
-    const MmffBondStrechParameters *bondStrechParameters_bc = parameters->bondStrechParameters(b, c);
-    const MmffAngleBendParameters *angleBendParameters = parameters->angleBendParameters(a, b, c);
+    const MmffBondStrechParameters *bondStrechParameters_ab =
+        parameters->bondStrechParameters(bondTypeAB, typeA, typeB);
+    const MmffBondStrechParameters *bondStrechParameters_bc =
+        parameters->bondStrechParameters(bondTypeBC, typeB, typeC);
+    const MmffAngleBendParameters *angleBendParameters =
+        parameters->angleBendParameters(angleType, typeA, typeB, typeC);
     if(strechBendParameters && bondStrechParameters_ab && bondStrechParameters_bc && angleBendParameters){
         if(parametersSwapped){
             setParameter(1, strechBendParameters->kba_ijk);
@@ -245,9 +270,9 @@ bool MmffStrechBendCalculation::setup(const MmffParameters *parameters)
 
 chemkit::Real MmffStrechBendCalculation::energy(const chemkit::CartesianCoordinates *coordinates) const
 {
-    size_t a = atom(0)->index();
-    size_t b = atom(1)->index();
-    size_t c = atom(2)->index();
+    size_t a = atom(0);
+    size_t b = atom(1);
+    size_t c = atom(2);
 
     chemkit::Real kba_ijk = parameter(0);
     chemkit::Real kba_kji = parameter(1);
@@ -268,9 +293,9 @@ chemkit::Real MmffStrechBendCalculation::energy(const chemkit::CartesianCoordina
 
 std::vector<chemkit::Vector3> MmffStrechBendCalculation::gradient(const chemkit::CartesianCoordinates *coordinates) const
 {
-    size_t a = atom(0)->index();
-    size_t b = atom(1)->index();
-    size_t c = atom(2)->index();
+    size_t a = atom(0);
+    size_t b = atom(1);
+    size_t c = atom(2);
 
     chemkit::Real kba_ijk = parameter(0);
     chemkit::Real kba_kji = parameter(1);
@@ -299,10 +324,7 @@ std::vector<chemkit::Vector3> MmffStrechBendCalculation::gradient(const chemkit:
 }
 
 // === MmffOutOfPlaneBendingCalculation ==================================== //
-MmffOutOfPlaneBendingCalculation::MmffOutOfPlaneBendingCalculation(const MmffAtom *a,
-                                                                   const MmffAtom *b,
-                                                                   const MmffAtom *c,
-                                                                   const MmffAtom *d)
+MmffOutOfPlaneBendingCalculation::MmffOutOfPlaneBendingCalculation(size_t a, size_t b, size_t c, size_t d)
     : MmffCalculation(Inversion, 4, 1)
 {
     setAtom(0, a);
@@ -313,12 +335,20 @@ MmffOutOfPlaneBendingCalculation::MmffOutOfPlaneBendingCalculation(const MmffAto
 
 bool MmffOutOfPlaneBendingCalculation::setup(const MmffParameters *parameters)
 {
-    const MmffAtom *a = atom(0);
-    const MmffAtom *b = atom(1);
-    const MmffAtom *c = atom(2);
-    const MmffAtom *d = atom(3);
+    const boost::shared_ptr<chemkit::Topology> &topology = this->topology();
 
-    const MmffOutOfPlaneBendingParameters *outOfPlaneBendingParameters = parameters->outOfPlaneBendingParameters(a, b, c, d);
+    size_t a = atom(0);
+    size_t b = atom(1);
+    size_t c = atom(2);
+    size_t d = atom(3);
+
+    int typeA = boost::lexical_cast<int>(topology->type(a));
+    int typeB = boost::lexical_cast<int>(topology->type(b));
+    int typeC = boost::lexical_cast<int>(topology->type(c));
+    int typeD = boost::lexical_cast<int>(topology->type(d));
+
+    const MmffOutOfPlaneBendingParameters *outOfPlaneBendingParameters =
+        parameters->outOfPlaneBendingParameters(typeA, typeB, typeC, typeD);
     if(!outOfPlaneBendingParameters){
         return false;
     }
@@ -329,10 +359,10 @@ bool MmffOutOfPlaneBendingCalculation::setup(const MmffParameters *parameters)
 
 chemkit::Real MmffOutOfPlaneBendingCalculation::energy(const chemkit::CartesianCoordinates *coordinates) const
 {
-    size_t a = atom(0)->index();
-    size_t b = atom(1)->index();
-    size_t c = atom(2)->index();
-    size_t d = atom(3)->index();
+    size_t a = atom(0);
+    size_t b = atom(1);
+    size_t c = atom(2);
+    size_t d = atom(3);
 
     chemkit::Real angle = coordinates->wilsonAngle(a, b, c, d);
     chemkit::Real koop = parameter(0);
@@ -343,10 +373,10 @@ chemkit::Real MmffOutOfPlaneBendingCalculation::energy(const chemkit::CartesianC
 
 std::vector<chemkit::Vector3> MmffOutOfPlaneBendingCalculation::gradient(const chemkit::CartesianCoordinates *coordinates) const
 {
-    size_t a = atom(0)->index();
-    size_t b = atom(1)->index();
-    size_t c = atom(2)->index();
-    size_t d = atom(3)->index();
+    size_t a = atom(0);
+    size_t b = atom(1);
+    size_t c = atom(2);
+    size_t d = atom(3);
 
     chemkit::Real angle = coordinates->wilsonAngle(a, b, c, d);
     chemkit::Real koop = parameter(0);
@@ -365,10 +395,7 @@ std::vector<chemkit::Vector3> MmffOutOfPlaneBendingCalculation::gradient(const c
 }
 
 // === MmffTorsionCalculation ============================================== //
-MmffTorsionCalculation::MmffTorsionCalculation(const MmffAtom *a,
-                                               const MmffAtom *b,
-                                               const MmffAtom *c,
-                                               const MmffAtom *d)
+MmffTorsionCalculation::MmffTorsionCalculation(size_t a, size_t b, size_t c, size_t d)
     : MmffCalculation(Torsion, 4, 3)
 {
     setAtom(0, a);
@@ -379,12 +406,21 @@ MmffTorsionCalculation::MmffTorsionCalculation(const MmffAtom *a,
 
 bool MmffTorsionCalculation::setup(const MmffParameters *parameters)
 {
-    const MmffAtom *a = atom(0);
-    const MmffAtom *b = atom(1);
-    const MmffAtom *c = atom(2);
-    const MmffAtom *d = atom(3);
+    const boost::shared_ptr<chemkit::Topology> &topology = this->topology();
 
-    const MmffTorsionParameters *torsionParameters = parameters->torsionParameters(a, b, c, d);
+    size_t a = atom(0);
+    size_t b = atom(1);
+    size_t c = atom(2);
+    size_t d = atom(3);
+
+    int typeA = boost::lexical_cast<int>(topology->type(a));
+    int typeB = boost::lexical_cast<int>(topology->type(b));
+    int typeC = boost::lexical_cast<int>(topology->type(c));
+    int typeD = boost::lexical_cast<int>(topology->type(d));
+    int torsionType = topology->torsionInteractionType(a, b, c, d);
+
+    const MmffTorsionParameters *torsionParameters =
+        parameters->torsionParameters(torsionType, typeA, typeB, typeC, typeD);
     if(!torsionParameters){
         return false;
     }
@@ -398,10 +434,10 @@ bool MmffTorsionCalculation::setup(const MmffParameters *parameters)
 
 chemkit::Real MmffTorsionCalculation::energy(const chemkit::CartesianCoordinates *coordinates) const
 {
-    size_t a = atom(0)->index();
-    size_t b = atom(1)->index();
-    size_t c = atom(2)->index();
-    size_t d = atom(3)->index();
+    size_t a = atom(0);
+    size_t b = atom(1);
+    size_t c = atom(2);
+    size_t d = atom(3);
 
     chemkit::Real angle = coordinates->torsionAngleRadians(a, b, c, d);
     chemkit::Real V1 = parameter(0);
@@ -414,10 +450,10 @@ chemkit::Real MmffTorsionCalculation::energy(const chemkit::CartesianCoordinates
 
 std::vector<chemkit::Vector3> MmffTorsionCalculation::gradient(const chemkit::CartesianCoordinates *coordinates) const
 {
-    size_t a = atom(0)->index();
-    size_t b = atom(1)->index();
-    size_t c = atom(2)->index();
-    size_t d = atom(3)->index();
+    size_t a = atom(0);
+    size_t b = atom(1);
+    size_t c = atom(2);
+    size_t d = atom(3);
 
     chemkit::Real phi = coordinates->torsionAngleRadians(a, b, c, d);
     chemkit::Real V1 = parameter(0);
@@ -438,8 +474,7 @@ std::vector<chemkit::Vector3> MmffTorsionCalculation::gradient(const chemkit::Ca
 }
 
 // === MmffVanDerWaalsCalculation ========================================== //
-MmffVanDerWaalsCalculation::MmffVanDerWaalsCalculation(const MmffAtom *a,
-                                                       const MmffAtom *b)
+MmffVanDerWaalsCalculation::MmffVanDerWaalsCalculation(size_t a, size_t b)
     : MmffCalculation(VanDerWaals, 2, 2)
 {
     setAtom(0, a);
@@ -448,11 +483,16 @@ MmffVanDerWaalsCalculation::MmffVanDerWaalsCalculation(const MmffAtom *a,
 
 bool MmffVanDerWaalsCalculation::setup(const MmffParameters *parameters)
 {
-    const MmffAtom *a = atom(0);
-    const MmffAtom *b = atom(1);
+    const boost::shared_ptr<chemkit::Topology> &topology = this->topology();
 
-    const MmffVanDerWaalsParameters *parametersA = parameters->vanDerWaalsParameters(a);
-    const MmffVanDerWaalsParameters *parametersB = parameters->vanDerWaalsParameters(b);
+    size_t a = atom(0);
+    size_t b = atom(1);
+
+    int typeA = boost::lexical_cast<int>(topology->type(a));
+    int typeB = boost::lexical_cast<int>(topology->type(b));
+
+    const MmffVanDerWaalsParameters *parametersA = parameters->vanDerWaalsParameters(typeA);
+    const MmffVanDerWaalsParameters *parametersB = parameters->vanDerWaalsParameters(typeB);
     if(!parametersA || !parametersB){
         return false;
     }
@@ -501,8 +541,8 @@ bool MmffVanDerWaalsCalculation::setup(const MmffParameters *parameters)
 
 chemkit::Real MmffVanDerWaalsCalculation::energy(const chemkit::CartesianCoordinates *coordinates) const
 {
-    size_t a = atom(0)->index();
-    size_t b = atom(1)->index();
+    size_t a = atom(0);
+    size_t b = atom(1);
 
     chemkit::Real rs = parameter(0);
     chemkit::Real eps = parameter(1);
@@ -514,8 +554,8 @@ chemkit::Real MmffVanDerWaalsCalculation::energy(const chemkit::CartesianCoordin
 
 std::vector<chemkit::Vector3> MmffVanDerWaalsCalculation::gradient(const chemkit::CartesianCoordinates *coordinates) const
 {
-    size_t a = atom(0)->index();
-    size_t b = atom(1)->index();
+    size_t a = atom(0);
+    size_t b = atom(1);
 
     chemkit::Real rs = parameter(0);
     chemkit::Real eps = parameter(1);
@@ -535,8 +575,7 @@ std::vector<chemkit::Vector3> MmffVanDerWaalsCalculation::gradient(const chemkit
 }
 
 // === MmffElectrostaticCalculation ======================================== //
-MmffElectrostaticCalculation::MmffElectrostaticCalculation(const MmffAtom *a,
-                                                           const MmffAtom *b)
+MmffElectrostaticCalculation::MmffElectrostaticCalculation(size_t a, size_t b)
     : MmffCalculation(Electrostatic, 2, 3)
 {
     setAtom(0, a);
@@ -547,20 +586,22 @@ bool MmffElectrostaticCalculation::setup(const MmffParameters *parameters)
 {
     CHEMKIT_UNUSED(parameters);
 
-    const MmffAtom *a = atom(0);
-    const MmffAtom *b = atom(1);
+    const boost::shared_ptr<chemkit::Topology> &topology = this->topology();
+
+    size_t a = atom(0);
+    size_t b = atom(1);
 
     chemkit::Real oneFourScaling;
 
-    if(a->isOneFour(b)){
+    if(topology->isOneFour(a, b)){
         oneFourScaling = 0.75;
     }
     else{
         oneFourScaling = 1.0;
     }
 
-    setParameter(0, a->charge());
-    setParameter(1, b->charge());
+    setParameter(0, topology->charge(a));
+    setParameter(1, topology->charge(b));
     setParameter(2, oneFourScaling);
 
     return true;
@@ -568,8 +609,8 @@ bool MmffElectrostaticCalculation::setup(const MmffParameters *parameters)
 
 chemkit::Real MmffElectrostaticCalculation::energy(const chemkit::CartesianCoordinates *coordinates) const
 {
-    size_t a = atom(0)->index();
-    size_t b = atom(1)->index();
+    size_t a = atom(0);
+    size_t b = atom(1);
 
     chemkit::Real qa = parameter(0);
     chemkit::Real qb = parameter(1);
@@ -585,8 +626,8 @@ chemkit::Real MmffElectrostaticCalculation::energy(const chemkit::CartesianCoord
 
 std::vector<chemkit::Vector3> MmffElectrostaticCalculation::gradient(const chemkit::CartesianCoordinates *coordinates) const
 {
-    size_t a = atom(0)->index();
-    size_t b = atom(1)->index();
+    size_t a = atom(0);
+    size_t b = atom(1);
 
     chemkit::Real qa = parameter(0);
     chemkit::Real qb = parameter(1);

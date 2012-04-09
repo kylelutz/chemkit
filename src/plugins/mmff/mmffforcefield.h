@@ -41,7 +41,6 @@
 
 #include "mmffcalculation.h"
 
-class MmffAtom;
 class MmffParameters;
 
 class MmffForceField : public chemkit::ForceField
@@ -50,10 +49,6 @@ public:
     // construction and destruction
     MmffForceField();
     ~MmffForceField();
-
-    // atoms
-    MmffAtom* atom(const chemkit::Atom *atom);
-    const MmffAtom* atom(const chemkit::Atom *atom) const;
 
     // parameterization
     virtual bool setup();

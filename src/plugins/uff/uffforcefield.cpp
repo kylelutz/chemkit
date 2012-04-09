@@ -41,14 +41,14 @@
 
 #include "uffforcefield.h"
 
+#include <boost/algorithm/string.hpp>
+
 #include "uffatomtyper.h"
 #include "uffparameters.h"
 #include "uffcalculation.h"
 
-#include <chemkit/atom.h>
 #include <chemkit/foreach.h>
-#include <chemkit/molecule.h>
-#include <chemkit/forcefieldinteractions.h>
+#include <chemkit/topology.h>
 
 // --- Construction and Destruction ---------------------------------------- //
 UffForceField::UffForceField()
@@ -73,79 +73,62 @@ const UffParameters* UffForceField::parameters() const
 // --- Setup --------------------------------------------------------------- //
 bool UffForceField::setup()
 {
-    const chemkit::Molecule *molecule = this->molecule();
-    if(!molecule){
+    const boost::shared_ptr<chemkit::Topology> &topology = this->topology();
+    if(!topology){
         return false;
     }
 
-    std::map<const chemkit::Atom *, chemkit::ForceFieldAtom *> atoms;
-
-    UffAtomTyper typer(molecule);
-
-    foreach(const chemkit::Atom *atom, molecule->atoms()){
-        chemkit::ForceFieldAtom *forceFieldAtom = new chemkit::ForceFieldAtom(this, atom);
-        atoms[atom] = forceFieldAtom;
-        addAtom(forceFieldAtom);
-        forceFieldAtom->setType(typer.typeString(atom).c_str());
-    }
-
-    chemkit::ForceFieldInteractions interactions(molecule, this);
-
     // bond strech
-    std::pair<const chemkit::ForceFieldAtom *, const chemkit::ForceFieldAtom *> bondedPair;
-    foreach(bondedPair, interactions.bondedPairs()){
-        addCalculation(new UffBondStrechCalculation(bondedPair.first,
-                                                    bondedPair.second));
+    foreach(const chemkit::Topology::BondedInteraction &interaction, topology->bondedInteractions()){
+        addCalculation(new UffBondStrechCalculation(interaction[0],
+                                                    interaction[1]));
     }
 
     // angle bend
-    std::vector<const chemkit::ForceFieldAtom *> angleGroup;
-    foreach(angleGroup, interactions.angleGroups()){
-        addCalculation(new UffAngleBendCalculation(angleGroup[0],
-                                                   angleGroup[1],
-                                                   angleGroup[2]));
+    foreach(const chemkit::Topology::AngleInteraction &interaction, topology->angleInteractions()){
+        addCalculation(new UffAngleBendCalculation(interaction[0],
+                                                   interaction[1],
+                                                   interaction[2]));
     }
 
     // torsion
-    std::vector<const chemkit::ForceFieldAtom *> torsionGroup;
-    foreach(torsionGroup, interactions.torsionGroups()){
-        addCalculation(new UffTorsionCalculation(torsionGroup[0],
-                                                 torsionGroup[1],
-                                                 torsionGroup[2],
-                                                 torsionGroup[3]));
+    foreach(const chemkit::Topology::TorsionInteraction &interaction, topology->torsionInteractions()){
+        addCalculation(new UffTorsionCalculation(interaction[0],
+                                                 interaction[1],
+                                                 interaction[2],
+                                                 interaction[3]));
     }
 
     // inversion
-    foreach(const chemkit::Atom *atom, molecule->atoms()){
-        if(atom->neighborCount() == 3 && (atom->is(chemkit::Atom::Carbon) ||
-                                          atom->is(chemkit::Atom::Nitrogen) ||
-                                          atom->is(chemkit::Atom::Phosphorus) ||
-                                          atom->is(chemkit::Atom::Arsenic) ||
-                                          atom->is(chemkit::Atom::Antimony) ||
-                                          atom->is(chemkit::Atom::Bismuth))){
-            std::vector<chemkit::Atom *> neighbors(atom->neighbors().begin(),
-                                                   atom->neighbors().end());
+    foreach(const chemkit::Topology::ImproperTorsionInteraction &interaction, topology->improperTorsionInteractions()){
+        // type for the center atom
+        std::string typeB = topology->type(interaction[1]);
 
-            addCalculation(new UffInversionCalculation(atoms[neighbors[0]],
-                                                       atoms[atom],
-                                                       atoms[neighbors[1]],
-                                                       atoms[neighbors[2]]));
-            addCalculation(new UffInversionCalculation(atoms[neighbors[0]],
-                                                       atoms[atom],
-                                                       atoms[neighbors[2]],
-                                                       atoms[neighbors[1]]));
-            addCalculation(new UffInversionCalculation(atoms[neighbors[1]],
-                                                       atoms[atom],
-                                                       atoms[neighbors[2]],
-                                                       atoms[neighbors[0]]));
+        if(boost::starts_with(typeB, "C_") ||
+           boost::starts_with(typeB, "N_") ||
+           boost::starts_with(typeB, "P_") ||
+           boost::starts_with(typeB, "As") ||
+           boost::starts_with(typeB, "Sb") ||
+           boost::starts_with(typeB, "Bi")){
+            addCalculation(new UffInversionCalculation(interaction[0],
+                                                       interaction[1],
+                                                       interaction[2],
+                                                       interaction[3]));
+            addCalculation(new UffInversionCalculation(interaction[0],
+                                                       interaction[1],
+                                                       interaction[3],
+                                                       interaction[2]));
+            addCalculation(new UffInversionCalculation(interaction[2],
+                                                       interaction[1],
+                                                       interaction[0],
+                                                       interaction[3]));
         }
     }
 
     // van der waals
-    std::pair<const chemkit::ForceFieldAtom *, const chemkit::ForceFieldAtom *> nonbondedPair;
-    foreach(nonbondedPair, interactions.nonbondedPairs()){
-        addCalculation(new UffVanDerWaalsCalculation(nonbondedPair.first,
-                                                     nonbondedPair.second));
+    foreach(const chemkit::Topology::NonbondedInteraction &interaction, topology->nonbondedInteractions()){
+        addCalculation(new UffVanDerWaalsCalculation(interaction[0],
+                                                     interaction[1]));
     }
 
     bool ok = true;
@@ -163,16 +146,14 @@ bool UffForceField::setup()
     return ok;
 }
 
-bool UffForceField::isGroupSix(const chemkit::ForceFieldAtom *atom) const
+/// Returns \c true if \p atom is in group six of the periodic table.
+bool UffForceField::isGroupSix(size_t atom) const
 {
-    switch(atom->atom()->atomicNumber()){
-        case 8:
-        case 16:
-        case 34:
-        case 52:
-        case 84:
-            return true;
-        default:
-            return false;
-    };
+    std::string type = topology()->type(atom);
+
+    return boost::starts_with(type, "O_") ||
+           boost::starts_with(type, "S_") ||
+           boost::starts_with(type, "Se") ||
+           boost::starts_with(type, "Te") ||
+           boost::starts_with(type, "Po");
 }
