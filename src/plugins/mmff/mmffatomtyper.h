@@ -39,6 +39,7 @@
 #include <vector>
 
 #include <chemkit/ring.h>
+#include <chemkit/element.h>
 #include <chemkit/atomtyper.h>
 
 class MmffAtomTyper : public chemkit::AtomTyper
@@ -58,6 +59,9 @@ public:
     // charges
     chemkit::Real formalCharge(int index) const;
     chemkit::Real formalCharge(const chemkit::Atom *atom) const;
+
+    // static methods
+    static chemkit::Element typeToElement(int type);
 
 private:
     void setType(int index, int type, chemkit::Real formalCharge = 0);
