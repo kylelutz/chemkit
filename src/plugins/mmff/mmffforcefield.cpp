@@ -50,7 +50,6 @@
 #include "mmffatomtyper.h"
 #include "mmffparameters.h"
 #include "mmffcalculation.h"
-#include "mmffpartialchargepredictor.h"
 
 #include <chemkit/plugin.h>
 #include <chemkit/foreach.h>

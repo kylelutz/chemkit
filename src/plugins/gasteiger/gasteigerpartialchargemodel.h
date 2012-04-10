@@ -33,10 +33,10 @@
 **
 ******************************************************************************/
 
-#ifndef GASTEIGERPARTIALCHARGEPREDICTOR_H
-#define GASTEIGERPARTIALCHARGEPREDICTOR_H
+#ifndef GASTEIGERPARTIALCHARGEMODEL_H
+#define GASTEIGERPARTIALCHARGEMODEL_H
 
-#include <chemkit/partialchargepredictor.h>
+#include <chemkit/partialchargemodel.h>
 
 struct GasteigerParameters {
     chemkit::Real a;
@@ -44,11 +44,11 @@ struct GasteigerParameters {
     chemkit::Real c;
 };
 
-class GasteigerPartialChargePredictor : public chemkit::PartialChargePredictor
+class GasteigerPartialChargeModel : public chemkit::PartialChargeModel
 {
 public:
     // construction and destruction
-    GasteigerPartialChargePredictor();
+    GasteigerPartialChargeModel();
 
     // properties
     void setMolecule(const chemkit::Molecule *molecule) CHEMKIT_OVERRIDE;
@@ -65,4 +65,4 @@ private:
     std::vector<const GasteigerParameters *> m_parameters;
 };
 
-#endif // GASTEIGERPARTIALCHARGEPREDICTOR_H
+#endif // GASTEIGERPARTIALCHARGEMODEL_H

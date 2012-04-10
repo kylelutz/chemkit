@@ -33,52 +33,32 @@
 **
 ******************************************************************************/
 
-#ifndef CHEMKIT_PARTIALCHARGEPREDICTOR_H
-#define CHEMKIT_PARTIALCHARGEPREDICTOR_H
+#ifndef MMFFPARTIALCHARGEMODEL_H
+#define MMFFPARTIALCHARGEMODEL_H
 
-#include "chemkit.h"
+#include <chemkit/partialchargemodel.h>
 
-#include <string>
-#include <vector>
+#include "mmffatomtyper.h"
+#include "mmffparameters.h"
 
-#include "plugin.h"
-
-namespace chemkit {
-
-class Atom;
-class Molecule;
-class PartialChargePredictorPrivate;
-
-class CHEMKIT_EXPORT PartialChargePredictor
+class MmffPartialChargeModel : public chemkit::PartialChargeModel
 {
 public:
     // construction and destruction
-    virtual ~PartialChargePredictor();
+    MmffPartialChargeModel();
+    ~MmffPartialChargeModel();
 
     // properties
-    std::string name() const;
-    virtual void setMolecule(const Molecule *molecule);
-    const Molecule* molecule() const;
+    void setMolecule(const chemkit::Molecule *molecule) CHEMKIT_OVERRIDE;
+    void setAtomTyper(const MmffAtomTyper *typer);
 
     // partial charges
-    virtual Real partialCharge(const Atom *atom) const;
-
-    // static methods
-    static PartialChargePredictor* create(const std::string &name);
-    static std::vector<std::string> predictors();
-    static bool predictPartialCharges(Molecule *molecule, const std::string &predictorName);
-
-protected:
-    PartialChargePredictor(const std::string &name);
+    chemkit::Real partialCharge(const chemkit::Atom *atom) const CHEMKIT_OVERRIDE;
 
 private:
-    PartialChargePredictorPrivate* const d;
+    std::vector<chemkit::Real> m_partialCharges;
+    const MmffAtomTyper *m_typer;
+    MmffParameters *m_parameters;
 };
 
-} // end chemkit namespace
-
-/// Registers a partial charge predictor with \p name.
-#define CHEMKIT_REGISTER_PARTIAL_CHARGE_PREDICTOR(name, className) \
-    CHEMKIT_REGISTER_PLUGIN_CLASS(name, chemkit::PartialChargePredictor, className)
-
-#endif // CHEMKIT_PARTIALCHARGEPREDICTOR_H
+#endif // MMFFPARTIALCHARGEMODEL_H

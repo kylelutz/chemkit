@@ -51,7 +51,7 @@ set(HEADERS
   moleculeeditor.h
   moleculewatcher.h
   nucleotide.h
-  partialchargepredictor.h
+  partialchargemodel.h
   plugin.h
   plugin-inline.h
   pluginmanager.h
@@ -107,7 +107,7 @@ set(SOURCES
   moleculeeditor.cpp
   moleculewatcher.cpp
   nucleotide.cpp
-  partialchargepredictor.cpp
+  partialchargemodel.cpp
   plugin.cpp
   pluginmanager.cpp
   polymer.cpp

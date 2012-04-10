@@ -45,8 +45,8 @@
 #include <chemkit/forcefield.h>
 #include <chemkit/moleculefile.h>
 #include <chemkit/aromaticitymodel.h>
+#include <chemkit/partialchargemodel.h>
 #include <chemkit/moleculardescriptor.h>
-#include <chemkit/partialchargepredictor.h>
 
 const std::string dataPath = "../../../data/";
 
@@ -55,7 +55,7 @@ void MmffTest::initTestCase()
     // verify that the mmff plugin registered itself correctly
     QVERIFY(boost::count(chemkit::AtomTyper::typers(), "mmff") == 1);
     QVERIFY(boost::count(chemkit::ForceField::forceFields(), "mmff") == 1);
-    QVERIFY(boost::count(chemkit::PartialChargePredictor::predictors(), "mmff") == 1);
+    QVERIFY(boost::count(chemkit::PartialChargeModel::models(), "mmff") == 1);
     QVERIFY(boost::count(chemkit::AromaticityModel::models(), "mmff") == 1);
     QVERIFY(boost::count(chemkit::MolecularDescriptor::descriptors(), "mmff-energy") == 1);
 }

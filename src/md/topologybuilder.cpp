@@ -42,7 +42,7 @@
 #include <chemkit/foreach.h>
 #include <chemkit/molecule.h>
 #include <chemkit/atomtyper.h>
-#include <chemkit/partialchargepredictor.h>
+#include <chemkit/partialchargemodel.h>
 
 #include "topology.h"
 
@@ -71,7 +71,7 @@ class TopologyBuilderPrivate
 {
 public:
     std::string atomTyper;
-    std::string partialChargePredictor;
+    std::string partialChargeModel;
     boost::shared_ptr<Topology> topology;
 };
 
@@ -135,10 +135,10 @@ bool TopologyBuilder::setAtomTyper(const std::string &atomTyper)
     return true;
 }
 
-/// Sets the partial charge predictor to \p partialChargePredictor.
-bool TopologyBuilder::setPartialChargePredictor(const std::string &partialChargePredictor)
+/// Sets the partial charge model to \p model.
+bool TopologyBuilder::setPartialChargeModel(const std::string &model)
 {
-    d->partialChargePredictor = partialChargePredictor;
+    d->partialChargeModel = model;
 
     return true;
 }
@@ -156,10 +156,10 @@ void TopologyBuilder::addMolecule(const Molecule *molecule)
         atomTyper.reset(AtomTyper::create(d->atomTyper));
     }
 
-    // create partial charge predictor
-    boost::scoped_ptr<PartialChargePredictor> chargePredictor(0);
-    if(!d->partialChargePredictor.empty()){
-        chargePredictor.reset(PartialChargePredictor::create(d->partialChargePredictor));
+    // create partial charge model
+    boost::scoped_ptr<PartialChargeModel> chargeModel(0);
+    if(!d->partialChargeModel.empty()){
+        chargeModel.reset(PartialChargeModel::create(d->partialChargeModel));
     }
 
     // increase topology size to store the new molecule
@@ -181,11 +181,11 @@ void TopologyBuilder::addMolecule(const Molecule *molecule)
     }
 
     // set atom charges
-    if(chargePredictor){
-        chargePredictor->setMolecule(molecule);
+    if(chargeModel){
+        chargeModel->setMolecule(molecule);
 
         foreach(const Atom *atom, molecule->atoms()){
-            topology->setCharge(initialSize + atom->index(), chargePredictor->partialCharge(atom));
+            topology->setCharge(initialSize + atom->index(), chargeModel->partialCharge(atom));
         }
     }
     else{

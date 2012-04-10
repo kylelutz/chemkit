@@ -8,7 +8,7 @@ set(SOURCES
   mmffforcefield.cpp
   mmffparameters.cpp
   mmffparametersdata.cpp
-  mmffpartialchargepredictor.cpp
+  mmffpartialchargemodel.cpp
   mmffplugin.cpp
 )
 

@@ -41,7 +41,7 @@
 #include "mmffforcefield.h"
 #include "mmffparametersdata.h"
 #include "mmffaromaticitymodel.h"
-#include "mmffpartialchargepredictor.h"
+#include "mmffpartialchargemodel.h"
 
 MmffPlugin::MmffPlugin()
     : chemkit::Plugin("mmff")
@@ -49,7 +49,7 @@ MmffPlugin::MmffPlugin()
     CHEMKIT_REGISTER_ATOM_TYPER("mmff", MmffAtomTyper);
     CHEMKIT_REGISTER_FORCE_FIELD("mmff", MmffForceField);
     CHEMKIT_REGISTER_AROMATICITY_MODEL("mmff", MmffAromaticityModel);
-    CHEMKIT_REGISTER_PARTIAL_CHARGE_PREDICTOR("mmff", MmffPartialChargePredictor);
+    CHEMKIT_REGISTER_PARTIAL_CHARGE_MODEL("mmff", MmffPartialChargeModel);
     registerPluginClass<chemkit::MolecularDescriptor>("mmff-energy", createMmffEnergyDescriptor);
 }
 

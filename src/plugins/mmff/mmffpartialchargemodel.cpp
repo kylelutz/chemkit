@@ -33,7 +33,7 @@
 **
 ******************************************************************************/
 
-#include "mmffpartialchargepredictor.h"
+#include "mmffpartialchargemodel.h"
 
 #include <chemkit/foreach.h>
 #include <chemkit/molecule.h>
@@ -43,8 +43,8 @@
 #include "mmffparameters.h"
 
 // --- Construction and Destruction ---------------------------------------- //
-MmffPartialChargePredictor::MmffPartialChargePredictor()
-    : chemkit::PartialChargePredictor("mmff")
+MmffPartialChargeModel::MmffPartialChargeModel()
+    : chemkit::PartialChargeModel("mmff")
 {
     m_typer = 0;
     m_parameters = 0;
@@ -63,15 +63,15 @@ MmffPartialChargePredictor::MmffPartialChargePredictor()
     }
 }
 
-MmffPartialChargePredictor::~MmffPartialChargePredictor()
+MmffPartialChargeModel::~MmffPartialChargeModel()
 {
     delete m_parameters;
 }
 
 // --- Properties ---------------------------------------------------------- //
-void MmffPartialChargePredictor::setMolecule(const chemkit::Molecule *molecule)
+void MmffPartialChargeModel::setMolecule(const chemkit::Molecule *molecule)
 {
-    chemkit::PartialChargePredictor::setMolecule(molecule);
+    chemkit::PartialChargeModel::setMolecule(molecule);
 
     if(!molecule){
         m_partialCharges.resize(0);
@@ -168,13 +168,13 @@ void MmffPartialChargePredictor::setMolecule(const chemkit::Molecule *molecule)
     }
 }
 
-void MmffPartialChargePredictor::setAtomTyper(const MmffAtomTyper *typer)
+void MmffPartialChargeModel::setAtomTyper(const MmffAtomTyper *typer)
 {
     m_typer = typer;
 }
 
 // --- Partial Charges ----------------------------------------------------- //
-chemkit::Real MmffPartialChargePredictor::partialCharge(const chemkit::Atom *atom) const
+chemkit::Real MmffPartialChargeModel::partialCharge(const chemkit::Atom *atom) const
 {
     return m_partialCharges[atom->index()];
 }

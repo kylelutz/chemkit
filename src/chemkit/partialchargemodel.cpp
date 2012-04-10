@@ -33,7 +33,7 @@
 **
 ******************************************************************************/
 
-#include "partialchargepredictor.h"
+#include "partialchargemodel.h"
 
 #include "atom.h"
 #include "foreach.h"
@@ -42,59 +42,59 @@
 
 namespace chemkit {
 
-// === PartialChargePredictorPrivate ======================================= //
-class PartialChargePredictorPrivate
+// === PartialChargeModelPrivate =========================================== //
+class PartialChargeModelPrivate
 {
 public:
     std::string name;
     const Molecule *molecule;
 };
 
-// === PartialChargePredictor ============================================== //
-/// \class PartialChargePredictor partialchargepredictor.h chemkit/partialchargepredictor.h
+// === PartialChargeModel ================================================== //
+/// \class PartialChargeModel partialchargemodel.h chemkit/partialchargemodel.h
 /// \ingroup chemkit
-/// \brief The PartialChargePredictor class provides a generic
-///        interface to partial charge prediction algorithms.
+/// \brief The PartialChargeModel class provides a generic interface
+///        to various partial charge models.
 ///
-/// A list of supported partial charge predictors is available at:
-/// http://wiki.chemkit.org/Features#Partial_Charge_Predictors
+/// A list of supported partial charge models is available at:
+/// http://wiki.chemkit.org/Features#Partial_Charge_Models
 
 // --- Construction and Destruction ---------------------------------------- //
-PartialChargePredictor::PartialChargePredictor(const std::string &name)
-    : d(new PartialChargePredictorPrivate)
+PartialChargeModel::PartialChargeModel(const std::string &name)
+    : d(new PartialChargeModelPrivate)
 {
     d->name = name;
     d->molecule = 0;
 }
 
-/// Destroys the partial charge predictor object.
-PartialChargePredictor::~PartialChargePredictor()
+/// Destroys the partial charge model object.
+PartialChargeModel::~PartialChargeModel()
 {
     delete d;
 }
 
 // --- Properties ---------------------------------------------------------- //
-/// Returns the name of the partial charge predictor.
-std::string PartialChargePredictor::name() const
+/// Returns the name of the partial charge model.
+std::string PartialChargeModel::name() const
 {
     return d->name;
 }
 
-/// Sets the molecule for the predictor to \p molecule.
-void PartialChargePredictor::setMolecule(const Molecule *molecule)
+/// Sets the molecule for the model to \p molecule.
+void PartialChargeModel::setMolecule(const Molecule *molecule)
 {
     d->molecule = molecule;
 }
 
-/// Returns the molecule for the predictor.
-const Molecule* PartialChargePredictor::molecule() const
+/// Returns the molecule for the model.
+const Molecule* PartialChargeModel::molecule() const
 {
     return d->molecule;
 }
 
 // --- Partial Charges ----------------------------------------------------- //
 /// Returns the partial charge for \p atom.
-Real PartialChargePredictor::partialCharge(const Atom *atom) const
+Real PartialChargeModel::partialCharge(const Atom *atom) const
 {
     CHEMKIT_UNUSED(atom);
 
@@ -102,33 +102,33 @@ Real PartialChargePredictor::partialCharge(const Atom *atom) const
 }
 
 // --- Static Methods ------------------------------------------------------ //
-/// Creates a new partial charge predictor with \p name. Returns \c 0
+/// Creates a new partial charge model with \p name. Returns \c 0
 /// if \p name is invalid.
-PartialChargePredictor* PartialChargePredictor::create(const std::string &name)
+PartialChargeModel* PartialChargeModel::create(const std::string &name)
 {
-    return PluginManager::instance()->createPluginClass<PartialChargePredictor>(name);
+    return PluginManager::instance()->createPluginClass<PartialChargeModel>(name);
 }
 
-/// Returns a list of available partial charge predictors.
-std::vector<std::string> PartialChargePredictor::predictors()
+/// Returns a list of available partial charge models.
+std::vector<std::string> PartialChargeModel::models()
 {
-    return PluginManager::instance()->pluginClassNames<PartialChargePredictor>();
+    return PluginManager::instance()->pluginClassNames<PartialChargeModel>();
 }
 
-bool PartialChargePredictor::predictPartialCharges(Molecule *molecule, const std::string &predictorName)
+bool PartialChargeModel::assignPartialCharges(Molecule *molecule, const std::string &modelName)
 {
-    PartialChargePredictor *predictor = create(predictorName);
-    if(!predictor){
+    PartialChargeModel *model = create(modelName);
+    if(!model){
         return false;
     }
 
-    predictor->setMolecule(molecule);
+    model->setMolecule(molecule);
 
     foreach(Atom *atom, molecule->atoms()){
-        atom->setPartialCharge(predictor->partialCharge(atom));
+        atom->setPartialCharge(model->partialCharge(atom));
     }
 
-    delete predictor;
+    delete model;
 
     return true;
 }

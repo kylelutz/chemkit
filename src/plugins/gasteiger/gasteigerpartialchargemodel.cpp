@@ -33,7 +33,7 @@
 **
 ******************************************************************************/
 
-#include "gasteigerpartialchargepredictor.h"
+#include "gasteigerpartialchargemodel.h"
 
 #include <chemkit/atom.h>
 #include <chemkit/foreach.h>
@@ -62,15 +62,15 @@ const GasteigerParameters Parameters[] = {
 } // end anonymous namespace
 
 // --- Construction and Destruction ---------------------------------------- //
-GasteigerPartialChargePredictor::GasteigerPartialChargePredictor()
-    : chemkit::PartialChargePredictor("gasteiger")
+GasteigerPartialChargeModel::GasteigerPartialChargeModel()
+    : chemkit::PartialChargeModel("gasteiger")
 {
 }
 
 // --- Properties ---------------------------------------------------------- //
-void GasteigerPartialChargePredictor::setMolecule(const chemkit::Molecule *molecule)
+void GasteigerPartialChargeModel::setMolecule(const chemkit::Molecule *molecule)
 {
-    chemkit::PartialChargePredictor::setMolecule(molecule);
+    chemkit::PartialChargeModel::setMolecule(molecule);
 
     if(!molecule){
         m_charges.resize(0);
@@ -146,13 +146,13 @@ void GasteigerPartialChargePredictor::setMolecule(const chemkit::Molecule *molec
 }
 
 // --- Partial Charges ----------------------------------------------------- //
-chemkit::Real GasteigerPartialChargePredictor::partialCharge(const chemkit::Atom *atom) const
+chemkit::Real GasteigerPartialChargeModel::partialCharge(const chemkit::Atom *atom) const
 {
     return m_charges[atom->index()];
 }
 
 // --- Internal Methods ---------------------------------------------------- //
-const GasteigerParameters* GasteigerPartialChargePredictor::atomParameters(const chemkit::Atom *atom) const
+const GasteigerParameters* GasteigerPartialChargeModel::atomParameters(const chemkit::Atom *atom) const
 {
     if(atom->is(chemkit::Atom::Hydrogen)){
         return &Parameters[0];

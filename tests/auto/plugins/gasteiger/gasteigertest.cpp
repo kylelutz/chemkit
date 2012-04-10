@@ -38,21 +38,21 @@
 #include <boost/range/algorithm.hpp>
 
 #include <chemkit/molecule.h>
-#include <chemkit/partialchargepredictor.h>
+#include <chemkit/partialchargemodel.h>
 
 void GasteigerTest::initTestCase()
 {
     // verify that the gasteiger plugin registered itself correctly
-    QVERIFY(boost::count(chemkit::PartialChargePredictor::predictors(), "gasteiger") == 1);
+    QVERIFY(boost::count(chemkit::PartialChargeModel::models(), "gasteiger") == 1);
 }
 
 void GasteigerTest::name()
 {
-    chemkit::PartialChargePredictor *predictor = chemkit::PartialChargePredictor::create("gasteiger");
-    QVERIFY(predictor != 0);
-    QCOMPARE(predictor->name(), std::string("gasteiger"));
+    chemkit::PartialChargeModel *model = chemkit::PartialChargeModel::create("gasteiger");
+    QVERIFY(model != 0);
+    QCOMPARE(model->name(), std::string("gasteiger"));
 
-    delete predictor;
+    delete model;
 }
 
 void GasteigerTest::methane()
@@ -69,13 +69,13 @@ void GasteigerTest::methane()
     molecule.addBond(C1, H5);
     QCOMPARE(molecule.formula(), std::string("CH4"));
 
-    chemkit::PartialChargePredictor *predictor = chemkit::PartialChargePredictor::create("gasteiger");
-    QVERIFY(predictor != 0);
+    chemkit::PartialChargeModel *model = chemkit::PartialChargeModel::create("gasteiger");
+    QVERIFY(model != 0);
 
-    predictor->setMolecule(&molecule);
-    QCOMPARE(qRound(predictor->partialCharge(C1) * 1e3), -78);
+    model->setMolecule(&molecule);
+    QCOMPARE(qRound(model->partialCharge(C1) * 1e3), -78);
 
-    delete predictor;
+    delete model;
 }
 
 void GasteigerTest::fluoromethane()
@@ -92,17 +92,17 @@ void GasteigerTest::fluoromethane()
     molecule.addBond(C1, H5);
     QCOMPARE(molecule.formula(), std::string("CH3F"));
 
-    chemkit::PartialChargePredictor *predictor = chemkit::PartialChargePredictor::create("gasteiger");
-    QVERIFY(predictor != 0);
+    chemkit::PartialChargeModel *model = chemkit::PartialChargeModel::create("gasteiger");
+    QVERIFY(model != 0);
 
-    predictor->setMolecule(&molecule);
-    QCOMPARE(qRound(predictor->partialCharge(C1) * 1e3), 79);
-    QCOMPARE(qRound(predictor->partialCharge(F2) * 1e3), -253);
-    QCOMPARE(qRound(predictor->partialCharge(H3) * 1e3), 58);
-    QCOMPARE(qRound(predictor->partialCharge(H4) * 1e3), 58);
-    QCOMPARE(qRound(predictor->partialCharge(H5) * 1e3), 58);
+    model->setMolecule(&molecule);
+    QCOMPARE(qRound(model->partialCharge(C1) * 1e3), 79);
+    QCOMPARE(qRound(model->partialCharge(F2) * 1e3), -253);
+    QCOMPARE(qRound(model->partialCharge(H3) * 1e3), 58);
+    QCOMPARE(qRound(model->partialCharge(H4) * 1e3), 58);
+    QCOMPARE(qRound(model->partialCharge(H5) * 1e3), 58);
 
-    delete predictor;
+    delete model;
 }
 
 void GasteigerTest::ethane()
@@ -125,14 +125,14 @@ void GasteigerTest::ethane()
     molecule.addBond(C5, H8);
     QCOMPARE(molecule.formula(), std::string("C2H6"));
 
-    chemkit::PartialChargePredictor *predictor = chemkit::PartialChargePredictor::create("gasteiger");
-    QVERIFY(predictor != 0);
+    chemkit::PartialChargeModel *model = chemkit::PartialChargeModel::create("gasteiger");
+    QVERIFY(model != 0);
 
-    predictor->setMolecule(&molecule);
-    QCOMPARE(qRound(predictor->partialCharge(C1) * 1e3), -68);
-    QCOMPARE(qRound(predictor->partialCharge(C5) * 1e3), -68);
+    model->setMolecule(&molecule);
+    QCOMPARE(qRound(model->partialCharge(C1) * 1e3), -68);
+    QCOMPARE(qRound(model->partialCharge(C5) * 1e3), -68);
 
-    delete predictor;
+    delete model;
 }
 
 void GasteigerTest::fluoroethane()
@@ -155,14 +155,14 @@ void GasteigerTest::fluoroethane()
     molecule.addBond(C5, H8);
     QCOMPARE(molecule.formula(), std::string("C2H5F"));
 
-    chemkit::PartialChargePredictor *predictor = chemkit::PartialChargePredictor::create("gasteiger");
-    QVERIFY(predictor != 0);
+    chemkit::PartialChargeModel *model = chemkit::PartialChargeModel::create("gasteiger");
+    QVERIFY(model != 0);
 
-    predictor->setMolecule(&molecule);
-    QCOMPARE(qRound(predictor->partialCharge(C1) * 1e3), -37);
-    QCOMPARE(qRound(predictor->partialCharge(C5) * 1e3), 87);
+    model->setMolecule(&molecule);
+    QCOMPARE(qRound(model->partialCharge(C1) * 1e3), -37);
+    QCOMPARE(qRound(model->partialCharge(C5) * 1e3), 87);
 
-    delete predictor;
+    delete model;
 }
 
 QTEST_APPLESS_MAIN(GasteigerTest)

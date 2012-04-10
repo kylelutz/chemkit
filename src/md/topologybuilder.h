@@ -65,7 +65,7 @@ public:
     size_t size() const;
     bool isEmpty() const;
     bool setAtomTyper(const std::string &atomTyper);
-    bool setPartialChargePredictor(const std::string &partialChargePredictor);
+    bool setPartialChargeModel(const std::string &model);
 
     // topology
     void addMolecule(const Molecule *molecule);

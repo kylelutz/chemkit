@@ -33,32 +33,52 @@
 **
 ******************************************************************************/
 
-#ifndef MMFFPARTIALCHARGEPREDICTOR_H
-#define MMFFPARTIALCHARGEPREDICTOR_H
+#ifndef CHEMKIT_PARTIALCHARGEMODEL_H
+#define CHEMKIT_PARTIALCHARGEMODEL_H
 
-#include <chemkit/partialchargepredictor.h>
+#include "chemkit.h"
 
-#include "mmffatomtyper.h"
-#include "mmffparameters.h"
+#include <string>
+#include <vector>
 
-class MmffPartialChargePredictor : public chemkit::PartialChargePredictor
+#include "plugin.h"
+
+namespace chemkit {
+
+class Atom;
+class Molecule;
+class PartialChargeModelPrivate;
+
+class CHEMKIT_EXPORT PartialChargeModel
 {
 public:
     // construction and destruction
-    MmffPartialChargePredictor();
-    ~MmffPartialChargePredictor();
+    virtual ~PartialChargeModel();
 
     // properties
-    void setMolecule(const chemkit::Molecule *molecule) CHEMKIT_OVERRIDE;
-    void setAtomTyper(const MmffAtomTyper *typer);
+    std::string name() const;
+    virtual void setMolecule(const Molecule *molecule);
+    const Molecule* molecule() const;
 
     // partial charges
-    chemkit::Real partialCharge(const chemkit::Atom *atom) const CHEMKIT_OVERRIDE;
+    virtual Real partialCharge(const Atom *atom) const;
+
+    // static methods
+    static PartialChargeModel* create(const std::string &name);
+    static std::vector<std::string> models();
+    static bool assignPartialCharges(Molecule *molecule, const std::string &model);
+
+protected:
+    PartialChargeModel(const std::string &name);
 
 private:
-    std::vector<chemkit::Real> m_partialCharges;
-    const MmffAtomTyper *m_typer;
-    MmffParameters *m_parameters;
+    PartialChargeModelPrivate* const d;
 };
 
-#endif // MMFFPARTIALCHARGEPREDICTOR_H
+} // end chemkit namespace
+
+/// Registers a partial charge model with \p name.
+#define CHEMKIT_REGISTER_PARTIAL_CHARGE_MODEL(name, className) \
+    CHEMKIT_REGISTER_PLUGIN_CLASS(name, chemkit::PartialChargeModel, className)
+
+#endif // CHEMKIT_PARTIALCHARGEMODEL_H

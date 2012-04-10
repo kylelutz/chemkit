@@ -35,7 +35,7 @@
 
 #include <chemkit/plugin.h>
 
-#include "gasteigerpartialchargepredictor.h"
+#include "gasteigerpartialchargemodel.h"
 
 class GasteigerPlugin : public chemkit::Plugin
 {
@@ -43,7 +43,7 @@ public:
     GasteigerPlugin()
         : chemkit::Plugin("gasteiger")
     {
-        CHEMKIT_REGISTER_PARTIAL_CHARGE_PREDICTOR("gasteiger", GasteigerPartialChargePredictor);
+        CHEMKIT_REGISTER_PARTIAL_CHARGE_MODEL("gasteiger", GasteigerPartialChargeModel);
     }
 };
 

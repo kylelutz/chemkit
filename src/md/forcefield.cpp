@@ -149,7 +149,7 @@ void ForceField::setTopologyFromMolecule(const Molecule *molecule)
 {
     TopologyBuilder builder;
     builder.setAtomTyper(name());
-    builder.setPartialChargePredictor(name());
+    builder.setPartialChargeModel(name());
     builder.addMolecule(molecule);
     setTopology(builder.topology());
 }
