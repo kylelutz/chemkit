@@ -43,8 +43,7 @@ class AtomicNumberAtomTyper : public chemkit::AtomTyper
 public:
     AtomicNumberAtomTyper();
 
-    chemkit::Variant type(const chemkit::Atom *atom) const CHEMKIT_OVERRIDE;
-    int typeNumber(const chemkit::Atom *atom) const CHEMKIT_OVERRIDE;
+    std::string type(const chemkit::Atom *atom) const CHEMKIT_OVERRIDE;
 };
 
 #endif // ATOMICNUMBERATOMTYPER_H

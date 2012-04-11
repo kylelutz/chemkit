@@ -229,6 +229,11 @@ void OplsAtomTyper::setMolecule(const chemkit::Molecule *molecule)
 }
 
 // --- Types --------------------------------------------------------------- //
+std::string OplsAtomTyper::type(const chemkit::Atom *atom) const
+{
+    return boost::lexical_cast<std::string>(m_typeNumbers[atom->index()]);
+}
+
 void OplsAtomTyper::setTypeNumber(int index, int typeNumber)
 {
     m_typeNumbers[index] = typeNumber;
@@ -237,9 +242,4 @@ void OplsAtomTyper::setTypeNumber(int index, int typeNumber)
 int OplsAtomTyper::typeNumber(const chemkit::Atom *atom) const
 {
     return m_typeNumbers[atom->index()];
-}
-
-std::string OplsAtomTyper::typeString(const chemkit::Atom *atom) const
-{
-    return boost::lexical_cast<std::string>(typeNumber(atom));
 }

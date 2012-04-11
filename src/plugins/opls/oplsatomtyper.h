@@ -54,8 +54,8 @@ public:
     void setMolecule(const chemkit::Molecule *molecule) CHEMKIT_OVERRIDE;
 
     // types
-    int typeNumber(const chemkit::Atom *atom) const CHEMKIT_OVERRIDE;
-    std::string typeString(const chemkit::Atom *atom) const CHEMKIT_OVERRIDE;
+    std::string type(const chemkit::Atom *atom) const CHEMKIT_OVERRIDE;
+    int typeNumber(const chemkit::Atom *atom) const;
 
 private:
     void setTypeNumber(int index, int typeNumber);

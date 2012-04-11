@@ -42,12 +42,7 @@ ElementSymbolAtomTyper::ElementSymbolAtomTyper()
 {
 }
 
-chemkit::Variant ElementSymbolAtomTyper::type(const chemkit::Atom *atom) const
-{
-    return atom->symbol();
-}
-
-std::string ElementSymbolAtomTyper::typeString(const chemkit::Atom *atom) const
+std::string ElementSymbolAtomTyper::type(const chemkit::Atom *atom) const
 {
     return atom->symbol();
 }

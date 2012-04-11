@@ -53,8 +53,8 @@ public:
     void setMolecule(const chemkit::Molecule *molecule) CHEMKIT_OVERRIDE;
 
     // types
-    chemkit::Variant type(const chemkit::Atom *atom) const CHEMKIT_OVERRIDE;
-    int typeNumber(const chemkit::Atom *atom) const CHEMKIT_OVERRIDE;
+    std::string type(const chemkit::Atom *atom) const CHEMKIT_OVERRIDE;
+    int typeNumber(const chemkit::Atom *atom) const;
 
     // interaction types
     int bondedInteractionType(const chemkit::Atom *a, const chemkit::Atom *b) const CHEMKIT_OVERRIDE;

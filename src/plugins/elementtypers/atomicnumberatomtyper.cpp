@@ -35,6 +35,8 @@
 
 #include "atomicnumberatomtyper.h"
 
+#include <boost/lexical_cast.hpp>
+
 #include <chemkit/atom.h>
 
 AtomicNumberAtomTyper::AtomicNumberAtomTyper()
@@ -42,12 +44,7 @@ AtomicNumberAtomTyper::AtomicNumberAtomTyper()
 {
 }
 
-chemkit::Variant AtomicNumberAtomTyper::type(const chemkit::Atom *atom) const
+std::string AtomicNumberAtomTyper::type(const chemkit::Atom *atom) const
 {
-    return atom->atomicNumber();
-}
-
-int AtomicNumberAtomTyper::typeNumber(const chemkit::Atom *atom) const
-{
-    return atom->atomicNumber();
+    return boost::lexical_cast<std::string>(atom->atomicNumber());
 }

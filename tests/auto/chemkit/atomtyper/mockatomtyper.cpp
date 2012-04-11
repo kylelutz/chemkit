@@ -48,7 +48,7 @@ MockAtomTyper::~MockAtomTyper()
 {
 }
 
-chemkit::Variant MockAtomTyper::type(const chemkit::Atom *atom) const
+std::string MockAtomTyper::type(const chemkit::Atom *atom) const
 {
     return atom->symbol();
 }

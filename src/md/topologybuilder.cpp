@@ -171,7 +171,7 @@ void TopologyBuilder::addMolecule(const Molecule *molecule)
         atomTyper->setMolecule(molecule);
 
         foreach(const Atom *atom, molecule->atoms()){
-            topology->setType(initialSize + atom->index(), atomTyper->typeString(atom));
+            topology->setType(initialSize + atom->index(), atomTyper->type(atom));
         }
     }
 

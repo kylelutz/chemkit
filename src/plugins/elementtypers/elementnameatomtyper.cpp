@@ -42,12 +42,7 @@ ElementNameAtomTyper::ElementNameAtomTyper()
 {
 }
 
-chemkit::Variant ElementNameAtomTyper::type(const chemkit::Atom *atom) const
-{
-    return atom->name();
-}
-
-std::string ElementNameAtomTyper::typeString(const chemkit::Atom *atom) const
+std::string ElementNameAtomTyper::type(const chemkit::Atom *atom) const
 {
     return atom->name();
 }

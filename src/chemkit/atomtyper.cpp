@@ -97,23 +97,11 @@ const Molecule* AtomTyper::molecule() const
 
 // --- Types --------------------------------------------------------------- //
 /// Returns the symbolic type for \p atom.
-Variant AtomTyper::type(const Atom *atom) const
+std::string AtomTyper::type(const Atom *atom) const
 {
     CHEMKIT_UNUSED(atom);
 
-    return Variant();
-}
-
-/// Returns the symbolic type for \p atom as an integer.
-int AtomTyper::typeNumber(const Atom *atom) const
-{
-    return type(atom).toInt();
-}
-
-/// Returns the symbolic type for \p atom as a string.
-std::string AtomTyper::typeString(const Atom *atom) const
-{
-    return type(atom).toString();
+    return std::string();
 }
 
 // --- Interaction Types --------------------------------------------------- //

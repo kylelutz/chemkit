@@ -68,7 +68,7 @@ void SybylAtomTyper::setMolecule(const chemkit::Molecule *molecule)
 }
 
 // --- Types --------------------------------------------------------------- //
-std::string SybylAtomTyper::typeString(const chemkit::Atom *atom) const
+std::string SybylAtomTyper::type(const chemkit::Atom *atom) const
 {
     return m_types[atom->index()];
 }

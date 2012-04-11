@@ -63,12 +63,7 @@ void AmberAtomTyper::setMolecule(const chemkit::Molecule *molecule)
 }
 
 // --- Types --------------------------------------------------------------- //
-chemkit::Variant AmberAtomTyper::type(const chemkit::Atom *atom) const
-{
-    return m_types[atom->index()];
-}
-
-std::string AmberAtomTyper::typeString(const chemkit::Atom *atom) const
+std::string AmberAtomTyper::type(const chemkit::Atom *atom) const
 {
     return m_types[atom->index()];
 }

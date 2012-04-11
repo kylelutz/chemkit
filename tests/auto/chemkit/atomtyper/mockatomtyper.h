@@ -45,7 +45,7 @@ class MockAtomTyper : public chemkit::AtomTyper
         MockAtomTyper();
         ~MockAtomTyper();
 
-        chemkit::Variant type(const chemkit::Atom *atom) const CHEMKIT_OVERRIDE;
+        std::string type(const chemkit::Atom *atom) const CHEMKIT_OVERRIDE;
 };
 
 class MockAtomTyperPlugin : public chemkit::Plugin

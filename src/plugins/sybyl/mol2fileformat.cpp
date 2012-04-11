@@ -224,7 +224,7 @@ bool Mol2FileFormat::write(const chemkit::MoleculeFile *file, std::ostream &outp
         int atomNumber = 1;
         foreach(chemkit::Atom *atom, molecule->atoms()){
             // get atom type from the atom typer
-            std::string type = atomTyper.typeString(atom);
+            std::string type = atomTyper.type(atom);
 
             // use the atom's symbol if no type assigned
             if(type.empty()){

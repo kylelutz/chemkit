@@ -43,8 +43,7 @@ class ElementSymbolAtomTyper : public chemkit::AtomTyper
 public:
     ElementSymbolAtomTyper();
 
-    chemkit::Variant type(const chemkit::Atom *atom) const CHEMKIT_OVERRIDE;
-    std::string typeString(const chemkit::Atom *atom) const CHEMKIT_OVERRIDE;
+    std::string type(const chemkit::Atom *atom) const CHEMKIT_OVERRIDE;
 };
 
 #endif // ELEMENTSYMBOLATOMTYPER_H

@@ -43,8 +43,7 @@ class ElementNameAtomTyper : public chemkit::AtomTyper
 public:
     ElementNameAtomTyper();
 
-    chemkit::Variant type(const chemkit::Atom *atom) const CHEMKIT_OVERRIDE;
-    std::string typeString(const chemkit::Atom *atom) const CHEMKIT_OVERRIDE;
+    std::string type(const chemkit::Atom *atom) const CHEMKIT_OVERRIDE;
 };
 
 #endif // ELEMENTNAMEATOMTYPER_H

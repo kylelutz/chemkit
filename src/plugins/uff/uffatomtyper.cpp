@@ -70,7 +70,7 @@ void UffAtomTyper::setMolecule(const chemkit::Molecule *molecule)
 }
 
 // --- Types --------------------------------------------------------------- //
-std::string UffAtomTyper::typeString(const chemkit::Atom *atom) const
+std::string UffAtomTyper::type(const chemkit::Atom *atom) const
 {
     return m_types[atom->index()];
 }
@@ -81,8 +81,8 @@ int UffAtomTyper::bondedInteractionType(const chemkit::Atom *a,
 {
     const chemkit::Bond *bond = a->bondTo(b);
 
-    std::string typeA = typeString(a);
-    std::string typeB = typeString(b);
+    std::string typeA = type(a);
+    std::string typeB = type(b);
 
     if((typeA.length() > 2 && typeA[2] == 'R') && (typeB.length() > 2 && typeB[2] == 'R')){
         return Resonant;

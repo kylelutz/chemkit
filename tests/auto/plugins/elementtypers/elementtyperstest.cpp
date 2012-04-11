@@ -76,7 +76,7 @@ void ElementTypersTest::test()
     elementNameTyper->setMolecule(&molecule);
 
     foreach(const chemkit::Atom *atom, molecule.atoms()){
-        QCOMPARE(elementNameTyper->typeString(atom), atom->name());
+        QCOMPARE(elementNameTyper->type(atom), atom->name());
     }
 
     boost::scoped_ptr<chemkit::AtomTyper> atomicNumberTyper(chemkit::AtomTyper::create("atomic-number"));
@@ -85,7 +85,7 @@ void ElementTypersTest::test()
     atomicNumberTyper->setMolecule(&molecule);
 
     foreach(const chemkit::Atom *atom, molecule.atoms()){
-        QCOMPARE(atomicNumberTyper->typeNumber(atom), static_cast<int>(atom->atomicNumber()));
+        QCOMPARE(atomicNumberTyper->type(atom), boost::lexical_cast<std::string>(atom->atomicNumber()));
     }
 
     boost::scoped_ptr<chemkit::AtomTyper> elementSymbolTyper(chemkit::AtomTyper::create("element-symbol"));
@@ -94,7 +94,7 @@ void ElementTypersTest::test()
     elementSymbolTyper->setMolecule(&molecule);
 
     foreach(const chemkit::Atom *atom, molecule.atoms()){
-        QCOMPARE(elementSymbolTyper->typeString(atom), atom->symbol());
+        QCOMPARE(elementSymbolTyper->type(atom), atom->symbol());
     }
 }
 
