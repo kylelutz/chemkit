@@ -337,7 +337,7 @@ Point3 orthocenter(const Point3 &a, const Point3 &b, const Point3 &c, const Poin
 /// weighted vertices (\p a, \p b).
 Real orthoradius(const Point3 &a, const Point3 &b, Real wa, Real wb)
 {
-    Vector3d ap = a - orthocenter(a, b, wa, wb);
+    Vector3d ap = a.cast<double>() - orthocenter(a, b, wa, wb).cast<double>();
 
     return ap.squaredNorm() - wa;
 }
@@ -346,8 +346,8 @@ Real orthoradius(const Point3 &a, const Point3 &b, Real wa, Real wb)
 /// with weighted vertices (\p a, \p b, \p c).
 Real orthoradius(const Point3 &a, const Point3 &b, const Point3 &c, Real wa, Real wb, Real wc)
 {
-    Vector3d r = a - c;
-    Vector3d s = b - c;
+    Vector3d r = a.cast<double>() - c.cast<double>();
+    Vector3d s = b.cast<double>() - c.cast<double>();
 
     double r2 = r.squaredNorm() + (wc - wa);
     double s2 = s.squaredNorm() + (wc - wb);
@@ -373,9 +373,9 @@ Real orthoradius(const Point3 &a, const Point3 &b, const Point3 &c, Real wa, Rea
 /// with weighted vertices (\p a, \p b, \p c, \p d).
 Real orthoradius(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d, Real wa, Real wb, Real wc, Real wd)
 {
-    Vector3d t = a - d;
-    Vector3d u = b - d;
-    Vector3d v = c - d;
+    Vector3d t = a.cast<double>() - d.cast<double>();
+    Vector3d u = b.cast<double>() - d.cast<double>();
+    Vector3d v = c.cast<double>() - d.cast<double>();
 
     Vector3d i = u.cross(v) * (t.squaredNorm() + (wd - wa));
     Vector3d j = v.cross(t) * (u.squaredNorm() + (wd - wb));
@@ -433,9 +433,9 @@ Vector3 planeNormal(const Point3 &a, const Point3 &b, const Point3 &c)
 **/
 Real planeOrientation(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &p)
 {
-    Vector3d t = a - p;
-    Vector3d u = b - p;
-    Vector3d v = c - p;
+    Vector3d t = a.cast<double>() - p.cast<double>();
+    Vector3d u = b.cast<double>() - p.cast<double>();
+    Vector3d v = c.cast<double>() - p.cast<double>();
 
     return t.dot(u.cross(v));
 }
@@ -464,10 +464,10 @@ Real planeOrientation(const Point3 &a, const Point3 &b, const Point3 &c, const P
 **/
 Real sphereOrientation(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d, const Point3 &p)
 {
-    Vector3d t = a - p;
-    Vector3d u = b - p;
-    Vector3d v = c - p;
-    Vector3d w = d - p;
+    Vector3d t = a.cast<double>() - p.cast<double>();
+    Vector3d u = b.cast<double>() - p.cast<double>();
+    Vector3d v = c.cast<double>() - p.cast<double>();
+    Vector3d w = d.cast<double>() - p.cast<double>();
 
     Eigen::Matrix<double, 4, 4> matrix;
 
@@ -503,10 +503,10 @@ Real sphereOrientation(const Point3 &a, const Point3 &b, const Point3 &c, const 
 **/
 Real sphereOrientation(const Point3 &a, const Point3 &b, const Point3 &c, const Point3 &d, const Point3 &p, Real wa, Real wb, Real wc, Real wd, Real wp)
 {
-    Vector3d t = a - p;
-    Vector3d u = b - p;
-    Vector3d v = c - p;
-    Vector3d w = d - p;
+    Vector3d t = a.cast<double>() - p.cast<double>();
+    Vector3d u = b.cast<double>() - p.cast<double>();
+    Vector3d v = c.cast<double>() - p.cast<double>();
+    Vector3d w = d.cast<double>() - p.cast<double>();
 
     Eigen::Matrix<double, 4, 4> matrix;
 

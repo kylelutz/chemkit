@@ -40,16 +40,16 @@
 void QuaternionTest::basic()
 {
     chemkit::Quaternion q(4, 1, 2, 3);
-    QCOMPARE(q.x(), 1.0);
-    QCOMPARE(q.y(), 2.0);
-    QCOMPARE(q.z(), 3.0);
-    QCOMPARE(q.w(), 4.0);
+    QCOMPARE(q.x(), chemkit::Real(1.0));
+    QCOMPARE(q.y(), chemkit::Real(2.0));
+    QCOMPARE(q.z(), chemkit::Real(3.0));
+    QCOMPARE(q.w(), chemkit::Real(4.0));
 
     q = chemkit::Quaternion(8, 5, 6, 7);
-    QCOMPARE(q.x(), 5.0);
-    QCOMPARE(q.y(), 6.0);
-    QCOMPARE(q.z(), 7.0);
-    QCOMPARE(q.w(), 8.0);
+    QCOMPARE(q.x(), chemkit::Real(5.0));
+    QCOMPARE(q.y(), chemkit::Real(6.0));
+    QCOMPARE(q.z(), chemkit::Real(7.0));
+    QCOMPARE(q.w(), chemkit::Real(8.0));
 }
 
 void QuaternionTest::multiply()
