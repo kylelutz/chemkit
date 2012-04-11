@@ -93,19 +93,19 @@ public:
 ///         surface.
 ///
 /// The following example shows how to calculate the solvent
-/// accessible surface area of a Protein.
+/// accessible surface area of a molecule.
 /// \code
-/// // create the surface object using the protein molecule
-/// chemkit::MolecularSurface surface(protein->molecule());
+/// // create the surface object for the molecule
+/// MolecularSurface surface(molecule);
 ///
 /// // set the surface type to solvent accessible
-/// surface.setSurfaceType(chemkit::MolecularSurface::SolventAccessible);
+/// surface.setSurfaceType(MolecularSurface::SolventAccessible);
 ///
 /// // set the solvent probe radius to 1.4 angstroms
 /// surface.setProbeRadius(1.4);
 ///
 /// // calculate the surface area
-/// chemkit::Float area = surface.surfaceArea();
+/// double area = surface.surfaceArea();
 /// \endcode
 
 /// \enum MolecularSurface::SurfaceType
