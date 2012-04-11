@@ -140,6 +140,12 @@ size_t ForceField::size() const
 void ForceField::setTopology(const boost::shared_ptr<Topology> &topology)
 {
     d->topology = topology;
+
+    // remove old calculations
+    foreach(ForceFieldCalculation *calculation, d->calculations){
+        delete calculation;
+    }
+    d->calculations.clear();
 }
 
 /// Builds a topology for the molecule and sets it with setTopology().
