@@ -1065,27 +1065,6 @@ Point3 Molecule::centerOfMass() const
     return m_coordinates->weightedCenter(weights);
 }
 
-/// Rotates the positions of all the atoms in the molecule
-/// by \p angle degrees around \p axis.
-void Molecule::rotate(const Vector3 &axis, Real angle)
-{
-    // convert angle to radians
-    angle *= chemkit::constants::DegreesToRadians;
-
-    // build rotation transform
-    Eigen::Matrix<Real, 3, 1> axisVector(axis.x(), axis.y(), axis.z());
-    Eigen::Transform<Real, 3, 3> transform(Eigen::AngleAxis<Real>(angle, axisVector));
-
-    // rotate each atom
-    foreach(Atom *atom, m_atoms){
-        Eigen::Matrix<Real, 3, 1> position(atom->x(), atom->y(), atom->z());
-
-        position = transform * position;
-
-        atom->setPosition(position.x(), position.y(), position.z());
-    }
-}
-
 // --- Operators ----------------------------------------------------------- //
 Molecule& Molecule::operator=(const Molecule &molecule)
 {

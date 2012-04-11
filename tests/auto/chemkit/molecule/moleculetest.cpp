@@ -42,6 +42,7 @@
 #include <chemkit/chemkit.h>
 #include <chemkit/molecule.h>
 #include <chemkit/lineformat.h>
+#include <chemkit/cartesiancoordinates.h>
 
 void MoleculeTest::name()
 {
@@ -444,7 +445,7 @@ void MoleculeTest::rotate()
     C2->setPosition(0, 0, 0);
     C3->setPosition(1, 0, 0);
 
-    molecule.rotate(chemkit::Vector3::UnitZ(), 90);
+    molecule.coordinates()->rotate(chemkit::Vector3::UnitZ(), 90);
     QVERIFY(C1->position().isApprox(chemkit::Vector3(1, 0, 0)));
     QVERIFY(C2->position().isApprox(chemkit::Vector3(0, 0, 0)));
     QVERIFY(C3->position().isApprox(chemkit::Vector3(0, 1, 0)));

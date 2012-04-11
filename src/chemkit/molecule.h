@@ -160,7 +160,6 @@ public:
     void setCenter(Real x, Real y, Real z);
     Point3 center() const;
     Point3 centerOfMass() const;
-    void rotate(const Vector3 &axis, Real angle);
 
     // operators
     Molecule& operator=(const Molecule &molecule);
