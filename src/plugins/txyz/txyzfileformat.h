@@ -1,6 +1,6 @@
 /******************************************************************************
 **
-** Copyright (C) 2009-2011 Kyle Lutz <kyle.r.lutz@gmail.com>
+** Copyright (C) 2009-2012 Kyle Lutz <kyle.r.lutz@gmail.com>
 ** All rights reserved.
 **
 ** This file is a part of the chemkit project. For more information
@@ -36,21 +36,15 @@
 #ifndef TXYZFILEFORMAT_H
 #define TXYZFILEFORMAT_H
 
-#include <chemkit/molecule.h>
 #include <chemkit/moleculefileformat.h>
-
-#include <QIODevice>
 
 class TxyzFileFormat : public chemkit::MoleculeFileFormat
 {
 public:
     TxyzFileFormat();
-    ~TxyzFileFormat();
 
     bool read(std::istream &input, chemkit::MoleculeFile *file) CHEMKIT_OVERRIDE;
-    bool read(QIODevice *iodev, chemkit::MoleculeFile *file);
     bool write(const chemkit::MoleculeFile *file, std::ostream &output) CHEMKIT_OVERRIDE;
-    bool write(const chemkit::MoleculeFile *file, QIODevice *iodev);
 };
 
 #endif // TXYZFILEFORMAT_H

@@ -1,6 +1,6 @@
 /******************************************************************************
 **
-** Copyright (C) 2009-2011 Kyle Lutz <kyle.r.lutz@gmail.com>
+** Copyright (C) 2009-2012 Kyle Lutz <kyle.r.lutz@gmail.com>
 ** All rights reserved.
 **
 ** This file is a part of the chemkit project. For more information
@@ -35,10 +35,16 @@
 
 #include "txyzfileformat.h"
 
-#include <QtCore>
+#include <iomanip>
+#include <algorithm>
+
+#include <boost/make_shared.hpp>
+#include <boost/algorithm/string.hpp>
 
 #include <chemkit/atom.h>
 #include <chemkit/element.h>
+#include <chemkit/foreach.h>
+#include <chemkit/molecule.h>
 #include <chemkit/moleculefile.h>
 
 TxyzFileFormat::TxyzFileFormat()
@@ -46,86 +52,93 @@ TxyzFileFormat::TxyzFileFormat()
 {
 }
 
-TxyzFileFormat::~TxyzFileFormat()
-{
-}
-
 bool TxyzFileFormat::read(std::istream &input, chemkit::MoleculeFile *file)
 {
-    QByteArray data;
-    while(!input.eof()){
-        data += input.get();
-    }
-    data.chop(1);
-
-    QBuffer buffer;
-    buffer.setData(data);
-    buffer.open(QBuffer::ReadOnly);
-    return read(&buffer, file);
-}
-
-bool TxyzFileFormat::read(QIODevice *iodev, chemkit::MoleculeFile *file)
-{
-    iodev->setTextModeEnabled(true);
-
-    bool ok;
-
     // first line contains atom count and molecule name
-    QString firstLine = iodev->readLine();
-    QStringList firstLineItems = firstLine.split(' ', QString::SkipEmptyParts);
-    if(firstLineItems.size() < 1){
+    std::string firstLine;
+    std::getline(input, firstLine);
+    boost::trim(firstLine);
+    std::vector<std::string> firstLineTokens;
+    boost::split(firstLineTokens,
+                 firstLine,
+                 boost::is_any_of(" "),
+                 boost::token_compress_on);
+    if(firstLineTokens.size() < 1){
         setErrorString("First line of TXYZ file should contain number of atoms.");
         return false;
     }
 
-    int atomCount = firstLineItems[0].toInt(&ok);
-    if(!ok){
+    size_t atomCount = 0;
+    try {
+        atomCount = boost::lexical_cast<size_t>(firstLineTokens[0]);
+    }
+    catch(boost::bad_lexical_cast &e) {
         setErrorString("First line of TXYZ file should contain number of atoms.");
         return false;
     }
 
-    boost::shared_ptr<chemkit::Molecule> molecule(new chemkit::Molecule);
-    QVector<QList<int> > bondLists(atomCount);
+    // create molecule
+    boost::shared_ptr<chemkit::Molecule> molecule = boost::make_shared<chemkit::Molecule>();
 
-    for(int i = 0; i < atomCount; i++){
-        QStringList line = QString(iodev->readLine()).simplified().split(' ', QString::SkipEmptyParts);
-        if(line.size() < 5){
+    // set molecule name
+    if(firstLineTokens.size() >= 2){
+        molecule->setName(firstLineTokens[1]);
+    }
+
+    // reserve space for atoms
+    molecule->setAtomCapacity(atomCount);
+
+    std::vector<std::vector<size_t> > bondLists(atomCount);
+
+    for(size_t i = 0; i < atomCount; i++){
+        std::string line;
+        std::getline(input, line);
+        boost::trim(line);
+        std::vector<std::string> lineTokens;
+        boost::split(lineTokens,
+                     line,
+                     boost::is_any_of("\t "),
+                     boost::token_compress_on);
+        if(lineTokens.size() < 5){
             // line too short
             continue;
         }
 
-        int atomicNumber;
+        chemkit::Atom::AtomicNumberType atomicNumber;
 
         // if first character of line is a number then it is the atomic number
-        if(line[1][0].isNumber()){
-            atomicNumber = line[0].toInt();
+        if(std::isdigit(lineTokens[1][0])){
+            atomicNumber = boost::lexical_cast<chemkit::Atom::AtomicNumberType>(lineTokens[1]);
         }
         // else we interpret it as an atomic symbol
         else{
-            QByteArray symbol = line[1].toAscii();
-            atomicNumber = chemkit::Element(symbol.constData()).atomicNumber();
+            atomicNumber = chemkit::Element(lineTokens[1]).atomicNumber();
         }
 
         // add the atom if we have a valid atomic number
-        if(chemkit::Element::isValidAtomicNumber(atomicNumber)){
-            chemkit::Atom *atom = molecule->addAtom(atomicNumber);
-            atom->setPosition(line[2].toDouble(), line[3].toDouble(), line[4].toDouble());
+        chemkit::Atom *atom = molecule->addAtom(atomicNumber);
+        if(atom){
+            atom->setPosition(boost::lexical_cast<chemkit::Real>(lineTokens[2]),
+                              boost::lexical_cast<chemkit::Real>(lineTokens[3]),
+                              boost::lexical_cast<chemkit::Real>(lineTokens[4]));
         }
 
         // read bonds
-        for(int j = 6; j < line.size(); j++){
-            // index of the other atom in the bond
-            int otherAtom = line[j].toInt(&ok);
-            if(ok)
-                bondLists[i].append(otherAtom);
+        for(size_t j = 6; j < lineTokens.size(); j++){
+            try {
+                bondLists[i].push_back(boost::lexical_cast<size_t>(lineTokens[j]));
+            }
+            catch(boost::bad_lexical_cast &){
+                continue;
+            }
         }
     }
 
-    // make bonds
-    for(int i = 0; i < atomCount; i++){
-        QList<int> bondedAtoms = bondLists[i];
+    // add bonds
+    for(size_t i = 0; i < atomCount; i++){
+        const std::vector<size_t> &neighbors = bondLists[i];
 
-        foreach(int neighbor, bondedAtoms){
+        foreach(size_t neighbor, neighbors){
             molecule->addBond(i, neighbor - 1);
         }
     }
@@ -137,21 +150,6 @@ bool TxyzFileFormat::read(QIODevice *iodev, chemkit::MoleculeFile *file)
 
 bool TxyzFileFormat::write(const chemkit::MoleculeFile *file, std::ostream &output)
 {
-    QBuffer buffer;
-    buffer.open(QBuffer::WriteOnly);
-    bool ok = write(file, &buffer);
-    if(!ok){
-        return false;
-    }
-
-    output.write(buffer.data().constData(), buffer.size());
-    return true;
-}
-
-bool TxyzFileFormat::write(const chemkit::MoleculeFile *file, QIODevice *iodev)
-{
-    iodev->setTextModeEnabled(true);
-
     if(file->isEmpty()){
         setErrorString("File is empty.");
         return false;
@@ -160,36 +158,34 @@ bool TxyzFileFormat::write(const chemkit::MoleculeFile *file, QIODevice *iodev)
     const boost::shared_ptr<chemkit::Molecule> &molecule = file->molecule();
 
     // write atom count and molecule name
-    iodev->write(QString("%1 %2\n").arg(molecule->atomCount())
-                                   .arg(molecule->name().c_str())
-                                   .toAscii());
+    output << std::setw(6) << molecule->atomCount();
+    if(!molecule->name().empty()){
+        output << "   " << molecule->name();
+    }
+    output << "\n";
 
-    int index = 0;
     foreach(const chemkit::Atom *atom, molecule->atoms()){
         // write atom line: index, symbol, x, y, z, 0
-        iodev->write(QString("%1%2%3%4%5%6").arg(index+1, 6)
-                                            .arg(atom->symbol().c_str(), 3)
-                                            .arg(atom->x(), 10)
-                                            .arg(atom->y(), 10)
-                                            .arg(atom->z(), 10)
-                                            .arg("0", 6)
-                                            .toAscii());
+        output << std::setw(6) << atom->index() + 1 <<
+                  std::setw(4) << atom->symbol()  <<
+                  std::setw(12) << atom->x() <<
+                  std::setw(12) << atom->y() <<
+                  std::setw(12) << atom->z() <<
+                  std::setw(6) << "0";
 
         // list of atom indices for each bonded neighbor
-        QList<int> neighborIndices;
+        std::vector<size_t> neighborIndices;
         foreach(const chemkit::Atom *neighbor, atom->neighbors()){
-            neighborIndices.append(neighbor->index());
+            neighborIndices.push_back(neighbor->index());
         }
-        qSort(neighborIndices);
+        std::sort(neighborIndices.begin(), neighborIndices.end());
 
         // write neighbor indices
-        foreach(int neighborIndex, neighborIndices){
-            iodev->write(QString("%1").arg(neighborIndex+1, 6).toAscii());
+        foreach(size_t neighborIndex, neighborIndices){
+            output << std::setw(6) << neighborIndex + 1;
         }
 
-        iodev->write("\n");
-
-        index++;
+        output << "\n";
     }
 
     return true;
