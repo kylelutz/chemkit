@@ -36,6 +36,7 @@
 #include "cartesiancoordinatestest.h"
 
 #include <chemkit/atom.h>
+#include <chemkit/vector3.h>
 #include <chemkit/molecule.h>
 #include <chemkit/cartesiancoordinates.h>
 
@@ -163,6 +164,19 @@ void CartesianCoordinatesTest::distanceMatrix()
     QCOMPARE(qRound(distances(0, 0)), 0);
     QCOMPARE(qRound(distances(0, 1)), 1);
     QCOMPARE(qRound(distances(1, 0)), 1);
+}
+
+void CartesianCoordinatesTest::rotate()
+{
+    chemkit::CartesianCoordinates coordinates(3);
+    coordinates.setPosition(0, chemkit::Point3(0, -1, 0));
+    coordinates.setPosition(1, chemkit::Point3(0, 0, 0));
+    coordinates.setPosition(2, chemkit::Point3(1, 0, 0));
+
+    coordinates.rotate(chemkit::Vector3::UnitZ(), 90);
+    QVERIFY(coordinates.position(0).isApprox(chemkit::Point3(1, 0, 0)));
+    QVERIFY(coordinates.position(1).isApprox(chemkit::Point3(0, 0, 0)));
+    QVERIFY(coordinates.position(2).isApprox(chemkit::Point3(0, 1, 0)));
 }
 
 QTEST_APPLESS_MAIN(CartesianCoordinatesTest)

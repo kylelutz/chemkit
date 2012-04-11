@@ -50,6 +50,7 @@ class CartesianCoordinatesTest : public QObject
         void center();
         void multiply();
         void distanceMatrix();
+        void rotate();
 };
 
 #endif // CARTESIANCOORDINATESTEST_H

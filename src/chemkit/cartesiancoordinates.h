@@ -87,6 +87,7 @@ public:
     Point3 weightedCenter(const std::vector<Real> &weights) const;
     void moveBy(const Vector3 &vector);
     void moveBy(Real x, Real y, Real z);
+    void rotate(const Vector3 &axis, Real angle);
     Matrix distanceMatrix() const;
 
     // derivatives
