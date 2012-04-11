@@ -36,7 +36,7 @@
 #ifndef MCDLREADER_H
 #define MCDLREADER_H
 
-#include <QtCore>
+#include <vector>
 
 #include <chemkit/molecule.h>
 
@@ -60,14 +60,14 @@ private:
     int readNumber(const char **p);
     chemkit::Element readElement(const char **p);
     void addFragmentCopies(chemkit::Atom *atom, int quantity);
-    void addFragmentConnections(const QList<int> &connections, int fragment);
+    void addFragmentConnections(const std::vector<int> &connections, int fragment);
     void setErrorString(const std::string &error);
 
 private:
     const char *p;
     const char *m_formula;
     chemkit::Molecule *m_molecule;
-    QList<chemkit::Atom *> m_fragments;
+    std::vector<chemkit::Atom *> m_fragments;
     std::string m_errorString;
 };
 

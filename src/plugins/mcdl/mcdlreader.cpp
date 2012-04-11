@@ -36,6 +36,7 @@
 #include "mcdlreader.h"
 
 #include <chemkit/atom.h>
+#include <chemkit/foreach.h>
 
 // === McdlReader ========================================================== //
 // --- Construction and Destruction ---------------------------------------- //
@@ -153,7 +154,7 @@ bool McdlReader::readCompositionModule()
                     return false;
                 }
 
-                m_fragments.append(atom);
+                m_fragments.push_back(atom);
             }
 
             p++;
@@ -169,7 +170,7 @@ bool McdlReader::readCompositionModule()
 
 bool McdlReader::readConnectionModule()
 {
-    QList<int> connections;
+    std::vector<int> connections;
     int fragment = 0;
 
     // read connectivity module
@@ -194,7 +195,7 @@ bool McdlReader::readConnectionModule()
         }
         // read number
         else if(isdigit(*p)){
-            connections.append(readNumber(&p));
+            connections.push_back(readNumber(&p));
         }
         else if(*p == ','){
             p++;
@@ -238,7 +239,7 @@ void McdlReader::addFragmentCopies(chemkit::Atom *atom, int quantity)
 {
     for(int i = 1; i < quantity; i++){
         chemkit::Atom *root = m_molecule->addAtomCopy(atom);
-        m_fragments.append(root);
+        m_fragments.push_back(root);
 
         foreach(chemkit::Atom *neighbor, atom->neighbors()){
             chemkit::Atom *terminalAtom  = m_molecule->addAtomCopy(neighbor);
@@ -248,12 +249,12 @@ void McdlReader::addFragmentCopies(chemkit::Atom *atom, int quantity)
 }
 
 /// adds inter-fragment bonds for fragment
-void McdlReader::addFragmentConnections(const QList<int> &connections, int fragment)
+void McdlReader::addFragmentConnections(const std::vector<int> &connections, int fragment)
 {
-    chemkit::Atom *root = m_fragments.value(fragment);
+    chemkit::Atom *root = m_fragments[fragment];
 
-    for(int i = 0; i < connections.size(); i++){
-        chemkit::Atom *neighbor = m_fragments.value(connections.at(i) - 1);
+    for(size_t i = 0; i < connections.size(); i++){
+        chemkit::Atom *neighbor = m_fragments[connections[i] - 1];
 
         m_molecule->addBond(root, neighbor);
     }
