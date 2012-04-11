@@ -1,6 +1,6 @@
 /******************************************************************************
 **
-** Copyright (C) 2009-2011 Kyle Lutz <kyle.r.lutz@gmail.com>
+** Copyright (C) 2009-2012 Kyle Lutz <kyle.r.lutz@gmail.com>
 ** All rights reserved.
 **
 ** This file is a part of the chemkit project. For more information
@@ -33,20 +33,17 @@
 **
 ******************************************************************************/
 
-#ifndef FORMULATEST_H
-#define FORMULATEST_H
+#ifndef SPACEDFORMULALINEFORMAT_H
+#define SPACEDFORMULALINEFORMAT_H
 
-#include <QtTest>
+#include <chemkit/lineformat.h>
 
-class FormulaTest : public QObject
+class SpacedFormulaLineFormat : public chemkit::LineFormat
 {
-    Q_OBJECT
+public:
+    SpacedFormulaLineFormat();
 
-    private slots:
-        void initTestCase();
-        void read();
-        void write();
-        void writeSpaced();
+    std::string write(const chemkit::Molecule *molecule) CHEMKIT_OVERRIDE;
 };
 
-#endif // FORMULATEST_H
+#endif // SPACEDFORMULALINEFORMAT_H

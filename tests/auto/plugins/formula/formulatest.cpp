@@ -45,6 +45,7 @@ void FormulaTest::initTestCase()
 {
     // verify that the formula plugin registered itself correctly
     QVERIFY(boost::count(chemkit::LineFormat::formats(), "formula") == 1);
+    QVERIFY(boost::count(chemkit::LineFormat::formats(), "spaced-formula") == 1);
 }
 
 void FormulaTest::read()
@@ -101,6 +102,34 @@ void FormulaTest::write()
     QCOMPARE(formulaFormat->write(&water), std::string("H2O"));
 
     delete formulaFormat;
+}
+
+void FormulaTest::writeSpaced()
+{
+    boost::scoped_ptr<chemkit::LineFormat>
+        spacedFormulaFormat(chemkit::LineFormat::create("spaced-formula"));
+    QVERIFY(spacedFormulaFormat != 0);
+    QCOMPARE(spacedFormulaFormat->name(), std::string("spaced-formula"));
+
+    // empty
+    chemkit::Molecule empty;
+    QCOMPARE(spacedFormulaFormat->write(&empty), std::string());
+
+    // water
+    chemkit::Molecule water("H2O", "formula");
+    QCOMPARE(spacedFormulaFormat->write(&water), std::string("H 2 O 1"));
+
+    // C2
+    chemkit::Molecule C2("C2", "formula");
+    QCOMPARE(spacedFormulaFormat->write(&C2), std::string("C 2"));
+
+    // ethanol
+    chemkit::Molecule ethanol("C2H6O", "formula");
+    QCOMPARE(spacedFormulaFormat->write(&ethanol), std::string("C 2 H 6 O 1"));
+
+    // guanine
+    chemkit::Molecule guanine("C5H5N5O", "formula");
+    QCOMPARE(spacedFormulaFormat->write(&guanine), std::string("C 5 H 5 N 5 O 1"));
 }
 
 QTEST_APPLESS_MAIN(FormulaTest)

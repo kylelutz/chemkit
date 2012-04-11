@@ -1,6 +1,6 @@
 /******************************************************************************
 **
-** Copyright (C) 2009-2011 Kyle Lutz <kyle.r.lutz@gmail.com>
+** Copyright (C) 2009-2012 Kyle Lutz <kyle.r.lutz@gmail.com>
 ** All rights reserved.
 **
 ** This file is a part of the chemkit project. For more information
@@ -33,20 +33,53 @@
 **
 ******************************************************************************/
 
-#ifndef FORMULATEST_H
-#define FORMULATEST_H
+#include "spacedformulalineformat.h"
 
-#include <QtTest>
+#include <map>
 
-class FormulaTest : public QObject
+#include <chemkit/atom.h>
+#include <chemkit/foreach.h>
+#include <chemkit/molecule.h>
+
+SpacedFormulaLineFormat::SpacedFormulaLineFormat()
+    : chemkit::LineFormat("spaced-formula")
 {
-    Q_OBJECT
+}
 
-    private slots:
-        void initTestCase();
-        void read();
-        void write();
-        void writeSpaced();
-};
+std::string SpacedFormulaLineFormat::write(const chemkit::Molecule *molecule)
+{
+    // a map of atomic symbols to their quantity
+    std::map<std::string, size_t> composition;
+    foreach(const chemkit::Atom *atom, molecule->atoms()){
+        composition[atom->symbol()]++;
+    }
 
-#endif // FORMULATEST_H
+    std::stringstream stream;
+
+    if(composition.count("C") != 0){
+        stream << "C ";
+        stream << composition["C"] << " ";
+        composition.erase("C");
+
+        if(composition.count("H") != 0){
+            stream << "H ";
+            stream << composition["H"] << " ";
+            composition.erase("H");
+        }
+    }
+
+    std::map<std::string, size_t>::iterator iter;
+    for(iter = composition.begin(); iter != composition.end(); ++iter){
+        stream << iter->first << " ";
+        stream << iter->second << " ";
+    }
+
+    std::string formula = stream.str();
+
+    // remove trailing space
+    if(!formula.empty()){
+        formula.erase(formula.end() - 1);
+    }
+
+    return formula;
+}
