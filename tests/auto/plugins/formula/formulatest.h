@@ -46,6 +46,7 @@ class FormulaTest : public QObject
         void initTestCase();
         void read();
         void write();
+        void writeHtml();
         void writeSpaced();
 };
 

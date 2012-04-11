@@ -33,22 +33,53 @@
 **
 ******************************************************************************/
 
-#include <chemkit/plugin.h>
-
-#include "formulalineformat.h"
 #include "htmlformulalineformat.h"
-#include "spacedformulalineformat.h"
 
-class FormulaPlugin : public chemkit::Plugin
+#include <map>
+
+#include <chemkit/atom.h>
+#include <chemkit/foreach.h>
+#include <chemkit/molecule.h>
+
+HtmlFormulaLineFormat::HtmlFormulaLineFormat()
+    : chemkit::LineFormat("html-formula")
 {
-public:
-    FormulaPlugin()
-        : chemkit::Plugin("formula")
-    {
-        CHEMKIT_REGISTER_LINE_FORMAT("formula", FormulaLineFormat);
-        CHEMKIT_REGISTER_LINE_FORMAT("html-formula", HtmlFormulaLineFormat);
-        CHEMKIT_REGISTER_LINE_FORMAT("spaced-formula", SpacedFormulaLineFormat);
-    }
-};
+}
 
-CHEMKIT_EXPORT_PLUGIN(formula, FormulaPlugin)
+std::string HtmlFormulaLineFormat::write(const chemkit::Molecule *molecule)
+{
+    // a map of atomic symbols to their quantity
+    std::map<std::string, size_t> composition;
+    foreach(const chemkit::Atom *atom, molecule->atoms()){
+        composition[atom->symbol()]++;
+    }
+
+    std::stringstream formula;
+
+    if(composition.count("C") != 0){
+        formula << "C";
+        if(composition["C"] > 1){
+            formula << "<sub>" << composition["C"] << "</sub>";
+        }
+        composition.erase("C");
+
+        if(composition.count("H") != 0){
+            formula << "H";
+            if(composition["H"] > 1){
+                formula << "<sub>" << composition["H"] << "</sub>";
+            }
+        }
+        composition.erase("H");
+    }
+
+    std::map<std::string, size_t>::iterator iter;
+    for(iter = composition.begin(); iter != composition.end(); ++iter){
+        formula << iter->first;
+
+        if(iter->second > 1){
+            formula << "<sub>" << iter->second << "</sub>";
+        }
+    }
+
+    return formula.str();
+}

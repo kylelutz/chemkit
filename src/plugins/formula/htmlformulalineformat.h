@@ -33,22 +33,17 @@
 **
 ******************************************************************************/
 
-#include <chemkit/plugin.h>
+#ifndef HTMLFORMULALINEFORMAT_H
+#define HTMLFORMULALINEFORMAT_H
 
-#include "formulalineformat.h"
-#include "htmlformulalineformat.h"
-#include "spacedformulalineformat.h"
+#include <chemkit/lineformat.h>
 
-class FormulaPlugin : public chemkit::Plugin
+class HtmlFormulaLineFormat : public chemkit::LineFormat
 {
 public:
-    FormulaPlugin()
-        : chemkit::Plugin("formula")
-    {
-        CHEMKIT_REGISTER_LINE_FORMAT("formula", FormulaLineFormat);
-        CHEMKIT_REGISTER_LINE_FORMAT("html-formula", HtmlFormulaLineFormat);
-        CHEMKIT_REGISTER_LINE_FORMAT("spaced-formula", SpacedFormulaLineFormat);
-    }
+    HtmlFormulaLineFormat();
+
+    std::string write(const chemkit::Molecule *molecule) CHEMKIT_OVERRIDE;
 };
 
-CHEMKIT_EXPORT_PLUGIN(formula, FormulaPlugin)
+#endif // HTMLFORMULALINEFORMAT_H

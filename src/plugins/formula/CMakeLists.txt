@@ -4,6 +4,7 @@ include_directories(${CHEMKIT_INCLUDE_DIRS})
 set(SOURCES
   formulalineformat.cpp
   formulaplugin.cpp
+  htmlformulalineformat.cpp
   spacedformulalineformat.cpp
 )
 
