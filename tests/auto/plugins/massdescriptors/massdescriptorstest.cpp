@@ -43,7 +43,7 @@
 void MassDescriptorsTest::initTestCase()
 {
     // verify that the massdescriptors plugin registered itself correctly
-    QVERIFY(boost::count(chemkit::MolecularDescriptor::descriptors(), "molecular-mass") == 1);
+    QVERIFY(boost::count(chemkit::MolecularDescriptor::descriptors(), "mass") == 1);
 }
 
 void MassDescriptorsTest::test_data()
@@ -65,7 +65,7 @@ void MassDescriptorsTest::test()
 
     chemkit::Molecule molecule(formula.constData(), "formula");
     QCOMPARE(molecule.formula().c_str(), formula.constData());
-    QCOMPARE(molecule.descriptor("molecular-mass").toInt(), mass);
+    QCOMPARE(molecule.descriptor("mass").toInt(), mass);
 }
 
 QTEST_APPLESS_MAIN(MassDescriptorsTest)

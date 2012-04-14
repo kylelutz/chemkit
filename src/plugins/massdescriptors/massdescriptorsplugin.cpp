@@ -43,7 +43,7 @@ public:
     MassDescriptorsPlugin()
         : chemkit::Plugin("massdescriptors")
     {
-        CHEMKIT_REGISTER_MOLECULAR_DESCRIPTOR("molecular-mass", MolecularMassDescriptor);
+        CHEMKIT_REGISTER_MOLECULAR_DESCRIPTOR("mass", MassDescriptor);
     }
 };
 

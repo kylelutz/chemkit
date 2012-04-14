@@ -38,10 +38,10 @@
 
 #include <chemkit/moleculardescriptor.h>
 
-class MolecularMassDescriptor : public chemkit::MolecularDescriptor
+class MassDescriptor : public chemkit::MolecularDescriptor
 {
 public:
-    MolecularMassDescriptor();
+    MassDescriptor();
 
     chemkit::Variant value(const chemkit::Molecule *molecule) const CHEMKIT_OVERRIDE;
 };
