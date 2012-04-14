@@ -55,10 +55,10 @@ void UridineMinimizationBenchmark::benchmark()
 
     QBENCHMARK {
         for(;;){
-            // converge when rmsg = 0.1
-            bool converged = optimizer.step();
+            optimizer.step();
 
-            if(converged){
+            // converge when rmsg = 0.1
+            if(optimizer.converged()){
                 break;
             }
         }

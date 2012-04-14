@@ -66,6 +66,7 @@ public:
     // optimization
     bool setup();
     bool step();
+    bool converged();
     bool optimize();
     void writeCoordinates();
 

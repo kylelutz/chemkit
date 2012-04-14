@@ -196,7 +196,6 @@ bool MoleculeGeometryOptimizer::step()
     Real step = 0.05;
     Real stepConv = 1e-5;
     int stepCount = 10;
-    Real converganceValue = 0.1;
 
     // calculate initial energy and gradient
     Real initialEnergy = d->forceField->energy(&d->coordinates);
@@ -259,7 +258,19 @@ bool MoleculeGeometryOptimizer::step()
     }
 
     // check for convergance
-    return d->forceField->rmsg(&d->coordinates) < converganceValue;
+    return converged();
+}
+
+/// Returns \c true if the optimization algorithm has converged. By
+/// default, the algorithm is considered converged when the
+/// root-mean-square gradient of the force field falls below \c 0.1.
+bool MoleculeGeometryOptimizer::converged()
+{
+    if(!d->forceField){
+        return false;
+    }
+
+    return d->forceField->rmsg(&d->coordinates) < 0.1;
 }
 
 /// Optimizes the geometry of the molecule. Returns \c true if the
@@ -270,15 +281,14 @@ bool MoleculeGeometryOptimizer::optimize()
         return false;
     }
 
-    bool done = false;
-    while(!done){
-        done = step();
+    while(!converged()){
+        step();
     }
 
     // write the optimized coordinates to the molecule
     writeCoordinates();
 
-    return done;
+    return true;
 }
 
 /// Writes the optimized coordinates to the molecule.
