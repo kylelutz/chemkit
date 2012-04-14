@@ -218,7 +218,7 @@ Real Atom::vanDerWaalsRadius() const
 /// Returns the fragment the atom is a part of.
 Fragment* Atom::fragment() const
 {
-    return molecule()->fragment(this);
+    return molecule()->fragmentForAtom(this);
 }
 
 // --- Structure ----------------------------------------------------------- //

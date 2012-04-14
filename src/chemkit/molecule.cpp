@@ -781,7 +781,7 @@ void Molecule::removeFragment(Fragment *fragment)
     removeAtoms(fragment->atoms());
 }
 
-Fragment* Molecule::fragment(const Atom *atom) const
+Fragment* Molecule::fragmentForAtom(const Atom *atom) const
 {
     foreach(Fragment *fragment, fragments()){
         if(fragment->contains(atom)){
