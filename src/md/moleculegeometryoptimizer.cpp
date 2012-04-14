@@ -186,10 +186,10 @@ bool MoleculeGeometryOptimizer::setup()
 /// Performs a single geometry optimization step. Returns \c true if
 /// converged. The minimization is considered converged when the
 /// root mean square gradient is below the convergance value.
-bool MoleculeGeometryOptimizer::step()
+void MoleculeGeometryOptimizer::step()
 {
     if(!d->molecule || !d->forceField){
-        return false;
+        return;
     }
 
     // optimization parameters
@@ -256,9 +256,6 @@ bool MoleculeGeometryOptimizer::step()
             step *= 0.1;
         }
     }
-
-    // check for convergance
-    return converged();
 }
 
 /// Returns \c true if the optimization algorithm has converged. By
