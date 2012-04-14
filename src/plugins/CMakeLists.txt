@@ -24,6 +24,7 @@ macro(add_chemkit_plugin plugin_name)
 endmacro(add_chemkit_plugin)
 
 add_subdirectory(amber)
+add_subdirectory(babel)
 add_subdirectory(cas)
 add_subdirectory(cml)
 add_subdirectory(countdescriptors)
