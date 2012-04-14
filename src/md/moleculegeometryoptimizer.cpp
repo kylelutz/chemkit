@@ -35,6 +35,7 @@
 
 #include "moleculegeometryoptimizer.h"
 
+#include <boost/make_shared.hpp>
 #include <boost/math/special_functions/fpclassify.hpp>
 
 #include <chemkit/atom.h>
@@ -43,18 +44,104 @@
 #include <chemkit/cartesiancoordinates.h>
 
 #include "forcefield.h"
+#include "integrator.h"
 
 namespace chemkit {
+
+namespace {
+
+class SteepestDescentIntegrator : public Integrator
+{
+public:
+    void integrate() CHEMKIT_OVERRIDE;
+};
+
+void SteepestDescentIntegrator::integrate()
+{
+    CartesianCoordinates *coordinates = this->coordinates();
+    boost::shared_ptr<Potential> potential = this->potential();
+
+    if(!potential || !coordinates){
+        return;
+    }
+
+    // optimization parameters
+    Real step = 0.05;
+    Real stepConv = 1e-5;
+    size_t stepCount = 10;
+
+    // calculate initial energy and gradient
+    Real initialEnergy = potential->energy(coordinates);
+    std::vector<Vector3> gradient = potential->gradient(coordinates);
+
+    // perform line search
+    for(size_t i = 0; i < stepCount; i++){
+        // save initial coordinates
+        CartesianCoordinates initialCoordinates = *coordinates;
+
+        // move each atom against its gradient
+        for(size_t atomIndex = 0; atomIndex < potential->size(); atomIndex++){
+            (*coordinates)[atomIndex] += -gradient[atomIndex] * step;
+        }
+
+        // calculate new energy
+        Real finalEnergy = potential->energy(coordinates);
+
+        // if the final energy is NaN then most likely the
+        // simulation exploded so we reset the initial atom
+        // positions and then 'wiggle' each atom by one
+        // Angstrom in a random direction
+        if((boost::math::isnan)(finalEnergy)){
+            for(size_t atomIndex = 0; atomIndex < potential->size(); atomIndex++){
+                Point3 position = initialCoordinates.position(atomIndex);
+                position += Vector3::Random().normalized();
+                coordinates->setPosition(atomIndex, position);
+            }
+
+            // recalculate gradient
+            gradient = potential->gradient(coordinates);
+
+            // continue to next step
+            continue;
+        }
+
+        if(finalEnergy < initialEnergy && std::abs(finalEnergy - initialEnergy) < stepConv){
+            break;
+        }
+        else if(finalEnergy < initialEnergy){
+            // we reduced the energy, so set a bigger step size
+            step *= 2;
+
+            // maximum step size is 1
+            if(step > 1){
+                step = 1;
+            }
+
+            // the initial energy for the next step
+            // is the final energy of this step
+            initialEnergy = finalEnergy;
+        }
+        else if(finalEnergy > initialEnergy){
+            // we went too far, so reset initial atom positions
+            *coordinates = initialCoordinates;
+
+            // and reduce step size
+            step *= 0.1;
+        }
+    }
+}
+
+} // end anonymous namespace
 
 // === MoleculeGeometryOptimizerPrivate ==================================== //
 class MoleculeGeometryOptimizerPrivate
 {
 public:
     Molecule *molecule;
-    ForceField *forceField;
+    boost::shared_ptr<ForceField> forceField;
     std::string forceFieldName;
     std::string errorString;
-    CartesianCoordinates coordinates;
+    boost::shared_ptr<Integrator> integrator;
 };
 
 // === MoleculeGeometryOptimizer =========================================== //
@@ -98,14 +185,13 @@ MoleculeGeometryOptimizer::MoleculeGeometryOptimizer(Molecule *molecule)
     : d(new MoleculeGeometryOptimizerPrivate)
 {
     d->molecule = molecule;
-    d->forceField = 0;
     d->forceFieldName = "uff";
+    d->integrator = boost::make_shared<SteepestDescentIntegrator>();
 }
 
 /// Destroys the geometry optmizer object.
 MoleculeGeometryOptimizer::~MoleculeGeometryOptimizer()
 {
-    delete d->forceField;
     delete d;
 }
 
@@ -150,7 +236,7 @@ Real MoleculeGeometryOptimizer::energy() const
         return 0;
     }
 
-    return d->forceField->energy(&d->coordinates);
+    return d->integrator->energy();
 }
 
 // --- Optimization -------------------------------------------------------- //
@@ -162,23 +248,20 @@ bool MoleculeGeometryOptimizer::setup()
         return false;
     }
 
-    delete d->forceField;
-
-    d->forceField = chemkit::ForceField::create(d->forceFieldName);
+    d->forceField = boost::shared_ptr<ForceField>(ForceField::create(d->forceFieldName));
     if(!d->forceField){
         d->errorString = "Force field '" + d->forceFieldName + "' is not supported.";
         return false;
     }
 
-    d->coordinates = *d->molecule->coordinates();
+    d->integrator->setPotential(d->forceField);
+    d->integrator->setCoordinates(d->molecule->coordinates());
 
     d->forceField->setTopologyFromMolecule(d->molecule);
     if(!d->forceField->setup()){
         d->errorString = "Failed to setup force field.";
         return false;
     }
-
-    d->coordinates = *d->molecule->coordinates();
 
     return true;
 }
@@ -192,70 +275,8 @@ void MoleculeGeometryOptimizer::step()
         return;
     }
 
-    // optimization parameters
-    Real step = 0.05;
-    Real stepConv = 1e-5;
-    int stepCount = 10;
-
-    // calculate initial energy and gradient
-    Real initialEnergy = d->forceField->energy(&d->coordinates);
-    std::vector<Vector3> gradient = d->forceField->gradient(&d->coordinates);
-
-    // perform line search
-    for(int i = 0; i < stepCount; i++){
-        // save initial coordinates
-        CartesianCoordinates initialCoordinates = d->coordinates;
-
-        // move each atom against its gradient
-        for(size_t atomIndex = 0; atomIndex < d->forceField->size(); atomIndex++){
-            d->coordinates[atomIndex] += -gradient[atomIndex] * step;
-        }
-
-        // calculate new energy
-        Real finalEnergy = d->forceField->energy(&d->coordinates);
-
-        // if the final energy is NaN then most likely the
-        // simulation exploded so we reset the initial atom
-        // positions and then 'wiggle' each atom by one
-        // Angstrom in a random direction
-        if((boost::math::isnan)(finalEnergy)){
-            for(size_t atomIndex = 0; atomIndex < d->forceField->size(); atomIndex++){
-                Point3 position = initialCoordinates.position(atomIndex);
-                position += Vector3::Random().normalized();
-                d->coordinates.setPosition(atomIndex, position);
-            }
-
-            // recalculate gradient
-            gradient = d->forceField->gradient(&d->coordinates);
-
-            // continue to next step
-            continue;
-        }
-
-        if(finalEnergy < initialEnergy && std::abs(finalEnergy - initialEnergy) < stepConv){
-            break;
-        }
-        else if(finalEnergy < initialEnergy){
-            // we reduced the energy, so set a bigger step size
-            step *= 2;
-
-            // maximum step size is 1
-            if(step > 1){
-                step = 1;
-            }
-
-            // the initial energy for the next step
-            // is the final energy of this step
-            initialEnergy = finalEnergy;
-        }
-        else if(finalEnergy > initialEnergy){
-            // we went too far, so reset initial atom positions
-            d->coordinates = initialCoordinates;
-
-            // and reduce step size
-            step *= 0.1;
-        }
-    }
+    // perform a single integration step
+    d->integrator->integrate();
 }
 
 /// Returns \c true if the optimization algorithm has converged. By
@@ -267,7 +288,8 @@ bool MoleculeGeometryOptimizer::converged()
         return false;
     }
 
-    return d->forceField->rmsg(&d->coordinates) < 0.1;
+    // check for convergance
+    return d->integrator->rmsg() < 0.1;
 }
 
 /// Optimizes the geometry of the molecule. Returns \c true if the
@@ -291,12 +313,14 @@ bool MoleculeGeometryOptimizer::optimize()
 /// Writes the optimized coordinates to the molecule.
 void MoleculeGeometryOptimizer::writeCoordinates()
 {
-    if(!d->molecule || !d->forceField){
+    if(!d->molecule){
         return;
     }
 
+    const CartesianCoordinates *coordinates = d->integrator->coordinates();
+
     for(size_t i = 0; i < d->molecule->size(); i++){
-        d->molecule->atom(i)->setPosition(d->coordinates.position(i));
+        d->molecule->atom(i)->setPosition(coordinates->position(i));
     }
 }
 
