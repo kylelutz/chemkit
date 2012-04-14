@@ -264,9 +264,7 @@ void ForceField::setCalculationSetup(ForceFieldCalculation *calculation, bool se
     calculation->setSetup(setup);
 }
 
-/// Calculates and returns the total energy of the system. Energy is
-/// in kcal/mol. If the force field is not setup this method will
-/// return \c 0.
+/// \copydoc Potential::energy()
 Real ForceField::energy(const CartesianCoordinates *coordinates) const
 {
     Real energy = 0;
@@ -278,34 +276,7 @@ Real ForceField::energy(const CartesianCoordinates *coordinates) const
     return energy;
 }
 
-/// Runs the energy() method asynchronously and returns a future
-/// containing the result.
-///
-/// \internal
-boost::shared_future<Real> ForceField::energyAsync(const CartesianCoordinates *coordinates) const
-{
-    return chemkit::concurrent::run(boost::bind(&ForceField::energy, this, coordinates));
-}
-
-/// Returns the gradient of the energy with respect to the
-/// coordinates of each atom in the force field.
-///
-/** \f[ \nabla E = \left[
-///                \begin{array}{ccc}
-///                    \frac{\partial E}{\partial x_{0}} &
-///                    \frac{\partial E}{\partial y_{0}} &
-///                    \frac{\partial E}{\partial z_{0}} \\
-///                    \frac{\partial E}{\partial x_{1}} &
-///                    \frac{\partial E}{\partial y_{1}} &
-///                    \frac{\partial E}{\partial z_{1}} \\
-///                    \vdots & \vdots & \vdots \\
-///                    \frac{\partial E}{\partial x_{n}} &
-///                    \frac{\partial E}{\partial y_{n}} &
-///                    \frac{\partial E}{\partial z_{n}}
-///                \end{array}
-///                \right]
-/// \f]
-**/
+/// \copydoc Potential::gradient()
 std::vector<Vector3> ForceField::gradient(const CartesianCoordinates *coordinates) const
 {
     if(d->flags & AnalyticalGradient){
@@ -325,64 +296,6 @@ std::vector<Vector3> ForceField::gradient(const CartesianCoordinates *coordinate
     else{
         return numericalGradient(coordinates);
     }
-}
-
-/// Returns the gradient of the energy with respect to the
-/// coordinates of each atom in the force field. The gradient is
-/// calculated numerically.
-///
-/// \see ForceField::gradient()
-std::vector<Vector3> ForceField::numericalGradient(const CartesianCoordinates *coordinates) const
-{
-    std::vector<Vector3> gradient(size());
-
-    CartesianCoordinates writeableCoordinates = *coordinates;
-
-    for(size_t i = 0; i < size(); i++){
-        const Point3 &position = coordinates->position(i);
-
-        // initial energy
-        Real eI = energy(&writeableCoordinates);
-        Real epsilon = 1.0e-10;
-
-        writeableCoordinates.setPosition(i, position + Vector3(epsilon, 0, 0));
-        Real eF_x = energy(&writeableCoordinates);
-
-        writeableCoordinates.setPosition(i, position + Vector3(0, epsilon, 0));
-        Real eF_y = energy(&writeableCoordinates);
-
-        writeableCoordinates.setPosition(i, position + Vector3(0, 0, epsilon));
-        Real eF_z = energy(&writeableCoordinates);
-
-        // restore initial position
-        writeableCoordinates.setPosition(i, coordinates->position(i));
-
-        Real dx = (eF_x - eI) / epsilon;
-        Real dy = (eF_y - eI) / epsilon;
-        Real dz = (eF_z - eI) / epsilon;
-
-        gradient[i] = Vector3(dx, dy, dz);
-    }
-
-    return gradient;
-}
-
-/// Returns the root mean square gradient.
-Real ForceField::rmsg(const CartesianCoordinates *coordinates) const
-{
-    if(!size()){
-        return 0;
-    }
-
-    Real sum = 0;
-
-    std::vector<Vector3> gradient = this->gradient(coordinates);
-
-    for(unsigned int i = 0; i < gradient.size(); i++){
-        sum += gradient[i].squaredNorm();
-    }
-
-    return sqrt(sum / (3.0 * size()));
 }
 
 // --- Error Handling ------------------------------------------------------ //

@@ -12,6 +12,7 @@ set(HEADERS
   forcefield.h
   md.h
   moleculegeometryoptimizer.h
+  potential.h
   topology.h
   topologybuilder.h
   trajectory.h
@@ -23,6 +24,7 @@ set(SOURCES
   forcefield.cpp
   md.cpp
   moleculegeometryoptimizer.cpp
+  potential.cpp
   topology.cpp
   topologybuilder.cpp
   trajectory.cpp

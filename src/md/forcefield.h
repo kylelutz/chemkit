@@ -47,6 +47,7 @@
 #include <chemkit/point3.h>
 #include <chemkit/vector3.h>
 
+#include "potential.h"
 #include "forcefieldcalculation.h"
 
 namespace chemkit {
@@ -56,7 +57,7 @@ class Topology;
 class ForceFieldPrivate;
 class CartesianCoordinates;
 
-class CHEMKIT_MD_EXPORT ForceField
+class CHEMKIT_MD_EXPORT ForceField : public Potential
 {
 public:
     // enumerations
@@ -70,7 +71,7 @@ public:
     // properties
     std::string name() const;
     int flags() const;
-    size_t size() const;
+    size_t size() const CHEMKIT_OVERRIDE;
 
     // setup
     void setTopology(const boost::shared_ptr<Topology> &topology);
@@ -89,11 +90,8 @@ public:
     // calculations
     std::vector<ForceFieldCalculation *> calculations() const;
     size_t calculationCount() const;
-    virtual Real energy(const CartesianCoordinates *coordinates) const;
-    boost::shared_future<Real> energyAsync(const CartesianCoordinates *coordinates) const;
-    std::vector<Vector3> gradient(const CartesianCoordinates *coordinates) const;
-    std::vector<Vector3> numericalGradient(const CartesianCoordinates *coordinates) const;
-    Real rmsg(const CartesianCoordinates *coordinates) const;
+    Real energy(const CartesianCoordinates *coordinates) const CHEMKIT_OVERRIDE;
+    std::vector<Vector3> gradient(const CartesianCoordinates *coordinates) const CHEMKIT_OVERRIDE;
 
     // error handling
     std::string errorString() const;
