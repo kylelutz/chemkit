@@ -10,6 +10,7 @@ set(HEADERS
   forcefieldenergydescriptor.h
   forcefieldenergydescriptor-inline.h
   forcefield.h
+  integrator.h
   md.h
   moleculegeometryoptimizer.h
   potential.h
@@ -22,6 +23,7 @@ set(HEADERS
 set(SOURCES
   forcefieldcalculation.cpp
   forcefield.cpp
+  integrator.cpp
   md.cpp
   moleculegeometryoptimizer.cpp
   potential.cpp
