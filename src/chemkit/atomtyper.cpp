@@ -284,4 +284,27 @@ std::vector<std::string> AtomTyper::typers()
     return PluginManager::instance()->pluginClassNames<AtomTyper>();
 }
 
+/// This static convenience function assigns atom types for atoms
+/// in molecule using the specified \p typer.
+///
+/// For example, to assign SYBYL atom types for a molecule:
+/// \code
+/// AtomTyper::assignAtomTypes(molecule, "sybyl");
+/// \endcode
+bool AtomTyper::assignAtomTypes(Molecule *molecule, const std::string &typer)
+{
+    boost::scoped_ptr<AtomTyper> atomTyper(create(typer));
+    if(!atomTyper){
+        return false;
+    }
+
+    atomTyper->setMolecule(molecule);
+
+    foreach(Atom *atom, molecule->atoms()){
+        atom->setType(atomTyper->type(atom));
+    }
+
+    return true;
+}
+
 } // end chemkit namespace

@@ -88,6 +88,7 @@ public:
     // static methods
     static AtomTyper* create(const std::string &name);
     static std::vector<std::string> typers();
+    static bool assignAtomTypes(Molecule *molecule, const std::string &typer);
 
 protected:
     AtomTyper(const std::string &name);
