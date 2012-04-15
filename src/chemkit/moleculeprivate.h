@@ -70,6 +70,7 @@ public:
     std::vector<MoleculeWatcher *> watchers;
     VariantMap data;
     std::map<const Atom *, Isotope> isotopes;
+    std::vector<std::string> atomTypes;
     std::vector<Real> partialCharges;
     std::vector<std::pair<Atom*, Atom*> > bondAtoms;
     std::vector<std::vector<Bond *> > atomBonds;

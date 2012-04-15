@@ -437,6 +437,10 @@ void Molecule::removeAtom(Atom *atom)
     d->atomBonds.erase(d->atomBonds.begin() + atom->index());
     d->partialCharges.erase(d->partialCharges.begin() + atom->index());
 
+    if(atom->index() < d->atomTypes.size()){
+        d->atomTypes.erase(d->atomTypes.begin() + atom->index());
+    }
+
     if(m_coordinates){
         m_coordinates->remove(atom->index());
     }

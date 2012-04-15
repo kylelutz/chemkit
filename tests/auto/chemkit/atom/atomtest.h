@@ -49,6 +49,7 @@ class AtomTest : public QObject
         void partialCharge();
         void symbol();
         void name();
+        void type();
         void electronegativity();
         void covalentRadius();
         void vanDerWaalsRadius();

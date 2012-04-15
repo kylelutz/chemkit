@@ -84,6 +84,8 @@ public:
     Isotope isotope() const;
     void setMassNumber(MassNumberType massNumber);
     MassNumberType massNumber() const;
+    void setType(const std::string &type);
+    std::string type() const;
     int expectedValence() const;
     int formalCharge() const;
     void setPartialCharge(Real charge);

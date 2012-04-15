@@ -147,6 +147,31 @@ Atom::MassNumberType Atom::massNumber() const
     return isotope().massNumber();
 }
 
+/// Sets the symbolic type for the atom to \p type.
+void Atom::setType(const std::string &type)
+{
+    std::vector<std::string> &atomTypes = m_molecule->d->atomTypes;
+
+    if(m_index >= atomTypes.size()){
+        atomTypes.resize(m_index + 1);
+    }
+
+    atomTypes[m_index] = type;
+}
+
+/// Returns the symbolic type for the atom or an empty string if no
+/// atom type has been set.
+std::string Atom::type() const
+{
+    std::vector<std::string> &atomTypes = m_molecule->d->atomTypes;
+
+    if(m_index >= atomTypes.size()){
+        return std::string();
+    }
+
+    return atomTypes[m_index];
+}
+
 /// Returns the atom's expected valence.
 int Atom::expectedValence() const
 {
