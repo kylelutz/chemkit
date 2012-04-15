@@ -115,6 +115,13 @@ std::vector<std::string> PartialChargeModel::models()
     return PluginManager::instance()->pluginClassNames<PartialChargeModel>();
 }
 
+/// This static convenience function assigns partial charges for atoms
+/// in molecule using the specified \p model.
+///
+/// For example, to assign gasteiger partial charges for a molecule:
+/// \code
+/// PartialChargeModel::assignPartialCharges(molecule, "gasteiger");
+/// \endcode
 bool PartialChargeModel::assignPartialCharges(Molecule *molecule, const std::string &modelName)
 {
     PartialChargeModel *model = create(modelName);
