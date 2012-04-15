@@ -79,8 +79,6 @@ public:
     bool contains(const Bond *bond) const;
 
     // atom types
-    void setAtomType(const Atom *atom, const std::string &type);
-    std::string atomType(const Atom *atom) const;
     Atom* atom(const std::string &type) const;
 
 private:

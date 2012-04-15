@@ -35,10 +35,10 @@
 
 #include "residue.h"
 
-#include <map>
 #include <algorithm>
 
 #include "atom.h"
+#include "foreach.h"
 #include "molecule.h"
 
 namespace chemkit {
@@ -50,7 +50,6 @@ public:
     int type;
     Molecule *molecule;
     std::vector<Atom *> atoms;
-    std::map<std::string, const Atom *> types;
 };
 
 // === Residue ============================================================= //
@@ -175,28 +174,17 @@ bool Residue::contains(const Bond *bond) const
 }
 
 // --- Atom Types ---------------------------------------------------------- //
-/// Sets the type for atom in the residue.
-void Residue::setAtomType(const Atom *atom, const std::string &type)
+/// Returns the atom in the residue with \p type or \c 0 if no atom
+/// has the specified type.
+Atom* Residue::atom(const std::string &type) const
 {
-    d->types[type] = atom;
-}
-
-/// Returns the type for atom in the residue.
-std::string Residue::atomType(const Atom *atom) const
-{
-    for(std::map<std::string, const Atom *>::iterator i = d->types.begin(); i != d->types.end(); ++i){
-        if(i->second == atom){
-            return i->first;
+    foreach(Atom *atom, d->atoms){
+        if(atom->type() == type){
+            return atom;
         }
     }
 
-    return std::string();
-}
-
-/// Returns the atom with type or 0 if no atom has type.
-Atom* Residue::atom(const std::string &type) const
-{
-    return const_cast<Atom *>(d->types[type]);
+    return 0;
 }
 
 } // end chemkit namespace

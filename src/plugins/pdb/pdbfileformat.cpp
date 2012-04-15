@@ -581,9 +581,9 @@ void PdbFile::writePolymerFile(chemkit::PolymerFile *file)
 
                 atomIds[pdbAtom->id] = atom;
 
+                atom->setType(pdbAtom->name);
                 atom->setPosition(pdbAtom->position);
                 residue->addAtom(atom);
-                residue->setAtomType(atom, pdbAtom->name);
 
                 if(chainType == PdbChain::Protein){
                     if(pdbAtom->name == "CA"){

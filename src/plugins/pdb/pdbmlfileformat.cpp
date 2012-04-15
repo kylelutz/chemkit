@@ -148,6 +148,9 @@ bool PdbmlFileFormat::read(std::istream &input, chemkit::PolymerFile *file)
                                           boost::lexical_cast<chemkit::Real>(z));
                     }
 
+                    // type
+                    atom->setType(atomType);
+
                     if(group == "ATOM"){
                         // set residue
                         if(chainName != currentChainName){
@@ -175,7 +178,6 @@ bool PdbmlFileFormat::read(std::istream &input, chemkit::PolymerFile *file)
                         else if(atomType == "N"){
                             residue->setAminoNitrogen(atom);
                         }
-                        residue->setAtomType(atom, atomType);
                     }
                 }
 
