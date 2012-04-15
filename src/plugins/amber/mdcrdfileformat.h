@@ -33,37 +33,17 @@
 **
 ******************************************************************************/
 
-#include <chemkit/plugin.h>
-#include <chemkit/moleculardescriptor.h>
-#include <chemkit/forcefieldenergydescriptor.h>
+#ifndef MDCRDFILEFORMAT_H
+#define MDCRDFILEFORMAT_H
 
-#include "amberatomtyper.h"
-#include "amberforcefield.h"
+#include <chemkit/trajectoryfileformat.h>
 
-#ifdef CHEMKIT_WITH_MD_IO
-#include "mdcrdfileformat.h"
-#endif
-
-class AmberPlugin : public chemkit::Plugin
+class MdcrdFileFormat : public chemkit::TrajectoryFileFormat
 {
 public:
-    AmberPlugin()
-        : chemkit::Plugin("amber")
-    {
-        CHEMKIT_REGISTER_ATOM_TYPER("amber", AmberAtomTyper);
-        CHEMKIT_REGISTER_FORCE_FIELD("amber", AmberForceField);
-        registerPluginClass<chemkit::MolecularDescriptor>("amber-energy", createAmberEnergyDescriptor);
+    MdcrdFileFormat();
 
-        #ifdef CHEMKIT_WITH_MD_IO
-        CHEMKIT_REGISTER_TRAJECTORY_FILE_FORMAT("mdcrd", MdcrdFileFormat);
-        CHEMKIT_REGISTER_TRAJECTORY_FILE_FORMAT("trj", MdcrdFileFormat);
-        #endif
-    }
-
-    static chemkit::MolecularDescriptor* createAmberEnergyDescriptor()
-    {
-        return new chemkit::ForceFieldEnergyDescriptor<AmberForceField>("amber-energy");
-    }
+    virtual bool read(std::istream &input, chemkit::TrajectoryFile *file);
 };
 
-CHEMKIT_EXPORT_PLUGIN(amber, AmberPlugin)
+#endif // MDCRDFILEFORMAT_H

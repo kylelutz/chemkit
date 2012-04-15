@@ -1,4 +1,4 @@
-find_package(Chemkit COMPONENTS md REQUIRED)
+find_package(Chemkit COMPONENTS md md-io REQUIRED)
 include_directories(${CHEMKIT_INCLUDE_DIRS})
 
 set(SOURCES
@@ -8,6 +8,12 @@ set(SOURCES
   amberparameters.cpp
   amberplugin.cpp
 )
+
+if(${CHEMKIT_WITH_MD_IO})
+  set(SOURCES ${SOURCES}
+    mdcrdfileformat.cpp
+  )
+endif()
 
 add_chemkit_plugin(amber ${SOURCES})
 target_link_libraries(amber ${CHEMKIT_LIBRARIES})

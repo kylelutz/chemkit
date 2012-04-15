@@ -160,6 +160,7 @@ void TrajectoryViewerDemo::openFile(const QString &fileName)
     if(!ok){
         QString errorString =
             QString("Failed to read file: %1").arg(file.errorString().c_str());
+        QString("Failed to read file: %1").arg(file.errorString().c_str());
 
         QMessageBox::critical(this, "Read Error", errorString);
         return;

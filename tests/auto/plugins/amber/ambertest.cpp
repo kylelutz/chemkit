@@ -45,6 +45,10 @@
 #include <chemkit/moleculefile.h>
 #include <chemkit/moleculardescriptor.h>
 
+#ifdef CHEMKIT_WITH_MD_IO
+#include <chemkit/trajectoryfileformat.h>
+#endif
+
 const std::string dataPath = "../../../data/";
 
 void AmberTest::initTestCase()
@@ -53,6 +57,11 @@ void AmberTest::initTestCase()
     QVERIFY(boost::count(chemkit::ForceField::forceFields(), "amber") == 1);
     QVERIFY(boost::count(chemkit::AtomTyper::typers(), "amber") == 1);
     QVERIFY(boost::count(chemkit::MolecularDescriptor::descriptors(), "amber-energy") == 1);
+
+    #ifdef CHEMKIT_WITH_MD_IO
+    QVERIFY(boost::count(chemkit::TrajectoryFileFormat::formats(), "mdcrd") == 1);
+    QVERIFY(boost::count(chemkit::TrajectoryFileFormat::formats(), "trj") == 1);
+    #endif
 }
 
 void AmberTest::adenosine()

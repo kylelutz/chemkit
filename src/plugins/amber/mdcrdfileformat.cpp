@@ -33,37 +33,49 @@
 **
 ******************************************************************************/
 
-#include <chemkit/plugin.h>
-#include <chemkit/moleculardescriptor.h>
-#include <chemkit/forcefieldenergydescriptor.h>
-
-#include "amberatomtyper.h"
-#include "amberforcefield.h"
-
-#ifdef CHEMKIT_WITH_MD_IO
 #include "mdcrdfileformat.h"
-#endif
 
-class AmberPlugin : public chemkit::Plugin
+#include <boost/make_shared.hpp>
+
+#include <chemkit/topology.h>
+#include <chemkit/trajectory.h>
+#include <chemkit/trajectoryfile.h>
+#include <chemkit/trajectoryframe.h>
+#include <chemkit/cartesiancoordinates.h>
+
+MdcrdFileFormat::MdcrdFileFormat()
+    : chemkit::TrajectoryFileFormat("mdcrd")
 {
-public:
-    AmberPlugin()
-        : chemkit::Plugin("amber")
-    {
-        CHEMKIT_REGISTER_ATOM_TYPER("amber", AmberAtomTyper);
-        CHEMKIT_REGISTER_FORCE_FIELD("amber", AmberForceField);
-        registerPluginClass<chemkit::MolecularDescriptor>("amber-energy", createAmberEnergyDescriptor);
+}
 
-        #ifdef CHEMKIT_WITH_MD_IO
-        CHEMKIT_REGISTER_TRAJECTORY_FILE_FORMAT("mdcrd", MdcrdFileFormat);
-        CHEMKIT_REGISTER_TRAJECTORY_FILE_FORMAT("trj", MdcrdFileFormat);
-        #endif
+bool MdcrdFileFormat::read(std::istream &input, chemkit::TrajectoryFile *file)
+{
+    boost::shared_ptr<chemkit::Topology> topology = file->topology();
+    if(!topology){
+        setErrorString("Topology required to read 'mdcrd' trajectories.");
+        return false;
     }
 
-    static chemkit::MolecularDescriptor* createAmberEnergyDescriptor()
-    {
-        return new chemkit::ForceFieldEnergyDescriptor<AmberForceField>("amber-energy");
-    }
-};
+    boost::shared_ptr<chemkit::Trajectory> trajectory =
+        boost::make_shared<chemkit::Trajectory>();
 
-CHEMKIT_EXPORT_PLUGIN(amber, AmberPlugin)
+    trajectory->resize(topology->size());
+
+    // comments line
+    std::string comments;
+    std::getline(input, comments);
+
+    while(!input.eof()){
+        chemkit::TrajectoryFrame *frame = trajectory->addFrame();
+
+        for(size_t i = 0; i < trajectory->size(); i++){
+            chemkit::Real x, y, z;
+            input >> x >> y >> z;
+            frame->setPosition(i, chemkit::Point3(x, y, z));
+        }
+    }
+
+    file->setTrajectory(trajectory);
+
+    return true;
+}
