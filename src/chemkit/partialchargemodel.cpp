@@ -122,20 +122,18 @@ std::vector<std::string> PartialChargeModel::models()
 /// \code
 /// PartialChargeModel::assignPartialCharges(molecule, "gasteiger");
 /// \endcode
-bool PartialChargeModel::assignPartialCharges(Molecule *molecule, const std::string &modelName)
+bool PartialChargeModel::assignPartialCharges(Molecule *molecule, const std::string &model)
 {
-    PartialChargeModel *model = create(modelName);
-    if(!model){
+    boost::scoped_ptr<PartialChargeModel> partialChargeModel(create(model));
+    if(!partialChargeModel){
         return false;
     }
 
-    model->setMolecule(molecule);
+    partialChargeModel->setMolecule(molecule);
 
     foreach(Atom *atom, molecule->atoms()){
-        atom->setPartialCharge(model->partialCharge(atom));
+        atom->setPartialCharge(partialChargeModel->partialCharge(atom));
     }
-
-    delete model;
 
     return true;
 }
