@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>TrajectoryViewerDemo</class>
+ <widget class="QWidget" name="TrajectoryViewerDemo">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>687</width>
+    <height>480</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>chemkit - Trajectory Viewer Demo</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QPushButton" name="openFileButton">
+       <property name="text">
+        <string>Open File</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="quitButton">
+       <property name="text">
+        <string>Quit</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="chemkit::GraphicsView" name="graphicsView">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QLabel" name="frameSliderLabel">
+       <property name="text">
+        <string>Frame:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSlider" name="frameSlider">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSpinBox" name="frameSpinBox"/>
+     </item>
+     <item>
+      <widget class="QLabel" name="frameCountLabel">
+       <property name="text">
+        <string>/ 200</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+  <action name="actionOpen">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Open</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
+  </action>
+  <action name="actionQuit">
+   <property name="text">
+    <string>Quit</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Q</string>
+   </property>
+  </action>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>chemkit::GraphicsView</class>
+   <extends>QWidget</extends>
+   <header location="global">chemkit/graphicsview.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>
