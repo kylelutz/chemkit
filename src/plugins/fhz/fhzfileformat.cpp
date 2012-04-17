@@ -35,8 +35,6 @@
 
 #include "fhzfileformat.h"
 
-#include <QtCore>
-
 #include <chemkit/molecule.h>
 #include <chemkit/moleculefile.h>
 #include <chemkit/internalcoordinates.h>
@@ -46,76 +44,60 @@ FhzFileFormat::FhzFileFormat()
 {
 }
 
-FhzFileFormat::~FhzFileFormat()
-{
-}
-
 bool FhzFileFormat::read(std::istream &input, chemkit::MoleculeFile *file)
 {
-    QByteArray data;
-    while(!input.eof()){
-        data += input.get();
-    }
-    data.chop(1);
-
-    QBuffer buffer;
-    buffer.setData(data);
-    buffer.open(QBuffer::ReadOnly);
-    return read(&buffer, file);
-}
-
-bool FhzFileFormat::read(QIODevice *iodev, chemkit::MoleculeFile *file)
-{
-    iodev->setTextModeEnabled(true);
-
     // title line
-    QString line = iodev->readLine();
+    std::string title;
+    std::getline(input, title);
 
     // atom count line
-    line = iodev->readLine();
-    QStringList lineItems = line.split(' ', QString::SkipEmptyParts);
-    if(lineItems.size() < 1){
+    std::string line;
+    std::getline(input, line);
+    boost::trim(line);
+    std::vector<std::string> tokens;
+    boost::split(tokens, line, boost::is_any_of("\t "), boost::token_compress_on);
+    if(tokens.size() < 1){
         setErrorString("Failed to read atom count.");
         return false;
     }
-    int atomCount = lineItems[0].toInt();
+    size_t atomCount = boost::lexical_cast<size_t>(tokens[0]);
 
     boost::shared_ptr<chemkit::Molecule> molecule(new chemkit::Molecule);
     chemkit::InternalCoordinates *coordinates = new chemkit::InternalCoordinates(atomCount);
 
-    for(int i = 0; i < atomCount; i++){
+    for(size_t i = 0; i < atomCount; i++){
         // read atom line
-        line = iodev->readLine();
-        lineItems = line.split(' ', QString::SkipEmptyParts);
-        if(lineItems.size() < 1){
+        std::getline(input, line);
+        boost::trim(line);
+        boost::split(tokens, line, boost::is_any_of("\t "), boost::token_compress_on);
+        if(tokens.size() < 1){
             break;
         }
 
         // create atom
-        QByteArray symbol = lineItems[0].toAscii();
-        chemkit::Atom *atom = molecule->addAtom(symbol.constData());
+        chemkit::Atom *atom = molecule->addAtom(tokens[0]);
         if(!atom){
             continue;
         }
 
         // read coordinates and connections
-        int a = 0;
-        int b = 0;
-        int c = 0;
+        size_t a = 0;
+        size_t b = 0;
+        size_t c = 0;
         chemkit::Real r = 0;
         chemkit::Real theta = 0;
         chemkit::Real phi = 0;
 
         switch(i){
             default:
-                c = lineItems[5].toInt();
-                phi = lineItems[6].toDouble();
+                c = boost::lexical_cast<size_t>(tokens[5]);
+                phi = boost::lexical_cast<chemkit::Real>(tokens[6]);
             case 2:
-                b = lineItems[3].toInt();
-                theta = lineItems[4].toDouble();
+                b = boost::lexical_cast<size_t>(tokens[3]);
+                theta = boost::lexical_cast<chemkit::Real>(tokens[4]);
             case 1:
-                a = lineItems[1].toInt();
-                r = lineItems[2].toDouble();
+                a = boost::lexical_cast<size_t>(tokens[1]);
+                r = boost::lexical_cast<chemkit::Real>(tokens[2]);
             case 0:
                 break;
         }
