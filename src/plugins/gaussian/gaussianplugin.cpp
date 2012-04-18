@@ -1,6 +1,6 @@
 /******************************************************************************
 **
-** Copyright (C) 2009-2011 Kyle Lutz <kyle.r.lutz@gmail.com>
+** Copyright (C) 2009-2012 Kyle Lutz <kyle.r.lutz@gmail.com>
 ** All rights reserved.
 **
 ** This file is a part of the chemkit project. For more information
@@ -33,18 +33,18 @@
 **
 ******************************************************************************/
 
-#ifndef CUBETEST_H
-#define CUBETEST_H
+#include <chemkit/plugin.h>
 
-#include <QtTest>
+#include "cubefileformat.h"
 
-class CubeTest : public QObject
+class GaussianPlugin : public chemkit::Plugin
 {
-    Q_OBJECT
-
-    private slots:
-        void initTestCase();
-        void readBenzene();
+public:
+    GaussianPlugin()
+        : chemkit::Plugin("gaussian")
+    {
+        CHEMKIT_REGISTER_MOLECULE_FILE_FORMAT("cube", CubeFileFormat);
+    }
 };
 
-#endif // CUBETEST_H
+CHEMKIT_EXPORT_PLUGIN(gaussian, GaussianPlugin)

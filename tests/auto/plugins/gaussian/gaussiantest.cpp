@@ -33,7 +33,7 @@
 **
 ******************************************************************************/
 
-#include "cubetest.h"
+#include "gaussiantest.h"
 
 #include <boost/range/algorithm.hpp>
 
@@ -43,13 +43,13 @@
 
 const std::string dataPath = "../../../data/";
 
-void CubeTest::initTestCase()
+void GaussianTest::initTestCase()
 {
-    // verify that the cube plugin registered itself correctly
+    // verify that the gaussian plugin registered itself correctly
     QVERIFY(boost::count(chemkit::MoleculeFileFormat::formats(), "cube") == 1);
 }
 
-void CubeTest::readBenzene()
+void GaussianTest::readBenzene()
 {
     chemkit::MoleculeFile file(dataPath + "benzene-homo.cube");
     bool ok = file.read();
@@ -63,4 +63,4 @@ void CubeTest::readBenzene()
     QCOMPARE(molecule->formula(), std::string("C6H6"));
 }
 
-QTEST_APPLESS_MAIN(CubeTest)
+QTEST_APPLESS_MAIN(GaussianTest)

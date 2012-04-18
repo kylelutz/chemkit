@@ -7,8 +7,8 @@ include_directories(${CHEMKIT_INCLUDE_DIRS})
 
 set(SOURCES
   cubefileformat.cpp
-  cubeplugin.cpp
+  gaussianplugin.cpp
 )
 
-add_chemkit_plugin(cube ${SOURCES})
-target_link_libraries(cube ${CHEMKIT_LIBRARIES})
+add_chemkit_plugin(gaussian ${SOURCES})
+target_link_libraries(gaussian ${CHEMKIT_LIBRARIES})
