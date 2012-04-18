@@ -35,8 +35,6 @@
 
 #include "mopinfileformat.h"
 
-#include <QtCore>
-
 #include <chemkit/molecule.h>
 #include <chemkit/moleculefile.h>
 #include <chemkit/coordinateset.h>
@@ -49,59 +47,48 @@ MopinFileFormat::MopinFileFormat()
 
 bool MopinFileFormat::read(std::istream &input, chemkit::MoleculeFile *file)
 {
-    QByteArray data;
-    while(!input.eof()){
-        data += input.get();
-    }
-    data.chop(1);
-
-    QBuffer buffer;
-    buffer.setData(data);
-    buffer.open(QBuffer::ReadOnly);
-    return read(&buffer, file);
-}
-
-bool MopinFileFormat::read(QIODevice *iodev, chemkit::MoleculeFile *file)
-{
-    iodev->setTextModeEnabled(true);
-
     // create molecule
     boost::shared_ptr<chemkit::Molecule> molecule(new chemkit::Molecule);
 
     // keyword line
-    QString line = iodev->readLine();
+    std::string keyword;
+    std::getline(input, keyword);
 
     // title line
-    line = iodev->readLine();
-    QByteArray name = line.trimmed().toAscii();
-    molecule->setName(name.constData());
+    std::string title;
+    std::getline(input, title);
+    if(!title.empty()){
+        molecule->setName(title);
+    }
 
     // blank line
-    iodev->readLine();
+    std::string line;
+    std::getline(input, line);
 
     // read atoms
-    QList<chemkit::Real> coordinateValues;
-    QList<int> connectionValues;
+    std::vector<chemkit::Real> coordinateValues;
+    std::vector<size_t> connectionValues;
     for(;;){
-        line = iodev->readLine();
-        QStringList lineItems = line.split(' ', QString::SkipEmptyParts);
-        if(lineItems.size() < 9){
+        std::getline(input, line);
+        boost::trim(line);
+        std::vector<std::string> tokens;
+        boost::split(tokens, line, boost::is_any_of("\t "), boost::token_compress_on);
+        if(tokens.size() < 9){
             break;
         }
 
-        QByteArray symbol = lineItems[0].toAscii();
-        chemkit::Atom *atom = molecule->addAtom(symbol.constData());
+        chemkit::Atom *atom = molecule->addAtom(tokens[0]);
         if(!atom){
             continue;
         }
 
-        coordinateValues.append(lineItems[1].toDouble());
-        coordinateValues.append(lineItems[3].toDouble());
-        coordinateValues.append(lineItems[5].toDouble());
+        coordinateValues.push_back(boost::lexical_cast<chemkit::Real>(tokens[1]));
+        coordinateValues.push_back(boost::lexical_cast<chemkit::Real>(tokens[3]));
+        coordinateValues.push_back(boost::lexical_cast<chemkit::Real>(tokens[5]));
 
-        connectionValues.append(lineItems[7].toInt());
-        connectionValues.append(lineItems[8].toInt());
-        connectionValues.append(lineItems[9].toInt());
+        connectionValues.push_back(boost::lexical_cast<size_t>(tokens[7]));
+        connectionValues.push_back(boost::lexical_cast<size_t>(tokens[8]));
+        connectionValues.push_back(boost::lexical_cast<size_t>(tokens[9]));
     }
 
     chemkit::InternalCoordinates *coordinates = new chemkit::InternalCoordinates(molecule->size());

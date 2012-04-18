@@ -35,8 +35,6 @@
 
 #include "mopcrtfileformat.h"
 
-#include <QtCore>
-
 #include <boost/make_shared.hpp>
 
 #include <chemkit/atom.h>
@@ -50,53 +48,42 @@ MopcrtFileFormat::MopcrtFileFormat()
 
 bool MopcrtFileFormat::read(std::istream &input, chemkit::MoleculeFile *file)
 {
-    QByteArray data;
-    while(!input.eof()){
-        data += input.get();
-    }
-    data.chop(1);
-
-    QBuffer buffer;
-    buffer.setData(data);
-    buffer.open(QBuffer::ReadOnly);
-    return read(&buffer, file);
-}
-
-bool MopcrtFileFormat::read(QIODevice *iodev, chemkit::MoleculeFile *file)
-{
-    iodev->setTextModeEnabled(true);
-
     // create molecule
-    boost::shared_ptr<chemkit::Molecule> molecule = boost::make_shared<chemkit::Molecule>();
+    boost::shared_ptr<chemkit::Molecule> molecule(new chemkit::Molecule);
 
     // keyword line
-    QString line = iodev->readLine();
+    std::string keyword;
+    std::getline(input, keyword);
 
     // title line
-    line = iodev->readLine();
-    QByteArray name = line.trimmed().toAscii();
-    molecule->setName(name.constData());
+    std::string title;
+    std::getline(input, title);
+    if(!title.empty()){
+        molecule->setName(title);
+    }
 
     // blank line
-    iodev->readLine();
+    std::string line;
+    std::getline(input, line);
 
     // read atoms
     for(;;){
-        line = iodev->readLine();
-        QStringList lineItems = line.split(' ', QString::SkipEmptyParts);
-        if(lineItems.size() < 7){
+        std::getline(input, line);
+        boost::trim(line);
+        std::vector<std::string> tokens;
+        boost::split(tokens, line, boost::is_any_of("\t "), boost::token_compress_on);
+        if(tokens.size() < 7){
             break;
         }
 
-        QByteArray symbol = lineItems[0].toAscii();
-        chemkit::Atom *atom = molecule->addAtom(symbol.constData());
+        chemkit::Atom *atom = molecule->addAtom(tokens[0]);
         if(!atom){
             continue;
         }
 
-        atom->setPosition(lineItems[1].toDouble(),
-                          lineItems[3].toDouble(),
-                          lineItems[5].toDouble());
+        atom->setPosition(boost::lexical_cast<chemkit::Real>(tokens[1]),
+                          boost::lexical_cast<chemkit::Real>(tokens[3]),
+                          boost::lexical_cast<chemkit::Real>(tokens[5]));
     }
 
     if(molecule->isEmpty()){
