@@ -49,7 +49,7 @@ struct FingerprintWriter : public std::iterator<std::output_iterator_tag, void, 
 {
     typedef chemkit::Bitset::block_type value_type;
 
-    FingerprintWriter(std::ostream &output)
+    FingerprintWriter(std::ostream *output)
         : m_output(output)
     {
     }
@@ -59,16 +59,25 @@ struct FingerprintWriter : public std::iterator<std::output_iterator_tag, void, 
     {
     }
 
+    FingerprintWriter& operator=(const FingerprintWriter &other)
+    {
+        if(this != &other){
+            m_output = other.m_output;
+        }
+
+        return *this;
+    }
+
     FingerprintWriter& operator=(const value_type &value)
     {
         const unsigned char *bytes =
             reinterpret_cast<const unsigned char *>(&value);
 
         for(size_t i = 0; i < sizeof(value_type); i++){
-            m_output << std::hex
-                     << std::setw(2)
-                     << std::setfill('0')
-                     << static_cast<int>(bytes[i]);
+            *m_output << std::hex
+                      << std::setw(2)
+                      << std::setfill('0')
+                      << static_cast<int>(bytes[i]);
         }
 
         return *this;
@@ -89,7 +98,7 @@ struct FingerprintWriter : public std::iterator<std::output_iterator_tag, void, 
         return *this;
     }
 
-    std::ostream &m_output;
+    std::ostream *m_output;
 };
 
 } // end anonymous namespace
@@ -123,7 +132,7 @@ bool FpsFileFormat::write(const chemkit::MoleculeFile *file, std::ostream &outpu
     output << "#date=" << dateTimeString() << std::endl;
 
     // create output writer
-    FingerprintWriter writer(output);
+    FingerprintWriter writer(&output);
 
     // write each molecule's fingerprint and identifier
     foreach(const boost::shared_ptr<chemkit::Molecule> &molecule, file->molecules()){
