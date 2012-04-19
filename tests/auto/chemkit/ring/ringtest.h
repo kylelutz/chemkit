@@ -38,8 +38,10 @@
 
 #include <QtTest>
 
-#include <chemkit/ring.h>
-#include <chemkit/molecule.h>
+namespace chemkit {
+    class Ring;
+    class Molecule;
+}
 
 class RingTest : public QObject
 {
