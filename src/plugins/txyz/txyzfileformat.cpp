@@ -107,7 +107,7 @@ bool TxyzFileFormat::read(std::istream &input, chemkit::MoleculeFile *file)
         chemkit::Atom::AtomicNumberType atomicNumber;
 
         // if first character of line is a number then it is the atomic number
-        if(std::isdigit(lineTokens[1][0])){
+        if(isdigit(lineTokens[1][0])){
             atomicNumber = boost::lexical_cast<chemkit::Atom::AtomicNumberType>(lineTokens[1]);
         }
         // else we interpret it as an atomic symbol
