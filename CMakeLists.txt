@@ -37,6 +37,9 @@ add_custom_target(uninstall
 
 set(CHEMKIT_IN_BUILD_TREE TRUE)
 
+# so "find_package(Chemkit)" calls will find this build tree's version
+set(Chemkit_DIR "${CMAKE_BINARY_DIR}")
+
 # configure and install ChemkitConfig.cmake file
 configure_file(
     "${CMAKE_MODULE_PATH}/ChemkitConfig.cmake.in"
