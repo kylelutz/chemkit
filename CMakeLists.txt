@@ -76,7 +76,6 @@ if(MSVC)
 
   # disable boost auto-linking
   add_definitions("-DBOOST_ALL_NO_LIB")
-  add_definitions("-DBOOST_ALL_DYN_LINK")
 
   # disable unsafe string function warnings
   add_definitions("-D_CRT_SECURE_NO_WARNINGS")
