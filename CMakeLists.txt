@@ -12,7 +12,6 @@ find_package(Eigen3 REQUIRED)
 
 if(WIN32)
   set(Boost_USE_STATIC_LIBS ON)
-  add_definitions("-DBOOST_ALL_NO_LIB")
 endif()
 
 find_package(Boost REQUIRED)
