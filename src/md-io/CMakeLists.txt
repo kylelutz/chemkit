@@ -6,6 +6,7 @@ find_package(Chemkit COMPONENTS io md REQUIRED)
 include_directories(${CHEMKIT_INCLUDE_DIRS})
 
 set(HEADERS
+  md-io.h
   topologyfile.h
   topologyfileformat.h
   trajectoryfile.h
