@@ -88,6 +88,7 @@ int distanceBetween(const chemkit::Atom *a, const chemkit::Atom *b)
 WienerIndexDescriptor::WienerIndexDescriptor()
     : chemkit::MolecularDescriptor("wiener-index")
 {
+    setDimensionality(2);
 }
 
 WienerIndexDescriptor::~WienerIndexDescriptor()

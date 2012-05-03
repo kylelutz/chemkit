@@ -43,6 +43,7 @@
 RotatableBondsDescriptor::RotatableBondsDescriptor()
 	: chemkit::MolecularDescriptor("rotatable-bonds")
 {
+    setDimensionality(0);
 }
 
 RotatableBondsDescriptor::~RotatableBondsDescriptor()

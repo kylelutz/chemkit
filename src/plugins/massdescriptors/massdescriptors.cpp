@@ -41,6 +41,7 @@
 MassDescriptor::MassDescriptor()
     : chemkit::MolecularDescriptor("mass")
 {
+    setDimensionality(0);
 }
 
 chemkit::Variant MassDescriptor::value(const chemkit::Molecule *molecule) const

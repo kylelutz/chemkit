@@ -49,6 +49,8 @@
 VabcDescriptor::VabcDescriptor()
     : chemkit::MolecularDescriptor("vabc")
 {
+    setDimensionality(1);
+
     // values from table 2 and the supplementary spreadsheet
     m_volumes[chemkit::Atom::Hydrogen] = 7.2382293504;
     m_volumes[chemkit::Atom::Carbon] = 20.5795259250667;

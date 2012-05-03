@@ -57,6 +57,8 @@ template<typename ForceField>
 ForceFieldEnergyDescriptor<ForceField>::ForceFieldEnergyDescriptor(const std::string &name)
     : MolecularDescriptor(name)
 {
+    // energy depends on 3D structure
+    setDimensionality(3);
 }
 
 /// Destroys the force field energy descriptor object.

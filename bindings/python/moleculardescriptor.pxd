@@ -46,6 +46,7 @@ cdef extern from "chemkit/moleculardescriptor.h" namespace "chemkit":
     cdef cppclass _MolecularDescriptor "chemkit::MolecularDescriptor":
         # properties
         string name()
+        int dimensionality()
 
         # descriptor
         _Variant value(_Molecule *molecule)

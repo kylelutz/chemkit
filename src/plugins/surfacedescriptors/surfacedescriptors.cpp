@@ -42,6 +42,7 @@
 VanDerWallsAreaDescriptor::VanDerWallsAreaDescriptor()
     : chemkit::MolecularDescriptor("vdw-area")
 {
+    setDimensionality(3);
 }
 
 chemkit::Variant VanDerWallsAreaDescriptor::value(const chemkit::Molecule *molecule) const
@@ -55,6 +56,7 @@ chemkit::Variant VanDerWallsAreaDescriptor::value(const chemkit::Molecule *molec
 VanDerWallsVolumeDescriptor::VanDerWallsVolumeDescriptor()
     : chemkit::MolecularDescriptor("vdw-volume")
 {
+    setDimensionality(3);
 }
 
 chemkit::Variant VanDerWallsVolumeDescriptor::value(const chemkit::Molecule *molecule) const
@@ -68,6 +70,7 @@ chemkit::Variant VanDerWallsVolumeDescriptor::value(const chemkit::Molecule *mol
 SolventAccessibleAreaDescriptor::SolventAccessibleAreaDescriptor()
     : chemkit::MolecularDescriptor("sas-area")
 {
+    setDimensionality(3);
 }
 
 chemkit::Variant SolventAccessibleAreaDescriptor::value(const chemkit::Molecule *molecule) const
@@ -81,6 +84,7 @@ chemkit::Variant SolventAccessibleAreaDescriptor::value(const chemkit::Molecule 
 SolventAccessibleVolumeDescriptor::SolventAccessibleVolumeDescriptor()
     : chemkit::MolecularDescriptor("sas-volume")
 {
+    setDimensionality(3);
 }
 
 chemkit::Variant SolventAccessibleVolumeDescriptor::value(const chemkit::Molecule *molecule) const

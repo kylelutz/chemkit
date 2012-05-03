@@ -43,6 +43,7 @@
 RandicIndexDescriptor::RandicIndexDescriptor()
     : chemkit::MolecularDescriptor("randic-index")
 {
+    setDimensionality(2);
 }
 
 RandicIndexDescriptor::~RandicIndexDescriptor()
