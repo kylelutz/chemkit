@@ -42,6 +42,7 @@
 HydrogenBondAcceptorsDescriptor::HydrogenBondAcceptorsDescriptor()
     : chemkit::MolecularDescriptor("hydrogen-bond-acceptors")
 {
+    setDimensionality(1);
 }
 
 HydrogenBondAcceptorsDescriptor::~HydrogenBondAcceptorsDescriptor()

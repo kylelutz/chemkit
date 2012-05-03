@@ -86,6 +86,7 @@ int distanceBetween(const chemkit::Atom *a, const chemkit::Atom *b)
 GraphDensityDescriptor::GraphDensityDescriptor()
     : chemkit::MolecularDescriptor("graph-density")
 {
+    setDimensionality(2);
 }
 
 chemkit::Variant GraphDensityDescriptor::value(const chemkit::Molecule *molecule) const
@@ -104,6 +105,7 @@ chemkit::Variant GraphDensityDescriptor::value(const chemkit::Molecule *molecule
 GraphDiameterDescriptor::GraphDiameterDescriptor()
     : chemkit::MolecularDescriptor("graph-diameter")
 {
+    setDimensionality(2);
 }
 
 chemkit::Variant GraphDiameterDescriptor::value(const chemkit::Molecule *molecule) const
@@ -131,6 +133,7 @@ chemkit::Variant GraphDiameterDescriptor::value(const chemkit::Molecule *molecul
 GraphOrderDescriptor::GraphOrderDescriptor()
     : chemkit::MolecularDescriptor("graph-order")
 {
+    setDimensionality(2);
 }
 
 chemkit::Variant GraphOrderDescriptor::value(const chemkit::Molecule *molecule) const
@@ -142,6 +145,7 @@ chemkit::Variant GraphOrderDescriptor::value(const chemkit::Molecule *molecule) 
 GraphRadiusDescriptor::GraphRadiusDescriptor()
     : chemkit::MolecularDescriptor("graph-radius")
 {
+    setDimensionality(2);
 }
 
 chemkit::Variant GraphRadiusDescriptor::value(const chemkit::Molecule *molecule) const
@@ -175,6 +179,7 @@ chemkit::Variant GraphRadiusDescriptor::value(const chemkit::Molecule *molecule)
 GraphSizeDescriptor::GraphSizeDescriptor()
     : chemkit::MolecularDescriptor("graph-size")
 {
+    setDimensionality(2);
 }
 
 chemkit::Variant GraphSizeDescriptor::value(const chemkit::Molecule *molecule) const

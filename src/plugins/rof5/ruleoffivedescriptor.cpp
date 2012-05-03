@@ -40,6 +40,7 @@
 RuleOfFiveDescriptor::RuleOfFiveDescriptor()
     : chemkit::MolecularDescriptor("rule-of-five")
 {
+    setDimensionality(1);
 }
 
 chemkit::Variant RuleOfFiveDescriptor::value(const chemkit::Molecule *molecule) const

@@ -42,6 +42,7 @@
 HydrogenBondDonorsDescriptor::HydrogenBondDonorsDescriptor()
     : chemkit::MolecularDescriptor("hydrogen-bond-donors")
 {
+    setDimensionality(1);
 }
 
 HydrogenBondDonorsDescriptor::~HydrogenBondDonorsDescriptor()

@@ -43,6 +43,7 @@
 AtomCountDescriptor::AtomCountDescriptor()
     : chemkit::MolecularDescriptor("atom-count")
 {
+    setDimensionality(0);
 }
 
 chemkit::Variant AtomCountDescriptor::value(const chemkit::Molecule *molecule) const
@@ -54,6 +55,7 @@ chemkit::Variant AtomCountDescriptor::value(const chemkit::Molecule *molecule) c
 HeavyAtomCountDescriptor::HeavyAtomCountDescriptor()
     : chemkit::MolecularDescriptor("heavy-atom-count")
 {
+    setDimensionality(0);
 }
 
 chemkit::Variant HeavyAtomCountDescriptor::value(const chemkit::Molecule *molecule) const
@@ -73,6 +75,7 @@ chemkit::Variant HeavyAtomCountDescriptor::value(const chemkit::Molecule *molecu
 BondCountDescriptor::BondCountDescriptor()
     : chemkit::MolecularDescriptor("bond-count")
 {
+    setDimensionality(0);
 }
 
 chemkit::Variant BondCountDescriptor::value(const chemkit::Molecule *molecule) const
@@ -84,6 +87,7 @@ chemkit::Variant BondCountDescriptor::value(const chemkit::Molecule *molecule) c
 RingCountDescriptor::RingCountDescriptor()
     : chemkit::MolecularDescriptor("ring-count")
 {
+    setDimensionality(0);
 }
 
 chemkit::Variant RingCountDescriptor::value(const chemkit::Molecule *molecule) const

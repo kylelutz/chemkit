@@ -59,6 +59,11 @@ cdef class MolecularDescriptor:
 
         return self._descriptor.name().c_str()
 
+    def dimensionality(self):
+        """Returns the dimensionality of the descriptor."""
+
+        return self._descriptor.dimensionality()
+
     ### Descriptor ############################################################
     def value(self, Molecule molecule):
         """Returns the descriptor value for the molecule."""

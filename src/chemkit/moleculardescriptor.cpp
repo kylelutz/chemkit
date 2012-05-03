@@ -48,6 +48,7 @@ class MolecularDescriptorPrivate
 {
 public:
     std::string name;
+    int dimensionality;
 };
 
 // === MolecularDescriptor ================================================= //
@@ -84,6 +85,7 @@ MolecularDescriptor::MolecularDescriptor(const std::string &name)
     : d(new MolecularDescriptorPrivate)
 {
     d->name = name;
+    d->dimensionality = -1;
 }
 
 /// Destroys the molecular descriptor object.
@@ -97,6 +99,27 @@ MolecularDescriptor::~MolecularDescriptor()
 std::string MolecularDescriptor::name() const
 {
     return d->name;
+}
+
+/// Sets the dimensionality of the descriptor.
+void MolecularDescriptor::setDimensionality(int dimensionality)
+{
+    d->dimensionality = dimensionality;
+}
+
+/// Returns the dimensionality of the descriptor.
+///
+/// Some dimensionality values for common descriptors are:
+/// \li \b 0D - Composition: atom count, bond count, ring count, molar mass
+/// \li \b 1D - %Fragment counts: hydrogen-bond acceptors/donors, molar refractivity
+/// \li \b 2D - Topological: wiener index, randic index, graph density
+/// \li \b 3D - Geometric: solvent accessible surface area, van der waals volume
+///
+/// By default descriptors have a dimensionality of \c -1 which indicates
+/// unknown dimensionality.
+int MolecularDescriptor::dimensionality() const
+{
+    return d->dimensionality;
 }
 
 // --- Descriptor ---------------------------------------------------------- //

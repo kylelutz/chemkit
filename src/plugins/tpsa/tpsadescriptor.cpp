@@ -44,6 +44,7 @@
 TpsaDescriptor::TpsaDescriptor()
     : chemkit::MolecularDescriptor("tpsa")
 {
+    setDimensionality(1);
 }
 
 // Returns the polar surface area contribution for the atom. The

@@ -57,6 +57,7 @@ public:
 
     // properties
     std::string name() const;
+    int dimensionality() const;
 
     // descriptor
     virtual Variant value(const Molecule *molecule) const;
@@ -67,6 +68,7 @@ public:
 
 protected:
     MolecularDescriptor(const std::string &name);
+    void setDimensionality(int dimensionality);
 
 private:
     MolecularDescriptorPrivate* const d;

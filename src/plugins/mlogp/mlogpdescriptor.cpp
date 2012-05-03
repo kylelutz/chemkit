@@ -48,6 +48,7 @@
 MlogPDescriptor::MlogPDescriptor()
     : chemkit::MolecularDescriptor("mlogp")
 {
+    setDimensionality(1);
 }
 
 // Returns the MlogP value for the molecule.
