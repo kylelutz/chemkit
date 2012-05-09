@@ -38,6 +38,7 @@
 
 #include <chemkit/moleculefile.h>
 #include <chemkit/graphicscamera.h>
+#include <chemkit/partialchargemodel.h>
 #include <chemkit/graphicsnavigationtool.h>
 
 // === SurfaceViewerDemo =================================================== //
@@ -87,6 +88,9 @@ void SurfaceViewerDemo::setMolecule(const boost::shared_ptr<chemkit::Molecule> &
         m_moleculeItem->setMolecule(molecule.get());
         m_molecularSurfaceItem->setMolecule(molecule.get());
         ui->graphicsView->camera()->lookAt(molecule->center().cast<float>());
+
+        // assign partial charges
+        chemkit::PartialChargeModel::assignPartialCharges(molecule.get(), "mmff");
     }
 
     ui->graphicsView->update();
@@ -180,6 +184,10 @@ void SurfaceViewerDemo::colorModeChanged(int index)
     }
     else if(index == 4){
         m_molecularSurfaceItem->setColorMode(chemkit::GraphicsMolecularSurfaceItem::AtomColor);
+    }
+    else if(index == 5){
+        m_molecularSurfaceItem->setColorMode(
+            chemkit::GraphicsMolecularSurfaceItem::ElectrostaticPotential);
     }
 
     ui->graphicsView->update();
