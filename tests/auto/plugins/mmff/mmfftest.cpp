@@ -128,7 +128,7 @@ void MmffTest::validate()
             double charge = topology->charge(i);
             double expectedCharge = expectedAtom.attribute("charge").toDouble();
             double chargeDifference = std::abs(charge - expectedCharge);
-            if(chargeDifference > 0.1){
+            if(chargeDifference > 0.001){
                 failed = true;
             }
 
