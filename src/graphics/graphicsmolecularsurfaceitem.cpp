@@ -35,6 +35,8 @@
 
 #include "graphicsmolecularsurfaceitem.h"
 
+#include <boost/bind.hpp>
+#include <boost/function.hpp>
 #include <boost/make_shared.hpp>
 
 #include <chemkit/atom.h>
@@ -51,6 +53,76 @@
 #include "graphicsvertexbuffer.h"
 
 namespace chemkit {
+
+namespace {
+
+// Returns the electrostatic potential at the given position calculated
+// from the partial charges and positions of the atoms in the molecule.
+float electrostaticPotential(const Molecule *molecule, const Point3f &position)
+{
+    float esp = 0;
+
+    const float pi = chemkit::constants::Pi;
+    const float e0 = 1.0f;
+
+    foreach(const Atom *atom, molecule->atoms()){
+        float q = atom->partialCharge();
+        float r = (position - atom->position().cast<float>()).norm();
+
+        esp += (1.0f / (4.0f * pi * e0)) * (q / r);
+    }
+
+    return esp;
+}
+
+// Returns a color interpolated at the given value between the colors a
+// (starting at value av) and b (starting at value bv).
+QColor interpolate(const QColor &a, const QColor &b, float av, float bv, float value)
+{
+    float v = (value - av) / (bv - av);
+
+    return QColor::fromRgbF(a.redF() + (b.redF() - a.redF()) * v,
+                            a.greenF() + (b.greenF() - a.greenF()) * v,
+                            a.blueF() + (b.blueF() - a.blueF()) * v);
+}
+
+// Returns the color associated with the electrostatic potential.
+QColor electrostaticPotentialColor(float esp)
+{
+    QColor red = QColor::fromRgb(255, 0, 0);
+    QColor orange = QColor::fromRgb(255, 127, 0);
+    QColor yellow = QColor::fromRgb(255, 255, 0);
+    QColor green = QColor::fromRgb(0, 255, 0);
+    QColor blue = QColor::fromRgb(0, 0, 255);
+
+    // color ranges are hard coded (for now)
+    float redStart = -0.0075f;
+    float orangeStart = -0.0035f;
+    float yellowStart = 0.0f;
+    float greenStart = 0.0015f;
+    float blueStart = 0.0045f;
+
+    if(esp < redStart){
+        return red;
+    }
+    else if(esp < orangeStart){
+        return interpolate(red, orange, redStart, orangeStart, esp);
+    }
+    else if(esp < yellowStart){
+        return interpolate(orange, yellow, orangeStart, yellowStart, esp);
+    }
+    else if(esp < greenStart){
+        return interpolate(yellow, green, yellowStart, greenStart, esp);
+    }
+    else if(esp < blueStart){
+        return interpolate(green, blue, greenStart, blueStart, esp);
+    }
+    else{
+        return blue;
+    }
+}
+
+} // end anonymous namespace
 
 // === GraphicsMolecularSurfaceItemPrivate ================================= //
 class GraphicsMolecularSurfaceItemPrivate
@@ -78,6 +150,7 @@ public:
 /// Provides different modes for coloring the surface.
 ///     - \c SolidColor
 ///     - \c AtomColor
+///     - \c ElectrostaticPotential
 
 // --- Construction and Destruction ---------------------------------------- //
 /// Creates a new molecular surface item for \p molecule.
@@ -236,10 +309,27 @@ void GraphicsMolecularSurfaceItem::paint(GraphicsPainter *painter)
             const boost::shared_ptr<GraphicsVertexBuffer> &buffer =
                 sphereCache.find(atom->vanDerWaalsRadius())->second;
 
-            if(d->colorMode == AtomColor)
+            if(d->colorMode == AtomColor){
                 painter->setColor(d->colorMap->color(atom));
-            else if(d->colorMode == SolidColor)
+            }
+            else if(d->colorMode == SolidColor){
                 painter->setColor(color());
+            }
+            else if(d->colorMode == ElectrostaticPotential){
+                // function that returns electrostatic potential at a point in space
+                boost::function<float (const Point3f&)> espFunction =
+                    boost::bind(electrostaticPotential, d->surface->molecule(), _1);
+
+                // calculate color for each vertex
+                QVector<QColor> colors;
+                foreach(const Point3f &vertex, buffer->vertices()){
+                    float esp = espFunction(atom->position().cast<float>() + vertex);
+                    QColor color = electrostaticPotentialColor(esp);
+                    colors.append(color);
+                }
+
+                buffer->setColors(colors);
+            }
 
             glPushMatrix();
             glTranslated(atom->x(), atom->y(), atom->z());
@@ -277,14 +367,32 @@ void GraphicsMolecularSurfaceItem::paint(GraphicsPainter *painter)
             const boost::shared_ptr<GraphicsVertexBuffer> &buffer =
                 sphereCache.find(atom->vanDerWaalsRadius())->second;
 
-            QColor color;
-            if(d->colorMode == AtomColor)
-                color = d->colorMap->color(atom);
-            else if(d->colorMode == SolidColor)
-                color = this->color();
+            if(d->colorMode == AtomColor){
+                QColor color = d->colorMap->color(atom);
+                color.setAlphaF(opacity());
+                painter->setColor(color);
+            }
+            else if(d->colorMode == SolidColor){
+                QColor color = this->color();
+                color.setAlphaF(opacity());
+                painter->setColor(color);
+            }
+            else if(d->colorMode == ElectrostaticPotential){
+                // function that returns electrostatic potential at a point in space
+                boost::function<float (const Point3f&)> espFunction =
+                    boost::bind(electrostaticPotential, d->surface->molecule(), _1);
 
-            color.setAlphaF(opacity());
-            painter->setColor(color);
+                // calculate color for each vertex
+                QVector<QColor> colors;
+                foreach(const Point3f &vertex, buffer->vertices()){
+                    float esp = espFunction(atom->position().cast<float>() + vertex);
+                    QColor color = electrostaticPotentialColor(esp);
+                    color.setAlphaF(opacity());
+                    colors.append(color);
+                }
+
+                buffer->setColors(colors);
+            }
 
             glPushMatrix();
             glTranslated(atom->x(), atom->y(), atom->z());
