@@ -277,6 +277,8 @@ void GraphicsVertexBuffer::setColors(const QVector<QColor> &colors)
         d->colors.append(color.blue());
         d->colors.append(color.alpha());
     }
+
+    d->readyToDraw = false;
 }
 
 /// Returns the colors in the vertex buffer.
