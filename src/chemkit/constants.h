@@ -89,7 +89,7 @@ const Real ReducedPlanckConstant = PlanckConstant / (2.0 * Pi);
 /// Mass of a proton (\f$m_{p}\f$).
 const Real ProtonMass = 1.672621637e-27;
 
-/// Mass of a electron (\f$m_{e}\f$).
+/// Mass of an electron (\f$m_{e}\f$).
 const Real ElectronMass = 9.10938215e-31;
 
 /// Elementary charge (\f$e\f$).
@@ -98,7 +98,7 @@ const Real ElementaryCharge = 1.602176487e-19;
 /// Charge of a proton (\f$+e\f$).
 const Real ProtonCharge = ElementaryCharge;
 
-/// Charge of a electron (\f$-e\f$).
+/// Charge of an electron (\f$-e\f$).
 const Real ElectronCharge = -ElementaryCharge;
 
 /// Faraday constant (\f$F\f$).
@@ -123,7 +123,7 @@ const Real VacuumPermittivity = 1.0 / (VacuumPermeability * SpeedOfLight * Speed
 const Real FineStructureConstant = (ElementaryCharge * ElementaryCharge * SpeedOfLight * VacuumPermittivity) / (2.0 * PlanckConstant);
 
 /// Conversion factor between Bohr units and Angstroms.
-const Real BohrToAnstroms = 0.52918;
+const Real BohrToAngstroms = 0.52918;
 
 } // end constants namespace
 
