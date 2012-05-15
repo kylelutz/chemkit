@@ -52,7 +52,7 @@
 //
 // The InChI library is not reentrant. In order to safely use the
 // library from multiple threads we introduce a single mutex which
-// must be aquired to use the InChI library functions.
+// must be acquired to use the InChI library functions.
 static boost::mutex BIL;
 
 InchiLineFormat::InchiLineFormat()

@@ -106,7 +106,7 @@ bool CubeFileFormat::read(std::istream &input, chemkit::MoleculeFile *file)
         chemkit::Point3 position(x, y, z);
 
         // scale from bohr units to angstroms
-        position *= chemkit::constants::BohrToAnstroms;
+        position *= chemkit::constants::BohrToAngstroms;
 
         // set position
         atom->setPosition(position);
