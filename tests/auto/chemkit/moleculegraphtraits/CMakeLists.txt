@@ -1,0 +1,4 @@
+qt4_wrap_cpp(MOC_SOURCES moleculegraphtraitstest.h)
+add_executable(moleculegraphtraitstest moleculegraphtraitstest.cpp ${MOC_SOURCES})
+target_link_libraries(moleculegraphtraitstest chemkit ${QT_LIBRARIES})
+add_chemkit_test(chemkit.MoleculeGraphTraits moleculegraphtraitstest)

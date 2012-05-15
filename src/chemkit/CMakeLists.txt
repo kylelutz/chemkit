@@ -49,6 +49,7 @@ set(HEADERS
   molecule-inline.h
   moleculealigner.h
   moleculeeditor.h
+  moleculegraphtraits.h
   moleculewatcher.h
   nucleotide.h
   partialchargemodel.h
