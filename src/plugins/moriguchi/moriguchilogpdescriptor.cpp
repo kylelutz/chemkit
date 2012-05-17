@@ -33,7 +33,7 @@
 **
 ******************************************************************************/
 
-#include "mlogpdescriptor.h"
+#include "moriguchilogpdescriptor.h"
 
 #include <chemkit/atom.h>
 #include <chemkit/bond.h>
@@ -41,18 +41,18 @@
 #include <chemkit/foreach.h>
 #include <chemkit/molecule.h>
 
-// The MlogPDescriptor class calculates the Moriguchi logP
+// The MoriguchiLogPDescriptor class calculates the Moriguchi logP
 // descriptor value for a given molecule.
 //
 // Reference: [Moriguchi 1992]
-MlogPDescriptor::MlogPDescriptor()
-    : chemkit::MolecularDescriptor("mlogp")
+MoriguchiLogPDescriptor::MoriguchiLogPDescriptor()
+    : chemkit::MolecularDescriptor("moriguchi-logp")
 {
     setDimensionality(1);
 }
 
-// Returns the MlogP value for the molecule.
-chemkit::Variant MlogPDescriptor::value(const chemkit::Molecule *molecule) const
+// Returns the Moriguchi logP value for the molecule.
+chemkit::Variant MoriguchiLogPDescriptor::value(const chemkit::Molecule *molecule) const
 {
     // CX - summation of numbers of carbon and halogen atoms
     //      weighted by C: 1.0, F: 0.5, Cl: 1.0, Br: 1.5, I: 2.0

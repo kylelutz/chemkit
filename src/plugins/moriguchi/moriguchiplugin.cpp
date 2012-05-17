@@ -33,17 +33,18 @@
 **
 ******************************************************************************/
 
-#ifndef MLOGPDESCRIPTOR_H
-#define MLOGPDESCRIPTOR_H
+#include <chemkit/plugin.h>
 
-#include <chemkit/moleculardescriptor.h>
+#include "moriguchilogpdescriptor.h"
 
-class MlogPDescriptor : public chemkit::MolecularDescriptor
+class MoriguchiPlugin : public chemkit::Plugin
 {
 public:
-    MlogPDescriptor();
-
-    chemkit::Variant value(const chemkit::Molecule *molecule) const CHEMKIT_OVERRIDE;
+    MoriguchiPlugin()
+        : chemkit::Plugin("moriguchi")
+    {
+        CHEMKIT_REGISTER_MOLECULAR_DESCRIPTOR("moriguchi-logp", MoriguchiLogPDescriptor);
+    }
 };
 
-#endif // MLOGPDESCRIPTOR_H
+CHEMKIT_EXPORT_PLUGIN(moriguchi, MoriguchiPlugin)

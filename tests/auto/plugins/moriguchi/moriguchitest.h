@@ -33,18 +33,19 @@
 **
 ******************************************************************************/
 
-#include <chemkit/plugin.h>
+#ifndef MORIGUCHITEST_H
+#define MORIGUCHITEST_H
 
-#include "mlogpdescriptor.h"
+#include <QtTest>
 
-class MlogPPlugin : public chemkit::Plugin
+class MoriguchiTest : public QObject
 {
-public:
-    MlogPPlugin()
-        : chemkit::Plugin("mlogp")
-    {
-        CHEMKIT_REGISTER_MOLECULAR_DESCRIPTOR("mlogp", MlogPDescriptor);
-    }
+    Q_OBJECT
+
+private slots:
+    void initTestCase();
+    void logP_data();
+    void logP();
 };
 
-CHEMKIT_EXPORT_PLUGIN(mlogp, MlogPPlugin)
+#endif // MORIGUCHITEST_H

@@ -33,24 +33,24 @@
 **
 ******************************************************************************/
 
-#include "mlogptest.h"
+#include "moriguchitest.h"
 
 #include <boost/range/algorithm.hpp>
 
 #include <chemkit/molecule.h>
 #include <chemkit/moleculardescriptor.h>
 
-void MlogPTest::initTestCase()
+void MoriguchiTest::initTestCase()
 {
-    // verify that the mlogp plugin registered itself correctly
-    QVERIFY(boost::count(chemkit::MolecularDescriptor::descriptors(), "mlogp") == 1);
+    // verify that the moriguchi-logp plugin registered itself correctly
+    QVERIFY(boost::count(chemkit::MolecularDescriptor::descriptors(), "moriguchi-logp") == 1);
 }
 
-void MlogPTest::mlogp_data()
+void MoriguchiTest::logP_data()
 {
     QTest::addColumn<QString>("smilesString");
     QTest::addColumn<QString>("formulaString");
-    QTest::addColumn<double>("mlogp");
+    QTest::addColumn<double>("logP");
 
     // data from examples in [Moriguchi 1992]
     QTest::newRow("halothane") << "C(C(F)(F)F)(Cl)Br" << "C2HBrClF3" << 2.60;
@@ -82,11 +82,11 @@ void MlogPTest::mlogp_data()
     QTest::newRow("verapamil") << "N#CC(c1cc(OC)c(OC)cc1)(CCCN(CCc2ccc(OC)c(OC)c2)C)C(C)C" << "C27H38N2O4" << 3.23;
 }
 
-void MlogPTest::mlogp()
+void MoriguchiTest::logP()
 {
     QFETCH(QString, smilesString);
     QFETCH(QString, formulaString);
-    QFETCH(double, mlogp);
+    QFETCH(double, logP);
 
     QByteArray smiles = smilesString.toAscii();
     QByteArray formula = formulaString.toAscii();
@@ -95,13 +95,13 @@ void MlogPTest::mlogp()
     QCOMPARE(molecule.formula().c_str(), formula.constData());
 
     double tolerance = 0.1;
-    double actual = molecule.descriptor("mlogp").toDouble();
-    bool equal = std::abs(mlogp - actual) < tolerance;
+    double actual = molecule.descriptor("moriguchi-logp").toDouble();
+    bool equal = std::abs(logP - actual) < tolerance;
     if(!equal){
         qDebug() << "Actual: " << actual;
-        qDebug() << "Expected: " << mlogp;
+        qDebug() << "Expected: " << logP;
     }
     QVERIFY(equal);
 }
 
-QTEST_APPLESS_MAIN(MlogPTest)
+QTEST_APPLESS_MAIN(MoriguchiTest)
