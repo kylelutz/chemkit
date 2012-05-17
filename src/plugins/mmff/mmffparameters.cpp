@@ -566,8 +566,9 @@ const MmffStrechBendParameters* MmffParameters::defaultStrechBendParameters(int 
 const MmffOutOfPlaneBendingParameters* MmffParameters::outOfPlaneBendingParameters(int typeA, int typeB, int typeC, int typeD) const
 {
     if(typeA > typeC)
+        std::swap(typeA, typeC);
+    if(typeA > typeD)
         std::swap(typeA, typeD);
-
     if(typeC > typeD)
         std::swap(typeC, typeD);
 
