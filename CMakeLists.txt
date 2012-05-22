@@ -80,6 +80,20 @@ if(MSVC)
   add_definitions("-D_CRT_SECURE_NO_WARNINGS")
 endif()
 
+# set a variable for the operating system
+set(CHEMKIT_OS_UNIX FALSE)
+set(CHEMKIT_OS_MAC FALSE)
+set(CHEMKIT_OS_WIN32 FALSE)
+
+if(UNIX)
+  set(CHEMKIT_OS_UNIX TRUE)
+  if(APPLE)
+    set(CHEMKIT_OS_MAC TRUE)
+  endif()
+elseif(WIN32)
+  set(CHEMKIT_OS_WIN32 TRUE)
+endif()
+
 add_subdirectory(src)
 add_subdirectory(bindings)
 add_subdirectory(demos)

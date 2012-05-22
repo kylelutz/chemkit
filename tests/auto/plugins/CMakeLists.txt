@@ -42,5 +42,10 @@ add_subdirectory(txyz)
 add_subdirectory(uff)
 add_subdirectory(vabc)
 add_subdirectory(wienerindex)
-add_subdirectory(xtc)
+
+# only enable xtc test on *nix where we have XDR
+if(${CHEMKIT_OS_UNIX} AND NOT ${CHEMKIT_OS_MAC})
+  add_subdirectory(xtc)
+endif()
+
 add_subdirectory(xyz)
