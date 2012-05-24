@@ -7,6 +7,7 @@ set(QT_USE_QTTEST TRUE)
 include(${QT_USE_FILE})
 
 add_subdirectory(amber)
+add_subdirectory(apol)
 add_subdirectory(chemjson)
 add_subdirectory(cml)
 add_subdirectory(countdescriptors)
