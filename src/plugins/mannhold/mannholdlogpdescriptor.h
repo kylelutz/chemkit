@@ -33,24 +33,17 @@
 **
 ******************************************************************************/
 
-#include "ruleoffiveviolationsdescriptor.h"
+#ifndef MANNHOLDLOGPDESCRIPTOR_H
+#define MANNHOLDLOGPDESCRIPTOR_H
 
-#include <chemkit/molecule.h>
+#include <chemkit/moleculardescriptor.h>
 
-RuleOfFiveViolationsDescriptor::RuleOfFiveViolationsDescriptor()
-    : chemkit::MolecularDescriptor("rule-of-five-violations")
+class MannholdLogPDescriptor : public chemkit::MolecularDescriptor
 {
-    setDimensionality(1);
-}
+public:
+    MannholdLogPDescriptor();
 
-chemkit::Variant RuleOfFiveViolationsDescriptor::value(const chemkit::Molecule *molecule) const
-{
-    int violations = 0;
+    chemkit::Variant value(const chemkit::Molecule *molecule) const CHEMKIT_OVERRIDE;
+};
 
-    if(molecule->descriptor("molecular-mass").toDouble() > 500.0) violations++;
-    if(molecule->descriptor("hydrogen-bond-donors").toInt() > 5) violations++;
-    if(molecule->descriptor("hydrogen-bond-acceptors").toInt() > 10) violations++;
-    if(molecule->descriptor("moriguchi-logp").toDouble() > 5.0) violations++;
-
-    return violations;
-}
+#endif // MANNHOLDLOGPDESCRIPTOR_H

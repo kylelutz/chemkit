@@ -33,24 +33,43 @@
 **
 ******************************************************************************/
 
-#include "ruleoffiveviolationsdescriptor.h"
+#include "mannholdtest.h"
+
+#include <boost/range/algorithm.hpp>
 
 #include <chemkit/molecule.h>
+#include <chemkit/moleculardescriptor.h>
 
-RuleOfFiveViolationsDescriptor::RuleOfFiveViolationsDescriptor()
-    : chemkit::MolecularDescriptor("rule-of-five-violations")
+void MannholdTest::initTestCase()
 {
-    setDimensionality(1);
+    // verify that the mannhold plugin registered itself correctly
+    QVERIFY(boost::count(chemkit::MolecularDescriptor::descriptors(), "mannhold-logp") == 1);
 }
 
-chemkit::Variant RuleOfFiveViolationsDescriptor::value(const chemkit::Molecule *molecule) const
+void MannholdTest::logP_data()
 {
-    int violations = 0;
+    QTest::addColumn<QString>("smilesString");
+    QTest::addColumn<QString>("formulaString");
+    QTest::addColumn<double>("logP");
 
-    if(molecule->descriptor("molecular-mass").toDouble() > 500.0) violations++;
-    if(molecule->descriptor("hydrogen-bond-donors").toInt() > 5) violations++;
-    if(molecule->descriptor("hydrogen-bond-acceptors").toInt() > 10) violations++;
-    if(molecule->descriptor("moriguchi-logp").toDouble() > 5.0) violations++;
-
-    return violations;
+    QTest::newRow("ethanol") << "CCO" << "C2H6O" << 1.57;
+    QTest::newRow("butane") << "CCCC" << "C4H10" << 1.9;
+    QTest::newRow("octanol") << "CCCCCCCCO" << "C8H18O" << 2.23;
+    QTest::newRow("guanine") << "c1[nH]c2c(n1)c(=O)[nH]c(n2)N" << "C5H5N5O" << 1.35;
 }
+
+void MannholdTest::logP()
+{
+    QFETCH(QString, smilesString);
+    QFETCH(QString, formulaString);
+    QFETCH(double, logP);
+
+    QByteArray smiles = smilesString.toAscii();
+    QByteArray formula = formulaString.toAscii();
+
+    chemkit::Molecule molecule(smiles.constData(), "smiles");
+    QCOMPARE(molecule.formula().c_str(), formula.constData());
+    QCOMPARE(qRound(molecule.descriptor("mannhold-logp").toDouble() * 100), qRound(logP * 100));
+}
+
+QTEST_APPLESS_MAIN(MannholdTest)

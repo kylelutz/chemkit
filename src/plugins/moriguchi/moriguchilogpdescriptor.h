@@ -33,19 +33,17 @@
 **
 ******************************************************************************/
 
-#ifndef MLOGPTEST_H
-#define MLOGPTEST_H
+#ifndef MORIGUCHILOGPDESCRIPTOR_H
+#define MORIGUCHILOGPDESCRIPTOR_H
 
-#include <QtTest>
+#include <chemkit/moleculardescriptor.h>
 
-class MlogPTest : public QObject
+class MoriguchiLogPDescriptor : public chemkit::MolecularDescriptor
 {
-    Q_OBJECT
+public:
+    MoriguchiLogPDescriptor();
 
-    private slots:
-        void initTestCase();
-        void mlogp_data();
-        void mlogp();
+    chemkit::Variant value(const chemkit::Molecule *molecule) const CHEMKIT_OVERRIDE;
 };
 
-#endif // MLOGPTEST_H
+#endif // MORIGUCHILOGPDESCRIPTOR_H

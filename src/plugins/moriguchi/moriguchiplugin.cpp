@@ -35,16 +35,16 @@
 
 #include <chemkit/plugin.h>
 
-#include "mlogpdescriptor.h"
+#include "moriguchilogpdescriptor.h"
 
-class MlogPPlugin : public chemkit::Plugin
+class MoriguchiPlugin : public chemkit::Plugin
 {
 public:
-    MlogPPlugin()
-        : chemkit::Plugin("mlogp")
+    MoriguchiPlugin()
+        : chemkit::Plugin("moriguchi")
     {
-        CHEMKIT_REGISTER_MOLECULAR_DESCRIPTOR("mlogp", MlogPDescriptor);
+        CHEMKIT_REGISTER_MOLECULAR_DESCRIPTOR("moriguchi-logp", MoriguchiLogPDescriptor);
     }
 };
 
-CHEMKIT_EXPORT_PLUGIN(mlogp, MlogPPlugin)
+CHEMKIT_EXPORT_PLUGIN(moriguchi, MoriguchiPlugin)

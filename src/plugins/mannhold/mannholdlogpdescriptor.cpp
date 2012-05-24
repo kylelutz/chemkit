@@ -33,24 +33,31 @@
 **
 ******************************************************************************/
 
-#include "ruleoffiveviolationsdescriptor.h"
+#include "mannholdlogpdescriptor.h"
 
+#include <chemkit/atom.h>
+#include <chemkit/foreach.h>
 #include <chemkit/molecule.h>
 
-RuleOfFiveViolationsDescriptor::RuleOfFiveViolationsDescriptor()
-    : chemkit::MolecularDescriptor("rule-of-five-violations")
+MannholdLogPDescriptor::MannholdLogPDescriptor()
+    : chemkit::MolecularDescriptor("mannhold-logp")
 {
     setDimensionality(1);
 }
 
-chemkit::Variant RuleOfFiveViolationsDescriptor::value(const chemkit::Molecule *molecule) const
+chemkit::Variant MannholdLogPDescriptor::value(const chemkit::Molecule *molecule) const
 {
-    int violations = 0;
+    size_t nc = 0; // number of carbons
+    size_t nhet = 0; // number of heteroatoms
 
-    if(molecule->descriptor("molecular-mass").toDouble() > 500.0) violations++;
-    if(molecule->descriptor("hydrogen-bond-donors").toInt() > 5) violations++;
-    if(molecule->descriptor("hydrogen-bond-acceptors").toInt() > 10) violations++;
-    if(molecule->descriptor("moriguchi-logp").toDouble() > 5.0) violations++;
+    foreach(const chemkit::Atom *atom, molecule->atoms()){
+        if(atom->is(chemkit::Atom::Carbon)){
+            nc++;
+        }
+        else if(!atom->is(chemkit::Atom::Hydrogen)){
+            nhet++;
+        }
+    }
 
-    return violations;
+    return 1.46 + 0.11 * nc - 0.11 * nhet;
 }

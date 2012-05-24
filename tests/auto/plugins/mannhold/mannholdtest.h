@@ -33,17 +33,19 @@
 **
 ******************************************************************************/
 
-#ifndef MLOGPDESCRIPTOR_H
-#define MLOGPDESCRIPTOR_H
+#ifndef MANNHOLDTEST_H
+#define MANNHOLDTEST_H
 
-#include <chemkit/moleculardescriptor.h>
+#include <QtTest>
 
-class MlogPDescriptor : public chemkit::MolecularDescriptor
+class MannholdTest : public QObject
 {
-public:
-    MlogPDescriptor();
+    Q_OBJECT
 
-    chemkit::Variant value(const chemkit::Molecule *molecule) const CHEMKIT_OVERRIDE;
+private slots:
+    void initTestCase();
+    void logP_data();
+    void logP();
 };
 
-#endif // MLOGPDESCRIPTOR_H
+#endif // MANNHOLDTEST_H

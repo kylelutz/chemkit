@@ -33,24 +33,19 @@
 **
 ******************************************************************************/
 
-#include "ruleoffiveviolationsdescriptor.h"
+#ifndef MORIGUCHITEST_H
+#define MORIGUCHITEST_H
 
-#include <chemkit/molecule.h>
+#include <QtTest>
 
-RuleOfFiveViolationsDescriptor::RuleOfFiveViolationsDescriptor()
-    : chemkit::MolecularDescriptor("rule-of-five-violations")
+class MoriguchiTest : public QObject
 {
-    setDimensionality(1);
-}
+    Q_OBJECT
 
-chemkit::Variant RuleOfFiveViolationsDescriptor::value(const chemkit::Molecule *molecule) const
-{
-    int violations = 0;
+private slots:
+    void initTestCase();
+    void logP_data();
+    void logP();
+};
 
-    if(molecule->descriptor("molecular-mass").toDouble() > 500.0) violations++;
-    if(molecule->descriptor("hydrogen-bond-donors").toInt() > 5) violations++;
-    if(molecule->descriptor("hydrogen-bond-acceptors").toInt() > 10) violations++;
-    if(molecule->descriptor("moriguchi-logp").toDouble() > 5.0) violations++;
-
-    return violations;
-}
+#endif // MORIGUCHITEST_H
