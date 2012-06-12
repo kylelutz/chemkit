@@ -104,6 +104,11 @@ cdef class MoleculeFile:
             else:
                 return self._moleculeFile.read(fileName, formatName)
 
+    def readString(self, char *string):
+        """Reads the file data from the string."""
+
+        return self._moleculeFile._readFromString(string)
+
     def write(self, char *fileName = NULL, char *formatName = NULL):
         """Writes the file."""
 
