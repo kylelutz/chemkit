@@ -58,7 +58,7 @@ add_custom_command(OUTPUT chemkit.cpp
 # build library
 add_library(chemkit-python SHARED chemkit.cpp)
 set_target_properties(chemkit-python PROPERTIES OUTPUT_NAME "chemkit" PREFIX "")
-target_link_libraries(chemkit-python ${CHEMKIT_LIBRARIES})
+target_link_libraries(chemkit-python ${CHEMKIT_LIBRARIES} ${PYTHON_LIBRARIES})
 
 # find python site-packages directory for installation
 execute_process(COMMAND ${PYTHON_EXECUTABLE}
