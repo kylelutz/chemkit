@@ -537,6 +537,21 @@ inline bool GenericFile<File, Format>::_readFromString(const std::string &string
     return read(stream);
 }
 
+// Writes the file to the string. This is an internal convenience method
+// provided to ease the implementation of the Python API for file I/O.
+template<typename File, typename Format>
+inline std::string GenericFile<File, Format>::_writeToString()
+{
+    std::ostringstream stream;
+
+    bool ok = write(stream);
+    if(!ok){
+        return std::string();
+    }
+
+    return stream.str();
+}
+
 } // end chemkit namespace
 
 #endif // CHEMKIT_GENERICFILE_INLINE_H

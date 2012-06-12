@@ -94,6 +94,7 @@ public:
 
     // internal methods
     bool _readFromString(const std::string &string);
+    std::string _writeToString();
 
     // static methods
     static std::vector<std::string> formats();
