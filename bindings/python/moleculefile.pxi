@@ -72,6 +72,11 @@ cdef class MoleculeFile:
 
         return self._moleculeFile.fileName().c_str()
 
+    def setFormat(self, char *format):
+        """Sets the file format."""
+
+        return self._moleculeFile.setFormat(format)
+
     def formatName(self):
         """Returns the name of the file format for the file."""
 
