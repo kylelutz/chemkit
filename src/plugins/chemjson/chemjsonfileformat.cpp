@@ -65,7 +65,7 @@ bool ChemJsonFileFormat::read(std::istream &input, chemkit::MoleculeFile *file)
     }
 
     // check file type
-    Json::Value version = root["Chemical JSON"];
+    Json::Value version = root["chemical json"];
     if(version.empty()){
         setErrorString("Not a valid Chemical JSON file");
         return false;
@@ -152,7 +152,7 @@ bool ChemJsonFileFormat::write(const chemkit::MoleculeFile *file, std::ostream &
 
     // write version
     const int version = 0;
-    output << "  \"Chemical JSON\": " << version << "," << std::endl;
+    output << "  \"chemical json\": " << version << "," << std::endl;
 
     // write molecule name
     std::string name = molecule->name();
