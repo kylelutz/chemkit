@@ -72,6 +72,11 @@ cdef class MoleculeFile:
 
         return self._moleculeFile.fileName().c_str()
 
+    def setFormat(self, char *format):
+        """Sets the file format."""
+
+        return self._moleculeFile.setFormat(format)
+
     def formatName(self):
         """Returns the name of the file format for the file."""
 
@@ -98,6 +103,11 @@ cdef class MoleculeFile:
                 return self._moleculeFile.read(fileName)
             else:
                 return self._moleculeFile.read(fileName, formatName)
+
+    def readString(self, char *string):
+        """Reads the file data from the string."""
+
+        return self._moleculeFile._readFromString(string)
 
     def write(self, char *fileName = NULL, char *formatName = NULL):
         """Writes the file."""

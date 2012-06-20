@@ -64,5 +64,28 @@ class MoleculeFileTest(unittest.TestCase):
         self.assertIsNotNone(molecule)
         self.assertEqual(molecule.formula(), "CH4O")
 
+    def test_readString(self):
+        f = chemkit.MoleculeFile()
+        f.setFormat("xyz")
+
+        # string containing the file's data
+        data = "5\n"
+        data += "methane\n"
+        data += "C 	 0.000000 	 0.000000 	 0.000000\n"
+        data += "H 	 0.000000 	 0.000000 	 1.089000\n"
+        data += "H 	 1.026719 	 0.000000 	-0.363000\n"
+        data += "H 	-0.513360 	-0.889165 	-0.363000\n"
+        data += "H 	-0.513360 	 0.889165 	-0.363000\n"
+
+        ok = f.readString(data)
+        if not ok:
+            print f.errorString()
+        self.assertTrue(ok)
+        self.assertEqual(f.moleculeCount(), 1)
+
+        molecule = f.molecule(0)
+        self.assertIsNotNone(molecule)
+        self.assertEqual(molecule.formula(), "CH4")
+
 if __name__ == '__main__':
     unittest.main()

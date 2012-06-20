@@ -39,6 +39,7 @@
 #include "genericfile.h"
 
 #include <fstream>
+#include <sstream>
 #include <boost/format.hpp>
 #include <boost/filesystem.hpp>
 #include <boost/scoped_ptr.hpp>
@@ -524,6 +525,16 @@ inline std::string GenericFile<File, Format>::suffix(const std::string &fileName
     suffix.erase(0, 1);
 
     return suffix;
+}
+
+// Reads the file from the string. This is an internal convenience method
+// provided to ease the implementation of the Python API for file I/O.
+template<typename File, typename Format>
+inline bool GenericFile<File, Format>::_readFromString(const std::string &string)
+{
+    std::istringstream stream(string);
+
+    return read(stream);
 }
 
 } // end chemkit namespace

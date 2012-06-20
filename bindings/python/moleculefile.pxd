@@ -50,6 +50,7 @@ cdef extern from "chemkit/moleculefile.h" namespace "chemkit":
         # properties
         void setFileName(char *fileName)
         string fileName()
+        bool setFormat(char *format)
         string formatName()
         int size()
         bool isEmpty()
@@ -58,6 +59,7 @@ cdef extern from "chemkit/moleculefile.h" namespace "chemkit":
         bool read()
         bool read(char *fileName)
         bool read(char *fileName, char *formatName)
+        bool _readFromString(char *string)
         bool write()
         bool write(char *fileName)
         bool write(char *fileName, char *formatName)

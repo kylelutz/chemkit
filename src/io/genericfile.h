@@ -92,6 +92,9 @@ public:
     // error handling
     std::string errorString() const;
 
+    // internal methods
+    bool _readFromString(const std::string &string);
+
     // static methods
     static std::vector<std::string> formats();
     static std::vector<std::string> compressionFormats();
