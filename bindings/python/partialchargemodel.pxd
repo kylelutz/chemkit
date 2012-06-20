@@ -1,6 +1,6 @@
 ###############################################################################
 ##
-## Copyright (C) 2009-2012 Kyle Lutz <kyle.r.lutz@gmail.com>
+## Copyright (C) 2012 Kitware, Inc.
 ## All rights reserved.
 ##
 ## This file is a part of the chemkit project. For more information
@@ -33,22 +33,28 @@
 ##
 ###############################################################################
 
-include "atom.pxi"
-include "atomtyper.pxi"
-include "bond.pxi"
-include "bondpredictor.pxi"
-include "coordinatepredictor.pxi"
-include "element.pxi"
-include "fingerprint.pxi"
-include "forcefield.pxi"
-include "fragment.pxi"
-include "lineformat.pxi"
-include "moleculardescriptor.pxi"
-include "molecule.pxi"
-include "moleculefile.pxi"
-include "moleculegeometryoptimizer.pxi"
-include "partialchargemodel.pxi"
-include "point3.pxi"
-include "ring.pxi"
-include "vector3.pxi"
+from libcpp cimport bool
+from string cimport string
+from libcpp.vector cimport vector
 
+cdef extern from "chemkit/atom.h" namespace "chemkit":
+    cdef cppclass _Atom "chemkit::Atom"
+
+cdef extern from "chemkit/molecule.h" namespace "chemkit":
+    cdef cppclass _Molecule "chemkit::Molecule"
+
+cdef extern from "chemkit/partialchargemodel.h" namespace "chemkit":
+    cdef cppclass _PartialChargeModel "chemkit::PartialChargeModel":
+        # properties
+        string name()
+        void setMolecule(_Molecule *molecule)
+        _Molecule* molecule()
+
+        # partial charges
+        double partialCharge(_Atom *atom)
+
+# static methods
+cdef extern from "chemkit/partialchargemodel.h" namespace "chemkit::PartialChargeModel":
+    _PartialChargeModel* create(char *name)
+    vector[string] models()
+    bool assignPartialCharges(_Molecule *molecule, string typer)

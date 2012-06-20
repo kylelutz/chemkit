@@ -45,6 +45,8 @@ set(SOURCES
   molecule.pxi
   moleculegeometryoptimizer.pxd
   moleculegeometryoptimizer.pxi
+  partialchargemodel.pxd
+  partialchargemodel.pxi
   point3.pxd
   point3.pxi
   ring.pxd
