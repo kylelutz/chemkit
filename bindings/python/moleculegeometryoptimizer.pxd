@@ -1,6 +1,6 @@
 ###############################################################################
 ##
-## Copyright (C) 2009-2012 Kyle Lutz <kyle.r.lutz@gmail.com>
+## Copyright (C) 2012 Kitware, Inc.
 ## All rights reserved.
 ##
 ## This file is a part of the chemkit project. For more information
@@ -33,21 +33,36 @@
 ##
 ###############################################################################
 
-include "atom.pxi"
-include "atomtyper.pxi"
-include "bond.pxi"
-include "bondpredictor.pxi"
-include "coordinatepredictor.pxi"
-include "element.pxi"
-include "fingerprint.pxi"
-include "forcefield.pxi"
-include "fragment.pxi"
-include "lineformat.pxi"
-include "moleculardescriptor.pxi"
-include "molecule.pxi"
-include "moleculefile.pxi"
-include "moleculegeometryoptimizer.pxi"
-include "point3.pxi"
-include "ring.pxi"
-include "vector3.pxi"
+from libcpp cimport bool
+from string cimport string
 
+cdef extern from "chemkit/molecule.h" namespace "chemkit":
+    cdef cppclass _Molecule "chemkit::Molecule"
+
+cdef extern from "chemkit/moleculegeometryoptimizer.h" namespace "chemkit":
+    cdef cppclass _MoleculeGeometryOptimizer "chemkit::MoleculeGeometryOptimizer":
+        # construction and destruction
+        _MoleculeGeometryOptimizer()
+
+        # properties
+        void setMolecule(_Molecule *molecule)
+        _Molecule* molecule()
+        bool setForceField(char *forceField)
+        string forceField()
+
+        # energy
+        double energy()
+
+        # optimization
+        bool setup()
+        void step()
+        bool converged()
+        bool optimize()
+        void writeCoordinates()
+
+        # error handling
+        string errorString()
+
+# static methods
+cdef extern from "chemkit/moleculegeometryoptimizer.h" namespace "chemkit::MoleculeGeometryOptimizer":
+    void optimizeCoordinates(_Molecule *molecule)

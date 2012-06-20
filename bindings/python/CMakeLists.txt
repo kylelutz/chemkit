@@ -43,6 +43,8 @@ set(SOURCES
   moleculefile.pxi
   molecule.pxd
   molecule.pxi
+  moleculegeometryoptimizer.pxd
+  moleculegeometryoptimizer.pxi
   point3.pxd
   point3.pxi
   ring.pxd
