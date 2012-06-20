@@ -22,6 +22,8 @@ set(SOURCES
   atomtyper.pxi
   bond.pxd
   bond.pxi
+  bondpredictor.pxd
+  bondpredictor.pxi
   chemkit.pyx
   element.pxd
   element.pxi
