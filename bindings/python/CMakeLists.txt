@@ -25,6 +25,8 @@ set(SOURCES
   bondpredictor.pxd
   bondpredictor.pxi
   chemkit.pyx
+  coordinatepredictor.pxd
+  coordinatepredictor.pxi
   element.pxd
   element.pxi
   fingerprint.pxd

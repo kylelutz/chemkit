@@ -1,6 +1,6 @@
 ###############################################################################
 ##
-## Copyright (C) 2009-2012 Kyle Lutz <kyle.r.lutz@gmail.com>
+## Copyright (C) 2012 Kitware, Inc.
 ## All rights reserved.
 ##
 ## This file is a part of the chemkit project. For more information
@@ -33,20 +33,17 @@
 ##
 ###############################################################################
 
-include "atom.pxi"
-include "atomtyper.pxi"
-include "bond.pxi"
-include "bondpredictor.pxi"
-include "coordinatepredictor.pxi"
-include "element.pxi"
-include "fingerprint.pxi"
-include "forcefield.pxi"
-include "fragment.pxi"
-include "lineformat.pxi"
-include "moleculardescriptor.pxi"
-include "molecule.pxi"
-include "moleculefile.pxi"
-include "point3.pxi"
-include "ring.pxi"
-include "vector3.pxi"
+from coordinatepredictor cimport _CoordinatePredictor
+from coordinatepredictor cimport predictCoordinates as _CoordinatePredictor_predictCoordinates
 
+cdef class CoordinatePredictor:
+    ### Construction and Destruction ##########################################
+    def __init__(self):
+        pass
+
+    ### Static Methods ########################################################
+    @classmethod
+    def predictCoordinates(cls, Molecule molecule):
+        """Predicts and assigns 3D coordinates for the atoms in molecule."""
+
+        _CoordinatePredictor_predictCoordinates(molecule._molecule)
