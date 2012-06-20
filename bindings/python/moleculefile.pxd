@@ -63,6 +63,7 @@ cdef extern from "chemkit/moleculefile.h" namespace "chemkit":
         bool write()
         bool write(char *fileName)
         bool write(char *fileName, char *formatName)
+        string _writeToString()
 
         # file contents
         void addMolecule(shared_ptr[_Molecule] molecule)

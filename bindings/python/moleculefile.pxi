@@ -120,6 +120,13 @@ cdef class MoleculeFile:
             else:
                 return self._moleculeFile.write(fileName, formatName)
 
+    def writeString(self):
+        """Writes the data to a string and returns it."""
+
+        string = self._moleculeFile._writeToString()
+
+        return string.c_str()
+
     ### File Contents #########################################################
     def addMolecule(self, Molecule molecule):
         """Adds molecule to the file."""
