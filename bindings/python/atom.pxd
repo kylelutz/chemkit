@@ -61,6 +61,8 @@ cdef extern from "chemkit/atom.h" namespace "chemkit":
         int atomicNumber()
         string symbol()
         string name()
+        void setType(string type)
+        string type()
         int formalCharge()
         void setPartialCharge(double charge)
         double partialCharge()
