@@ -18,6 +18,8 @@ find_program(CYTHON cython REQUIRED)
 set(SOURCES
   atom.pxd
   atom.pxi
+  atomtyper.pxd
+  atomtyper.pxi
   bond.pxd
   bond.pxi
   chemkit.pyx

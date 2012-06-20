@@ -9,6 +9,7 @@ macro(add_chemkit_python_test test_name test_script)
 endmacro(add_chemkit_python_test)
 
 add_chemkit_python_test(python.Atom ${CMAKE_CURRENT_SOURCE_DIR}/atomtest.py)
+add_chemkit_python_test(python.AtomTyper ${CMAKE_CURRENT_SOURCE_DIR}/atomtypertest.py)
 add_chemkit_python_test(python.Bond ${CMAKE_CURRENT_SOURCE_DIR}/bondtest.py)
 add_chemkit_python_test(python.Element ${CMAKE_CURRENT_SOURCE_DIR}/elementtest.py)
 add_chemkit_python_test(python.Fingerprint ${CMAKE_CURRENT_SOURCE_DIR}/fingerprinttest.py)

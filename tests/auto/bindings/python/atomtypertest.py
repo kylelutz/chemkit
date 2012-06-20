@@ -1,6 +1,6 @@
 ###############################################################################
 ##
-## Copyright (C) 2009-2012 Kyle Lutz <kyle.r.lutz@gmail.com>
+## Copyright (C) 2012 Kitware, Inc.
 ## All rights reserved.
 ##
 ## This file is a part of the chemkit project. For more information
@@ -33,18 +33,43 @@
 ##
 ###############################################################################
 
-include "atom.pxi"
-include "atomtyper.pxi"
-include "bond.pxi"
-include "element.pxi"
-include "fingerprint.pxi"
-include "forcefield.pxi"
-include "fragment.pxi"
-include "lineformat.pxi"
-include "moleculardescriptor.pxi"
-include "molecule.pxi"
-include "moleculefile.pxi"
-include "point3.pxi"
-include "ring.pxi"
-include "vector3.pxi"
+import chemkit
+import unittest
 
+class AtomTyperTest(unittest.TestCase):
+    def test_name(self):
+        typer = chemkit.AtomTyper.create("uff")
+        self.assertEqual(typer.name(), "uff")
+
+    def test_benzene_mmff(self):
+        molecule = chemkit.Molecule("c1ccccc1", "smiles")
+        self.assertEqual(molecule.formula(), "C6H6")
+
+        typer = chemkit.AtomTyper.create("mmff")
+        typer.setMolecule(molecule)
+
+        for atom in molecule.atoms():
+            if atom.symbol() == "C":
+                self.assertEqual(typer.type(atom), "37")
+            elif atom.symbol() == "H":
+                self.assertEqual(typer.type(atom), "5")
+
+    def test_assign_types(self):
+        molecule = chemkit.Molecule("CCO", "smiles")
+        self.assertEqual(molecule.formula(), "C2H6O")
+
+        for atom in molecule.atoms():
+            self.assertEqual(atom.type(), "")
+
+        chemkit.AtomTyper.assignAtomTypes(molecule, "element-name")
+
+        for atom in molecule.atoms():
+            if atom.symbol() == "C":
+                self.assertEqual(atom.type(), "Carbon")
+            elif atom.symbol() == "H":
+                self.assertEqual(atom.type(), "Hydrogen")
+            elif atom.symbol() == "O":
+                self.assertEqual(atom.type(), "Oxygen")
+
+if __name__ == '__main__':
+    unittest.main()

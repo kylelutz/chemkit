@@ -1,6 +1,6 @@
 ###############################################################################
 ##
-## Copyright (C) 2009-2012 Kyle Lutz <kyle.r.lutz@gmail.com>
+## Copyright (C) 2012 Kitware, Inc.
 ## All rights reserved.
 ##
 ## This file is a part of the chemkit project. For more information
@@ -33,18 +33,45 @@
 ##
 ###############################################################################
 
-include "atom.pxi"
-include "atomtyper.pxi"
-include "bond.pxi"
-include "element.pxi"
-include "fingerprint.pxi"
-include "forcefield.pxi"
-include "fragment.pxi"
-include "lineformat.pxi"
-include "moleculardescriptor.pxi"
-include "molecule.pxi"
-include "moleculefile.pxi"
-include "point3.pxi"
-include "ring.pxi"
-include "vector3.pxi"
+from libcpp cimport bool
+from string cimport string
+from libcpp.vector cimport vector
 
+cdef extern from "chemkit/atom.h" namespace "chemkit":
+    cdef cppclass _Atom "chemkit::Atom"
+
+cdef extern from "chemkit/molecule.h" namespace "chemkit":
+    cdef cppclass _Molecule "chemkit::Molecule"
+
+cdef extern from "chemkit/atomtyper.h" namespace "chemkit":
+    cdef cppclass _AtomTyper "chemkit::AtomTyper":
+        # properties
+        string name()
+        void setMolecule(_Molecule *molecule)
+        _Molecule* molecule()
+
+        # types
+        string type(_Atom *atom)
+
+# static methods
+cdef extern from "chemkit/atomtyper.h" namespace "chemkit::AtomTyper":
+    _AtomTyper* create(char *name)
+    vector[string] typers()
+    bool assignAtomTypes(_Molecule *molecule, string typer)
+
+    # predicates
+    bool isCarbonylCarbon(_Atom *atom)
+    bool isCarbonylOxygen(_Atom *atom)
+    bool isHalogen(_Atom *atom)
+    bool isHydrogenDonor(_Atom *atom)
+    bool isHydrogenAcceptor(_Atom *atom)
+    bool isHydroxylHydrogen(_Atom *atom)
+    bool isHydroxylOxygen(_Atom *atom)
+    bool isNitrileCarbon(_Atom *atom)
+    bool isNitrileNitrogen(_Atom *atom)
+    bool isNitroOxygen(_Atom *atom)
+    bool isNitroNitrogen(_Atom *atom)
+    bool isPolarHydrogen(_Atom *atom)
+    bool isNonpolarHydrogen(_Atom *atom)
+    bool isThiolHydrogen(_Atom *atom)
+    bool isThiolSulfur(_Atom *atom)
