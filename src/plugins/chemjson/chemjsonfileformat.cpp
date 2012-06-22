@@ -35,6 +35,8 @@
 
 #include "chemjsonfileformat.h"
 
+#include <boost/range/algorithm.hpp>
+
 #include <chemkit/atom.h>
 #include <chemkit/bond.h>
 #include <chemkit/foreach.h>
@@ -42,6 +44,20 @@
 #include <chemkit/moleculefile.h>
 
 #include "../../3rdparty/jsoncpp/json/json.h"
+
+namespace {
+
+// Returns a sanitized copy of the string which can then be
+// safely inserted into a JSON document.
+std::string sanitizeJsonString(std::string string)
+{
+    // remove any double-quotes
+    string.erase(boost::remove(string, '"'), string.end());
+
+    return string;
+}
+
+} // end anonymous namespace
 
 // The ChemJsonFileFormat class implements reading and writing
 // for files in the Chemical JSON file format.
@@ -155,7 +171,7 @@ bool ChemJsonFileFormat::write(const chemkit::MoleculeFile *file, std::ostream &
     output << "  \"chemical json\": " << version << "," << std::endl;
 
     // write molecule name
-    std::string name = molecule->name();
+    std::string name = sanitizeJsonString(molecule->name());
     if(!name.empty()){
         output << "  \"name\": \"" << name << "\"," << std::endl;
     }

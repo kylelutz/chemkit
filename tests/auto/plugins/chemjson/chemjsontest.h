@@ -45,6 +45,7 @@ class ChemJsonTest : public QObject
 private slots:
     void initTestCase();
     void read();
+    void checkSanitizeStrings();
 };
 
 #endif // CHEMJSONTEST_H
