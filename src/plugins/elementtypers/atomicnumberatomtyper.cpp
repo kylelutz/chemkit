@@ -46,5 +46,10 @@ AtomicNumberAtomTyper::AtomicNumberAtomTyper()
 
 std::string AtomicNumberAtomTyper::type(const chemkit::Atom *atom) const
 {
-    return boost::lexical_cast<std::string>(atom->atomicNumber());
+    // store atomic number as an int rather than a char
+    // so that lexical_cast will correctly interpret it
+    // as a number rather than an ascii character
+    int number = atom->atomicNumber();
+
+    return boost::lexical_cast<std::string>(number);
 }
