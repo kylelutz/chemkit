@@ -85,7 +85,7 @@ void ElementTypersTest::test()
     atomicNumberTyper->setMolecule(&molecule);
 
     foreach(const chemkit::Atom *atom, molecule.atoms()){
-        QCOMPARE(atomicNumberTyper->type(atom), boost::lexical_cast<std::string>(atom->atomicNumber()));
+        QCOMPARE(boost::lexical_cast<int>(atomicNumberTyper->type(atom)), int(atom->atomicNumber()));
     }
 
     boost::scoped_ptr<chemkit::AtomTyper> elementSymbolTyper(chemkit::AtomTyper::create("element-symbol"));
