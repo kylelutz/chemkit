@@ -68,4 +68,39 @@ void ChemJsonTest::read()
     QCOMPARE(molecule->data("boiling point").toInt(), -88);
 }
 
+void ChemJsonTest::checkSanitizeStrings()
+{
+    // create helium molecule
+    boost::shared_ptr<chemkit::Molecule> molecule(new chemkit::Molecule);
+    molecule->addAtom("He");
+    QCOMPARE(molecule->formula(), std::string("He"));
+
+    // set the molecule's name to a string containing quotes
+    molecule->setName("\"helium\"");
+
+    // create file
+    chemkit::MoleculeFile outputFile;
+    outputFile.addMolecule(molecule);
+
+    // write file
+    std::stringstream stream;
+    bool ok = outputFile.write(stream, "cjson");
+    if(!ok)
+        qDebug() << outputFile.errorString().c_str();
+    QVERIFY(ok);
+
+    // read file
+    chemkit::MoleculeFile inputFile;
+    stream.seekg(0);
+    ok = inputFile.read(stream, "cjson");
+    if(!ok)
+        qDebug() << inputFile.errorString().c_str();
+    QVERIFY(ok);
+
+    // check the molecule
+    molecule = inputFile.molecule();
+    QCOMPARE(molecule->formula(), std::string("He"));
+    QCOMPARE(molecule->name(), std::string("helium"));
+}
+
 QTEST_APPLESS_MAIN(ChemJsonTest)
