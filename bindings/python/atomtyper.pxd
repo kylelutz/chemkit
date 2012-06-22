@@ -1,6 +1,6 @@
 ###############################################################################
 ##
-## Copyright (C) 2009-2012 Kyle Lutz <kyle.r.lutz@gmail.com>
+## Copyright (C) 2012 Kitware, Inc.
 ## All rights reserved.
 ##
 ## This file is a part of the chemkit project. For more information
@@ -35,71 +35,43 @@
 
 from libcpp cimport bool
 from string cimport string
+from libcpp.vector cimport vector
 
-cdef extern from "chemkit/bond.h" namespace "chemkit":
-    cdef cppclass _Bond "chemkit::Bond"
-
-cdef extern from "chemkit/element.h" namespace "chemkit":
-    cdef cppclass _Element "chemkit::Element"
-
-cdef extern from "chemkit/fragment.h" namespace "chemkit":
-    cdef cppclass _Fragment "chemkit::Fragment"
+cdef extern from "chemkit/atom.h" namespace "chemkit":
+    cdef cppclass _Atom "chemkit::Atom"
 
 cdef extern from "chemkit/molecule.h" namespace "chemkit":
     cdef cppclass _Molecule "chemkit::Molecule"
 
-cdef extern from "chemkit/point3.h" namespace "chemkit":
-    cdef cppclass _Point3 "chemkit::Point3"
-
-cdef extern from "chemkit/ring.h" namespace "chemkit":
-    cdef cppclass _Ring "chemkit::Ring"
-
-cdef extern from "chemkit/atom.h" namespace "chemkit":
-    cdef cppclass _Atom "chemkit::Atom":
+cdef extern from "chemkit/atomtyper.h" namespace "chemkit":
+    cdef cppclass _AtomTyper "chemkit::AtomTyper":
         # properties
-        void setAtomicNumber(int atomicNumber)
-        int atomicNumber()
-        string symbol()
         string name()
-        void setType(string type)
-        string type()
-        int formalCharge()
-        void setPartialCharge(double charge)
-        double partialCharge()
-        double mass()
-        double electronegativity()
-        double covalentRadius()
-        double vanDerWaalsRadius()
-        _Fragment* fragment()
+        void setMolecule(_Molecule *molecule)
         _Molecule* molecule()
-        size_t index()
 
-        # structure
-        _Bond* bond(int index)
-        int bondCount()
-        int valence()
-        _Bond* bondTo(_Atom *neighbor)
-        _Atom* neighbor(int index)
-        int neighborCount()
-        bool isBondedTo(_Atom *atom)
-        bool isConnectedTo(_Atom *atom)
-        bool isTerminal()
-        bool isTerminalHydrogen()
+        # types
+        string type(_Atom *atom)
 
-        # ring perception
-        _Ring* ring(int index)
-        int ringCount()
-        bool isInRing()
-        bool isInRing(int size)
-        _Ring* smallestRing()
-        bool isAromatic()
+# static methods
+cdef extern from "chemkit/atomtyper.h" namespace "chemkit::AtomTyper":
+    _AtomTyper* create(char *name)
+    vector[string] typers()
+    bool assignAtomTypes(_Molecule *molecule, string typer)
 
-        # geometry
-        void setPosition(_Point3 position)
-        void setPosition(double x, double y, double z)
-        _Point3 position()
-        double x()
-        double y()
-        double z()
-        double distance(_Atom *atom)
-
+    # predicates
+    bool isCarbonylCarbon(_Atom *atom)
+    bool isCarbonylOxygen(_Atom *atom)
+    bool isHalogen(_Atom *atom)
+    bool isHydrogenDonor(_Atom *atom)
+    bool isHydrogenAcceptor(_Atom *atom)
+    bool isHydroxylHydrogen(_Atom *atom)
+    bool isHydroxylOxygen(_Atom *atom)
+    bool isNitrileCarbon(_Atom *atom)
+    bool isNitrileNitrogen(_Atom *atom)
+    bool isNitroOxygen(_Atom *atom)
+    bool isNitroNitrogen(_Atom *atom)
+    bool isPolarHydrogen(_Atom *atom)
+    bool isNonpolarHydrogen(_Atom *atom)
+    bool isThiolHydrogen(_Atom *atom)
+    bool isThiolSulfur(_Atom *atom)

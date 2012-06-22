@@ -1,6 +1,6 @@
 ###############################################################################
 ##
-## Copyright (C) 2009-2012 Kyle Lutz <kyle.r.lutz@gmail.com>
+## Copyright (C) 2012 Kitware, Inc.
 ## All rights reserved.
 ##
 ## This file is a part of the chemkit project. For more information
@@ -33,73 +33,17 @@
 ##
 ###############################################################################
 
-from libcpp cimport bool
-from string cimport string
-
-cdef extern from "chemkit/bond.h" namespace "chemkit":
-    cdef cppclass _Bond "chemkit::Bond"
-
-cdef extern from "chemkit/element.h" namespace "chemkit":
-    cdef cppclass _Element "chemkit::Element"
-
-cdef extern from "chemkit/fragment.h" namespace "chemkit":
-    cdef cppclass _Fragment "chemkit::Fragment"
-
 cdef extern from "chemkit/molecule.h" namespace "chemkit":
     cdef cppclass _Molecule "chemkit::Molecule"
 
-cdef extern from "chemkit/point3.h" namespace "chemkit":
-    cdef cppclass _Point3 "chemkit::Point3"
+cdef extern from "chemkit/bondpredictor.h" namespace "chemkit":
+    cdef cppclass _BondPredictor "chemkit::BondPredictor":
+        # construction and destruction
+        _BondPredictor(_Molecule *molecule)
 
-cdef extern from "chemkit/ring.h" namespace "chemkit":
-    cdef cppclass _Ring "chemkit::Ring"
-
-cdef extern from "chemkit/atom.h" namespace "chemkit":
-    cdef cppclass _Atom "chemkit::Atom":
         # properties
-        void setAtomicNumber(int atomicNumber)
-        int atomicNumber()
-        string symbol()
-        string name()
-        void setType(string type)
-        string type()
-        int formalCharge()
-        void setPartialCharge(double charge)
-        double partialCharge()
-        double mass()
-        double electronegativity()
-        double covalentRadius()
-        double vanDerWaalsRadius()
-        _Fragment* fragment()
         _Molecule* molecule()
-        size_t index()
 
-        # structure
-        _Bond* bond(int index)
-        int bondCount()
-        int valence()
-        _Bond* bondTo(_Atom *neighbor)
-        _Atom* neighbor(int index)
-        int neighborCount()
-        bool isBondedTo(_Atom *atom)
-        bool isConnectedTo(_Atom *atom)
-        bool isTerminal()
-        bool isTerminalHydrogen()
-
-        # ring perception
-        _Ring* ring(int index)
-        int ringCount()
-        bool isInRing()
-        bool isInRing(int size)
-        _Ring* smallestRing()
-        bool isAromatic()
-
-        # geometry
-        void setPosition(_Point3 position)
-        void setPosition(double x, double y, double z)
-        _Point3 position()
-        double x()
-        double y()
-        double z()
-        double distance(_Atom *atom)
-
+# static methods
+cdef extern from "chemkit/bondpredictor.h" namespace "chemkit::BondPredictor":
+    void predictBonds(_Molecule *molecule)

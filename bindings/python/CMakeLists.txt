@@ -18,9 +18,15 @@ find_program(CYTHON cython REQUIRED)
 set(SOURCES
   atom.pxd
   atom.pxi
+  atomtyper.pxd
+  atomtyper.pxi
   bond.pxd
   bond.pxi
+  bondpredictor.pxd
+  bondpredictor.pxi
   chemkit.pyx
+  coordinatepredictor.pxd
+  coordinatepredictor.pxi
   element.pxd
   element.pxi
   fingerprint.pxd
@@ -37,6 +43,10 @@ set(SOURCES
   moleculefile.pxi
   molecule.pxd
   molecule.pxi
+  moleculegeometryoptimizer.pxd
+  moleculegeometryoptimizer.pxi
+  partialchargemodel.pxd
+  partialchargemodel.pxi
   point3.pxd
   point3.pxi
   ring.pxd

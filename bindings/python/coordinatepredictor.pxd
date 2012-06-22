@@ -1,6 +1,6 @@
 ###############################################################################
 ##
-## Copyright (C) 2009-2012 Kyle Lutz <kyle.r.lutz@gmail.com>
+## Copyright (C) 2012 Kitware, Inc.
 ## All rights reserved.
 ##
 ## This file is a part of the chemkit project. For more information
@@ -33,22 +33,14 @@
 ##
 ###############################################################################
 
-include "atom.pxi"
-include "atomtyper.pxi"
-include "bond.pxi"
-include "bondpredictor.pxi"
-include "coordinatepredictor.pxi"
-include "element.pxi"
-include "fingerprint.pxi"
-include "forcefield.pxi"
-include "fragment.pxi"
-include "lineformat.pxi"
-include "moleculardescriptor.pxi"
-include "molecule.pxi"
-include "moleculefile.pxi"
-include "moleculegeometryoptimizer.pxi"
-include "partialchargemodel.pxi"
-include "point3.pxi"
-include "ring.pxi"
-include "vector3.pxi"
+cdef extern from "chemkit/molecule.h" namespace "chemkit":
+    cdef cppclass _Molecule "chemkit::Molecule"
 
+cdef extern from "chemkit/coordinatepredictor.h" namespace "chemkit":
+    cdef cppclass _CoordinatePredictor "chemkit::CoordinatePredictor":
+        # construction and destruction
+        _CoordinatePredictor()
+
+# static methods
+cdef extern from "chemkit/coordinatepredictor.h" namespace "chemkit::CoordinatePredictor":
+    void predictCoordinates(_Molecule *molecule)

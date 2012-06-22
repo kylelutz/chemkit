@@ -1,6 +1,6 @@
 ###############################################################################
 ##
-## Copyright (C) 2009-2012 Kyle Lutz <kyle.r.lutz@gmail.com>
+## Copyright (C) 2012 Kitware, Inc.
 ## All rights reserved.
 ##
 ## This file is a part of the chemkit project. For more information
@@ -33,22 +33,32 @@
 ##
 ###############################################################################
 
-include "atom.pxi"
-include "atomtyper.pxi"
-include "bond.pxi"
-include "bondpredictor.pxi"
-include "coordinatepredictor.pxi"
-include "element.pxi"
-include "fingerprint.pxi"
-include "forcefield.pxi"
-include "fragment.pxi"
-include "lineformat.pxi"
-include "moleculardescriptor.pxi"
-include "molecule.pxi"
-include "moleculefile.pxi"
-include "moleculegeometryoptimizer.pxi"
-include "partialchargemodel.pxi"
-include "point3.pxi"
-include "ring.pxi"
-include "vector3.pxi"
+from bondpredictor cimport _BondPredictor
+from bondpredictor cimport predictBonds as _BondPredictor_predictBonds
 
+cdef class BondPredictor:
+    cdef _BondPredictor *_bondPredictor
+
+    ### Construction and Destruction ##########################################
+    def __cinit__(self):
+        self._bondPredictor = NULL
+
+    def __init__(self, Molecule molecule):
+        """Creates a new bond predictor for molecule."""
+        self._bondPredictor = new _BondPredictor(molecule._molecule)
+
+    def __dealloc__(self):
+        del self._bondPredictor
+
+    ### Properties ############################################################
+    def molecule(self):
+        """Returns the molecule."""
+
+        return Molecule_fromPointer(self._bondPredictor.molecule())
+
+    ### Static Methods ########################################################
+    @classmethod
+    def predictBonds(cls, Molecule molecule):
+        """Predicts and adds bonds to the molecule."""
+
+        _BondPredictor_predictBonds(molecule._molecule)

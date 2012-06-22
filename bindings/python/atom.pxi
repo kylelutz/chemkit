@@ -84,6 +84,18 @@ cdef class Atom:
 
         return self._atom.name().c_str()
 
+    def setType(self, char *type):
+        """Sets the symbolic type for the atom."""
+
+        self._atom.setType(<string>(type))
+
+    def type(self):
+        """Returns the symbolic type for the atom."""
+
+        cdef string type = self._atom.type()
+
+        return type.c_str()
+
     def formalCharge(self):
         """Returns the formal charge of the atom."""
 
