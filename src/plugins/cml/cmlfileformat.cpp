@@ -196,6 +196,70 @@ bool CmlFileFormat::readXML(const rapidxml::xml_document<> &doc, chemkit::Molecu
             diagramCoordinates = 0;
         }
 
+        // add molecule property data
+        rapidxml::xml_node<> *propertyListNode = moleculeNode->first_node("propertyList");
+        if(!propertyListNode){
+            // in some files the propertyList node is stored within a list node
+            rapidxml::xml_node<> *listNode = moleculeNode->first_node("list");
+            if(listNode){
+                propertyListNode = listNode->first_node("propertyList");
+            }
+        }
+
+        if(propertyListNode){
+            rapidxml::xml_node<> *propertyNode = propertyListNode->first_node("property");
+            while(propertyNode){
+                // get the name for the property from the title attribute
+                rapidxml::xml_attribute<> *titleAttr = propertyNode->first_attribute("title");
+                if(!titleAttr){
+                    propertyNode = propertyNode->next_sibling("property");
+                    continue;
+                }
+
+                std::string title = titleAttr->value();
+
+                // get the value for the property
+                rapidxml::xml_node<> *scalarNode = propertyNode->first_node("scalar");
+                if(scalarNode && scalarNode->value_size()){
+                    // determine the scalar data type
+                    std::string dataType;
+                    rapidxml::xml_attribute<> *dataTypeAttr = scalarNode->first_attribute("dataType");
+                    if(dataTypeAttr && dataTypeAttr->value_size()){
+                        dataType = dataTypeAttr->value();
+                    }
+
+                    // parse the data value
+                    chemkit::Variant value;
+                    std::string valueString = scalarNode->value();
+                    try {
+                        if(dataType == "xsd:decimal" || dataType == "xsd:double"){
+                            value = boost::lexical_cast<double>(valueString);
+                        }
+                        else if(dataType == "xsd:float"){
+                            value = boost::lexical_cast<float>(valueString);
+                        }
+                        else if(dataType == "xsd:integer"){
+                            value = boost::lexical_cast<int>(valueString);
+                        }
+                        else{
+                            // unknown data type, so store the value as a string
+                            value = valueString;
+                        }
+                    }
+                    catch(boost::bad_lexical_cast &){
+                        // failed to parse the value, so store the value as a string
+                        value = valueString;
+                    }
+
+                    // set the data value
+                    molecule->setData(title, value);
+                }
+
+                // move to the next property node
+                propertyNode = propertyNode->next_sibling("property");
+            }
+        }
+
         // add molecule to file
         file->addMolecule(molecule);
         molecule.reset();

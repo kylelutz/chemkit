@@ -47,6 +47,7 @@ class CmlTest : public QObject
         void read_data();
         void read();
         void glucose();
+        void ethanol();
 };
 
 #endif // CMLTEST_H
