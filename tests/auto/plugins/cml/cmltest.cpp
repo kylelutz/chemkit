@@ -117,4 +117,24 @@ void CmlTest::glucose()
     QCOMPARE(diagramCoordinates->size(), size_t(24));
 }
 
+void CmlTest::ethanol()
+{
+    chemkit::MoleculeFile file(dataPath + "ethanol.cml");
+    bool ok = file.read();
+    if(!ok)
+        qDebug() << file.errorString().c_str();
+    QVERIFY(ok);
+
+    QCOMPARE(file.moleculeCount(), size_t(1));
+    boost::shared_ptr<chemkit::Molecule> molecule = file.molecule();
+    QVERIFY(molecule != 0);
+    QCOMPARE(molecule->formula(), std::string("C2H6O"));
+
+    // check molecule property data
+    QCOMPARE(qRound(molecule->data("molecular weight").toReal()), 46);
+    QCOMPARE(qRound(molecule->data("exact molecular weight").toReal()), 46);
+    QCOMPARE(qRound(molecule->data("melting point").toReal()), -114);
+    QCOMPARE(qRound(molecule->data("boiling point").toReal()), 78);
+}
+
 QTEST_APPLESS_MAIN(CmlTest)
