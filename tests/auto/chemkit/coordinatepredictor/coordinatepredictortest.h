@@ -44,6 +44,7 @@ class CoordinatePredictorTest : public QObject
 
     private slots:
         void molecule();
+        void eliminateCloseContacts();
 };
 
 #endif // COORDINATEPREDICTORTEST_H

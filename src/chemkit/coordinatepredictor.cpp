@@ -125,4 +125,38 @@ boost::shared_future<void> CoordinatePredictor::predictCoordinatesAsync(Molecule
       boost::bind(&CoordinatePredictor::predictCoordinates, molecule));
 }
 
+/// Adjusts the coordinates of the atoms in \p molecule to ensure that
+/// no two atoms are within \p distance Angstroms of each other. Returns
+/// \c true if at least one close contact was found and eliminated.
+bool CoordinatePredictor::eliminateCloseContacts(Molecule *molecule, Real distance)
+{
+    bool done = false;
+    bool modified = false;
+
+    while(!done){
+        done = true;
+
+        for(size_t i = 0; i < molecule->size(); i++){
+            Atom *a = molecule->atom(i);
+
+            for(size_t j = i + 1; j < molecule->size(); j++){
+                Atom *b = molecule->atom(j);
+
+                if(a->distance(b) < distance){
+                    done = false;
+
+                    // move atom b by a random unit vector
+                    b->setPosition(b->position() +
+                                   distance * Vector3::Random().normalized());
+
+                    // set modified flag
+                    modified = true;
+                }
+            }
+        }
+    }
+
+    return modified;
+}
+
 } // end chemkit namespace
