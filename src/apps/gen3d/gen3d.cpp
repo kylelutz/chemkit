@@ -81,6 +81,8 @@ int main(int argc, char *argv[])
         ("output-format,o",
             boost::program_options::value<std::string>(&outputFormatName),
             "Sets the output format.")
+        ("no-optimization",
+            "Do not perform geometry optimization.")
         ("help,h",
             "Shows this help message");
 
@@ -139,8 +141,10 @@ int main(int argc, char *argv[])
     // generate 3d coordinates
     chemkit::CoordinatePredictor::predictCoordinates(molecule.get());
 
-    // optimize 3d coordinates
-    chemkit::MoleculeGeometryOptimizer::optimizeCoordinates(molecule.get());
+    if(!variables.count("no-optimization")){
+        // optimize 3d coordinates
+        chemkit::MoleculeGeometryOptimizer::optimizeCoordinates(molecule.get());
+    }
 
     // set center to origin
     molecule->setCenter(0, 0, 0);
