@@ -86,8 +86,32 @@ const Molecule* CoordinatePredictor::molecule() const
 /// Predicts and assigns 3D coordinates for the atoms in \p molecule.
 void CoordinatePredictor::predictCoordinates(Molecule *molecule)
 {
+    // store terminal hydrogens
+    std::vector<Atom *> hydrogens;
     foreach(Atom *atom, molecule->atoms()){
-        atom->setPosition(molecule->size() * chemkit::Point3::Random().normalized());
+        if(atom->isTerminalHydrogen()){
+            hydrogens.push_back(atom);
+        }
+    }
+
+    // assign heavy atom positions
+    size_t heavyAtomCount = molecule->size() - hydrogens.size();
+
+    foreach(Atom *atom, molecule->atoms()){
+        if(atom->isTerminalHydrogen()){
+            continue;
+        }
+
+        atom->setPosition(heavyAtomCount *
+                          chemkit::Vector3::Random().normalized());
+    }
+
+    // assign hydrogen positions
+    foreach(Atom *hydrogen, hydrogens){
+        const Atom *neighbor = hydrogen->neighbor(0);
+
+        hydrogen->setPosition(neighbor->position() +
+                              chemkit::Vector3::Random().normalized());
     }
 }
 
