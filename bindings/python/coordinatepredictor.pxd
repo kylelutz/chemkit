@@ -33,6 +33,8 @@
 ##
 ###############################################################################
 
+from libcpp cimport bool
+
 cdef extern from "chemkit/molecule.h" namespace "chemkit":
     cdef cppclass _Molecule "chemkit::Molecule"
 
@@ -44,3 +46,4 @@ cdef extern from "chemkit/coordinatepredictor.h" namespace "chemkit":
 # static methods
 cdef extern from "chemkit/coordinatepredictor.h" namespace "chemkit::CoordinatePredictor":
     void predictCoordinates(_Molecule *molecule)
+    bool eliminateCloseContacts(_Molecule *molecule, double distance)

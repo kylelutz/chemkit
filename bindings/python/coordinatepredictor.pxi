@@ -35,6 +35,7 @@
 
 from coordinatepredictor cimport _CoordinatePredictor
 from coordinatepredictor cimport predictCoordinates as _CoordinatePredictor_predictCoordinates
+from coordinatepredictor cimport eliminateCloseContacts as _CoordinatePredictor_eliminateCloseContacts
 
 cdef class CoordinatePredictor:
     ### Construction and Destruction ##########################################
@@ -47,3 +48,10 @@ cdef class CoordinatePredictor:
         """Predicts and assigns 3D coordinates for the atoms in molecule."""
 
         _CoordinatePredictor_predictCoordinates(molecule._molecule)
+
+    @classmethod
+    def eliminateCloseContacts(cls, Molecule molecule, double distance = 1.0):
+        """Adjusts the atoms in the molecule so that no two atoms are closer
+           than distance Angstroms to each other."""
+
+        return _CoordinatePredictor_eliminateCloseContacts(molecule._molecule, distance)
