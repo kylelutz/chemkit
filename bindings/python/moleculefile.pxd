@@ -79,4 +79,4 @@ cdef extern from "chemkit/moleculefile.h" namespace "chemkit":
 cdef extern from "chemkit/moleculefile.h" namespace "chemkit::MoleculeFile":
     vector[string] formats()
     shared_ptr[_Molecule] quickRead(string fileName)
-
+    void quickWrite(_Molecule *molecule, string fileName)

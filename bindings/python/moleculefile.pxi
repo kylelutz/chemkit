@@ -41,6 +41,7 @@ from libcpp.vector cimport vector
 from moleculefile cimport _MoleculeFile
 from moleculefile cimport formats as _MoleculeFile_formats
 from moleculefile cimport quickRead as _MoleculeFile_quickRead
+from moleculefile cimport quickWrite as _MoleculeFile_quickWrite
 
 cdef class MoleculeFile:
     """The MoleculeFile class represents a file containing molecules."""
@@ -197,3 +198,9 @@ cdef class MoleculeFile:
         cdef shared_ptr[_Molecule] _molecule = _MoleculeFile_quickRead(<string>(fileName))
 
         return Molecule_fromSharedPointer(new shared_ptr[_Molecule](_molecule))
+
+    @classmethod
+    def quickWrite(cls, Molecule molecule, char *fileName):
+        """Writes the molecule to a file with the given fileName."""
+
+        _MoleculeFile_quickWrite(molecule._molecule, <string>(fileName))
