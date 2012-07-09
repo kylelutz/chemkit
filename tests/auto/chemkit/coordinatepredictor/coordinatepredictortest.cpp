@@ -35,6 +35,8 @@
 
 #include "coordinatepredictortest.h"
 
+#include <limits>
+
 #include <chemkit/molecule.h>
 #include <chemkit/coordinatepredictor.h>
 
@@ -49,6 +51,38 @@ void CoordinatePredictorTest::molecule()
 
     predictor.setMolecule(0);
     QVERIFY(predictor.molecule() == 0);
+}
+
+void CoordinatePredictorTest::eliminateCloseContacts()
+{
+    // create ethanol molecule
+    chemkit::Molecule ethanol("CCO", "smiles");
+    QCOMPARE(ethanol.formula(), std::string("C2H6O"));
+    QVERIFY(ethanol.distance(ethanol.atom(0), ethanol.atom(1)) == chemkit::Real(0));
+
+    // eliminate all close atom contacts less than two angstroms
+    bool modified = chemkit::CoordinatePredictor::eliminateCloseContacts(&ethanol, 2.0);
+    QVERIFY(modified == true);
+    QVERIFY(ethanol.distance(ethanol.atom(0), ethanol.atom(1)) != chemkit::Real(0));
+
+    chemkit::Real closestDistance = std::numeric_limits<chemkit::Real>::max();
+    for(size_t i = 0; i < ethanol.size(); i++){
+        for(size_t j = i + 1; j < ethanol.size(); j++){
+            chemkit::Real distance = ethanol.distance(ethanol.atom(i),
+                                                      ethanol.atom(j));
+
+            if(distance < closestDistance){
+                closestDistance = distance;
+            }
+        }
+    }
+
+    // verify that no two atoms are less than two angstroms from each other
+    QVERIFY(closestDistance >= 2.0);
+
+    // run the algorithm again but verify that nothing is modifed
+    modified = chemkit::CoordinatePredictor::eliminateCloseContacts(&ethanol);
+    QVERIFY(modified == false);
 }
 
 QTEST_APPLESS_MAIN(CoordinatePredictorTest)
