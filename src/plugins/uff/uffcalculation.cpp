@@ -191,7 +191,15 @@ bool UffAngleBendCalculation::setup()
 
     setParameter(0, ka);
 
-    chemkit::Real c2 = 1 / (4 * pow(sin(theta0), 2));
+    chemkit::Real sinTheta0 = sin(theta0);
+
+    // clamp sin(theta0) to 1e-3 because for some atoms theta0 == pi which
+    // would lead to a division by zero error when calculating c2 below
+    if(std::abs(sinTheta0) < 1e-3){
+        sinTheta0 = 1e-3;
+    }
+
+    chemkit::Real c2 = 1 / (4 * pow(sinTheta0, 2));
     chemkit::Real c1 = -4 * c2 * cos(theta0);
     chemkit::Real c0 = c2 * (2 * pow(cos(theta0), 2) + 1);
 
