@@ -61,7 +61,7 @@ public:
     virtual ~GenericFile();
 
     // properties
-    void setFileName(const std::string &fileName);
+    bool setFileName(const std::string &fileName);
     std::string fileName() const;
     void setFormat(Format *format);
     bool setFormat(const std::string &formatName);

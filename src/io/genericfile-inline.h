@@ -89,9 +89,14 @@ inline GenericFile<File, Format>::~GenericFile()
 ///
 /// If no file format is set the suffix of \p fileName will be
 /// used as the format.
+///
+/// Returns \c false if auto-detection of the file format from
+/// the file name's suffix fails.
 template<typename File, typename Format>
-inline void GenericFile<File, Format>::setFileName(const std::string &fileName)
+inline bool GenericFile<File, Format>::setFileName(const std::string &fileName)
 {
+    bool result = true;
+
     m_fileName = fileName;
     m_compressionFormat.clear();
 
@@ -119,14 +124,16 @@ inline void GenericFile<File, Format>::setFileName(const std::string &fileName)
 
         // set file format
         if(!m_format){
-            setFormat(formatName);
+            result &= setFormat(formatName);
         }
 
         // set compression format
         if(m_compressionFormat.empty() && !compressionFormatName.empty()){
-            setCompressionFormat(compressionFormatName);
+            result &= setCompressionFormat(compressionFormatName);
         }
     }
+
+    return result;
 }
 
 /// Returns the file name for the file.

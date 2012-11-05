@@ -48,6 +48,8 @@ class MoleculeFileTest : public QObject
         void contains();
         void data();
         void molecule();
+        void fileFormatDetection();
+        void fileFormatDetectionWithCompression();
 };
 
 #endif // MOLECULEFILETEST_H
