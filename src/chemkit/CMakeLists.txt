@@ -4,7 +4,12 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config.h.in ${CMAKE_CURRENT_SOURCE_DI
 find_package(Chemkit)
 include_directories(${CHEMKIT_INCLUDE_DIRS})
 
-find_package(Boost COMPONENTS system filesystem thread chrono REQUIRED)
+find_package(Boost COMPONENTS system filesystem thread REQUIRED)
+
+# boost.thread in versions 1.50 and later require boost.chrono
+if(${Boost_VERSION} GREATER 104999)
+  find_package(Boost COMPONENTS chrono REQUIRED)
+endif()
 
 set(HEADERS
   alphashape.h
