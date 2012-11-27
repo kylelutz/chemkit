@@ -118,4 +118,61 @@ void MoleculeFileTest::molecule()
     QVERIFY(file.molecule("invalid-name") == 0);
 }
 
+void MoleculeFileTest::fileFormatDetection()
+{
+    // create empty file object
+    chemkit::MoleculeFile file;
+
+    // try to set an invalid file format
+    bool ret = file.setFileName("ethanol.dml");
+
+    // check return code and error string
+    QVERIFY(ret == false);
+    QCOMPARE(file.errorString().c_str(), "File format 'dml' is not supported.");
+
+    // try to set a valid file format
+    ret = file.setFileName("ethanol.cml");
+
+    // check return code
+    QVERIFY(ret == true);
+}
+
+void MoleculeFileTest::fileFormatDetectionWithCompression()
+{
+    // check that gzip compression is supported
+    std::vector<std::string> compressionFormats =
+        chemkit::MoleculeFile::compressionFormats();
+
+    if(std::find(compressionFormats.begin(),
+                 compressionFormats.end(),
+                 "gz") == compressionFormats.end()){
+        QSKIP("Gzip compression not supported", SkipSingle);
+    }
+
+    // create empty file object
+    chemkit::MoleculeFile file;
+
+    // try to set an invalid file format
+    bool ret = file.setFileName("ethanol.dml.gz");
+
+    // check return code and error string
+    QVERIFY(ret == false);
+    QCOMPARE(file.errorString().c_str(), "File format 'dml' is not supported.");
+
+    // check file format and compression format
+    QVERIFY(file.format() == 0);
+    QCOMPARE(file.compressionFormat().c_str(), "gz");
+
+    // try to set a valid file format
+    ret = file.setFileName("ethanol.cml.gz");
+    QVERIFY(file.format() != 0);
+
+    // check file format and compression format
+    QVERIFY(file.format() != 0);
+    QCOMPARE(file.compressionFormat().c_str(), "gz");
+
+    // check return code
+    QVERIFY(ret == true);
+}
+
 QTEST_APPLESS_MAIN(MoleculeFileTest)
