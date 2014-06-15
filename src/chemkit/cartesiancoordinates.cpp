@@ -267,7 +267,7 @@ Point3 CartesianCoordinates::weightedCenter(const std::vector<Real> &weights) co
         sw += weights[i];
     }
 
-    return (1.0 / (sw * size())) * sum;
+    return (1.0 / sw) * sum;
 }
 
 /// Moves all of the coordinates by \p vector.
