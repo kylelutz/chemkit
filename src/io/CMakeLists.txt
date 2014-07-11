@@ -1,7 +1,7 @@
 find_package(Chemkit REQUIRED)
 include_directories(${CHEMKIT_INCLUDE_DIRS})
 
-find_package(Boost COMPONENTS iostreams REQUIRED)
+find_package(Boost COMPONENTS iostreams thread REQUIRED)
 include_directories(${BOOST_INCLUDE_DIRS})
 
 if(NOT ${CHEMKIT_WITH_IO})
