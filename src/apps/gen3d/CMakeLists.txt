@@ -5,7 +5,7 @@ endif()
 find_package(Chemkit COMPONENTS io md REQUIRED)
 include_directories(${CHEMKIT_INCLUDE_DIRS})
 
-find_package(Boost COMPONENTS program_options REQUIRED)
+find_package(Boost COMPONENTS system thread filesystem program_options REQUIRED)
 
 add_chemkit_executable(gen3d gen3d.cpp)
 target_link_libraries(gen3d ${CHEMKIT_LIBRARIES} ${Boost_LIBRARIES})
