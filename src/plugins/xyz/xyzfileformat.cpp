@@ -179,6 +179,7 @@ bool XyzFileFormat::write(const chemkit::MoleculeFile *file, std::ostream &outpu
     foreach(const chemkit::Atom *atom, molecule->atoms()){
         output << std::showpoint
                << std::setw(3) << atom->symbol()
+               << std::fixed
                << std::setw(15) << std::setprecision(5) << atom->x()
                << std::setw(15) << std::setprecision(5) << atom->y()
                << std::setw(15) << std::setprecision(5) << atom->z()
