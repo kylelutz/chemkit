@@ -38,7 +38,7 @@
 
 #include "gui.h"
 
-#include <QtGui>
+#include <QtWidgets>
 
 #include <chemkit/element.h>
 

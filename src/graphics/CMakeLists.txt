@@ -5,14 +5,15 @@ endif()
 find_package(Chemkit COMPONENTS gui REQUIRED)
 include_directories(${CHEMKIT_INCLUDE_DIRS})
 
-find_package(Qt4 4.6 COMPONENTS QtCore QtGui QtOpenGL REQUIRED)
-set(QT_USE_QTOPENGL TRUE)
-include(${QT_USE_FILE})
+find_package(Qt5 COMPONENTS Widgets OpenGL REQUIRED)
+include_directories(${Qt5Widgets_INCLUDE_DIRS})
+include_directories(${Qt5OpenGL_INCLUDE_DIRS})
 
 # disable Qt keywords
 add_definitions("-DQT_NO_KEYWORDS")
 
 find_package(OpenGL REQUIRED)
+include_directories(${OPENGL_INCLUDE_DIRS})
 
 set(HEADERS
   graphicsatomitem.h
@@ -88,8 +89,8 @@ set(MOC_HEADERS
   graphicsview.h
 )
 
-qt4_wrap_cpp(MOC_SOURCES ${MOC_HEADERS})
-qt4_add_resources(RCC_SOURCES shaders.qrc)
+qt5_wrap_cpp(MOC_SOURCES ${MOC_HEADERS})
+qt5_add_resources(RCC_SOURCES shaders.qrc)
 
 # add external mskit source files
 aux_source_directory(../3rdparty/mskit/ MSKIT_SOURCES)
@@ -99,7 +100,7 @@ add_definitions(
 )
 
 add_chemkit_library(chemkit-graphics ${SOURCES} ${MOC_SOURCES} ${RCC_SOURCES} ${MSKIT_SOURCES})
-target_link_libraries(chemkit-graphics ${CHEMKIT_LIBRARIES} ${QT_LIBRARIES} ${OPENGL_LIBRARIES})
+target_link_libraries(chemkit-graphics Qt5::Widgets Qt5::OpenGL ${CHEMKIT_LIBRARIES} ${OPENGL_LIBRARIES})
 
 # install header files
 install(FILES ${HEADERS} DESTINATION include/chemkit/)

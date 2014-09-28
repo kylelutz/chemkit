@@ -36,7 +36,7 @@
 #include "periodictablewidget.h"
 #include "ui_periodictablewidget.h"
 
-#include <QtGui>
+#include <QtWidgets>
 
 #include <chemkit/element.h>
 

@@ -70,6 +70,20 @@ T function_pointer_cast(void *address)
     return pointer.function;
 }
 
+template<typename T>
+T function_pointer_cast(QFunctionPointer address)
+{
+    union FunctionPointer {
+        QFunctionPointer address;
+        T function;
+    };
+
+    FunctionPointer pointer;
+    pointer.address = address;
+
+    return pointer.function;
+}
+
 void setupGlFunctions()
 {
     const QGLContext *context = QGLContext::currentContext();
