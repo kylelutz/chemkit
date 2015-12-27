@@ -38,8 +38,10 @@
 
 #include <cstddef>
 
+#ifndef Q_MOC_RUN
 #include <boost/config.hpp>
 #include <boost/preprocessor/stringize.hpp>
+#endif
 
 #include "config.h"
 

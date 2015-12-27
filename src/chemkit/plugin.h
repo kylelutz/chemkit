@@ -40,8 +40,10 @@
 
 #include <string>
 
+#ifndef Q_MOC_RUN
 #include <boost/function.hpp>
 #include <boost/lambda/construct.hpp>
+#endif
 
 namespace chemkit {
 

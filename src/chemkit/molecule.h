@@ -42,7 +42,9 @@
 #include <string>
 #include <vector>
 
+#ifndef Q_MOC_RUN
 #include <boost/range/iterator_range.hpp>
+#endif
 
 #include "bitset.h"
 #include "point3.h"

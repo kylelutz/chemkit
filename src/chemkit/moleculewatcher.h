@@ -38,7 +38,9 @@
 
 #include "chemkit.h"
 
+#ifndef Q_MOC_RUN
 #include <boost/signals2/signal.hpp>
+#endif
 
 namespace chemkit {
 

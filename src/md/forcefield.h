@@ -41,7 +41,9 @@
 #include <string>
 #include <vector>
 
+#ifndef Q_MOC_RUN
 #include <boost/thread/future.hpp>
+#endif
 
 #include <chemkit/plugin.h>
 #include <chemkit/point3.h>

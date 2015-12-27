@@ -38,7 +38,9 @@
 
 #include "variant.h"
 
+#ifndef Q_MOC_RUN
 #include <boost/lexical_cast.hpp>
+#endif
 
 namespace chemkit {
 
