@@ -40,6 +40,7 @@
 
 #include <fstream>
 #include <sstream>
+#ifndef Q_MOC_RUN
 #include <boost/format.hpp>
 #include <boost/filesystem.hpp>
 #include <boost/scoped_ptr.hpp>
@@ -49,6 +50,7 @@
 #ifndef CHEMKIT_OS_WIN32
 #include <boost/iostreams/filter/gzip.hpp>
 #include <boost/iostreams/filter/bzip2.hpp>
+#endif
 #endif
 
 namespace chemkit {

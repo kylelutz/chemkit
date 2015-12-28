@@ -38,7 +38,9 @@
 
 #include "md-io.h"
 
+#ifndef Q_MOC_RUN
 #include <boost/shared_ptr.hpp>
+#endif
 
 #include <chemkit/genericfile.h>
 

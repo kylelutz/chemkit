@@ -38,7 +38,9 @@
 
 #include "chemkit.h"
 
+#ifndef Q_MOC_RUN
 #include <boost/array.hpp>
+#endif
 
 #include "point3.h"
 #include "vector3.h"

@@ -40,7 +40,9 @@
 
 #include <string>
 
+#ifndef Q_MOC_RUN
 #include <boost/thread/future.hpp>
+#endif
 
 namespace chemkit {
 
