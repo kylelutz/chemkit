@@ -38,10 +38,12 @@
 
 #include <utility>
 
+#ifndef Q_MOC_RUN
 #include <boost/graph/properties.hpp>
 #include <boost/graph/graph_traits.hpp>
 #include <boost/property_map/property_map.hpp>
 #include <boost/type_traits/remove_reference.hpp>
+#endif
 
 #include "atom.h"
 #include "bond.h"

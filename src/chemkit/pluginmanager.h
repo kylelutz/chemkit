@@ -41,7 +41,9 @@
 #include <string>
 #include <vector>
 
+#ifndef Q_MOC_RUN
 #include <boost/function.hpp>
+#endif
 
 namespace chemkit {
 

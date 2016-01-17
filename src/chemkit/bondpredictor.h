@@ -40,7 +40,9 @@
 
 #include <vector>
 
+#ifndef Q_MOC_RUN
 #include <boost/tuple/tuple.hpp>
+#endif
 
 #include "bond.h"
 
