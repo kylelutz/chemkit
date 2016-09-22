@@ -1,10 +1,12 @@
 /******************************************************************************
 **
-** Copyright (C) 2009-2012 Kyle Lutz <kyle.r.lutz@gmail.com>
+** Copyright (C) 2009-2011 Kyle Lutz <kyle.r.lutz@gmail.com>
 ** All rights reserved.
 **
 ** This file is a part of the chemkit project. For more information
 ** see <http://www.chemkit.org>.
+**
+** This file is Copyright (C) 2016 by Jan von Cosel
 **
 ** Redistribution and use in source and binary forms, with or without
 ** modification, are permitted provided that the following conditions
@@ -33,21 +35,63 @@
 **
 ******************************************************************************/
 
-#include <chemkit/plugin.h>
-
-#include "cubefileformat.h"
 #include "logfileformat.h"
 
-class GaussianPlugin : public chemkit::Plugin
-{
-public:
-    GaussianPlugin()
-        : chemkit::Plugin("gaussian")
-    {
-        CHEMKIT_REGISTER_MOLECULE_FILE_FORMAT("cube", CubeFileFormat);
-        CHEMKIT_REGISTER_MOLECULE_FILE_FORMAT("log", LogFileFormat);
-        CHEMKIT_REGISTER_MOLECULE_FILE_FORMAT("out", LogFileFormat);
-    }
-};
+#include <chemkit/atom.h>
+#include <chemkit/molecule.h>
+#include <chemkit/moleculefile.h>
 
-CHEMKIT_EXPORT_PLUGIN(gaussian, GaussianPlugin)
+#include <iostream>
+
+LogFileFormat::LogFileFormat()
+    : chemkit::MoleculeFileFormat("log")
+{
+}
+
+LogFileFormat::~LogFileFormat()
+{
+}
+
+bool LogFileFormat::read(std::istream &input, chemkit::MoleculeFile *file)
+{
+    // find the number of atoms:
+    int atomCount;
+    std::string currentLine;
+    while (std::getline(input, currentLine))
+    {
+        if (currentLine.find("NAtoms=") != std::string::npos)
+        {
+            std::istringstream iss(currentLine.substr(8));
+            iss >> atomCount;
+            break;
+        }
+    }
+
+    // read in every Standard Orientation in the file and add them as molecules:
+    while (std::getline(input, currentLine))
+    {
+        if (currentLine.find("Standard orientation") != std::string::npos)
+        {
+            boost::shared_ptr<chemkit::Molecule> molecule(new chemkit::Molecule);
+
+            // skip the next 4 lines:
+            for (int i = 0; i < 4; i++)
+                input.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+            int dummy1, atomicNumber, dummy2;
+            double x, y, z;
+
+            for (int i = 0; i < atomCount; i++)
+            {
+                input >> dummy1 >> atomicNumber >> dummy2 >> x >> y >> z;
+
+                chemkit::Atom *atom = molecule->addAtom(atomicNumber);
+                chemkit::Point3 position(x, y, z);
+                atom->setPosition(position);
+            }
+            file->addMolecule(molecule);
+        }
+    }
+
+    return true;
+}
