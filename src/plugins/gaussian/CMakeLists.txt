@@ -7,6 +7,7 @@ include_directories(${CHEMKIT_INCLUDE_DIRS})
 
 set(SOURCES
   logfileformat.cpp
+  fcheckfileformat.cpp
   cubefileformat.cpp
   gaussianplugin.cpp
 )
