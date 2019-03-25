@@ -33,6 +33,7 @@
 **
 ******************************************************************************/
 
+#include <iostream>
 #include "pdbfileformat.h"
 
 #include <boost/algorithm/string.hpp>
@@ -169,8 +170,14 @@ public:
     std::vector<PdbResidue *> residues() const;
 
     Type guessType() const;
+    void buildIndex();
+    int getResIdfromPdbResId(int pdbid) const;
 
 private:
+    std::vector<int> m_pdbresids_to_internalids;
+    std::vector<int> m_internalids_to_pdbresids;
+    int pdb_resid_min;
+
     char m_id;
     std::string m_name;
     std::vector<PdbResidue *> m_residues;
@@ -200,6 +207,7 @@ std::string PdbChain::name() const
 
 void PdbChain::addResidue(PdbResidue *residue)
 {
+    m_internalids_to_pdbresids.push_back(residue->index());
     m_residues.push_back(residue);
 }
 
@@ -223,6 +231,36 @@ PdbChain::Type PdbChain::guessType() const
     }
 
     return Protein;
+}
+
+void PdbChain::buildIndex()
+{
+    //Reindexing
+    if (m_internalids_to_pdbresids.size() > 0)
+    {
+        int maxid = *std::max_element(m_internalids_to_pdbresids.begin(), m_internalids_to_pdbresids.end()); 
+        pdb_resid_min = *std::min_element(m_internalids_to_pdbresids.begin(), m_internalids_to_pdbresids.end()); 
+       
+        m_pdbresids_to_internalids.clear();
+        m_pdbresids_to_internalids.resize(maxid - pdb_resid_min + 1,-1);
+        for (uint32_t i = 0; i < m_internalids_to_pdbresids.size(); ++i)
+        {
+            int inner_id = m_internalids_to_pdbresids[i];
+            m_pdbresids_to_internalids[inner_id - pdb_resid_min] = i;
+        }
+    }
+}
+
+int PdbChain::getResIdfromPdbResId(int pdb_res_id) const
+{
+    int offsetid = pdb_res_id - pdb_resid_min;
+    if (offsetid < 0 || offsetid >= static_cast<int>(m_pdbresids_to_internalids.size()))
+    {
+        std::cout << "PdbConformation referenced id, which was not contained in PDB File, returning -1" << std::endl;
+        return -1;
+    }
+    //if the original PDB does not contain the id, this will return -1
+    return m_pdbresids_to_internalids[pdb_res_id - pdb_resid_min];
 }
 
 // === PdbConformation ===================================================== //
@@ -411,6 +449,10 @@ bool PdbFile::read(std::istream &input)
 
             char chainId = line[21];
             if(!currentChain || currentChain->id() != chainId){
+                if (currentChain)
+                {
+                    currentChain->buildIndex();
+                }
                 currentChain = new PdbChain(chainId);
                 addChain(currentChain);
             }
@@ -497,7 +539,10 @@ bool PdbFile::read(std::istream &input)
             m_title += title;
         }
     }
-
+    if (currentChain)
+    {
+        currentChain->buildIndex();
+    }
     return true;
 }
 
@@ -614,8 +659,14 @@ void PdbFile::writePolymerFile(chemkit::PolymerFile *file)
             foreach(const PdbConformation *pdbConformation, m_conformations){
                 if(pdbConformation->chain() == pdbChain->id()){
                     for(int residue = pdbConformation->firstResidue(); residue < pdbConformation->lastResidue(); residue++){
-                        chemkit::AminoAcid *aminoAcid = static_cast<chemkit::AminoAcid *>(chain->residue(residue));
-
+                        int internal_id = pdbChain->getResIdfromPdbResId(residue);
+                        if(internal_id == -1)
+                        {
+                            std::cout << "Residue " << residue << " had internal mapping: " << internal_id << " , skipping." << std::endl;
+                            continue;
+                        }
+                        chemkit::AminoAcid *aminoAcid = 0;
+                        aminoAcid = static_cast<chemkit::AminoAcid *>(chain->residue(internal_id));
                         if(aminoAcid){
                             aminoAcid->setConformation(pdbConformation->type());
                         }
