@@ -652,7 +652,7 @@ int DelaunayTriangulation::location(const Point3 &point) const
     int tetrahedronIndex = 0;
 
     // find last valid tetrahedron to start at
-    for(int i = d->tetrahedra.size() - 1; i != 0; i++){
+    for(int i = d->tetrahedra.size() - 1; i != 0; i--){
         const Tetrahedron &tetrahedron = d->tetrahedra[i];
         if(!tetrahedron.valid)
             continue;

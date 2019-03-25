@@ -40,7 +40,9 @@
 
 #include <vector>
 
+#ifndef Q_MOC_RUN
 #include <boost/array.hpp>
+#endif
 
 #include "matrix.h"
 #include "point3.h"

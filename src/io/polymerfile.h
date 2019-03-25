@@ -41,8 +41,10 @@
 #include <string>
 #include <vector>
 
+#ifndef Q_MOC_RUN
 #include <boost/shared_ptr.hpp>
 #include <boost/range/iterator_range.hpp>
+#endif
 
 #include "genericfile.h"
 #include "polymerfileformat.h"

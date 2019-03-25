@@ -44,7 +44,9 @@
 #include <istream>
 #include <ostream>
 
+#ifndef Q_MOC_RUN
 #include <boost/iostreams/device/mapped_file.hpp>
+#endif
 
 #include <chemkit/variant.h>
 #include <chemkit/variantmap.h>

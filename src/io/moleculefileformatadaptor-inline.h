@@ -38,8 +38,10 @@
 
 #include "moleculefileformatadaptor.h"
 
+#ifndef Q_MOC_RUN
 #include <boost/foreach.hpp>
 #include <boost/algorithm/string.hpp>
+#endif
 
 #include <chemkit/polymer.h>
 #include <chemkit/lineformat.h>

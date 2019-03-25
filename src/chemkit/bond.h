@@ -40,9 +40,11 @@
 
 #include <vector>
 
+#ifndef Q_MOC_RUN
 #include <boost/function.hpp>
 #include <boost/range/iterator_range.hpp>
 #include <boost/iterator/filter_iterator.hpp>
+#endif
 
 #include "point3.h"
 #include "vector3.h"

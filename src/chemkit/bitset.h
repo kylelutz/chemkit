@@ -38,7 +38,9 @@
 
 #include "chemkit.h"
 
+#ifndef Q_MOC_RUN
 #include <boost/dynamic_bitset.hpp>
+#endif
 
 namespace chemkit {
 

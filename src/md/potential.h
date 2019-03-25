@@ -40,7 +40,9 @@
 
 #include <vector>
 
+#ifndef Q_MOC_RUN
 #include <boost/thread/future.hpp>
+#endif
 
 #include <chemkit/vector3.h>
 
