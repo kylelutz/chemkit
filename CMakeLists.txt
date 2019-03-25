@@ -17,6 +17,31 @@ endif()
 find_package(Boost REQUIRED)
 link_directories(${Boost_LIBRARY_DIRS})
 
+if(UNIX)
+    set(CMAKE_PREFIX_PATH ${RPCDIR})
+    find_package(RPC QUIET)
+    set(HAVE_RPC ${RPC_FOUND})
+    if(RPC_FOUND)
+        include_directories(${RPC_INCLUDE_DIR})
+    else(RPC_FOUND)
+        message(FATAL_ERROR "RPC support is mandatory.\n"
+        "Note that SunRPC has been removed in glibc-2.26 and later, "
+        "while being optional in earlier versions. Consider using the "
+        "recommended and more modern libtirpc instead.\n"
+        "Use -DRPCDIR=DIR to specify the rpc directory tree.\n")
+    endif(RPC_FOUND)
+elseif (WIN32 AND NOT CYGWIN)
+    set(CMAKE_PREFIX_PATH ${XDRDIR})
+    find_package(Xdr)
+    set(HAVE_LIBXDR ${XDR_FOUND})
+    if(XDR_FOUND)
+        include_directories(${XDR_INCLUDE_DIR})
+    else(XDR_FOUND)
+        message(FATAL_ERROR "bsd-xdr library is required but was not found.\n"
+        "Use -DXDRDIR=DIR to specify the bsd-xdr directory tree.")
+    endif(XDR_FOUND)
+endif()
+
 # add option for CMAKE_BUILD_TYPE
 if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
   set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the type of build." FORCE)
