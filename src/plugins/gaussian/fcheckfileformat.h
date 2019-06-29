@@ -1,10 +1,12 @@
 /******************************************************************************
 **
-** Copyright (C) 2009-2012 Kyle Lutz <kyle.r.lutz@gmail.com>
+** Copyright (C) 2009-2011 Kyle Lutz <kyle.r.lutz@gmail.com>
 ** All rights reserved.
 **
 ** This file is a part of the chemkit project. For more information
 ** see <http://www.chemkit.org>.
+**
+** This file is Copyright (C) 2016 by Jan von Cosel
 **
 ** Redistribution and use in source and binary forms, with or without
 ** modification, are permitted provided that the following conditions
@@ -33,23 +35,19 @@
 **
 ******************************************************************************/
 
-#include <chemkit/plugin.h>
+#ifndef FCHECKFILEFORMAT_H
+#define FCHECKFILEFORMAT_H
 
-#include "cubefileformat.h"
-#include "logfileformat.h"
-#include "fcheckfileformat.h"
 
-class GaussianPlugin : public chemkit::Plugin
+#include <chemkit/moleculefileformat.h>
+
+class FCheckFileFormat : public chemkit::MoleculeFileFormat
 {
 public:
-    GaussianPlugin()
-        : chemkit::Plugin("gaussian")
-    {
-        CHEMKIT_REGISTER_MOLECULE_FILE_FORMAT("cube", CubeFileFormat);
-        CHEMKIT_REGISTER_MOLECULE_FILE_FORMAT("log", LogFileFormat);
-        CHEMKIT_REGISTER_MOLECULE_FILE_FORMAT("out", LogFileFormat);
-        CHEMKIT_REGISTER_MOLECULE_FILE_FORMAT("fchk", FCheckFileFormat);
-    }
+    FCheckFileFormat();
+    ~FCheckFileFormat();
+
+    bool read(std::istream &input, chemkit::MoleculeFile *file) CHEMKIT_OVERRIDE;
 };
 
-CHEMKIT_EXPORT_PLUGIN(gaussian, GaussianPlugin)
+#endif // FCHECKFILEFORMAT_H
