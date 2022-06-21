@@ -373,19 +373,18 @@ inline std::vector<std::vector<T> > rppath(const Graph<T> &graph)
             if(P(i, j).size() == 1 && Pt(i, j).size() == 0){
                 continue;
             }
+            
+            T size;
+
+            if(Pt(i, j).size() > 1){
+                size = 2 * D(i, j) + 1;
+            }
             else{
-                T size;
+                size = 2 * D(i, j);
+            }
 
-                if(P(i, j).size() > 1){
-                    size = 2 * D(i, j);
-                }
-                else{
-                    size = 2 * D(i, j) + 1;
-                }
-
-                if(size > 2){
-                    candidates.push_back(RingCandidate<T>(size, i, j));
-                }
+            if(size > 2){
+                candidates.push_back(RingCandidate<T>(size, i, j));
             }
         }
     }
